@@ -400,8 +400,8 @@ public interface Configuration extends Serializable {
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newExecutorProvider The new executor to be contained in the
-     *            changed configuration.
+     * @param newExecutor The new executor to be contained in the changed
+     *            configuration.
      * @return The changed configuration.
      */
     Configuration set(Executor newExecutor);
@@ -426,7 +426,7 @@ public interface Configuration extends Serializable {
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newConnection The new data source to be contained in the changed
+     * @param newDataSource The new data source to be contained in the changed
      *            configuration.
      * @return The changed configuration.
      */
@@ -453,8 +453,8 @@ public interface Configuration extends Serializable {
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newRecordMapperProvider The new record mapper to be contained in
-     *            the changed configuration.
+     * @param newRecordMapper The new record mapper to be contained in the
+     *            changed configuration.
      * @return The changed configuration.
      */
     Configuration set(RecordMapper<?, ?> newRecordMapper);

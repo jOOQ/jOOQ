@@ -70,7 +70,7 @@ public interface TransactionProvider {
      * {@link #commit(TransactionContext)} or
      * {@link #rollback(TransactionContext)} is called.
      *
-     * @param Configuration the configuration scoped to this transaction and its
+     * @param ctx the configuration scoped to this transaction and its
      *            nested transactions.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
@@ -78,21 +78,20 @@ public interface TransactionProvider {
     void begin(TransactionContext ctx) throws DataAccessException;
 
     /**
-     * @param Configuration the configuration scoped to this transaction and its
-     *            nested transactions.
-     * @param transaction The user-defined transaction object returned from
-     *            {@link #begin(TransactionContext)}. May be <code>null</code>.
+     * Commit a transaction.
+     *
+     * @param ctx the configuration scoped to this transaction and its nested
+     *            transactions.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */
     void commit(TransactionContext ctx) throws DataAccessException;
 
     /**
-     * @param Configuration the configuration scoped to this transaction and its
-     *            nested transactions.
-     * @param transaction The user-defined transaction object returned from
-     *            {@link #begin(TransactionContext)}. May be <code>null</code>.
-     * @param cause The exception that has caused the rollback.
+     * Rollback a transaction.
+     *
+     * @param ctx the configuration scoped to this transaction and its nested
+     *            transactions.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */

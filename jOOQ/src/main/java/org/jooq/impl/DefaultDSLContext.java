@@ -3144,6 +3144,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     // [jooq-tools] START [newRecord]
+
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public <T1> Record1<T1> newRecord(Field<T1> field1) {

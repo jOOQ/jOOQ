@@ -419,7 +419,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * MY_TABLE.as(MY_OTHER_TABLE, f -> MY_OTHER_TABLE.field(f));
      * </pre></code>
      *
-     * @param alias The alias name
+     * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
      */
@@ -437,7 +437,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * MY_TABLE.as("t1", (f, i) -> "column" + i);
      * </pre></code>
      *
-     * @param alias The alias name
+     * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
      */

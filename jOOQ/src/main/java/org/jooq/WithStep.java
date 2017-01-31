@@ -327,7 +327,7 @@ public interface WithStep extends QueryPart {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field...)} instead.
+     * {@link DSL#select(SelectField...)} instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -340,7 +340,7 @@ public interface WithStep extends QueryPart {
      *       .execute();
      * </pre></code>
      *
-     * @see DSL#select(Field...)
+     * @see DSL#select(SelectField...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectSelectStep<Record> select(SelectField<?>... fields);
@@ -350,7 +350,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -381,7 +381,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -412,7 +412,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -443,7 +443,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -474,7 +474,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -505,7 +505,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -536,7 +536,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -567,7 +567,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -598,7 +598,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -629,7 +629,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -660,7 +660,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -691,7 +691,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -722,7 +722,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -753,7 +753,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -784,7 +784,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -815,7 +815,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -846,7 +846,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -877,7 +877,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -908,7 +908,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -939,7 +939,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -970,7 +970,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1001,7 +1001,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
+     * This is the same as {@link #select(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1062,7 +1062,7 @@ public interface WithStep extends QueryPart {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field...)} instead.
+     * {@link DSL#selectDistinct(SelectField...)} instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -1074,7 +1074,7 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectSelectStep<Record> selectDistinct(SelectField<?>... fields);
@@ -1084,7 +1084,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1115,7 +1115,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1146,7 +1146,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1177,7 +1177,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1208,7 +1208,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1239,7 +1239,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1270,7 +1270,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1301,7 +1301,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1332,7 +1332,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1363,7 +1363,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1394,7 +1394,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1425,7 +1425,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1456,7 +1456,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1487,7 +1487,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1518,7 +1518,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1549,7 +1549,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1580,7 +1580,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1611,7 +1611,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1642,7 +1642,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1673,7 +1673,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1704,7 +1704,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1735,7 +1735,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.

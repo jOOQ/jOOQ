@@ -51,7 +51,7 @@ public interface RecordContext extends Scope {
      * <ul>
      * <li>{@link ExecuteType#BATCH} when calling
      * {@link DSLContext#batchStore(UpdatableRecord...) batchStore()},
-     * {@link DSLContext#batchInsert(UpdatableRecord...) batchInsert()},
+     * {@link DSLContext#batchInsert(TableRecord...) batchInsert()},
      * {@link DSLContext#batchUpdate(UpdatableRecord...) batchUpdate()},
      * {@link DSLContext#batchDelete(UpdatableRecord...) batchDelete()}.</li>
      * <li>{@link ExecuteType#READ} when calling

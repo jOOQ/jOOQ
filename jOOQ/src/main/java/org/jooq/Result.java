@@ -997,9 +997,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * non-unique in the result set. Use {@link #intoGroups(String, String)}
      * instead, if your keys are non-unique
      *
-     * @param key The key field name. Client code must assure that this field is
-     *            unique in the result set.
-     * @param value The value field name
+     * @param keyFieldName The key field name. Client code must assure that this
+     *            field is unique in the result set.
+     * @param valueFieldName The value field name
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
@@ -1017,9 +1017,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * non-unique in the result set. Use {@link #intoGroups(Name, Name)}
      * instead, if your keys are non-unique
      *
-     * @param key The key field name. Client code must assure that this field is
-     *            unique in the result set.
-     * @param value The value field name
+     * @param keyFieldName The key field name. Client code must assure that this
+     *            field is unique in the result set.
+     * @param valueFieldName The value field name
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}

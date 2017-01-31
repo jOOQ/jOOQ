@@ -42,6 +42,8 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
@@ -66,11 +68,13 @@ import java.util.stream.Stream;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
@@ -273,8 +277,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             // [#5617] This may happen when using plain SQL API or a MockConnection and expecting a result set where
             //         there is none. The cursor / result is patched into the ctx only for single result sets, where
             //         access to the cursor / result is possible.
-            if (ctx.resultSet() == null)
-                ctx.resultSet(new MockResultSet(new ResultImpl<R>(ctx.configuration())));
+            // [#5818] It may also happen in case we're fetching from a batch and the first result is an update count,
+            //         not a result set.
+            if (ctx.resultSet() == null) {
+                DSLContext dsl = DSL.using(ctx.configuration());
+                Field<Integer> updateCount = field(name("UPDATE_COUNT"), int.class);
+                Result<Record1<Integer>> r = dsl.newResult(updateCount);
+                r.add(dsl.newRecord(updateCount).values(ctx.statement().getUpdateCount()));
+                ctx.resultSet(new MockResultSet(r));
+            }
 
             Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
             cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()));

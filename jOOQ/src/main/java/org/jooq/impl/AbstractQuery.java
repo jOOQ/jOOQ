@@ -459,6 +459,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             this.sql = sql;
             this.bindValues = bindValues;
         }
+
+        @Override
+        public String toString() {
+            return sql;
+        }
     }
 
     private final Rendered getSQL0(ExecuteContext ctx) {

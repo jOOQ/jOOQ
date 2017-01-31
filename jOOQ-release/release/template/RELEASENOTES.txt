@@ -11,6 +11,27 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.9.1 - January 20, 2017
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#5802 - Stop distributing third party dependencies through zip distribution
+
+Bug Fixes
+---------
+#5743 - jOOQ-checker is not deployed to Maven Central
+#5752 - Log WARN if users combine nested catalog configurations with top-level inputSchema configuration
+#5756 - Parser cannot parse bind variables
+#5766 - Compilation error in generated schema when table-valued function literal clashes with class name
+#5773 - MockResultSet should call Converter to transform MockResult's <U> back to <T>
+#5777 - DefaultBinding cannot parse +HH timezone offset
+#5786 - KeepNamesGeneratorStrategy generates wrong Keys.java
+#5801 - Oracle 12c support for OFFSET .. FETCH causes ORA-00918 regression on queries with ambiguous column names
+
+
 Version 3.9.0 - December 23, 2016
 ================================================================================
 
@@ -102,13 +123,11 @@ API that creates a new Configuration is too confusing. This is why jOOQ 3.9 now
 introduces the ThreadLocalTransactionProvider implementation that allows for the
 simpler transaction API to be used:
 
-<pre>
 ctx.transaction(() -> {
   // Safe to re-use the "global" ctx here:
   ctx.insertInto(TABLE_A);
   ctx.update(TABLE_B);
 });
-</pre>
 
 Besides, we now support a new TransactionListener SPI, which allows for hooking
 into the transaction lifecycle and execute stuff prior to beginning / committing

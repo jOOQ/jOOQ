@@ -15,7 +15,9 @@
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen-maven"/>
+        <!-- [java-8] -->
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-checker"/>
+        <!-- [/java-8] -->
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-scala"/>
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}.jar"/>
@@ -23,7 +25,9 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}.jar"/>
+        <!-- [java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-checker/target/jooq-checker-${version-prefix}.jar"/>
+        <!-- [/java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}.jar"/>
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-javadoc.jar"/>
@@ -31,7 +35,9 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-javadoc.jar"/>
+        <!-- [java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-checker/target/jooq-checker-${version-prefix}-javadoc.jar"/>
+        <!-- [/java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-javadoc.jar"/>
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
@@ -40,7 +46,9 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jOOQ-meta-extensions/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jOOQ-codegen/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jOOQ-codegen-maven/pom.xml"/>
+        <!-- [java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-checker"         file="${dir.workspace}/jOOQ-checker/pom.xml"/>
+        <!-- [/java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jOOQ-scala/pom.xml"/>
     </target>
 
@@ -53,7 +61,9 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-sources.jar"/>
+        <!-- [java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-checker/target/jooq-checker-${version-prefix}-sources.jar"/>
+        <!-- [/java-8] -->
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-sources.jar"/>
 
         <zip destfile="${dir.release}/${dir.version}/jOOQ-src/jooq-${version-prefix}-all-sources.zip">
@@ -69,7 +79,9 @@
                 <include name="jOOQ-examples/**"/>
                 <include name="jOOQ-meta/**"/>
                 <include name="jOOQ-meta-extensions/**"/>
+                <!-- [java-8] -->
                 <include name="jOOQ-checker/**"/>
+                <!-- [/java-8] -->
                 <include name="jOOQ-scala/**"/>
                 <include name="authors.txt"/>
                 <include name="LICENSE"/>

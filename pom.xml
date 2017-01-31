@@ -163,7 +163,9 @@
 
     <modules>
         <module>jOOQ</module>
+        <!-- [java-8] -->
         <module>jOOQ-checker</module>
+        <!-- [/java-8] -->
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-meta</module>

@@ -1189,11 +1189,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         Object[] a = (Object[]) value;
                         Class<?> t = actualType;
 
-                        // [#2325] Some array types are not natively supported by HSQLDB
-                        // More integration tests are probably needed...
+                        // [#2325] [#5823] Cannot bind UUID[] type in HSQLDB.
+                        // See also: https://sourceforge.net/p/hsqldb/bugs/1466
                         if (actualType == UUID[].class) {
-                            a = Convert.convertArray(a, String[].class);
-                            t = String[].class;
+                            a = Convert.convertArray(a, byte[][].class);
+                            t = byte[][].class;
                         }
 
                         ctx.statement().setArray(ctx.index(), new MockArray(dialect, a, t));

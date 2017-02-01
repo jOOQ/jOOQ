@@ -120,12 +120,12 @@ public class HSQLDBDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.HSQLDB, SQLDataType.DECIMAL_INTEGER, "decimal");
-    protected static final DataType<UUID>       __UUID             = new DefaultDataType<UUID>(SQLDialect.HSQLDB, SQLDataType.UUID, "varchar", "varchar(36)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
+    public static final DataType<UUID>           UUID              = new DefaultDataType<UUID>(SQLDialect.HSQLDB, SQLDataType.UUID, "uuid");
     public static final DataType<String>         VARCHARIGNORECASE = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.VARCHAR, "varchar_ignorecase", "varchar_ignorecase(32672)");
     public static final DataType<Object>         OBJECT            = new DefaultDataType<Object>(SQLDialect.HSQLDB, SQLDataType.OTHER, "object");
     public static final DataType<Result<Record>> ROW               = new DefaultDataType<Result<Record>>(SQLDialect.HSQLDB, SQLDataType.RESULT, "row");

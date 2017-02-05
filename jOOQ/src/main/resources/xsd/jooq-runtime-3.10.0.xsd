@@ -122,6 +122,9 @@
 
       <!-- [#5600] Whether IN lists in IN predicates should be padded to powers of 2 -->
       <element name="inListPadding" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+
+      <!-- [#5826] The delimiter character to be used to delimit statements in batches -->
+      <element name="delimiter" type="string" minOccurs="0" maxOccurs="1" default=";" />
     </all>
   </complexType>
 

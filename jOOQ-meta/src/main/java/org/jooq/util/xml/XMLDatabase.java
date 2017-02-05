@@ -411,7 +411,7 @@ public class XMLDatabase extends AbstractDatabase {
                 SchemaDefinition schema = getSchema(schemaName);
                 String packageName = defaultIfBlank(routine.getSpecificPackage(), routine.getRoutinePackage());
 
-                if (packages.add(packageName)) {
+                if (!isBlank(packageName) && packages.add(packageName)) {
                     result.add(new XMLPackageDefinition(schema, info(), packageName));
                 }
             }

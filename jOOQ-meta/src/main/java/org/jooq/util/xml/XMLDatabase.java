@@ -35,7 +35,9 @@
 
 package org.jooq.util.xml;
 
+import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
@@ -49,7 +51,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.Transformer;
@@ -82,6 +86,7 @@ import org.jooq.util.UDTDefinition;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
+import org.jooq.util.xml.jaxb.Routine;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
@@ -378,12 +383,40 @@ public class XMLDatabase extends AbstractDatabase {
     @Override
     protected List<RoutineDefinition> getRoutines0() {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+
+        for (Routine routine : info().getRoutines()) {
+            if (isBlank(routine.getSpecificPackage()) && isBlank(routine.getRoutinePackage())) {
+                String schemaName = defaultIfBlank(routine.getSpecificSchema(), routine.getRoutineSchema());
+
+                if (getInputSchemata().contains(schemaName)) {
+                    SchemaDefinition schema = getSchema(schemaName);
+
+                    result.add(new XMLRoutineDefinition(schema, null, info(), routine));
+                }
+            }
+        }
+
         return result;
     }
 
     @Override
     protected List<PackageDefinition> getPackages0() {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
+
+        Set<String> packages = new HashSet<String>();
+        for (Routine routine : info().getRoutines()) {
+            String schemaName = defaultIfBlank(routine.getSpecificSchema(), routine.getRoutineSchema());
+
+            if (getInputSchemata().contains(schemaName)) {
+                SchemaDefinition schema = getSchema(schemaName);
+                String packageName = defaultIfBlank(routine.getSpecificPackage(), routine.getRoutinePackage());
+
+                if (packages.add(packageName)) {
+                    result.add(new XMLPackageDefinition(schema, info(), packageName));
+                }
+            }
+        }
+
         return result;
     }
 

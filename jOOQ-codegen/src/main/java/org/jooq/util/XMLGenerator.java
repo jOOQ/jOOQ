@@ -34,6 +34,7 @@
  */
 package org.jooq.util;
 
+import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -48,7 +49,11 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
+import org.jooq.util.xml.jaxb.Parameter;
+import org.jooq.util.xml.jaxb.ParameterMode;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
+import org.jooq.util.xml.jaxb.Routine;
+import org.jooq.util.xml.jaxb.RoutineType;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
@@ -235,6 +240,13 @@ public class XMLGenerator extends AbstractGenerator {
 
                     is.getSequences().add(sequence);
                 }
+
+                for (PackageDefinition pkg : db.getPackages(s))
+                    for (RoutineDefinition r : pkg.getRoutines())
+                        exportRoutine(is, r, catalogName, schemaName);
+
+                for (RoutineDefinition r : db.getRoutines(s))
+                    exportRoutine(is, r, catalogName, schemaName);
             }
         }
 
@@ -242,5 +254,71 @@ public class XMLGenerator extends AbstractGenerator {
         JAXB.marshal(is, writer);
         out.print(writer.toString());
         out.close();
+    }
+
+    private void exportRoutine(InformationSchema is, RoutineDefinition r, String catalogName, String schemaName) {
+        String specificName = r.getName() + (isBlank(r.getOverload()) ? "" : "_" + r.getOverload());
+
+        Routine routine = new Routine();
+        routine.setRoutineCatalog(catalogName);
+        routine.setSpecificCatalog(catalogName);
+        routine.setRoutineSchema(schemaName);
+        routine.setSpecificSchema(schemaName);
+
+        if (r.getPackage() != null) {
+            routine.setRoutinePackage(r.getPackage().getName());
+            routine.setSpecificPackage(r.getPackage().getName());
+        }
+
+        routine.setRoutineName(r.getName());
+        routine.setSpecificName(specificName);
+
+        if (r.getReturnValue() == null) {
+            routine.setRoutineType(RoutineType.PROCEDURE);
+        }
+        else {
+            routine.setRoutineType(RoutineType.FUNCTION);
+            routine.setDataType(r.getReturnType().getType());
+            routine.setCharacterMaximumLength(r.getReturnType().getLength());
+            routine.setNumericPrecision(r.getReturnType().getPrecision());
+            routine.setNumericScale(r.getReturnType().getScale());
+        }
+
+        is.getRoutines().add(routine);
+
+        int i = 1;
+        for (ParameterDefinition p : r.getAllParameters()) {
+            if (p != r.getReturnValue()) {
+                Parameter parameter = new Parameter();
+
+                parameter.setSpecificCatalog(catalogName);
+                parameter.setSpecificSchema(schemaName);
+
+                if (r.getPackage() != null)
+                    parameter.setSpecificPackage(r.getPackage().getName());
+
+                parameter.setSpecificName(specificName);
+                parameter.setOrdinalPosition(i++);
+                parameter.setParameterName(p.getName());
+
+                boolean in = r.getInParameters().contains(p);
+                boolean out = r.getOutParameters().contains(p);
+
+                if (in && out)
+                    parameter.setParameterMode(ParameterMode.INOUT);
+                else if (in)
+                    parameter.setParameterMode(ParameterMode.IN);
+                else if (out)
+                    parameter.setParameterMode(ParameterMode.OUT);
+
+                parameter.setDataType(p.getType().getType());
+                parameter.setCharacterMaximumLength(p.getType().getLength());
+                parameter.setNumericPrecision(p.getType().getPrecision());
+                parameter.setNumericScale(p.getType().getScale());
+                parameter.setParameterDefault(p.getType().getDefaultValue());
+
+                is.getParameters().add(parameter);
+            }
+        }
     }
 }

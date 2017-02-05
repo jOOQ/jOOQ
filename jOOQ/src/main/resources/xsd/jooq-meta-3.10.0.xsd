@@ -184,6 +184,12 @@
 
     <complexType name="Parameters">
         <sequence>
+            <element name="parameter" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Parameter">
+        <all>
             <element name="specific_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="specific_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="specific_package" type="string" minOccurs="0" maxOccurs="1" />
@@ -196,7 +202,7 @@
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
             <element name="parameter_default" type="string" minOccurs="0" maxOccurs="1" />
-        </sequence>
+        </all>
     </complexType>
 
     <simpleType name="ParameterMode">

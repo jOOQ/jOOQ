@@ -40,6 +40,7 @@ import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.field;
@@ -251,10 +252,35 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
 
+        // [#5666] Avoid calling Statement.getUpdateCount() twice
+        Integer updateCount = null;
+
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
         if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -281,9 +307,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             //         not a result set.
             if (ctx.resultSet() == null) {
                 DSLContext dsl = DSL.using(ctx.configuration());
-                Field<Integer> updateCount = field(name("UPDATE_COUNT"), int.class);
-                Result<Record1<Integer>> r = dsl.newResult(updateCount);
-                r.add(dsl.newRecord(updateCount).values(ctx.statement().getUpdateCount()));
+                Field<Integer> c = field(name("UPDATE_COUNT"), int.class);
+                Result<Record1<Integer>> r = dsl.newResult(c);
+                r.add(dsl.newRecord(c).values(updateCount != null ? updateCount : ctx.statement().getUpdateCount()));
                 ctx.resultSet(new MockResultSet(r));
             }
 

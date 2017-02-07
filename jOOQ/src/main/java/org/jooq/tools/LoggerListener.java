@@ -156,7 +156,7 @@ public class LoggerListener extends DefaultExecuteListener {
     public void outEnd(ExecuteContext ctx) {
         if (ctx.routine() != null)
             if (log.isDebugEnabled())
-                logMultiline("Fetched OUT parameters", "" + record(ctx.configuration(), ctx.routine()), Level.FINE);
+                logMultiline("Fetched OUT parameters", "" + StringUtils.defaultIfNull(record(ctx.configuration(), ctx.routine()), "N/A"), Level.FINE);
     }
 
     @Override
@@ -177,16 +177,19 @@ public class LoggerListener extends DefaultExecuteListener {
         for (Parameter<?> param : routine.getOutParameters())
             fields.add(field(name(param.getName()), param.getDataType()));
 
-        result = DSL.using(configuration).newRecord(fields.toArray(new Field[0]));
+        if (fields.size() > 0) {
+            result = DSL.using(configuration).newRecord(fields.toArray(new Field[0]));
 
-        int i = 0;
-        if (returnParam != null)
-            result.setValue((Field) fields.get(i++), routine.getValue(returnParam));
+            int i = 0;
+            if (returnParam != null)
+                result.setValue((Field) fields.get(i++), routine.getValue(returnParam));
 
-        for (Parameter<?> param : routine.getOutParameters())
-            result.setValue((Field) fields.get(i++), routine.getValue(param));
+            for (Parameter<?> param : routine.getOutParameters())
+                result.setValue((Field) fields.get(i++), routine.getValue(param));
 
-        result.changed(false);
+            result.changed(false);
+        }
+
         return result;
     }
 

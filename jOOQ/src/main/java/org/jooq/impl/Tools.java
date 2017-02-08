@@ -38,9 +38,11 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -2902,12 +2904,72 @@ final class Tools {
     }
 
     /**
+     * [#5666] Handle the complexity of each dialect's understanding of
+     * correctly calling {@link Statement#execute()}.
+     */
+    static final void executeStatementAndGetFirstResultSet(ExecuteContext ctx) throws SQLException {
+        PreparedStatement stmt = ctx.statement();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         if (stmt.execute()) {
+            ctx.resultSet(stmt.getResultSet());
+        }
+
+        else {
+            ctx.resultSet(null);
+            ctx.rows(stmt.getUpdateCount());
+        }
+    }
+
+    /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
     static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
         boolean anyResults = false;
         int i = 0;
-        int rows = (ctx.resultSet() == null) ? ctx.statement().getUpdateCount() : 0;
+        int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
             if (ctx.resultSet() != null) {
@@ -2924,12 +2986,18 @@ final class Tools {
                     break;
             }
 
-            if (ctx.statement().getMoreResults())
+            if (ctx.statement().getMoreResults()) {
                 ctx.resultSet(ctx.statement().getResultSet());
-            else if ((rows = ctx.statement().getUpdateCount()) != -1)
-                ctx.resultSet(null);
-            else
-                break;
+            }
+            else {
+                rows = ctx.statement().getUpdateCount();
+                ctx.rows(rows);
+
+                if (rows != -1)
+                    ctx.resultSet(null);
+                else
+                    break;
+            }
         }
 
         if (i == maxConsumedResults)

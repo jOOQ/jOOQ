@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 
 import java.sql.CallableStatement;
@@ -471,10 +472,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         try {
             listener.executeStart(ctx);
-
-            if (ctx.statement().execute())
-                ctx.resultSet(ctx.statement().getResultSet());
-
+            executeStatementAndGetFirstResultSet(ctx);
             listener.executeEnd(ctx);
         }
 

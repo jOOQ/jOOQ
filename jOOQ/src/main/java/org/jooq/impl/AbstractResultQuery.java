@@ -38,15 +38,14 @@ import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
-// ...
 import static org.jooq.SQLDialect.CUBRID;
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeResultSets;
+import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
@@ -252,49 +251,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
 
-        // [#5666] Avoid calling Statement.getUpdateCount() twice
-        Integer updateCount = null;
-
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
         if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                         if (ctx.statement().execute()) {
-            ctx.resultSet(ctx.statement().getResultSet());
-        }
-
+        executeStatementAndGetFirstResultSet(ctx);
         listener.executeEnd(ctx);
 
         // Fetch a single result set
@@ -309,7 +271,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 DSLContext dsl = DSL.using(ctx.configuration());
                 Field<Integer> c = field(name("UPDATE_COUNT"), int.class);
                 Result<Record1<Integer>> r = dsl.newResult(c);
-                r.add(dsl.newRecord(c).values(updateCount != null ? updateCount : ctx.statement().getUpdateCount()));
+                r.add(dsl.newRecord(c).values(ctx.rows()));
                 ctx.resultSet(new MockResultSet(r));
             }
 

@@ -124,9 +124,13 @@ public class JPADatabase extends H2Database {
                     new ClassPathScanningCandidateComponentProvider(true);
 
                 scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
+                
+                // [#5845] Use the correct ClassLoader to load the jpa entity classes defined in the user project
+                ClassLoader cl = Thread.currentThread().getContextClassLoader();
+                
                 for (String pkg : packages.split(","))
                     for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim()))
-                        metadata.addAnnotatedClass(Class.forName(def.getBeanClassName()));
+                        metadata.addAnnotatedClass(Class.forName(def.getBeanClassName(), true, cl));
 
                 // This seems to be the way to do this in idiomatic Hibernate 5.0 API
                 // See also: http://stackoverflow.com/q/32178041/521799

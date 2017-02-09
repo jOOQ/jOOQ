@@ -41,6 +41,7 @@ package org.jooq;
  */
 public final class XMLFormat {
 
+    final boolean xmlns;
     final boolean format;
     final String  newline;
     final int     indent;
@@ -48,6 +49,7 @@ public final class XMLFormat {
 
     public XMLFormat() {
         this(
+            true,
             false,
             "\n",
             2,
@@ -56,11 +58,13 @@ public final class XMLFormat {
     }
 
     private XMLFormat(
+        boolean xmlns,
         boolean format,
         String newline,
         int indent,
         boolean header
     ) {
+        this.xmlns = xmlns;
         this.format = format;
         this.newline = newline;
         this.indent = indent;
@@ -68,10 +72,31 @@ public final class XMLFormat {
     }
 
     /**
+     * The new value for the xmlns flag, defaulting to <code>true</code>.
+     */
+    public XMLFormat xmlns(boolean newXmlns) {
+        return new XMLFormat(
+            newXmlns,
+            format,
+            newline,
+            indent,
+            header
+        );
+    }
+
+    /**
+     * The xmlns flag.
+     */
+    public boolean xmlns() {
+        return xmlns;
+    }
+
+    /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
     public XMLFormat format(boolean newFormat) {
         return new XMLFormat(
+            xmlns,
             newFormat,
             newline,
             indent,
@@ -91,6 +116,7 @@ public final class XMLFormat {
      */
     public XMLFormat newline(String newNewline) {
         return new XMLFormat(
+            xmlns,
             format,
             newNewline,
             indent,
@@ -110,6 +136,7 @@ public final class XMLFormat {
      */
     public XMLFormat indent(int newIndent) {
         return new XMLFormat(
+            xmlns,
             format,
             newline,
             newIndent,
@@ -132,6 +159,7 @@ public final class XMLFormat {
      */
     public XMLFormat header(boolean newHeader) {
         return new XMLFormat(
+            xmlns,
             format,
             newline,
             indent,

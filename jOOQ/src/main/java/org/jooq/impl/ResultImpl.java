@@ -1007,7 +1007,10 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         int valueLevel = format.header() ? 2 : 1;
 
         try {
-            writer.append("<result xmlns=\"" + Constants.NS_EXPORT + "\">");
+            writer.append("<result");
+            if (format.xmlns())
+                writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+            writer.append(">");
 
             if (format.header()) {
                 writer.append(newline).append(indent[0]).append("<fields>");
@@ -1146,7 +1149,9 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             Document document = builder.newDocument();
 
             Element eResult = document.createElement("result");
-            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
+
+            if (format.xmlns())
+                eResult.setAttribute("xmlns", Constants.NS_EXPORT);
             document.appendChild(eResult);
 
             Element eRecordParent = eResult;
@@ -1217,9 +1222,11 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Attributes empty = new AttributesImpl();
 
         handler.startDocument();
-        handler.startPrefixMapping("", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
-        handler.startElement("", "", "result", empty);
 
+        if (format.xmlns())
+            handler.startPrefixMapping("", Constants.NS_EXPORT);
+
+        handler.startElement("", "", "result", empty);
         if (format.header()) {
             handler.startElement("", "", "fields", empty);
 
@@ -1277,7 +1284,9 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         if (format.header())
             handler.endElement("", "", "records");
 
-        handler.endPrefixMapping("");
+        if (format.xmlns())
+            handler.endPrefixMapping("");
+
         handler.endDocument();
         return handler;
     }

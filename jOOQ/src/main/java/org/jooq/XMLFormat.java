@@ -44,23 +44,27 @@ public final class XMLFormat {
     final boolean format;
     final String  newline;
     final int     indent;
+    final boolean header;
 
     public XMLFormat() {
         this(
             false,
             "\n",
-            2
+            2,
+            true
         );
     }
 
     private XMLFormat(
         boolean format,
         String newline,
-        int indent
+        int indent,
+        boolean header
     ) {
         this.format = format;
         this.newline = newline;
         this.indent = indent;
+        this.header = header;
     }
 
     /**
@@ -70,7 +74,8 @@ public final class XMLFormat {
         return new XMLFormat(
             newFormat,
             newline,
-            indent
+            indent,
+            header
         );
     }
 
@@ -88,7 +93,8 @@ public final class XMLFormat {
         return new XMLFormat(
             format,
             newNewline,
-            indent
+            indent,
+            header
         );
     }
 
@@ -106,7 +112,8 @@ public final class XMLFormat {
         return new XMLFormat(
             format,
             newline,
-            newIndent
+            newIndent,
+            header
         );
     }
 
@@ -115,5 +122,27 @@ public final class XMLFormat {
      */
     public int indent() {
         return indent;
+    }
+
+    /**
+     * The new header value, defaulting to <code>true</code>.
+     * <p>
+     * This flag governs whether the <code>/result/fields element should be
+     * generated on export.
+     */
+    public XMLFormat header(boolean newHeader) {
+        return new XMLFormat(
+            format,
+            newline,
+            indent,
+            newHeader
+        );
+    }
+
+    /**
+     * The header.
+     */
+    public boolean header() {
+        return header;
     }
 }

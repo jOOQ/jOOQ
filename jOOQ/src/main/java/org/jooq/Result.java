@@ -879,6 +879,15 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Document intoXML();
 
     /**
+     * Get this result as XML.
+     *
+     * @see #formatXML()
+     * @see <a
+     *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
+     */
+    Document intoXML(XMLFormat format);
+
+    /**
      * Get this result as XML using a SAX <code>ContentHandler</code>.
      *
      * @param handler The custom content handler.
@@ -888,6 +897,17 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
     <H extends ContentHandler> H intoXML(H handler) throws SAXException;
+
+    /**
+     * Get this result as XML using a SAX <code>ContentHandler</code>.
+     *
+     * @param handler The custom content handler.
+     * @return The argument content handler is returned for convenience.
+     * @see #formatXML()
+     * @see <a
+     *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
+     */
+    <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException;
 
     /**
      * Return the generated result as a list of name/value maps.

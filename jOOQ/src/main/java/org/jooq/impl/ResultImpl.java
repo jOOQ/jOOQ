@@ -1003,50 +1003,55 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             format.format() ? rightPad("", format.indent() * 2) : "",
             format.format() ? rightPad("", format.indent() * 3) : ""
         };
+        int recordLevel = format.header() ? 1 : 0;
+        int valueLevel = format.header() ? 2 : 1;
 
         try {
-            writer.append("<result xmlns=\"" + Constants.NS_EXPORT + "\">")
-                  .append(newline).append(indent[0]).append("<fields>");
+            writer.append("<result xmlns=\"" + Constants.NS_EXPORT + "\">");
 
-            for (Field<?> field : fields.fields) {
-                writer.append(newline).append(indent[1]).append("<field");
+            if (format.header()) {
+                writer.append(newline).append(indent[0]).append("<fields>");
 
-                if (field instanceof TableField) {
-                    Table<?> table = ((TableField<?, ?>) field).getTable();
+                for (Field<?> field : fields.fields) {
+                    writer.append(newline).append(indent[1]).append("<field");
 
-                    if (table != null) {
-                        Schema schema = table.getSchema();
+                    if (field instanceof TableField) {
+                        Table<?> table = ((TableField<?, ?>) field).getTable();
 
-                        if (schema != null) {
-                            writer.append(" schema=\"");
-                            writer.append(escapeXML(schema.getName()));
+                        if (table != null) {
+                            Schema schema = table.getSchema();
+
+                            if (schema != null) {
+                                writer.append(" schema=\"");
+                                writer.append(escapeXML(schema.getName()));
+                                writer.append("\"");
+                            }
+
+                            writer.append(" table=\"");
+                            writer.append(escapeXML(table.getName()));
                             writer.append("\"");
                         }
-
-                        writer.append(" table=\"");
-                        writer.append(escapeXML(table.getName()));
-                        writer.append("\"");
                     }
+
+                    writer.append(" name=\"");
+                    writer.append(escapeXML(field.getName()));
+                    writer.append("\"");
+                    writer.append(" type=\"");
+                    writer.append(field.getDataType().getTypeName().toUpperCase());
+                    writer.append("\"/>");
                 }
 
-                writer.append(" name=\"");
-                writer.append(escapeXML(field.getName()));
-                writer.append("\"");
-                writer.append(" type=\"");
-                writer.append(field.getDataType().getTypeName().toUpperCase());
-                writer.append("\"/>");
+                writer.append(newline).append(indent[0]).append("</fields>");
+                writer.append(newline).append(indent[0]).append("<records>");
             }
 
-            writer.append(newline).append(indent[0]).append("</fields>");
-            writer.append(newline).append(indent[0]).append("<records>");
-
             for (Record record : this) {
-                writer.append(newline).append(indent[1]).append("<record>");
+                writer.append(newline).append(indent[recordLevel]).append("<record>");
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     Object value = record.get(index);
 
-                    writer.append(newline).append(indent[2]).append("<value field=\"");
+                    writer.append(newline).append(indent[valueLevel]).append("<value field=\"");
                     writer.append(escapeXML(fields.fields[index].getName()));
                     writer.append("\"");
 
@@ -1060,12 +1065,13 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     }
                 }
 
-                writer.append(newline).append(indent[1]).append("</record>");
+                writer.append(newline).append(indent[recordLevel]).append("</record>");
             }
 
-            writer.append(newline).append(indent[0]).append("</records>");
-            writer.append(newline).append("</result>");
+            if (format.header())
+                writer.append(newline).append(indent[0]).append("</records>");
 
+            writer.append(newline).append("</result>");
             writer.flush();
         }
         catch (java.io.IOException e) {
@@ -1129,6 +1135,11 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final Document intoXML() {
+        return intoXML(new XMLFormat());
+    }
+
+    @Override
+    public final Document intoXML(XMLFormat format) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -1138,37 +1149,42 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
             document.appendChild(eResult);
 
-            Element eFields = document.createElement("fields");
-            eResult.appendChild(eFields);
+            Element eRecordParent = eResult;
 
-            for (Field<?> field : fields.fields) {
-                Element eField = document.createElement("field");
+            if (format.header()) {
+                Element eFields = document.createElement("fields");
+                eResult.appendChild(eFields);
 
-                if (field instanceof TableField<?, ?>) {
-                    Table<?> table = ((TableField) field).getTable();
+                for (Field<?> field : fields.fields) {
+                    Element eField = document.createElement("field");
 
-                    if (table != null) {
-                        Schema schema = table.getSchema();
+                    if (field instanceof TableField<?, ?>) {
+                        Table<?> table = ((TableField) field).getTable();
 
-                        if (schema != null) {
-                            eField.setAttribute("schema", schema.getName());
+                        if (table != null) {
+                            Schema schema = table.getSchema();
+
+                            if (schema != null) {
+                                eField.setAttribute("schema", schema.getName());
+                            }
+
+                            eField.setAttribute("table", table.getName());
                         }
-
-                        eField.setAttribute("table", table.getName());
                     }
+
+                    eField.setAttribute("name", field.getName());
+                    eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
+                    eFields.appendChild(eField);
                 }
 
-                eField.setAttribute("name", field.getName());
-                eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
-                eFields.appendChild(eField);
+                Element eRecords = document.createElement("records");
+                eResult.appendChild(eRecords);
+                eRecordParent = eRecords;
             }
-
-            Element eRecords = document.createElement("records");
-            eResult.appendChild(eRecords);
 
             for (Record record : this) {
                 Element eRecord = document.createElement("record");
-                eRecords.appendChild(eRecord);
+                eRecordParent.appendChild(eRecord);
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     Field<?> field = fields.fields[index];
@@ -1193,39 +1209,47 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
+        return intoXML(handler, new XMLFormat());
+    }
+
+    @Override
+    public final <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException {
         Attributes empty = new AttributesImpl();
 
         handler.startDocument();
         handler.startPrefixMapping("", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
         handler.startElement("", "", "result", empty);
-        handler.startElement("", "", "fields", empty);
 
-        for (Field<?> field : fields.fields) {
-            AttributesImpl attrs = new AttributesImpl();
+        if (format.header()) {
+            handler.startElement("", "", "fields", empty);
 
-            if (field instanceof TableField<?, ?>) {
-                Table<?> table = ((TableField) field).getTable();
+            for (Field<?> field : fields.fields) {
+                AttributesImpl attrs = new AttributesImpl();
 
-                if (table != null) {
-                    Schema schema = table.getSchema();
+                if (field instanceof TableField<?, ?>) {
+                    Table<?> table = ((TableField) field).getTable();
 
-                    if (schema != null) {
-                        attrs.addAttribute("", "", "schema", "CDATA", schema.getName());
+                    if (table != null) {
+                        Schema schema = table.getSchema();
+
+                        if (schema != null) {
+                            attrs.addAttribute("", "", "schema", "CDATA", schema.getName());
+                        }
+
+                        attrs.addAttribute("", "", "table", "CDATA", table.getName());
                     }
-
-                    attrs.addAttribute("", "", "table", "CDATA", table.getName());
                 }
+
+                attrs.addAttribute("", "", "name", "CDATA", field.getName());
+                attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
+
+                handler.startElement("", "", "field", attrs);
+                handler.endElement("", "", "field");
             }
 
-            attrs.addAttribute("", "", "name", "CDATA", field.getName());
-            attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
-
-            handler.startElement("", "", "field", attrs);
-            handler.endElement("", "", "field");
+            handler.endElement("", "", "fields");
+            handler.startElement("", "", "records", empty);
         }
-
-        handler.endElement("", "", "fields");
-        handler.startElement("", "", "records", empty);
 
         for (Record record : this) {
             handler.startElement("", "", "record", empty);
@@ -1250,7 +1274,9 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             handler.endElement("", "", "record");
         }
 
-        handler.endElement("", "", "records");
+        if (format.header())
+            handler.endElement("", "", "records");
+
         handler.endPrefixMapping("");
         handler.endDocument();
         return handler;

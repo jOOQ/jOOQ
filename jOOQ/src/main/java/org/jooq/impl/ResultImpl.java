@@ -74,6 +74,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jooq.AttachableInternal;
 import org.jooq.CSVFormat;
 import org.jooq.Configuration;
+import org.jooq.Constants;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1004,7 +1005,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         };
 
         try {
-            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-3.7.0.xsd\">")
+            writer.append("<result xmlns=\"" + Constants.NS_EXPORT + "\">")
                   .append(newline).append(indent[0]).append("<fields>");
 
             for (Field<?> field : fields.fields) {

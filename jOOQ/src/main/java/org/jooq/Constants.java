@@ -75,7 +75,7 @@ public final class Constants {
     /**
      * The current jooq-export XSD file name.
      */
-    public static final String XSD_EXPORT     = "jooq-export-3.7.0.xsd";
+    public static final String XSD_EXPORT     = "jooq-export-3.10.0.xsd";
 
     /**
      * The current jooq-export XML namespace

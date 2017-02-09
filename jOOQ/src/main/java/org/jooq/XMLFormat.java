@@ -41,11 +41,12 @@ package org.jooq;
  */
 public final class XMLFormat {
 
-    final boolean xmlns;
-    final boolean format;
-    final String  newline;
-    final int     indent;
-    final boolean header;
+    final boolean      xmlns;
+    final boolean      format;
+    final String       newline;
+    final int          indent;
+    final boolean      header;
+    final RecordFormat recordFormat;
 
     public XMLFormat() {
         this(
@@ -53,7 +54,8 @@ public final class XMLFormat {
             false,
             "\n",
             2,
-            true
+            true,
+            RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE
         );
     }
 
@@ -62,13 +64,15 @@ public final class XMLFormat {
         boolean format,
         String newline,
         int indent,
-        boolean header
+        boolean header,
+        RecordFormat recordFormat
     ) {
         this.xmlns = xmlns;
         this.format = format;
         this.newline = newline;
         this.indent = indent;
         this.header = header;
+        this.recordFormat = recordFormat;
     }
 
     /**
@@ -80,7 +84,8 @@ public final class XMLFormat {
             format,
             newline,
             indent,
-            header
+            header,
+            recordFormat
         );
     }
 
@@ -100,7 +105,8 @@ public final class XMLFormat {
             newFormat,
             newline,
             indent,
-            header
+            header,
+            recordFormat
         );
     }
 
@@ -120,7 +126,8 @@ public final class XMLFormat {
             format,
             newNewline,
             indent,
-            header
+            header,
+            recordFormat
         );
     }
 
@@ -140,7 +147,8 @@ public final class XMLFormat {
             format,
             newline,
             newIndent,
-            header
+            header,
+            recordFormat
         );
     }
 
@@ -163,7 +171,8 @@ public final class XMLFormat {
             format,
             newline,
             indent,
-            newHeader
+            newHeader,
+            recordFormat
         );
     }
 
@@ -172,5 +181,49 @@ public final class XMLFormat {
      */
     public boolean header() {
         return header;
+    }
+
+    /**
+     * The record format to be applied, defaulting to
+     * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
+     */
+    public XMLFormat recordFormat(RecordFormat newRecordFormat) {
+        return new XMLFormat(
+            xmlns,
+            format,
+            newline,
+            indent,
+            header,
+            newRecordFormat
+        );
+    }
+
+    /**
+     * The record format to be applied, defaulting to
+     * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
+     */
+    public RecordFormat recordFormat() {
+        return recordFormat;
+    }
+
+    /**
+     * The format of individual XML records.
+     */
+    public enum RecordFormat {
+
+        /**
+         * The default: <code>/record/value[@field="colname"]/text()</code>.
+         */
+        VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
+
+        /**
+         * Simplified: <code>/record/value/text()</code>.
+         */
+        VALUE_ELEMENTS,
+
+        /**
+         * Simplified: <code>/record/colname/text()</code>.
+         */
+        COLUMN_NAME_ELEMENTS,
     }
 }

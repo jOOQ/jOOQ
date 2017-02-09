@@ -37,6 +37,8 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
+import static org.jooq.XMLFormat.RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -1052,11 +1054,21 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 writer.append(newline).append(indent[recordLevel]).append("<record>");
 
                 for (int index = 0; index < fields.fields.length; index++) {
+                    writer.append(newline).append(indent[valueLevel]);
+
+                    String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                        ? escapeXML(fields.fields[index].getName())
+                        : "value";
+
                     Object value = record.get(index);
 
-                    writer.append(newline).append(indent[valueLevel]).append("<value field=\"");
-                    writer.append(escapeXML(fields.fields[index].getName()));
-                    writer.append("\"");
+                    writer.append("<" + tag);
+
+                    if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
+                        writer.append(" field=\"");
+                        writer.append(escapeXML(fields.fields[index].getName()));
+                        writer.append("\"");
+                    }
 
                     if (value == null) {
                         writer.append("/>");
@@ -1064,7 +1076,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     else {
                         writer.append(">");
                         writer.append(escapeXML(format0(value, false, false)));
-                        writer.append("</value>");
+                        writer.append("</" + tag + ">");
                     }
                 }
 
@@ -1195,8 +1207,14 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     Field<?> field = fields.fields[index];
                     Object value = record.get(index);
 
-                    Element eValue = document.createElement("value");
-                    eValue.setAttribute("field", field.getName());
+                    String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                        ? escapeXML(fields.fields[index].getName())
+                        : "value";
+
+                    Element eValue = document.createElement(tag);
+
+                    if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
+                        eValue.setAttribute("field", field.getName());
                     eRecord.appendChild(eValue);
 
                     if (value != null) {
@@ -1265,17 +1283,23 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 Field<?> field = fields.fields[index];
                 Object value = record.get(index);
 
-                AttributesImpl attrs = new AttributesImpl();
-                attrs.addAttribute("", "", "field", "CDATA", field.getName());
+                String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                    ? escapeXML(fields.fields[index].getName())
+                    : "value";
 
-                handler.startElement("", "", "value", attrs);
+                AttributesImpl attrs = new AttributesImpl();
+
+                if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
+                    attrs.addAttribute("", "", "field", "CDATA", field.getName());
+
+                handler.startElement("", "", tag, attrs);
 
                 if (value != null) {
                     char[] chars = format0(value, false, false).toCharArray();
                     handler.characters(chars, 0, chars.length);
                 }
 
-                handler.endElement("", "", "value");
+                handler.endElement("", "", tag);
             }
 
             handler.endElement("", "", "record");

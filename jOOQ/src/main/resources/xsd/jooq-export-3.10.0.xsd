@@ -38,15 +38,26 @@
     </complexType>
 
     <complexType name="Record">
+        <!--
+          It is not possible, in XSD, to enforce a choice between a well defined type and a wildcard as below.
+          If, however, a <value/> element is present, then the following behaviour can be assumed:
+
+          - If there are only value elements, then the jooq-export:Value type is parsed
+          - If there is at least one non-value element, then the wildcard is parsed
+
         <sequence>
             <element name="value" type="jooq-export:Value" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+         -->
+        <sequence>
+            <any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
         </sequence>
     </complexType>
 
     <complexType name="Value">
         <simpleContent>
             <extension base="string">
-                <attribute name="field" type="string"/>
+                <attribute name="field" type="string" use="optional"/>
             </extension>
         </simpleContent>
     </complexType>

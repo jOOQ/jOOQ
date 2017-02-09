@@ -619,6 +619,14 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatXML();
 
     /**
+     * Get this result formatted as XML.
+     *
+     * @see <a
+     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
+     */
+    String formatXML(XMLFormat format);
+
+    /**
      * Get this result as a set of <code>INSERT</code> statements.
      * <p>
      * This uses the the first record's {@link TableRecord#getTable()}, if the
@@ -729,6 +737,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatXML(OutputStream stream) throws IOException;
 
     /**
+     * Like {@link #formatXML(XMLFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(OutputStream stream, XMLFormat format) throws IOException;
+
+    /**
      * Like {@link #formatInsert()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -832,6 +847,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatXML(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatXML(XMLFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(Writer writer, XMLFormat format) throws IOException;
 
     /**
      * Like {@link #formatInsert()}, but the data is output onto a {@link Writer}.

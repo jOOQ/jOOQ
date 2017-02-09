@@ -115,6 +115,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.XMLFormat;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -968,24 +969,46 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final String formatXML() {
+        return formatXML(new XMLFormat());
+    }
+
+    @Override
+    public final String formatXML(XMLFormat format) {
         StringWriter writer = new StringWriter();
-        formatXML(writer);
+        formatXML(writer, format);
         return writer.toString();
     }
 
     @Override
     public final void formatXML(OutputStream stream) {
-        formatXML(new OutputStreamWriter(stream));
+        formatXML(stream, new XMLFormat());
+    }
+
+    @Override
+    public final void formatXML(OutputStream stream, XMLFormat format) {
+        formatXML(new OutputStreamWriter(stream), format);
     }
 
     @Override
     public final void formatXML(Writer writer) {
+        formatXML(writer, new XMLFormat());
+    }
+
+    @Override
+    public final void formatXML(Writer writer, XMLFormat format) {
+        String newline = format.format() ? format.newline() : "";
+        String[] indent = {
+            format.format() ? rightPad("", format.indent() * 1) : "",
+            format.format() ? rightPad("", format.indent() * 2) : "",
+            format.format() ? rightPad("", format.indent() * 3) : ""
+        };
+
         try {
-            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-3.7.0.xsd\">");
-            writer.append("<fields>");
+            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-3.7.0.xsd\">")
+                  .append(newline).append(indent[0]).append("<fields>");
 
             for (Field<?> field : fields.fields) {
-                writer.append("<field");
+                writer.append(newline).append(indent[1]).append("<field");
 
                 if (field instanceof TableField) {
                     Table<?> table = ((TableField<?, ?>) field).getTable();
@@ -1013,16 +1036,16 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 writer.append("\"/>");
             }
 
-            writer.append("</fields>");
-            writer.append("<records>");
+            writer.append(newline).append(indent[0]).append("</fields>");
+            writer.append(newline).append(indent[0]).append("<records>");
 
             for (Record record : this) {
-                writer.append("<record>");
+                writer.append(newline).append(indent[1]).append("<record>");
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     Object value = record.get(index);
 
-                    writer.append("<value field=\"");
+                    writer.append(newline).append(indent[2]).append("<value field=\"");
                     writer.append(escapeXML(fields.fields[index].getName()));
                     writer.append("\"");
 
@@ -1036,11 +1059,11 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     }
                 }
 
-                writer.append("</record>");
+                writer.append(newline).append(indent[1]).append("</record>");
             }
 
-            writer.append("</records>");
-            writer.append("</result>");
+            writer.append(newline).append(indent[0]).append("</records>");
+            writer.append(newline).append("</result>");
 
             writer.flush();
         }

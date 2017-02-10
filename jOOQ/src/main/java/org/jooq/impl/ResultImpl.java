@@ -790,6 +790,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     private final String formatCSV0(Object value, CSVFormat format) {
 
+        // [#2741] TODO: This logic will be externalised in new SPI
         // [#4746] Escape null and empty strings
         if (value == null)
             return format.nullString();
@@ -817,6 +818,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     private final Object formatJSON0(Object value) {
+
+        // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[])
             return DatatypeConverter.printBase64Binary((byte[]) value);
 
@@ -829,6 +832,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
      *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
      */
     private static final String format0(Object value, boolean changed, boolean visual) {
+
+        // [#2741] TODO: This logic will be externalised in new SPI
         String formatted = changed && visual ? "*" : "";
 
         if (value == null) {

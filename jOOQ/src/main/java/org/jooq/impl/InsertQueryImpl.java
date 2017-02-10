@@ -44,6 +44,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -62,6 +63,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
@@ -420,6 +422,13 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             if (insertMaps.insertMaps.get(0).size() == 0)
                 ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
 
+
+
+
+
+
+
+
             ctx.formatSeparator()
                .start(INSERT_SELECT)
                .visit(select)
@@ -460,10 +469,41 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     break;
             }
         }
+
+
+
+
+
+
+
+
+
         else {
             ctx.visit(insertMaps);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final QueryPart toInsertSelect(Configuration configuration) {
         if (table.getPrimaryKey() != null) {

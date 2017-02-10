@@ -25,6 +25,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Matti Tahvonen
 - Michael Doberenz
 - Michał Kołodziejski
+- Nathaniel Fischer
 - Oliver Flege
 - Peter Ertl
 - Robin Stocker

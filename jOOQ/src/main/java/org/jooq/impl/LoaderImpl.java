@@ -735,8 +735,9 @@ final class LoaderImpl<R extends Record> implements
                     for (int i = 0; i < row.length; i++)
                         if (StringUtils.equals(nullString, row[i]))
                             row[i] = null;
-                        else if (fields[i].getType() == byte[].class && row[i] instanceof String)
-                            row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
+                        else if (i < fields.length && fields[i] != null)
+                            if (fields[i].getType() == byte[].class && row[i] instanceof String)
+                                row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
 
                     // TODO: In batch mode, we can probably optimise this by not creating
                     // new statements every time, just to convert bind values to their

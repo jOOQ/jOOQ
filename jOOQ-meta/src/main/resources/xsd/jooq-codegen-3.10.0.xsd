@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
   elementFormDefault="qualified">
 
   <element name="configuration">
@@ -961,6 +961,13 @@
         useful to those users who do not depend on EL, JSP, JSF, etc.
         -->
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Generate varargs setters for array types for convenience.
+
+        This may lead to compilation warnings in current Java versions.
+        -->
+      <element name="varargSetters" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
         A regular expression matching all the types in generated code that should

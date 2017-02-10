@@ -5537,7 +5537,9 @@ public class JavaGenerator extends AbstractGenerator {
     private static final Pattern SQUARE_BRACKETS = Pattern.compile("\\[\\]$");
 
     private String varargsIfArray(String type) {
-        if (scala)
+        if (!generateVarargsSetters())
+            return type;
+        else if (scala)
             return type;
         else
             return SQUARE_BRACKETS.matcher(type).replaceFirst("...");

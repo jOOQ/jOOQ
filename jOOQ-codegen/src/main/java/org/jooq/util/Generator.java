@@ -362,13 +362,29 @@ public interface Generator {
 
     /**
      * Whether fluent setters should be generated
+     *
+     * @deprecated - Use {@link #generateFluentSetters()} instead.
      */
+    @Deprecated
     boolean fluentSetters();
 
     /**
      * Whether fluent setters should be generated
+     *
+     * @deprecated - Use {@link #setGenerateFluentSetters(boolean)} instead.
      */
+    @Deprecated
     void setFluentSetters(boolean fluentSetters);
+
+    /**
+     * Whether fluent setters should be generated
+     */
+    boolean generateFluentSetters();
+
+    /**
+     * Whether fluent setters should be generated
+     */
+    void setGenerateFluentSetters(boolean fluentSetters);
 
     /**
      * Whether varargs setters should be generated for array types.

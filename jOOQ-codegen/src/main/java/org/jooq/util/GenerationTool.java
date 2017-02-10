@@ -553,7 +553,7 @@ public class GenerationTool {
             if (g.getGenerate().isGlobalLinkReferences() != null)
                 generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
             if (g.getGenerate().isFluentSetters() != null)
-                generator.setFluentSetters(g.getGenerate().isFluentSetters());
+                generator.setGenerateFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isVarargSetters() != null)
                 generator.setGenerateVarargsSetters(g.getGenerate().isVarargSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)

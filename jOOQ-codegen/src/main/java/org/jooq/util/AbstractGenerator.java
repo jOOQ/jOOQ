@@ -85,7 +85,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalUDTReferences      = true;
     boolean                            generateGlobalQueueReferences    = true;
     boolean                            generateGlobalLinkReferences     = true;
-    boolean                            fluentSetters                    = false;
+    boolean                            generateFluentSetters            = false;
     boolean                            generateVarargsSetters           = true;
     String                             generateFullyQualifiedTypes      = "";
     boolean                            generateJavaTimeTypes            = false;
@@ -486,13 +486,25 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    @Deprecated
     public boolean fluentSetters() {
-        return fluentSetters;
+        return generateFluentSetters();
     }
 
     @Override
+    @Deprecated
     public void setFluentSetters(boolean fluentSetters) {
-        this.fluentSetters = fluentSetters;
+        setGenerateFluentSetters(fluentSetters);
+    }
+
+    @Override
+    public boolean generateFluentSetters() {
+        return generateFluentSetters;
+    }
+
+    @Override
+    public void setGenerateFluentSetters(boolean fluentSetters) {
+        this.generateFluentSetters = fluentSetters;
     }
 
     @Override

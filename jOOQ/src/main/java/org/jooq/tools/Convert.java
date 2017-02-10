@@ -291,6 +291,10 @@ public final class Convert {
         }
     }
 
+    public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
+        return new ConvertAll<U[]>(to).from(from);
+    }
+
     /**
      * Convert an object to a type.
      *
@@ -499,16 +503,43 @@ public final class Convert {
                     }
                 }
                 else if (fromClass.isArray()) {
+                    Object[] fromArray = (Object[]) from;
+
+                    // [#3062] Default collections if no specific collection type was requested
+                    if (Collection.class.isAssignableFrom(toClass) &&
+                            toClass.isAssignableFrom(ArrayList.class)) {
+                        return (U) new ArrayList(Arrays.asList(fromArray));
+                    }
+                    else if (Collection.class.isAssignableFrom(toClass) &&
+                            toClass.isAssignableFrom(LinkedHashSet.class)) {
+                        return (U) new LinkedHashSet(Arrays.asList(fromArray));
+                    }
 
                     // [#3443] Conversion from Object[] to JDBC Array
                     if (toClass == java.sql.Array.class) {
-                        return (U) new MockArray(null, (Object[]) from, fromClass);
+                        return (U) new MockArray(null, fromArray, fromClass);
                     }
                     else {
-                        return (U) convertArray((Object[]) from, toClass);
+                        return (U) convertArray(fromArray, toClass);
                     }
                 }
 
+                else if (toClass.isArray()
+                        && Collection.class.isAssignableFrom(fromClass)){
+                    Collection f = (Collection) from;
+                    Class componentType = toClass.getComponentType();
+
+                    Object[] dest = (Object[]) Array.newInstance(componentType, f.size());
+                    Object[] list = f.stream()
+                            .map(e -> {
+                                if (!componentType.isAssignableFrom(e.getClass()))
+                                    return convert(e, componentType);
+                                return e;
+                            }).toArray();
+                    System.arraycopy(list, 0, dest, 0, dest.length);
+
+                    return (U) dest;
+                }
 
                 else if (toClass == Optional.class) {
                     return (U) Optional.of(from);

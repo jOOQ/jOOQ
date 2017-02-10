@@ -154,6 +154,45 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Stream<R> fetchStream() throws DataAccessException;
 
     /**
+     * Stream this query, mapping records into a custom type.
+     * <p>
+     * This is the same as calling
+     * <code>fetchStream().map(r -> r.into(type))</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @see DefaultRecordMapper
+     * @return The results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <E> Stream<E> fetchStreamInto(Class<? extends E> type) throws DataAccessException, MappingException;
+
+    /**
+     * Stream this query, mapping records into a custom record.
+     * <p>
+     * This is the same as calling
+     * <code>fetchStream().map(r -> r.into(table))</code>. See
+     * {@link Record#into(Table)} for more details
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The results. This will never be <code>null</code>.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) throws DataAccessException;
+
+    /**
      * Stream this query.
      * <p>
      * This is essentially the same as {@link #fetchLazy()} but instead of
@@ -3023,11 +3062,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
+     * @see DefaultRecordMapper
      * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
-     * @see DefaultRecordMapper
      */
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 

@@ -337,6 +337,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <E> Stream<E> fetchStreamInto(Class<? extends E> type) {
+        return fetchStream().map(r -> r.into(type));
+    }
+
+    @Override
+    public final <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) {
+        return fetchStream().map(r -> r.into(table));
+    }
+
+    @Override
     public final Stream<R> stream() {
         return fetchLazy().stream();
     }

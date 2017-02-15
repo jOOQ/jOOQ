@@ -42,8 +42,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
@@ -82,7 +85,9 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
+import org.jooq.Param;
 import org.jooq.Parameter;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -93,6 +98,7 @@ import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
+import org.jooq.XMLFormat;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -128,6 +134,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
+
 
 
 
@@ -537,6 +544,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
+
+
+
         for (Parameter<?> parameter : getParameters()) {
 
             // [#1183] [#3533] Skip defaulted parameters
@@ -560,6 +574,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
 
         if (bindAsIn) {
+
+
+
+
+
+
+
+
 
 
 
@@ -729,9 +751,23 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
+
+
+
+
     }
 
     private final void toSQLBegin(RenderContext context) {
+
+
+
+
+
+
 
 
 
@@ -755,6 +791,41 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             context.sql("{ ");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -945,6 +1016,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, int index, Field<?> value) {
+
+
+
+
 
 
 
@@ -1155,6 +1230,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
     private final boolean hasUnnamedParameters() {
         return hasUnnamedParameters;
     }
@@ -1168,7 +1247,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
     }
+
+
+
+
 
 
 

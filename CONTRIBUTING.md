@@ -1,3 +1,20 @@
+The ideal PR
+============
+
+Thanks for offering your help.
+
+In order to make our cooperation as smooth as possible, we have a couple of guidelines that we'd like you to follow:
+
+- If in doubt, please discuss your ideas first before providing a pull request. This often helps avoid a lot of unnecessary work.
+- Fork the repository.
+- Check out and work on your own fork.
+- Try to make your commits as atomic as possible. Related changes to three files should be committed in one commit.
+- The commit message should reference the issue number, e.g. `[#5873] Add Setting.quoteEscaping to allow for alternative escaping of single quotes`.
+- Try not to modify anything unrelated, i.e. don't make unimportant whitespace / formatting changes, which will just distract during review.
+- Don't worry about tests. Our unit and integration tests are not open source. If your change is substantial, we'll add tests ourselves.
+- Add your name to our [jOOQ/src/main/resources/META-INF/ABOUT.txt](https://github.com/jOOQ/jOOQ/blob/master/jOOQ/src/main/resources/META-INF/ABOUT.txt) file
+- Be sure you agree to transfer your rights to us (see below) before contributing.
+
 Contributing to dual-licensed Open Source
 =========================================
 

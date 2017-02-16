@@ -1,18 +1,22 @@
-import org.jooq.Result;
-import org.jooq.impl.DSL;
-import org.junit.Test;
+package org.jooq.example.flyway;
+
+import static java.util.Arrays.asList;
+import static org.jooq.example.flyway.j.db.h2.Tables.AUTHOR;
+import static org.jooq.example.flyway.j.db.h2.Tables.BOOK;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import static java.util.Arrays.asList;
-import static org.jooq.example.flyway.db.h2.Tables.*;
-import static org.junit.Assert.assertEquals;
+import org.jooq.Result;
+import org.jooq.impl.DSL;
+
+import org.junit.Test;
 
 /**
- * Created by Lukas on 23.06.2014.
+ * @author Lukas Eder
  */
-public class AfterMigrationTest {
+public class AfterMigrationTestJava {
 
     @Test
     public void testQueryingAfterMigration() throws Exception {

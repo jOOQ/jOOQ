@@ -39,9 +39,12 @@ import static java.util.Collections.unmodifiableSet;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
 import static org.jooq.util.AbstractGenerator.Language.SCALA;
+import static org.jooq.util.GenerationUtil.ExpressionType.CONSTRUCTOR_REFERENCE;
+import static org.jooq.util.GenerationUtil.ExpressionType.EXPRESSION;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
@@ -54,6 +57,9 @@ import org.jooq.util.h2.H2DataType;
  * @author Eric Peters
  */
 class GenerationUtil {
+
+    static final Pattern       TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*\\])*)$");
+    static final Pattern       PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
         "abstract",
@@ -413,5 +419,17 @@ class GenerationUtil {
         }
 
         return result;
+    }
+
+    static ExpressionType expressionType(String expression) {
+        if (TYPE_REFERENCE_PATTERN.matcher(expression).matches())
+            return CONSTRUCTOR_REFERENCE;
+        else
+            return EXPRESSION;
+    }
+
+    enum ExpressionType {
+        CONSTRUCTOR_REFERENCE,
+        EXPRESSION
     }
 }

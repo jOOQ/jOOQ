@@ -1660,19 +1660,17 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
             final String attrName = attribute.getName();
             final String attrComment = StringUtils.defaultString(attribute.getComment());
-            final List<String> converters = out.ref(list(
-                attribute.getType().getConverter(),
-                attribute.getType().getBinding()
-            ));
+            final List<String> converter = out.ref(list(attribute.getType().getConverter()));
+            final List<String> binding = out.ref(list(attribute.getType().getBinding()));
 
             if (scala) {
-                out.tab(1).println("private val %s : %s[%s, %s] = %s.createField(\"%s\", %s, this, \"%s\"[[before=, ][new %s]])",
-                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, attrName, attrTypeRef, escapeString(""), converters);
+                out.tab(1).println("private val %s : %s[%s, %s] = %s.createField(\"%s\", %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, attrName, attrTypeRef, escapeString(""), converter, binding);
             }
             else {
                 out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
-                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"[[before=, ][new %s()]]);",
-                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), converters);
+                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
             }
         }
 
@@ -1905,8 +1903,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
-
-
 
 
 
@@ -3325,23 +3321,21 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
             final String columnComment = StringUtils.defaultString(column.getComment());
-            final List<String> converters = out.ref(list(
-                column.getType().getConverter(),
-                column.getType().getBinding()
-            ));
+            final List<String> converter = out.ref(list(column.getType().getConverter()));
+            final List<String> binding = out.ref(list(column.getType().getBinding()));
 
             out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(columnComment), ""));
 
             if (scala) {
-                out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"[[before=, ][new %s()]])",
-                        columnId, TableField.class, recordType, columnType, columnName, columnTypeRef, escapeString(columnComment), converters);
+                out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        columnId, TableField.class, recordType, columnType, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
-                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"[[before=, ][new %s()]]);",
-                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), converters);
+                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), converter, binding);
             }
         }
 
@@ -3685,6 +3679,21 @@ public class JavaGenerator extends AbstractGenerator {
         generateTableClassFooter(table, out);
         out.println("}");
         closeJavaWriter(out);
+    }
+
+    private String converterTemplate(List<String> converter) {
+        if (converter == null || converter.isEmpty())
+            return "[[]]";
+        if (converter.size() > 1)
+            throw new IllegalArgumentException();
+        switch (GenerationUtil.expressionType(converter.get(0))) {
+            case CONSTRUCTOR_REFERENCE:
+                return "[[before=, ][new %s()]]";
+            case EXPRESSION:
+                return "[[before=, ][%s]]";
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     private String escapeString(String comment) {
@@ -4172,17 +4181,18 @@ public class JavaGenerator extends AbstractGenerator {
         final String returnType = (routine.getReturnValue() == null)
             ? Void.class.getName()
             : out.ref(getJavaType(routine.getReturnType()));
-        final List<?> returnTypeRef = list((routine.getReturnValue() != null)
+        final List<String> returnTypeRef = list((routine.getReturnValue() != null)
             ? getJavaTypeReference(database, routine.getReturnType())
             : null);
-        final List<?> returnConverterType = out.ref(list(
+        final List<String> returnConverter = out.ref(list(
              (routine.getReturnValue() != null)
             ? routine.getReturnType().getConverter()
-            : null,
+            : null));
+        final List<String> returnBinding = out.ref(list(
              (routine.getReturnValue() != null)
             ? routine.getReturnType().getBinding()
-            : null
-        ));
+            : null));
+
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(routine, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final List<String> packageId = out.ref(getStrategy().getFullJavaIdentifiers(routine.getPackage()), 2);
@@ -4218,8 +4228,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][separator= with ][%s]] {",
-                    className, AbstractRoutine.class, returnType, routine.getName(), schemaId, packageId, returnTypeRef, returnConverterType, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
+                    className, AbstractRoutine.class, returnType, routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -4234,15 +4244,13 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
-                final List<String> converters = out.ref(list(
-                        parameter.getType().getConverter(),
-                        parameter.getType().getBinding()
-                ));
+                final List<String> converter = out.ref(list(parameter.getType().getConverter()));
+                final List<String> binding = out.ref(list(parameter.getType().getBinding()));
 
                 out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s[[before=, ][new %s()]]);",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
+                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");",
+                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
         }
 
@@ -4253,7 +4261,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).javadoc("Create a new routine call instance");
             out.tab(1).println("public %s() {", className);
-            out.tab(2).println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]]);", routine.getName(), schemaId, packageId, returnTypeRef, returnConverterType);
+            out.tab(2).println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");", routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding);
 
 
             if (routine.getAllParameters().size() > 0) {

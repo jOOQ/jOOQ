@@ -1,5 +1,8 @@
 package org.jooq.util;
 
+import static org.jooq.util.GenerationUtil.PLAIN_GENERIC_TYPE_PATTERN;
+import static org.jooq.util.GenerationUtil.TYPE_REFERENCE_PATTERN;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -33,8 +36,6 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final String              className;
     private final boolean             isJava;
     private final boolean             isScala;
-    private final Pattern             REF_PATTERN                = Pattern.compile("((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*\\])*)");
-    private final Pattern             PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
         this(file, fullyQualifiedTypes, null);
@@ -202,7 +203,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
                     if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {
-                        Matcher m = REF_PATTERN.matcher(c);
+                        Matcher m = TYPE_REFERENCE_PATTERN.matcher(c);
 
                         if (m.find()) {
 

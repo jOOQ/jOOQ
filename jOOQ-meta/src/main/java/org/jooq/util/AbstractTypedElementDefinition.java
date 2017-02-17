@@ -52,6 +52,7 @@ import org.jooq.Name;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.EnumConverter;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -137,27 +138,36 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         // [#677] Forced types for matching regular expressions
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
         if (forcedType != null) {
-            String type = forcedType.getName();
+            String uType = forcedType.getName();
             String converter = null;
             String binding = result.getBinding();
 
             CustomType customType = customType(db, forcedType);
             if (customType != null) {
-                type = (!StringUtils.isBlank(customType.getType()))
+                uType = (!StringUtils.isBlank(customType.getType()))
                     ? customType.getType()
                     : customType.getName();
 
-                if (!StringUtils.isBlank(customType.getConverter()))
+                if (Boolean.TRUE.equals(customType.isEnumConverter())) {
+                    String tType = DefaultDataType
+                        .getDataType(db.getDialect(), definedType.getType(), definedType.getPrecision(), definedType.getScale())
+                        .getType()
+                        .getName();
+
+                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + tType + ".class, " + uType + ".class)";
+                }
+                else if (!StringUtils.isBlank(customType.getConverter())) {
                     converter = customType.getConverter();
+                }
 
                 if (!StringUtils.isBlank(customType.getBinding()))
                     binding = customType.getBinding();
             }
 
-            if (type != null) {
+            if (uType != null) {
                 log.info("Forcing type", child
                     + " with type " + definedType.getType()
-                    + " into " + type
+                    + " into " + uType
                     + (converter != null ? " using converter " + converter : "")
                     + (binding != null ? " using binding " + binding : ""));
 
@@ -171,7 +181,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 int s = 0;
 
                 // [#2486] Allow users to override length, precision, and scale
-                Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(type);
+                Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(uType);
                 if (matcher.find()) {
                     if (!isEmpty(matcher.group(1))) {
                         l = p = convert(matcher.group(1), int.class);
@@ -183,12 +193,12 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 }
 
                 try {
-                    forcedDataType = DefaultDataType.getDataType(db.getDialect(), type, p, s);
+                    forcedDataType = DefaultDataType.getDataType(db.getDialect(), uType, p, s);
                 } catch (SQLDialectNotSupportedException ignore) {}
 
                 // [#677] SQLDataType matches are actual type-rewrites
                 if (forcedDataType != null) {
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, (Name) null, converter, binding);
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, d, (Name) null, converter, binding);
                 }
 
                 // Other forced types are UDT's, enums, etc.
@@ -198,7 +208,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, u, converter, binding, type);
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, u, converter, binding, uType);
                 }
 
                 // [#4597] If we don't have a type-rewrite (forcedDataType) or a
@@ -235,6 +245,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         else {
             return new CustomType()
                 .withBinding(forcedType.getBinding())
+                .withEnumConverter(forcedType.isEnumConverter())
                 .withConverter(forcedType.getConverter())
                 .withName(name)
                 .withType(forcedType.getUserType());

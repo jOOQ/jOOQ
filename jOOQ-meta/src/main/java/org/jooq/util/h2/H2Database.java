@@ -302,7 +302,7 @@ public class H2Database extends AbstractDatabase {
                 .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     Tables.TABLE_SCHEMA,
-                    Tables.ID)
+                    Tables.TABLE_NAME)
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));

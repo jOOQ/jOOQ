@@ -9972,7 +9972,7 @@ Cursor<Record> result = create.fetchLazy(rs, BOOK.ID, BOOK.TITLE);]]></java><htm
 								<title>Data type conversion</title>
 								<content><html>
 									<p>
-										Apart from a few extra features (<reference id="codegen-udts" title="user-defined types"/>), jOOQ only supports basic types as supported by the JDBC API. In your application, you may choose to transform these data types into your own ones, without writing too much boiler-plate code. This can be done using jOOQ's <reference class="org.jooq.Converter"/> types. A converter essentially allows for two-way conversion between two Java data types &lt;T&gt; and &lt;U&gt;. By convention, the &lt;T&gt; type corresponds to the type in your database whereas the &gt;U&gt; type corresponds to your own user type. The Converter API is given here:
+										Apart from a few extra features (<reference id="codegen-udts" title="user-defined types"/>), jOOQ only supports basic types as supported by the JDBC API. In your application, you may choose to transform these data types into your own ones, without writing too much boiler-plate code. This can be done using jOOQ's <reference class="org.jooq.Converter"/> types. A converter essentially allows for two-way conversion between two Java data types &lt;T&gt; and &lt;U&gt;. By convention, the &lt;T&gt; type corresponds to the type in your database whereas the &lt;U&gt; type corresponds to your own user type. The Converter API is given here:
 									</p>
 
 </html><java><![CDATA[public interface Converter<T, U> extends Serializable {

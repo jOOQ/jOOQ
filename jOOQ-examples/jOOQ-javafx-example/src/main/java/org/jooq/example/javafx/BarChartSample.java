@@ -37,7 +37,7 @@ package org.jooq.example.javafx;
 
 import static java.util.stream.Collectors.toList;
 import static javafx.collections.FXCollections.observableArrayList;
-import static org.jooq.example.db.h2.Tables.COUNTRIES;
+import static org.jooq.generated.Tables.COUNTRIES;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -55,8 +55,8 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.conf.Settings;
-import org.jooq.example.db.h2.tables.records.CountriesRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.generated.tables.records.CountriesRecord;
 import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.JDBCUtils;
 

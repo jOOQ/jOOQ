@@ -184,10 +184,14 @@
                                 <database>
                                     <inputSchema>WORLD</inputSchema>
                                 </database>
+
+                                <!-- [#5881] Specify this if concrete target directories / packages are required -->
+                                <!--
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>
                                     <directory>target/generated-sources/jooq-h2</directory>
                                 </target>
+                                  -->
                             </generator>
                         </configuration>
                     </execution>

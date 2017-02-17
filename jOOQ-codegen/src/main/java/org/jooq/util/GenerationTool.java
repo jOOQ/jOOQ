@@ -93,6 +93,10 @@ import org.jooq.util.jaxb.Target;
  */
 public class GenerationTool {
 
+    public static final String      DEFAULT_TARGET_ENCODING    = "UTF-8";
+    public static final String      DEFAULT_TARGET_DIRECTORY   = "target/generated-sources/jooq";
+    public static final String      DEFAULT_TARGET_PACKAGENAME = "org.jooq.generated";
+
     private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
 
     private ClassLoader             loader;
@@ -186,7 +190,7 @@ public class GenerationTool {
     }
 
     public static void generate(String xml) throws Exception {
-        new GenerationTool().run(load(new ByteArrayInputStream(xml.getBytes("UTF-8"))));
+        new GenerationTool().run(load(new ByteArrayInputStream(xml.getBytes(DEFAULT_TARGET_ENCODING))));
     }
 
     public static void generate(Configuration configuration) throws Exception {
@@ -481,11 +485,11 @@ public class GenerationTool {
                 log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 
             if (StringUtils.isBlank(g.getTarget().getPackageName()))
-                g.getTarget().setPackageName("org.jooq.generated");
+                g.getTarget().setPackageName(DEFAULT_TARGET_PACKAGENAME);
             if (StringUtils.isBlank(g.getTarget().getDirectory()))
-                g.getTarget().setDirectory("target/generated-sources/jooq");
+                g.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
             if (StringUtils.isBlank(g.getTarget().getEncoding()))
-                g.getTarget().setEncoding("UTF-8");
+                g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());

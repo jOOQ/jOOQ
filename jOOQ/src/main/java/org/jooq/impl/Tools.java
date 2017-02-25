@@ -2186,28 +2186,21 @@ final class Tools {
     /**
      * Utility method to escape strings or "toString" other objects
      */
-    static final Field<String> escapeForLike(Object value) {
-        return escapeForLike(value, new DefaultConfiguration());
+    static final Field<?> escapeForLike(Object value, DataType<?> type) {
+        return escapeForLike(value, type, new DefaultConfiguration());
     }
 
     /**
      * Utility method to escape strings or "toString" other objects
      */
-    static final Field<String> escapeForLike(Object value, Configuration configuration) {
+    static final Field<?> escapeForLike(Object value, DataType<?> type, Configuration configuration) {
         if (value != null && value.getClass() == String.class) {
-
-
-
-
-
-
-
             {
-                return val(escape("" + value, ESCAPE));
+                return val(escape(value.toString(), ESCAPE));
             }
         }
         else {
-            return val("" + value);
+            return val(value, type);
         }
     }
 

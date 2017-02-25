@@ -837,7 +837,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
+        Field<String> concat = DSL.concat(Tools.escapeForLike(value, dataType), inline("%"));
         return like(concat, Tools.ESCAPE);
     }
 
@@ -849,7 +849,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
+        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value, dataType));
         return like(concat, Tools.ESCAPE);
     }
 

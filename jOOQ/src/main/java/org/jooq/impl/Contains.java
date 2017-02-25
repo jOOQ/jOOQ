@@ -96,7 +96,7 @@ final class Contains<T> extends AbstractCondition {
             Field<String> concat;
 
             if (rhs == null) {
-                concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
+                concat = DSL.concat(inline("%"), Tools.escapeForLike(value, lhs.getDataType(), configuration), inline("%"));
             }
             else {
                 concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));

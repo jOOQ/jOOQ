@@ -1595,6 +1595,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 ctx.record(record);
                 listener.recordStart(ctx);
 
+                try {
 
 
 
@@ -1621,6 +1622,11 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                     if (intern[i])
                         record.intern0(i);
 
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
                 ctx.record(record);
                 listener.recordEnd(ctx);
 
@@ -1632,24 +1638,31 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
              */
             @SuppressWarnings("unchecked")
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-                T value;
+                try {
+                    T value;
 
-                if (field instanceof RowField) {
-                    Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
+                    if (field instanceof RowField) {
+                        Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
 
-                    value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
-                                     .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
+                        value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
+                                         .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
 
-                    offset += emulatedFields.length - 1;
+                        offset += emulatedFields.length - 1;
+                    }
+                    else {
+                        rsContext.index(offset + index + 1);
+                        field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
+                        value = (T) rsContext.value();
+                    }
+
+                    record.values[index] = value;
+                    record.originals[index] = value;
                 }
-                else {
-                    rsContext.index(offset + index + 1);
-                    field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
-                    value = (T) rsContext.value();
-                }
 
-                record.values[index] = value;
-                record.originals[index] = value;
+                // [#5901] Improved error logging, mostly useful when there are some data type conversion errors
+                catch (Exception e) {
+                    throw new SQLException("Error while reading field: " + field + ", at JDBC index: " + (offset + index + 1), e);
+                }
             }
         }
     }

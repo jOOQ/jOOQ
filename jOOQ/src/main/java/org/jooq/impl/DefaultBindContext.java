@@ -53,9 +53,16 @@ final class DefaultBindContext extends AbstractBindContext {
     @Override
     @SuppressWarnings({ "unchecked" })
     protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
-        ((Field<Object>) field).getBinding().set(
-            new DefaultBindingSetStatementContext<Object>(configuration(), data(), stmt, nextIndex(), value)
-        );
+        int nextIndex = nextIndex();
+
+        try {
+            ((Field<Object>) field).getBinding().set(
+                new DefaultBindingSetStatementContext<Object>(configuration(), data(), stmt, nextIndex, value)
+            );
+        }
+        catch (Exception e) {
+            throw new SQLException("Error while writing value at JDBC bind index: " + nextIndex ,e);
+        }
 
         return this;
     }

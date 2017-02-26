@@ -62,6 +62,7 @@ import org.jooq.Table;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
+import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -93,10 +94,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     // [#2694] Unified RenderContext and BindContext traversal
     final ParamType                   forcedParamType;
+    final boolean                     castModeOverride;
+    CastMode                          castMode;
     ParamType                         paramType                = ParamType.INDEXED;
     boolean                           qualifySchema            = true;
     boolean                           qualifyCatalog           = true;
-    CastMode                          castMode                 = CastMode.DEFAULT;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -133,9 +135,19 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             this.visitClauses = null;
         }
 
-        forcedParamType = SettingsTools.getStatementType(settings()) == StatementType.STATIC_STATEMENT
+        this.forcedParamType = SettingsTools.getStatementType(settings()) == StatementType.STATIC_STATEMENT
             ? ParamType.INLINED
             : null;
+
+        ParamCastMode m = settings().getParamCastMode();
+        this.castModeOverride =
+              m != ParamCastMode.DEFAULT && m != null;
+        this.castMode =
+              m == ParamCastMode.ALWAYS
+            ? CastMode.ALWAYS
+            : m == ParamCastMode.NEVER
+            ? CastMode.NEVER
+            : CastMode.DEFAULT;
     }
 
     // ------------------------------------------------------------------------
@@ -383,7 +395,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 declareCTE(true);
             }
 
-            else if (castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
+            else if (!castModeOverride && castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
                 CastMode previous = castMode();
 
                 castMode(CastMode.DEFAULT);
@@ -592,6 +604,9 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     void toString(StringBuilder sb) {
         sb.append(  "bind index   [");
         sb.append(index);
+        sb.append("]");
+        sb.append("\ncast mode    [");
+        sb.append(castMode);
         sb.append("]");
         sb.append("\ndeclaring    [");
 

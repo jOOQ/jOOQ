@@ -57,6 +57,9 @@
         -->
       <element name="paramType" type="jooq-runtime:ParamType" minOccurs="0" maxOccurs="1" default="INDEXED"/>
 
+      <!-- Whether rendered bind values should be cast to their respective type. -->
+      <element name="paramCastMode" type="jooq-runtime:ParamCastMode" minOccurs="0" maxOccurs="1" default="DEFAULT"/>
+
       <!-- The type of statement that is to be executed -->
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
 
@@ -205,6 +208,25 @@
 
       <!-- Execute statements with inlined parameters -->
       <enumeration value="INLINED"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParamCastMode">
+    <restriction base="string">
+
+      <!-- Bind values are always cast to their respective type. -->
+      <enumeration value="ALWAYS"/>
+
+      <!-- Bind values are cast to their respective type when needed.
+
+           Some databases are not able to delay bind value type inference until the execution of a statement.
+           They will either reject the value of unknown type, or assume a possibly inappropriate type. In these
+           cases, jOOQ will generate an explicit cast(? as datatype) expression around the bind value to help
+           the query parser do its job. The exact behaviour of this mode is undefined and subject to change. -->
+      <enumeration value="DEFAULT"/>
+
+      <!-- Bind values are never cast to their respective type. -->
+      <enumeration value="NEVER"/>
     </restriction>
   </simpleType>
 

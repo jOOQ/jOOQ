@@ -217,16 +217,15 @@ public class MockFileDatabase implements MockDataProvider {
                         else if (line.endsWith(";")) {
                             currentSQL.append(line.substring(0, line.length() - 1));
 
-                            if (!matchExactly.containsKey(previousSQL)) {
-                                matchExactly.put(previousSQL, null);
-                            }
+                            if (previousSQL != null)
+                                if (!matchExactly.containsKey(previousSQL))
+                                    matchExactly.put(previousSQL, null);
 
                             previousSQL = currentSQL.toString();
                             currentSQL = new StringBuilder();
 
-                            if (log.isDebugEnabled()) {
+                            if (log.isDebugEnabled())
                                 log.debug("Loaded SQL", previousSQL);
-                            }
                         }
 
                         // A non-terminated line of SQL
@@ -244,9 +243,8 @@ public class MockFileDatabase implements MockDataProvider {
                     }
                 }
                 finally {
-                    if (in != null) {
+                    if (in != null)
                         in.close();
-                    }
                 }
             }
 
@@ -283,9 +281,8 @@ public class MockFileDatabase implements MockDataProvider {
 
             private MockResult parse(String rowString) {
                 int rows = 0;
-                if (rowString.startsWith("@ rows:")) {
+                if (rowString.startsWith("@ rows:"))
                     rows = Integer.parseInt(rowString.substring(7).trim());
-                }
 
                 MockResult result = new MockResult(rows,
                     nullLiteral == null
@@ -316,6 +313,14 @@ public class MockFileDatabase implements MockDataProvider {
                 }
             }
         }.load();
+    }
+
+    /**
+     * @deprecated - Experimental: Do not use. Subject to change.
+     */
+    @Deprecated
+    public Map<String, List<MockResult>> queries() {
+        return matchExactly;
     }
 
     @Override

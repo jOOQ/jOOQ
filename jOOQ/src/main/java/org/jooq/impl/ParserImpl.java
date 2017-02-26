@@ -4005,8 +4005,11 @@ class ParserImpl implements Parser {
             parseKeyword(ctx, "JOIN");
             return JoinType.RIGHT_OUTER_JOIN;
         }
-        else if (parseKeywordIf(ctx, "FULL OUTER JOIN"))
+        else if (parseKeywordIf(ctx, "FULL")) {
+            parseKeywordIf(ctx, "OUTER");
+            parseKeyword(ctx, "JOIN");
             return JoinType.FULL_OUTER_JOIN;
+        }
         else if (parseKeywordIf(ctx, "OUTER APPLY"))
             return JoinType.OUTER_APPLY;
         else if (parseKeywordIf(ctx, "NATURAL")) {

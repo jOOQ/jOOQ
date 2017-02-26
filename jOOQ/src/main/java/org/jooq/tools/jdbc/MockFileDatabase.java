@@ -50,6 +50,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
@@ -170,6 +171,8 @@ public class MockFileDatabase implements MockDataProvider {
         load();
     }
 
+    private static final Pattern END_OF_STATEMENT = Pattern.compile("^(.*?);[ \t]*$");
+
     private void load() throws FileNotFoundException, IOException {
 
         // Wrap the below code in a local scope
@@ -181,6 +184,7 @@ public class MockFileDatabase implements MockDataProvider {
             private void load() throws FileNotFoundException, IOException {
                 try {
                     while (true) {
+                        Matcher matcher;
                         String line = readLine();
 
                         // End of file reached
@@ -214,8 +218,13 @@ public class MockFileDatabase implements MockDataProvider {
                         }
 
                         // A terminated line of SQL
-                        else if (line.endsWith(";")) {
-                            currentSQL.append(line.substring(0, line.length() - 1));
+                        else if ((matcher = END_OF_STATEMENT.matcher(line)).matches()) {
+
+                            // [#5921] Preserve newlines
+                            if (currentSQL.length() > 0)
+                                currentSQL.append('\n');
+
+                            currentSQL.append(matcher.group(1));
 
                             if (previousSQL != null)
                                 if (!matchExactly.containsKey(previousSQL))
@@ -237,6 +246,10 @@ public class MockFileDatabase implements MockDataProvider {
                                 loadOneResult("");
                                 currentResult = new StringBuilder();
                             }
+
+                            // [#5921] Preserve newlines
+                            if (currentSQL.length() > 0)
+                                currentSQL.append('\n');
 
                             currentSQL.append(line);
                         }
@@ -300,16 +313,12 @@ public class MockFileDatabase implements MockDataProvider {
                 while (true) {
                     String line = in.readLine();
 
-                    if (line == null) {
+                    if (line == null)
                         return line;
-                    }
-
-                    line = line.trim();
 
                     // Skip empty lines
-                    if (line.length() > 0) {
+                    if (line.length() > 0 && line.trim().length() > 0)
                         return line;
-                    }
                 }
             }
         }.load();

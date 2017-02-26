@@ -39,6 +39,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.Statement;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -206,9 +207,14 @@ public interface ExecuteContext extends Scope {
     /**
      * The number of rows that were affected by the last statement.
      * <p>
-     * This returns <code>-1</code> if the number of affected rows is not yet
-     * available, or if affected rows are not applicable for the given
-     * statement.
+     * This returns <code>-1</code>:
+     * <ul>
+     * <li>if the number of affected rows is not yet available (e.g. prior to
+     * the {@link ExecuteListener#executeEnd(ExecuteContext)} event).</li>
+     * <li>if affected rows are not applicable for the given statement
+     * (statements that do not produce a JDBC
+     * {@link Statement#getUpdateCount()}.</li>
+     * </ul>
      */
     int rows();
 

@@ -290,7 +290,6 @@ import org.jooq.exception.SQLStateSubclass;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-@Deprecated
 class ParserImpl implements Parser {
 
     private final Configuration configuration;

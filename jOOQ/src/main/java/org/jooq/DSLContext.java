@@ -185,10 +185,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Access the parser API.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
+     * <p>
+     * This is experimental functionality.
      */
-    @Deprecated
     Parser parser();
 
     /**
@@ -198,10 +197,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * The resulting {@link Connection} wraps an underlying JDBC connection that
      * has been obtained from {@link ConnectionProvider#acquire()} and must be
      * released by calling {@link Connection#close()}.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
+     * <p>
+     * This is experimental functionality.
      */
-    @Deprecated
     Connection parsingConnection();
 
     /**

@@ -35,57 +35,42 @@
 package org.jooq;
 
 /**
+ * This is experimental functionality.
+ * <p>
+ * While the parser API will probably not change between versions, the
+ * functionality itself may be subject to change in future releases.
+ *
  * @author Lukas Eder
- * @deprecated - [#2303] This is experimental functionality.
  */
-@Deprecated
 public interface Parser {
 
     /**
      * Parse a SQL string to a set of queries.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Queries parse(String sql);
 
     /**
      * Parse a SQL string to a query.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Query parseQuery(String sql);
 
     /**
      * Parse a SQL string to a table.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Table<?> parseTable(String sql);
 
     /**
      * Parse a SQL string to a field.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Field<?> parseField(String sql);
 
     /**
      * Parse a SQL string to a condition.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Condition parseCondition(String sql);
 
     /**
      * Parse a SQL string to a name.
-     *
-     * @deprecated - [#2303] This is experimental functionality.
      */
-    @Deprecated
     Name parseName(String sql);
 }

@@ -275,6 +275,7 @@ public class GenerationTool {
                 if (g.getStrategy().getName() != null) {
                     log.warn("WARNING: Matchers take precedence over custom strategy. Strategy ignored: " +
                         g.getStrategy().getName());
+                    g.getStrategy().setName(null);
                 }
             }
             else {

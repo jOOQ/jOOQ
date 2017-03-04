@@ -1423,6 +1423,52 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Condition notContains(Field<T> value);
 
     /**
+     * Convenience method for {@link #likeIgnoreCase(String, char)} including proper
+     * adding of wildcards and escaping.
+     *
+     * <p>
+     * This translates to <code>this not ilike ('%' || escape(value, '\') || '%') escape '\'</code>
+     * in {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * in all other dialects.
+     * </p>
+     *
+     * @see DSL#escape(Field, char)
+     * @see #likeIgnoreCase(Field, char)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	Condition containsIgnoreCase(T value);
+
+    /**
+     * Convenience method for {@link #likeIgnoreCase(String, char)} including proper
+     * adding of wildcards and escaping.
+     *
+     * <p>
+     * This translates to <code>this not ilike ('%' || escape(value, '\') || '%') escape '\'</code>
+     * in {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * in all other dialects.
+     * </p>
+     *
+     * @see DSL#escape(Field, char)
+     * @see #likeIgnoreCase(Field, char)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	Condition containsIgnoreCase(Field<T> value);
+
+    /**
+     * Inverse of {@link #containsIgnoreCase(Object)}
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	Condition notContainsIgnoreCase(T value);
+
+    /**
+     * Inverse of {@link #containsIgnoreCase(Field)}
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	Condition notContainsIgnoreCase(Field<T> value);
+
+	/**
      * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>

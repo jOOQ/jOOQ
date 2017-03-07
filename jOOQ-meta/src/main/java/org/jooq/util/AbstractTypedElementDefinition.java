@@ -113,7 +113,8 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         return type;
     }
 
-    DataTypeDefinition getDefinedType() {
+    @Override
+    public DataTypeDefinition getDefinedType() {
         return definedType;
     }
 

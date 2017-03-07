@@ -42,6 +42,7 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 import java.sql.Timestamp;
+import java.util.function.Consumer;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultBinding;
@@ -185,4 +186,112 @@ public interface Binding<T, U> extends Serializable {
      *             {@link DataAccessException}s.
      */
     void get(BindingGetSQLInputContext<U> ctx) throws SQLException;
+
+
+    /**
+     * Construct a binding from functions.
+     */
+    static <T, U> Binding<T, U> of(
+        Converter<T, U>                                 converter,
+        Consumer<? super BindingSQLContext<U>>          sqlContext,
+        Consumer<? super BindingGetResultSetContext<U>> getResultSetContext,
+        Consumer<? super BindingSetStatementContext<U>> setStatementContext
+    ) {
+        return of(
+            converter,
+            sqlContext,
+            getResultSetContext,
+            setStatementContext,
+            ctx -> { throw new UnsupportedOperationException(); },
+            ctx -> { throw new UnsupportedOperationException(); },
+            ctx -> { throw new UnsupportedOperationException(); },
+            ctx -> { throw new UnsupportedOperationException(); }
+        );
+    }
+
+    /**
+     * Construct a binding from functions.
+     */
+    static <T, U> Binding<T, U> of(
+        Converter<T, U>                                 converter,
+        Consumer<? super BindingSQLContext<U>>          sqlContext,
+        Consumer<? super BindingGetResultSetContext<U>> getResultSetContext,
+        Consumer<? super BindingSetStatementContext<U>> setStatementContext,
+        Consumer<? super BindingRegisterContext<U>>     registerContext,
+        Consumer<? super BindingGetStatementContext<U>> getStatementContext
+    ) {
+        return of(
+            converter,
+            sqlContext,
+            getResultSetContext,
+            setStatementContext,
+            registerContext,
+            getStatementContext,
+            ctx -> { throw new UnsupportedOperationException(); },
+            ctx -> { throw new UnsupportedOperationException(); }
+        );
+    }
+
+    /**
+     * Construct a binding from functions.
+     */
+    static <T, U> Binding<T, U> of(
+        Converter<T, U>                                 converter,
+        Consumer<? super BindingSQLContext<U>>          sqlContext,
+        Consumer<? super BindingGetResultSetContext<U>> getResultSetContext,
+        Consumer<? super BindingSetStatementContext<U>> setStatementContext,
+        Consumer<? super BindingRegisterContext<U>>     registerContext,
+        Consumer<? super BindingGetStatementContext<U>> getStatementContext,
+        Consumer<? super BindingGetSQLInputContext<U>>  getSqlInputContext,
+        Consumer<? super BindingSetSQLOutputContext<U>> setSqlOutputContext
+    ) {
+        return new Binding<T, U>() {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -7780201518613974266L;
+
+            @Override
+            public final Converter<T, U> converter() {
+                return converter;
+            }
+
+            @Override
+            public final void sql(BindingSQLContext<U> ctx) throws SQLException {
+                sqlContext.accept(ctx);
+            }
+
+            @Override
+            public final void register(BindingRegisterContext<U> ctx) throws SQLException {
+                registerContext.accept(ctx);
+            }
+
+            @Override
+            public final void set(BindingSetStatementContext<U> ctx) throws SQLException {
+                setStatementContext.accept(ctx);
+            }
+
+            @Override
+            public final void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
+                setSqlOutputContext.accept(ctx);
+            }
+
+            @Override
+            public final void get(BindingGetResultSetContext<U> ctx) throws SQLException {
+                getResultSetContext.accept(ctx);
+            }
+
+            @Override
+            public final void get(BindingGetStatementContext<U> ctx) throws SQLException {
+                getStatementContext.accept(ctx);
+            }
+
+            @Override
+            public final void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
+                getSqlInputContext.accept(ctx);
+            }
+        };
+    }
+
 }

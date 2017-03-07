@@ -10,6 +10,16 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.7 - March 7, 2017
+================================================================================
+
+This is a patch release with an urgent fix for the 3.8 branch
+
+Bug Fixes
+---------
+#5943 - Boolean data type rewrites on Oracle procedures conflict with PL/SQL BOOLEAN data type logic
+
+
 Version 3.8.6 - November 4, 2016
 ================================================================================
 

@@ -20,7 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.0.0-rc-1036</kotlin.version>
-        <org.jooq.version>3.8.6</org.jooq.version>
+        <org.jooq.version>3.8.7</org.jooq.version>
         <org.h2.version>1.4.181</org.h2.version>
         <java.version>1.8</java.version>
     </properties>

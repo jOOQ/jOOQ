@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.8.6</version>
+    <version>3.8.7</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>

@@ -4489,7 +4489,7 @@ FROM BOOK
 GROUP BY AUTHOR_ID
 HAVING COUNT(*) >= 2
 ]]>&#160;</sql>
-<java><![CDATA[create.select(BOOK.AUTHOR_ID, count(*))
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, count())
       .from(BOOK)
       .groupBy(AUTHOR_ID)
       .having(count().greaterOrEqual(2))

@@ -35,11 +35,19 @@
 package org.jooq.util;
 
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.normalise;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 // ...
 
 
@@ -289,6 +297,21 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isGenericNumberType() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

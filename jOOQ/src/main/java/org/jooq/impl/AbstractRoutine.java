@@ -129,6 +129,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
     private final List<Parameter<?>>          outParameters;
+
+
+
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
     private ResultsImpl                       results;
@@ -207,6 +210,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
+        this.plsqlBooleanParameters = new ArrayList<Parameter<?>>();
         this.results = new ResultsImpl(null);
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
@@ -1247,8 +1251,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
-
     }
+
+
+
+
 
 
 
@@ -1306,6 +1313,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         addParameter(parameter);
         returnParameter = parameter;
     }
+
+
+
+
+
+
+
 
     public final Field<T> asField() {
         if (function == null) {

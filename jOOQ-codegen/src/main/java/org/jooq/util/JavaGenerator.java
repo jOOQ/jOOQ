@@ -4298,6 +4298,17 @@ public class JavaGenerator extends AbstractGenerator {
             	else
             	    out.tab(2).println("addOutParameter(%s);", paramId);
             }
+
+
+
+
+
+
+
+
+
+
+
         }
 
         if (routine.getOverload() != null) {

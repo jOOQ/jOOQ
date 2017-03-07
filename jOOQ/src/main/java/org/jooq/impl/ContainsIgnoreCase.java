@@ -51,49 +51,49 @@ import org.jooq.Field;
  */
 final class ContainsIgnoreCase<T> extends AbstractCondition {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 1795491010886118843L;
+    /**
+     * Generated UID
+     */
+    private static final long     serialVersionUID = 1795491010886118843L;
 
-	private static final Clause[] CLAUSES = {CONDITION, CONDITION_COMPARISON};
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-	private final Field<T> lhs;
-	private final Field<T> rhs;
-	private final T value;
+    private final Field<T>        lhs;
+    private final Field<T>        rhs;
+    private final T               value;
 
-	ContainsIgnoreCase(Field<T> field, T value) {
-		this.lhs = field;
-		this.rhs = null;
-		this.value = value;
-	}
+    ContainsIgnoreCase(Field<T> field, T value) {
+        this.lhs = field;
+        this.rhs = null;
+        this.value = value;
+    }
 
-	ContainsIgnoreCase(Field<T> field, Field<T> rhs) {
-		this.lhs = field;
-		this.rhs = rhs;
-		this.value = null;
-	}
+    ContainsIgnoreCase(Field<T> field, Field<T> rhs) {
+        this.lhs = field;
+        this.rhs = rhs;
+        this.value = null;
+    }
 
-	@Override
-	public final void accept(Context<?> ctx) {
-		ctx.visit(condition(ctx.configuration()));
-	}
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(condition(ctx.configuration()));
+    }
 
-	@Override
-	public final Clause[] clauses(Context<?> ctx) {
-		return CLAUSES;
-	}
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
 
-	private final Condition condition(Configuration configuration) {
+    private final Condition condition(Configuration configuration) {
+        Field<String> concat;
 
-		Field<String> concat;
+        if (rhs == null) {
+            concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
+        }
+        else {
+            concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));
+        }
 
-		if (rhs == null) {
-			concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
-		} else {
-			concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));
-		}
-
-		return lhs.likeIgnoreCase(concat, Tools.ESCAPE);
-	}
+        return lhs.likeIgnoreCase(concat, Tools.ESCAPE);
+    }
 }

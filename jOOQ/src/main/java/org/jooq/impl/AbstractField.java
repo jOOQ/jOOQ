@@ -837,12 +837,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition containsIgnoreCase(T value) {
-        return new ContainsIgnoreCase<>(this, value);
+        return new ContainsIgnoreCase<T>(this, value);
     }
 
     @Override
     public final Condition containsIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<>(this, value);
+        return new ContainsIgnoreCase<T>(this, value);
     }
 
     @Override

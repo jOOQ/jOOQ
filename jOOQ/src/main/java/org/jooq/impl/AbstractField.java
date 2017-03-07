@@ -836,6 +836,26 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition containsIgnoreCase(T value) {
+        return new ContainsIgnoreCase<>(this, value);
+    }
+
+    @Override
+    public final Condition containsIgnoreCase(Field<T> value) {
+        return new ContainsIgnoreCase<>(this, value);
+    }
+
+    @Override
+    public final Condition notContainsIgnoreCase(T value) {
+        return containsIgnoreCase(value).not();
+    }
+
+    @Override
+    public final Condition notContainsIgnoreCase(Field<T> value) {
+        return containsIgnoreCase(value).not();
+    }
+
+    @Override
     public final Condition startsWith(T value) {
         Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
         return like(concat, Tools.ESCAPE);

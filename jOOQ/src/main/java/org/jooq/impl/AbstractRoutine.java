@@ -210,7 +210,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
-        this.plsqlBooleanParameters = new ArrayList<Parameter<?>>();
+
+
+
         this.results = new ResultsImpl(null);
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
         this.inValuesDefaulted = new HashSet<Parameter<?>>();

@@ -3172,16 +3172,16 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx) {
-        AggregateFunction<?> agg = null;
-        WindowBeforeOverStep<?> over = null;
-        Field<?> result = null;
-        Condition filter = null;
+        AggregateFunction<?> agg;
+        WindowBeforeOverStep<?> over;
+        Field<?> result;
+        Condition filter;
 
-        agg = parseCountIf(ctx);
+        over = agg = parseCountIf(ctx);
         if (agg == null)
-            agg = parseGeneralSetFunctionIf(ctx);
+            over = agg = parseGeneralSetFunctionIf(ctx);
         if (agg == null)
-            agg = parseBinarySetFunctionIf(ctx);
+            over = agg = parseBinarySetFunctionIf(ctx);
         if (agg == null)
             over = parseOrderedSetFunctionIf(ctx);
 
@@ -3197,13 +3197,13 @@ class ParserImpl implements Parser {
             result = over = agg.filterWhere(filter);
         }
         else if (agg != null)
-            result = over = agg;
-        else if (over != null)
+            result = agg;
+        else
             result = over;
 
         // TODO parse WITHIN GROUP (ORDER BY) where applicable
         if (parseKeywordIf(ctx, "OVER")) {
-            Object nameOrSpecification = parseWindowNameOrSpecification(ctx);
+            Object nameOrSpecification = parseWindowNameOrSpecification(ctx, agg != null);
 
             if (nameOrSpecification instanceof Name)
                 result = over.over((Name) nameOrSpecification);
@@ -3216,7 +3216,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static Object parseWindowNameOrSpecification(ParserContext ctx) {
+    private static Object parseWindowNameOrSpecification(ParserContext ctx, boolean orderByAllowed) {
         Object result;
 
         if (parseIf(ctx, '(')) {
@@ -3228,14 +3228,14 @@ class ParserImpl implements Parser {
                 ? partitionBy(parseFields(ctx))
                 : null;
 
-            s2 = parseKeywordIf(ctx, "ORDER BY")
+            s2 = orderByAllowed && parseKeywordIf(ctx, "ORDER BY")
                 ? s1 == null
                     ? orderBy(parseSortSpecification(ctx))
                     : s1.orderBy(parseSortSpecification(ctx))
                 : s1;
 
-            boolean rows = parseKeywordIf(ctx, "ROWS");
-            if (rows || parseKeywordIf(ctx, "RANGE")) {
+            boolean rows = orderByAllowed && parseKeywordIf(ctx, "ROWS");
+            if (rows || (orderByAllowed && parseKeywordIf(ctx, "RANGE"))) {
                 if (parseKeywordIf(ctx, "BETWEEN")) {
                     if (parseKeywordIf(ctx, "UNBOUNDED")) {
                         if (parseKeywordIf(ctx, "PRECEDING")) {
@@ -3530,7 +3530,7 @@ class ParserImpl implements Parser {
         }
 
         parseKeyword(ctx, "OVER");
-        Object nameOrSpecification = parseWindowNameOrSpecification(ctx);
+        Object nameOrSpecification = parseWindowNameOrSpecification(ctx, true);
 
         // https://bugs.eclipse.org/bugs/show_bug.cgi?id=494897
         Field<?> result = (nameOrSpecification instanceof Name)

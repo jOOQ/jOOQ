@@ -495,8 +495,15 @@ class ParserImpl implements Parser {
             }
         }
 
-        if (parseKeywordIf(ctx, "ORDER BY"))
-            result.addOrderBy(parseSortSpecification(ctx));
+        if (parseKeywordIf(ctx, "ORDER"))
+            if (parseKeywordIf(ctx, "SIBLINGS BY")) {
+                result.addOrderBy(parseSortSpecification(ctx));
+                result.setOrderBySiblings(true);
+            }
+            else if (parseKeywordIf(ctx, "BY"))
+                result.addOrderBy(parseSortSpecification(ctx));
+            else
+                throw ctx.unexpectedToken();
 
         if (!result.getLimit().isApplicable()) {
             boolean offsetStandard = false;

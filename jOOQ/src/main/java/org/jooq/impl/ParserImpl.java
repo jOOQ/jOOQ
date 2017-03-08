@@ -119,6 +119,8 @@ import static org.jooq.impl.DSL.octetLength;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
+import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.DSL.percentileDisc;
 import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
@@ -210,6 +212,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
 import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
@@ -259,6 +262,7 @@ import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.Name;
+import org.jooq.OrderedAggregateFunction;
 import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -3168,21 +3172,23 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx) {
-        AggregateFunction<?> agg;
-        WindowBeforeOverStep<?> over;
-        Field<?> result;
-        Condition filter;
+        AggregateFunction<?> agg = null;
+        WindowBeforeOverStep<?> over = null;
+        Field<?> result = null;
+        Condition filter = null;
 
         agg = parseCountIf(ctx);
         if (agg == null)
             agg = parseGeneralSetFunctionIf(ctx);
         if (agg == null)
             agg = parseBinarySetFunctionIf(ctx);
-
         if (agg == null)
+            over = parseOrderedSetFunctionIf(ctx);
+
+        if (agg == null && over == null)
             return null;
 
-        if (parseKeywordIf(ctx, "FILTER")) {
+        if (agg != null && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
             filter = parseCondition(ctx);
@@ -3190,9 +3196,10 @@ class ParserImpl implements Parser {
 
             result = over = agg.filterWhere(filter);
         }
-        else {
+        else if (agg != null)
             result = over = agg;
-        }
+        else if (over != null)
+            result = over;
 
         // TODO parse WITHIN GROUP (ORDER BY) where applicable
         if (parseKeywordIf(ctx, "OVER")) {
@@ -3573,6 +3580,42 @@ class ParserImpl implements Parser {
         }
     }
 
+    private static final WindowBeforeOverStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
+        // TODO Hypothetical set function
+        // TODO Listagg set function
+        OrderedAggregateFunction<BigDecimal> ordered = parseInverseDistributionFunctionif(ctx);
+
+        if (ordered == null)
+            return null;
+
+        parseKeyword(ctx, "WITHIN GROUP");
+        parse(ctx, '(');
+        parseKeyword(ctx, "ORDER BY");
+        AggregateFilterStep<BigDecimal> result = ordered.withinGroupOrderBy(parseSortSpecification(ctx));
+        parse(ctx, ')');
+
+        return result;
+    }
+
+    private static OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionif(ParserContext ctx) {
+        OrderedAggregateFunction<BigDecimal> ordered;
+
+        if (parseKeywordIf(ctx, "PERCENTILE_CONT")) {
+            parse(ctx, '(');
+            ordered = percentileCont(parseFieldUnsignedNumericLiteral(ctx, false));
+            parse(ctx, ')');
+        }
+        else if (parseKeywordIf(ctx, "PERCENTILE_DISC")) {
+            parse(ctx, '(');
+            ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, false));
+            parse(ctx, ')');
+        }
+        else
+            ordered = null;
+
+        return ordered;
+    }
+
     private static final AggregateFunction<?> parseGeneralSetFunctionIf(ParserContext ctx) {
         boolean distinct;
         Field arg;
@@ -3881,7 +3924,16 @@ class ParserImpl implements Parser {
         throw ctx.exception();
     }
 
-    private static final Field<?> parseFieldUnsignedNumericLiteralIf(ParserContext ctx, boolean minus) {
+    private static final Field<Number> parseFieldUnsignedNumericLiteral(ParserContext ctx, boolean minus) {
+        Field<Number> result = parseFieldUnsignedNumericLiteralIf(ctx, minus);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Field<Number> parseFieldUnsignedNumericLiteralIf(ParserContext ctx, boolean minus) {
         Number r = parseUnsignedNumericLiteralIf(ctx, minus);
         return r == null ? null : inline(r);
     }

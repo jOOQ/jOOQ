@@ -3389,8 +3389,15 @@ class ParserImpl implements Parser {
     private static final Field<?> parseFieldRankIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "RANK")) {
             parse(ctx, '(');
+
+            if (parseIf(ctx, ')'))
+                return parseWindowFunction(ctx, null, rank());
+
+            // Hypothetical set function
+            List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, rank());
+            AggregateFilterStep<?> result = parseWithinGroup(ctx, rank(args));
+            return result;
         }
 
         return null;
@@ -3399,8 +3406,15 @@ class ParserImpl implements Parser {
     private static final Field<?> parseFieldDenseRankIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "DENSE_RANK")) {
             parse(ctx, '(');
+
+            if (parseIf(ctx, ')'))
+                return parseWindowFunction(ctx, null, denseRank());
+
+            // Hypothetical set function
+            List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, denseRank());
+            AggregateFilterStep<?> result = parseWithinGroup(ctx, denseRank(args));
+            return result;
         }
 
         return null;
@@ -3409,8 +3423,15 @@ class ParserImpl implements Parser {
     private static final Field<?> parseFieldPercentRankIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "PERCENT_RANK")) {
             parse(ctx, '(');
+
+            if (parseIf(ctx, ')'))
+                return parseWindowFunction(ctx, null, percentRank());
+
+            // Hypothetical set function
+            List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, percentRank());
+            AggregateFilterStep<?> result = parseWithinGroup(ctx, percentRank(args));
+            return result;
         }
 
         return null;
@@ -3419,8 +3440,15 @@ class ParserImpl implements Parser {
     private static final Field<?> parseFieldCumeDistIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "CUME_DIST")) {
             parse(ctx, '(');
+
+            if (parseIf(ctx, ')'))
+                return parseWindowFunction(ctx, null, cumeDist());
+
+            // Hypothetical set function
+            List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, cumeDist());
+            AggregateFilterStep<?> result = parseWithinGroup(ctx, cumeDist(args));
+            return result;
         }
 
         return null;
@@ -3581,20 +3609,57 @@ class ParserImpl implements Parser {
     }
 
     private static final WindowBeforeOverStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
-        // TODO Hypothetical set function
         // TODO Listagg set function
-        OrderedAggregateFunction<BigDecimal> ordered = parseInverseDistributionFunctionif(ctx);
+        OrderedAggregateFunction<?> ordered;
 
+        ordered = parseHypotheticalSetFunctionif(ctx);
+        if (ordered == null)
+            ordered = parseInverseDistributionFunctionif(ctx);
         if (ordered == null)
             return null;
 
+        return parseWithinGroup(ctx, ordered);
+    }
+
+    private static final AggregateFilterStep<?> parseWithinGroup(ParserContext ctx, OrderedAggregateFunction<?> ordered) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
-        AggregateFilterStep<BigDecimal> result = ordered.withinGroupOrderBy(parseSortSpecification(ctx));
+        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortSpecification(ctx));
         parse(ctx, ')');
-
         return result;
+    }
+
+    private static OrderedAggregateFunction<?> parseHypotheticalSetFunctionif(ParserContext ctx) {
+
+        // This currently never parses hypothetical set functions, as the function names are already
+        // consumed earlier in parseFieldTerm(). We should implement backtracking...
+        OrderedAggregateFunction<?> ordered;
+
+        if (parseKeywordIf(ctx, "RANK")) {
+            parse(ctx, '(');
+            ordered = rank(parseFields(ctx));
+            parse(ctx, ')');
+        }
+        else if (parseKeywordIf(ctx, "DENSE_RANK")) {
+            parse(ctx, '(');
+            ordered = denseRank(parseFields(ctx));
+            parse(ctx, ')');
+        }
+        else if (parseKeywordIf(ctx, "PERCENT_RANK")) {
+            parse(ctx, '(');
+            ordered = percentRank(parseFields(ctx));
+            parse(ctx, ')');
+        }
+        else if (parseKeywordIf(ctx, "CUME_DIST")) {
+            parse(ctx, '(');
+            ordered = cumeDist(parseFields(ctx));
+            parse(ctx, ')');
+        }
+        else
+            ordered = null;
+
+        return ordered;
     }
 
     private static OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionif(ParserContext ctx) {

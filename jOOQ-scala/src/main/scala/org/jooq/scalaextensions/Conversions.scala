@@ -84,7 +84,7 @@ import scala.collection.convert.WrapAsScala
  * @author Lukas Eder
  * @author Eric Peters
  */
-object Conversions {
+trait Conversions {
 
   // -------------------------------------------------------------------------
   // Enhanced jOOQ types
@@ -815,3 +815,5 @@ object Conversions {
 // [jooq-tools] START [handler]
 // [jooq-tools] END [handler]
 }
+
+object Conversions extends Conversions

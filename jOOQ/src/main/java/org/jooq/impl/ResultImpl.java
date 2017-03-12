@@ -817,7 +817,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         }
     }
 
-    private final Object formatJSON0(Object value) {
+    private static final Object formatJSON0(Object value) {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[])
@@ -894,7 +894,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final void formatJSON(Writer writer) {
-        formatJSON(writer, new JSONFormat());
+        formatJSON(writer, JSONFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -931,25 +931,13 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
             switch (format.recordFormat()) {
                 case ARRAY:
-                    for (Record record : this) {
-                        List<Object> list = new ArrayList<Object>();
-
-                        for (int index = 0; index < fields.fields.length; index++)
-                            list.add(formatJSON0(record.get(index)));
-
-                        r.add(list);
-                    }
+                    for (Record record : this)
+                        r.add(formatJSONArray0(record, fields));
 
                     break;
                 case OBJECT:
-                    for (Record record : this) {
-                        Map<String, Object> map = new LinkedHashMap<String, Object>();
-
-                        for (int index = 0; index < fields.fields.length; index++)
-                            map.put(record.field(index).getName(), formatJSON0(record.get(index)));
-
-                        r.add(map);
-                    }
+                    for (Record record : this)
+                        r.add(formatJSONMap0(record, fields));
 
                     break;
                 default:
@@ -973,6 +961,24 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing JSON", e);
         }
+    }
+
+    static final Map<String, Object> formatJSONMap0(Record record, Fields<?> fields) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        for (int index = 0; index < fields.fields.length; index++)
+            map.put(record.field(index).getName(), formatJSON0(record.get(index)));
+
+        return map;
+    }
+
+    static final List<Object> formatJSONArray0(Record record, Fields<?> fields) {
+        List<Object> list = new ArrayList<Object>();
+
+        for (int index = 0; index < fields.fields.length; index++)
+            list.add(formatJSON0(record.get(index)));
+
+        return list;
     }
 
     @Override

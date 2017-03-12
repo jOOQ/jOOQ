@@ -60,8 +60,11 @@ package org.jooq;
  */
 public final class JSONFormat {
 
-    final boolean      header;
-    final RecordFormat recordFormat;
+    public static final JSONFormat DEFAULT_FOR_RESULTS = new JSONFormat();
+    public static final JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
+
+    final boolean                  header;
+    final RecordFormat             recordFormat;
 
     public JSONFormat() {
         this(

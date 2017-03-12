@@ -1314,6 +1314,54 @@ public interface Record extends Attachable, Comparable<Record> {
     // -------------------------------------------------------------------------
 
     /**
+     * Get a simple formatted representation of this result as a JSON array.
+     * <p>
+     * The format is the following: <code><pre>
+     * [value-2-1,value-2-2,...,value-2-n]
+     * </pre></code>
+     *
+     * @return The formatted result
+     */
+    String formatJSON();
+
+    /**
+     * Get a simple formatted representation of this result as a JSON data
+     * structure, according to the format.
+     *
+     * @return The formatted result
+     * @see JSONFormat
+     */
+    String formatJSON(JSONFormat format);
+
+    /**
+     * Like {@link #formatJSON()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(OutputStream stream, JSONFormat format) throws IOException;
+
+    /**
+     * Like {@link #formatJSON()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(Writer writer, JSONFormat format) throws IOException;
+
+    /**
      * Get this record formatted as XML.
      *
      * @see Result#formatXML()

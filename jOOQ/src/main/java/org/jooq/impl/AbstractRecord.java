@@ -67,6 +67,7 @@ import org.jooq.Attachable;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSONFormat;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -104,6 +105,8 @@ import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.json.JSONArray;
+import org.jooq.tools.json.JSONObject;
 
 /**
  * A general base class for all {@link Record} types
@@ -1002,6 +1005,57 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // -------------------------------------------------------------------------
     // Formatting methods
     // -------------------------------------------------------------------------
+
+    @Override
+    public final String formatJSON() {
+        StringWriter writer = new StringWriter();
+        formatJSON(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final String formatJSON(JSONFormat format) {
+        StringWriter writer = new StringWriter();
+        formatJSON(writer, format);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatJSON(OutputStream stream) {
+        formatJSON(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void formatJSON(OutputStream stream, JSONFormat format) {
+        formatJSON(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
+    public final void formatJSON(Writer writer) {
+        formatJSON(writer, JSONFormat.DEFAULT_FOR_RECORDS);
+    }
+
+    @Override
+    public final void formatJSON(Writer writer, JSONFormat format) {
+        if (format.header())
+            log.debug("JSONFormat.header currently not supported for Record.formatJSON()");
+
+        try {
+            switch (format.recordFormat()) {
+                case ARRAY:
+                    writer.append(JSONArray.toJSONString(ResultImpl.formatJSONArray0(this, fields.fields)));
+                    break;
+                case OBJECT:
+                    writer.append(JSONObject.toJSONString(ResultImpl.formatJSONMap0(this, fields.fields)));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Format not supported: " + format);
+            }
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing JSON", e);
+        }
+    }
 
     @Override
     public final String formatXML() {

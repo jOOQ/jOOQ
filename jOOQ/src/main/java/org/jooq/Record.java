@@ -35,6 +35,8 @@
 
 package org.jooq;
 
+import java.io.OutputStream;
+import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +50,7 @@ import javax.annotation.Generated;
 import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.IOException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
@@ -1305,6 +1308,52 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #fromArray(Object...)
      */
     void fromArray(Object[] array, int... fieldIndexes);
+
+    // -------------------------------------------------------------------------
+    // Formatting methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get this record formatted as XML.
+     *
+     * @see Result#formatXML()
+     */
+    String formatXML();
+
+    /**
+     * Get this record formatted as XML.
+     *
+     * @see Result#formatXML(XMLFormat)
+     */
+    String formatXML(XMLFormat format);
+
+    /**
+     * Like {@link #formatXML()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatXML(XMLFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(OutputStream stream, XMLFormat format) throws IOException;
+
+    /**
+     * Like {@link #formatXML()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatXML(XMLFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(Writer writer, XMLFormat format) throws IOException;
 
     // -------------------------------------------------------------------------
     // Inherited methods

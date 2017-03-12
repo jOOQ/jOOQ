@@ -34,6 +34,8 @@
  */
 package org.jooq;
 
+import static org.jooq.tools.StringUtils.rightPad;
+
 /**
  * An XML formatting type, which can be used to configure XML imports / exports.
  *
@@ -41,12 +43,16 @@ package org.jooq;
  */
 public final class XMLFormat {
 
-    final boolean      xmlns;
-    final boolean      format;
-    final String       newline;
-    final int          indent;
-    final boolean      header;
-    final RecordFormat recordFormat;
+    public static final XMLFormat DEFAULT_FOR_RESULTS = new XMLFormat();
+    public static final XMLFormat DEFAULT_FOR_RECORDS = new XMLFormat().header(false).xmlns(false);
+
+    final boolean                 xmlns;
+    final boolean                 format;
+    final String                  newline;
+    final int                     indent;
+    final String[]                indented;
+    final boolean                 header;
+    final RecordFormat            recordFormat;
 
     public XMLFormat() {
         this(
@@ -71,6 +77,12 @@ public final class XMLFormat {
         this.format = format;
         this.newline = newline;
         this.indent = indent;
+        this.indented = new String[] {
+                                                "",
+            format ? rightPad("", indent * 1) : "",
+            format ? rightPad("", indent * 2) : "",
+            format ? rightPad("", indent * 3) : ""
+        };
         this.header = header;
         this.recordFormat = recordFormat;
     }
@@ -135,7 +147,7 @@ public final class XMLFormat {
      * The formatting flag.
      */
     public String newline() {
-        return newline;
+        return format ? newline : "";
     }
 
     /**
@@ -160,10 +172,25 @@ public final class XMLFormat {
     }
 
     /**
+     * Convenience method to get an indentation string at a given level.
+     */
+    public String indentString(int level) {
+        if (level < indented.length)
+            return indented[level];
+        else if (format)
+            return rightPad("", indent * level);
+        else
+            return "";
+    }
+
+    /**
      * The new header value, defaulting to <code>true</code>.
      * <p>
      * This flag governs whether the <code>/result/fields element should be
      * generated on export.
+     * <p>
+     * This flag is ignored on {@link Record#formatXML(XMLFormat)} and similar
+     * methods.
      */
     public XMLFormat header(boolean newHeader) {
         return new XMLFormat(

@@ -462,6 +462,10 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     boolean isNotEmpty();
 
+    // -------------------------------------------------------------------------
+    // Formatting methods
+    // -------------------------------------------------------------------------
+
     /**
      * Get a simple formatted representation of this result.
      * <p>

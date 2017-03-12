@@ -977,7 +977,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final String formatXML() {
-        return formatXML(new XMLFormat());
+        return formatXML(XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -989,7 +989,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final void formatXML(OutputStream stream) {
-        formatXML(stream, new XMLFormat());
+        formatXML(stream, XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -999,19 +999,13 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final void formatXML(Writer writer) {
-        formatXML(writer, new XMLFormat());
+        formatXML(writer, XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
     public final void formatXML(Writer writer, XMLFormat format) {
-        String newline = format.format() ? format.newline() : "";
-        String[] indent = {
-            format.format() ? rightPad("", format.indent() * 1) : "",
-            format.format() ? rightPad("", format.indent() * 2) : "",
-            format.format() ? rightPad("", format.indent() * 3) : ""
-        };
-        int recordLevel = format.header() ? 1 : 0;
-        int valueLevel = format.header() ? 2 : 1;
+        String newline = format.newline();
+        int recordLevel = format.header() ? 2 : 1;
 
         try {
             writer.append("<result");
@@ -1020,10 +1014,10 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             writer.append(">");
 
             if (format.header()) {
-                writer.append(newline).append(indent[0]).append("<fields>");
+                writer.append(newline).append(format.indentString(1)).append("<fields>");
 
                 for (Field<?> field : fields.fields) {
-                    writer.append(newline).append(indent[1]).append("<field");
+                    writer.append(newline).append(format.indentString(2)).append("<field");
 
                     if (field instanceof TableField) {
                         Table<?> table = ((TableField<?, ?>) field).getTable();
@@ -1051,45 +1045,17 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     writer.append("\"/>");
                 }
 
-                writer.append(newline).append(indent[0]).append("</fields>");
-                writer.append(newline).append(indent[0]).append("<records>");
+                writer.append(newline).append(format.indentString(1)).append("</fields>");
+                writer.append(newline).append(format.indentString(1)).append("<records>");
             }
 
             for (Record record : this) {
-                writer.append(newline).append(indent[recordLevel]).append("<record>");
-
-                for (int index = 0; index < fields.fields.length; index++) {
-                    writer.append(newline).append(indent[valueLevel]);
-
-                    String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                        ? escapeXML(fields.fields[index].getName())
-                        : "value";
-
-                    Object value = record.get(index);
-
-                    writer.append("<" + tag);
-
-                    if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
-                        writer.append(" field=\"");
-                        writer.append(escapeXML(fields.fields[index].getName()));
-                        writer.append("\"");
-                    }
-
-                    if (value == null) {
-                        writer.append("/>");
-                    }
-                    else {
-                        writer.append(">");
-                        writer.append(escapeXML(format0(value, false, false)));
-                        writer.append("</" + tag + ">");
-                    }
-                }
-
-                writer.append(newline).append(indent[recordLevel]).append("</record>");
+                writer.append(newline).append(format.indentString(recordLevel));
+                formatXMLRecord(writer, format, recordLevel, record, fields);
             }
 
             if (format.header())
-                writer.append(newline).append(indent[0]).append("</records>");
+                writer.append(newline).append(format.indentString(1)).append("</records>");
 
             writer.append(newline).append("</result>");
             writer.flush();
@@ -1097,6 +1063,49 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);
         }
+    }
+
+    static final void formatXMLRecord(
+        Writer writer,
+        XMLFormat format,
+        int recordLevel,
+        Record record,
+        Fields<?> fields
+    )
+    throws java.io.IOException {
+        String newline = format.newline();
+
+        writer.append("<record");
+        if (format.xmlns())
+            writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+        writer.append(">");
+
+        for (int index = 0; index < fields.fields.length; index++) {
+            Object value = record.get(index);
+
+            writer.append(newline).append(format.indentString(recordLevel + 1));
+            String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                ? escapeXML(fields.fields[index].getName())
+                : "value";
+
+            writer.append("<" + tag);
+            if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
+                writer.append(" field=\"");
+                writer.append(escapeXML(fields.fields[index].getName()));
+                writer.append("\"");
+            }
+
+            if (value == null) {
+                writer.append("/>");
+            }
+            else {
+                writer.append(">");
+                writer.append(escapeXML(format0(value, false, false)));
+                writer.append("</" + tag + ">");
+            }
+        }
+
+        writer.append(newline).append(format.indentString(recordLevel)).append("</record>");
     }
 
     @Override
@@ -1155,7 +1164,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final Document intoXML() {
-        return intoXML(new XMLFormat());
+        return intoXML(XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -1237,7 +1246,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
-        return intoXML(handler, new XMLFormat());
+        return intoXML(handler, XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -1320,7 +1329,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         return handler;
     }
 
-    private final String escapeXML(String string) {
+    private static final String escapeXML(String string) {
         return StringUtils.replaceEach(string,
             new String[] { "\"", "'", "<", ">", "&" },
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});

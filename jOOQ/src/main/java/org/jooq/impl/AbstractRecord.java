@@ -47,6 +47,10 @@ import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -57,7 +61,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import java.util.stream.Stream;
 
 import org.jooq.Attachable;
@@ -92,11 +95,14 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.XMLFormat;
+import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.Tools.ThreadGuard;
 import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -110,13 +116,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6052512608911220404L;
+    private static final long       serialVersionUID = -6052512608911220404L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractRecord.class);
 
-    final RowImpl             fields;
-    final Object[]            values;
-    final Object[]            originals;
-    final BitSet              changed;
-    boolean                   fetched;
+    final RowImpl                   fields;
+    final Object[]                  values;
+    final Object[]                  originals;
+    final BitSet                    changed;
+    boolean                         fetched;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -989,6 +996,50 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
         else {
             Tools.setValue(this, field, member.get(source));
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Formatting methods
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final String formatXML() {
+        return formatXML(XMLFormat.DEFAULT_FOR_RECORDS);
+    }
+
+    @Override
+    public final String formatXML(XMLFormat format) {
+        StringWriter writer = new StringWriter();
+        formatXML(writer, format);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatXML(OutputStream stream) {
+        formatXML(stream, XMLFormat.DEFAULT_FOR_RECORDS);
+    }
+
+    @Override
+    public final void formatXML(OutputStream stream, XMLFormat format) {
+        formatXML(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
+    public final void formatXML(Writer writer) {
+        formatXML(writer, XMLFormat.DEFAULT_FOR_RECORDS);
+    }
+
+    @Override
+    public final void formatXML(Writer writer, XMLFormat format) {
+        if (format.header())
+            log.debug("XMLFormat.header currently not supported for Record.formatXML()");
+
+        try {
+            ResultImpl.formatXMLRecord(writer, format, 0, this, fields.fields);
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing XML", e);
         }
     }
 

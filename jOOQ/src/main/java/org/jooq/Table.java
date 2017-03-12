@@ -1003,6 +1003,78 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
      * <p>
+     * A synonym for {@link #fullOuterJoin(TableLike)}.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    TableOnStep<Record> fullJoin(TableLike<?> table);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(SQL)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    TableOnStep<Record> fullJoin(SQL sql);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    TableOnStep<Record> fullJoin(String sql);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(String, Object...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    TableOnStep<Record> fullJoin(String sql, Object... bindings);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(String, QueryPart...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    TableOnStep<Record> fullJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(Name)}.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    TableOnStep<Record> fullJoin(Name name);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })

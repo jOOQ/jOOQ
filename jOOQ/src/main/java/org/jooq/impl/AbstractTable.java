@@ -1002,6 +1002,36 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TableOnStep<Record> fullJoin(TableLike<?> table) {
+        return fullOuterJoin(table);
+    }
+
+    @Override
+    public final TableOnStep<Record> fullJoin(SQL sql) {
+        return fullOuterJoin(sql);
+    }
+
+    @Override
+    public final TableOnStep<Record> fullJoin(String sql) {
+        return fullOuterJoin(sql);
+    }
+
+    @Override
+    public final TableOnStep<Record> fullJoin(String sql, Object... bindings) {
+        return fullOuterJoin(sql, bindings);
+    }
+
+    @Override
+    public final TableOnStep<Record> fullJoin(String sql, QueryPart... parts) {
+        return fullOuterJoin(sql, parts);
+    }
+
+    @Override
+    public final TableOnStep<Record> fullJoin(Name name) {
+        return fullOuterJoin(name);
+    }
+
+    @Override
     public final Table<Record> crossJoin(TableLike<?> table) {
         return join(table, CROSS_JOIN);
     }

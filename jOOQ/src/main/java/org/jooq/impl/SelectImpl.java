@@ -2194,6 +2194,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final SelectOnStep<R> fullJoin(TableLike<?> table) {
+        return fullOuterJoin(table);
+    }
+
+    @Override
     public final SelectImpl fullOuterJoin(TableLike<?> table) {
         return join(table, JoinType.FULL_OUTER_JOIN);
     }
@@ -2423,22 +2428,47 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final SelectOnStep<R> fullOuterJoin(SQL sql) {
+    public final SelectImpl fullJoin(SQL sql) {
+        return fullOuterJoin(sql);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(String sql) {
+        return fullOuterJoin(sql);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(String sql, Object... bindings) {
+        return fullOuterJoin(sql, bindings);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(String sql, QueryPart... parts) {
+        return fullOuterJoin(sql, parts);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(Name name) {
+        return fullOuterJoin(name);
+    }
+
+    @Override
+    public final SelectImpl fullOuterJoin(SQL sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectOnStep<R> fullOuterJoin(String sql) {
+    public final SelectImpl fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectOnStep<R> fullOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl fullOuterJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(table(sql, parts));
     }
 

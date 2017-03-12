@@ -90,7 +90,7 @@ trait Conversions {
   // Enhanced jOOQ types
   // -------------------------------------------------------------------------
 
-  implicit class SQLInterpolation(val sc : StringContext) extends AnyVal {
+  implicit class SQLInterpolation(val sc : StringContext) {
 
     @PlainSQL
     def sql(args: Any*) : SQL = DSL.sql(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
@@ -199,7 +199,7 @@ trait Conversions {
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to arbitrary fields
    */
-  implicit class ScalaField[T](val field : Field[T]) extends AnyVal {
+  implicit class ScalaField[T](val field : Field[T]) {
 
     // String operations
     // -----------------
@@ -257,7 +257,7 @@ trait Conversions {
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to numeric fields
    */
-  implicit class ScalaNumberField[T <: Number](val field : Field[T]) extends AnyVal {
+  implicit class ScalaNumberField[T <: Number](val field : Field[T]) {
 
     // ------------------------------------------------------------------------
     // Arithmetic operations

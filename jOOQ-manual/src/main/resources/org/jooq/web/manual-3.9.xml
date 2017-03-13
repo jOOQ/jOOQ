@@ -2043,7 +2043,7 @@ $$ LANGUAGE PLPGSQL;
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.2-1003-jdbc4</version>
+            <version>9.4.1212</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -13423,9 +13423,9 @@ result.forEach((Object[] entities) -> {
   <!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL database -->
   <dependencies>
     <dependency>
-      <groupId>postgresql</groupId>
+      <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>8.4-702.jdbc4</version>
+      <version>9.4.1212</version>
     </dependency>
   </dependencies>
 

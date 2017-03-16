@@ -87,23 +87,17 @@ final class Contains<T> extends AbstractCondition {
     private final Condition condition(Configuration configuration) {
 
         // [#1107] Some dialects support "contains" operations for ARRAYs
-        if (lhs.getDataType().isArray()) {
+        // [#5929] Check both sides of the operation for array types
+        if (lhs.getDataType().isArray()
+            || (rhs != null && rhs.getDataType().isArray())
+            || (rhs == null && value != null && value.getClass().isArray()))
             return new PostgresArrayContains();
-        }
 
         // "contains" operations on Strings
-        else {
-            Field<String> concat;
-
-            if (rhs == null) {
-                concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
-            }
-            else {
-                concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));
-            }
-
-            return lhs.like(concat, Tools.ESCAPE);
-        }
+        else
+            return lhs.like((rhs == null)
+                ? DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"))
+                : DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%")), Tools.ESCAPE);
     }
 
     /**

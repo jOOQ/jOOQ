@@ -56,6 +56,7 @@ import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -102,7 +103,7 @@ final class DDL {
     final Queries queries(Schema schema) {
         List<Query> queries = new ArrayList<Query>();
 
-        if (flags.contains(SCHEMA))
+        if (flags.contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
             queries.add(ctx.createSchema(schema.getName()));
 
         if (flags.contains(TABLE)) {

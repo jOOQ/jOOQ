@@ -77,6 +77,7 @@ public final class JSONFormat {
             false,
             "\n",
             2,
+            null,
             true,
             RecordFormat.ARRAY
         );
@@ -86,13 +87,14 @@ public final class JSONFormat {
         boolean format,
         String newline,
         int indent,
+        String[] indented,
         boolean header,
         RecordFormat recordFormat
     ) {
         this.format = format;
         this.newline = newline;
         this.indent = indent;
-        this.indented = new String[] {
+        this.indented = indented != null ? indented : new String[] {
                                                 "",
             format ? rightPad("", indent * 1) : "",
             format ? rightPad("", indent * 2) : "",
@@ -110,8 +112,10 @@ public final class JSONFormat {
             newFormat,
             newline,
             indent,
+            null,
             header,
-            recordFormat);
+            recordFormat
+        );
     }
 
     /**
@@ -129,6 +133,7 @@ public final class JSONFormat {
             format,
             newNewline,
             indent,
+            indented,
             header,
             recordFormat
         );
@@ -149,6 +154,7 @@ public final class JSONFormat {
             format,
             newline,
             newIndent,
+            null,
             header,
             recordFormat
         );
@@ -182,8 +188,10 @@ public final class JSONFormat {
             format,
             newline,
             indent,
+            indented,
             newHeader,
-            recordFormat);
+            recordFormat
+        );
     }
 
     /**
@@ -203,8 +211,10 @@ public final class JSONFormat {
             format,
             newline,
             indent,
+            indented,
             header,
-            newRecordFormat);
+            newRecordFormat
+        );
     }
 
     /**

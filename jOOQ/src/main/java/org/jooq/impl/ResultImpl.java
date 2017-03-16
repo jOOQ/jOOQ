@@ -900,14 +900,27 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     public final void formatJSON(Writer writer, JSONFormat format) {
         try {
             String separator;
+            int recordLevel = format.header() ? 2 : 1;
 
             if (format.header()) {
-                writer.append("{\"fields\":[");
+                if (format.format())
+                    writer.append('{').append(format.newline())
+                          .append(format.indentString(1)).append("\"fields\": [");
+                else
+                    writer.append("{\"fields\":[");
+
                 separator = "";
 
                 for (Field<?> field : fields.fields) {
-                    writer.append(separator)
-                          .append('{');
+                    writer.append(separator);
+
+                    if (format.format())
+                        writer.append(format.newline()).append(format.indentString(2));
+
+                    writer.append('{');
+
+                    if (format.format())
+                        writer.append(format.newline()).append(format.indentString(3));
 
                     if (field instanceof TableField) {
                         Table<?> table = ((TableField<?, ?>) field).getTable();
@@ -917,28 +930,60 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
                             if (schema != null) {
                                 writer.append("\"schema\":");
+
+                                if (format.format())
+                                    writer.append(' ');
+
                                 JSONValue.writeJSONString(schema.getName(), writer);
                                 writer.append(',');
+
+                                if (format.format())
+                                    writer.append(format.newline()).append(format.indentString(3));
                             }
 
                             writer.append("\"table\":");
+
+                            if (format.format())
+                                writer.append(' ');
+
                             JSONValue.writeJSONString(table.getName(), writer);
                             writer.append(',');
+
+                            if (format.format())
+                                writer.append(format.newline()).append(format.indentString(3));
                         }
                     }
 
                     writer.append("\"name\":");
+
+                    if (format.format())
+                        writer.append(' ');
+
                     JSONValue.writeJSONString(field.getName(), writer);
                     writer.append(',');
 
-                    writer.append("\"type\":");
-                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(), writer);
-                    writer.append('}');
+                    if (format.format())
+                        writer.append(format.newline()).append(format.indentString(3));
 
+                    writer.append("\"type\":");
+
+                    if (format.format())
+                        writer.append(' ');
+
+                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(), writer);
+
+                    if (format.format())
+                        writer.append(format.newline()).append(format.indentString(2));
+
+                    writer.append('}');
                     separator = ",";
                 }
 
-                writer.append("],\"records\":");
+                if (format.format())
+                    writer.append(format.newline()).append(format.indentString(1)).append("],")
+                          .append(format.newline()).append(format.indentString(1)).append("\"records\": ");
+                else
+                    writer.append("],\"records\":");
             }
 
             writer.append('[');
@@ -948,7 +993,11 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 case ARRAY:
                     for (Record record : this) {
                         writer.append(separator);
-                        formatJSONArray0(record, fields, writer);
+
+                        if (format.format())
+                            writer.append(format.newline());
+
+                        formatJSONArray0(record, fields, format, recordLevel, writer);
                         separator = ",";
                     }
 
@@ -956,7 +1005,11 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 case OBJECT:
                     for (Record record : this) {
                         writer.append(separator);
-                        formatJSONMap0(record, fields, writer);
+
+                        if (format.format())
+                            writer.append(format.newline());
+
+                        formatJSONMap0(record, fields, format, recordLevel, writer);
                         separator = ",";
                     }
 
@@ -965,10 +1018,17 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                     throw new IllegalArgumentException("Format not supported: " + format);
             }
 
+            if (format.format()) {
+                writer.append(format.newline());
+
+                if (format.header())
+                    writer.append(format.indentString(1));
+            }
+
             writer.append(']');
 
             if (format.header())
-                writer.append('}');
+                writer.append(format.newline()).append('}');
 
             writer.flush();
         }
@@ -977,30 +1037,55 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         }
     }
 
-    static final void formatJSONMap0(Record record, Fields<?> fields, Writer writer) throws java.io.IOException {
+    static final void formatJSONMap0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
-        writer.append('{');
+
+        if (format.format())
+            writer.append(format.indentString(recordLevel)).append('{');
+        else
+            writer.append('{');
 
         for (int index = 0; index < fields.fields.length; index++) {
             writer.append(separator);
+
+            if (format.format())
+                writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+
             JSONValue.writeJSONString(record.field(index).getName(), writer);
             writer.append(':');
+            if (format.format())
+                writer.append(' ');
+
             JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
             separator = ",";
         }
+
+        if (format.format())
+            writer.append(format.newline()).append(format.indentString(recordLevel));
 
         writer.append('}');
     }
 
-    static final void formatJSONArray0(Record record, Fields<?> fields, Writer writer) throws java.io.IOException {
+    static final void formatJSONArray0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
-        writer.append('[');
+
+        if (format.format())
+            writer.append(format.indentString(recordLevel)).append('[');
+        else
+            writer.append('[');
 
         for (int index = 0; index < fields.fields.length; index++) {
             writer.append(separator);
+
+            if (format.format())
+                writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+
             JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
             separator = ",";
         }
+
+        if (format.format())
+            writer.append(format.newline()).append(format.indentString(recordLevel));
 
         writer.append(']');
     }

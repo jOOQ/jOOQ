@@ -34,6 +34,8 @@
  */
 package org.jooq;
 
+import static org.jooq.tools.StringUtils.rightPad;
+
 /**
  * A JSON formatting type, which can be used to configure JSON imports /
  * exports.
@@ -66,6 +68,7 @@ public final class JSONFormat {
     final boolean                  format;
     final String                   newline;
     final int                      indent;
+    final String[]                 indented;
     final boolean                  header;
     final RecordFormat             recordFormat;
 
@@ -89,6 +92,12 @@ public final class JSONFormat {
         this.format = format;
         this.newline = newline;
         this.indent = indent;
+        this.indented = new String[] {
+                                                "",
+            format ? rightPad("", indent * 1) : "",
+            format ? rightPad("", indent * 2) : "",
+            format ? rightPad("", indent * 3) : ""
+        };
         this.header = header;
         this.recordFormat = recordFormat;
     }
@@ -150,6 +159,18 @@ public final class JSONFormat {
      */
     public int indent() {
         return indent;
+    }
+
+    /**
+     * Convenience method to get an indentation string at a given level.
+     */
+    public String indentString(int level) {
+        if (level < indented.length)
+            return indented[level];
+        else if (format)
+            return rightPad("", indent * level);
+        else
+            return "";
     }
 
     /**

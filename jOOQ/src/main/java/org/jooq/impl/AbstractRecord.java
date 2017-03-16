@@ -105,8 +105,6 @@ import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.json.JSONArray;
-import org.jooq.tools.json.JSONObject;
 
 /**
  * A general base class for all {@link Record} types
@@ -1043,10 +1041,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         try {
             switch (format.recordFormat()) {
                 case ARRAY:
-                    ResultImpl.formatJSONArray0(this, fields.fields, writer);
+                    ResultImpl.formatJSONArray0(this, fields.fields, format, 0, writer);
                     break;
                 case OBJECT:
-                    ResultImpl.formatJSONMap0(this, fields.fields, writer);
+                    ResultImpl.formatJSONMap0(this, fields.fields, format, 0, writer);
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);

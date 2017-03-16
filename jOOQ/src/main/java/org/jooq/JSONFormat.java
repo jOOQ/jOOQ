@@ -63,21 +63,93 @@ public final class JSONFormat {
     public static final JSONFormat DEFAULT_FOR_RESULTS = new JSONFormat();
     public static final JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
 
+    final boolean                  format;
+    final String                   newline;
+    final int                      indent;
     final boolean                  header;
     final RecordFormat             recordFormat;
 
     public JSONFormat() {
         this(
+            false,
+            "\n",
+            2,
             true,
             RecordFormat.ARRAY
         );
     }
 
     private JSONFormat(
+        boolean format,
+        String newline,
+        int indent,
         boolean header,
-        RecordFormat recordFormat) {
+        RecordFormat recordFormat
+    ) {
+        this.format = format;
+        this.newline = newline;
+        this.indent = indent;
         this.header = header;
         this.recordFormat = recordFormat;
+    }
+
+    /**
+     * The new value for the formatting flag, defaulting to <code>false</code>.
+     */
+    public JSONFormat format(boolean newFormat) {
+        return new JSONFormat(
+            newFormat,
+            newline,
+            indent,
+            header,
+            recordFormat);
+    }
+
+    /**
+     * The formatting flag.
+     */
+    public boolean format() {
+        return format;
+    }
+
+    /**
+     * The new newline character, defaulting to <code>\n</code>.
+     */
+    public JSONFormat newline(String newNewline) {
+        return new JSONFormat(
+            format,
+            newNewline,
+            indent,
+            header,
+            recordFormat
+        );
+    }
+
+    /**
+     * The formatting flag.
+     */
+    public String newline() {
+        return format ? newline : "";
+    }
+
+    /**
+     * The new indentation value, defaulting to <code>2</code>.
+     */
+    public JSONFormat indent(int newIndent) {
+        return new JSONFormat(
+            format,
+            newline,
+            newIndent,
+            header,
+            recordFormat
+        );
+    }
+
+    /**
+     * The indentation.
+     */
+    public int indent() {
+        return indent;
     }
 
     /**
@@ -86,6 +158,9 @@ public final class JSONFormat {
      */
     public JSONFormat header(boolean newHeader) {
         return new JSONFormat(
+            format,
+            newline,
+            indent,
             newHeader,
             recordFormat);
     }
@@ -104,6 +179,9 @@ public final class JSONFormat {
      */
     public JSONFormat recordFormat(RecordFormat newRecordFormat) {
         return new JSONFormat(
+            format,
+            newline,
+            indent,
             header,
             newRecordFormat);
     }

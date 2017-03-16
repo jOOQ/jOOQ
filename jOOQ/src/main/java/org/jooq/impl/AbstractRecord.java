@@ -1043,10 +1043,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         try {
             switch (format.recordFormat()) {
                 case ARRAY:
-                    writer.append(JSONArray.toJSONString(ResultImpl.formatJSONArray0(this, fields.fields)));
+                    ResultImpl.formatJSONArray0(this, fields.fields, writer);
                     break;
                 case OBJECT:
-                    writer.append(JSONObject.toJSONString(ResultImpl.formatJSONMap0(this, fields.fields)));
+                    ResultImpl.formatJSONMap0(this, fields.fields, writer);
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);

@@ -86,7 +86,11 @@ public class JSONValue {
             return;
         }
 
-        out.write(value.toString());
+        // Patched original according to issue 27 of JSON-simple
+        // http://code.google.com/p/json-simple/issues/detail?id=27
+        out.write('\"');
+        out.write(escape(value.toString()));
+        out.write('\"');
     }
 
     /**

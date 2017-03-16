@@ -124,8 +124,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.MockResultSet;
-import org.jooq.tools.json.JSONArray;
-import org.jooq.tools.json.JSONObject;
+import org.jooq.tools.json.JSONValue;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -900,14 +899,15 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
         try {
-            List<Map<String, String>> f = null;
-            List<Object> r = new ArrayList<Object>();
+            String separator;
 
             if (format.header()) {
-                f = new ArrayList<Map<String, String>>();
+                writer.append("{\"fields\":[");
+                separator = "";
 
                 for (Field<?> field : fields.fields) {
-                    Map<String, String> fieldMap = new LinkedHashMap<String, String>();
+                    writer.append(separator)
+                          .append('{');
 
                     if (field instanceof TableField) {
                         Table<?> table = ((TableField<?, ?>) field).getTable();
@@ -915,46 +915,60 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                         if (table != null) {
                             Schema schema = table.getSchema();
 
-                            if (schema != null)
-                                fieldMap.put("schema", schema.getName());
+                            if (schema != null) {
+                                writer.append("\"schema\":");
+                                JSONValue.writeJSONString(schema.getName(), writer);
+                                writer.append(',');
+                            }
 
-                            fieldMap.put("table", table.getName());
+                            writer.append("\"table\":");
+                            JSONValue.writeJSONString(table.getName(), writer);
+                            writer.append(',');
                         }
                     }
 
-                    fieldMap.put("name", field.getName());
-                    fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
+                    writer.append("\"name\":");
+                    JSONValue.writeJSONString(field.getName(), writer);
+                    writer.append(',');
 
-                    f.add(fieldMap);
+                    writer.append("\"type\":");
+                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(), writer);
+                    writer.append('}');
+
+                    separator = ",";
                 }
+
+                writer.append("],\"records\":");
             }
+
+            writer.append('[');
+            separator = "";
 
             switch (format.recordFormat()) {
                 case ARRAY:
-                    for (Record record : this)
-                        r.add(formatJSONArray0(record, fields));
+                    for (Record record : this) {
+                        writer.append(separator);
+                        formatJSONArray0(record, fields, writer);
+                        separator = ",";
+                    }
 
                     break;
                 case OBJECT:
-                    for (Record record : this)
-                        r.add(formatJSONMap0(record, fields));
+                    for (Record record : this) {
+                        writer.append(separator);
+                        formatJSONMap0(record, fields, writer);
+                        separator = ",";
+                    }
 
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);
             }
 
-            if (f == null) {
-                writer.append(JSONArray.toJSONString(r));
-            }
-            else {
-                Map<String, List<?>> map = new LinkedHashMap<String, List<?>>();
+            writer.append(']');
 
-                map.put("fields", f);
-                map.put("records", r);
-
-                writer.append(JSONObject.toJSONString(map));
-            }
+            if (format.header())
+                writer.append('}');
 
             writer.flush();
         }
@@ -963,22 +977,32 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         }
     }
 
-    static final Map<String, Object> formatJSONMap0(Record record, Fields<?> fields) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+    static final void formatJSONMap0(Record record, Fields<?> fields, Writer writer) throws java.io.IOException {
+        String separator = "";
+        writer.append('{');
 
-        for (int index = 0; index < fields.fields.length; index++)
-            map.put(record.field(index).getName(), formatJSON0(record.get(index)));
+        for (int index = 0; index < fields.fields.length; index++) {
+            writer.append(separator);
+            JSONValue.writeJSONString(record.field(index).getName(), writer);
+            writer.append(':');
+            JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
+            separator = ",";
+        }
 
-        return map;
+        writer.append('}');
     }
 
-    static final List<Object> formatJSONArray0(Record record, Fields<?> fields) {
-        List<Object> list = new ArrayList<Object>();
+    static final void formatJSONArray0(Record record, Fields<?> fields, Writer writer) throws java.io.IOException {
+        String separator = "";
+        writer.append('[');
 
-        for (int index = 0; index < fields.fields.length; index++)
-            list.add(formatJSON0(record.get(index)));
+        for (int index = 0; index < fields.fields.length; index++) {
+            writer.append(separator);
+            JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
+            separator = ",";
+        }
 
-        return list;
+        writer.append(']');
     }
 
     @Override

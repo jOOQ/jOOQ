@@ -2216,6 +2216,12 @@ class ParserImpl implements Parser {
 
                 break;
 
+            case 'q':
+            case 'Q':
+                if (S.is(type))
+                    if (ctx.character(ctx.position + 1) == '\'')
+                        return inline(parseStringLiteral(ctx));
+
             case 'r':
             case 'R':
                 if (S.is(type))
@@ -3967,6 +3973,49 @@ class ParserImpl implements Parser {
 
     static final String parseStringLiteral(ParserContext ctx) {
         parseWhitespaceIf(ctx);
+
+        if (parseIf(ctx, 'q'))
+            return parseOracleQuotedStringLiteral(ctx);
+        else
+            return parseUnquotedStringLiteral(ctx);
+    }
+
+    private static String parseOracleQuotedStringLiteral(ParserContext ctx) {
+        parse(ctx, '\'');
+
+        char start = ctx.character();
+        char end;
+
+        switch (start) {
+            case '!': end = '!'; ctx.position = ctx.position + 1; break;
+            case '[': end = ']'; ctx.position = ctx.position + 1; break;
+            case '{': end = '}'; ctx.position = ctx.position + 1; break;
+            case '(': end = ')'; ctx.position = ctx.position + 1; break;
+            case '<': end = '>'; ctx.position = ctx.position + 1; break;
+            default:
+                throw ctx.exception();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = ctx.position; i < ctx.sql.length; i++) {
+            char c = ctx.character(i);
+
+            if (c == end)
+                if (ctx.character(i + 1) == '\'') {
+                    ctx.position = i + 2;
+                    return sb.toString();
+                }
+                else {
+                    i++;
+                }
+
+            sb.append(c);
+        }
+
+        throw ctx.exception();
+    }
+
+    private static String parseUnquotedStringLiteral(ParserContext ctx) {
         parse(ctx, '\'');
 
         StringBuilder sb = new StringBuilder();

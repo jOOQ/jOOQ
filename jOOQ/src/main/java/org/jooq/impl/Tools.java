@@ -1621,6 +1621,51 @@ final class Tools {
                 render.sql(sqlChars[i]);
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // [#3297] Skip ? inside of quoted identifiers, e.g.
             // update x set v = "Column Name with a ? (question mark)"
             else if (peekAny(sqlChars, i, quotes[QUOTE_START_DELIMITER])) {

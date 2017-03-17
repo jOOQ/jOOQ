@@ -4514,7 +4514,7 @@ SELECT * FROM (
     ROW_NUMBER() OVER (ORDER BY ID ASC) AS RN
   FROM BOOK
 ) AS X
-WHERE RN > 1
+WHERE RN > 2
 AND RN <= 3
 
 -- DB2 (with OFFSET), SQL Server 2008 (with OFFSET)
@@ -4523,7 +4523,7 @@ SELECT * FROM (
     DENSE_RANK() OVER (ORDER BY ID ASC, TITLE ASC) AS RN
   FROM BOOK
 ) AS X
-WHERE RN > 1
+WHERE RN > 2
 AND RN <= 3
 
 -- Oracle 11g and less
@@ -4537,7 +4537,7 @@ FROM (
   ) b
   WHERE ROWNUM <= 3
 )
-WHERE RN > 1]]></sql><html>
+WHERE RN > 2]]></sql><html>
 
 											<p>
 												As you can see, jOOQ will take care of the incredibly painful ROW_NUMBER() OVER() (or ROWNUM for Oracle) filtering in subselects for you, you'll just have to write limit(1).offset(2) in any dialect.

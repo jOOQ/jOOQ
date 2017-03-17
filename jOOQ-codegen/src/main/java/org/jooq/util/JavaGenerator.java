@@ -5088,13 +5088,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printPackage(JavaWriter out, Definition definition, Mode mode) {
-        String header = getStrategy().getFileHeader(definition, mode);
-
-        if (!StringUtils.isBlank(header)) {
-            out.println("/*");
-            printJavadocParagraph(out, header, "");
-            out.println("*/");
-        }
+        printPackageComment(out, definition, mode);
 
         if (scala)
             out.println("package %s", getStrategy().getJavaPackageName(definition, mode));
@@ -5104,6 +5098,16 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
         out.printImports();
         out.println();
+    }
+
+    protected void printPackageComment(JavaWriter out, Definition definition, Mode mode) {
+        String header = getStrategy().getFileHeader(definition, mode);
+
+        if (!StringUtils.isBlank(header)) {
+            out.println("/*");
+            printJavadocParagraph(out, header, "");
+            out.println("*/");
+        }
     }
 
     @Deprecated

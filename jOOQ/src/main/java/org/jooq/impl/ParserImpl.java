@@ -263,6 +263,7 @@ import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
+import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -514,7 +515,7 @@ class ParserImpl implements Parser {
             boolean offsetPostgres = false;
 
             if (parseKeywordIf(ctx, "OFFSET")) {
-                result.addOffset((int) (long) parseUnsignedInteger(ctx));
+                result.addOffset(inline((int) (long) parseUnsignedInteger(ctx)));
 
                 if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
                     offsetStandard = true;
@@ -523,12 +524,12 @@ class ParserImpl implements Parser {
             }
 
             if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
-                int limit = (int) (long) parseUnsignedInteger(ctx);
+                Param<Integer> limit = inline((int) (long) parseUnsignedInteger(ctx));
 
                 if (!offsetPostgres && parseIf(ctx, ','))
-                    result.addLimit(limit, (int) (long) parseUnsignedInteger(ctx));
+                    result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
                 else if (!offsetPostgres && parseKeywordIf(ctx, "OFFSET"))
-                    result.addLimit((int) (long) parseUnsignedInteger(ctx), limit);
+                    result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
                 else
                     result.addLimit(limit);
             }
@@ -536,7 +537,7 @@ class ParserImpl implements Parser {
                 if (!parseKeywordIf(ctx, "FIRST") && !parseKeywordIf(ctx, "NEXT"))
                     throw ctx.unexpectedToken();
 
-                result.addLimit((int) (long) parseUnsignedInteger(ctx));
+                result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)));
 
                 if (!parseKeywordIf(ctx, "ROWS ONLY") && !parseKeywordIf(ctx, "ROW ONLY"))
                     throw ctx.unexpectedToken();

@@ -543,7 +543,27 @@ class ParserImpl implements Parser {
                     throw ctx.unexpectedToken();
             }
         }
-        // TODO FOR UPDATE, etc.
+
+        if (parseKeywordIf(ctx, "FOR")) {
+            if (parseKeywordIf(ctx, "SHARE")) {
+                result.setForShare(true);
+            }
+            else if (parseKeywordIf(ctx, "UPDATE")) {
+                result.setForUpdate(true);
+
+                if (parseKeywordIf(ctx, "OF"))
+                    result.setForUpdateOf(parseFields(ctx));
+
+                if (parseKeywordIf(ctx, "NOWAIT"))
+                    result.setForUpdateNoWait();
+                else if (parseKeywordIf(ctx, "WAIT"))
+                    result.setForUpdateWait((int) (long) parseUnsignedInteger(ctx));
+                else if (parseKeywordIf(ctx, "SKIP LOCKED"))
+                    result.setForUpdateSkipLocked();
+            }
+            else
+                throw ctx.unexpectedToken();
+        }
 
         return result;
     }
@@ -4647,6 +4667,7 @@ class ParserImpl implements Parser {
         "CROSS",
         "EXCEPT",
         "FETCH",
+        "FOR",
         "FULL",
         "FROM",
         "GROUP BY",

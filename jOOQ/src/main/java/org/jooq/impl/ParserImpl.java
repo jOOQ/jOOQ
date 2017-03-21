@@ -4439,7 +4439,7 @@ class ParserImpl implements Parser {
 
     private static final int afterWhitespace(ParserContext ctx, int position) {
         loop:
-        for (int i = position; i < ctx.sql.length; i++)
+        for (int i = position; i < ctx.sql.length; i++) {
             switch (ctx.sql[i]) {
                 case ' ':
                 case '\t':
@@ -4448,10 +4448,55 @@ class ParserImpl implements Parser {
                     position = i + 1;
                     continue loop;
 
-                // TODO consume comments
+                case '/':
+                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
+                        i = i + 2;
+
+                        while (i < ctx.sql.length) {
+                            switch (ctx.sql[i]) {
+                                case '*':
+                                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
+                                        position = i = i + 1;
+                                        continue loop;
+                                    }
+
+                                    // No break
+                                default:
+                                    i++;
+                            }
+                        }
+                    }
+
+                    break loop;
+
+                case '-':
+                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '-') {
+                        i = i + 2;
+
+                        while (i < ctx.sql.length) {
+                            switch (ctx.sql[i]) {
+                                case '\r':
+                                case '\n':
+                                    position = i = i + 1;
+                                    continue loop;
+
+                                default:
+                                    i++;
+                            }
+                        }
+                    }
+
+                    break loop;
+
+                    // TODO MySQL comments require a whitespace after --. Should we deal with this?
+                    // TODO Some databases also support # as a single line comment character.
+
+
+                // TODO support Oracle-style hints
                 default:
                     break loop;
             }
+        }
 
         return position;
     }

@@ -3898,14 +3898,30 @@ class ParserImpl implements Parser {
     private static final String parseIdentifierIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
+        char quoteEnd =
+            parseIf(ctx, '"') ? '"'
+          : parseIf(ctx, '`') ? '`'
+          : parseIf(ctx, '[') ? ']'
+          : 0;
+
         int start = ctx.position;
-        while (ctx.isIdentifierPart())
-            ctx.position = ctx.position + 1;
+        if (quoteEnd != 0)
+            while (ctx.character() != quoteEnd)
+                ctx.position = ctx.position + 1;
+        else
+            while (ctx.isIdentifierPart())
+                ctx.position = ctx.position + 1;
+
 
         if (ctx.position == start)
             return null;
 
-        return new String(ctx.sql, start, ctx.position - start);
+        String result = new String(ctx.sql, start, ctx.position - start);
+
+        if (quoteEnd != 0)
+            ctx.position = ctx.position + 1;
+
+        return result;
     }
 
     private static final DataType<?> parseDataType(ParserContext ctx) {

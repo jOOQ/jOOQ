@@ -556,8 +556,10 @@ class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "NOWAIT"))
                     result.setForUpdateNoWait();
-                else if (parseKeywordIf(ctx, "WAIT"))
-                    result.setForUpdateWait((int) (long) parseUnsignedInteger(ctx));
+
+
+
+
                 else if (parseKeywordIf(ctx, "SKIP LOCKED"))
                     result.setForUpdateSkipLocked();
             }

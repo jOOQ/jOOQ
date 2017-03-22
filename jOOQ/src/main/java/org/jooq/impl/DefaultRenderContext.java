@@ -114,6 +114,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         paramType(context.paramType());
         qualifyCatalog(context.qualifyCatalog());
         qualifySchema(context.qualifySchema());
+        quote(context.quote());
         castMode(context.castMode());
         data().putAll(context.data());
 

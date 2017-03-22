@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.using;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -61,26 +62,26 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
 
     private final Object[]          array;
     private final Fields<Record>    field;
-    private final String            alias;
-    private final String            fieldAlias;
+    private final Name              alias;
+    private final Name              fieldAlias;
 
     private transient Table<Record> table;
 
     ArrayTableEmulation(Object[] array) {
-        this(array, "array_table", null);
+        this(array, DSL.name("array_table"), null);
     }
 
-    ArrayTableEmulation(Object[] array, String alias) {
+    ArrayTableEmulation(Object[] array, Name alias) {
         this(array, alias, null);
     }
 
-    ArrayTableEmulation(Object[] array, String alias, String fieldAlias) {
-        super(alias);
+    ArrayTableEmulation(Object[] array, Name alias, Name fieldAlias) {
+        super(alias.last());
 
         this.array = array;
         this.alias = alias;
-        this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
-        this.field = new Fields<Record>(DSL.field(name(alias, this.fieldAlias), DSL.getDataType(array.getClass().getComponentType())));
+        this.fieldAlias = fieldAlias == null ? DSL.name("COLUMN_VALUE") : fieldAlias;
+        this.field = new Fields<Record>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
     }
 
     @Override
@@ -89,18 +90,16 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String as) {
+    public final Table<Record> as(Name as) {
         return new ArrayTableEmulation(array, as);
     }
 
     @Override
-    public final Table<Record> as(String as, String... fieldAliases) {
-        if (fieldAliases == null) {
+    public final Table<Record> as(Name as, Name... fieldAliases) {
+        if (fieldAliases == null)
             return new ArrayTableEmulation(array, as);
-        }
-        else if (fieldAliases.length == 1) {
+        else if (fieldAliases.length == 1)
             return new ArrayTableEmulation(array, as, fieldAliases[0]);
-        }
 
         throw new IllegalArgumentException("Array table simulations can only have a single field alias");
     }
@@ -146,7 +145,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
                 select = using(configuration).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
             }
 
-            table = select.asTable(alias);
+            table = DSL.table(select).as(alias);
         }
 
         return table;

@@ -639,7 +639,7 @@ final class Expression<T> extends AbstractFunction<T> {
         private static final long serialVersionUID = -5105004317793995419L;
 
         private DefaultExpression() {
-            super(operator.toSQL(), lhs.getDataType());
+            super(operator.toName(), lhs.getDataType());
         }
 
         @Override

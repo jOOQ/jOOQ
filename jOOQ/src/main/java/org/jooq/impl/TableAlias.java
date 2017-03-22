@@ -43,6 +43,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Table;
@@ -59,20 +60,20 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     final Alias<Table<R>>     alias;
     final Fields<R>           aliasedFields;
 
-    TableAlias(Table<R> table, String alias) {
+    TableAlias(Table<R> table, Name alias) {
         this(table, alias, null, false);
     }
 
-    TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
+    TableAlias(Table<R> table, Name alias, boolean wrapInParentheses) {
         this(table, alias, null, wrapInParentheses);
     }
 
-    TableAlias(Table<R> table, String alias, String[] fieldAliases) {
+    TableAlias(Table<R> table, Name alias, Name[] fieldAliases) {
         this(table, alias, fieldAliases, false);
     }
 
-    TableAlias(Table<R> table, String alias, String[] fieldAliases, boolean wrapInParentheses) {
-        super(alias, table.getSchema());
+    TableAlias(Table<R> table, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
+        super(alias.last(), table.getSchema());
 
         this.alias = new Alias<Table<R>>(table, alias, fieldAliases, wrapInParentheses);
         this.aliasedFields = init(fieldAliases);
@@ -82,18 +83,19 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
      * Register fields for this table alias
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final Fields<R> init(String[] fieldAliases) {
+    private final Fields<R> init(Name[] fieldAliases) {
         List<Field<?>> result = new ArrayList<Field<?>>();
         Row row = this.alias.wrapped().fieldsRow();
         int size = row.size();
 
         for (int i = 0; i < size; i++) {
             Field<?> field = row.field(i);
-            String name = field.getName();
 
-            if (fieldAliases != null && fieldAliases.length > i) {
+            // [#5997] TODO: Retain quotation flag
+            Name name = DSL.name(field.getName());
+
+            if (fieldAliases != null && fieldAliases.length > i)
                 name = fieldAliases[i];
-            }
 
             result.add(new TableFieldImpl(name, field.getDataType(), this, field.getComment(), field.getBinding()));
         }
@@ -153,12 +155,12 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String as) {
+    public final Table<R> as(Name as) {
         return alias.wrapped().as(as);
     }
 
     @Override
-    public final Table<R> as(String as, String... fieldAliases) {
+    public final Table<R> as(Name as, Name... fieldAliases) {
         return alias.wrapped().as(as, fieldAliases);
     }
 

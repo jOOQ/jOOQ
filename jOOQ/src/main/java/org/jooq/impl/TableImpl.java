@@ -48,6 +48,7 @@ import java.util.Arrays;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -71,33 +72,76 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     protected final Field<?>[]    parameters;
 
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or
+     *             re-generated your code).
+     */
+    @Deprecated
     public TableImpl(String name) {
+        this(DSL.name(name));
+    }
+
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema)}
+     *             instead (or re-generated your code).
+     */
+    @Deprecated
+    public TableImpl(String name, Schema schema) {
+        this(DSL.name(name), schema);
+    }
+
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table)}
+     *             instead (or re-generated your code).
+     */
+    @Deprecated
+    public TableImpl(String name, Schema schema, Table<R> aliased) {
+        this(DSL.name(name), schema, aliased);
+    }
+
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table, Field[])}
+     *             instead (or re-generated your code).
+     */
+    @Deprecated
+    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
+        this(DSL.name(name), schema, aliased, parameters);
+    }
+
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table, Field[], String)}
+     *             instead (or re-generated your code).
+     */
+    @Deprecated
+    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
+        this(DSL.name(name), schema, aliased, parameters, comment);
+    }
+
+    public TableImpl(Name name) {
         this(name, null, null, null, null);
     }
 
-    public TableImpl(String name, Schema schema) {
+    public TableImpl(Name name, Schema schema) {
         this(name, schema, null, null, null);
     }
 
-    public TableImpl(String name, Schema schema, Table<R> aliased) {
+    public TableImpl(Name name, Schema schema, Table<R> aliased) {
         this(name, schema, aliased, null, null);
     }
 
-    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
+    public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
         this(name, schema, aliased, parameters, null);
     }
 
-    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        super(name, schema, comment);
+    public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
+        super(name.last(), schema, comment);
 
         this.fields = new Fields<R>();
 
-        if (aliased != null) {
+        if (aliased != null)
             alias = new Alias<Table<R>>(aliased, name);
-        }
-        else {
+        else
             alias = null;
-        }
 
         this.parameters = parameters;
     }
@@ -180,7 +224,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * {@inheritDoc}
      */
     @Override
-    public Table<R> as(String as) {
+    public Table<R> as(Name as) {
         if (alias != null) {
             return alias.wrapped().as(as);
         }
@@ -196,7 +240,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * {@inheritDoc}
      */
     @Override
-    public Table<R> as(String as, String... fieldAliases) {
+    public Table<R> as(Name as, Name... fieldAliases) {
         if (alias != null) {
             return alias.wrapped().as(as, fieldAliases);
         }

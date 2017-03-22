@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -65,12 +66,12 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String as) {
+    public final Table<R> as(Name as) {
         return new TableAlias<R>(new FunctionTable<R>(function), as);
     }
 
     @Override
-    public final Table<R> as(String as, String... fieldAliases) {
+    public final Table<R> as(Name as, Name... fieldAliases) {
         return new TableAlias<R>(new FunctionTable<R>(function), as, fieldAliases);
     }
 

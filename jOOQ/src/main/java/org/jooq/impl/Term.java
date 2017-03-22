@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 
 /**
@@ -280,9 +281,19 @@ enum Term {
 
     ;
 
+    private final Name name;
+
+    private Term() {
+        this.name = DSL.name(name());
+    }
+
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public final Name toName() {
+        return name;
     }
 
     /**

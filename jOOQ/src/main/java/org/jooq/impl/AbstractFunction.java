@@ -55,7 +55,7 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
     private final Field<?>[]   arguments;
 
     AbstractFunction(String name, DataType<T> type, Field<?>... arguments) {
-        super(name, type);
+        super(DSL.name(name), type);
 
         this.arguments = arguments;
     }

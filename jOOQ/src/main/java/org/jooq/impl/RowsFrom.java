@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 
@@ -67,12 +68,12 @@ final class RowsFrom extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         return new TableAlias<Record>(this, alias);
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases);
     }
 

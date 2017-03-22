@@ -84,12 +84,12 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String alias) {
+    public final Table<R> as(Name alias) {
         return new HintedTable<R>(new TableAlias<R>(delegate, alias), keywords, arguments);
     }
 
     @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
+    public final Table<R> as(Name alias, Name... fieldAliases) {
         return new HintedTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), keywords, arguments);
     }
 

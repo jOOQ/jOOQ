@@ -41,6 +41,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * A base class for custom {@link Field} implementations in client code.
@@ -64,6 +65,10 @@ public abstract class CustomField<T> extends AbstractField<T> {
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomField(String name, DataType<T> type) {
+        this(DSL.name(name), type);
+    }
+
+    protected CustomField(Name name, DataType<T> type) {
         super(name, type);
     }
 
@@ -89,7 +94,7 @@ public abstract class CustomField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final Field<T> as(String alias) {
+    public final Field<T> as(Name alias) {
         return super.as(alias);
     }
 

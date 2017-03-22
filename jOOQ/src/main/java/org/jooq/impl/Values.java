@@ -37,6 +37,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.TABLE_VALUES;
 
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Select;
@@ -76,12 +77,12 @@ final class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String alias) {
+    public final Table<R> as(Name alias) {
         return new TableAlias<R>(this, alias, true);
     }
 
     @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
+    public final Table<R> as(Name alias, Name... fieldAliases) {
         return new TableAlias<R>(this, alias, fieldAliases, true);
     }
 

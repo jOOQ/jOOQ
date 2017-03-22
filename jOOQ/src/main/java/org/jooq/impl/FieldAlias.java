@@ -38,6 +38,7 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -47,7 +48,7 @@ final class FieldAlias<T> extends AbstractField<T> {
     private static final long     serialVersionUID = -85277321749681553L;
     private final Alias<Field<T>> alias;
 
-    FieldAlias(Field<T> field, String alias) {
+    FieldAlias(Field<T> field, Name alias) {
         super(alias, field.getDataType());
 
         this.alias = new Alias<Field<T>>(field, alias, false);
@@ -64,7 +65,7 @@ final class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
-    public final Field<T> as(String as) {
+    public final Field<T> as(Name as) {
         return alias.wrapped().as(as);
     }
 

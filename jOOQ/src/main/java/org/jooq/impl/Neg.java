@@ -62,7 +62,7 @@ final class Neg<T> extends AbstractField<T> {
     private final Field<T>           field;
 
     Neg(Field<T> field, ExpressionOperator operator) {
-        super(operator.toSQL() + field.getName(), field.getDataType());
+        super(operator.toName(), field.getDataType());
 
         this.operator = operator;
         this.field = field;

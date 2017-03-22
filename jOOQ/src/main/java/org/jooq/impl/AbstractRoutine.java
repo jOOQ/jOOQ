@@ -1513,7 +1513,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
         @SuppressWarnings("unchecked")
         RoutineField() {
-            super(AbstractRoutine.this.getName(),
+
+            // [#5997] TODO Retain quotation flag
+            super(DSL.name(AbstractRoutine.this.getName()),
                   AbstractRoutine.this.type == null
 
                   // [#4254] PostgreSQL may have stored functions that don't

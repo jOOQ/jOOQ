@@ -92,6 +92,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -417,12 +418,12 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         return new TableAlias<Record>(this, alias, true);
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases, true);
     }
 

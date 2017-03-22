@@ -43,6 +43,7 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Table;
@@ -106,12 +107,12 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     @Override
-    public final Table<Record1<Integer>> as(String alias) {
+    public final Table<Record1<Integer>> as(Name alias) {
         return new TableAlias<Record1<Integer>>(this, alias);
     }
 
     @Override
-    public final Table<Record1<Integer>> as(String alias, String... fieldAliases) {
+    public final Table<Record1<Integer>> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record1<Integer>>(this, alias, fieldAliases);
     }
 

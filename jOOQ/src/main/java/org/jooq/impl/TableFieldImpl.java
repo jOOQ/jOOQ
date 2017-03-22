@@ -43,6 +43,7 @@ import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -58,9 +59,9 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
     private static final long     serialVersionUID = -2211214195583539735L;
     private static final Clause[] CLAUSES          = { FIELD, FIELD_REFERENCE };
 
-    private final Table<R>    table;
+    private final Table<R>        table;
 
-    TableFieldImpl(String name, DataType<T> type, Table<R> table, String comment, Binding<?, T> binding) {
+    TableFieldImpl(Name name, DataType<T> type, Table<R> table, String comment, Binding<?, T> binding) {
         super(name, type, comment, binding);
 
         this.table = table;

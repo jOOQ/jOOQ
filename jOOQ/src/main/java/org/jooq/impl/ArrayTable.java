@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -64,20 +65,20 @@ final class ArrayTable extends AbstractTable<Record> {
 
     private final Field<?>       array;
     private final Fields<Record> field;
-    private final String         alias;
-    private final String[]       fieldAliases;
+    private final Name           alias;
+    private final Name[]         fieldAliases;
 
     ArrayTable(Field<?> array) {
-        this(array, "array_table");
+        this(array, DSL.name("array_table"));
     }
 
-    ArrayTable(Field<?> array, String alias) {
-        this(array, alias, new String[] { "COLUMN_VALUE" });
+    ArrayTable(Field<?> array, Name alias) {
+        this(array, alias, new Name[] { DSL.name("COLUMN_VALUE") });
     }
 
     @SuppressWarnings({ "unchecked" })
-    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
-        super(alias);
+    ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
+        super(alias.last());
 
         Class<?> arrayType;
 
@@ -112,7 +113,7 @@ final class ArrayTable extends AbstractTable<Record> {
         this.field = init(arrayType, alias, fieldAliases);
     }
 
-    private static final Fields<Record> init(Class<?> arrayType, String alias, String[] fieldAliases) {
+    private static final Fields<Record> init(Class<?> arrayType, Name alias, Name[] fields) {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
@@ -120,7 +121,7 @@ final class ArrayTable extends AbstractTable<Record> {
             try {
                 UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
                 for (Field<?> f : record.fields()) {
-                    result.add(DSL.field(name(alias, f.getName()), f.getDataType()));
+                    result.add(DSL.field(name(alias.last(), f.getName()), f.getDataType()));
                 }
             }
             catch (Exception e) {
@@ -130,7 +131,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
-            result.add(DSL.field(name(alias, "COLUMN_VALUE"), DSL.getDataType(arrayType)));
+            result.add(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
         }
 
         return new Fields<Record>(result);
@@ -142,13 +143,13 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String as) {
+    public final Table<Record> as(Name as) {
         return new ArrayTable(array, as);
     }
 
     @Override
-    public final Table<Record> as(String as, String... fieldAliases) {
-        return new ArrayTable(array, as, fieldAliases);
+    public final Table<Record> as(Name as, Name... fields) {
+        return new ArrayTable(array, as, fields);
     }
 
     @Override
@@ -223,7 +224,7 @@ final class ArrayTable extends AbstractTable<Record> {
         public final void accept(Context<?> ctx) {
             ctx.keyword("table")
                .sql('(')
-               .visit(name(fieldAliases == null || fieldAliases.length == 0 ? "COLUMN_VALUE" : fieldAliases[0]))
+               .visit(fieldAliases == null || fieldAliases.length == 0 ? DSL.name("COLUMN_VALUE") : fieldAliases[0])
                .sql(' ');
 
             // If the array type is unknown (e.g. because it's returned from
@@ -260,7 +261,7 @@ final class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 2662639259338694177L;
 
         DialectArrayTable() {
-            super(alias);
+            super(alias.last());
         }
 
         @Override
@@ -269,13 +270,13 @@ final class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        public final Table<Record> as(String as) {
+        public final Table<Record> as(Name as) {
             return new TableAlias<Record>(this, as);
         }
 
         @Override
-        public final Table<Record> as(String as, String... fieldAliases) {
-            return new TableAlias<Record>(this, as, fieldAliases);
+        public final Table<Record> as(Name as, Name... fields) {
+            return new TableAlias<Record>(this, as, fields);
         }
 
         @Override

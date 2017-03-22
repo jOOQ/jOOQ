@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 
@@ -77,12 +78,12 @@ final class WithTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String alias) {
+    public final Table<R> as(Name alias) {
         return new WithTable<R>(new TableAlias<R>(delegate, alias), hint);
     }
 
     @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
+    public final Table<R> as(Name alias, Name... fieldAliases) {
         return new WithTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), hint);
     }
 

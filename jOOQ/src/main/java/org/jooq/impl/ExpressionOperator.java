@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Name;
+
 /**
  * The operator used in <code>Expression</code>
  *
@@ -119,12 +121,18 @@ enum ExpressionOperator {
     ;
 
     private final String sql;
+    private final Name name;
 
     private ExpressionOperator(String sql) {
         this.sql = sql;
+        this.name = DSL.name(name().toLowerCase());
     }
 
     public String toSQL() {
         return sql;
+    }
+
+    public Name toName() {
+        return name;
     }
 }

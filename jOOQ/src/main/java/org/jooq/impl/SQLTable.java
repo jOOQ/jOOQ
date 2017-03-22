@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -64,12 +65,12 @@ final class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         return new TableAlias<Record>(this, alias);
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases);
     }
 

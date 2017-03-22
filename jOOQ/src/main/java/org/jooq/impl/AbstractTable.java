@@ -291,6 +291,16 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public /* non-final for covariant overriding */ Table<R> as(String alias) {
+        return as(DSL.name(alias));
+    }
+
+    @Override
+    public /* non-final for covariant overriding */ Table<R> as(String alias, String... fieldAliases) {
+        return as(DSL.name(alias), Tools.names(fieldAliases));
+    }
+
+    @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
         return as(alias, Stream.of(fields()).map(aliasFunction).toArray(String[]::new));
     }
@@ -299,6 +309,32 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
         Field<?>[] fields = fields();
         String[] names = new String[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            names[i] = aliasFunction.apply(fields[i], i);
+        return as(alias, names);
+    }
+
+
+    @Override
+    public /* non-final for covariant overriding */ Table<R> as(Name alias) {
+        throw new UnsupportedOperationException("Subtypes should override this method. If using the jOOQ code generator, please re-generate your code");
+    }
+
+    @Override
+    public /* non-final for covariant overriding */ Table<R> as(Name alias, Name... fieldAliases) {
+        throw new UnsupportedOperationException("Subtypes should override this method. If using the jOOQ code generator, please re-generate your code");
+    }
+
+
+    @Override
+    public final Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction) {
+        return as(alias, Stream.of(fields()).map(aliasFunction).toArray(Name[]::new));
+    }
+
+    @Override
+    public final Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction) {
+        Field<?>[] fields = fields();
+        Name[] names = new Name[fields.length];
         for (int i = 0; i < fields.length; i++)
             names[i] = aliasFunction.apply(fields[i], i);
         return as(alias, names);
@@ -492,7 +528,8 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
           ? (DataType<U>) type
           : type.asConvertedDataType(actualBinding);
 
-        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(name, actualType, table, comment, actualBinding);
+        // [#5999] TODO: Allow for user-defined Names
+        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(DSL.name(name), actualType, table, comment, actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {
@@ -651,22 +688,26 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<R> as(Table<?> otherTable) {
+        // [#5997] TODO Change this
         return as(otherTable.getName());
     }
 
     @Override
     public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
+        // [#5997] TODO Change this
         return as(otherTable.getName(), Tools.fieldNames(otherFields));
     }
 
 
     @Override
     public final Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction) {
+        // [#5997] TODO Change this
         return as(otherTable.getName(), f -> aliasFunction.apply(f).getName());
     }
 
     @Override
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
+        // [#5997] TODO Change this
         return as(otherTable.getName(), (f, i) -> aliasFunction.apply(f, i).getName());
     }
 

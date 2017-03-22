@@ -40,6 +40,7 @@ import static org.jooq.impl.DSL.select;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -75,7 +76,7 @@ final class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         if (force) {
             return FORCED_DUAL.as(alias);
         }
@@ -85,7 +86,7 @@ final class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         if (force) {
             return FORCED_DUAL.as(alias, fieldAliases);
         }

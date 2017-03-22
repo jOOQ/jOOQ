@@ -87,6 +87,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
+import org.jooq.Name;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -109,16 +110,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private static final long     serialVersionUID = 2884811923648354905L;
     private static final Clause[] CLAUSES          = { FIELD };
 
-    private final String          name;
+    private final Name            name;
     private final String          comment;
     private final DataType<T>     dataType;
 
-    AbstractField(String name, DataType<T> type) {
+    AbstractField(Name name, DataType<T> type) {
         this(name, type, null, type.getBinding());
     }
 
     @SuppressWarnings("unchecked")
-    AbstractField(String name, DataType<T> type, String comment, Binding<?, T> binding) {
+    AbstractField(Name name, DataType<T> type, String comment, Binding<?, T> binding) {
         super();
 
         this.name = name;
@@ -182,12 +183,18 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public Field<T> as(String alias) {
+    public final Field<T> as(String alias) {
+        return as(DSL.name(alias));
+    }
+
+    @Override
+    public Field<T> as(Name alias) {
         return new FieldAlias<T>(this, alias);
     }
 
     @Override
     public final Field<T> as(Field<?> otherField) {
+        // [#5997] TODO Change this
         return as(otherField.getName());
     }
 
@@ -202,7 +209,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final String getName() {
-        return name;
+        return StringUtils.defaultIfNull(name.last(), "");
     }
 
     @Override
@@ -2032,21 +2039,18 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractField) {
-            if (StringUtils.equals(name, (((AbstractField<?>) that).name))) {
+        if (that instanceof AbstractField)
+            if (StringUtils.equals(name.last(), (((AbstractField<?>) that).name.last())))
                 return super.equals(that);
-            }
-
+            else
+                return false;
+        else
             return false;
-        }
-
-        return false;
     }
 
     @Override
@@ -2054,6 +2058,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return name.hashCode();
+        return name.last().hashCode();
     }
 }

@@ -53,7 +53,7 @@ final class Prior<T> extends AbstractField<T> {
     private final Field<T>    field;
 
     Prior(Field<T> field) {
-        super("prior", nullSafe(field).getDataType());
+        super(DSL.name("prior"), nullSafe(field).getDataType());
 
         this.field = field;
     }

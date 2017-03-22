@@ -47,6 +47,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
 import org.jooq.QueryPart;
@@ -268,12 +269,12 @@ implements
         }
 
         @Override
-        public final Table<Record> as(String as) {
+        public final Table<Record> as(Name as) {
             return new TableAlias<Record>(this, as);
         }
 
         @Override
-        public final Table<Record> as(String as, String... fieldAliases) {
+        public final Table<Record> as(Name as, Name... fieldAliases) {
             return new TableAlias<Record>(this, as, fieldAliases);
         }
 
@@ -297,12 +298,12 @@ implements
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         return new TableAlias<Record>(this, alias, true);
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases, true);
     }
 

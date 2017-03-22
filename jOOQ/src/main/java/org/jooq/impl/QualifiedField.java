@@ -64,7 +64,7 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
     private final Table<Record> table;
 
     QualifiedField(Name name, DataType<T> type) {
-        super(defaultIfNull(name.last(), ""), type);
+        super(DSL.name(defaultIfNull(name.last(), "")), type);
 
         this.name = name;
         this.table = name.getName().length > 1

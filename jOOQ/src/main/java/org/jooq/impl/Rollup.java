@@ -52,7 +52,7 @@ final class Rollup extends AbstractField<Object> {
     private QueryPartList<FieldOrRow> arguments;
 
     Rollup(FieldOrRow... arguments) {
-        super("rollup", SQLDataType.OTHER);
+        super(DSL.name("rollup"), SQLDataType.OTHER);
 
         this.arguments = new QueryPartList<FieldOrRow>(arguments);
     }

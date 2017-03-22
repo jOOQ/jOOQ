@@ -48,7 +48,7 @@ final class SQLField<T> extends AbstractField<T> {
     private final QueryPart   delegate;
 
     SQLField(DataType<T> type, QueryPart delegate) {
-        super(delegate.toString(), type);
+        super(DSL.name(delegate.toString()), type);
 
         this.delegate = delegate;
     }

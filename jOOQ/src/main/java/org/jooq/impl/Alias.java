@@ -68,6 +68,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -86,23 +87,23 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final Clause[] CLAUSES_FIELD_ALIAS     = { FIELD, FIELD_ALIAS };
 
     private final Q               wrapped;
-    private final String          alias;
-    private final String[]        fieldAliases;
+    private final Name            alias;
+    private final Name[]          fieldAliases;
     private final boolean         wrapInParentheses;
 
-    Alias(Q wrapped, String alias) {
+    Alias(Q wrapped, Name alias) {
         this(wrapped, alias, null, false);
     }
 
-    Alias(Q wrapped, String alias, boolean wrapInParentheses) {
+    Alias(Q wrapped, Name alias, boolean wrapInParentheses) {
         this(wrapped, alias, null, wrapInParentheses);
     }
 
-    Alias(Q wrapped, String alias, String[] fieldAliases) {
+    Alias(Q wrapped, Name alias, Name[] fieldAliases) {
         this(wrapped, alias, fieldAliases, false);
     }
 
-    Alias(Q wrapped, String alias, String[] fieldAliases, boolean wrapInParentheses) {
+    Alias(Q wrapped, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         this.wrapped = wrapped;
         this.alias = alias;
         this.fieldAliases = fieldAliases;
@@ -115,6 +116,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     @Override
     public final void accept(Context<?> context) {
+        boolean qualify = context.qualify();
+
         if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
             context.declareAliases(false);
 
@@ -143,8 +146,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 emulatedDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();
-                for (String fieldAlias : fieldAliases) {
-
+                for (Name fieldAlias : fieldAliases) {
                     switch (family) {
 
 
@@ -189,8 +191,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
             toSQLAs(context);
 
-            context.sql(' ');
-            context.literal(alias);
+            context.sql(' ')
+                   .qualify(false)
+                   .visit(alias)
+                   .qualify(qualify);
 
             // [#1801] Add field aliases to the table alias, if applicable
             if (fieldAliases != null && !emulatedDerivedColumnList) {
@@ -234,7 +238,9 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
         else {
-            context.literal(alias);
+            context.qualify(false)
+                   .visit(alias)
+                   .qualify(qualify);
         }
     }
 
@@ -257,7 +263,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
         for (int i = 0; i < fieldAliases.length; i++) {
             context.sql(separator);
-            context.literal(fieldAliases[i]);
+            context.visit(fieldAliases[i]);
 
             separator = ", ";
         }

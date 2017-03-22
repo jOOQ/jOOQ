@@ -45,6 +45,7 @@ import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.UDTRecord;
@@ -87,8 +88,9 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
      * <li>Otherwise, take the string value of <code>value</code></li>
      * </ul>
      */
-    private static String name(Object value, String paramName) {
-        return paramName != null
+    private static Name name(Object value, String paramName) {
+        return DSL.name(
+               paramName != null
              ? paramName
 
              // [#3707] Protect value.toString call for certain jOOQ types.
@@ -99,7 +101,8 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
 
 
 
-             : String.valueOf(value);
+             : String.valueOf(value)
+        );
     }
 
     // ------------------------------------------------------------------------

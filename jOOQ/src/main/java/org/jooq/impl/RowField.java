@@ -40,6 +40,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 
@@ -57,11 +58,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     private final Field<?>[]  emulatedFields;
 
     RowField(ROW row) {
-        this(row, "row");
+        this(row, DSL.name("row"));
     }
 
     @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
-    RowField(final ROW row, String as) {
+    RowField(final ROW row, Name as) {
         super(as, (DataType) SQLDataType.RECORD, "", new DefaultBinding<Object, REC>(new Converter<Object, REC>() {
             @Override
             public REC from(final Object t) {
@@ -111,7 +112,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     }
 
     @Override
-    public Field<REC> as(String alias) {
+    public Field<REC> as(Name alias) {
         return new RowField<ROW, REC>(row, alias);
     }
 

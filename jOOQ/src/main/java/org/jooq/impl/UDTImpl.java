@@ -270,7 +270,8 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
-        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(name, actualType, udt, comment, actualBinding);
+        // [#5999] TODO: Allow for user-defined Names
+        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(DSL.name(name), actualType, udt, comment, actualBinding);
 
         return udtField;
     }

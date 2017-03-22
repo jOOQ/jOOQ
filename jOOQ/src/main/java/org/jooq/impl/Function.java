@@ -144,7 +144,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     Function(String name, boolean distinct, DataType<T> type, QueryPart... arguments) {
-        super(name, type);
+        super(DSL.name(name), type);
 
         this.term = null;
         this.name = null;
@@ -155,7 +155,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     Function(Term term, boolean distinct, DataType<T> type, QueryPart... arguments) {
-        super(term.name().toLowerCase(), type);
+        super(term.toName(), type);
 
         this.term = term;
         this.name = null;
@@ -166,7 +166,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     Function(Name name, boolean distinct, DataType<T> type, QueryPart... arguments) {
-        super(last(name.getName()), type);
+        super(name, type);
 
         this.term = null;
         this.name = name;
@@ -174,14 +174,6 @@ class Function<T> extends AbstractField<T> implements
         this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-    }
-
-    final static String last(String... strings) {
-        if (strings != null && strings.length > 0) {
-            return strings[strings.length - 1];
-        }
-
-        return null;
     }
 
     // -------------------------------------------------------------------------

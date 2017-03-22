@@ -3342,7 +3342,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("def this() = {");
-            out.tab(2).println("this(\"%s\", null, null)", table.getOutputName());
+            out.tab(2).println("this(%s.name(\"%s\"), null, null)", DSL.class, table.getOutputName());
             out.tab(1).println("}");
         }
         else {
@@ -3357,7 +3357,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("private %s() {", className);
             }
 
-            out.tab(2).println("this(\"%s\", null);", table.getOutputName());
+            out.tab(2).println("this(%s.name(\"%s\"), null);", DSL.class, table.getOutputName());
             out.tab(1).println("}");
         }
 
@@ -3365,6 +3365,11 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("def this(alias : %s) = {", String.class);
+            out.tab(2).println("this(%s.name(alias), %s, null)", DSL.class, tableId);
+            out.tab(1).println("}");
+
+            out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
+            out.tab(1).println("def this(alias : %s) = {", Name.class);
             out.tab(2).println("this(alias, %s, null)", tableId);
             out.tab(1).println("}");
         }
@@ -3376,6 +3381,11 @@ public class JavaGenerator extends AbstractGenerator {
         else if (generateInstanceFields()) {
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s(%s alias) {", className, String.class);
+            out.tab(2).println("this(%s.name(alias), %s);", DSL.class, tableId);
+            out.tab(1).println("}");
+
+            out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
+            out.tab(1).println("public %s(%s alias) {", className, Name.class);
             out.tab(2).println("this(alias, %s);", tableId);
             out.tab(1).println("}");
         }
@@ -3383,7 +3393,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         if (scala) {
-            out.tab(1).println("private def this(alias : %s, aliased : %s[%s]) = {", String.class, Table.class, recordType);
+            out.tab(1).println("private def this(alias : %s, aliased : %s[%s]) = {", Name.class, Table.class, recordType);
             if (table.isTableValuedFunction())
                 out.tab(2).println("this(alias, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, table.getParameters().size());
             else
@@ -3392,7 +3402,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
         else {
-            out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
+            out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
             if (table.isTableValuedFunction())
                 out.tab(2).println("this(alias, aliased, new %s[%s]);", Field.class, table.getParameters().size());
             else
@@ -3401,7 +3411,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
 
             out.println();
-            out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, String.class, Table.class, recordType, Field.class);
+            out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
             out.tab(2).println("super(alias, null, aliased, parameters, \"%s\");", escapeString(comment));
             out.tab(1).println("}");
         }
@@ -3564,6 +3574,17 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("override def as(alias : %s) : %s = {", String.class, className);
 
             if (table.isTableValuedFunction())
+                out.tab(2).println("new %s(%s.name(alias), this, parameters)", className, DSL.class);
+            else
+                out.tab(2).println("new %s(%s.name(alias), this)", className, DSL.class);
+
+            out.tab(1).println("}");
+
+
+            out.println();
+            out.tab(1).println("override def as(alias : %s) : %s = {", Name.class, className);
+
+            if (table.isTableValuedFunction())
                 out.tab(2).println("new %s(alias, this, parameters)", className);
             else
                 out.tab(2).println("new %s(alias, this)", className);
@@ -3578,6 +3599,17 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s as(%s alias) {", className, String.class);
 
             if (table.isTableValuedFunction())
+                out.tab(2).println("return new %s(%s.name(alias), this, parameters);", className, DSL.class);
+            else
+                out.tab(2).println("return new %s(%s.name(alias), this);", className, DSL.class);
+
+            out.tab(1).println("}");
+
+
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s as(%s alias) {", className, Name.class);
+
+            if (table.isTableValuedFunction())
                 out.tab(2).println("return new %s(alias, this, parameters);", className);
             else
                 out.tab(2).println("return new %s(alias, this);", className);
@@ -3590,9 +3622,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("override def rename(name : %s) : %s = {", String.class, className);
 
             if (table.isTableValuedFunction())
-                out.tab(2).println("new %s(name, null, parameters)", className);
+                out.tab(2).println("new %s(%s.name(name), null, parameters)", className, DSL.class);
             else
-                out.tab(2).println("new %s(name, null)", className);
+                out.tab(2).println("new %s(%s.name(name), null)", className, DSL.class);
 
             out.tab(1).println("}");
         }
@@ -3604,9 +3636,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s rename(%s name) {", className, String.class);
 
             if (table.isTableValuedFunction())
-                out.tab(2).println("return new %s(name, null, parameters);", className);
+                out.tab(2).println("return new %s(%s.name(name), null, parameters);", className, DSL.class);
             else
-                out.tab(2).println("return new %s(name, null);", className);
+                out.tab(2).println("return new %s(%s.name(name), null);", className, DSL.class);
 
             out.tab(1).println("}");
         }

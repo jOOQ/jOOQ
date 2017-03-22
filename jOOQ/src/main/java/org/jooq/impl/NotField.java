@@ -51,7 +51,7 @@ final class NotField extends AbstractField<Boolean> {
     private final Field<Boolean>  field;
 
     NotField(Field<Boolean> field) {
-        super("not", field.getDataType());
+        super(DSL.name("not"), field.getDataType());
         this.field = field;
     }
 

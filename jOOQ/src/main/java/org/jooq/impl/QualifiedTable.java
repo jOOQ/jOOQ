@@ -86,12 +86,12 @@ final class QualifiedTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final Table<Record> as(String alias) {
+    public final Table<Record> as(Name alias) {
         return new TableAlias<Record>(this, alias);
     }
 
     @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
+    public final Table<Record> as(Name alias, Name... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases);
     }
 

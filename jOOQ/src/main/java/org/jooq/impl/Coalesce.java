@@ -51,7 +51,7 @@ final class Coalesce<T> extends AbstractField<T> {
 
     @SuppressWarnings("unchecked")
     Coalesce(DataType<T> dataType, Field<?>[] fields) {
-        super("coalesce", dataType);
+        super(DSL.name("coalesce"), dataType);
 
         this.fields = (Field[]) fields;
     }

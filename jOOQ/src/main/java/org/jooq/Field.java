@@ -155,6 +155,23 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Field<T> as(String alias);
 
     /**
+     * Create an alias for this field.
+     * <p>
+     * Note that the case-sensitivity of the returned field depends on
+     * {@link Settings#getRenderNameStyle()} and the {@link Name}. By default,
+     * field aliases are quoted, and thus case-sensitive - use
+     * {@link DSL#unquotedName(String...)} for case-insensitive aliases.
+     * <p>
+     * If the argument {@link Name#getName()} is qualified, then the
+     * {@link Name#last()} part will be used.
+     *
+     * @param alias The alias name
+     * @return The field alias
+     */
+    @Support
+    Field<T> as(Name alias);
+
+    /**
      * Create an alias for this field based on another field's name.
      * <p>
      * Note that the case-sensitivity of the returned field depends on

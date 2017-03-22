@@ -7012,9 +7012,9 @@ public class DSL {
      * identifiers for use in plain SQL where {@link QueryPart} objects are
      * accepted. For instance, this can be used with any of these methods:
      * <ul>
-     * <li> {@link #field(String, QueryPart...)}</li>
-     * <li> {@link #field(String, Class, QueryPart...)}</li>
-     * <li> {@link #field(String, DataType, QueryPart...)}</li>
+     * <li> {@link #field(Name)}</li>
+     * <li> {@link #field(Name, Class)}</li>
+     * <li> {@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
      * An example: <code><pre>
@@ -7039,9 +7039,9 @@ public class DSL {
      * identifiers for use in plain SQL where {@link QueryPart} objects are
      * accepted. For instance, this can be used with any of these methods:
      * <ul>
-     * <li> {@link #field(String, QueryPart...)}</li>
-     * <li> {@link #field(String, Class, QueryPart...)}</li>
-     * <li> {@link #field(String, DataType, QueryPart...)}</li>
+     * <li> {@link #field(Name)}</li>
+     * <li> {@link #field(Name, Class)}</li>
+     * <li> {@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
      * An example: <code><pre>

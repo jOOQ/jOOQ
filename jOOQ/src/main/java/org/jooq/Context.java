@@ -337,10 +337,20 @@ public interface Context<C extends Context<C>> extends Scope {
     C formatPrintMargin(int margin);
 
     /**
-     * Append some (quoted) literal to the context's contained
+     * Append some literal to the context's contained
      * {@link StringBuilder}.
      */
     C literal(String literal);
+
+    /**
+     * Whether {@link Name} parts (and {@link #literal(String)}) should be quoted.
+     */
+    boolean quote();
+
+    /**
+     * Set the new context value for {@link #quote()}.
+     */
+    C quote(boolean quote);
 
     /**
      * Whether query parts should render qualified names or not.

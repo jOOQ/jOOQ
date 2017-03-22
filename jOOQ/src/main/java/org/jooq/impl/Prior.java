@@ -34,14 +34,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.conf.RenderNameStyle.AS_IS;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.TableField;
-import org.jooq.conf.RenderNameStyle;
 
 /**
  * @author Lukas Eder
@@ -63,10 +61,6 @@ final class Prior<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-
-
-
 
 
 

@@ -64,6 +64,7 @@ import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
@@ -97,6 +98,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     final boolean                     castModeOverride;
     CastMode                          castMode;
     ParamType                         paramType                = ParamType.INDEXED;
+    boolean                           quote                    = true;
     boolean                           qualifySchema            = true;
     boolean                           qualifyCatalog           = true;
 
@@ -148,6 +150,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : m == ParamCastMode.NEVER
             ? CastMode.NEVER
             : CastMode.DEFAULT;
+        this.quote = settings().getRenderNameStyle() == RenderNameStyle.QUOTED;
     }
 
     // ------------------------------------------------------------------------
@@ -523,6 +526,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C paramType(ParamType p) {
         paramType = (p == null ? INDEXED : p);
+        return (C) this;
+    }
+
+    @Override
+    public final boolean quote() {
+        return quote;
+    }
+
+    @Override
+    public final C quote(boolean q) {
+        this.quote = q;
         return (C) this;
     }
 

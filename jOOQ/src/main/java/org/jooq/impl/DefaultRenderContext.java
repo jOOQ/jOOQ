@@ -39,7 +39,6 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.RenderNameStyle.LOWER;
-import static org.jooq.conf.RenderNameStyle.QUOTED;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
@@ -335,7 +334,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#2367] ... but in SQLite, quoting "normal" literals is generally
             // asking for trouble, as SQLite bends the rules here, see
             // http://www.sqlite.org/lang_keywords.html for details ...
-            (family != SQLITE && QUOTED == cachedRenderNameStyle)
+            (family != SQLITE && quote())
 
         ||
 

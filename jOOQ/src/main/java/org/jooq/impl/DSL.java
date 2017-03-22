@@ -7059,6 +7059,62 @@ public class DSL {
         return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
 
+    /**
+     * Create a new SQL identifier using a qualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name quotedName(String... qualifiedName) {
+        return new NameImpl(qualifiedName, true);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified, quoted name.
+     * <p>
+     * This works like {@link #name(Collection)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name quotedName(Collection<String> qualifiedName) {
+        return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING), true);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name unquotedName(String... qualifiedName) {
+        return new NameImpl(qualifiedName, false);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified, quoted name.
+     * <p>
+     * This works like {@link #name(Collection)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name unquotedName(Collection<String> qualifiedName) {
+        return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING), false);
+    }
+
     // -------------------------------------------------------------------------
     // XXX QueryPart composition
     // -------------------------------------------------------------------------

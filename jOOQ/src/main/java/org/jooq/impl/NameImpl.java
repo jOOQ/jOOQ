@@ -64,9 +64,15 @@ final class NameImpl extends AbstractQueryPart implements Name {
     private static final long serialVersionUID = 8562325639223483938L;
 
     private final String[]    qualifiedName;
+    private final Boolean     quoted;
 
     NameImpl(String[] qualifiedName) {
+        this(qualifiedName, null);
+    }
+
+    NameImpl(String[] qualifiedName, Boolean quoted) {
         this.qualifiedName = nonEmpty(qualifiedName);
+        this.quoted = quoted;
     }
 
     private static final String[] nonEmpty(String[] qualifiedName) {
@@ -95,6 +101,10 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final void accept(Context<?> ctx) {
+        boolean previous = ctx.quote();
+
+        if (quoted != null)
+            ctx.quote(quoted);
 
         // [#3437] Fully qualify this field only if allowed in the current context
         if (ctx.qualify()) {
@@ -108,6 +118,9 @@ final class NameImpl extends AbstractQueryPart implements Name {
         else {
             ctx.literal(last());
         }
+
+        if (quoted != null)
+            ctx.quote(previous);
     }
 
     @Override

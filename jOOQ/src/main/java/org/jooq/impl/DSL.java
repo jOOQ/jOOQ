@@ -4925,6 +4925,14 @@ public class DSL {
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
     @Support
+    public static ConstraintFinalStep primaryKey(Name... fields) {
+        return constraint().primaryKey(fields);
+    }
+
+    /**
+     * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
+     */
+    @Support
     public static ConstraintFinalStep primaryKey(Field<?>... fields) {
         return constraint().primaryKey(fields);
     }
@@ -4934,6 +4942,14 @@ public class DSL {
      */
     @Support
     public static ConstraintForeignKeyReferencesStepN foreignKey(String... fields) {
+        return constraint().foreignKey(fields);
+    }
+
+    /**
+     * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Support
+    public static ConstraintForeignKeyReferencesStepN foreignKey(Name... fields) {
         return constraint().foreignKey(fields);
     }
 
@@ -5150,6 +5166,204 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    public static ConstraintForeignKeyReferencesStep1<?> foreignKey(Name field1) {
+        return constraint().foreignKey(field1);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(Name field1, Name field2) {
+        return constraint().foreignKey(field1, field2);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(Name field1, Name field2, Name field3) {
+        return constraint().foreignKey(field1, field2, field3);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4) {
+        return constraint().foreignKey(field1, field2, field3, field4);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21, Name field22) {
+        return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
+    }
+
+    /**
+     * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     public static ConstraintForeignKeyReferencesStep1<?> foreignKey(String field1) {
         return constraint().foreignKey(field1);
     }
@@ -5350,6 +5564,14 @@ public class DSL {
      */
     @Support
     public static ConstraintFinalStep unique(String... fields) {
+        return constraint().unique(fields);
+    }
+
+    /**
+     * Create an unnamed (system named) <code>UNIQUE</code> constraint.
+     */
+    @Support
+    public static ConstraintFinalStep unique(Name... fields) {
         return constraint().unique(fields);
     }
 

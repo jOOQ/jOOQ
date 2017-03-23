@@ -52,5 +52,10 @@ public interface ConstraintForeignKeyReferencesStepN {
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
+    ConstraintFinalStep references(Name table, Name... fields);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
     ConstraintFinalStep references(Table<?> table, Field<?>... fields);
 }

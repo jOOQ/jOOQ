@@ -194,6 +194,7 @@ final class Tools {
     static final QueryPart[]          EMPTY_QUERYPART        = {};
     static final Record[]             EMPTY_RECORD           = {};
     static final String[]             EMPTY_STRING           = {};
+    static final Name[]               EMPTY_NAME             = {};
     static final TableRecord<?>[]     EMPTY_TABLE_RECORD     = {};
     static final UpdatableRecord<?>[] EMPTY_UPDATABLE_RECORD = {};
 

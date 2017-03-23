@@ -56,5 +56,11 @@ public interface ConstraintForeignKeyReferencesStep10<T1, T2, T3, T4, T5, T6, T7
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
     @Support
+    ConstraintForeignKeyOnStep references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Support
     ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 }

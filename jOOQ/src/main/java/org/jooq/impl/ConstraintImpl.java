@@ -225,6 +225,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl unique(Name... fields) {
+        return unique(fieldsByName(fields));
+    }
+
+    @Override
     public final ConstraintImpl unique(Field<?>... fields) {
         unique = fields;
         return this;
@@ -242,6 +247,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl primaryKey(Name... fields) {
+        return primaryKey(fieldsByName(fields));
+    }
+
+    @Override
     public final ConstraintImpl primaryKey(Field<?>... fields) {
         primaryKey = fields;
         return this;
@@ -249,6 +259,11 @@ implements
 
     @Override
     public final ConstraintImpl foreignKey(String... fields) {
+        return foreignKey(fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl foreignKey(Name... fields) {
         return foreignKey(fieldsByName(fields));
     }
 
@@ -261,6 +276,11 @@ implements
     @Override
     public final ConstraintImpl references(String table, String... fields) {
         return references(table(name(table)), fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl references(Name table, Name... fields) {
+        return references(table(table), fieldsByName(fields));
     }
 
     @Override
@@ -466,134 +486,266 @@ implements
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
+    public final ConstraintImpl foreignKey(Name field1) {
+        return foreignKey(new Name[] { field1 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2) {
+        return foreignKey(new Name[] { field1, field2 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3) {
+        return foreignKey(new Name[] { field1, field2, field3 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4) {
+        return foreignKey(new Name[] { field1, field2, field3, field4 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21, Name field22) {
+        return foreignKey(new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
     public final ConstraintImpl foreignKey(String field1) {
-    	return foreignKey(new String[] { field1 });
+        return foreignKey(new String[] { field1 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2) {
-    	return foreignKey(new String[] { field1, field2 });
+        return foreignKey(new String[] { field1, field2 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3) {
-    	return foreignKey(new String[] { field1, field2, field3 });
+        return foreignKey(new String[] { field1, field2, field3 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4) {
-    	return foreignKey(new String[] { field1, field2, field3, field4 });
+        return foreignKey(new String[] { field1, field2, field3, field4 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22) {
-    	return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+        return foreignKey(new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
@@ -730,134 +882,266 @@ implements
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
+    public final ConstraintImpl references(Name table, Name field1) {
+        return references(table, new Name[] { field1 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2) {
+        return references(table, new Name[] { field1, field2 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3) {
+        return references(table, new Name[] { field1, field2, field3 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4) {
+        return references(table, new Name[] { field1, field2, field3, field4 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final ConstraintImpl references(Name table, Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21, Name field22) {
+        return references(table, new Name[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
     public final ConstraintImpl references(String table, String field1) {
-    	return references(table, new String[] { field1 });
+        return references(table, new String[] { field1 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2) {
-    	return references(table, new String[] { field1, field2 });
+        return references(table, new String[] { field1, field2 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3) {
-    	return references(table, new String[] { field1, field2, field3 });
+        return references(table, new String[] { field1, field2, field3 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4) {
-    	return references(table, new String[] { field1, field2, field3, field4 });
+        return references(table, new String[] { field1, field2, field3, field4 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5 });
+        return references(table, new String[] { field1, field2, field3, field4, field5 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final ConstraintImpl references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22) {
-    	return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+        return references(table, new String[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
 // [jooq-tools] END [foreignKey]

@@ -56,5 +56,11 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
     @Support
+    ConstraintForeignKeyOnStep references(Name table, Name field1);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @Support
     ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1);
 }

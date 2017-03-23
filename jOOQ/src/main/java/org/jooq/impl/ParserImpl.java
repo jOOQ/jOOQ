@@ -266,6 +266,7 @@ import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -1629,6 +1630,10 @@ class ParserImpl implements Parser {
     }
 
     private static final Condition parsePredicate(ParserContext ctx) {
+        return (Condition) parseFieldCondition0(ctx, true);
+    }
+
+    private static final QueryPart parseFieldCondition0(ParserContext ctx, boolean onlyConditions) {
         if (parseKeywordIf(ctx, "EXISTS")) {
             parse(ctx, '(');
             Select<?> select = parseSelect(ctx);
@@ -1711,6 +1716,8 @@ class ParserImpl implements Parser {
                         ? left.notLike(right)
                         : left.like(right);
             }
+            else if (!onlyConditions)
+                return left;
         }
 
         throw ctx.exception();
@@ -1999,8 +2006,10 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCondition(ParserContext ctx) {
-        // TODO all predicates also as fields
-        return parseFieldConcat(ctx, null);
+        QueryPart result = parseFieldCondition0(ctx, false);
+        return result instanceof Field<?>
+             ? (Field<?>) result
+             : DSL.field((Condition) result);
     }
 
     private static final Field<?> parseFieldTerm(ParserContext ctx, Type type) {
@@ -2483,7 +2492,7 @@ class ParserImpl implements Parser {
         return null;
     }
 
-    private static Field<?> parseFieldLeastIf(ParserContext ctx) {
+    private static final Field<?> parseFieldLeastIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "LEAST")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
@@ -2495,7 +2504,7 @@ class ParserImpl implements Parser {
         return null;
     }
 
-    private static Field<?> parseFieldGreatestIf(ParserContext ctx) {
+    private static final Field<?> parseFieldGreatestIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "GREATEST")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
@@ -3245,7 +3254,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static Object parseWindowNameOrSpecification(ParserContext ctx, boolean orderByAllowed) {
+    private static final Object parseWindowNameOrSpecification(ParserContext ctx, boolean orderByAllowed) {
         Object result;
 
         if (parseIf(ctx, '(')) {
@@ -3659,7 +3668,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static OrderedAggregateFunction<?> parseHypotheticalSetFunctionif(ParserContext ctx) {
+    private static final OrderedAggregateFunction<?> parseHypotheticalSetFunctionif(ParserContext ctx) {
 
         // This currently never parses hypothetical set functions, as the function names are already
         // consumed earlier in parseFieldTerm(). We should implement backtracking...
@@ -3691,7 +3700,7 @@ class ParserImpl implements Parser {
         return ordered;
     }
 
-    private static OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionif(ParserContext ctx) {
+    private static final OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionif(ParserContext ctx) {
         OrderedAggregateFunction<BigDecimal> ordered;
 
         if (parseKeywordIf(ctx, "PERCENTILE_CONT")) {
@@ -4021,7 +4030,7 @@ class ParserImpl implements Parser {
             return parseUnquotedStringLiteral(ctx);
     }
 
-    private static String parseOracleQuotedStringLiteral(ParserContext ctx) {
+    private static final String parseOracleQuotedStringLiteral(ParserContext ctx) {
         parse(ctx, '\'');
 
         char start = ctx.character();
@@ -4056,7 +4065,7 @@ class ParserImpl implements Parser {
         throw ctx.exception();
     }
 
-    private static String parseUnquotedStringLiteral(ParserContext ctx) {
+    private static final String parseUnquotedStringLiteral(ParserContext ctx) {
         parse(ctx, '\'');
 
         StringBuilder sb = new StringBuilder();
@@ -4546,13 +4555,13 @@ class ParserImpl implements Parser {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
 
-    public static void main(String[] args) {
+    public static final void main(String[] args) {
         System.out.println(new ParserImpl(new DefaultConfiguration()).parse(
             "DROP INDEX   y on a.b.c"
         ));
     }
 
-    static class ParserContext {
+    static final class ParserContext {
         final DSLContext   dsl;
         final String       sqlString;
         final char[]       sql;
@@ -4616,7 +4625,7 @@ class ParserImpl implements Parser {
         }
     }
 
-    static class ParserException extends DataAccessException {
+    static final class ParserException extends DataAccessException {
 
         /**
          * Generated UID

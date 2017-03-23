@@ -109,7 +109,6 @@ import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.month;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.nullif;
@@ -195,6 +194,7 @@ import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.math.BigDecimal;
@@ -203,7 +203,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -830,15 +829,16 @@ class ParserImpl implements Parser {
         Table<?> target = parseTableName(ctx);
         parseKeyword(ctx, "USING");
         parse(ctx, '(');
-        TableLike<?> using = parseSelect(ctx);
+        Select<?> using = parseSelect(ctx);
+        TableLike<?> usingTable = using;
         parse(ctx, ')');
         if (parseKeywordIf(ctx, "AS"))
-            using = using.asTable(parseIdentifier(ctx));
+            usingTable = DSL.table(using).as(parseIdentifier(ctx));
         parseKeyword(ctx, "ON");
         Condition on = parseCondition(ctx);
         boolean update = false;
         boolean insert = false;
-        List<Field<?>> insertColumns = null;
+        Field<?>[] insertColumns = null;
         List<Field<?>> insertValues = null;
         Map<Field<?>, Object> updateSet = null;
 
@@ -848,14 +848,14 @@ class ParserImpl implements Parser {
             }
             else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED THEN INSERT"))) {
                 parse(ctx, '(');
-                insertColumns = Arrays.asList(Tools.fieldsByName(parseIdentifiers(ctx)));
+                insertColumns = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
                 parse(ctx, ')');
                 parseKeyword(ctx, "VALUES");
                 parse(ctx, '(');
                 insertValues = parseFields(ctx);
                 parse(ctx, ')');
 
-                if (insertColumns.size() != insertValues.size())
+                if (insertColumns.length != insertValues.size())
                     throw ctx.exception();
             }
             else
@@ -869,7 +869,7 @@ class ParserImpl implements Parser {
         // TODO support multi clause MERGE
         // TODO support DELETE
 
-        MergeMatchedStep<?> s1 = ctx.dsl.mergeInto(target).using(using).on(on);
+        MergeMatchedStep<?> s1 = ctx.dsl.mergeInto(target).using(usingTable).on(on);
         MergeNotMatchedStep<?> s2 = update ? s1.whenMatchedThenUpdate().set(updateSet) : s1;
         MergeFinalStep<?> s3 = insert ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s2;
 
@@ -1035,7 +1035,7 @@ class ParserImpl implements Parser {
 
             parse(ctx, '(');
             do {
-                String fieldName = parseIdentifier(ctx);
+                Name fieldName = parseIdentifier(ctx);
                 DataType<?> type = parseDataType(ctx);
 
                 boolean nullable = false;
@@ -1088,7 +1088,7 @@ class ParserImpl implements Parser {
                     break;
                 }
 
-                fields.add(field(name(fieldName), type));
+                fields.add(field(fieldName, type));
             }
             while (parseIf(ctx, ',')
                && (noConstraint =
@@ -1249,7 +1249,7 @@ class ParserImpl implements Parser {
                         // Once implemented, we might be able to factor out the common logic into
                         // a new parseXXX() method.
 
-                        String fieldName = parseIdentifier(ctx);
+                        Name fieldName = parseIdentifier(ctx);
                         DataType type = parseDataType(ctx);
 
                         boolean nullable = false;
@@ -1294,7 +1294,7 @@ class ParserImpl implements Parser {
                             break;
                         }
 
-                        return s1.add(field(name(fieldName), type), type);
+                        return s1.add(field(fieldName, type), type);
                     }
                 }
 
@@ -1318,7 +1318,7 @@ class ParserImpl implements Parser {
                         return s3;
                     }
                     else if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        String constraint = parseIdentifier(ctx);
+                        Name constraint = parseIdentifier(ctx);
 
                         return s1.dropConstraint(constraint);
                     }
@@ -1330,21 +1330,21 @@ class ParserImpl implements Parser {
             case 'R':
                 if (parseKeywordIf(ctx, "RENAME")) {
                     if (parseKeywordIf(ctx, "TO")) {
-                        String newName = parseIdentifier(ctx);
+                        Name newName = parseIdentifier(ctx);
 
                         return s1.renameTo(newName);
                     }
                     else if (parseKeywordIf(ctx, "COLUMN")) {
-                        String oldName = parseIdentifier(ctx);
+                        Name oldName = parseIdentifier(ctx);
                         parseKeyword(ctx, "TO");
-                        String newName = parseIdentifier(ctx);
+                        Name newName = parseIdentifier(ctx);
 
                         return s1.renameColumn(oldName).to(newName);
                     }
                     else if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        String oldName = parseIdentifier(ctx);
+                        Name oldName = parseIdentifier(ctx);
                         parseKeyword(ctx, "TO");
-                        String newName = parseIdentifier(ctx);
+                        Name newName = parseIdentifier(ctx);
 
                         return s1.renameConstraint(oldName).to(newName);
                     }
@@ -1498,7 +1498,7 @@ class ParserImpl implements Parser {
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
         parse(ctx, '(');
-        Field<?>[] fieldNames = Tools.fieldsByName(parseIdentifiers(ctx));
+        Field<?>[] fieldNames = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
         parse(ctx, ')');
         Condition condition = parseKeywordIf(ctx, "WHERE")
             ? parseCondition(ctx)
@@ -1781,8 +1781,8 @@ class ParserImpl implements Parser {
             result = parseTableName(ctx);
         }
 
-        String alias = null;
-        List<String> columnAliases = null;
+        Name alias = null;
+        List<Name> columnAliases = null;
 
         if (parseKeywordIf(ctx, "AS"))
             alias = parseIdentifier(ctx);
@@ -1796,7 +1796,7 @@ class ParserImpl implements Parser {
             }
 
             if (columnAliases != null)
-                result = result.as(alias, columnAliases.toArray(EMPTY_STRING));
+                result = result.as(alias, columnAliases.toArray(EMPTY_NAME));
             else
                 result = result.as(alias);
         }
@@ -1864,7 +1864,7 @@ class ParserImpl implements Parser {
         List<Field<?>> result = new ArrayList<Field<?>>();
         do {
             Field<?> field = parseField(ctx);
-            String alias = null;
+            Name alias = null;
 
             if (parseKeywordIf(ctx, "AS"))
                 alias = parseIdentifier(ctx);
@@ -3409,7 +3409,7 @@ class ParserImpl implements Parser {
             parse(ctx, ')');
         }
         else {
-            result = name(parseIdentifier(ctx));
+            result = parseIdentifier(ctx);
         }
 
         return result;
@@ -3875,19 +3875,19 @@ class ParserImpl implements Parser {
         return DSL.name(name.toArray(EMPTY_STRING));
     }
 
-    private static final List<String> parseIdentifiers(ParserContext ctx) {
-        LinkedHashSet<String> result = new LinkedHashSet<String>();
+    private static final List<Name> parseIdentifiers(ParserContext ctx) {
+        LinkedHashSet<Name> result = new LinkedHashSet<Name>();
 
         do {
             if (!result.add(parseIdentifier(ctx)))
                 throw ctx.exception();
         }
         while (parseIf(ctx, ','));
-        return new ArrayList<String>(result);
+        return new ArrayList<Name>(result);
     }
 
-    private static final String parseIdentifier(ParserContext ctx) {
-        String alias = parseIdentifierIf(ctx);
+    private static final Name parseIdentifier(ParserContext ctx) {
+        Name alias = parseIdentifierIf(ctx);
 
         if (alias == null)
             throw ctx.exception();
@@ -3895,7 +3895,7 @@ class ParserImpl implements Parser {
         return alias;
     }
 
-    private static final String parseIdentifierIf(ParserContext ctx) {
+    private static final Name parseIdentifierIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
         char quoteEnd =
@@ -3918,10 +3918,12 @@ class ParserImpl implements Parser {
 
         String result = new String(ctx.sql, start, ctx.position - start);
 
-        if (quoteEnd != 0)
+        if (quoteEnd != 0) {
             ctx.position = ctx.position + 1;
-
-        return result;
+            return DSL.quotedName(result);
+        }
+        else
+            return DSL.unquotedName(result);
     }
 
     private static final DataType<?> parseDataType(ParserContext ctx) {
@@ -4003,7 +4005,7 @@ class ParserImpl implements Parser {
 
             case ':':
                 parse(ctx, ':');
-                return DSL.param(parseIdentifier(ctx));
+                return DSL.param(parseIdentifier(ctx).last());
 
             default:
                 throw ctx.exception();

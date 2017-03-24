@@ -195,7 +195,6 @@ import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
-import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -736,7 +735,7 @@ class ParserImpl implements Parser {
         Field<?>[] fields = null;
 
         if (parseIf(ctx, '(')) {
-            fields = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_STRING));
+            fields = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
             parse(ctx, ')');
         }
 
@@ -1059,7 +1058,7 @@ class ParserImpl implements Parser {
 
                     if (!defaultValue) {
                         if (parseKeywordIf(ctx, "DEFAULT")) {
-                            type = type.defaultValue((Field) parseField(ctx));
+                            type = type.defaultValue((Field) parseFieldConcat(ctx, null));
                             defaultValue = true;
                             continue;
                         }
@@ -1273,7 +1272,7 @@ class ParserImpl implements Parser {
 
                             if (!defaultValue) {
                                 if (parseKeywordIf(ctx, "DEFAULT")) {
-                                    type = type.defaultValue(parseField(ctx));
+                                    type = type.defaultValue(parseFieldConcat(ctx, null));
                                     defaultValue = true;
                                     continue;
                                 }
@@ -1850,7 +1849,7 @@ class ParserImpl implements Parser {
                 else {
                     parseKeyword(ctx, "USING");
                     parse(ctx, '(');
-                    result2 = result1.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_STRING)));
+                    result2 = result1.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
                     parse(ctx, ')');
                 }
 
@@ -2244,7 +2243,7 @@ class ParserImpl implements Parser {
                         return field;
 
                 if (parseKeywordIf(ctx, "PRIOR"))
-                    return prior(parseField(ctx));
+                    return prior(parseFieldConcat(ctx, type));
 
                 break;
 

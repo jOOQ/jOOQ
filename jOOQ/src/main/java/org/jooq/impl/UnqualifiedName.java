@@ -34,55 +34,62 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.tools.StringUtils.defaultIfNull;
-
-import java.util.Arrays;
-
 import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.Name;
-import org.jooq.Record;
-import org.jooq.RenderContext;
-import org.jooq.Table;
-import org.jooq.TableField;
 
 /**
- * A <code>QualifiedField</code> is a {@link Field} that always renders a field name
- * or alias as a literal using {@link RenderContext#literal(String)}
+ * The default implementation for an unqualified SQL identifier.
  *
  * @author Lukas Eder
  */
-final class QualifiedField<T> extends AbstractField<T> implements TableField<Record, T> {
+final class UnqualifiedName extends AbstractName {
 
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 6937002867156868761L;
+    private static final long serialVersionUID = 8562325639223483938L;
 
-    private final Name          name;
-    private final Table<Record> table;
+    private final String      name;
+    private final Boolean     quoted;
 
-    QualifiedField(Name name, DataType<T> type) {
-        super(DSL.name(defaultIfNull(name.last(), "")), type);
-
-        this.name = name;
-        this.table = name.qualified()
-            ? DSL.table(DSL.name(Arrays.copyOf(name.getName(), name.getName().length - 1)))
-            : null;
+    UnqualifiedName(String name) {
+        this(name, null);
     }
 
-    // ------------------------------------------------------------------------
-    // Field API
-    // ------------------------------------------------------------------------
+    UnqualifiedName(String name, Boolean quoted) {
+        this.name = name;
+        this.quoted = quoted;
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name);
+        boolean previous = ctx.quote();
+
+        if (quoted != null)
+            ctx.quote(quoted);
+
+        ctx.literal(name);
+
+        if (quoted != null)
+            ctx.quote(previous);
     }
 
     @Override
-    public final Table<Record> getTable() {
-        return table;
+    public final String first() {
+        return name;
+    }
+
+    @Override
+    public final String last() {
+        return name;
+    }
+
+    @Override
+    public final boolean qualified() {
+        return false;
+    }
+
+    @Override
+    public final String[] getName() {
+        return new String[] { name };
     }
 }

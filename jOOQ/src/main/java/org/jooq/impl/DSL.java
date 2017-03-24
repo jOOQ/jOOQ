@@ -7228,6 +7228,33 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new SQL identifier using an unqualified name.
+     * <p>
+     * Use this method to construct syntax-safe, SQL-injection-safe SQL
+     * identifiers for use in plain SQL where {@link QueryPart} objects are
+     * accepted. For instance, this can be used with any of these methods:
+     * <ul>
+     * <li> {@link #field(Name)}</li>
+     * <li> {@link #field(Name, Class)}</li>
+     * <li> {@link #field(Name, DataType)}</li>
+     * </ul>
+     * <p>
+     * An example: <code><pre>
+     * // This unqualified name here
+     * name("book");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [book].[title]
+     * </pre></code>
+     *
+     * @param unqualifiedName The SQL identifier's unqualified name
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name name(String unqualifiedName) {
+        return new UnqualifiedName(unqualifiedName);
+    }
+
+    /**
      * Create a new SQL identifier using a qualified name.
      * <p>
      * Use this method to construct syntax-safe, SQL-injection-safe SQL
@@ -7251,7 +7278,10 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name name(String... qualifiedName) {
-        return new NameImpl(qualifiedName);
+        if (qualifiedName == null || qualifiedName.length != 1)
+            return new QualifiedName(qualifiedName);
+        else
+            return new UnqualifiedName(qualifiedName[0]);
     }
 
     /**
@@ -7282,7 +7312,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name name(Name... nameParts) {
-        return new NameImpl(nameParts);
+        return new QualifiedName(nameParts);
     }
 
     /**
@@ -7309,7 +7339,21 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name name(Collection<String> qualifiedName) {
-        return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING));
+        return name(qualifiedName.toArray(Tools.EMPTY_STRING));
+    }
+
+    /**
+     * Create a new SQL identifier using an unqualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param unqualifiedName The SQL identifier's unqualified name
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name quotedName(String unqualifiedName) {
+        return new UnqualifiedName(unqualifiedName, true);
     }
 
     /**
@@ -7323,7 +7367,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name quotedName(String... qualifiedName) {
-        return new NameImpl(qualifiedName, true);
+        return new QualifiedName(qualifiedName, true);
     }
 
     /**
@@ -7337,7 +7381,21 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name quotedName(Collection<String> qualifiedName) {
-        return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING), true);
+        return quotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
+    }
+
+    /**
+     * Create a new SQL identifier using an unqualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be quoted in databases that support
+     * quoted identifiers.
+     *
+     * @param unqualifiedName The SQL identifier's unqualified name
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name unquotedName(String unqualifiedName) {
+        return new UnqualifiedName(unqualifiedName, false);
     }
 
     /**
@@ -7351,7 +7409,10 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name unquotedName(String... qualifiedName) {
-        return new NameImpl(qualifiedName, false);
+        if (qualifiedName == null || qualifiedName.length != 1)
+            return new QualifiedName(qualifiedName, false);
+        else
+            return new UnqualifiedName(qualifiedName[0], false);
     }
 
     /**
@@ -7365,7 +7426,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name unquotedName(Collection<String> qualifiedName) {
-        return new NameImpl(qualifiedName.toArray(Tools.EMPTY_STRING), false);
+        return unquotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
 
     // -------------------------------------------------------------------------

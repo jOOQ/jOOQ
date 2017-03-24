@@ -49,145 +49,22 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
-import org.jooq.tools.StringUtils;
 
 /**
- * The default implementation for a SQL identifier
+ * The default implementation for a qualified SQL identifier.
  *
  * @author Lukas Eder
  */
-final class NameImpl extends AbstractQueryPart implements Name {
+abstract class AbstractName extends AbstractQueryPart implements Name {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 8562325639223483938L;
 
-    private final String[]    qualifiedName;
-    private final Boolean[]   quoted;
-
-    NameImpl(String[] qualifiedName) {
-        this(qualifiedName, new Boolean[qualifiedName.length]);
-    }
-
-    NameImpl(Name[] qualifiedName) {
-        this(last(qualifiedName), quoted(qualifiedName));
-    }
-
-    NameImpl(String[] qualifiedName, boolean quoted) {
-        this(qualifiedName, booleans(quoted, qualifiedName.length));
-    }
-
-    NameImpl(String[] qualifiedName, Boolean[] quoted) {
-        this.qualifiedName = nonEmpty(qualifiedName);
-        this.quoted = quoted;
-    }
-
-    private static final Boolean[] booleans(boolean val, int length) {
-        Boolean[] result = new Boolean[length];
-        Arrays.fill(result, val);
-        return result;
-    }
-
-    private static final String[] last(Name[] qualifiedName) {
-        String[] result = new String[qualifiedName.length];
-
-        for (int i = 0; i < qualifiedName.length; i++)
-            result[i] = qualifiedName[i].last();
-
-        return result;
-    }
-
-    private static final Boolean[] quoted(Name[] qualifiedName) {
-        Boolean[] result = new Boolean[qualifiedName.length];
-
-        for (int i = 0; i < qualifiedName.length; i++)
-            result[i] = ((NameImpl) qualifiedName[i]).quoted[((NameImpl) qualifiedName[i]).quoted.length - 1];
-
-        return result;
-    }
-
-    private static final String[] nonEmpty(String[] qualifiedName) {
-        String[] result;
-        int nulls = 0;
-
-        for (int i = 0; i < qualifiedName.length; i++)
-            if (StringUtils.isEmpty(qualifiedName[i]))
-                nulls++;
-
-        if (nulls > 0) {
-            result = new String[qualifiedName.length - nulls];
-
-            for (int i = qualifiedName.length - 1; i >= 0; i--)
-                if (StringUtils.isEmpty(qualifiedName[i]))
-                    nulls--;
-                else
-                    result[i - nulls] = qualifiedName[i];
-        }
-        else {
-            result = qualifiedName.clone();
-        }
-
-        return result;
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        boolean previous = ctx.quote();
-
-        // [#3437] Fully qualify this field only if allowed in the current context
-        if (ctx.qualify()) {
-            String separator = "";
-
-            for (int i = 0; i < qualifiedName.length; i++) {
-                String name = qualifiedName[i];
-
-                if (quoted[i] != null)
-                    ctx.quote(quoted[i]);
-
-                ctx.sql(separator).literal(name);
-
-                if (quoted[i] != null)
-                    ctx.quote(previous);
-
-                separator = ".";
-            }
-        }
-        else {
-            int last = quoted.length - 1;
-            if (quoted[last] != null)
-                ctx.quote(quoted[last]);
-
-            ctx.literal(last());
-
-            if (quoted[last] != null)
-                ctx.quote(previous);
-        }
-    }
-
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
-    }
-
-    @Override
-    public final String first() {
-        return qualifiedName.length > 0 ? qualifiedName[0] : null;
-    }
-
-    @Override
-    public final String last() {
-        return qualifiedName.length > 0 ? qualifiedName[qualifiedName.length - 1] : null;
-    }
-
-    @Override
-    public final boolean qualified() {
-        return qualifiedName.length > 1;
-    }
-
-    @Override
-    public final String[] getName() {
-        return qualifiedName;
     }
 
     @Override
@@ -203,10 +80,10 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final DerivedColumnListImpl fields(String... fieldNames) {
-        if (qualifiedName.length != 1)
-            throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(qualifiedName));
+        if (getName().length != 1)
+            throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(getName()));
 
-        return new DerivedColumnListImpl(first(), fieldNames);
+        return new DerivedColumnListImpl(last(), fieldNames);
     }
 
 
@@ -375,8 +252,8 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
         // [#1626] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl)
-            return Arrays.equals(getName(), (((NameImpl) that).getName()));
+        if (that instanceof AbstractName)
+            return Arrays.equals(getName(), (((AbstractName) that).getName()));
 
         return super.equals(that);
     }

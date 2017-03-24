@@ -83,6 +83,11 @@ public interface Name extends QueryPart {
     boolean qualified();
 
     /**
+     * This name's qualifier (if it is {@link #qualified()}), or <code>null</code>.
+     */
+    Name qualifier();
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

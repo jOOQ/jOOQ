@@ -36,8 +36,6 @@ package org.jooq.impl;
 
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.util.Arrays;
-
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -68,7 +66,7 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
 
         this.name = name;
         this.table = name.qualified()
-            ? DSL.table(DSL.name(Arrays.copyOf(name.getName(), name.getName().length - 1)))
+            ? DSL.table(name.qualifier())
             : null;
     }
 

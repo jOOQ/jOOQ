@@ -154,6 +154,18 @@ final class QualifiedName extends AbstractName {
     }
 
     @Override
+    public final Name qualifier() {
+        if (qualifiedName.length <= 1)
+            return null;
+        if (qualifiedName.length == 2)
+            return qualifiedName[0];
+
+        UnqualifiedName[] qualifier = new UnqualifiedName[qualifiedName.length - 1];
+        System.arraycopy(qualifiedName, 0, qualifier, 0, qualifier.length);
+        return new QualifiedName(qualifier);
+    }
+
+    @Override
     public final String[] getName() {
         String[] result = new String[qualifiedName.length];
 

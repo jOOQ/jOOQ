@@ -64,15 +64,47 @@ final class NameImpl extends AbstractQueryPart implements Name {
     private static final long serialVersionUID = 8562325639223483938L;
 
     private final String[]    qualifiedName;
-    private final Boolean     quoted;
+    private final Boolean[]   quoted;
 
     NameImpl(String[] qualifiedName) {
-        this(qualifiedName, null);
+        this(qualifiedName, new Boolean[qualifiedName.length]);
     }
 
-    NameImpl(String[] qualifiedName, Boolean quoted) {
+    NameImpl(Name[] qualifiedName) {
+        this(last(qualifiedName), quoted(qualifiedName));
+    }
+
+    NameImpl(String[] qualifiedName, boolean quoted) {
+        this(qualifiedName, booleans(quoted, qualifiedName.length));
+    }
+
+    NameImpl(String[] qualifiedName, Boolean[] quoted) {
         this.qualifiedName = nonEmpty(qualifiedName);
         this.quoted = quoted;
+    }
+
+    private static final Boolean[] booleans(boolean val, int length) {
+        Boolean[] result = new Boolean[length];
+        Arrays.fill(result, val);
+        return result;
+    }
+
+    private static final String[] last(Name[] qualifiedName) {
+        String[] result = new String[qualifiedName.length];
+
+        for (int i = 0; i < qualifiedName.length; i++)
+            result[i] = qualifiedName[i].last();
+
+        return result;
+    }
+
+    private static final Boolean[] quoted(Name[] qualifiedName) {
+        Boolean[] result = new Boolean[qualifiedName.length];
+
+        for (int i = 0; i < qualifiedName.length; i++)
+            result[i] = ((NameImpl) qualifiedName[i]).quoted[((NameImpl) qualifiedName[i]).quoted.length - 1];
+
+        return result;
     }
 
     private static final String[] nonEmpty(String[] qualifiedName) {
@@ -103,24 +135,34 @@ final class NameImpl extends AbstractQueryPart implements Name {
     public final void accept(Context<?> ctx) {
         boolean previous = ctx.quote();
 
-        if (quoted != null)
-            ctx.quote(quoted);
-
         // [#3437] Fully qualify this field only if allowed in the current context
         if (ctx.qualify()) {
             String separator = "";
 
-            for (String name : qualifiedName) {
+            for (int i = 0; i < qualifiedName.length; i++) {
+                String name = qualifiedName[i];
+
+                if (quoted[i] != null)
+                    ctx.quote(quoted[i]);
+
                 ctx.sql(separator).literal(name);
+
+                if (quoted[i] != null)
+                    ctx.quote(previous);
+
                 separator = ".";
             }
         }
         else {
-            ctx.literal(last());
-        }
+            int last = quoted.length - 1;
+            if (quoted[last] != null)
+                ctx.quote(quoted[last]);
 
-        if (quoted != null)
-            ctx.quote(previous);
+            ctx.literal(last());
+
+            if (quoted[last] != null)
+                ctx.quote(previous);
+        }
     }
 
     @Override

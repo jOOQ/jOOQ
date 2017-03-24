@@ -1369,7 +1369,7 @@ class ParserImpl implements Parser {
                     parseKeyword(ctx, "TO");
                     Field<?> newName = parseFieldName(ctx);
 
-                    return ctx.dsl.alterTable(oldName.getTable().getName()).renameColumn(oldName).to(newName);
+                    return ctx.dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(newName);
                 }
 
                 break;
@@ -3828,60 +3828,13 @@ class ParserImpl implements Parser {
     }
 
     static final Name parseName(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-        if (ctx.done())
-            throw ctx.exception();
+        List<Name> result = new ArrayList<Name>();
+        result.add(parseIdentifier(ctx));
 
-        List<String> name = new ArrayList<String>();
-        StringBuilder sb = new StringBuilder();
-        int i = ctx.position;
-        boolean identifierStart = true;
-        boolean identifierEnd = false;
-        for (;;) {
-            char c = ctx.character(i);
+        while (parseIf(ctx, '.'))
+            result.add(parseIdentifier(ctx));
 
-            // TODO Quoted identifiers
-            if (c == '.') {
-                if (identifierStart)
-                    throw new ParserException(ctx);
-
-                name.add(sb.toString());
-                sb = new StringBuilder();
-                identifierStart = true;
-                identifierEnd = false;
-            }
-
-            // Better way to distinguish identifier parts
-            else if (!identifierEnd && Character.isJavaIdentifierPart(c)) {
-                sb.append(c);
-                identifierStart = false;
-            }
-
-            else if (Character.isWhitespace(c)) {
-                identifierEnd = !identifierStart;
-            }
-
-            else {
-                name.add(sb.toString());
-                identifierEnd = !identifierStart;
-                break;
-            }
-
-            if (++i == ctx.sql.length) {
-                if (identifierStart)
-                    throw ctx.exception();
-
-                name.add(sb.toString());
-                identifierEnd = !identifierStart;
-                break;
-            }
-        }
-
-        if (ctx.position == i)
-            throw ctx.exception();
-
-        ctx.position = i;
-        return DSL.name(name.toArray(EMPTY_STRING));
+        return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
     }
 
     private static final List<Name> parseIdentifiers(ParserContext ctx) {
@@ -3896,12 +3849,12 @@ class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifier(ParserContext ctx) {
-        Name alias = parseIdentifierIf(ctx);
+        Name result = parseIdentifierIf(ctx);
 
-        if (alias == null)
+        if (result == null)
             throw ctx.exception();
 
-        return alias;
+        return result;
     }
 
     private static final Name parseIdentifierIf(ParserContext ctx) {
@@ -3915,19 +3868,25 @@ class ParserImpl implements Parser {
 
         int start = ctx.position;
         if (quoteEnd != 0)
-            while (ctx.character() != quoteEnd)
+            while (ctx.character() != quoteEnd && ctx.position < ctx.sql.length)
                 ctx.position = ctx.position + 1;
         else
-            while (ctx.isIdentifierPart())
+            while (ctx.isIdentifierPart() && ctx.position < ctx.sql.length)
                 ctx.position = ctx.position + 1;
 
 
         if (ctx.position == start)
             return null;
 
+        if (ctx.position - start < 0)
+            throw ctx.exception();
+
         String result = new String(ctx.sql, start, ctx.position - start);
 
         if (quoteEnd != 0) {
+            if (ctx.character() != quoteEnd)
+                throw ctx.exception();
+
             ctx.position = ctx.position + 1;
             return DSL.quotedName(result);
         }

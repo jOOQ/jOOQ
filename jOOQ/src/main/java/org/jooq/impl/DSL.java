@@ -7257,6 +7257,37 @@ public class DSL {
     /**
      * Create a new SQL identifier using a qualified name.
      * <p>
+     * Unlike other {@link #name(String...)} constructors, this one constructs a
+     * name from its argument {@link Name#last()} parts, retaining the quoted
+     * flag, to construct a new name.
+     * <p>
+     * Use this method to construct syntax-safe, SQL-injection-safe SQL
+     * identifiers for use in plain SQL where {@link QueryPart} objects are
+     * accepted. For instance, this can be used with any of these methods:
+     * <ul>
+     * <li>{@link #field(Name)}</li>
+     * <li>{@link #field(Name, Class)}</li>
+     * <li>{@link #field(Name, DataType)}</li>
+     * </ul>
+     * <p>
+     * An example: <code><pre>
+     * // This qualified name here
+     * name(quotedName("book"), unquotedName("title"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [book].title
+     * </pre></code>
+     *
+     * @param nameParts The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name name(Name... nameParts) {
+        return new NameImpl(nameParts);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified name.
+     * <p>
      * Use this method to construct syntax-safe, SQL-injection-safe SQL
      * identifiers for use in plain SQL where {@link QueryPart} objects are
      * accepted. For instance, this can be used with any of these methods:

@@ -47,7 +47,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 
@@ -118,13 +117,13 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
+    public final CreateIndexImpl on(Name tableName, Name... fieldNames) {
+        return on(table(tableName), Tools.fieldsByName(fieldNames));
+    }
+
+    @Override
     public final CreateIndexImpl on(String tableName, String... fieldNames) {
-        Field<?>[] f = new Field[fieldNames.length];
-
-        for (int i = 0; i < f.length; i++)
-            f[i] = field(name(fieldNames[i]));
-
-        return on(table(name(tableName)), f);
+        return on(table(name(tableName)), Tools.fieldsByName(fieldNames));
     }
 
     @Override

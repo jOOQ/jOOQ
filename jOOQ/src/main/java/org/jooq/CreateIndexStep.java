@@ -76,5 +76,11 @@ public interface CreateIndexStep {
      * Specify the table and column expressions on which to create an index.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexWhereStep on(Name tableName, Name... fieldNames);
+
+    /**
+     * Specify the table and column expressions on which to create an index.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexWhereStep on(String tableName, String... fieldNames);
 }

@@ -518,6 +518,10 @@ class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
                     offsetStandard = true;
+
+                // Ingres doesn't have a ROWS keyword after offset
+                else if (peekKeyword(ctx, "FETCH"))
+                    offsetStandard = true;
                 else
                     offsetPostgres = true;
             }

@@ -588,11 +588,23 @@ class ParserImpl implements Parser {
         if (!distinct)
             parseKeywordIf(ctx, "ALL");
 
+        // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
             limit = parseUnsignedInteger(ctx);
 
             if (parseKeywordIf(ctx, "START AT"))
                 offset = parseUnsignedInteger(ctx);
+        }
+
+        // Informix style SKIP .. FIRST
+        else if (parseKeywordIf(ctx, "SKIP")) {
+            offset = parseUnsignedInteger(ctx);
+
+            if (parseKeywordIf(ctx, "FIRST"))
+                limit = parseUnsignedInteger(ctx);
+        }
+        else if (parseKeywordIf(ctx, "FIRST")) {
+            limit = parseUnsignedInteger(ctx);
         }
 
         List<Field<?>> select = parseSelectList(ctx);

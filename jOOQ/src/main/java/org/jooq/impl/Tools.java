@@ -123,6 +123,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -178,27 +179,28 @@ import org.jooq.types.UShort;
  */
 final class Tools {
 
-    static final JooqLogger           log                    = JooqLogger.getLogger(Tools.class);
+    static final JooqLogger                 log                           = JooqLogger.getLogger(Tools.class);
 
     // ------------------------------------------------------------------------
     // Empty arrays for use with Collection.toArray()
     // ------------------------------------------------------------------------
 
-    static final Class<?>[]           EMPTY_CLASS            = {};
-    static final Clause[]             EMPTY_CLAUSE           = {};
-    static final Collection<?>[]      EMPTY_COLLECTION       = {};
-    static final ExecuteListener[]    EMPTY_EXECUTE_LISTENER = {};
-    static final Field<?>[]           EMPTY_FIELD            = {};
-    static final int[]                EMPTY_INT              = {};
-    static final Param<?>[]           EMPTY_PARAM            = {};
-    static final Query[]              EMPTY_QUERY            = {};
-    static final QueryPart[]          EMPTY_QUERYPART        = {};
-    static final Record[]             EMPTY_RECORD           = {};
-    static final RowN[]               EMPTY_ROWN             = {};
-    static final String[]             EMPTY_STRING           = {};
-    static final Name[]               EMPTY_NAME             = {};
-    static final TableRecord<?>[]     EMPTY_TABLE_RECORD     = {};
-    static final UpdatableRecord<?>[] EMPTY_UPDATABLE_RECORD = {};
+    static final Class<?>[]                 EMPTY_CLASS                   = {};
+    static final Clause[]                   EMPTY_CLAUSE                  = {};
+    static final Collection<?>[]            EMPTY_COLLECTION              = {};
+    static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};
+    static final Field<?>[]                 EMPTY_FIELD                   = {};
+    static final int[]                      EMPTY_INT                     = {};
+    static final Param<?>[]                 EMPTY_PARAM                   = {};
+    static final Query[]                    EMPTY_QUERY                   = {};
+    static final QueryPart[]                EMPTY_QUERYPART               = {};
+    static final Record[]                   EMPTY_RECORD                  = {};
+    static final RowN[]                     EMPTY_ROWN                    = {};
+    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
+    static final String[]                   EMPTY_STRING                  = {};
+    static final Name[]                     EMPTY_NAME                    = {};
+    static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
+    static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()

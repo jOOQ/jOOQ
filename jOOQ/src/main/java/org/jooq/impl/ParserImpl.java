@@ -195,6 +195,7 @@ import static org.jooq.impl.ParserImpl.Type.D;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
+import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 
@@ -224,6 +225,7 @@ import org.jooq.AlterTableStep;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -243,6 +245,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteFinalStep;
 import org.jooq.DeleteWhereStep;
+import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaFinalStep;
@@ -453,6 +456,13 @@ class ParserImpl implements Parser {
 
                     break;
 
+                case 'w':
+                case 'W':
+                    if (peekKeyword(ctx, "WITH"))
+                        return parseWith(ctx);
+
+                    break;
+
                 case '(':
                     // TODO are there other possible statement types?
                     return parseSelect(ctx);
@@ -473,8 +483,42 @@ class ParserImpl implements Parser {
     // Statement parsing
     // -----------------------------------------------------------------------------------------------------------------
 
+    private static final Query parseWith(ParserContext ctx) {
+        parseKeyword(ctx, "WITH");
+
+        List<CommonTableExpression<?>> cte = new ArrayList<CommonTableExpression<?>>();
+        do {
+
+            Name table = parseIdentifier(ctx);
+
+            // [#6022] Allow unquoted identifiers for columns
+            parse(ctx, '(');
+            List<Name> columnNames = parseIdentifiers(ctx);
+            String[] columns = new String[columnNames.size()];
+            for (int i = 0; i < columns.length; i++)
+                columns[i] = columnNames.get(i).last();
+            parse(ctx, ')');
+
+            DerivedColumnList dcl = table.fields(columns);
+            parseKeyword(ctx, "AS");
+            parse(ctx, '(');
+            cte.add(dcl.as(parseSelect(ctx)));
+            parse(ctx, ')');
+        }
+        while (parseIf(ctx, ','));
+
+        // TODO Better model API for WITH clause
+        return parseSelect(ctx, (WithImpl) new WithImpl(ctx.dsl.configuration(), false).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
+
+        // TODO Other statements than SELECT
+    }
+
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
-        SelectQueryImpl<Record> result = parseQueryPrimary(ctx);
+        return parseSelect(ctx, null);
+    }
+
+    private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, WithImpl with) {
+        SelectQueryImpl<Record> result = parseQueryPrimary(ctx, with);
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx)) != null) {
             switch (combine) {
@@ -577,8 +621,12 @@ class ParserImpl implements Parser {
     }
 
     private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx) {
+        return parseQueryPrimary(ctx, null);
+    }
+
+    private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx, WithImpl with) {
         if (parseIf(ctx, '(')) {
-            SelectQueryImpl<Record> result = parseSelect(ctx);
+            SelectQueryImpl<Record> result = parseSelect(ctx, with);
             parse(ctx, ')');
             return result;
         }
@@ -689,7 +737,7 @@ class ParserImpl implements Parser {
 
         // TODO support WINDOW
 
-        SelectQueryImpl<Record> result = (SelectQueryImpl<Record>) ctx.dsl.selectQuery();
+        SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
         if (distinct)
             result.setDistinct(distinct);
 

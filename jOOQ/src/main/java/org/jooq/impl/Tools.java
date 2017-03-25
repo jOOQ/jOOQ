@@ -144,6 +144,7 @@ import org.jooq.RenderContext.CastMode;
 import org.jooq.Result;
 import org.jooq.Results;
 import org.jooq.Row;
+import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -193,6 +194,7 @@ final class Tools {
     static final Query[]              EMPTY_QUERY            = {};
     static final QueryPart[]          EMPTY_QUERYPART        = {};
     static final Record[]             EMPTY_RECORD           = {};
+    static final RowN[]               EMPTY_ROWN             = {};
     static final String[]             EMPTY_STRING           = {};
     static final Name[]               EMPTY_NAME             = {};
     static final TableRecord<?>[]     EMPTY_TABLE_RECORD     = {};

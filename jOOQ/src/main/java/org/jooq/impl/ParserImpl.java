@@ -150,6 +150,7 @@ import static org.jooq.impl.DSL.reverse;
 import static org.jooq.impl.DSL.right;
 import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.round;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.rownum;
 import static org.jooq.impl.DSL.rowsBetweenCurrentRow;
@@ -184,6 +185,7 @@ import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.unique;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.when;
@@ -267,6 +269,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RowN;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
@@ -1784,6 +1787,10 @@ class ParserImpl implements Parser {
                 result = table(parseSelect(ctx));
                 parse(ctx, ')');
             }
+            else if (peekKeyword(ctx, "VALUES")) {
+                result = parseTableValueConstructor(ctx);
+                parse(ctx, ')');
+            }
             else {
                 int parens = 0;
 
@@ -1824,6 +1831,24 @@ class ParserImpl implements Parser {
         }
 
         return result;
+    }
+
+    private static final Table<?> parseTableValueConstructor(ParserContext ctx) {
+        parseKeyword(ctx, "VALUES");
+
+        List<RowN> rows = new ArrayList<RowN>();
+        do {
+            rows.add(parseRow(ctx));
+        }
+        while (parseIf(ctx, ','));
+        return values(rows.toArray(Tools.EMPTY_ROWN));
+    }
+
+    private static final RowN parseRow(ParserContext ctx) {
+        parse(ctx, '(');
+        RowN row = row(parseFields(ctx));
+        parse(ctx, ')');
+        return row;
     }
 
     private static final Table<?> parseJoinedTable(ParserContext ctx) {

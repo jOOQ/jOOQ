@@ -18134,7 +18134,7 @@ public class DSL {
         String[] columns = new String[size];
 
         for (int i = 0; i < size; i++)
-            columns[i] = "c" + i;
+            columns[i] = "c" + (i + 1);
 
         return new Values<Record>(rows).as("v", columns);
     }

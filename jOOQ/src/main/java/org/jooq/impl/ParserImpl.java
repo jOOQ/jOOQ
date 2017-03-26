@@ -1934,8 +1934,7 @@ class ParserImpl implements Parser {
             case JOIN:
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case RIGHT_OUTER_JOIN:
-            case OUTER_APPLY: {
+            case RIGHT_OUTER_JOIN: {
                 boolean on = parseKeywordIf(ctx, "ON");
 
                 if (on) {

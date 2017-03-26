@@ -190,6 +190,7 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.year;
+import static org.jooq.impl.ParserImpl.Type.A;
 import static org.jooq.impl.ParserImpl.Type.B;
 import static org.jooq.impl.ParserImpl.Type.D;
 import static org.jooq.impl.ParserImpl.Type.N;
@@ -2044,10 +2045,17 @@ class ParserImpl implements Parser {
     }
 
     static enum Type {
-        D,
-        S,
-        N,
-        B;
+        A("array"),
+        D("date"),
+        S("string"),
+        N("numeric"),
+        B("boolean");
+
+        private final String name;
+
+        private Type(String name) {
+            this.name = name;
+        }
 
         boolean is(Type type) {
             return type == null || type == this;
@@ -2157,6 +2165,10 @@ class ParserImpl implements Parser {
                     else if (parseKeywordIf(ctx, "ATAN"))
                         return atan((Field) parseFieldSumParenthesised(ctx));
                     else if ((field = parseFieldAtan2If(ctx)) != null)
+                        return field;
+
+                if (A.is(type))
+                    if ((field = parseArrayValueConstructorIf(ctx)) != null)
                         return field;
 
                 break;
@@ -2528,6 +2540,25 @@ class ParserImpl implements Parser {
 
         else
             return parseFieldName(ctx);
+    }
+
+    private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ARRAY")) {
+            parse(ctx, '[');
+
+            List<? extends Field<? extends Object[]>> fields;
+            if (parseIf(ctx, ']')) {
+                fields = Collections.emptyList();
+            }
+            else {
+                fields = (List) parseFields(ctx);
+                parse(ctx, ']');
+            }
+
+            return DSL.array(fields);
+        }
+
+        return null;
     }
 
     private static final Field<?> parseFieldAtan2If(ParserContext ctx) {

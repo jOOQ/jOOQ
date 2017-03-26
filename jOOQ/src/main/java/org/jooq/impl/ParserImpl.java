@@ -219,6 +219,7 @@ import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
+import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
@@ -970,6 +971,8 @@ class ParserImpl implements Parser {
             return parseAlterIndex(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseAlterSchema(ctx);
+        else if (parseKeywordIf(ctx, "SEQUENCE"))
+            return parseAlterSequence(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseAlterView(ctx);
         else
@@ -1077,6 +1080,25 @@ class ParserImpl implements Parser {
         return ifNotExists
             ? ctx.dsl.createSequenceIfNotExists(schemaName)
             : ctx.dsl.createSequence(schemaName);
+    }
+
+    private static final DDLQuery parseAlterSequence(ParserContext ctx) {
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        Sequence<?> sequenceName = parseSequenceName(ctx);
+
+        AlterSequenceStep s1 = ifExists
+            ? ctx.dsl.alterSequenceIfExists(sequenceName)
+            : ctx.dsl.alterSequence(sequenceName);
+
+        if (parseKeywordIf(ctx, "RENAME TO"))
+            return s1.renameTo(parseSequenceName(ctx));
+        else if (parseKeywordIf(ctx, "RESTART"))
+            if (parseKeywordIf(ctx, "WITH"))
+                return s1.restartWith(parseUnsignedInteger(ctx));
+            else
+                return s1.restart();
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final DDLQuery parseDropSequence(ParserContext ctx) {

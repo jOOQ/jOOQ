@@ -4514,6 +4514,10 @@ class ParserImpl implements Parser {
             return Comparator.GREATER_OR_EQUAL;
         else if (parseIf(ctx, ">"))
             return Comparator.GREATER;
+
+        // MySQL DISTINCT operator
+        else if (parseIf(ctx, "<=>"))
+            return Comparator.IS_NOT_DISTINCT_FROM;
         else if (parseIf(ctx, "<="))
             return Comparator.LESS_OR_EQUAL;
         else if (parseIf(ctx, "<"))

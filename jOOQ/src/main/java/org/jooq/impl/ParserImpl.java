@@ -104,6 +104,7 @@ import static org.jooq.impl.DSL.ltrim;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.maxDistinct;
 import static org.jooq.impl.DSL.md5;
+import static org.jooq.impl.DSL.median;
 import static org.jooq.impl.DSL.mid;
 import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
@@ -3880,7 +3881,19 @@ class ParserImpl implements Parser {
             return null;
 
         parse(ctx, '(');
-        distinct = parseSetQuantifier(ctx);
+
+        switch (operation) {
+            case AVG:
+            case MAX:
+            case MIN:
+            case SUM:
+                distinct = parseSetQuantifier(ctx);
+                break;
+            default:
+                distinct = false;
+                break;
+        }
+
         arg = parseField(ctx);
         parse(ctx, ')');
 
@@ -3893,6 +3906,8 @@ class ParserImpl implements Parser {
                 return distinct ? minDistinct(arg) : min(arg);
             case SUM:
                 return distinct ? sumDistinct(arg) : sum(arg);
+            case MEDIAN:
+                return median(arg);
             case EVERY:
                 return every(arg);
             case ANY:
@@ -4425,6 +4440,8 @@ class ParserImpl implements Parser {
             return ComputationalOperation.MIN;
         else if (parseKeywordIf(ctx, "SUM"))
             return ComputationalOperation.SUM;
+        else if (parseKeywordIf(ctx, "MEDIAN"))
+            return ComputationalOperation.MEDIAN;
         else if (parseKeywordIf(ctx, "EVERY") || parseKeywordIf(ctx, "BOOL_AND"))
             return ComputationalOperation.EVERY;
         else if (parseKeywordIf(ctx, "ANY") || parseKeywordIf(ctx, "SOME") || parseKeywordIf(ctx, "BOOL_OR"))
@@ -4782,6 +4799,7 @@ class ParserImpl implements Parser {
         STDDEV_SAMP,
         VAR_SAMP,
         VAR_POP,
+        MEDIAN,
 //        COLLECT,
 //        FUSION,
 //        INTERSECTION;

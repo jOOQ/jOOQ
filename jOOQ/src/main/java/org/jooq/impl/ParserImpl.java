@@ -250,7 +250,6 @@ import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaFinalStep;
 import org.jooq.DropSchemaStep;
-import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
@@ -954,6 +953,8 @@ class ParserImpl implements Parser {
             return parseCreateIndex(ctx, true);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseCreateSchema(ctx);
+        else if (parseKeywordIf(ctx, "SEQUENCE"))
+            return parseCreateSequence(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseCreateView(ctx);
         else
@@ -1069,17 +1070,22 @@ class ParserImpl implements Parser {
         return s1;
     }
 
+    private static final DDLQuery parseCreateSequence(ParserContext ctx) {
+        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+        Sequence<?> schemaName = parseSequenceName(ctx);
+
+        return ifNotExists
+            ? ctx.dsl.createSequenceIfNotExists(schemaName)
+            : ctx.dsl.createSequence(schemaName);
+    }
+
     private static final DDLQuery parseDropSequence(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName(ctx);
 
-        DropSequenceFinalStep s1;
-
-        s1 = ifExists
+        return ifExists
             ? ctx.dsl.dropSequenceIfExists(sequenceName)
             : ctx.dsl.dropSequence(sequenceName);
-
-        return s1;
     }
 
     private static final DDLQuery parseCreateTable(ParserContext ctx) {

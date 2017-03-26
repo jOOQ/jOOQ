@@ -948,8 +948,10 @@ class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "TABLE"))
             return parseCreateTable(ctx);
-        if (parseKeywordIf(ctx, "INDEX"))
-            return parseCreateIndex(ctx);
+        else if (parseKeywordIf(ctx, "INDEX"))
+            return parseCreateIndex(ctx, false);
+        else if (parseKeywordIf(ctx, "UNIQUE INDEX"))
+            return parseCreateIndex(ctx, true);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseCreateSchema(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
@@ -1559,7 +1561,7 @@ class ParserImpl implements Parser {
         return s2;
     }
 
-    private static final DDLQuery parseCreateIndex(ParserContext ctx) {
+    private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Name indexName = parseIndexName(ctx);
         parseKeyword(ctx, "ON");
@@ -1573,8 +1575,12 @@ class ParserImpl implements Parser {
 
 
         CreateIndexStep s1 = ifNotExists
-            ? ctx.dsl.createIndexIfNotExists(indexName)
-            : ctx.dsl.createIndex(indexName);
+            ? unique
+                ? ctx.dsl.createUniqueIndexIfNotExists(indexName)
+                : ctx.dsl.createIndexIfNotExists(indexName)
+            : unique
+                ? ctx.dsl.createUniqueIndex(indexName)
+                : ctx.dsl.createIndex(indexName);
         CreateIndexWhereStep s2 = s1.on(tableName, fieldNames);
         CreateIndexFinalStep s3 = condition != null
             ? s2.where(condition)

@@ -109,6 +109,7 @@ import static org.jooq.impl.DSL.mid;
 import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
+import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.month;
 import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
@@ -268,6 +269,7 @@ import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
+import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Queries;
@@ -2011,23 +2013,27 @@ class ParserImpl implements Parser {
         List<SortField<?>> result = new ArrayList<SortField<?>>();
 
         do {
-            Field<?> field = parseField(ctx);
-            SortField<?> sort;
-
-            if (parseKeywordIf(ctx, "DESC"))
-                sort = field.desc();
-            else if (parseKeywordIf(ctx, "ASC") || true)
-                sort = field.asc();
-
-            if (parseKeywordIf(ctx, "NULLS FIRST"))
-                sort = sort.nullsFirst();
-            else if (parseKeywordIf(ctx, "NULLS LAST"))
-                sort = sort.nullsLast();
-
-            result.add(sort);
+            result.add(parseSortField(ctx));
         }
         while (parseIf(ctx, ','));
         return result;
+    }
+
+    private static final SortField<?> parseSortField(ParserContext ctx) {
+        Field<?> field = parseField(ctx);
+        SortField<?> sort;
+
+        if (parseKeywordIf(ctx, "DESC"))
+            sort = field.desc();
+        else if (parseKeywordIf(ctx, "ASC") || true)
+            sort = field.asc();
+
+        if (parseKeywordIf(ctx, "NULLS FIRST"))
+            sort = sort.nullsFirst();
+        else if (parseKeywordIf(ctx, "NULLS LAST"))
+            sort = sort.nullsLast();
+
+        return sort;
     }
 
     private static final List<Field<?>> parseFields(ParserContext ctx) {
@@ -3587,7 +3593,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroup(ctx, rank(args));
+            AggregateFilterStep<?> result = parseWithinGroupN(ctx, rank(args));
             return result;
         }
 
@@ -3604,7 +3610,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroup(ctx, denseRank(args));
+            AggregateFilterStep<?> result = parseWithinGroupN(ctx, denseRank(args));
             return result;
         }
 
@@ -3621,7 +3627,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroup(ctx, percentRank(args));
+            AggregateFilterStep<?> result = parseWithinGroupN(ctx, percentRank(args));
             return result;
         }
 
@@ -3638,7 +3644,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroup(ctx, cumeDist(args));
+            AggregateFilterStep<?> result = parseWithinGroupN(ctx, cumeDist(args));
             return result;
         }
 
@@ -3801,18 +3807,23 @@ class ParserImpl implements Parser {
 
     private static final WindowBeforeOverStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
         // TODO Listagg set function
-        OrderedAggregateFunction<?> ordered;
+        OrderedAggregateFunction<?> orderedN;
+        OrderedAggregateFunctionOfDeferredType ordered1;
 
-        ordered = parseHypotheticalSetFunctionif(ctx);
-        if (ordered == null)
-            ordered = parseInverseDistributionFunctionif(ctx);
-        if (ordered == null)
-            return null;
+        orderedN = parseHypotheticalSetFunctionIf(ctx);
+        if (orderedN == null)
+            orderedN = parseInverseDistributionFunctionIf(ctx);
+        if (orderedN != null)
+            return parseWithinGroupN(ctx, orderedN);
 
-        return parseWithinGroup(ctx, ordered);
+        ordered1 = parseModeIf(ctx);
+        if (ordered1 != null)
+            return parseWithinGroup1(ctx, ordered1);
+
+        return null;
     }
 
-    private static final AggregateFilterStep<?> parseWithinGroup(ParserContext ctx, OrderedAggregateFunction<?> ordered) {
+    private static final AggregateFilterStep<?> parseWithinGroupN(ParserContext ctx, OrderedAggregateFunction<?> ordered) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
@@ -3821,7 +3832,16 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final OrderedAggregateFunction<?> parseHypotheticalSetFunctionif(ParserContext ctx) {
+    private static final AggregateFilterStep<?> parseWithinGroup1(ParserContext ctx, OrderedAggregateFunctionOfDeferredType ordered) {
+        parseKeyword(ctx, "WITHIN GROUP");
+        parse(ctx, '(');
+        parseKeyword(ctx, "ORDER BY");
+        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortField(ctx));
+        parse(ctx, ')');
+        return result;
+    }
+
+    private static final OrderedAggregateFunction<?> parseHypotheticalSetFunctionIf(ParserContext ctx) {
 
         // This currently never parses hypothetical set functions, as the function names are already
         // consumed earlier in parseFieldTerm(). We should implement backtracking...
@@ -3853,7 +3873,7 @@ class ParserImpl implements Parser {
         return ordered;
     }
 
-    private static final OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionif(ParserContext ctx) {
+    private static final OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionIf(ParserContext ctx) {
         OrderedAggregateFunction<BigDecimal> ordered;
 
         if (parseKeywordIf(ctx, "PERCENTILE_CONT")) {
@@ -3865,6 +3885,20 @@ class ParserImpl implements Parser {
             parse(ctx, '(');
             ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, false));
             parse(ctx, ')');
+        }
+        else
+            ordered = null;
+
+        return ordered;
+    }
+
+    private static final OrderedAggregateFunctionOfDeferredType parseModeIf(ParserContext ctx) {
+        OrderedAggregateFunctionOfDeferredType ordered;
+
+        if (parseKeywordIf(ctx, "MODE")) {
+            parse(ctx, '(');
+            parse(ctx, ')');
+            ordered = mode();
         }
         else
             ordered = null;

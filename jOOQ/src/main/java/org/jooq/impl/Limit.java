@@ -104,49 +104,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-            // [#4785] OFFSET cannot be without LIMIT
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE: {
-                context.castMode(NEVER)
-                       .formatSeparator()
-                       .keyword("limit")
-                       .sql(' ').visit(numberOfRowsOrMax);
-
-                if (!offsetZero())
-                    context.formatSeparator()
-                           .keyword("offset")
-                           .sql(' ').visit(offsetOrZero);
-
-                context.castMode(castMode);
-
-                break;
-            }
-
-            // [#4785] OFFSET can be without LIMIT
-            case HSQLDB:
-            case POSTGRES:
-            case POSTGRES_9_3:
-            case POSTGRES_9_4:
-            case POSTGRES_9_5: {
-                context.castMode(NEVER);
-
-                if (!limitZero())
-                    context.formatSeparator()
-                           .keyword("limit")
-                           .sql(' ').visit(numberOfRows);
-
-                if (!offsetZero())
-                    context.formatSeparator()
-                           .keyword("offset")
-                           .sql(' ').visit(offsetOrZero);
-
-                context.castMode(castMode);
-
-                break;
-            }
-
             // LIMIT [offset], [limit] supported by CUBRID
             // -------------------------------------------
             case CUBRID: {
@@ -291,20 +248,50 @@ final class Limit extends AbstractQueryPart {
 
 
 
-            // A default implementation is necessary for hashCode() and toString()
-            default: {
+
+            // [#4785] OFFSET cannot be without LIMIT
+            case H2:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE: {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(' ').visit(numberOfRows);
-
+                       .sql(' ').visit(numberOfRowsOrMax);
 
                 if (!offsetZero())
-                    context.sql(' ').keyword("offset")
+                    context.formatSeparator()
+                           .keyword("offset")
                            .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);
 
+                break;
+            }
+
+            // [#4785] OFFSET can be without LIMIT
+            case HSQLDB:
+            case POSTGRES:
+            case POSTGRES_9_3:
+            case POSTGRES_9_4:
+            case POSTGRES_9_5:
+                // No break
+
+            // A default implementation is necessary for hashCode() and toString()
+            default: {
+                context.castMode(NEVER);
+
+                if (!limitZero())
+                    context.formatSeparator()
+                           .keyword("limit")
+                           .sql(' ').visit(numberOfRows);
+
+                if (!offsetZero())
+                    context.formatSeparator()
+                           .keyword("offset")
+                           .sql(' ').visit(offsetOrZero);
+
+                context.castMode(castMode);
                 break;
             }
         }

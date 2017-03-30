@@ -69,8 +69,8 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     SchemaImpl(Name name) {
         this(
-            name.getName()[name.getName().length - 1],
-            name.getName().length > 1 ? DSL.catalog(DSL.name(name.getName()[0])) : null
+            name.last(),
+            name.qualified() ? DSL.catalog(name.qualifier()) : null
         );
     }
 

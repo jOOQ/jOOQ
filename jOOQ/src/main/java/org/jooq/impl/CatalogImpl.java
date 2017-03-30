@@ -65,7 +65,7 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     private final String          catalogName;
 
     CatalogImpl(Name name) {
-        this(name.getName()[0]);
+        this(name.last());
     }
 
     public CatalogImpl(String name) {

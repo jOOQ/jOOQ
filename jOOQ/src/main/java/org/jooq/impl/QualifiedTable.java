@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_REFERENCE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -61,7 +62,12 @@ final class QualifiedTable extends AbstractTable<Record> {
     private final Name            name;
 
     QualifiedTable(Name name) {
-        super(name.getName()[name.getName().length - 1]);
+        super(
+            defaultIfNull(name.last(), ""),
+            name.qualified()
+                ? DSL.schema(name.qualifier())
+                : null
+        );
 
         this.name = name;
     }

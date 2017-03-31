@@ -642,11 +642,20 @@ class ParserImpl implements Parser {
 
         parseKeyword(ctx, "SELECT");
         boolean distinct = parseKeywordIf(ctx, "DISTINCT") || parseKeywordIf(ctx, "UNIQUE");
+        List<Field<?>> distinctOn = null;
+
+        if (distinct) {
+            if (parseKeywordIf(ctx, "ON")) {
+                parse(ctx, '(');
+                distinctOn = parseFields(ctx);
+                parse(ctx, ')');
+            }
+        }
+        else
+            parseKeywordIf(ctx, "ALL");
+
         Long limit = null;
         Long offset = null;
-
-        if (!distinct)
-            parseKeywordIf(ctx, "ALL");
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
@@ -752,6 +761,9 @@ class ParserImpl implements Parser {
         SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
         if (distinct)
             result.setDistinct(distinct);
+
+        if (distinctOn != null)
+            result.addDistinctOn(distinctOn);
 
         if (select.size() > 0)
             result.addSelect(select);

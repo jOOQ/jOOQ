@@ -863,7 +863,7 @@ class ParserImpl implements Parser {
 
             return ctx.dsl.insertInto(tableName).set(map);
         }
-        else if (peekKeyword(ctx, "SELECT")){
+        else if (peekKeyword(ctx, "SELECT", false, true)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             return fields == null
@@ -2018,6 +2018,9 @@ class ParserImpl implements Parser {
         // TODO Support qualified asterisk
         List<Field<?>> result = new ArrayList<Field<?>>();
         do {
+            if (peekKeyword(ctx, SELECT_KEYWORDS))
+                throw ctx.unexpectedToken();
+
             Field<?> field = parseField(ctx);
             Name alias = null;
 
@@ -4595,7 +4598,7 @@ class ParserImpl implements Parser {
     static final boolean parseKeywordIf(ParserContext ctx, String string) {
         ctx.expectedTokens.add(string);
 
-        if (peekKeyword(ctx, string, true))
+        if (peekKeyword(ctx, string, true, false))
             ctx.expectedTokens.clear();
         else
             return false;
@@ -4612,10 +4615,10 @@ class ParserImpl implements Parser {
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String keyword) {
-        return peekKeyword(ctx, keyword, false);
+        return peekKeyword(ctx, keyword, false, false);
     }
 
-    private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition) {
+    private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens) {
         parseWhitespaceIf(ctx);
         int length = keyword.length();
         int skip;
@@ -4633,8 +4636,13 @@ class ParserImpl implements Parser {
                 case '\t':
                 case '\r':
                 case '\n':
-                case '(':
                     continue skipLoop;
+
+                case '(':
+                    if (peekIntoParens)
+                        continue skipLoop;
+                    else
+                        break skipLoop;
 
                 default:
                     break skipLoop;

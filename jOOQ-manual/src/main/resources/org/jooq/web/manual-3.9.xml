@@ -3170,10 +3170,6 @@ SelectSelectStep<R> select(Field<?>... fields);]]></java><html>
     // Get a connection back from jOOQ
     void release(Connection connection) throws DataAccessException;
 }]]></java><html>
-
-									<p>
-									    Note that <code>acquire()</code> should always return the same Connection until this connection is returned via <code>release()</code>
-									</p>
 								</html></content>
 							</section>
 

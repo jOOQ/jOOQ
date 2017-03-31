@@ -668,6 +668,7 @@ class ParserImpl implements Parser {
         }
 
         List<Field<?>> select = parseSelectList(ctx);
+        Table<?> into = null;
         List<Table<?>> from = null;
         Condition startWith = null;
         Condition connectBy = null;
@@ -676,6 +677,8 @@ class ParserImpl implements Parser {
         List<GroupField> groupBy = null;
         Condition having = null;
 
+        if (parseKeywordIf(ctx, "INTO"))
+            into = parseTableName(ctx);
 
         if (parseKeywordIf(ctx, "FROM"))
             from = parseTables(ctx);
@@ -752,6 +755,9 @@ class ParserImpl implements Parser {
 
         if (select.size() > 0)
             result.addSelect(select);
+
+        if (into != null)
+            result.setInto(into);
 
         if (from != null)
             result.addFrom(from);
@@ -4875,6 +4881,7 @@ class ParserImpl implements Parser {
         "HAVING",
         "INNER",
         "INTERSECT",
+        "INTO",
         "JOIN",
         "LEFT",
         "LIMIT",

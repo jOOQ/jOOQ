@@ -460,6 +460,11 @@ class ParserImpl implements Parser {
 
                     break;
 
+                case 'v':
+                case 'V':
+                    if (peekKeyword(ctx, "VALUES"))
+                        return DSL.selectFrom(parseTableValueConstructor(ctx));
+
                 case 'w':
                 case 'W':
                     if (peekKeyword(ctx, "WITH"))

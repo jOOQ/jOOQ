@@ -290,6 +290,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return as(alias, aliasFunction);
     }
 
+
     @Override
     public /* non-final for covariant overriding */ Table<R> as(String alias) {
         return as(DSL.name(alias));
@@ -299,6 +300,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public /* non-final for covariant overriding */ Table<R> as(String alias, String... fieldAliases) {
         return as(DSL.name(alias), Tools.names(fieldAliases));
     }
+
 
     @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {

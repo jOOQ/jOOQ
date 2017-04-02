@@ -974,7 +974,11 @@ class ParserImpl implements Parser {
         parseKeyword(ctx, "CREATE");
 
         if (parseKeywordIf(ctx, "TABLE"))
-            return parseCreateTable(ctx);
+            return parseCreateTable(ctx, false);
+        else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
+            return parseCreateTable(ctx, true);
+        else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
+            return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseCreateIndex(ctx, false);
         else if (parseKeywordIf(ctx, "UNIQUE INDEX"))
@@ -1137,8 +1141,8 @@ class ParserImpl implements Parser {
             : ctx.dsl.dropSequence(sequenceName);
     }
 
-    private static final DDLQuery parseCreateTable(ParserContext ctx) {
-        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+    private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
+        boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
         Table<?> tableName = parseTableName(ctx);
 
         if (parseKeywordIf(ctx, "AS")) {
@@ -1146,7 +1150,9 @@ class ParserImpl implements Parser {
 
             CreateTableAsStep<Record> s1 = ifNotExists
                 ? ctx.dsl.createTableIfNotExists(tableName)
-                : ctx.dsl.createTable(tableName);
+                : temporary
+                    ? ctx.dsl.createTemporaryTable(tableName)
+                    : ctx.dsl.createTable(tableName);
 
             CreateTableFinalStep s2 = s1.as(select);
             return s2;
@@ -1291,7 +1297,9 @@ class ParserImpl implements Parser {
 
             CreateTableAsStep<Record> s1 = ifNotExists
                 ? ctx.dsl.createTableIfNotExists(tableName)
-                : ctx.dsl.createTable(tableName);
+                : temporary
+                    ? ctx.dsl.createTemporaryTable(tableName)
+                    : ctx.dsl.createTable(tableName);
             CreateTableColumnStep s2 = s1.columns(fields);
             CreateTableConstraintStep s3 = constraints.isEmpty()
                 ? s2

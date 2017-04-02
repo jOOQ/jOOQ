@@ -2190,6 +2190,8 @@ class ParserImpl implements Parser {
         parseWhitespaceIf(ctx);
 
         Field<?> field;
+        Object value;
+
         switch (ctx.character()) {
             case ':':
             case '?':
@@ -2517,8 +2519,8 @@ class ParserImpl implements Parser {
             case 'x':
             case 'X':
                 if (X.is(type))
-                    if ((field = inline(parseBinaryLiteralIf(ctx))) != null)
-                        return field;
+                    if ((value = parseBinaryLiteralIf(ctx)) != null)
+                        return inline((byte[]) value);
 
                 break;
 

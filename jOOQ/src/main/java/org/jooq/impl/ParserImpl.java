@@ -197,11 +197,14 @@ import static org.jooq.impl.ParserImpl.Type.B;
 import static org.jooq.impl.ParserImpl.Type.D;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
+import static org.jooq.impl.ParserImpl.Type.X;
+import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -2090,7 +2093,8 @@ class ParserImpl implements Parser {
         D("date"),
         S("string"),
         N("numeric"),
-        B("boolean");
+        B("boolean"),
+        X("binary");
 
         private final String name;
 
@@ -2506,6 +2510,14 @@ class ParserImpl implements Parser {
             case 'U':
                 if (S.is(type))
                     if ((field = parseFieldUpperIf(ctx)) != null)
+                        return field;
+
+                break;
+
+            case 'x':
+            case 'X':
+                if (X.is(type))
+                    if ((field = inline(parseBinaryLiteralIf(ctx))) != null)
                         return field;
 
                 break;
@@ -4222,6 +4234,47 @@ class ParserImpl implements Parser {
             return parseOracleQuotedStringLiteral(ctx);
         else
             return parseUnquotedStringLiteral(ctx);
+    }
+
+    private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+
+        if (parseIf(ctx, "X'") || parseIf(ctx, "x'")) {
+            if (parseIf(ctx, '\''))
+                return EMPTY_BYTE;
+
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            char c1 = 0;
+            char c2 = 0;
+            int i = ctx.position;
+
+            do {
+                c1 = ctx.character(i);
+                c2 = ctx.character(i + 1);
+
+                if (c1 == '\'')
+                    break;
+                if (c2 == '\'')
+                    throw ctx.unexpectedToken();
+
+                try {
+                    buffer.write(Integer.parseInt("" + c1 + c2, 16));
+                }
+                catch (NumberFormatException e) {
+                    throw ctx.exception();
+                }
+            }
+            while ((i = i + 2) < ctx.sql.length);
+
+            if (c1 == '\'') {
+                ctx.position = i + 1;
+                return buffer.toByteArray();
+            }
+
+            throw ctx.exception();
+        }
+
+        return null;
     }
 
     private static final String parseOracleQuotedStringLiteral(ParserContext ctx) {

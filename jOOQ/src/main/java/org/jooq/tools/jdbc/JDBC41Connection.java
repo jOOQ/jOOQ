@@ -50,31 +50,31 @@ public abstract class JDBC41Connection {
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final void setSchema(String s) throws SQLException {
+    public void setSchema(String s) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final String getSchema() throws SQLException {
+    public String getSchema() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final void abort(Executor executor) throws SQLException {
+    public void abort(Executor executor) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final int getNetworkTimeout() throws SQLException {
+    public int getNetworkTimeout() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

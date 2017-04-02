@@ -48,6 +48,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.sql.Statement;
@@ -1028,4 +1029,46 @@ public class DefaultResultSet extends JDBC41ResultSet implements ResultSet {
     public void updateNClob(String columnLabel, Reader reader) throws SQLException {
         getDelegate().updateNClob(columnLabel, reader);
     }
+
+
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.1
+    // ------------------------------------------------------------------------
+
+    @Override
+    public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+        return getDelegate().getObject(columnIndex, type);
+    }
+
+    @Override
+    public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+        return getDelegate().getObject(columnLabel, type);
+    }
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.2
+    // ------------------------------------------------------------------------
+
+    @Override
+    public void updateObject(int columnIndex, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+        getDelegate().updateObject(columnIndex, x, targetSqlType, scaleOrLength);
+    }
+
+    @Override
+    public void updateObject(String columnLabel, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+        getDelegate().updateObject(columnLabel, x, targetSqlType, scaleOrLength);
+    }
+
+    @Override
+    public void updateObject(int columnIndex, Object x, SQLType targetSqlType) throws SQLException {
+        getDelegate().updateObject(columnIndex, x, targetSqlType);
+    }
+
+    @Override
+    public void updateObject(String columnLabel, Object x, SQLType targetSqlType) throws SQLException {
+        getDelegate().updateObject(columnLabel, x, targetSqlType);
+    }
+
+
 }

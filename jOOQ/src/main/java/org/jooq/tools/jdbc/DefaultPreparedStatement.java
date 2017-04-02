@@ -50,6 +50,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Time;
@@ -364,4 +365,27 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
     public void setNClob(int parameterIndex, Reader reader) throws SQLException {
         getDelegatePreparedStatement().setNClob(parameterIndex, reader);
     }
+
+
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.2
+    // ------------------------------------------------------------------------
+
+    @Override
+    public void setObject(int parameterIndex, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+        getDelegatePreparedStatement().setObject(parameterIndex, x, targetSqlType, scaleOrLength);
+    }
+
+    @Override
+    public void setObject(int parameterIndex, Object x, SQLType targetSqlType) throws SQLException {
+        getDelegatePreparedStatement().setObject(parameterIndex, x, targetSqlType);
+    }
+
+    @Override
+    public long executeLargeUpdate() throws SQLException {
+        return getDelegatePreparedStatement().executeLargeUpdate();
+    }
+
+
 }

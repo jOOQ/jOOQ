@@ -51,6 +51,7 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 /**
  * A default JDBC Connection implementation delegating all JDBC 4.0 calls to an
@@ -318,4 +319,37 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
     public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
         return getDelegate().createStruct(typeName, attributes);
     }
+
+
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.1
+    // ------------------------------------------------------------------------
+
+    @Override
+    public void setSchema(String s) throws SQLException {
+        getDelegate().setSchema(s);
+    }
+
+    @Override
+    public String getSchema() throws SQLException {
+        return getDelegate().getSchema();
+    }
+
+    @Override
+    public void abort(Executor executor) throws SQLException {
+        getDelegate().abort(executor);
+    }
+
+    @Override
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+        getDelegate().setNetworkTimeout(executor, milliseconds);
+    }
+
+    @Override
+    public int getNetworkTimeout() throws SQLException {
+        return getDelegate().getNetworkTimeout();
+    }
+
+
 }

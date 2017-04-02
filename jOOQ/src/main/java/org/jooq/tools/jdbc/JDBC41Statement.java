@@ -56,13 +56,13 @@ public abstract class JDBC41Statement {
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final void closeOnCompletion() throws SQLException {
+    public void closeOnCompletion() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final boolean isCloseOnCompletion() throws SQLException {
+    public boolean isCloseOnCompletion() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -72,13 +72,13 @@ public abstract class JDBC41Statement {
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final <T> T getObject(int parameterIndex, Class<T> type) throws SQLException {
+    public <T> T getObject(int parameterIndex, Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public final <T> T getObject(String parameterName, Class<T> type) throws SQLException {
+    public <T> T getObject(String parameterName, Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

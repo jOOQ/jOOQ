@@ -41,6 +41,8 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 
+import java.util.Arrays;
+
 // ...
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -172,5 +174,44 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     @Override
     public final ParamMode getParamMode() {
         return ParamMode.IN;
+    }
+
+    @Override
+    public void accept(Context<?> ctx) {}
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+            return true;
+
+        if (that instanceof AbstractParam) {
+            AbstractParam<?> thatParam = (AbstractParam<?>) that;
+
+            if (value == null)
+                return thatParam.value == null;
+            else if (value instanceof byte[] && thatParam.value instanceof byte[])
+                return Arrays.equals((byte[]) value, (byte[]) thatParam.value);
+            else if (value instanceof Object[] && thatParam.value instanceof Object[])
+                return Arrays.equals((Object[]) value, (Object[]) thatParam.value);
+            else
+                return value.equals(thatParam.value);
+        }
+        else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return value == null
+            ? 0
+            : value instanceof byte[]
+            ? Arrays.hashCode((byte[]) value)
+            : value instanceof Object[]
+            ? Arrays.hashCode((Object[]) value)
+            : value.hashCode();
     }
 }

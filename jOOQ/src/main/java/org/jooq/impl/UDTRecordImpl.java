@@ -101,33 +101,32 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         return Tools.getMappedUDTName(configuration, this);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
         Configuration configuration = localConfiguration();
         Map<Object, Object> data = localData();
+        Field<?>[] f = getUDT().fields();
 
-        for (Field<?> field : getUDT().fields()) {
-            setValue(configuration, data, stream, field);
+        for (int i = 0; i < f.length; i++) {
+            Field field = f[i];
+            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(configuration, data, stream);
+            field.getBinding().get(out);
+            set(i, field, out.value());
         }
     }
 
-    private final <T> void setValue(Configuration configuration, Map<Object, Object> data, SQLInput stream, Field<T> field) throws SQLException {
-        DefaultBindingGetSQLInputContext<T> out = new DefaultBindingGetSQLInputContext<T>(configuration, data, stream);
-        field.getBinding().get(out);
-        set(field, out.value());
-    }
-
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void writeSQL(SQLOutput stream) throws SQLException {
         Configuration configuration = localConfiguration();
         Map<Object, Object> data = localData();
+        Field<?>[] f = getUDT().fields();
 
-        for (Field<?> field : getUDT().fields())
-            set(configuration, data, stream, field);
-    }
-
-    private final <T> void set(Configuration configuration, Map<Object, Object> data, SQLOutput stream, Field<T> field) throws SQLException {
-        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(configuration, data, stream, get(field)));
+        for (int i = 0; i < f.length; i++) {
+            Field field = f[i];
+            field.getBinding().set(new DefaultBindingSetSQLOutputContext(configuration, data, stream, get(i)));
+        }
     }
 
     @SuppressWarnings("unchecked")

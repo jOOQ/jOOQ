@@ -302,7 +302,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         set(indexOrFail(fields, field), field, value);
     }
 
-    private final <T> void set(int index, Field<T> field, T value) {
+    final <T> void set(int index, Field<T> field, T value) {
         // Relevant issues documenting this method's behaviour:
         // [#945] Avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses

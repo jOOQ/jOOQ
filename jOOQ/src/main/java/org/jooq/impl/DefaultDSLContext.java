@@ -3114,7 +3114,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger nextval(String sequence) {
-        return nextval(sequence(name(sequence)));
+        return nextval(name(sequence));
+    }
+
+    @Override
+    public BigInteger nextval(Name sequence) {
+        return nextval(sequence(sequence));
     }
 
     @Override
@@ -3125,7 +3130,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger currval(String sequence) {
-        return currval(sequence(name(sequence)));
+        return currval(name(sequence));
+    }
+
+    @Override
+    public BigInteger currval(Name sequence) throws DataAccessException {
+        return currval(sequence(sequence));
     }
 
     @Override

@@ -8361,6 +8361,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    BigInteger nextval(Name sequence) throws DataAccessException;
+
+    /**
+     * Convenience method to fetch the NEXTVAL for a sequence directly from this
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -8371,6 +8380,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     BigInteger currval(String sequence) throws DataAccessException;
+
+    /**
+     * Convenience method to fetch the CURRVAL for a sequence directly from this
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
+    BigInteger currval(Name sequence) throws DataAccessException;
 
     /**
      * Convenience method to fetch the CURRVAL for a sequence directly from this

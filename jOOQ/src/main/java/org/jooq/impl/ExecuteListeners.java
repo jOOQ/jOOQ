@@ -45,7 +45,6 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.tools.LoggerListener;
-import org.jooq.tools.StopWatchListener;
 
 /**
  * A queue implementation for several {@link ExecuteListener} objects as defined
@@ -86,164 +85,140 @@ final class ExecuteListeners implements ExecuteListener {
             if (provider != null)
                 result.add(provider.provide());
 
-        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
+        // [#6051] The previously used StopWatchListener is no longer included by default
+        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging()))
             result.add(new LoggerListener());
-            result.add(new StopWatchListener());
-        }
 
         return result.toArray(EMPTY_EXECUTE_LISTENER);
     }
 
     @Override
     public final void start(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.start(ctx);
-        }
     }
 
     @Override
     public final void renderStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.renderStart(ctx);
-        }
     }
 
     @Override
     public final void renderEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.renderEnd(ctx);
-        }
     }
 
     @Override
     public final void prepareStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.prepareStart(ctx);
-        }
     }
 
     @Override
     public final void prepareEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.prepareEnd(ctx);
-        }
     }
 
     @Override
     public final void bindStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.bindStart(ctx);
-        }
     }
 
     @Override
     public final void bindEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.bindEnd(ctx);
-        }
     }
 
     @Override
     public final void executeStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.executeStart(ctx);
-        }
     }
 
     @Override
     public final void executeEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.executeEnd(ctx);
-        }
     }
 
     @Override
     public final void fetchStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.fetchStart(ctx);
-        }
     }
 
     @Override
     public final void outStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.outStart(ctx);
-        }
     }
 
     @Override
     public final void outEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.outEnd(ctx);
-        }
     }
 
     @Override
     public final void resultStart(ExecuteContext ctx) {
         resultStart = true;
 
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.resultStart(ctx);
-        }
     }
 
     @Override
     public final void recordStart(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.recordStart(ctx);
-        }
     }
 
     @Override
     public final void recordEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.recordEnd(ctx);
-        }
     }
 
     @Override
     public final void resultEnd(ExecuteContext ctx) {
         resultStart = false;
 
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.resultEnd(ctx);
-        }
 
-        if (fetchEnd) {
+        if (fetchEnd)
             fetchEnd(ctx);
-        }
     }
 
     @Override
     public final void fetchEnd(ExecuteContext ctx) {
-        if (resultStart) {
+        if (resultStart)
             fetchEnd = true;
-        }
-        else {
-            for (ExecuteListener listener : listeners) {
+        else
+            for (ExecuteListener listener : listeners)
                 listener.fetchEnd(ctx);
-            }
-        }
     }
 
     @Override
     public final void end(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.end(ctx);
-        }
     }
 
     @Override
     public final void exception(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.exception(ctx);
-        }
     }
 
     @Override
     public final void warning(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
+        for (ExecuteListener listener : listeners)
             listener.warning(ctx);
-        }
     }
 }

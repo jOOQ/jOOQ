@@ -144,9 +144,10 @@ import org.jooq.tools.StopWatchListener;
  * <br/>
  * jOOQ-provided example implementations include:
  * <ul>
- * <li>{@link LoggerListener}: generating default query execution log output</li>
+ * <li>{@link LoggerListener}: generating default query execution log output
+ * (active by default)</li>
  * <li>{@link StopWatchListener}: generating default query execution speed log
- * output</li>
+ * output (inactive by default)</li>
  * </ul>
  * <li>{@link #visitListenerProviders()}: A set of {@link VisitListenerProvider}
  * that implement {@link Query} rendering and variable binding lifecycle
@@ -155,7 +156,8 @@ import org.jooq.tools.StopWatchListener;
  * <br/>
  * jOOQ does not provide any implementations.</li>
  * </ul>
- * </li> </ul>
+ * </li>
+ * </ul>
  *
  * @author Lukas Eder
  */

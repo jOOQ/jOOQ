@@ -47,7 +47,6 @@ import org.jooq.conf.StatementType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.LoggerListener;
-import org.jooq.tools.StopWatchListener;
 
 /**
  * An event listener for {@link Query}, {@link Routine}, or {@link ResultSet}
@@ -57,15 +56,15 @@ import org.jooq.tools.StopWatchListener;
  * profilers, data collectors that can be hooked into a jOOQ {@link DSLContext}
  * using the {@link Configuration#executeListenerProviders()} property, passing
  * <code>Settings</code> to
- * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
- * will use that configuration at the beginning of a query execution event to
- * instantiate all the provided listeners. In other words, listeners have the
- * same lifetime as a single query execution, and can thus be used to store
- * state between the moment when a query execution starts, and the moment when a
- * query execution finishes. Advanced <code>ExecuteListeners</code> can also
- * provide custom implementations of {@link Connection},
- * {@link PreparedStatement}, {@link ResultSet}, {@link SQLException} or
- * {@link RuntimeException} to jOOQ in appropriate methods.
+ * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ will use
+ * that configuration at the beginning of a query execution event to instantiate
+ * all the provided listeners. In other words, listeners have the same lifetime
+ * as a single query execution, and can thus be used to store state between the
+ * moment when a query execution starts, and the moment when a query execution
+ * finishes. Advanced <code>ExecuteListeners</code> can also provide custom
+ * implementations of {@link Connection}, {@link PreparedStatement},
+ * {@link ResultSet}, {@link SQLException} or {@link RuntimeException} to jOOQ
+ * in appropriate methods.
  * <p>
  * For convenience, consider extending {@link DefaultExecuteListener} instead of
  * implementing this interface. This will prevent compilation errors in future
@@ -86,7 +85,7 @@ import org.jooq.tools.StopWatchListener;
  * <th>Use case [6]</th>
  * </tr>
  * <tr>
- * <td> {@link #start(ExecuteContext)}</code></td>
+ * <td>{@link #start(ExecuteContext)}</code></td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
@@ -95,7 +94,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #renderStart(ExecuteContext)}</td>
+ * <td>{@link #renderStart(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -104,7 +103,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #renderEnd(ExecuteContext)}</td>
+ * <td>{@link #renderEnd(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -113,7 +112,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #prepareStart(ExecuteContext)}</td>
+ * <td>{@link #prepareStart(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -122,7 +121,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #prepareEnd(ExecuteContext)}</td>
+ * <td>{@link #prepareEnd(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -131,7 +130,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #bindStart(ExecuteContext)}</td>
+ * <td>{@link #bindStart(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
@@ -140,7 +139,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #bindEnd(ExecuteContext)}</td>
+ * <td>{@link #bindEnd(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
@@ -148,7 +147,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * <td>Yes, 1
  * <tr>
- * <td> {@link #executeStart(ExecuteContext)}</td>
+ * <td>{@link #executeStart(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -157,7 +156,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #executeEnd(ExecuteContext)}</td>
+ * <td>{@link #executeEnd(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
@@ -166,7 +165,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #outStart(ExecuteContext)}</td>
+ * <td>{@link #outStart(ExecuteContext)}</td>
  * <td>No</td>
  * <td>No</td>
  * <td>No</td>
@@ -175,7 +174,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #outEnd(ExecuteContext)}</td>
+ * <td>{@link #outEnd(ExecuteContext)}</td>
  * <td>No</td>
  * <td>No</td>
  * <td>No</td>
@@ -184,7 +183,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #fetchStart(ExecuteContext)}</td>
+ * <td>{@link #fetchStart(ExecuteContext)}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
  * <td>Yes, 1x</td>
@@ -193,7 +192,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #resultStart(ExecuteContext)}</td>
+ * <td>{@link #resultStart(ExecuteContext)}</td>
  * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
  * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
  * <td>Yes, 1x</td>
@@ -202,7 +201,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #recordStart(ExecuteContext)}<br/>
+ * <td>{@link #recordStart(ExecuteContext)}<br/>
  * </td>
  * <td>Yes, Nx</td>
  * <td>Yes, Nx</td>
@@ -212,7 +211,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #recordEnd(ExecuteContext)}</td>
+ * <td>{@link #recordEnd(ExecuteContext)}</td>
  * <td>Yes, Nx</td>
  * <td>Yes, Nx</td>
  * <td>Yes, Nx</td>
@@ -221,7 +220,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #resultEnd(ExecuteContext)}</td>
+ * <td>{@link #resultEnd(ExecuteContext)}</td>
  * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
  * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
  * <td>Yes, 1x</td>
@@ -230,7 +229,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #fetchEnd(ExecuteContext)}</td>
+ * <td>{@link #fetchEnd(ExecuteContext)}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
  * <td>Yes, 1x</td>
@@ -239,7 +238,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td> {@link #end(ExecuteContext)}</td>
+ * <td>{@link #end(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
@@ -248,7 +247,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #warning(ExecuteContext)}</td>
+ * <td>{@link #warning(ExecuteContext)}</td>
  * <td>Maybe, 1x</td>
  * <td>Maybe, 1x</td>
  * <td>Maybe, 1x</td>
@@ -257,7 +256,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>Maybe, 1x</td>
  * </tr>
  * <tr>
- * <td> {@link #exception(ExecuteContext)}</td>
+ * <td>{@link #exception(ExecuteContext)}</td>
  * <td>Maybe, 1x</td>
  * <td>Maybe, 1x</td>
  * <td>Maybe, 1x</td>
@@ -283,9 +282,8 @@ import org.jooq.tools.StopWatchListener;
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>
- * If nothing is specified, the default is to use {@link LoggerListener} and
- * {@link StopWatchListener} as the only event listeners, as configured in
- * {@link Settings#isExecuteLogging()}
+ * If nothing is specified, the default is to use {@link LoggerListener} as the
+ * only event listener, as configured in {@link Settings#isExecuteLogging()}
  *
  * @author Lukas Eder
  */

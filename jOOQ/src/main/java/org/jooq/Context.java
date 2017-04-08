@@ -41,6 +41,7 @@ import org.jooq.conf.ParamType;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 
 /**
  * A context type that is used for rendering SQL or for binding.
@@ -225,7 +226,10 @@ public interface Context<C extends Context<C>> extends Scope {
      * Append a SQL keyword to the context's contained {@link StringBuilder}.
      * <p>
      * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}.
+     *
+     * @deprecated - 3.10.0 - [#4990] - Use {@link DSL#keyword(String)} instead.
      */
+    @Deprecated
     C keyword(String keyword);
 
     /**
@@ -337,9 +341,13 @@ public interface Context<C extends Context<C>> extends Scope {
     C formatPrintMargin(int margin);
 
     /**
-     * Append some literal to the context's contained
-     * {@link StringBuilder}.
+     * Append some literal to the context's contained {@link StringBuilder}.
+     *
+     * @deprecated - 3.10.0 - [#4990] - Use any of {@link DSL#name(String)},
+     *             {@link DSL#quotedName(String)} or
+     *             {@link DSL#unquotedName(String)} instead.
      */
+    @Deprecated
     C literal(String literal);
 
     /**

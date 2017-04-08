@@ -37,6 +37,7 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
+import org.jooq.conf.RenderKeywordStyle;
 
 /**
  * A default {@link Keyword} implementation.
@@ -50,15 +51,26 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
      */
     private static final long serialVersionUID = 9137269798087732005L;
 
-    private final String      keyword;
+    private final String      asIs;
+    private final String      upper;
+    private final String      lower;
 
     KeywordImpl(String keyword) {
-        this.keyword = keyword;
+        this.asIs = keyword;
+        this.upper = keyword.toUpperCase();
+        this.lower = keyword.toLowerCase();
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword(keyword);
+        RenderKeywordStyle style = ctx.settings().getRenderKeywordStyle();
+
+        if (RenderKeywordStyle.AS_IS == style)
+            ctx.sql(asIs, true);
+        else if (RenderKeywordStyle.UPPER == style)
+            ctx.sql(upper, true);
+        else
+            ctx.sql(lower, true);
     }
 
     @Override

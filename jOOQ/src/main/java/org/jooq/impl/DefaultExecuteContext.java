@@ -151,33 +151,29 @@ class DefaultExecuteContext implements ExecuteContext {
         List<Array> arrays = ARRAYS.get();
 
         if (blobs != null) {
-            for (Blob blob : blobs) {
+            for (Blob blob : blobs)
                 JDBCUtils.safeFree(blob);
-            }
 
             BLOBS.remove();
         }
 
         if (clobs != null) {
-            for (Clob clob : clobs) {
+            for (Clob clob : clobs)
                 JDBCUtils.safeFree(clob);
-            }
 
             CLOBS.remove();
         }
 
         if (xmls != null) {
-            for (SQLXML xml : xmls) {
+            for (SQLXML xml : xmls)
                 JDBCUtils.safeFree(xml);
-            }
 
             SQLXMLS.remove();
         }
 
         if (arrays != null) {
-            for (Array array : arrays) {
+            for (Array array : arrays)
                 JDBCUtils.safeFree(array);
-            }
 
             ARRAYS.remove();
         }

@@ -36,6 +36,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CREATE_SCHEMA;
 import static org.jooq.Clause.CREATE_SCHEMA_NAME;
+import static org.jooq.impl.Keywords.K_CREATE_SCHEMA;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -80,10 +82,10 @@ final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(CREATE_SCHEMA_NAME)
-           .keyword("create schema");
+           .visit(K_CREATE_SCHEMA);
 
         if (ifNotExists)
-            ctx.sql(' ').keyword("if not exists");
+            ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(schema)
            .end(CREATE_SCHEMA_NAME);

@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_ROWS_FROM;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -92,7 +94,7 @@ final class RowsFrom extends AbstractTable<Record> {
     public final void accept(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
 
-        ctx.keyword("rows from")
+        ctx.visit(K_ROWS_FROM)
            .sql(" (")
            .declareTables(true)
            .visit(tables)

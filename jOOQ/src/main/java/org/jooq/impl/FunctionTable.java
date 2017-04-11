@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_TABLE;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -79,7 +81,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
     public final void accept(Context<?> ctx) {
         switch (ctx.configuration().dialect()) {
             case HSQLDB: {
-                ctx.keyword("table(").visit(function).sql(')');
+                ctx.visit(K_TABLE).sql('(').visit(function).sql(')');
                 break;
             }
 

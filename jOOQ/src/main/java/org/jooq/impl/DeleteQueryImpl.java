@@ -42,6 +42,9 @@ import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.Keywords.K_DELETE;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Collection;
 
@@ -99,7 +102,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         boolean declare = ctx.declareTables();
 
         ctx.start(DELETE_DELETE)
-           .keyword("delete").sql(' ');
+           .visit(K_DELETE).sql(' ');
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
@@ -114,7 +117,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
             }
         }
 
-        ctx.keyword("from").sql(' ')
+        ctx.visit(K_FROM).sql(' ')
            .declareTables(true)
            .visit(table)
            .declareTables(declare)
@@ -123,7 +126,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         if (!(getWhere() instanceof TrueCondition)) {
             ctx.formatSeparator()
-               .keyword("where").sql(' ')
+               .visit(K_WHERE).sql(' ')
                .visit(getWhere());
         }
 

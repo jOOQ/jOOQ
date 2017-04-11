@@ -54,6 +54,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Keywords.K_IS_NULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +128,7 @@ final class RowIsNull extends AbstractCondition {
         public final void accept(Context<?> ctx) {
             ctx.visit(row)
                .sql(' ')
-               .keyword(isNull ? "is null" : "is not null");
+               .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
         }
 
         @Override

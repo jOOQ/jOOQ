@@ -90,6 +90,32 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_BY;
+import static org.jooq.impl.Keywords.K_CONNECT_BY;
+import static org.jooq.impl.Keywords.K_DISTINCT;
+import static org.jooq.impl.Keywords.K_DISTINCT_ON;
+import static org.jooq.impl.Keywords.K_FOR_SHARE;
+import static org.jooq.impl.Keywords.K_FOR_UPDATE;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_GROUP_BY;
+import static org.jooq.impl.Keywords.K_HAVING;
+import static org.jooq.impl.Keywords.K_INTO;
+import static org.jooq.impl.Keywords.K_LOCK_IN_SHARE_MODE;
+import static org.jooq.impl.Keywords.K_NOCYCLE;
+import static org.jooq.impl.Keywords.K_OF;
+import static org.jooq.impl.Keywords.K_ORDER;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Keywords.K_PERCENT;
+import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_SIBLINGS;
+import static org.jooq.impl.Keywords.K_START_WITH;
+import static org.jooq.impl.Keywords.K_TOP;
+import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Keywords.K_WINDOW;
+import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
+import static org.jooq.impl.Keywords.K_WITH_LOCK;
+import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
@@ -125,6 +151,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.Param;
@@ -545,7 +572,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
             if (forUpdate && !asList(CUBRID).contains(family)) {
                 context.formatSeparator()
-                       .keyword("for update");
+                       .visit(K_FOR_UPDATE);
 
                 if (!forUpdateOf.isEmpty()) {
 
@@ -557,14 +584,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (unqualified)
                         context.qualify(false);
 
-                    context.sql(' ').keyword("of")
+                    context.sql(' ').visit(K_OF)
                            .sql(' ').visit(forUpdateOf);
 
                     if (unqualified)
                         context.qualify(qualify);
                 }
                 else if (!forUpdateOfTables.isEmpty()) {
-                    context.sql(' ').keyword("of").sql(' ');
+                    context.sql(' ').visit(K_OF).sql(' ');
 
                     switch (family) {
 
@@ -592,12 +619,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
                 // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
                 if (family == FIREBIRD) {
-                    context.sql(' ').keyword("with lock");
+                    context.sql(' ').visit(K_WITH_LOCK);
                 }
 
                 if (forUpdateMode != null) {
                     context.sql(' ');
-                    context.keyword(forUpdateMode.toSQL());
+                    context.visit(forUpdateMode.toKeyword());
 
                     if (forUpdateMode == ForUpdateMode.WAIT) {
                         context.sql(' ');
@@ -612,13 +639,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     case MARIADB:
                     case MYSQL:
                         context.formatSeparator()
-                               .keyword("lock in share mode");
+                               .visit(K_LOCK_IN_SHARE_MODE);
                         break;
 
                     // Postgres is known to implement the "FOR SHARE" clause like this
                     default:
                         context.formatSeparator()
-                               .keyword("for share");
+                               .visit(K_FOR_SHARE);
                         break;
                 }
             }
@@ -935,9 +962,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
          || (context.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null && unionOpSize > 0);
 
         if (wrapQueryExpressionInDerivedTable)
-            context.keyword("select").sql(" *")
+            context.visit(K_SELECT).sql(" *")
                    .formatSeparator()
-                   .keyword("from").sql(" (")
+                   .visit(K_FROM).sql(" (")
                    .formatIndentStart()
                    .formatNewLine();
 
@@ -995,7 +1022,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SELECT clause
         // -------------
         context.start(SELECT_SELECT)
-               .keyword("select")
+               .visit(K_SELECT)
                .sql(' ');
 
         // [#1493] Oracle hints come directly after the SELECT keyword
@@ -1011,10 +1038,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
         if (!distinctOn.isEmpty()) {
-            context.keyword("distinct on").sql(" (").visit(distinctOn).sql(") ");
+            context.visit(K_DISTINCT_ON).sql(" (").visit(distinctOn).sql(") ");
         }
         else if (distinct) {
-            context.keyword("distinct").sql(' ');
+            context.visit(K_DISTINCT).sql(' ');
         }
 
 
@@ -1075,7 +1102,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     && asList(HSQLDB, POSTGRES).contains(family)) {
 
                 context.formatSeparator()
-                       .keyword("into")
+                       .visit(K_INTO)
                        .sql(' ')
                        .visit(actualInto);
             }
@@ -1105,7 +1132,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             Object previousCollected = context.data(DATA_COLLECTED_SEMI_ANTI_JOIN, null);
 
             context.formatSeparator()
-                   .keyword("from")
+                   .visit(K_FROM)
                    .sql(' ')
                    .visit(getFrom());
 
@@ -1144,7 +1171,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 where.addConditions(getWhere());
 
             context.formatSeparator()
-                   .keyword("where")
+                   .visit(K_WHERE)
                    .sql(' ')
                    .visit(where);
         }
@@ -1161,7 +1188,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("start with")
+                   .visit(K_START_WITH)
                    .sql(' ')
                    .visit(getConnectByStartWith());
         }
@@ -1171,10 +1198,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("connect by");
+                   .visit(K_CONNECT_BY);
 
             if (connectByNoCycle) {
-                context.sql(' ').keyword("nocycle");
+                context.sql(' ').visit(K_NOCYCLE);
             }
 
             context.sql(' ').visit(getConnectBy());
@@ -1188,7 +1215,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (grouping) {
             context.formatSeparator()
-                   .keyword("group by")
+                   .visit(K_GROUP_BY)
                    .sql(' ');
 
             // [#1665] Empty GROUP BY () clauses need parentheses
@@ -1234,7 +1261,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("having")
+                   .visit(K_HAVING)
                    .sql(' ')
                    .visit(getHaving());
         }
@@ -1247,7 +1274,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (!getWindow().isEmpty() && asList(POSTGRES).contains(family)) {
             context.formatSeparator()
-                   .keyword("window")
+                   .visit(K_WINDOW)
                    .sql(' ')
                    .declareWindows(true)
                    .visit(getWindow())
@@ -1275,7 +1302,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 for (Select<?> other : union.get(i)) {
                     context.formatSeparator()
-                           .keyword(op.toSQL(dialect))
+                           .visit(op.toKeyword(dialect))
                            .sql(' ');
 
                     unionParenthesis(context, "(");
@@ -1334,11 +1361,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (!actualOrderBy.isEmpty()) {
             context.formatSeparator()
-                   .keyword("order")
-                   .sql(orderBySiblings ? " " : "")
-                   .keyword(orderBySiblings ? "siblings" : "")
-                   .sql(' ')
-                   .keyword("by")
+                   .visit(K_ORDER);
+
+            if (orderBySiblings) {
+                context.sql(' ').visit(K_SIBLINGS);
+
+            }
+
+            context.sql(' ').visit(K_BY)
                    .sql(' ');
 
 
@@ -1462,10 +1492,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case MARIADB:
                 case MYSQL:
                     ctx.formatNewLine()
-                       .keyword("select")
+                       .visit(K_SELECT)
                        .sql(" *")
                        .formatSeparator()
-                       .keyword("from")
+                       .visit(K_FROM)
                        .sql(' ');
                     break;
             }
@@ -2266,14 +2296,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
 
-        private final String sql;
+        private final Keyword keyword;
 
         private ForUpdateMode(String sql) {
-            this.sql = sql;
+            this.keyword = DSL.keyword(sql);
         }
 
-        public final String toSQL() {
-            return sql;
+        public final Keyword toKeyword() {
+            return keyword;
         }
     }
 }

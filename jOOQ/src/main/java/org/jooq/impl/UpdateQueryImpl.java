@@ -47,6 +47,10 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_UPDATE;
+import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -480,7 +484,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     final void accept0(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
-           .keyword("update")
+           .visit(K_UPDATE)
            .sql(' ')
 
            // [#4314] Not all SQL dialects support declaring aliased tables in
@@ -509,7 +513,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         ctx.formatSeparator()
            .start(UPDATE_SET)
-           .keyword("set")
+           .visit(K_SET)
            .sql(' ');
 
         // A multi-row update was specified
@@ -572,7 +576,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 if (!from.isEmpty()) {
                     ctx.formatSeparator()
-                       .keyword("from").sql(' ')
+                       .visit(K_FROM).sql(' ')
                        .declareTables(true)
                        .visit(from)
                        .declareTables(false);
@@ -586,7 +590,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         if (!(getWhere() instanceof TrueCondition)) {
             ctx.formatSeparator()
-               .keyword("where").sql(' ')
+               .visit(K_WHERE).sql(' ')
                .visit(getWhere());
         }
 

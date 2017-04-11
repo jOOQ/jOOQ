@@ -36,6 +36,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.impl.Keywords.K_LIKE_REGEX;
+import static org.jooq.impl.Keywords.K_REGEXP;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -75,7 +77,7 @@ final class RegexpLike extends AbstractCondition {
             case SQLITE: {
                 ctx.visit(search)
                    .sql(' ')
-                   .keyword("regexp")
+                   .visit(K_REGEXP)
                    .sql(' ')
                    .visit(pattern);
 
@@ -125,7 +127,7 @@ final class RegexpLike extends AbstractCondition {
             default: {
                 ctx.visit(search)
                    .sql(' ')
-                   .keyword("like_regex")
+                   .visit(K_LIKE_REGEX)
                    .sql(' ')
                    .visit(pattern);
 

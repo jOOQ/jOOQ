@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.Keywords.K_PRIOR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -89,7 +90,7 @@ final class Prior<T> extends AbstractField<T> {
 
             case CUBRID:
             default:
-                ctx.keyword("prior").sql(' ').visit(field);
+                ctx.visit(K_PRIOR).sql(' ').visit(field);
                 break;
         }
     }

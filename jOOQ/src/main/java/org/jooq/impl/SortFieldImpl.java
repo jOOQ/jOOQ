@@ -37,6 +37,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.K_NULLS_FIRST;
+import static org.jooq.impl.Keywords.K_NULLS_LAST;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -128,7 +130,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                        .sql(", ")
                        .visit(field)
                        .sql(' ')
-                       .keyword(order.toSQL());
+                       .visit(order.toKeyword());
 
                     break;
                 }
@@ -137,13 +139,13 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 default: {
                     ctx.visit(field)
                        .sql(' ')
-                       .keyword(order.toSQL());
+                       .visit(order.toKeyword());
 
                     if (nullsFirst) {
-                        ctx.sql(' ').keyword("nulls first");
+                        ctx.sql(' ').visit(K_NULLS_FIRST);
                     }
                     else {
-                        ctx.sql(' ').keyword("nulls last");
+                        ctx.sql(' ').visit(K_NULLS_LAST);
                     }
 
                     break;
@@ -153,7 +155,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         else {
             ctx.visit(field)
                .sql(' ')
-               .keyword(order.toSQL());
+               .visit(order.toKeyword());
         }
     }
 

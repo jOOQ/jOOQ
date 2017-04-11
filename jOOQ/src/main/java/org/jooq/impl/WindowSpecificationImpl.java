@@ -39,6 +39,15 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_BETWEEN;
+import static org.jooq.impl.Keywords.K_CURRENT_ROW;
+import static org.jooq.impl.Keywords.K_FOLLOWING;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Keywords.K_PARTITION_BY;
+import static org.jooq.impl.Keywords.K_PRECEDING;
+import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
+import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 
@@ -48,6 +57,7 @@ import java.util.Collection;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Keyword;
 import org.jooq.SortField;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
@@ -94,8 +104,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             }
             else {
                 ctx.sql(glue)
-                       .keyword("partition by").sql(' ')
-                       .visit(partitionBy);
+                   .visit(K_PARTITION_BY).sql(' ')
+                   .visit(partitionBy);
 
                 glue = " ";
             }
@@ -103,21 +113,21 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
         if (!orderBy.isEmpty()) {
             ctx.sql(glue)
-                   .keyword("order by").sql(' ')
-                   .visit(orderBy);
+               .visit(K_ORDER_BY).sql(' ')
+               .visit(orderBy);
 
             glue = " ";
         }
 
         if (frameStart != null) {
             ctx.sql(glue);
-            ctx.keyword(frameUnits.keyword).sql(' ');
+            ctx.visit(frameUnits.keyword).sql(' ');
 
             if (frameEnd != null) {
-                ctx.keyword("between").sql(' ');
+                ctx.visit(K_BETWEEN).sql(' ');
                 toSQLRows(ctx, frameStart);
 
-                ctx.sql(' ').keyword("and").sql(' ');
+                ctx.sql(' ').visit(K_AND).sql(' ');
                 toSQLRows(ctx, frameEnd);
             }
             else {
@@ -129,23 +139,16 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     private final void toSQLRows(Context<?> ctx, Integer rows) {
-        if (rows == Integer.MIN_VALUE) {
-            ctx.keyword("unbounded preceding");
-        }
-        else if (rows == Integer.MAX_VALUE) {
-            ctx.keyword("unbounded following");
-        }
-        else if (rows < 0) {
-            ctx.sql(-rows);
-            ctx.sql(' ').keyword("preceding");
-        }
-        else if (rows > 0) {
-            ctx.sql(rows);
-            ctx.sql(' ').keyword("following");
-        }
-        else {
-            ctx.keyword("current row");
-        }
+        if (rows == Integer.MIN_VALUE)
+            ctx.visit(K_UNBOUNDED_PRECEDING);
+        else if (rows == Integer.MAX_VALUE)
+            ctx.visit(K_UNBOUNDED_FOLLOWING);
+        else if (rows < 0)
+            ctx.sql(-rows).sql(' ').visit(K_PRECEDING);
+        else if (rows > 0)
+            ctx.sql(rows).sql(' ').visit(K_FOLLOWING);
+        else
+            ctx.visit(K_CURRENT_ROW);
     }
 
     @Override
@@ -352,10 +355,10 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         ROWS("rows"),
         RANGE("range");
 
-        private final String keyword;
+        private final Keyword keyword;
 
         private FrameUnits(String keyword) {
-            this.keyword = keyword;
+            this.keyword = DSL.keyword(keyword);
         }
     }
 }

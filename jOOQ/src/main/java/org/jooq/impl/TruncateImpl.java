@@ -37,6 +37,12 @@ package org.jooq.impl;
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 // ...
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_CONTINUE_IDENTITY;
+import static org.jooq.impl.Keywords.K_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_RESTART_IDENTITY;
+import static org.jooq.impl.Keywords.K_RESTRICT;
+import static org.jooq.impl.Keywords.K_TRUNCATE_TABLE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -114,7 +120,7 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
             // All other dialects do
             default: {
                 ctx.start(TRUNCATE_TRUNCATE)
-                   .keyword("truncate table").sql(' ')
+                   .visit(K_TRUNCATE_TABLE).sql(' ')
                    .visit(table);
 
 
@@ -124,7 +130,7 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
 
                 if (restartIdentity != null)
                     ctx.formatSeparator()
-                       .keyword(restartIdentity ? "restart identity" : "continue identity");
+                       .visit(restartIdentity ? K_RESTART_IDENTITY : K_CONTINUE_IDENTITY);
 
                 if (cascade != null)
 
@@ -137,7 +143,7 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
 
 
                         ctx.formatSeparator()
-                           .keyword(cascade ? "cascade" : "restrict");
+                           .visit(cascade ? K_CASCADE : K_RESTRICT);
 
                 ctx.end(TRUNCATE_TRUNCATE);
                 break;

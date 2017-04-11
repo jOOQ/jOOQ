@@ -49,6 +49,12 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_INDEX;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_UNIQUE;
+import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Collection;
 
@@ -184,23 +190,23 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.keyword("create");
+        ctx.visit(K_CREATE);
 
         if (unique)
             ctx.sql(' ')
-               .keyword("unique");
+               .visit(K_UNIQUE);
 
         ctx.sql(' ')
-           .keyword("index")
+           .visit(K_INDEX)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))
-            ctx.keyword("if not exists")
+            ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
         ctx.visit(index)
            .sql(' ')
-           .keyword("on")
+           .visit(K_ON)
            .sql(' ')
            .visit(table)
            .sql('(')
@@ -211,7 +217,7 @@ final class CreateIndexImpl extends AbstractQuery implements
 
         if (where != null)
             ctx.sql(' ')
-               .keyword("where")
+               .visit(K_WHERE)
                .sql(' ')
                .qualify(false)
                .visit(where)

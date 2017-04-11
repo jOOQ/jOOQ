@@ -49,6 +49,19 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
+import static org.jooq.impl.Keywords.K_DO_NOTHING;
+import static org.jooq.impl.Keywords.K_DO_UPDATE;
+import static org.jooq.impl.Keywords.K_IGNORE;
+import static org.jooq.impl.Keywords.K_INSERT;
+import static org.jooq.impl.Keywords.K_INTO;
+import static org.jooq.impl.Keywords.K_ON_CONFLICT;
+import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
+import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNames;
@@ -205,7 +218,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .keyword("on duplicate key update")
+                       .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .formatIndentStart()
                        .formatSeparator()
                        .visit(updateMap)
@@ -219,7 +232,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .keyword("on conflict")
+                       .visit(K_ON_CONFLICT)
                        .sql(" (");
 
                     if (onConflict != null && onConflict.size() > 0) {
@@ -241,9 +254,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     }
 
                     ctx.sql(") ")
-                       .keyword("do update")
+                       .visit(K_DO_UPDATE)
                        .formatSeparator()
-                       .keyword("set")
+                       .visit(K_SET)
                        .sql(' ')
                        .formatIndentLockStart()
                        .visit(updateMap)
@@ -251,7 +264,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     if (!(condition.getWhere() instanceof TrueCondition))
                         ctx.formatSeparator()
-                           .keyword("where")
+                           .visit(K_WHERE)
                            .sql(' ')
                            .visit(condition);
 
@@ -303,7 +316,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .keyword("on conflict")
+                       .visit(K_ON_CONFLICT)
                        .sql(' ');
 
                     if (onConflict != null && onConflict.size() > 0) {
@@ -316,7 +329,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                            .sql(") ");
                     }
 
-                    ctx.keyword("do nothing")
+                    ctx.visit(K_DO_NOTHING)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
@@ -330,7 +343,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .keyword("on duplicate key update")
+                       .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .sql(' ')
                        .visit(update)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
@@ -392,17 +405,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         boolean declareTables = ctx.declareTables();
 
         ctx.start(INSERT_INSERT_INTO)
-           .keyword("insert")
-           .sql(' ')
-           // [#1295] [#4376] MySQL and SQLite have native syntaxes for
-           //                 INSERT [ OR ] IGNORE
-           .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.family()))
-                  ? "ignore "
-                  : (onDuplicateKeyIgnore && SQLDialect.SQLITE == ctx.family())
-                  ? "or ignore "
-                  : ""
-           )
-           .keyword("into")
+           .visit(K_INSERT)
+           .sql(' ');
+
+        // [#1295] [#4376] MySQL and SQLite have native syntaxes for
+        //                 INSERT [ OR ] IGNORE
+        if (onDuplicateKeyIgnore)
+            if (asList(MARIADB, MYSQL).contains(ctx.family()))
+                ctx.visit(K_IGNORE).sql(' ');
+            else if (SQLDialect.SQLITE == ctx.family())
+                ctx.visit(K_OR).sql(' ').visit(K_IGNORE).sql(' ');
+
+        ctx.visit(K_INTO)
            .sql(' ')
            .declareTables(true)
            .visit(table)
@@ -448,7 +462,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case MARIADB:
                 case MYSQL:
                     ctx.formatSeparator()
-                       .keyword("values")
+                       .visit(K_VALUES)
                        .sql('(');
 
                     int count = table.fields().length;
@@ -456,7 +470,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     for (int i = 0; i < count; i++) {
                         ctx.sql(separator);
-                        ctx.keyword("default");
+                        ctx.visit(K_DEFAULT);
                         separator = ", ";
                     }
 
@@ -465,7 +479,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 default:
                     ctx.formatSeparator()
-                       .keyword("default values");
+                       .visit(K_DEFAULT_VALUES);
                     break;
             }
         }
@@ -570,17 +584,17 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      */
     @SuppressWarnings("unchecked")
     private final Condition matchByPrimaryKey(FieldMapForInsert map) {
-        Condition condition = null;
+        Condition result = null;
 
         for (Field<?> f : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = (Field<Object>) map.get(field);
 
             Condition other = field.equal(value);
-            condition = (condition == null) ? other : condition.and(other);
+            result = (result == null) ? other : result.and(other);
         }
 
-        return condition;
+        return result;
     }
 
     @Override

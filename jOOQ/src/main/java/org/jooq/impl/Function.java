@@ -49,6 +49,20 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_DENSE_RANK;
+import static org.jooq.impl.Keywords.K_DISTINCT;
+import static org.jooq.impl.Keywords.K_FILTER;
+import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
+import static org.jooq.impl.Keywords.K_KEEP;
+import static org.jooq.impl.Keywords.K_LAST;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Keywords.K_OVER;
+import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
+import static org.jooq.impl.Keywords.K_SEPARATOR;
+import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
 import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
@@ -269,7 +283,7 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql('(');
 
         if (distinct)
-            ctx.keyword("distinct").sql(' ');
+            ctx.visit(K_DISTINCT).sql(' ');
 
         // The explicit cast is needed in Postgres
         ctx.visit(((Field<?>) arguments.get(0)).cast(String.class));
@@ -280,8 +294,8 @@ class Function<T> extends AbstractField<T> implements
             ctx.sql(", ''");
 
         if (!withinGroupOrderBy.isEmpty())
-            ctx.sql(' ').keyword("order by").sql(' ')
-                   .visit(withinGroupOrderBy);
+            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
+               .visit(withinGroupOrderBy);
 
         ctx.sql(')');
     }
@@ -295,11 +309,11 @@ class Function<T> extends AbstractField<T> implements
         toSQLArguments1(ctx, new QueryPartList<QueryPart>(arguments.get(0)));
 
         if (!withinGroupOrderBy.isEmpty())
-            ctx.sql(' ').keyword("order by").sql(' ')
+            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
                .visit(withinGroupOrderBy);
 
         if (arguments.size() > 1)
-            ctx.sql(' ').keyword("separator").sql(' ')
+            ctx.sql(' ').visit(K_SEPARATOR).sql(' ')
                .visit(arguments.get(1));
 
         ctx.sql(')');
@@ -308,9 +322,9 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLFilterClause(Context<?> ctx) {
         if (filter != null && (HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect()))) {
             ctx.sql(' ')
-               .keyword("filter")
+               .visit(K_FILTER)
                .sql(" (")
-               .keyword("where")
+               .visit(K_WHERE)
                .sql(' ')
                .visit(filter)
                .sql(')');
@@ -329,7 +343,7 @@ class Function<T> extends AbstractField<T> implements
             return;
 
         ctx.sql(' ')
-           .keyword("over")
+           .visit(K_OVER)
            .sql(' ')
            .visit(window);
     }
@@ -378,10 +392,10 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
         if (!keepDenseRankOrderBy.isEmpty()) {
-            ctx.sql(' ').keyword("keep")
-               .sql(" (").keyword("dense_rank")
-               .sql(' ').keyword(first ? "first" : "last")
-               .sql(' ').keyword("order by")
+            ctx.sql(' ').visit(K_KEEP)
+               .sql(" (").visit(K_DENSE_RANK)
+               .sql(' ').visit(first ? K_FIRST : K_LAST)
+               .sql(' ').visit(K_ORDER_BY)
                .sql(' ').visit(keepDenseRankOrderBy)
                .sql(')');
         }
@@ -392,8 +406,8 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLWithinGroupClause(Context<?> ctx) {
         if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(' ').keyword("within group")
-               .sql(" (").keyword("order by")
+            ctx.sql(' ').visit(K_WITHIN_GROUP)
+               .sql(" (").visit(K_ORDER_BY)
                .sql(' ').visit(withinGroupOrderBy)
                .sql(')');
         }
@@ -415,7 +429,7 @@ class Function<T> extends AbstractField<T> implements
 
     final void toSQLArguments1(Context<?> ctx, QueryPartList<QueryPart> args) {
         if (distinct) {
-            ctx.keyword("distinct");
+            ctx.visit(K_DISTINCT);
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
             if (ctx.family() == POSTGRES && args.size() > 1) {
@@ -450,7 +464,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-                ctx.sql(' ').keyword("ignore nulls");
+                ctx.sql(' ').visit(K_IGNORE_NULLS);
         }
         else if (respectNulls) {
 
@@ -458,7 +472,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-                ctx.sql(' ').keyword("respect nulls");
+                ctx.sql(' ').visit(K_RESPECT_NULLS);
         }
     }
 

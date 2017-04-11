@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_NOT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,7 +207,7 @@ final class RowCondition extends AbstractCondition {
 
             // Some dialects do not support != comparison with rows
             if (comparator == NOT_EQUALS && asList().contains(ctx.configuration().dialect().family())) {
-                ctx.keyword("not").sql('(')
+                ctx.visit(K_NOT).sql('(')
                    .visit(left).sql(" = ").visit(right)
                    .sql(')');
             }

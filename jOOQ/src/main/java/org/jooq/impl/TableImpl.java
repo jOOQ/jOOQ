@@ -42,6 +42,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.Keywords.K_TABLE;
 
 import java.util.Arrays;
 

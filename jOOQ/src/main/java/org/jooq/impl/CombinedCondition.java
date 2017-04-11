@@ -41,6 +41,8 @@ import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_OR;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,6 +51,7 @@ import java.util.List;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.Keyword;
 import org.jooq.Operator;
 
 /**
@@ -115,17 +118,17 @@ final class CombinedCondition extends AbstractCondition {
                .formatIndentStart()
                .formatNewLine();
 
-            String operatorName = operator == AND ? "and" : "or";
-            String separator = null;
+            Keyword op = operator == AND ? K_AND : K_OR;
+            Keyword separator = null;
 
             for (int i = 0; i < conditions.size(); i++) {
                 if (i > 0)
                     ctx.formatSeparator();
                 if (separator != null)
-                    ctx.keyword(separator).sql(' ');
+                    ctx.visit(separator).sql(' ');
 
                 ctx.visit(conditions.get(i));
-                separator = operatorName;
+                separator = op;
             }
 
             ctx.formatIndentEnd()

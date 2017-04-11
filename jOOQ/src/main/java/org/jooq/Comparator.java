@@ -35,6 +35,8 @@
 
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A comparator to be used in conditions to form comparison predicates.
  * <p>
@@ -99,11 +101,13 @@ public enum Comparator {
     ;
 
     private final String  sql;
+    private final Keyword keyword;
     private final boolean supportsQuantifier;
     private final boolean supportsSubselect;
 
     private Comparator(String sql, boolean supportsQuantifier, boolean supportsSubselect) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
         this.supportsQuantifier = supportsQuantifier;
         this.supportsSubselect = supportsSubselect;
     }
@@ -113,6 +117,13 @@ public enum Comparator {
      */
     public String toSQL() {
         return sql;
+    }
+
+    /**
+     * A keyword rendition of this comparator.
+     */
+    public Keyword toKeyword() {
+        return keyword;
     }
 
     /**

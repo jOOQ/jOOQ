@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_AS;
+
 import java.util.List;
 
 import org.jooq.CommonTableExpression;
@@ -93,7 +95,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
             ctx.visit(name)
                .sql(' ')
-               .keyword("as")
+               .visit(K_AS)
                .sql(" (")
                .subquery(true)
                .formatIndentStart()

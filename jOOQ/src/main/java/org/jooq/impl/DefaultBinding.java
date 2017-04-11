@@ -62,6 +62,22 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Keywords.K_ARRAY;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_BLOB;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_DATE;
+import static org.jooq.impl.Keywords.K_DATETIME;
+import static org.jooq.impl.Keywords.K_FALSE;
+import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_TIME;
+import static org.jooq.impl.Keywords.K_TIMESTAMP;
+import static org.jooq.impl.Keywords.K_TIMESTAMP_WITH_TIME_ZONE;
+import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
+import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
+import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
@@ -424,9 +440,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     private final void toSQLCast(BindingSQLContext<U> ctx, T converted, DataType<?> dataType, int length, int precision, int scale) {
-        ctx.render().keyword("cast").sql('(');
+        ctx.render().visit(K_CAST).sql('(');
         toSQL(ctx, converted);
-        ctx.render().sql(' ').keyword("as").sql(' ')
+        ctx.render().sql(' ').visit(K_AS).sql(' ')
                .sql(dataType.length(length).precision(precision, scale).getCastTypeName(ctx.configuration()))
                .sql(')');
     }
@@ -446,7 +462,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // SQL injection may occur
 
             if (val == null) {
-                render.keyword("null");
+                render.visit(K_NULL);
             }
             else if (type == Boolean.class) {
 
@@ -460,7 +476,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 else {
-                    render.keyword(((Boolean) val).toString());
+                    render.visit(((Boolean) val) ? K_TRUE : K_FALSE);
                 }
             }
 
@@ -486,14 +502,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                           .sql('\'');
                 }
                 else if (asList().contains(family)) {
-                    render.keyword("hextoraw('")
+                    render.sql("hextoraw('")
                           .sql(convertBytesToHex(binary))
                           .sql("')");
                 }
                 else if (family == POSTGRES) {
                     render.sql("E'")
                           .sql(PostgresUtils.toPGString(binary))
-                          .keyword("'::bytea");
+                          .sql("'::bytea");
                 }
 
                 // This default behaviour is used in debug logging for dialects
@@ -515,7 +531,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#5249] Special inlining of special floating point values
             else if (Double.class.isAssignableFrom(type) && ((Double) val).isNaN()) {
                 if (POSTGRES == family)
-                    render.visit(inline("NaN")).sql("::").keyword("float8");
+                    render.visit(inline("NaN")).sql("::float8");
                 else
                     render.sql(((Number) val).toString());
             }
@@ -523,7 +539,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#5249] Special inlining of special floating point values
             else if (Float.class.isAssignableFrom(type) && ((Float) val).isNaN()) {
                 if (POSTGRES == family)
-                    render.visit(inline("NaN")).sql("::").keyword("float4");
+                    render.visit(inline("NaN")).sql("::float4");
                 else
                     render.sql(((Number) val).toString());
             }
@@ -555,17 +571,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("date('").sql(escape(date, render)).sql("')");
+                    render.visit(K_DATE).sql("('").sql(escape(date, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{d '").sql(escape(date, render)).sql("'}");
+                    render.sql("{d '").sql(escape(date, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    render.keyword("date '").sql(escape(date, render)).sql('\'');
+                    render.visit(K_DATE).sql(" '").sql(escape(date, render)).sql('\'');
                 }
             }
             else if (Tools.isTimestamp(type)) {
@@ -589,22 +605,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("timestamp('").sql(escape(ts, render)).sql("')");
+                    render.visit(K_TIMESTAMP).sql("('").sql(escape(ts, render)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    render.keyword("datetime '").sql(escape(ts, render)).sql('\'');
+                    render.visit(K_DATETIME).sql(" '").sql(escape(ts, render)).sql('\'');
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{ts '").sql(escape(ts, render)).sql("'}");
+                    render.sql("{ts '").sql(escape(ts, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    render.keyword("timestamp '").sql(escape(ts, render)).sql('\'');
+                    render.visit(K_TIMESTAMP).sql(" '").sql(escape(ts, render)).sql('\'');
                 }
             }
             else if (Tools.isTime(type)) {
@@ -628,12 +644,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("time").sql("('").sql(escape(time, render)).sql("')");
+                    render.visit(K_TIME).sql("('").sql(escape(time, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{t '").sql(escape(time, render)).sql("'}");
+                    render.sql("{t '").sql(escape(time, render)).sql("'}");
                 }
 
 
@@ -644,7 +660,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Most dialects implement SQL standard time literals
                 else {
-                    render.keyword("time").sql(" '").sql(escape(time, render)).sql('\'');
+                    render.visit(K_TIME).sql(" '").sql(escape(time, render)).sql('\'');
                 }
             }
 
@@ -661,7 +677,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Some dialects implement SQL standard time literals
                 {
-                    render.keyword("timestamp with time zone").sql(" '").sql(escape(string, render)).sql('\'');
+                    render.visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(string, render)).sql('\'');
                 }
             }
 
@@ -678,7 +694,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Some dialects implement SQL standard time literals
                 {
-                    render.keyword("time with time zone").sql(" '").sql(escape(string, render)).sql('\'');
+                    render.visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(string, render)).sql('\'');
                 }
             }
 
@@ -705,7 +721,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // By default, render HSQLDB / POSTGRES syntax
                 else {
-                    render.keyword("ARRAY");
+                    render.visit(K_ARRAY);
                     render.sql('[');
 
                     for (Object o : ((Object[]) val)) {
@@ -766,7 +782,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type.isArray() && byte[].class != type) {
                 render.sql(ctx.variable());
                 render.sql("::");
-                render.keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
+                render.sql(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
             }
 
             else {

@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Keyword;
 
 /**
  * A quantifier used for quantified comparison predicates
@@ -54,13 +55,19 @@ enum Quantifier {
 
     ;
 
-    private final String sql;
+    private final String  sql;
+    private final Keyword keyword;
 
     private Quantifier(String sql) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
     }
 
-    public String toSQL() {
+    public final String toSQL() {
         return sql;
+    }
+
+    public final Keyword toKeyword() {
+        return keyword;
     }
 }

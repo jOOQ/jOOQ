@@ -55,6 +55,22 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
+import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
+import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
+import static org.jooq.impl.Keywords.K_IDENTITY;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_NOT_NULL;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_ON_COMMIT_DELETE_ROWS;
+import static org.jooq.impl.Keywords.K_ON_COMMIT_DROP;
+import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
+import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_TEMPORARY;
+import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
@@ -256,10 +272,10 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
                     // [#4321] Not all dialects support explicit NULL type declarations
                     if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
-                        ctx.sql(' ').keyword("null");
+                        ctx.sql(' ').visit(K_NULL);
                 }
                 else {
-                    ctx.sql(' ').keyword("not null");
+                    ctx.sql(' ').visit(K_NOT_NULL);
                 }
 
                 if (type.identity()) {
@@ -273,7 +289,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
                         case H2:
                         case MARIADB:
-                        case MYSQL:  ctx.sql(' ').keyword("auto_increment"); break;
+                        case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                     }
                 }
 
@@ -306,7 +322,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     private void acceptDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
-            ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
+            ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {
@@ -314,7 +330,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         toSQLCreateTableName(ctx);
         toSQLOnCommit(ctx);
         ctx.formatSeparator()
-           .keyword("as");
+           .visit(K_AS);
 
         if (asList(HSQLDB).contains(ctx.family())) {
             ctx.sql(" (")
@@ -336,7 +352,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             if (ctx.family() == HSQLDB)
                 ctx.sql(' ')
-                   .keyword("with data");
+                   .visit(K_WITH_DATA);
         }
 
         ctx.end(CREATE_TABLE);
@@ -344,20 +360,20 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     private final void toSQLCreateTableName(Context<?> ctx) {
         ctx.start(CREATE_TABLE_NAME)
-           .keyword("create")
+           .visit(K_CREATE)
            .sql(' ');
 
         if (temporary)
             if (asList(MARIADB, MYSQL, POSTGRES).contains(ctx.family()))
-                ctx.keyword("temporary").sql(' ');
+                ctx.visit(K_TEMPORARY).sql(' ');
             else
-                ctx.keyword("global temporary").sql(' ');
+                ctx.visit(K_GLOBAL_TEMPORARY).sql(' ');
 
-        ctx.keyword("table")
+        ctx.visit(K_TABLE)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))
-            ctx.keyword("if not exists")
+            ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
         ctx.visit(table)
@@ -367,9 +383,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final void toSQLOnCommit(Context<?> ctx) {
         if (temporary && onCommit != null) {
             switch (onCommit) {
-                case DELETE_ROWS:   ctx.formatSeparator().keyword("on commit delete rows");   break;
-                case PRESERVE_ROWS: ctx.formatSeparator().keyword("on commit preserve rows"); break;
-                case DROP:          ctx.formatSeparator().keyword("on commit drop");          break;
+                case DELETE_ROWS:   ctx.formatSeparator().visit(K_ON_COMMIT_DELETE_ROWS);   break;
+                case PRESERVE_ROWS: ctx.formatSeparator().visit(K_ON_COMMIT_PRESERVE_ROWS); break;
+                case DROP:          ctx.formatSeparator().visit(K_ON_COMMIT_DROP);          break;
             }
         }
     }

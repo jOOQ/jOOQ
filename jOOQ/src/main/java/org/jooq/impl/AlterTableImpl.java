@@ -59,6 +59,29 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.Keywords.K_ADD;
+import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
+import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_DROP;
+import static org.jooq.impl.Keywords.K_DROP_COLUMN;
+import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_MODIFY;
+import static org.jooq.impl.Keywords.K_NOT_NULL;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
+import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
+import static org.jooq.impl.Keywords.K_SET_DEFAULT;
+import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.K_TYPE;
+import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
@@ -430,10 +453,10 @@ final class AlterTableImpl extends AbstractQuery implements
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
-               .keyword("alter table");
+               .visit(K_ALTER_TABLE);
 
             if (ifExists && supportsIfExists(ctx))
-                ctx.sql(' ').keyword("if exists");
+                ctx.sql(' ').visit(K_IF_EXISTS);
 
             ctx.sql(' ').visit(table)
                .end(ALTER_TABLE_TABLE)
@@ -446,7 +469,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.start(ALTER_TABLE_RENAME)
                .qualify(false)
-               .keyword("rename to").sql(' ')
+               .visit(K_RENAME_TO).sql(' ')
                .visit(renameTo)
                .qualify(qualify)
                .end(ALTER_TABLE_RENAME);
@@ -460,18 +483,18 @@ final class AlterTableImpl extends AbstractQuery implements
             switch (ctx.family()) {
                 case H2:
                 case HSQLDB:
-                    ctx.keyword("alter column").sql(' ')
+                    ctx.visit(K_ALTER_COLUMN).sql(' ')
                        .visit(renameColumn)
                        .formatSeparator()
-                       .keyword("rename to").sql(' ')
+                       .visit(K_RENAME_TO).sql(' ')
                        .visit(renameColumnTo);
                     break;
 
                 default:
-                    ctx.keyword("rename column").sql(' ')
+                    ctx.visit(K_RENAME_COLUMN).sql(' ')
                        .visit(renameColumn)
                        .formatSeparator()
-                       .keyword("to").sql(' ')
+                       .visit(K_TO).sql(' ')
                        .visit(renameColumnTo);
                     break;
             }
@@ -487,19 +510,19 @@ final class AlterTableImpl extends AbstractQuery implements
 
             if (family == HSQLDB) {
                 ctx.qualify(false)
-                   .keyword("alter constraint").sql(' ')
+                   .visit(K_ALTER_CONSTRAINT).sql(' ')
                    .visit(renameConstraint)
                    .formatSeparator()
-                   .keyword("rename to").sql(' ')
+                   .visit(K_RENAME_TO).sql(' ')
                    .visit(renameConstraintTo)
                    .qualify(qualify);
             }
             else {
                 ctx.qualify(false)
-                   .keyword("rename constraint").sql(' ')
+                   .visit(K_RENAME_CONSTRAINT).sql(' ')
                    .visit(renameConstraint)
                    .formatSeparator()
-                   .keyword("to").sql(' ')
+                   .visit(K_TO).sql(' ')
                    .visit(renameConstraintTo)
                    .qualify(qualify);
             }
@@ -511,7 +534,7 @@ final class AlterTableImpl extends AbstractQuery implements
             boolean qualify = ctx.qualify();
 
             ctx.start(ALTER_TABLE_ADD)
-               .keyword("add").sql(' ');
+               .visit(K_ADD).sql(' ');
 
 
 
@@ -524,15 +547,13 @@ final class AlterTableImpl extends AbstractQuery implements
 
             toSQLDDLTypeDeclaration(ctx, addColumnType);
 
-            if (!addColumnType.nullable()) {
-                ctx.sql(' ').keyword("not null");
-            }
+            if (!addColumnType.nullable())
+                ctx.sql(' ').visit(K_NOT_NULL);
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
             // [#3400] [#4321] ... but not in Derby, Firebird
-            else if (!asList(DERBY, FIREBIRD).contains(family)) {
-                ctx.sql(' ').keyword("null");
-            }
+            else if (!asList(DERBY, FIREBIRD).contains(family))
+                ctx.sql(' ').visit(K_NULL);
 
 
 
@@ -546,7 +567,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.start(ALTER_TABLE_ADD);
 
-            ctx.keyword("add")
+            ctx.visit(K_ADD)
                .sql(' ')
                .qualify(false)
                .visit(addConstraint)
@@ -582,20 +603,18 @@ final class AlterTableImpl extends AbstractQuery implements
                 case MARIADB:
                 case MYSQL: {
 
-                    if (alterColumnDefault == null) {
-                        // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                        ctx.keyword("change column")
+                    // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
+                    if (alterColumnDefault == null)
+                        ctx.visit(K_CHANGE_COLUMN)
                            .sql(' ').qualify(false).visit(alterColumn).qualify(true);
-                    }
-                    else {
-                        ctx.keyword("alter column");
-                    }
+                    else
+                        ctx.visit(K_ALTER_COLUMN);
 
                     break;
                 }
 
                 default:
-                    ctx.keyword("alter");
+                    ctx.visit(K_ALTER);
                     break;
             }
 
@@ -612,20 +631,19 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
                     case DERBY:
-                        ctx.sql(' ').keyword("set data type");
+                        ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
 
                     case POSTGRES:
-                        ctx.sql(' ').keyword("type");
+                        ctx.sql(' ').visit(K_TYPE);
                         break;
                 }
 
                 ctx.sql(' ');
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
-                if (!alterColumnType.nullable()) {
-                    ctx.sql(' ').keyword("not null");
-                }
+                if (!alterColumnType.nullable())
+                    ctx.sql(' ').visit(K_NOT_NULL);
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
@@ -638,7 +656,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
                     default:
-                        ctx.keyword("set default");
+                        ctx.visit(K_SET_DEFAULT);
                         break;
                 }
 
@@ -664,7 +682,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
                 default:
-                    ctx.keyword("drop");
+                    ctx.visit(K_DROP);
                     break;
             }
 
@@ -684,9 +702,8 @@ final class AlterTableImpl extends AbstractQuery implements
                     break;
             }
 
-            if (dropColumnCascade) {
-                ctx.sql(' ').keyword("cascade");
-            }
+            if (dropColumnCascade)
+                ctx.sql(' ').visit(K_CASCADE);
 
             ctx.end(ALTER_TABLE_DROP);
         }
@@ -694,7 +711,7 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            ctx.keyword("drop constraint")
+            ctx.visit(K_DROP_CONSTRAINT)
                .sql(' ')
                .visit(dropConstraint);
 

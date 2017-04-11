@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE_VALUES;
+import static org.jooq.impl.Keywords.K_VALUES;
 
 import org.jooq.Context;
 import org.jooq.Name;
@@ -144,7 +145,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             default: {
                 ctx.start(TABLE_VALUES)
-                   .keyword("values")
+                   .visit(K_VALUES)
                    .formatIndentLockStart();
 
                 boolean firstRow = true;

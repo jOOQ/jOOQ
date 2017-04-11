@@ -43,6 +43,8 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.K_RECURSIVE;
+import static org.jooq.impl.Keywords.K_WITH;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -181,11 +183,11 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("with")
+        ctx.visit(K_WITH)
            .sql(' ');
 
         if (recursive && !asList().contains(ctx.configuration().dialect().family()))
-            ctx.keyword("recursive")
+            ctx.visit(K_RECURSIVE)
                .sql(' ');
 
         ctx.declareCTE(true)

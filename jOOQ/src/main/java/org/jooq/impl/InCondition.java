@@ -48,6 +48,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_OR;
 
 import java.util.AbstractList;
 import java.util.Arrays;
@@ -57,14 +59,12 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final JooqLogger log              = JooqLogger.getLogger(InCondition.class);
     private static final long       serialVersionUID = -1653924248576930761L;
     private static final int        IN_LIMIT         = 1000;
     private static final Clause[]   CLAUSES_IN       = { CONDITION, CONDITION_IN };
@@ -116,12 +116,12 @@ final class InCondition<T> extends AbstractCondition {
                             // operator
                             if (comparator == Comparator.IN) {
                                 ctx.formatSeparator()
-                                   .keyword("or")
+                                   .visit(K_OR)
                                    .sql(' ');
                             }
                             else {
                                 ctx.formatSeparator()
-                                   .keyword("and")
+                                   .visit(K_AND)
                                    .sql(' ');
                             }
                         }
@@ -161,7 +161,7 @@ final class InCondition<T> extends AbstractCondition {
     private void toSQLSubValues(Context<?> ctx, List<Field<?>> subValues) {
         ctx.visit(field)
            .sql(' ')
-           .keyword(comparator.toSQL())
+           .visit(comparator.toKeyword())
            .sql(" (");
 
         if (subValues.size() > 1) {

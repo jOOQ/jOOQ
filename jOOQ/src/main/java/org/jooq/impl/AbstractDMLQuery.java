@@ -44,6 +44,12 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_INTO;
+import static org.jooq.impl.Keywords.K_RETURNING;
+import static org.jooq.impl.Keywords.K_ROWCOUNT;
+import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.unqualify;
@@ -203,7 +209,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 case FIREBIRD:
                 case POSTGRES:
                     ctx.formatSeparator()
-                       .keyword("returning")
+                       .visit(K_RETURNING)
                        .sql(' ')
                        .visit(returning);
                     break;

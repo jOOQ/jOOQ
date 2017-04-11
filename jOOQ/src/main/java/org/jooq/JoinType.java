@@ -40,6 +40,8 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 
+import org.jooq.impl.DSL;
+
 
 /**
  * The type of join
@@ -128,13 +130,19 @@ public enum JoinType {
 
     ;
 
-    private final String sql;
+    private final String  sql;
+    private final Keyword keyword;
 
     private JoinType(String sql) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
     }
 
     public final String toSQL() {
         return sql;
+    }
+
+    public final Keyword toKeyword() {
+        return keyword;
     }
 }

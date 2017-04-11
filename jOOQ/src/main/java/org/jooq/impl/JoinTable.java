@@ -79,6 +79,13 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
+import static org.jooq.impl.Keywords.K_INNER_JOIN;
+import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_PARTITION_BY;
+import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
@@ -92,6 +99,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -159,13 +167,13 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
         JoinType translatedType = translateType(ctx);
         Clause translatedClause = translateClause(translatedType);
 
-        String keyword = translatedType.toSQL();
+        Keyword keyword = translatedType.toKeyword();
 
         if (translatedType == CROSS_APPLY && ctx.family() == POSTGRES) {
-            keyword = "cross join lateral";
+            keyword = K_CROSS_JOIN_LATERAL;
         }
         else if (translatedType == OUTER_APPLY && ctx.family() == POSTGRES) {
-            keyword = "left outer join lateral";
+            keyword = K_LEFT_OUTER_JOIN_LATERAL;
         }
 
 
@@ -207,7 +215,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
         ctx.formatIndentStart()
            .formatSeparator()
            .start(translatedClause)
-           .keyword(keyword)
+           .visit(keyword)
            .sql(' ');
 
         toSQLTable(ctx, rhs);
@@ -217,7 +225,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
         if (!rhsPartitionBy.isEmpty()) {
             ctx.formatSeparator()
                    .start(TABLE_JOIN_PARTITION_BY)
-                   .keyword("partition by")
+                   .visit(K_PARTITION_BY)
                    .sql(" (")
                    .visit(rhsPartitionBy)
                    .sql(')')
@@ -236,7 +244,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
         else if (OUTER_APPLY == translatedType && ctx.family() == POSTGRES) {
             ctx.formatSeparator()
                .start(TABLE_JOIN_ON)
-               .keyword("on")
+               .visit(K_ON)
                .sql(" true")
                .end(TABLE_JOIN_ON);
         }
@@ -341,10 +349,10 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
                         first = false;
 
                         context.start(TABLE_JOIN_ON)
-                               .keyword("on");
+                               .visit(K_ON);
                     }
                     else {
-                        context.keyword("and");
+                        context.visit(K_AND);
                     }
 
                     context.sql(' ')
@@ -360,7 +368,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
             else {
                 context.formatSeparator()
                        .start(TABLE_JOIN_USING)
-                       .keyword("using")
+                       .visit(K_USING)
                        .sql('(');
                 Tools.fieldNames(context, using);
                 context.sql(')')
@@ -385,10 +393,10 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
                         first = false;
 
                         context.start(TABLE_JOIN_ON)
-                               .keyword("on");
+                               .visit(K_ON);
                     }
                     else {
-                        context.keyword("and");
+                        context.visit(K_AND);
                     }
 
                     context.sql(' ')
@@ -405,7 +413,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
         else {
             context.formatSeparator()
                    .start(TABLE_JOIN_ON)
-                   .keyword("on")
+                   .visit(K_ON)
                    .sql(' ')
                    .visit(condition)
                    .end(TABLE_JOIN_ON);

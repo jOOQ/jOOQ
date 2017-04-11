@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -50,7 +51,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     private static final long         serialVersionUID = -3905775637768497535L;
 
     private final AbstractTable<R>    delegate;
-    private final String              keywords;
+    private final Keyword             keywords;
     private final QueryPartList<Name> arguments;
 
     HintedTable(AbstractTable<R> delegate, String keywords, String... arguments) {
@@ -58,6 +59,14 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     }
 
     HintedTable(AbstractTable<R> delegate, String keywords, QueryPartList<Name> arguments) {
+        this(delegate, DSL.keyword(keywords), arguments);
+    }
+
+    HintedTable(AbstractTable<R> delegate, Keyword keywords, String... arguments) {
+        this(delegate, keywords, new QueryPartList<Name>(Tools.names(arguments)));
+    }
+
+    HintedTable(AbstractTable<R> delegate, Keyword keywords, QueryPartList<Name> arguments) {
         super(delegate.getName(), delegate.getSchema());
 
         this.delegate = delegate;
@@ -73,9 +82,9 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate)
-           .sql(' ').keyword(keywords)
-           .sql(" (").visit(arguments)
-           .sql(')');
+            .sql(' ').visit(keywords)
+            .sql(" (").visit(arguments)
+            .sql(')');
     }
 
     @Override

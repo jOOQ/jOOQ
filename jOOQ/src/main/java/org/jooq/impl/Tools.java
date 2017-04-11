@@ -62,6 +62,7 @@ import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.select;
@@ -71,6 +72,39 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_AUTOINCREMENT;
+import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
+import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
+import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_DO;
+import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_END_CATCH;
+import static org.jooq.impl.Keywords.K_END_IF;
+import static org.jooq.impl.Keywords.K_END_LOOP;
+import static org.jooq.impl.Keywords.K_END_TRY;
+import static org.jooq.impl.Keywords.K_EXCEPTION;
+import static org.jooq.impl.Keywords.K_EXEC;
+import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
+import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
+import static org.jooq.impl.Keywords.K_IDENTITY;
+import static org.jooq.impl.Keywords.K_IF;
+import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Keywords.K_LIKE;
+import static org.jooq.impl.Keywords.K_LOOP;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_RAISE;
+import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.K_SERIAL8;
+import static org.jooq.impl.Keywords.K_START_WITH;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_THROW;
+import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.io.Serializable;
@@ -1788,7 +1822,7 @@ final class Tools {
 
                     // If the above failed, then we're dealing with a {keyword}
                     catch (NumberFormatException e) {
-                        render.keyword(token);
+                        render.visit(DSL.keyword(token));
                     }
                 }
             }
@@ -3232,10 +3266,10 @@ final class Tools {
 
 
             case FIREBIRD: {
-                ctx.keyword("execute block").formatSeparator()
-                   .keyword("as").formatSeparator()
-                   .keyword("begin").formatIndentStart().formatSeparator()
-                   .keyword("execute statement").sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
+                ctx.visit(K_EXECUTE_BLOCK).formatSeparator()
+                   .visit(K_AS).formatSeparator()
+                   .visit(K_BEGIN).formatIndentStart().formatSeparator()
+                   .visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
 
                 break;
             }
@@ -3313,9 +3347,9 @@ final class Tools {
 
             case FIREBIRD: {
                 ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
-                   .keyword("when").sql(" sqlcode -607 ").keyword("do").formatIndentStart().formatSeparator()
-                   .keyword("begin end").formatIndentEnd().formatIndentEnd().formatSeparator()
-                   .keyword("end");
+                   .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
+                   .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .visit(K_END);
 
                 break;
             }
@@ -3445,13 +3479,13 @@ final class Tools {
 
 
 
-                case POSTGRES: ctx.keyword(type.getType() == Long.class ? "serial8" : "serial"); return;
+                case POSTGRES: ctx.visit(type.getType() == Long.class ? K_SERIAL8 : K_SERIAL); return;
             }
         }
 
         if (type.hasLength()) {
             if (type.length() > 0) {
-                ctx.keyword(typeName).sql('(').sql(type.length()).sql(')');
+                ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
             }
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
@@ -3459,19 +3493,19 @@ final class Tools {
                 String castTypeName = type.getCastTypeName(ctx.configuration());
 
                 if (!typeName.equals(castTypeName))
-                    ctx.keyword(castTypeName);
+                    ctx.sql(castTypeName);
                 else
-                    ctx.keyword(typeName);
+                    ctx.sql(typeName);
             }
         }
         else if (type.hasPrecision() && type.precision() > 0) {
             if (type.hasScale())
-                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
+                ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
             else
-                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(')');
+                ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
         }
         else {
-            ctx.keyword(typeName);
+            ctx.sql(typeName);
         }
 
         if (type.identity()) {
@@ -3484,9 +3518,9 @@ final class Tools {
 
 
 
-                case CUBRID:    ctx.sql(' ').keyword("auto_increment"); break;
-                case DERBY:     ctx.sql(' ').keyword("generated by default as identity"); break;
-                case HSQLDB:    ctx.sql(' ').keyword("generated by default as identity").sql('(').keyword("start with").sql(" 1)"); break;
+                case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
+                case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
             }
         }
     }

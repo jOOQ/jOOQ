@@ -172,7 +172,7 @@ final class Dual extends AbstractTable<Record> {
 
 
                 default:
-                    ctx.keyword("dual");
+                    ctx.sql("dual");
                     break;
             }
         }

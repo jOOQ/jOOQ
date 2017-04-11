@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.Keywords.K_AS;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -72,7 +73,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
         if (ctx.declareWindows()) {
             ctx.visit(name)
                .sql(' ')
-               .keyword("as")
+               .visit(K_AS)
                .sql(" (")
                .visit(window)
                .sql(')');

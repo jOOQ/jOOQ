@@ -37,6 +37,9 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Keywords.K_PIVOT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.ArrayList;

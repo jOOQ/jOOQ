@@ -35,6 +35,8 @@
 
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * The sorting order used in OrderByFieldLists
  *
@@ -54,13 +56,19 @@ public enum SortOrder {
     @Support
     DESC("desc");
 
-    private final String sql;
+    private final String  sql;
+    private final Keyword keyword;
 
     private SortOrder(String sql) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
     }
 
-    public String toSQL() {
+    public final String toSQL() {
         return sql;
+    }
+
+    public final Keyword toKeyword() {
+        return keyword;
     }
 }

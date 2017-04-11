@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_DROP_TABLE;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -119,15 +122,15 @@ final class DropTableImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_TABLE_TABLE)
-           .keyword("drop table").sql(' ');
+           .visit(K_DROP_TABLE).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(' ');
+            ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
 
         if (cascade) {
-            ctx.sql(' ').keyword("cascade");
+            ctx.sql(' ').visit(K_CASCADE);
         }
 
         ctx.end(DROP_TABLE_TABLE);

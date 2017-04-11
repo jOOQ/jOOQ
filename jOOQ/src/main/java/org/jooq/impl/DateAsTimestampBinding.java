@@ -36,6 +36,9 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_DATE;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;

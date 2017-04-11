@@ -164,12 +164,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext keyword(String keyword) {
-        if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle)
-            return sql(keyword.toUpperCase(), true);
-        else if (RenderKeywordStyle.LOWER == cachedRenderKeywordStyle)
-            return sql(keyword.toLowerCase(), true);
-        else
-            return sql(keyword, true);
+        return visit(DSL.keyword(keyword));
     }
 
     @Override

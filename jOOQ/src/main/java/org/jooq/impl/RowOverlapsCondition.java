@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_OVERLAPS;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -147,7 +148,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         @Override
         public final void accept(Context<?> ctx) {
             ctx.sql('(').visit(left)
-               .sql(' ').keyword("overlaps")
+               .sql(' ').visit(K_OVERLAPS)
                .sql(' ').visit(right)
                .sql(')');
         }

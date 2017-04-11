@@ -51,6 +51,18 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_DELETE_WHERE;
+import static org.jooq.impl.Keywords.K_KEY;
+import static org.jooq.impl.Keywords.K_MERGE_INTO;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_UPSERT;
+import static org.jooq.impl.Keywords.K_USING;
+import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Keywords.K_WHEN_MATCHED_THEN_UPDATE_SET;
+import static org.jooq.impl.Keywords.K_WHEN_NOT_MATCHED_THEN_INSERT;
+import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -1338,7 +1350,7 @@ implements
     }
 
     private final void toSQLH2Merge(Context<?> ctx) {
-        ctx.keyword("merge into")
+        ctx.visit(K_MERGE_INTO)
            .sql(' ')
            .declareTables(true)
            .visit(table)
@@ -1349,7 +1361,7 @@ implements
         ctx.sql(')');
 
         if (!getUpsertKeys().isEmpty()) {
-            ctx.sql(' ').keyword("key").sql(" (");
+            ctx.sql(' ').visit(K_KEY).sql(" (");
             Tools.fieldNames(ctx, getUpsertKeys());
             ctx.sql(')');
         }
@@ -1359,7 +1371,7 @@ implements
                .visit(upsertSelect);
         }
         else {
-            ctx.sql(' ').keyword("values").sql(" (")
+            ctx.sql(' ').visit(K_VALUES).sql(" (")
                .visit(getUpsertValues())
                .sql(')');
         }
@@ -1409,7 +1421,7 @@ implements
 
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)
-           .keyword("merge into").sql(' ')
+           .visit(K_MERGE_INTO).sql(' ')
            .declareTables(true)
            .visit(table)
            .declareTables(false)
@@ -1417,7 +1429,7 @@ implements
            .formatSeparator()
            .start(MERGE_USING)
            .declareTables(true)
-           .keyword("using").sql(' ')
+           .visit(K_USING).sql(' ')
            .formatIndentStart()
            .formatNewLine();
         ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
@@ -1464,7 +1476,7 @@ implements
            .formatSeparator()
            .start(MERGE_ON)
            // Oracle ON ( ... ) parentheses are a mandatory syntax element
-           .keyword("on").sql(onParentheses ? " (" : " ")
+           .visit(K_ON).sql(onParentheses ? " (" : " ")
            .visit(on)
            .sql(onParentheses ? ")" : "")
            .end(MERGE_ON)
@@ -1474,7 +1486,7 @@ implements
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
             ctx.formatSeparator()
-               .keyword("when matched then update set")
+               .visit(K_WHEN_MATCHED_THEN_UPDATE_SET)
                .formatIndentStart()
                .formatSeparator()
                .visit(matchedUpdate)
@@ -1487,7 +1499,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
             ctx.formatSeparator()
-               .keyword("where").sql(' ')
+               .visit(K_WHERE).sql(' ')
                .visit(matchedWhere);
         }
 
@@ -1497,7 +1509,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
             ctx.formatSeparator()
-               .keyword("delete where").sql(' ')
+               .visit(K_DELETE_WHERE).sql(' ')
                .visit(matchedDeleteWhere);
         }
 
@@ -1508,11 +1520,11 @@ implements
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             ctx.formatSeparator()
-               .keyword("when not matched then insert");
+               .visit(K_WHEN_NOT_MATCHED_THEN_INSERT);
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)
-               .keyword("values").sql(' ')
+               .visit(K_VALUES).sql(' ')
                .visit(notMatchedInsert)
                .end(MERGE_VALUES);
         }
@@ -1522,7 +1534,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
             ctx.formatSeparator()
-               .keyword("where").sql(' ')
+               .visit(K_WHERE).sql(' ')
                .visit(notMatchedWhere);
         }
 

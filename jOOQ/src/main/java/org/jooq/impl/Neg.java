@@ -85,7 +85,7 @@ final class Neg<T> extends AbstractField<T> {
 
 
         else if (operator == BIT_NOT && family == FIREBIRD) {
-            ctx.keyword("bin_not(")
+            ctx.sql("bin_not(")
                .visit(field)
                .sql(')');
         }

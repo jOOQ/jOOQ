@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_WITH;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -67,7 +69,7 @@ final class WithTable<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate)
-           .sql(' ').keyword("with")
+           .sql(' ').visit(K_WITH)
            .sql(" (").sql(hint)
            .sql(')');
     }

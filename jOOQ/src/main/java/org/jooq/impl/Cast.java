@@ -36,6 +36,10 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_DECIMAL;
+import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
@@ -182,15 +186,15 @@ final class Cast<T> extends AbstractFunction<T> {
             if (field.getDataType().isNumeric() &&
                 VARCHAR.equals(getSQLDataType())) {
 
-                ctx.keyword("trim").sql('(')
-                       .keyword("cast").sql('(')
-                           .keyword("cast").sql('(')
+                ctx.visit(K_TRIM).sql('(')
+                       .visit(K_CAST).sql('(')
+                           .visit(K_CAST).sql('(')
                                .castMode(CastMode.NEVER)
                                .visit(field)
                                .castMode(castMode)
-                               .sql(' ').keyword("as").sql(" char(38))")
-                           .sql(' ').keyword("as").sql(' ')
-                           .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+                               .sql(' ').visit(K_AS).sql(" char(38))")
+                           .sql(' ').visit(K_AS).sql(' ')
+                           .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
                        .sql("))");
 
                 return;
@@ -200,16 +204,16 @@ final class Cast<T> extends AbstractFunction<T> {
             else if (field.getDataType().isString() &&
                      asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
 
-                ctx.keyword("cast").sql('(')
-                       .keyword("cast").sql('(')
+                ctx.visit(K_CAST).sql('(')
+                       .visit(K_CAST).sql('(')
                            .castMode(CastMode.NEVER)
                            .visit(field)
                            .castMode(castMode)
-                           .sql(' ').keyword("as").sql(' ').keyword("decimal")
+                           .sql(' ').visit(K_AS).sql(' ').visit(K_DECIMAL)
                        .sql(") ")
-                       .keyword("as")
+                       .visit(K_AS)
                        .sql(' ')
-                       .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+                       .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
                    .sql(')');
 
                 return;
@@ -249,12 +253,12 @@ final class Cast<T> extends AbstractFunction<T> {
             CastMode castMode = ctx.castMode();
 
             // Default rendering, if no special case has applied yet
-            ctx.keyword("cast").sql('(')
+            ctx.visit(K_CAST).sql('(')
                .castMode(CastMode.NEVER)
                .visit(field)
                .castMode(castMode)
-               .sql(' ').keyword("as").sql(' ')
-               .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+               .sql(' ').visit(K_AS).sql(' ')
+               .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
                .sql(')');
         }
 

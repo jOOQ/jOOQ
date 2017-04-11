@@ -60,6 +60,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_AND;
+import static org.jooq.impl.Keywords.K_BETWEEN;
+import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Keywords.K_SYMMETRIC;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
@@ -141,11 +145,11 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
         @Override
         public final void accept(Context<?> ctx) {
                            ctx.visit(field);
-            if (not)       ctx.sql(' ').keyword("not");
-                           ctx.sql(' ').keyword("between");
-            if (symmetric) ctx.sql(' ').keyword("symmetric");
+            if (not)       ctx.sql(' ').visit(K_NOT);
+                           ctx.sql(' ').visit(K_BETWEEN);
+            if (symmetric) ctx.sql(' ').visit(K_SYMMETRIC);
                            ctx.sql(' ').visit(minValue);
-                           ctx.sql(' ').keyword("and");
+                           ctx.sql(' ').visit(K_AND);
                            ctx.sql(' ').visit(maxValue);
         }
 

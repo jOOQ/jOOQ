@@ -48,6 +48,13 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME;
+import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.K_VIEW;
 
 import org.jooq.AlterViewFinalStep;
 import org.jooq.AlterViewStep;
@@ -168,11 +175,11 @@ final class AlterViewImpl extends AbstractQuery implements
 
     private final void accept1(Context<?> ctx) {
         ctx.start(ALTER_VIEW_VIEW)
-           .keyword("alter").sql(' ')
-           .keyword(ctx.family() == HSQLDB ? "table" : "view");
+           .visit(K_ALTER).sql(' ')
+           .visit(ctx.family() == HSQLDB ? K_TABLE : K_VIEW);
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.sql(' ').keyword("if exists");
+            ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(view)
            .end(ALTER_VIEW_VIEW)
@@ -184,7 +191,7 @@ final class AlterViewImpl extends AbstractQuery implements
 
             ctx.start(ALTER_VIEW_RENAME)
                .qualify(false)
-               .keyword("rename to").sql(' ').visit(renameTo)
+               .visit(K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
                .end(ALTER_VIEW_RENAME);
         }

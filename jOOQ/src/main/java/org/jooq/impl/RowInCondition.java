@@ -136,7 +136,7 @@ final class RowInCondition extends AbstractCondition {
             else {
                 ctx.visit(left)
                    .sql(' ')
-                   .keyword(comparator.toSQL())
+                   .visit(comparator.toKeyword())
                    .sql(" (")
                    .visit(right)
                    .sql(')');

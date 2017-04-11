@@ -219,7 +219,7 @@ final class RowSubqueryCondition extends AbstractCondition {
 
             ctx.visit(left)
                .sql(' ')
-               .keyword(comparator.toSQL())
+               .visit(comparator.toKeyword())
                .sql(' ');
 
             if (rightQuantified == null) {

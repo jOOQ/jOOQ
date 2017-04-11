@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_LATERAL;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -78,9 +80,7 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("lateral")
-           .sql(' ')
-           .visit(table);
+        ctx.visit(K_LATERAL).sql(' ').visit(table);
     }
 
     @Override

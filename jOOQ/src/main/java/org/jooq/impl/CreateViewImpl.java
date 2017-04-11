@@ -50,6 +50,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CREATE_VIEW;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -161,11 +164,11 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         ParamType paramType = ctx.paramType();
 
         ctx.start(CREATE_VIEW_NAME)
-           .keyword("create view")
+           .visit(K_CREATE_VIEW)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))
-            ctx.keyword("if not exists")
+            ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
         ctx.visit(view);
@@ -182,7 +185,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
         ctx.end(CREATE_VIEW_NAME)
            .formatSeparator()
-           .keyword("as")
+           .visit(K_AS)
            .formatSeparator()
            .start(CREATE_VIEW_AS)
            .paramType(INLINED)

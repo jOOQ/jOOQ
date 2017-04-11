@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
@@ -246,7 +247,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     static void toSQLAs(Context<?> context) {
         if (asList(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.family())) {
-            context.sql(' ').keyword("as");
+            context.sql(' ').visit(K_AS);
         }
     }
 

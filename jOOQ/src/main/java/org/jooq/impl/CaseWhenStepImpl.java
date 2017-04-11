@@ -34,6 +34,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_CASE;
+import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_SWITCH;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Keywords.K_WHEN;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -214,7 +222,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
         @Override
         public final void accept(Context<?> ctx) {
             ctx.formatIndentLockStart()
-               .keyword("case");
+               .visit(K_CASE);
 
             int size = compareValues.size();
             switch (ctx.configuration().dialect()) {
@@ -227,9 +235,9 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                         if (i > 0)
                             ctx.formatNewLine();
 
-                        ctx.sql(' ').keyword("when").sql(' ');
+                        ctx.sql(' ').visit(K_WHEN).sql(' ');
                         ctx.visit(value.equal(compareValues.get(i)));
-                        ctx.sql(' ').keyword("then").sql(' ');
+                        ctx.sql(' ').visit(K_THEN).sql(' ');
                         ctx.visit(results.get(i));
                     }
 
@@ -243,9 +251,9 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
                     for (int i = 0; i < size; i++)
                         ctx.formatSeparator()
-                           .keyword("when").sql(' ')
+                           .visit(K_WHEN).sql(' ')
                            .visit(compareValues.get(i)).sql(' ')
-                           .keyword("then").sql(' ')
+                           .visit(K_THEN).sql(' ')
                            .visit(results.get(i));
 
                     break;
@@ -254,7 +262,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
             if (otherwise != null)
                 ctx.formatSeparator()
-                   .keyword("else").sql(' ')
+                   .visit(K_ELSE).sql(' ')
                    .visit(otherwise);
 
             ctx.formatIndentEnd();
@@ -264,7 +272,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
             else
                 ctx.sql(' ');
 
-            ctx.keyword("end")
+            ctx.visit(K_END)
                .formatIndentLockEnd();
         }
     }

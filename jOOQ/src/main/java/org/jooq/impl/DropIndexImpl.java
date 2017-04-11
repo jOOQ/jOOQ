@@ -46,6 +46,9 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_DROP_INDEX;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_ON;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -125,15 +128,15 @@ final class DropIndexImpl extends AbstractQuery implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.keyword("drop index").sql(' ');
+        ctx.visit(K_DROP_INDEX).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(' ');
+            ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(index);
 
         if (on != null)
-            ctx.sql(' ').keyword("on").sql(' ').visit(on);
+            ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
     }
 
     @Override

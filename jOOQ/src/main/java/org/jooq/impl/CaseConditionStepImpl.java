@@ -34,6 +34,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_CASE;
+import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_SWITCH;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Keywords.K_WHEN;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,7 +186,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
         @Override
         public final void accept(Context<?> ctx) {
             ctx.formatIndentLockStart()
-               .keyword("case")
+               .visit(K_CASE)
                .formatIndentLockStart();
 
             int size = conditions.size();
@@ -187,13 +195,13 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
                     ctx.formatNewLine();
                 }
 
-                ctx.sql(' ').keyword("when").sql(' ').visit(conditions.get(i))
-                   .sql(' ').keyword("then").sql(' ').visit(results.get(i));
+                ctx.sql(' ').visit(K_WHEN).sql(' ').visit(conditions.get(i))
+                   .sql(' ').visit(K_THEN).sql(' ').visit(results.get(i));
             }
 
             if (otherwise != null) {
                 ctx.formatNewLine()
-                   .sql(' ').keyword("else").sql(' ').visit(otherwise);
+                   .sql(' ').visit(K_ELSE).sql(' ').visit(otherwise);
             }
 
             ctx.formatIndentLockEnd();
@@ -205,7 +213,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
                 ctx.sql(' ');
             }
 
-            ctx.keyword("end")
+            ctx.visit(K_END)
                .formatIndentLockEnd();
         }
     }

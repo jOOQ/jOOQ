@@ -45,6 +45,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_DROP_VIEW;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -103,10 +105,10 @@ final class DropViewImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_VIEW_TABLE)
-           .keyword("drop view").sql(' ');
+           .visit(K_DROP_VIEW).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(' ');
+            ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
 

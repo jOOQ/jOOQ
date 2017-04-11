@@ -49,6 +49,16 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME;
+import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_RESTART;
+import static org.jooq.impl.Keywords.K_RESTART_WITH;
+import static org.jooq.impl.Keywords.K_SEQUENCE;
+import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.K_START_WITH;
+import static org.jooq.impl.Keywords.K_TO;
 
 import org.jooq.AlterSequenceFinalStep;
 import org.jooq.AlterSequenceStep;
@@ -180,12 +190,12 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     private final void accept1(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
-           .keyword("alter")
+           .visit(K_ALTER)
            .sql(' ')
-           .keyword(ctx.family() == CUBRID ? "serial" : "sequence");
+           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.sql(' ').keyword("if exists");
+            ctx.sql(' ').visit(K_IF_EXISTS);
 
         switch (ctx.family()) {
 
@@ -212,7 +222,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
             boolean qualify = ctx.qualify();
 
             ctx.start(ALTER_SEQUENCE_RENAME)
-               .sql(' ').keyword("rename to")
+               .sql(' ').visit(K_RENAME_TO)
                .sql(' ')
                .qualify(false)
                .visit(renameTo)
@@ -230,14 +240,14 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
 
 
-                    ctx.sql(' ').keyword("restart");
+                    ctx.sql(' ').visit(K_RESTART);
             }
             else {
                 if (ctx.family() == CUBRID)
-                    ctx.sql(' ').keyword("start with")
+                    ctx.sql(' ').visit(K_START_WITH)
                        .sql(' ').sql(with.toString());
                 else
-                    ctx.sql(' ').keyword("restart with")
+                    ctx.sql(' ').visit(K_RESTART_WITH)
                        .sql(' ').sql(with.toString());
             }
 

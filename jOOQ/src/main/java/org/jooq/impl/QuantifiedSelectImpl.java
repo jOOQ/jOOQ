@@ -85,7 +85,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
         // If this is already a subquery, proceed
         if (ctx.subquery()) {
-            ctx.keyword(quantifier.toSQL())
+            ctx.visit(quantifier.toKeyword())
                .sql(extraParentheses ? " ((" : " (")
                .formatIndentStart()
                .formatNewLine()
@@ -95,8 +95,8 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                .sql(extraParentheses ? "))" : ")");
         }
         else {
-            ctx.keyword(quantifier.toSQL())
-            .sql(extraParentheses ? " ((" : " (")
+            ctx.visit(quantifier.toKeyword())
+               .sql(extraParentheses ? " ((" : " (")
                .subquery(true)
                .formatIndentStart()
                .formatNewLine()

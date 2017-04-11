@@ -38,6 +38,9 @@ import static org.jooq.Clause.ALTER_SCHEMA;
 import static org.jooq.Clause.ALTER_SCHEMA_RENAME;
 import static org.jooq.Clause.ALTER_SCHEMA_SCHEMA;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Keywords.K_ALTER_SCHEMA;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME_TO;
 
 import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
@@ -104,10 +107,10 @@ final class AlterSchemaImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_SCHEMA_SCHEMA)
-           .keyword("alter schema");
+           .visit(K_ALTER_SCHEMA);
 
         if (ifExists)
-            ctx.sql(' ').keyword("if exists");
+            ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema)
            .end(ALTER_SCHEMA_SCHEMA)
@@ -119,7 +122,7 @@ final class AlterSchemaImpl extends AbstractQuery implements
 
             ctx.start(ALTER_SCHEMA_RENAME)
                .qualify(false)
-               .keyword("rename to").sql(' ').visit(renameTo)
+               .visit(K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
                .end(ALTER_SCHEMA_RENAME);
         }

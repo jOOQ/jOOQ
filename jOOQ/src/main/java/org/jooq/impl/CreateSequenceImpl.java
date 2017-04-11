@@ -46,6 +46,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_SEQUENCE;
+import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.K_START_WITH;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -99,20 +104,20 @@ final class CreateSequenceImpl extends AbstractQuery implements
 
     private final void accept0(Context<?> ctx) {
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
-           .keyword("create")
+           .visit(K_CREATE)
            .sql(' ')
-           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
+           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))
-            ctx.keyword("if not exists")
+            ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
         ctx.visit(sequence);
 
         // Some databases default to sequences starting with MIN_VALUE
         if (asList(DERBY).contains(ctx.family()))
-            ctx.sql(' ').keyword("start with").sql(" 1");
+            ctx.sql(' ').visit(K_START_WITH).sql(" 1");
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }

@@ -46,6 +46,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_DROP;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RESTRICT;
+import static org.jooq.impl.Keywords.K_SEQUENCE;
+import static org.jooq.impl.Keywords.K_SERIAL;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -103,13 +108,13 @@ final class DropSequenceImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop")
+           .visit(K_DROP)
            .sql(' ')
-           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
+           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(' ');
+            ctx.visit(K_IF_EXISTS).sql(' ');
 
         switch (ctx.family()) {
 
@@ -131,7 +136,7 @@ final class DropSequenceImpl extends AbstractQuery implements
         }
 
         if (ctx.family() == DERBY)
-            ctx.sql(' ').keyword("restrict");
+            ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(DROP_SEQUENCE_SEQUENCE);
     }

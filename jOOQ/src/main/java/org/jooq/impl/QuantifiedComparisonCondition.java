@@ -67,7 +67,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition {
     public final void accept(Context<?> ctx) {
         ctx.visit(field)
            .sql(' ')
-           .keyword(comparator.toSQL())
+           .visit(comparator.toKeyword())
            .sql(' ')
            .visit(query);
     }

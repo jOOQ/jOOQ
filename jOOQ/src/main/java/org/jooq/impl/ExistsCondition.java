@@ -38,6 +38,8 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_EXISTS;
+import static org.jooq.impl.Keywords.K_NOT_EXISTS;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -64,7 +66,7 @@ final class ExistsCondition extends AbstractCondition {
     public final void accept(Context<?> ctx) {
         boolean subquery = ctx.subquery();
 
-        ctx.keyword(exists ? "exists" : "not exists")
+        ctx.visit(exists ? K_EXISTS : K_NOT_EXISTS)
            .sql(" (")
            .subquery(true)
            .formatIndentStart()

@@ -42,6 +42,14 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
 import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_CHECK;
+import static org.jooq.impl.Keywords.K_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
+import static org.jooq.impl.Keywords.K_ON_DELETE;
+import static org.jooq.impl.Keywords.K_ON_UPDATE;
+import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
+import static org.jooq.impl.Keywords.K_REFERENCES;
+import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
@@ -76,6 +84,7 @@ import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
@@ -159,14 +168,14 @@ implements
             boolean qualify = ctx.qualify();
 
             if (name != null)
-                ctx.keyword("constraint")
+                ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(name)
                    .formatIndentStart()
                    .formatSeparator();
 
             if (unique != null) {
-                ctx.keyword("unique")
+                ctx.visit(K_UNIQUE)
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(unique))
@@ -174,7 +183,7 @@ implements
                    .sql(')');
             }
             else if (primaryKey != null) {
-                ctx.keyword("primary key")
+                ctx.visit(K_PRIMARY_KEY)
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(primaryKey))
@@ -182,14 +191,14 @@ implements
                    .sql(')');
             }
             else if (foreignKey != null) {
-                ctx.keyword("foreign key")
+                ctx.visit(K_FOREIGN_KEY)
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(foreignKey))
                    .qualify(qualify)
                    .sql(')')
                    .formatSeparator()
-                   .keyword("references")
+                   .visit(K_REFERENCES)
                    .sql(' ')
                    .visit(referencesTable)
                    .sql(" (")
@@ -199,15 +208,15 @@ implements
                    .sql(')');
 
                 if (onDelete != null)
-                    ctx.sql(' ').keyword("on delete")
-                       .sql(' ').keyword(onDelete.sql);
+                    ctx.sql(' ').visit(K_ON_DELETE)
+                       .sql(' ').visit(onDelete.keyword);
 
                 if (onUpdate != null)
-                    ctx.sql(' ').keyword("on update")
-                       .sql(' ').keyword(onUpdate.sql);
+                    ctx.sql(' ').visit(K_ON_UPDATE)
+                       .sql(' ').visit(onUpdate.keyword);
             }
             else if (check != null) {
-                ctx.keyword("check")
+                ctx.visit(K_CHECK)
                    .sql(" (")
                    .qualify(false)
                    .visit(check)
@@ -1153,10 +1162,10 @@ implements
         SET_NULL("set null"),
         SET_DEFAULT("set default");
 
-        String sql;
+        Keyword keyword;
 
         private Action(String sql) {
-            this.sql = sql;
+            this.keyword = DSL.keyword(sql);
         }
     }
 }

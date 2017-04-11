@@ -35,6 +35,10 @@
 
 package org.jooq.impl;
 
+// ...
+import static org.jooq.impl.Keywords.K_MINUS;
+
+import org.jooq.Keyword;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 
@@ -84,21 +88,29 @@ enum CombineOperator {
      */
     INTERSECT_ALL("intersect all");
 
-    private final String sql;
+    private final String  sql;
+    private final Keyword keyword;
 
     private CombineOperator(String sql) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
     }
 
-    public String toSQL(SQLDialect dialect) {
-
-
-
+    public final String toSQL(SQLDialect dialect) {
 
 
 
 
 
         return sql;
+    }
+
+    public final Keyword toKeyword(SQLDialect dialect) {
+
+
+
+
+
+        return keyword;
     }
 }

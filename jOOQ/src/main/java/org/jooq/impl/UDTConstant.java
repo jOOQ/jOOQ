@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_ROW;
 
 import org.jooq.BindContext;
 import org.jooq.Context;
@@ -117,7 +118,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     private final void toSQLInline(RenderContext context) {
         switch (context.family()) {
             case POSTGRES:
-                context.keyword("row");
+                context.visit(K_ROW);
                 break;
 
 

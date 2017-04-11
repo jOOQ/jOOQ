@@ -50,6 +50,24 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_BOOLEAN;
+import static org.jooq.impl.Keywords.K_CASE;
+import static org.jooq.impl.Keywords.K_COLUMNS;
+import static org.jooq.impl.Keywords.K_DECLARE;
+import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_FALSE;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_OPEN;
+import static org.jooq.impl.Keywords.K_PASSING;
+import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.consumeExceptions;
@@ -715,12 +733,17 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
         {
             context.sql(" }");
         }
     }
 
     private final void toSQLDeclare(RenderContext context) {
+
+
 
 
 

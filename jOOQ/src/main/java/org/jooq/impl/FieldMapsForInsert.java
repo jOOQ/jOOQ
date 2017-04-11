@@ -36,6 +36,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
+import static org.jooq.impl.Keywords.K_VALUES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         if (!isExecutable()) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
-               .keyword("default values")
+               .visit(K_DEFAULT_VALUES)
                .end(INSERT_VALUES);
         }
 
@@ -79,7 +81,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
-               .keyword("values")
+               .visit(K_VALUES)
                .sql(' ')
                .visit(insertMaps.get(0))
                .end(INSERT_VALUES);
@@ -127,7 +129,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
                 default: {
                     ctx.formatSeparator()
                        .start(INSERT_VALUES)
-                       .keyword("values")
+                       .visit(K_VALUES)
                        .sql(' ');
                     toSQL92Values(ctx);
                     ctx.end(INSERT_VALUES);

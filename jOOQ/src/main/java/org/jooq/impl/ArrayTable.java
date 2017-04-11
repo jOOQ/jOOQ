@@ -35,6 +35,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_UNNEST;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,7 +211,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.keyword("unnest").sql('(').visit(array).sql(")");
+            ctx.visit(K_UNNEST).sql('(').visit(array).sql(")");
         }
     }
 
@@ -222,7 +224,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.keyword("table")
+            ctx.visit(K_TABLE)
                .sql('(')
                .visit(fieldAliases == null || fieldAliases.length == 0 ? DSL.name("COLUMN_VALUE") : fieldAliases[0])
                .sql(' ');
@@ -230,9 +232,9 @@ final class ArrayTable extends AbstractTable<Record> {
             // If the array type is unknown (e.g. because it's returned from
             // a stored function), then a reasonable choice for arbitrary types is varchar
             if (array.getDataType().getType() == Object[].class)
-                ctx.keyword(H2DataType.VARCHAR.getTypeName());
+                ctx.sql(H2DataType.VARCHAR.getTypeName());
             else
-                ctx.keyword(array.getDataType().getTypeName());
+                ctx.sql(array.getDataType().getTypeName());
 
             ctx.sql(" = ").visit(array).sql(')');
         }

@@ -50,6 +50,10 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_ESCAPE;
+import static org.jooq.impl.Keywords.K_VARCHAR;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -132,15 +136,15 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
 
 
-                     ctx.keyword(op.toSQL()).sql(' ');
-        if (castRhs) ctx.keyword("cast").sql('(');
+                     ctx.visit(op.toKeyword()).sql(' ');
+        if (castRhs) ctx.visit(K_CAST).sql('(');
                      ctx.paramType(forcedParamType)
                         .visit(rhs)
                         .paramType(previousParamType);
-        if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
+        if (castRhs) ctx.sql(' ').visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
 
         if (escape != null) {
-            ctx.sql(' ').keyword("escape").sql(' ')
+            ctx.sql(' ').visit(K_ESCAPE).sql(' ')
                .visit(inline(escape));
         }
     }

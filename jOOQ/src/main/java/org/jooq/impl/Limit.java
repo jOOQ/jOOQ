@@ -40,6 +40,17 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.K_FETCH_FIRST;
+import static org.jooq.impl.Keywords.K_FETCH_NEXT;
+import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_LIMIT;
+import static org.jooq.impl.Keywords.K_OFFSET;
+import static org.jooq.impl.Keywords.K_ROWS;
+import static org.jooq.impl.Keywords.K_ROWS_ONLY;
+import static org.jooq.impl.Keywords.K_SKIP;
+import static org.jooq.impl.Keywords.K_START_AT;
+import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.K_TOP;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -109,7 +120,7 @@ final class Limit extends AbstractQueryPart {
             case CUBRID: {
                 context.castMode(NEVER)
                        .formatSeparator()
-                       .keyword("limit")
+                       .visit(K_LIMIT)
                        .sql(' ').visit(offsetOrZero)
                        .sql(", ").visit(numberOfRowsOrMax)
                        .castMode(castMode);
@@ -124,9 +135,9 @@ final class Limit extends AbstractQueryPart {
             case FIREBIRD_3_0: {
                 context.castMode(NEVER)
                        .formatSeparator()
-                       .keyword("rows")
+                       .visit(K_ROWS)
                        .sql(' ').visit(getLowerRownum().add(inline(1, SQLDataType.INTEGER)))
-                       .sql(' ').keyword("to")
+                       .sql(' ').visit(K_TO)
                        .sql(' ').visit(getUpperRownum())
                        .castMode(castMode);
 
@@ -145,14 +156,14 @@ final class Limit extends AbstractQueryPart {
                 // Casts are not supported here...
                 context.castMode(NEVER)
                        .formatSeparator()
-                       .keyword("offset")
+                       .visit(K_OFFSET)
                        .sql(' ').visit(offsetOrZero)
-                       .sql(' ').keyword("rows");
+                       .sql(' ').visit(K_ROWS);
 
                 if (!limitZero())
-                    context.sql(' ').keyword("fetch next")
+                    context.sql(' ').visit(K_FETCH_NEXT)
                            .sql(' ').visit(numberOfRows)
-                           .sql(' ').keyword("rows only");
+                           .sql(' ').visit(K_ROWS_ONLY);
 
                 context.castMode(castMode);
 
@@ -256,12 +267,12 @@ final class Limit extends AbstractQueryPart {
             case SQLITE: {
                 context.castMode(NEVER)
                        .formatSeparator()
-                       .keyword("limit")
+                       .visit(K_LIMIT)
                        .sql(' ').visit(numberOfRowsOrMax);
 
                 if (!offsetZero())
                     context.formatSeparator()
-                           .keyword("offset")
+                           .visit(K_OFFSET)
                            .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);
@@ -283,12 +294,12 @@ final class Limit extends AbstractQueryPart {
 
                 if (!limitZero())
                     context.formatSeparator()
-                           .keyword("limit")
+                           .visit(K_LIMIT)
                            .sql(' ').visit(numberOfRows);
 
                 if (!offsetZero())
                     context.formatSeparator()
-                           .keyword("offset")
+                           .visit(K_OFFSET)
                            .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);

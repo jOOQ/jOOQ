@@ -2338,7 +2338,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Object.class) {
             return (T) string;
         }
-        else {
+
+        // [#4964] [#6058] Recurse only if we have a meaningful converter, not the identity converter,
+        //                 which would cause a StackOverflowError, here!
+        else if (type != converter.fromType()) {
             Converter<Object, T> c = (Converter<Object, T>) converter;
             return c.from(pgFromString(c.fromType(), string));
         }

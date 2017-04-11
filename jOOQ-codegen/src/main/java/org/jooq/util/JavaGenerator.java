@@ -3658,7 +3658,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, table, parametersAsField);
                     out.println(") : %s = {", className);
 
-                    out.tab(2).println("return new %s(getName(), null, %s(", className, out.ref("scala.Array"));
+                    out.tab(2).println("return new %s(%s.name(getName()), null, %s(", className, DSL.class, out.ref("scala.Array"));
                     String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
@@ -3684,7 +3684,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, table, parametersAsField);
                     out.println(") {");
 
-                    out.tab(2).println("return new %s(getName(), null, new %s[] { ", className, Field.class);
+                    out.tab(2).println("return new %s(%s.name(getName()), null, new %s[] { ", className, DSL.class, Field.class);
                     String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);

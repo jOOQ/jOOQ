@@ -192,7 +192,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> type, final Binding<T, X> binding) {
+    static final <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> type, final Binding<T, X> binding) {
         final Binding<T, U> theBinding;
 
 
@@ -401,7 +401,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // [#1727] VARCHAR types should be cast to their actual lengths in some
         // dialects
         else if ((sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR) && asList(FIREBIRD).contains(family)) {
-            toSQLCast(ctx, converted, dataType, getValueLength(converted), 0, 0);
+            toSQLCast(ctx, converted, dataType, getValueLength((String) converted), 0, 0);
         }
 
 
@@ -417,8 +417,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private final int getValueLength(T value) {
-        String string = (String) value;
+    private static final int getValueLength(String string) {
         if (string == null) {
             return 1;
         }
@@ -808,22 +807,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private final Time getTime(Class<?> t, Object val) {
+    private static final Time getTime(Class<?> t, Object val) {
         return  t == Time.class ?  (Time) val  : Time.valueOf((LocalTime) val) ;
     }
 
-    private final Timestamp getTimestamp(Class<?> t, Object val) {
+    private static final Timestamp getTimestamp(Class<?> t, Object val) {
         return  t == Timestamp.class ?  (Timestamp) val  : Timestamp.valueOf((LocalDateTime) val) ;
     }
 
-    private final Date getDate(Class<?> t, Object val) {
+    private static final Date getDate(Class<?> t, Object val) {
         return  t == Date.class ?  (Date) val  : Date.valueOf((LocalDate) val) ;
     }
 
     /**
      * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
      */
-    private final String escape(Object val, Context<?> context) {
+    private static final String escape(Object val, Context<?> context) {
         String result = val.toString();
 
         if (needsBackslashEscaping(context.configuration()))
@@ -1624,30 +1623,30 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
 
-    private final LocalDate localDate(Date date) {
+    private static final LocalDate localDate(Date date) {
         return date == null ? null : date.toLocalDate();
     }
 
-    private final LocalTime localTime(Time time) {
+    private static final LocalTime localTime(Time time) {
         return time == null ? null : time.toLocalTime();
     }
 
-    private final LocalDateTime localDateTime(Timestamp timestamp) {
+    private static final LocalDateTime localDateTime(Timestamp timestamp) {
         return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
     private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
         "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
 
-    private final OffsetTime offsetTime(String string) {
+    private static final OffsetTime offsetTime(String string) {
         return string == null ? null : OffsetTime.parse(preparse(string, false));
     }
 
-    private final OffsetDateTime offsetDateTime(String string) {
+    private static final OffsetDateTime offsetDateTime(String string) {
         return string == null ? null : OffsetDateTime.parse(preparse(string, true));
     }
 
-    private final String preparse(String formatted, boolean includeDate) {
+    private static final String preparse(String formatted, boolean includeDate) {
         Matcher m = LENIENT_OFFSET_PATTERN.matcher(formatted);
 
         if (m.find()) {
@@ -1693,17 +1692,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private final String replaceZ(String format) {
+    private static final String replaceZ(String format) {
 
         // Replace the ISO standard Z character for UTC, as some databases don't like that
         return format.replace("Z", "+00:00");
     }
 
-    private final String format(OffsetTime val) {
+    private static final String format(OffsetTime val) {
         return replaceZ(val.format(DateTimeFormatter.ISO_OFFSET_TIME));
     }
 
-    private final String format(OffsetDateTime val) {
+    private static final String format(OffsetDateTime val) {
 
         // Remove the ISO standard T character, as some databases don't like that
         String format = val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -2110,7 +2109,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * [#2534] Extract <code>byte[]</code> or <code>String</code> data from a
      * LOB, if the argument is a lob.
      */
-    private static Object unlob(Object object) throws SQLException {
+    private static final Object unlob(Object object) throws SQLException {
         if (object instanceof Blob) {
             Blob blob = (Blob) object;
 
@@ -2306,6 +2305,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Timestamp.class) {
             return (T) Timestamp.valueOf(string);
         }
+
+        else if (type == LocalTime.class) {
+            return (T) LocalTime.parse(string);
+        }
+        else if (type == LocalDate.class) {
+            return (T) LocalDate.parse(string);
+        }
+        else if (type == LocalDateTime.class) {
+            return (T) LocalDateTime.parse(string);
+        }
+        else if (type == OffsetTime.class) {
+            return (T) offsetTime(string);
+        }
+        else if (type == OffsetDateTime.class) {
+            return (T) offsetDateTime(string);
+        }
+
         else if (type == UByte.class) {
             return (T) UByte.valueOf(string);
         }

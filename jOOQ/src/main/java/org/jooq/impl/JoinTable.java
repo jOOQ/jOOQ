@@ -356,9 +356,9 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
                     }
 
                     context.sql(' ')
-                           .visit(lhs.field(field))
+                           .visit(Tools.qualify(field, lhs))
                            .sql(" = ")
-                           .visit(rhs.field(field));
+                           .visit(Tools.qualify(field, rhs));
                 }
 
                 context.end(TABLE_JOIN_ON);

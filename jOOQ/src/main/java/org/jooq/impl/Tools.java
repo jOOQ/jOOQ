@@ -3626,4 +3626,18 @@ final class Tools {
 
         return false;
     }
+
+    static final <T> Field<T> qualify(Field<T> field, Table<?> table) {
+        Field<T> result = table.field(field);
+
+        if (result != null)
+            return result;
+
+        Name[] part = table.getQualifiedName().parts();
+        Name[] name = new Name[part.length + 1];
+        System.arraycopy(part, 0, name, 0, part.length);
+        name[part.length] = field.getQualifiedName().unqualifiedName();
+
+        return DSL.field(DSL.name(name), field.getDataType());
+    }
 }

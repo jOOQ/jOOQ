@@ -62,26 +62,30 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
      */
     private static final long     serialVersionUID = -3650318934053960244L;
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
-    private final String          catalogName;
 
-    CatalogImpl(Name name) {
-        this(name.last());
+    private final Name            name;
+
+    public CatalogImpl(Name name) {
+        this.name = name;
     }
 
     public CatalogImpl(String name) {
-        super();
-
-        this.catalogName = name;
+        this(DSL.name(name));
     }
 
     @Override
     public final String getName() {
-        return catalogName;
+        return name.last();
+    }
+
+    @Override
+    public final Name getQualifiedName() {
+        return name;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.literal(getName());
+        ctx.visit(name.unqualifiedName());
     }
 
     @Override
@@ -90,12 +94,10 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     }
 
     @Override
-    public final Schema getSchema(String name) {
-        for (Schema schema : getSchemas()) {
-            if (schema.getName().equals(name)) {
+    public final Schema getSchema(String schemaName) {
+        for (Schema schema : getSchemas())
+            if (schema.getName().equals(schemaName))
                 return schema;
-            }
-        }
 
         return null;
     }
@@ -123,20 +125,18 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
 
     @Override
     public int hashCode() {
-        return getName() != null ? getName().hashCode() : 0;
+        return getQualifiedName() != null ? getQualifiedName().hashCode() : 0;
     }
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#1626] CatalogImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof CatalogImpl) {
-            return StringUtils.equals(getName(), (((CatalogImpl) that).getName()));
-        }
+        if (that instanceof CatalogImpl)
+            return StringUtils.equals(getQualifiedName(), (((CatalogImpl) that).getQualifiedName()));
 
         return super.equals(that);
     }

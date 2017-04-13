@@ -107,22 +107,50 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private static final Clause[] CLAUSES          = { TABLE };
 
     private final Schema          tableschema;
-    private final String          tablename;
+    private final Name            tablename;
     private final String          tablecomment;
     private transient DataType<R> type;
 
+    /**
+     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name)} instead.
+     */
+    @Deprecated
     AbstractTable(String name) {
         this(name, null, null);
     }
 
+    /**
+     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name, Schema)} instead.
+     */
+    @Deprecated
     AbstractTable(String name, Schema schema) {
         this(name, schema, null);
     }
 
+    /**
+     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name, Schema, String)} instead.
+     */
+    @Deprecated
     AbstractTable(String name, Schema schema, String comment) {
-        super();
+        this(DSL.name(name), schema, comment);
+    }
 
-        this.tableschema = schema;
+    AbstractTable(Name name) {
+        this(name, null, null);
+    }
+
+    AbstractTable(Name name, Schema schema) {
+        this(name, schema, null);
+    }
+
+    AbstractTable(Name name, Schema schema, String comment) {
+        this.tableschema =
+            schema != null
+          ? schema
+          : name.qualified()
+          ? DSL.schema(name.qualifier())
+          : null;
+
         this.tablename = name;
         this.tablecomment = comment;
     }
@@ -359,6 +387,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final String getName() {
+        return tablename.last();
+    }
+
+    @Override
+    public final Name getQualifiedName() {
         return tablename;
     }
 

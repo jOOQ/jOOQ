@@ -52,6 +52,11 @@ public interface Catalog extends QueryPart {
     String getName();
 
     /**
+     * The qualified name of this catalog.
+     */
+    Name getQualifiedName();
+
+    /**
      * List all schemas contained in this catalog.
      */
     List<Schema> getSchemas();

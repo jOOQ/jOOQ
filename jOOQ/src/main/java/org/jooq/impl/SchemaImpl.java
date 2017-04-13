@@ -64,25 +64,29 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     private static final long     serialVersionUID = -8101463810207566546L;
     private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
 
+    private final Name            name;
     private final Catalog         catalog;
-    private final String          schemaName;
-
-    SchemaImpl(Name name) {
-        this(
-            name.last(),
-            name.qualified() ? DSL.catalog(name.qualifier()) : null
-        );
-    }
 
     public SchemaImpl(String name) {
         this(name, null);
     }
 
     public SchemaImpl(String name, Catalog catalog) {
-        super();
+        this(DSL.name(name), catalog);
+    }
 
-        this.schemaName = name;
-        this.catalog = catalog;
+    public SchemaImpl(Name name) {
+        this(name, null);
+    }
+
+    public SchemaImpl(Name name, Catalog catalog) {
+        this.name = name;
+        this.catalog =
+            catalog != null
+          ? catalog
+          : name.qualified()
+          ? DSL.catalog(name.qualifier())
+          : null;
     }
 
     @Override
@@ -92,7 +96,12 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     @Override
     public final String getName() {
-        return schemaName;
+        return name.last();
+    }
+
+    @Override
+    public final Name getQualifiedName() {
+        return name;
     }
 
     @Override
@@ -104,7 +113,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
             ctx.sql('.');
         }
 
-        ctx.literal(getName());
+        ctx.visit(name.unqualifiedName());
     }
 
     @Override
@@ -113,34 +122,28 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     }
 
     @Override
-    public final Table<?> getTable(String name) {
-        for (Table<?> table : getTables()) {
-            if (table.getName().equals(name)) {
+    public final Table<?> getTable(String tableName) {
+        for (Table<?> table : getTables())
+            if (table.getName().equals(tableName))
                 return table;
-            }
-        }
 
         return null;
     }
 
     @Override
-    public final UDT<?> getUDT(String name) {
-        for (UDT<?> udt : getUDTs()) {
-            if (udt.getName().equals(name)) {
+    public final UDT<?> getUDT(String udtName) {
+        for (UDT<?> udt : getUDTs())
+            if (udt.getName().equals(udtName))
                 return udt;
-            }
-        }
 
         return null;
     }
 
     @Override
-    public final Sequence<?> getSequence(String name) {
-        for (Sequence<?> sequence : getSequences()) {
-            if (sequence.getName().equals(name)) {
+    public final Sequence<?> getSequence(String sequenceName) {
+        for (Sequence<?> sequence : getSequences())
+            if (sequence.getName().equals(sequenceName))
                 return sequence;
-            }
-        }
 
         return null;
     }

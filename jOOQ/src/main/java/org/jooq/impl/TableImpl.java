@@ -135,7 +135,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        super(name.last(), schema, comment);
+        super(name, schema, comment);
 
         this.fields = new Fields<R>();
 

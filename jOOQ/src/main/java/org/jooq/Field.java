@@ -98,6 +98,11 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     String getName();
 
     /**
+     * The qualified name of this field.
+     */
+    Name getQualifiedName();
+
+    /**
      * The comment given to the field.
      * <p>
      * If this <code>Field</code> is a generated field from your database, it

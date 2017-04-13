@@ -56,6 +56,11 @@ public interface Schema extends QueryPart {
     String getName();
 
     /**
+     * The qualified name of this schema.
+     */
+    Name getQualifiedName();
+
+    /**
      * Stream all tables contained in this schema.
      */
 

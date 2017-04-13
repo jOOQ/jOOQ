@@ -7782,7 +7782,7 @@ public class DSL {
      */
     @Support
     public static Table<Record> table(Name name) {
-        return new QualifiedTable(name);
+        return new TableImpl<Record>(name);
     }
 
     /**

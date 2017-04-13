@@ -88,6 +88,11 @@ public interface Name extends QueryPart {
     Name qualifier();
 
     /**
+     * This name, unqualified.
+     */
+    Name unqualifiedName();
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

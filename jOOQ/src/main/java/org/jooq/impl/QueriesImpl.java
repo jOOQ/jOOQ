@@ -73,6 +73,26 @@ final class QueriesImpl implements Queries {
     }
 
 
+    // ------------------------------------------------------------------------
+    // Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return queries.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (!(obj instanceof QueriesImpl))
+            return false;
+
+        return queries.equals(((QueriesImpl) obj).queries);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

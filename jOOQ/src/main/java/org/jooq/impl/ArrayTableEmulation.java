@@ -76,7 +76,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     }
 
     ArrayTableEmulation(Object[] array, Name alias, Name fieldAlias) {
-        super(alias.last());
+        super(alias);
 
         this.array = array;
         this.alias = alias;

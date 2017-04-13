@@ -80,7 +80,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
     @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
-        super(alias.last());
+        super(alias);
 
         Class<?> arrayType;
 
@@ -263,7 +263,7 @@ final class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 2662639259338694177L;
 
         DialectArrayTable() {
-            super(alias.last());
+            super(alias);
         }
 
         @Override

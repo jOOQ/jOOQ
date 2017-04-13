@@ -1972,7 +1972,7 @@ final class Tools {
         String separator = "";
 
         for (Field<?> field : list) {
-            context.sql(separator).literal(field.getName());
+            context.sql(separator).visit(field.getQualifiedName().unqualifiedName());
 
             separator = ", ";
         }
@@ -1994,7 +1994,7 @@ final class Tools {
         String separator = "";
 
         for (Table<?> table : list) {
-            context.sql(separator).literal(table.getName());
+            context.sql(separator).visit(table.getQualifiedName().unqualifiedName());
 
             separator = ", ";
         }

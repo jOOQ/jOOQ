@@ -182,4 +182,9 @@ final class QualifiedName extends AbstractName {
 
         return result;
     }
+
+    @Override
+    public final Name[] parts() {
+        return qualifiedName.clone();
+    }
 }

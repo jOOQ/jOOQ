@@ -103,4 +103,9 @@ final class UnqualifiedName extends AbstractName {
     public final String[] getName() {
         return new String[] { name };
     }
+
+    @Override
+    public final Name[] parts() {
+        return new Name[] { this };
+    }
 }

@@ -93,6 +93,11 @@ public interface Name extends QueryPart {
     Name unqualifiedName();
 
     /**
+     * Get the individual, unqualified name parts of this name.
+     */
+    Name[] parts();
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

@@ -326,7 +326,9 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql);
         List<Query> result = new ArrayList<Query>();
         do {
-            result.add(parseQuery(ctx));
+            Query query = parseQuery(ctx);
+            if (query != null)
+                result.add(query);
         }
         while (parseIf(ctx, ";"));
 

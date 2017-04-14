@@ -1994,7 +1994,7 @@ class ParserImpl implements Parser {
         if (joinType == null)
             return null;
 
-        Table<?> right = parseTable(ctx);
+        Table<?> right = joinType.qualified() ? parseTable(ctx) : parseTableFactor(ctx);
         TableOptionalOnStep<?> result1 = left.join(right, joinType);
         Table<?> result2 = result1;
 

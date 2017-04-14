@@ -3421,12 +3421,13 @@ class ParserImpl implements Parser {
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx) {
         AggregateFunction<?> agg;
         WindowBeforeOverStep<?> over;
+        Object keep = null;
         Field<?> result;
         Condition filter;
 
-        over = agg = parseCountIf(ctx);
+        keep = over = agg = parseCountIf(ctx);
         if (agg == null)
-            over = agg = parseGeneralSetFunctionIf(ctx);
+            keep = over = agg = parseGeneralSetFunctionIf(ctx);
         if (agg == null)
             over = agg = parseBinarySetFunctionIf(ctx);
         if (agg == null)
@@ -3435,7 +3436,24 @@ class ParserImpl implements Parser {
         if (agg == null && over == null)
             return null;
 
-        if (agg != null && parseKeywordIf(ctx, "FILTER")) {
+        if (keep != null && agg != null && parseKeywordIf(ctx, "KEEP")) {
+            boolean first;
+
+            parse(ctx, '(');
+            parseKeyword(ctx, "DENSE_RANK");
+            first = parseKeywordIf(ctx, "FIRST");
+            if (!first)
+                parseKeyword(ctx, "LAST");
+            parseKeyword(ctx, "ORDER BY");
+            List<SortField<?>> sort = parseSortSpecification(ctx);
+            parse(ctx, ')');
+
+            if (first)
+                result = over = agg.keepDenseRankFirstOrderBy(sort);
+            else
+                result = over = agg.keepDenseRankLastOrderBy(sort);
+        }
+        else if (agg != null && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
             filter = parseCondition(ctx);
@@ -3448,7 +3466,6 @@ class ParserImpl implements Parser {
         else
             result = over;
 
-        // TODO parse WITHIN GROUP (ORDER BY) where applicable
         if (parseKeywordIf(ctx, "OVER")) {
             Object nameOrSpecification = parseWindowNameOrSpecification(ctx, agg != null);
 

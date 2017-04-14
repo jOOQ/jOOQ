@@ -3436,24 +3436,27 @@ class ParserImpl implements Parser {
         if (agg == null && over == null)
             return null;
 
-        if (keep != null && agg != null && parseKeywordIf(ctx, "KEEP")) {
-            boolean first;
 
-            parse(ctx, '(');
-            parseKeyword(ctx, "DENSE_RANK");
-            first = parseKeywordIf(ctx, "FIRST");
-            if (!first)
-                parseKeyword(ctx, "LAST");
-            parseKeyword(ctx, "ORDER BY");
-            List<SortField<?>> sort = parseSortSpecification(ctx);
-            parse(ctx, ')');
 
-            if (first)
-                result = over = agg.keepDenseRankFirstOrderBy(sort);
-            else
-                result = over = agg.keepDenseRankLastOrderBy(sort);
-        }
-        else if (agg != null && parseKeywordIf(ctx, "FILTER")) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (agg != null && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
             filter = parseCondition(ctx);

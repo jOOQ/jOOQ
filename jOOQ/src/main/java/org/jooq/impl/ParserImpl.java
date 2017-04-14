@@ -468,7 +468,7 @@ class ParserImpl implements Parser {
                 case 'v':
                 case 'V':
                     if (peekKeyword(ctx, "VALUES"))
-                        return DSL.selectFrom(parseTableValueConstructor(ctx));
+                        return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
 
                 case 'w':
                 case 'W':
@@ -1994,7 +1994,7 @@ class ParserImpl implements Parser {
         if (joinType == null)
             return null;
 
-        Table<?> right = parseTableFactor(ctx);
+        Table<?> right = parseTable(ctx);
         TableOptionalOnStep<?> result1 = left.join(right, joinType);
         Table<?> result2 = result1;
 

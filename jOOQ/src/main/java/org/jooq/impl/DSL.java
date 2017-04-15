@@ -9280,7 +9280,9 @@ public class DSL {
      */
     @Support
     public static Condition condition(Field<Boolean> field) {
-        return new FieldCondition(field);
+        return field instanceof ConditionAsField
+            ? ((ConditionAsField) field).condition
+            : new FieldCondition(field);
     }
 
     /**
@@ -9461,7 +9463,9 @@ public class DSL {
      */
     @Support
     public static Field<Boolean> field(Condition condition) {
-        return new ConditionAsField(condition);
+        return condition instanceof FieldCondition
+            ? ((FieldCondition) condition).field
+            : new ConditionAsField(condition);
     }
 
     // -------------------------------------------------------------------------

@@ -523,37 +523,44 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         // TODO Better model API for WITH clause
-        return parseSelect(ctx, (WithImpl) new WithImpl(ctx.dsl.configuration(), false).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
+        return parseSelect(ctx, null, (WithImpl) new WithImpl(ctx.dsl.configuration(), false).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
 
         // TODO Other statements than SELECT
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
-        return parseSelect(ctx, null);
+        return parseSelect(ctx, null, null);
     }
 
-    private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, WithImpl with) {
-        SelectQueryImpl<Record> result = parseQueryPrimary(ctx, with);
+    private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree) {
+        return parseSelect(ctx, degree, null);
+    }
+
+    private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
+        SelectQueryImpl<Record> result = parseQueryPrimary(ctx, degree, with);
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx)) != null) {
+            if (degree == null)
+                degree = result.getSelect().size();
+
             switch (combine) {
                 case UNION:
-                    result = (SelectQueryImpl<Record>) result.union(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.union(parseQueryPrimary(ctx, degree));
                     break;
                 case UNION_ALL:
-                    result = (SelectQueryImpl<Record>) result.unionAll(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.unionAll(parseQueryPrimary(ctx, degree));
                     break;
                 case EXCEPT:
-                    result = (SelectQueryImpl<Record>) result.except(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.except(parseQueryPrimary(ctx, degree));
                     break;
                 case EXCEPT_ALL:
-                    result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryPrimary(ctx, degree));
                     break;
                 case INTERSECT:
-                    result = (SelectQueryImpl<Record>) result.intersect(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.intersect(parseQueryPrimary(ctx, degree));
                     break;
                 case INTERSECT_ALL:
-                    result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx));
+                    result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree));
                     break;
                 default:
                     ctx.unexpectedToken();
@@ -635,13 +642,13 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx) {
-        return parseQueryPrimary(ctx, null);
+    private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx, Integer degree) {
+        return parseQueryPrimary(ctx, degree, null);
     }
 
-    private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx, WithImpl with) {
+    private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx, Integer degree, WithImpl with) {
         if (parseIf(ctx, '(')) {
-            SelectQueryImpl<Record> result = parseSelect(ctx, with);
+            SelectQueryImpl<Record> result = parseSelect(ctx, degree, with);
             parse(ctx, ')');
             return result;
         }
@@ -683,6 +690,9 @@ class ParserImpl implements Parser {
         }
 
         List<Field<?>> select = parseSelectList(ctx);
+        if (degree != null && select.size() != degree)
+            throw ctx.exception();
+
         Table<?> into = null;
         List<Table<?>> from = null;
         Condition startWith = null;
@@ -1751,14 +1761,14 @@ class ParserImpl implements Parser {
                 Condition result =
                       all
                     ? left instanceof Field
-                        ? ((Field) left).compare(comp, DSL.all(parseSelect(ctx)))
-                        : ((RowN) left).compare(comp, DSL.all(parseSelect(ctx)))
+                        ? ((Field) left).compare(comp, DSL.all(parseSelect(ctx, 1)))
+                        : ((RowN) left).compare(comp, DSL.all(parseSelect(ctx, ((RowN) left).size())))
                     : any
                     ? left instanceof Field
-                        ? ((Field) left).compare(comp, DSL.any(parseSelect(ctx)))
-                        : ((RowN) left).compare(comp, DSL.any(parseSelect(ctx)))
+                        ? ((Field) left).compare(comp, DSL.any(parseSelect(ctx, 1)))
+                        : ((RowN) left).compare(comp, DSL.any(parseSelect(ctx, ((RowN) left).size())))
                     : left instanceof Field
-                        ? ((Field) left).compare(comp, parseConcat(ctx, null))
+                        ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null)))
                         : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size()));
 
                 if (all || any)
@@ -1794,11 +1804,11 @@ class ParserImpl implements Parser {
                 if (peekKeyword(ctx, "SELECT"))
                     result = not
                         ? left instanceof Field
-                            ? ((Field) left).notIn(parseSelect(ctx))
-                            : ((RowN) left).notIn(parseSelect(ctx))
+                            ? ((Field) left).notIn(parseSelect(ctx, 1))
+                            : ((RowN) left).notIn(parseSelect(ctx, ((RowN) left).size()))
                         : left instanceof Field
-                            ? ((Field) left).in(parseSelect(ctx))
-                            : ((RowN) left).notIn(parseSelect(ctx));
+                            ? ((Field) left).in(parseSelect(ctx, 1))
+                            : ((RowN) left).in(parseSelect(ctx, ((RowN) left).size()));
                 else
                     result = not
                         ? left instanceof Field
@@ -1806,7 +1816,7 @@ class ParserImpl implements Parser {
                             : ((RowN) left).notIn(parseRows(ctx, ((RowN) left).size()))
                         : left instanceof Field
                             ? ((Field) left).in(parseFields(ctx))
-                            : ((RowN) left).notIn(parseRows(ctx, ((RowN) left).size()));
+                            : ((RowN) left).in(parseRows(ctx, ((RowN) left).size()));
 
                 parse(ctx, ')');
                 return result;

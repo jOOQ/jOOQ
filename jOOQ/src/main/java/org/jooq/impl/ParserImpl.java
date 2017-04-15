@@ -261,6 +261,7 @@ import org.jooq.DropTableFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
 import org.jooq.GroupField;
 import org.jooq.Insert;
 import org.jooq.InsertSetStep;
@@ -1746,6 +1747,9 @@ class ParserImpl implements Parser {
     private static final Condition parseBooleanPrimary(ParserContext ctx) {
         if (parseIf(ctx, '(')) {
             Condition result = parseCondition(ctx);
+            while (parseIf(ctx, ',')) {
+                parseCondition(ctx);
+            }
             parse(ctx, ')');
             return result;
         }
@@ -1783,12 +1787,18 @@ class ParserImpl implements Parser {
         }
 
         else {
-            // TODO row value expressions
-            Field left;
+            FieldOrRow left;
+            Field leftField;
+            RowN leftRow;
             Comparator comp;
             boolean not;
 
+            // TODO
+            // left = parseFieldOrRow(ctx);
             left = parseFieldConcat(ctx, null);
+            leftField = left instanceof Field ? (Field<?>) left : null;
+            leftRow = left instanceof RowN ? (RowN) left : null;
+
             not = parseKeywordIf(ctx, "NOT");
 
             if (!not && (comp = parseComparatorIf(ctx)) != null) {
@@ -1797,12 +1807,19 @@ class ParserImpl implements Parser {
                 if (all || any)
                     parse(ctx, '(');
 
+                // TODO equal degrees
                 Condition result =
                       all
-                    ? left.compare(comp, DSL.all(parseSelect(ctx)))
+                    ? leftField != null
+                        ? leftField.compare(comp, DSL.all(parseSelect(ctx)))
+                        : leftRow.compare(comp, DSL.all(parseSelect(ctx)))
                     : any
-                    ? left.compare(comp, DSL.any(parseSelect(ctx)))
-                    : left.compare(comp, parseFieldConcat(ctx, null));
+                    ? leftField != null
+                        ? leftField.compare(comp, DSL.any(parseSelect(ctx)))
+                        : leftRow.compare(comp, DSL.any(parseSelect(ctx)))
+                    : leftField != null
+                        ? leftField.compare(comp, parseFieldConcat(ctx, null))
+                        : leftRow.compare(comp, parseRow(ctx, leftRow.size()));
 
                 if (all || any)
                     parse(ctx, ')');
@@ -1813,48 +1830,84 @@ class ParserImpl implements Parser {
                 not = parseKeywordIf(ctx, "NOT");
 
                 if (parseKeywordIf(ctx, "NULL"))
-                    return not ? left.isNotNull() : left.isNull();
+                    return not
+                        ? leftField != null
+                            ? leftField.isNotNull()
+                            : leftRow.isNotNull()
+                        : leftField != null
+                            ? leftField.isNull()
+                            : leftRow.isNotNull();
 
                 parseKeyword(ctx, "DISTINCT FROM");
+
+                // TODO: Support this for ROW as well
+                if (leftField == null)
+                    throw ctx.exception();
+
                 Field right = parseFieldConcat(ctx, null);
-                return not ? left.isNotDistinctFrom(right) : left.isDistinctFrom(right);
+                return not ? leftField.isNotDistinctFrom(right) : leftField.isDistinctFrom(right);
             }
             else if (parseKeywordIf(ctx, "IN")) {
                 Condition result;
 
                 parse(ctx, '(');
                 if (peekKeyword(ctx, "SELECT"))
-                    result = not ? left.notIn(parseSelect(ctx)) : left.in(parseSelect(ctx));
+                    result = not
+                        ? leftField != null
+                            ? leftField.notIn(parseSelect(ctx))
+                            : leftRow.notIn(parseSelect(ctx))
+                        : leftField != null
+                            ? leftField.in(parseSelect(ctx))
+                            : leftRow.notIn(parseSelect(ctx));
                 else
-                    result = not ? left.notIn(parseFields(ctx)) : left.in(parseFields(ctx));
+                    result = not
+                        ? leftField != null
+                            ? leftField.notIn(parseFields(ctx))
+                            : leftRow.notIn(parseRows(ctx, leftRow.size()))
+                        : leftField != null
+                            ? leftField.in(parseFields(ctx))
+                            : leftRow.notIn(parseRows(ctx, leftRow.size()));
 
                 parse(ctx, ')');
                 return result;
             }
             else if (parseKeywordIf(ctx, "BETWEEN")) {
                 boolean symmetric = parseKeywordIf(ctx, "SYMMETRIC");
-                Field r1 = parseFieldConcat(ctx, null);
+                FieldOrRow r1 = leftField != null
+                    ? parseFieldConcat(ctx, null)
+                    : parseRow(ctx, leftRow.size());
                 parseKeyword(ctx, "AND");
-                Field r2 = parseFieldConcat(ctx, null);
+                FieldOrRow r2 = leftField != null
+                    ? parseFieldConcat(ctx, null)
+                    : parseRow(ctx, leftRow.size());
+
                 return symmetric
                     ? not
-                        ? left.notBetweenSymmetric(r1, r2)
-                        : left.betweenSymmetric(r1, r2)
+                        ? leftField != null
+                            ? leftField.notBetweenSymmetric((Field) r1, (Field) r2)
+                            : leftRow.notBetweenSymmetric((RowN) r1, (RowN) r2)
+                        : leftField != null
+                            ? leftField.betweenSymmetric((Field) r1, (Field) r2)
+                            : leftRow.betweenSymmetric((RowN) r1, (RowN) r2)
                     : not
-                        ? left.notBetween(r1, r2)
-                        : left.between(r1, r2);
+                        ? leftField != null
+                            ? leftField.notBetween((Field) r1, (Field) r2)
+                            : leftRow.notBetween((RowN) r1, (RowN) r2)
+                        : leftField != null
+                            ? leftField.between((Field) r1, (Field) r2)
+                            : leftRow.between((RowN) r1, (RowN) r2);
             }
-            else if (parseKeywordIf(ctx, "LIKE")) {
+            else if (leftField != null && parseKeywordIf(ctx, "LIKE")) {
                 Field right = parseFieldConcat(ctx, null);
                 boolean escape = parseKeywordIf(ctx, "ESCAPE");
                 char character = escape ? parseCharacterLiteral(ctx) : ' ';
                 return escape
                     ? not
-                        ? left.notLike(right, character)
-                        : left.like(right, character)
+                        ? leftField.notLike(right, character)
+                        : leftField.like(right, character)
                     : not
-                        ? left.notLike(right)
-                        : left.like(right);
+                        ? leftField.notLike(right)
+                        : leftField.like(right);
             }
             else if (!onlyConditions)
                 return left;
@@ -1960,15 +2013,23 @@ class ParserImpl implements Parser {
 
         List<RowN> rows = new ArrayList<RowN>();
         do {
-            rows.add(parseRow(ctx));
+            rows.add(parseTuple(ctx));
         }
         while (parseIf(ctx, ','));
         return values(rows.toArray(Tools.EMPTY_ROWN));
     }
 
-    private static final RowN parseRow(ParserContext ctx) {
+    private static final RowN parseTuple(ParserContext ctx) {
+        return parseTuple(ctx, null);
+    }
+
+    private static final RowN parseTuple(ParserContext ctx, Integer degree) {
         parse(ctx, '(');
         RowN row = row(parseFields(ctx));
+
+        if (degree != null && row.size() != degree)
+            throw ctx.exception();
+
         parse(ctx, ')');
         return row;
     }
@@ -2088,6 +2149,58 @@ class ParserImpl implements Parser {
 
     static final Field<?> parseField(ParserContext ctx) {
         return parseField(ctx, null);
+    }
+
+    private static final RowN parseRow(ParserContext ctx) {
+        return parseRow(ctx, null);
+    }
+
+    private static final List<RowN> parseRows(ParserContext ctx) {
+        return parseRows(ctx, null);
+    }
+
+    private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
+        List<RowN> result = new ArrayList<RowN>();
+
+        do {
+            result.add(parseRow(ctx, degree));
+        }
+        while (parseIf(ctx, ','));
+
+        return result;
+    }
+
+    private static final RowN parseRow(ParserContext ctx, Integer degree) {
+        parseKeywordIf(ctx, "ROW");
+        RowN row = parseTuple(ctx, degree);
+        return row;
+    }
+
+    static final FieldOrRow parseFieldOrRow(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ROW")) {
+            return parseTuple(ctx);
+        }
+        else if (parseIf(ctx, '(')) {
+            int parens = 0;
+
+            while (parseIf(ctx, '('))
+                parens++;
+
+            List<Field<?>> fields = parseFields(ctx);
+
+            while (parens --> 0)
+                parse(ctx, ')');
+
+            parse(ctx, ')');
+
+            if (fields.size() == 1)
+                return fields.get(0);
+            else
+                return row(fields);
+        }
+        else {
+            return parseFieldConcat(ctx, null);
+        }
     }
 
     static enum Type {

@@ -1697,87 +1697,34 @@ class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     static final Condition parseCondition(ParserContext ctx) {
-        Condition condition = parseBooleanTerm(ctx);
+        return toCondition(ctx, parseOr(ctx));
+    }
+
+    private static QueryPart parseOr(ParserContext ctx) {
+        QueryPart condition = parseAnd(ctx);
 
         while (parseKeywordIf(ctx, "OR"))
-            condition = condition.or(parseBooleanTerm(ctx));
+            condition = toCondition(ctx, condition).or(toCondition(ctx, parseAnd(ctx)));
 
         return condition;
     }
 
-    private static final Condition parseBooleanTerm(ParserContext ctx) {
-        Condition condition = parseBooleanFactor(ctx);
+    private static final QueryPart parseAnd(ParserContext ctx) {
+        QueryPart condition = parseNot(ctx);
 
         while (parseKeywordIf(ctx, "AND"))
-            condition = condition.and(parseBooleanFactor(ctx));
+            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx)));
 
         return condition;
     }
 
-    private static final Condition parseBooleanFactor(ParserContext ctx) {
+    private static final QueryPart parseNot(ParserContext ctx) {
         boolean not = parseKeywordIf(ctx, "NOT");
-        Condition condition = parseBooleanTest(ctx);
-        return not ? condition.not() : condition;
+        QueryPart condition = parsePredicate(ctx);
+        return not ? toCondition(ctx, condition).not() : condition;
     }
 
-    private static final Condition parseBooleanTest(ParserContext ctx) {
-        Condition condition = parseBooleanPrimary(ctx);
-
-        if (parseKeywordIf(ctx, "IS")) {
-            Field<Boolean> field = field(condition);
-
-            boolean not = parseKeywordIf(ctx, "NOT");
-            TruthValue truth = parseTruthValue(ctx);
-
-            switch (truth) {
-                case FALSE:
-                    return not ? field.ne(inline(false)) : field.eq(inline(false));
-                case TRUE:
-                    return not ? field.ne(inline(true)) : field.eq(inline(true));
-                case NULL:
-                    return not ? field.isNotNull() : field.isNull();
-                default:
-                    throw ctx.internalError();
-            }
-        }
-
-        return condition;
-    }
-
-    private static final Condition parseBooleanPrimary(ParserContext ctx) {
-        if (parseIf(ctx, '(')) {
-            Condition result = parseCondition(ctx);
-            while (parseIf(ctx, ',')) {
-                parseCondition(ctx);
-            }
-            parse(ctx, ')');
-            return result;
-        }
-
-        TruthValue truth = parseTruthValueIf(ctx);
-        if (truth != null) {
-            Comparator comp = parseComparatorIf(ctx);
-
-            switch (truth) {
-                case TRUE:
-                    return comp == null ? condition(true) : inline(true).compare(comp, (Field<Boolean>) parseField(ctx));
-                case FALSE:
-                    return comp == null ? condition(false) : inline(false).compare(comp, (Field<Boolean>) parseField(ctx));
-                case NULL:
-                    return comp == null ? condition((Boolean) null) : inline((Boolean) null).compare(comp, (Field<Boolean>) parseField(ctx));
-                default:
-                    throw ctx.exception();
-            }
-        }
-
-        return parsePredicate(ctx);
-    }
-
-    private static final Condition parsePredicate(ParserContext ctx) {
-        return (Condition) parseFieldCondition0(ctx, true);
-    }
-
-    private static final QueryPart parseFieldCondition0(ParserContext ctx, boolean onlyConditions) {
+    private static final QueryPart parsePredicate(ParserContext ctx) {
         if (parseKeywordIf(ctx, "EXISTS")) {
             parse(ctx, '(');
             Select<?> select = parseSelect(ctx);
@@ -1909,11 +1856,9 @@ class ParserImpl implements Parser {
                         ? leftField.notLike(right)
                         : leftField.like(right);
             }
-            else if (!onlyConditions)
+            else
                 return left;
         }
-
-        throw ctx.exception();
     }
 
     private static final List<Table<?>> parseTables(ParserContext ctx) {
@@ -2224,16 +2169,36 @@ class ParserImpl implements Parser {
 
     private static final Field<?> parseField(ParserContext ctx, Type type) {
         if (B.is(type)) {
-            Field<?> r = parseFieldAnd(ctx);
-            Condition c = null;
-            while (parseKeywordIf(ctx, "OR"))
-                c = ((c == null) ? condition((Field) r) : c).or((Field) parseFieldAnd(ctx));
-
-            return c == null ? r : field(c);
+            return toField(ctx, parseOr(ctx));
         }
         else {
             return parseFieldConcat(ctx, type);
         }
+    }
+
+    private static final Condition toCondition(ParserContext ctx, QueryPart part) {
+        if (part == null)
+            return null;
+        else if (part instanceof Condition)
+            return (Condition) part;
+        else if (part instanceof Field)
+            if (((Field) part).getDataType().getType() == Boolean.class)
+                return condition((Field) part);
+            else
+                throw ctx.exception();
+        else
+            throw ctx.exception();
+    }
+
+    private static final Field<?> toField(ParserContext ctx, QueryPart part) {
+        if (part == null)
+            return null;
+        else if (part instanceof Field)
+            return (Field) part;
+        else if (part instanceof Condition)
+            return field((Condition) part);
+        else
+            throw ctx.exception();
     }
 
     private static final Field<?> parseFieldConcat(ParserContext ctx, Type type) {
@@ -2283,22 +2248,6 @@ class ParserImpl implements Parser {
                     break;
 
         return r;
-    }
-
-    private static final Field<?> parseFieldAnd(ParserContext ctx) {
-        Field<?> r = parseFieldCondition(ctx);
-        Condition c = null;
-        while (parseKeywordIf(ctx, "AND"))
-            c = ((c == null) ? condition((Field) r) : c).and((Field) parseFieldCondition(ctx));
-
-        return c == null ? r : field(c);
-    }
-
-    private static final Field<?> parseFieldCondition(ParserContext ctx) {
-        QueryPart result = parseFieldCondition0(ctx, false);
-        return result instanceof Field<?>
-             ? (Field<?>) result
-             : DSL.field((Condition) result);
     }
 
     private static final Field<?> parseFieldTerm(ParserContext ctx, Type type) {
@@ -2603,6 +2552,10 @@ class ParserImpl implements Parser {
 
             case 't':
             case 'T':
+                if (B.is(type))
+                    if ((field = parseBooleanValueExpressionIf(ctx)) != null)
+                        return field;
+
                 if (S.is(type))
                     if ((field = parseFieldTrimIf(ctx)) != null)
                         return field;
@@ -4637,16 +4590,7 @@ class ParserImpl implements Parser {
         // TODO partitioned join
     }
 
-    static final TruthValue parseTruthValue(ParserContext ctx) {
-        TruthValue result = parseTruthValueIf(ctx);
-
-        if (result == null)
-            throw ctx.exception();
-
-        return result;
-    }
-
-    static final TruthValue parseTruthValueIf(ParserContext ctx) {
+    private static final TruthValue parseTruthValueIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
         if (parseKeywordIf(ctx, "TRUE"))

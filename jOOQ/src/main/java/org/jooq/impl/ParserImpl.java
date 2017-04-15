@@ -1735,17 +1735,10 @@ class ParserImpl implements Parser {
 
         else {
             FieldOrRow left;
-            Field leftField;
-            RowN leftRow;
             Comparator comp;
             boolean not;
 
-            // TODO
-            // left = parseFieldOrRow(ctx);
             left = parseConcat(ctx, null);
-            leftField = left instanceof Field ? (Field<?>) left : null;
-            leftRow = left instanceof RowN ? (RowN) left : null;
-
             not = parseKeywordIf(ctx, "NOT");
 
             if (!not && (comp = parseComparatorIf(ctx)) != null) {
@@ -1757,16 +1750,16 @@ class ParserImpl implements Parser {
                 // TODO equal degrees
                 Condition result =
                       all
-                    ? leftField != null
-                        ? leftField.compare(comp, DSL.all(parseSelect(ctx)))
-                        : leftRow.compare(comp, DSL.all(parseSelect(ctx)))
+                    ? left instanceof Field
+                        ? ((Field) left).compare(comp, DSL.all(parseSelect(ctx)))
+                        : ((RowN) left).compare(comp, DSL.all(parseSelect(ctx)))
                     : any
-                    ? leftField != null
-                        ? leftField.compare(comp, DSL.any(parseSelect(ctx)))
-                        : leftRow.compare(comp, DSL.any(parseSelect(ctx)))
-                    : leftField != null
-                        ? leftField.compare(comp, parseConcat(ctx, null))
-                        : leftRow.compare(comp, parseRow(ctx, leftRow.size()));
+                    ? left instanceof Field
+                        ? ((Field) left).compare(comp, DSL.any(parseSelect(ctx)))
+                        : ((RowN) left).compare(comp, DSL.any(parseSelect(ctx)))
+                    : left instanceof Field
+                        ? ((Field) left).compare(comp, parseConcat(ctx, null))
+                        : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size()));
 
                 if (all || any)
                     parse(ctx, ')');
@@ -1778,21 +1771,21 @@ class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "NULL"))
                     return not
-                        ? leftField != null
-                            ? leftField.isNotNull()
-                            : leftRow.isNotNull()
-                        : leftField != null
-                            ? leftField.isNull()
-                            : leftRow.isNotNull();
+                        ? left instanceof Field
+                            ? ((Field) left).isNotNull()
+                            : ((RowN) left).isNotNull()
+                        : left instanceof Field
+                            ? ((Field) left).isNull()
+                            : ((RowN) left).isNotNull();
 
                 parseKeyword(ctx, "DISTINCT FROM");
 
                 // TODO: Support this for ROW as well
-                if (leftField == null)
+                if (((Field) left) == null)
                     throw ctx.exception();
 
                 Field right = toField(ctx, parseConcat(ctx, null));
-                return not ? leftField.isNotDistinctFrom(right) : leftField.isDistinctFrom(right);
+                return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
             }
             else if (parseKeywordIf(ctx, "IN")) {
                 Condition result;
@@ -1800,61 +1793,61 @@ class ParserImpl implements Parser {
                 parse(ctx, '(');
                 if (peekKeyword(ctx, "SELECT"))
                     result = not
-                        ? leftField != null
-                            ? leftField.notIn(parseSelect(ctx))
-                            : leftRow.notIn(parseSelect(ctx))
-                        : leftField != null
-                            ? leftField.in(parseSelect(ctx))
-                            : leftRow.notIn(parseSelect(ctx));
+                        ? left instanceof Field
+                            ? ((Field) left).notIn(parseSelect(ctx))
+                            : ((RowN) left).notIn(parseSelect(ctx))
+                        : left instanceof Field
+                            ? ((Field) left).in(parseSelect(ctx))
+                            : ((RowN) left).notIn(parseSelect(ctx));
                 else
                     result = not
-                        ? leftField != null
-                            ? leftField.notIn(parseFields(ctx))
-                            : leftRow.notIn(parseRows(ctx, leftRow.size()))
-                        : leftField != null
-                            ? leftField.in(parseFields(ctx))
-                            : leftRow.notIn(parseRows(ctx, leftRow.size()));
+                        ? left instanceof Field
+                            ? ((Field) left).notIn(parseFields(ctx))
+                            : ((RowN) left).notIn(parseRows(ctx, ((RowN) left).size()))
+                        : left instanceof Field
+                            ? ((Field) left).in(parseFields(ctx))
+                            : ((RowN) left).notIn(parseRows(ctx, ((RowN) left).size()));
 
                 parse(ctx, ')');
                 return result;
             }
             else if (parseKeywordIf(ctx, "BETWEEN")) {
                 boolean symmetric = parseKeywordIf(ctx, "SYMMETRIC");
-                FieldOrRow r1 = leftField != null
+                FieldOrRow r1 = left instanceof Field
                     ? parseConcat(ctx, null)
-                    : parseRow(ctx, leftRow.size());
+                    : parseRow(ctx, ((RowN) left).size());
                 parseKeyword(ctx, "AND");
-                FieldOrRow r2 = leftField != null
+                FieldOrRow r2 = left instanceof Field
                     ? parseConcat(ctx, null)
-                    : parseRow(ctx, leftRow.size());
+                    : parseRow(ctx, ((RowN) left).size());
 
                 return symmetric
                     ? not
-                        ? leftField != null
-                            ? leftField.notBetweenSymmetric((Field) r1, (Field) r2)
-                            : leftRow.notBetweenSymmetric((RowN) r1, (RowN) r2)
-                        : leftField != null
-                            ? leftField.betweenSymmetric((Field) r1, (Field) r2)
-                            : leftRow.betweenSymmetric((RowN) r1, (RowN) r2)
+                        ? left instanceof Field
+                            ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
+                            : ((RowN) left).notBetweenSymmetric((RowN) r1, (RowN) r2)
+                        : left instanceof Field
+                            ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
+                            : ((RowN) left).betweenSymmetric((RowN) r1, (RowN) r2)
                     : not
-                        ? leftField != null
-                            ? leftField.notBetween((Field) r1, (Field) r2)
-                            : leftRow.notBetween((RowN) r1, (RowN) r2)
-                        : leftField != null
-                            ? leftField.between((Field) r1, (Field) r2)
-                            : leftRow.between((RowN) r1, (RowN) r2);
+                        ? left instanceof Field
+                            ? ((Field) left).notBetween((Field) r1, (Field) r2)
+                            : ((RowN) left).notBetween((RowN) r1, (RowN) r2)
+                        : left instanceof Field
+                            ? ((Field) left).between((Field) r1, (Field) r2)
+                            : ((RowN) left).between((RowN) r1, (RowN) r2);
             }
-            else if (leftField != null && parseKeywordIf(ctx, "LIKE")) {
+            else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
                 Field right = toField(ctx, parseConcat(ctx, null));
                 boolean escape = parseKeywordIf(ctx, "ESCAPE");
                 char character = escape ? parseCharacterLiteral(ctx) : ' ';
                 return escape
                     ? not
-                        ? leftField.notLike(right, character)
-                        : leftField.like(right, character)
+                        ? ((Field) left).notLike(right, character)
+                        : ((Field) left).like(right, character)
                     : not
-                        ? leftField.notLike(right)
-                        : leftField.like(right);
+                        ? ((Field) left).notLike(right)
+                        : ((Field) left).like(right);
             }
             else
                 return left;

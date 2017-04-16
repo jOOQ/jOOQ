@@ -280,6 +280,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Row2;
 import org.jooq.RowN;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -1858,6 +1859,9 @@ class ParserImpl implements Parser {
                     : not
                         ? ((Field) left).notLike(right)
                         : ((Field) left).like(right);
+            }
+            else if (left instanceof RowN && ((RowN) left).size() == 2 && parseKeywordIf(ctx, "OVERLAPS")) {
+                return ((Row2) left).overlaps((Row2) parseRow(ctx, 2));
             }
             else
                 return left;

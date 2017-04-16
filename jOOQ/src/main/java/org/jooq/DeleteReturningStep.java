@@ -62,7 +62,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface DeleteReturningStep<R extends Record> {
+public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
      * Configure the <code>DELETE</code> statement to return all fields in

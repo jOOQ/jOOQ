@@ -842,7 +842,7 @@ class ParserImpl implements Parser {
             else
                 return s2.returning(parseFields(ctx));
         else
-            return (Delete<?>) s2;
+            return s2;
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx) {
@@ -937,7 +937,7 @@ class ParserImpl implements Parser {
             else
                 return returning.returning(parseFields(ctx));
         else
-            return (Update<?>) returning;
+            return returning;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {

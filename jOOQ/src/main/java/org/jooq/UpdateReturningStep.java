@@ -65,7 +65,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface UpdateReturningStep<R extends Record> {
+public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R> {
 
     /**
      * Configure the <code>UPDATE</code> statement to return all fields in

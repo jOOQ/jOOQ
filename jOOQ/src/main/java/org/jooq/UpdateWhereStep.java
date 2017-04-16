@@ -53,7 +53,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, UpdateReturningStep<R> {
+public interface UpdateWhereStep<R extends Record> extends UpdateReturningStep<R> {
 
     /**
      * Add conditions to the query, connecting them with each other with

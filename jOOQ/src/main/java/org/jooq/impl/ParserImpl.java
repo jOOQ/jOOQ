@@ -250,7 +250,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Delete;
-import org.jooq.DeleteFinalStep;
+import org.jooq.DeleteReturningStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexFinalStep;
@@ -297,6 +297,7 @@ import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
+import org.jooq.UpdateReturningStep;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
@@ -827,19 +828,21 @@ class ParserImpl implements Parser {
         boolean where = parseKeywordIf(ctx, "WHERE");
         Condition condition = where ? parseCondition(ctx) : null;
 
-        // TODO Implement returning
-        // boolean returning = parseKeywordIf(ctx, "RETURNING");
-
-
         DeleteWhereStep<?> s1;
-        DeleteFinalStep<?> s2;
+        DeleteReturningStep<?> s2;
 
         s1 = ctx.dsl.delete(tableName);
         s2 = where
             ? s1.where(condition)
             : s1;
 
-        return s2;
+        if (parseKeywordIf(ctx, "RETURNING"))
+            if (parseIf(ctx, '*'))
+                return s2.returning();
+            else
+                return s2.returning(parseFields(ctx));
+        else
+            return (Delete<?>) s2;
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx) {
@@ -924,9 +927,17 @@ class ParserImpl implements Parser {
         Condition condition = parseKeywordIf(ctx, "WHERE") ? parseCondition(ctx) : null;
 
         // TODO support RETURNING
-        return condition == null
+        UpdateReturningStep<?> returning = condition == null
             ? ctx.dsl.update(tableName).set(map)
             : ctx.dsl.update(tableName).set(map).where(condition);
+
+        if (parseKeywordIf(ctx, "RETURNING"))
+            if (parseIf(ctx, '*'))
+                return returning.returning();
+            else
+                return returning.returning(parseFields(ctx));
+        else
+            return (Update<?>) returning;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {

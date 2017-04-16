@@ -264,6 +264,8 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GroupField;
 import org.jooq.Insert;
+import org.jooq.InsertOnDuplicateStep;
+import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JoinType;
@@ -850,6 +852,9 @@ class ParserImpl implements Parser {
             parse(ctx, ')');
         }
 
+        InsertOnDuplicateStep<?> onDuplicate;
+        InsertReturningStep<?> returning;
+
         if (parseKeywordIf(ctx, "VALUES")) {
             List<List<Field<?>>> allValues = new ArrayList<List<Field<?>>>();
 
@@ -873,31 +878,38 @@ class ParserImpl implements Parser {
             for (List<Field<?>> values : allValues)
                 step2 = step2.values(values);
 
-            return step2;
+            returning = onDuplicate = step2;
         }
         else if (parseKeywordIf(ctx, "SET")) {
             Map<Field<?>, Object> map = parseSetClauseList(ctx);
 
-            return ctx.dsl.insertInto(tableName).set(map);
+            returning = onDuplicate =  ctx.dsl.insertInto(tableName).set(map);
         }
         else if (peekKeyword(ctx, "SELECT", false, true)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
-            return fields == null
-                ? ctx.dsl.insertInto(tableName).select(select)
+            returning = onDuplicate = (fields == null)
+                ? (InsertOnDuplicateStep<?>) ctx.dsl.insertInto(tableName).select(select)
                 : ctx.dsl.insertInto(tableName).columns(fields).select(select);
         }
         else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
             if (fields != null)
                 throw ctx.exception();
             else
-                return ctx.dsl.insertInto(tableName).defaultValues();
+                returning = onDuplicate = (InsertOnDuplicateStep<?>) ctx.dsl.insertInto(tableName).defaultValues();
         }
+        else
+            throw ctx.unexpectedToken();
 
-        throw ctx.unexpectedToken();
-
-        // TODO Support RETURNING
         // TODO Support ON DUPLICATE KEY UPDATE
+
+        if (parseKeywordIf(ctx, "RETURNING"))
+            if (parseIf(ctx, '*'))
+                return returning.returning();
+            else
+                return returning.returning(parseFields(ctx));
+        else
+            return returning;
     }
 
     private static final Update<?> parseUpdate(ParserContext ctx) {
@@ -5029,8 +5041,8 @@ class ParserImpl implements Parser {
         "EXCEPT",
         "FETCH",
         "FOR",
-        "FULL",
         "FROM",
+        "FULL",
         "GROUP BY",
         "HAVING",
         "INNER",
@@ -5045,6 +5057,7 @@ class ParserImpl implements Parser {
         "ON",
         "ORDER BY",
         "OUTER",
+        "RETURNING",
         "RIGHT",
         "SELECT",
         "START",

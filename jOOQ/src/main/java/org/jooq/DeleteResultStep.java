@@ -68,10 +68,10 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
 
     /**
      * The result holding returned values as specified by the
-     * {@link UpdateReturningStep}.
+     * {@link DeleteReturningStep}.
      *
      * @return The returned values as specified by the
-     *         {@link UpdateReturningStep}. Note:
+     *         {@link DeleteReturningStep}. Note:
      *         <ul>
      *         <li>Not all databases / JDBC drivers support returning several
      *         values on multi-row inserts!</li>
@@ -79,21 +79,21 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      *         could not retrieve any generated keys from the JDBC driver.</li>
      *         </ul>
      * @throws DataAccessException if something went wrong executing the query
-     * @see UpdateQuery#getReturnedRecords()
+     * @see DeleteQuery#getReturnedRecords()
      */
     @Support({ FIREBIRD, POSTGRES })
     Result<R> fetch() throws DataAccessException;
 
     /**
      * The record holding returned values as specified by the
-     * {@link UpdateReturningStep}.
+     * {@link DeleteReturningStep}.
      *
      * @return The returned value as specified by the
-     *         {@link UpdateReturningStep}. This may return <code>null</code> in
+     *         {@link DeleteReturningStep}. This may return <code>null</code> in
      *         case jOOQ could not retrieve any generated keys from the JDBC
      *         driver.
      * @throws DataAccessException if something went wrong executing the query
-     * @see UpdateQuery#getReturnedRecord()
+     * @see DeleteQuery#getReturnedRecord()
      */
     @Support({ FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException;
@@ -101,12 +101,12 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
 
     /**
      * The record holding returned values as specified by the
-     * {@link UpdateReturningStep}.
+     * {@link DeleteReturningStep}.
      *
      * @return The returned value as specified by the
-     *         {@link UpdateReturningStep}
+     *         {@link DeleteReturningStep}
      * @throws DataAccessException if something went wrong executing the query
-     * @see UpdateQuery#getReturnedRecord()
+     * @see DeleteQuery#getReturnedRecord()
      */
     @Support({ FIREBIRD, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException;

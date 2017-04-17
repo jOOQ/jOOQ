@@ -2335,16 +2335,29 @@ class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseFactor(ParserContext ctx, Type type) {
-        FieldOrRow r = parseTerm(ctx, type);
+        FieldOrRow r = parseExp(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '*'))
-                    r = ((Field) r).mul((Field) parseTerm(ctx, type));
+                    r = ((Field) r).mul((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '/'))
-                    r = ((Field) r).div((Field) parseTerm(ctx, type));
+                    r = ((Field) r).div((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '%'))
-                    r = ((Field) r).mod((Field) parseTerm(ctx, type));
+                    r = ((Field) r).mod((Field) parseExp(ctx, type));
+                else
+                    break;
+
+        return r;
+    }
+
+    private static final FieldOrRow parseExp(ParserContext ctx, Type type) {
+        FieldOrRow r = parseTerm(ctx, type);
+
+        if (N.is(type) && r instanceof Field)
+            for (;;)
+                if (parseIf(ctx, '^'))
+                    r = ((Field) r).pow(toField(ctx, parseTerm(ctx, type)));
                 else
                     break;
 

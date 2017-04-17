@@ -3492,6 +3492,7 @@ class ParserImpl implements Parser {
             Field<?> field = parseField(ctx);
             parseKeyword(ctx, "AS");
             DataType<?> type = parseDataType(ctx);
+            parse(ctx, ')');
 
             return cast(field, type);
         }

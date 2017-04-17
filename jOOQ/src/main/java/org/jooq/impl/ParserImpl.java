@@ -263,6 +263,8 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GroupField;
 import org.jooq.Insert;
+import org.jooq.InsertOnConflictDoUpdateStep;
+import org.jooq.InsertOnConflictWhereStep;
 import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
@@ -911,7 +913,36 @@ class ParserImpl implements Parser {
         else
             throw ctx.unexpectedToken();
 
-        // TODO Support ON DUPLICATE KEY UPDATE
+        if (parseKeywordIf(ctx, "ON")) {
+            if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE SET")) {
+                returning = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
+            }
+            else if (parseKeywordIf(ctx, "DUPLICATE KEY IGNORE")) {
+                returning = onDuplicate.onDuplicateKeyIgnore();
+            }
+            else if (parseKeywordIf(ctx, "CONFLICT")) {
+                parse(ctx, '(');
+                InsertOnConflictDoUpdateStep<?> doUpdate = onDuplicate.onConflict(parseFieldNames(ctx));
+                parse(ctx, ')');
+                parseKeyword(ctx, "DO");
+
+                if (parseKeywordIf(ctx, "NOTHING")) {
+                    returning = doUpdate.doNothing();
+                }
+                else if (parseKeywordIf(ctx, "UPDATE SET")) {
+                    InsertOnConflictWhereStep<?> where = doUpdate.doUpdate().set(parseSetClauseList(ctx));
+
+                    if (parseKeywordIf(ctx, "WHERE"))
+                        returning = where.where(parseCondition(ctx));
+                    else
+                        returning = where;
+                }
+                else
+                    throw ctx.unexpectedToken();
+            }
+            else
+                throw ctx.unexpectedToken();
+        }
 
         if (parseKeywordIf(ctx, "RETURNING"))
             if (parseIf(ctx, '*'))

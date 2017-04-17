@@ -2352,19 +2352,19 @@ class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseExp(ParserContext ctx, Type type) {
-        FieldOrRow r = parseSigned(ctx, type);
+        FieldOrRow r = parseUnaryOps(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '^'))
-                    r = ((Field) r).pow(toField(ctx, parseSigned(ctx, type)));
+                    r = ((Field) r).pow(toField(ctx, parseUnaryOps(ctx, type)));
                 else
                     break;
 
         return r;
     }
 
-    private static final FieldOrRow parseSigned(ParserContext ctx, Type type) {
+    private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type) {
         Integer sign = null;
         FieldOrRow r;
 
@@ -2382,6 +2382,9 @@ class ParserImpl implements Parser {
             r = toField(ctx, parseTerm(ctx, type));
         else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, true)) == null)
             r = toField(ctx, parseTerm(ctx, type)).neg();
+
+        while (parseIf(ctx, "::"))
+            r = cast(toField(ctx, r), parseDataType(ctx));
 
         return r;
     }

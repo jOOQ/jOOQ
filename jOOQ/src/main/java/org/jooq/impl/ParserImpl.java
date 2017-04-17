@@ -899,7 +899,7 @@ class ParserImpl implements Parser {
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             returning = onDuplicate = (fields == null)
-                ? (InsertOnDuplicateStep<?>) ctx.dsl.insertInto(tableName).select(select)
+                ? ctx.dsl.insertInto(tableName).select(select)
                 : ctx.dsl.insertInto(tableName).columns(fields).select(select);
         }
         else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {

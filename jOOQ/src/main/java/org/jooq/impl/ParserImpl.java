@@ -36,7 +36,6 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.jooq.exception.SQLStateSubclass.C42000_NO_SUBCLASS;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
@@ -306,8 +305,6 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
-import org.jooq.exception.DataAccessException;
-import org.jooq.exception.SQLStateSubclass;
 
 /**
  * @author Lukas Eder
@@ -339,7 +336,7 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ";"));
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return new QueriesImpl(result);
     }
@@ -350,7 +347,7 @@ class ParserImpl implements Parser {
         Query result = parseQuery(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -361,7 +358,7 @@ class ParserImpl implements Parser {
         Table<?> result = parseTable(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -372,7 +369,7 @@ class ParserImpl implements Parser {
         Field<?> result = parseField(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -383,7 +380,7 @@ class ParserImpl implements Parser {
         RowN result = parseRow(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -394,7 +391,7 @@ class ParserImpl implements Parser {
         Condition result = parseCondition(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -405,7 +402,7 @@ class ParserImpl implements Parser {
         Name result = parseName(ctx);
 
         if (!ctx.done())
-            throw new ParserException(ctx);
+            throw ctx.exception();
 
         return result;
     }
@@ -4937,7 +4934,7 @@ class ParserImpl implements Parser {
         ));
     }
 
-    private static final class ParserContext {
+    static final class ParserContext {
         private final DSLContext   dsl;
         private final String       sqlString;
         private final char[]       sql;
@@ -4952,15 +4949,15 @@ class ParserImpl implements Parser {
         }
 
         ParserException internalError() {
-            return new ParserException(this, "Internal Error");
+            return new ParserException(mark(), "Internal Error");
         }
 
         ParserException exception() {
-            return new ParserException(this);
+            return new ParserException(mark());
         }
 
         ParserException unexpectedToken() {
-            return new ParserException(this, "Expected tokens: " + new TreeSet<String>(expectedTokens));
+            return new ParserException(mark(), "Expected tokens: " + new TreeSet<String>(expectedTokens));
         }
 
         char character() {
@@ -4998,33 +4995,6 @@ class ParserImpl implements Parser {
         @Override
         public String toString() {
             return mark();
-        }
-    }
-
-    private static final class ParserException extends DataAccessException {
-
-        /**
-         * Generated UID
-         */
-        private static final long   serialVersionUID = -724913199583039157L;
-        private final ParserContext ctx;
-
-        public ParserException(ParserContext ctx) {
-            this(ctx, null);
-        }
-
-        public ParserException(ParserContext ctx, String message) {
-            this(ctx, message, C42000_NO_SUBCLASS);
-        }
-
-        public ParserException(ParserContext ctx, String message, SQLStateSubclass state) {
-            this(ctx, message, state, null);
-        }
-
-        public ParserException(ParserContext ctx, String message, SQLStateSubclass state, Throwable cause) {
-            super(state + ": " + (message == null ? "" : message + ": ") + ctx.mark(), cause);
-
-            this.ctx = ctx;
         }
     }
 

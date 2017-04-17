@@ -2013,7 +2013,23 @@ class ParserImpl implements Parser {
 
     private static final RowN parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parse(ctx, '(');
-        RowN row = row(parseFields(ctx));
+        List<? extends FieldOrRow> fieldsOrRows;
+
+        if (allowDoubleParens)
+            fieldsOrRows = parseFieldsOrRows(ctx);
+        else
+            fieldsOrRows = parseFields(ctx);
+
+        RowN row;
+
+        if (fieldsOrRows.size() == 0)
+            row = row();
+        else if (fieldsOrRows.get(0) instanceof Field)
+            row = row(fieldsOrRows);
+        else if (fieldsOrRows.size() == 1)
+            row = (RowN) fieldsOrRows.get(0);
+        else
+            throw ctx.exception();
 
         if (degree != null && row.size() != degree)
             throw ctx.exception();
@@ -2135,8 +2151,23 @@ class ParserImpl implements Parser {
         return result;
     }
 
+    private static final List<FieldOrRow> parseFieldsOrRows(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+
+        List<FieldOrRow> result = new ArrayList<FieldOrRow>();
+        do {
+            result.add(parseFieldOrRow(ctx));
+        }
+        while (parseIf(ctx, ','));
+        return result;
+    }
+
     private static final Field<?> parseField(ParserContext ctx) {
         return parseField(ctx, null);
+    }
+
+    private static final FieldOrRow parseFieldOrRow(ParserContext ctx) {
+        return parseFieldOrRow(ctx, null);
     }
 
     private static final RowN parseRow(ParserContext ctx) {
@@ -2189,6 +2220,13 @@ class ParserImpl implements Parser {
         }
     }
 
+    private static final FieldOrRow parseFieldOrRow(ParserContext ctx, Type type) {
+        if (B.is(type))
+            return toFieldOrRow(ctx, parseOr(ctx));
+        else
+            return parseConcat(ctx, type);
+    }
+
     private static final Field<?> parseField(ParserContext ctx, Type type) {
         if (B.is(type))
             return toField(ctx, parseOr(ctx));
@@ -2206,6 +2244,19 @@ class ParserImpl implements Parser {
                 return condition((Field) part);
             else
                 throw ctx.exception();
+        else
+            throw ctx.exception();
+    }
+
+    private static final FieldOrRow toFieldOrRow(ParserContext ctx, QueryPart part) {
+        if (part == null)
+            return null;
+        else if (part instanceof Field)
+            return (Field) part;
+        else if (part instanceof Condition)
+            return field((Condition) part);
+        else if (part instanceof Row)
+            return (Row) part;
         else
             throw ctx.exception();
     }
@@ -2672,16 +2723,19 @@ class ParserImpl implements Parser {
                     return field;
                 }
                 else {
-                    Field<?> r = parseField(ctx, type);
+                    FieldOrRow r = parseFieldOrRow(ctx, type);
                     List<Field<?>> list = null;
 
-                    while (parseIf(ctx, ',')) {
-                        if (list == null) {
-                            list = new ArrayList<Field<?>>();
-                            list.add(r);
-                        }
+                    if (r instanceof Field) {
+                        while (parseIf(ctx, ',')) {
+                            if (list == null) {
+                                list = new ArrayList<Field<?>>();
+                                list.add((Field) r);
+                            }
 
-                        list.add(parseField(ctx, type));
+                            // TODO Allow for nesting ROWs
+                            list.add(parseField(ctx, type));
+                        }
                     }
 
                     parse(ctx, ')');

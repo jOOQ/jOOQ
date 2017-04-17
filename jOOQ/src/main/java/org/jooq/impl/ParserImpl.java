@@ -312,11 +312,9 @@ import org.jooq.WindowSpecificationRowsStep;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 class ParserImpl implements Parser {
 
-    private final Configuration configuration;
     private final DSLContext    dsl;
 
     ParserImpl(Configuration configuration) {
-        this.configuration = configuration;
         this.dsl = DSL.using(configuration);
     }
 
@@ -908,7 +906,7 @@ class ParserImpl implements Parser {
             if (fields != null)
                 throw ctx.exception();
             else
-                returning = onDuplicate = (InsertOnDuplicateStep<?>) ctx.dsl.insertInto(tableName).defaultValues();
+                returning = onDuplicate = ctx.dsl.insertInto(tableName).defaultValues();
         }
         else
             throw ctx.unexpectedToken();
@@ -2174,10 +2172,6 @@ class ParserImpl implements Parser {
         return parseRow(ctx, null);
     }
 
-    private static final List<RowN> parseRows(ParserContext ctx) {
-        return parseRows(ctx, null);
-    }
-
     private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
         List<RowN> result = new ArrayList<RowN>();
 
@@ -2217,6 +2211,10 @@ class ParserImpl implements Parser {
 
         boolean is(Type type) {
             return type == null || type == this;
+        }
+
+        String getName() {
+            return name;
         }
     }
 
@@ -4590,15 +4588,6 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Field<?> parseFieldUnsignedIntegerIf(ParserContext ctx, boolean minus) {
-        Long r = parseUnsignedIntegerIf(ctx);
-        return r == null
-            ? null
-            : minus
-            ? inline(-r)
-            : inline(r);
-    }
-
     private static final Long parseUnsignedIntegerIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
@@ -4619,15 +4608,6 @@ class ParserImpl implements Parser {
             return null;
 
         return Long.valueOf(sb.toString());
-    }
-
-    private static final JoinType parseJoinType(ParserContext ctx) {
-        JoinType result = parseJoinTypeIf(ctx);
-
-        if (result == null)
-            ctx.unexpectedToken();
-
-        return result;
     }
 
     private static final JoinType parseJoinTypeIf(ParserContext ctx) {

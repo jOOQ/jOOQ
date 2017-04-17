@@ -2352,14 +2352,36 @@ class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseExp(ParserContext ctx, Type type) {
-        FieldOrRow r = parseTerm(ctx, type);
+        FieldOrRow r = parseSigned(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '^'))
-                    r = ((Field) r).pow(toField(ctx, parseTerm(ctx, type)));
+                    r = ((Field) r).pow(toField(ctx, parseSigned(ctx, type)));
                 else
                     break;
+
+        return r;
+    }
+
+    private static final FieldOrRow parseSigned(ParserContext ctx, Type type) {
+        Integer sign = null;
+        FieldOrRow r;
+
+        for (;;)
+            if (parseIf(ctx, '+'))
+                sign = 1;
+            else if (parseIf(ctx, '-'))
+                sign = sign == null ? -1 : -sign;
+            else
+                break;
+
+        if (sign == null)
+            r = parseTerm(ctx, type);
+        else if (sign == 1)
+            r = toField(ctx, parseTerm(ctx, type));
+        else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, true)) == null)
+            r = toField(ctx, parseTerm(ctx, type)).neg();
 
         return r;
     }
@@ -2714,25 +2736,6 @@ class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldYearIf(ctx)) != null)
                         return field;
-
-                break;
-
-            case '+':
-                parse(ctx, '+');
-
-                if (N.is(type))
-                    return parseTerm(ctx, type);
-                else
-                    break;
-
-            case '-':
-                parse(ctx, '-');
-
-                if (N.is(type))
-                    if ((field = parseFieldUnsignedNumericLiteralIf(ctx, true)) != null)
-                        return field;
-                    else
-                        return toField(ctx, parseTerm(ctx, type)).neg();
 
                 break;
 

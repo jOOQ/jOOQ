@@ -410,7 +410,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    static final Query parseQuery(ParserContext ctx) {
+    private static final Query parseQuery(ParserContext ctx) {
         if (ctx.done())
             return null;
 
@@ -1742,11 +1742,11 @@ class ParserImpl implements Parser {
     // QueryPart parsing
     // -----------------------------------------------------------------------------------------------------------------
 
-    static final Condition parseCondition(ParserContext ctx) {
+    private static final Condition parseCondition(ParserContext ctx) {
         return toCondition(ctx, parseOr(ctx));
     }
 
-    private static QueryPart parseOr(ParserContext ctx) {
+    private static final QueryPart parseOr(ParserContext ctx) {
         QueryPart condition = parseAnd(ctx);
 
         while (parseKeywordIf(ctx, "OR"))
@@ -2138,7 +2138,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    static final Field<?> parseField(ParserContext ctx) {
+    private static final Field<?> parseField(ParserContext ctx) {
         return parseField(ctx, null);
     }
 
@@ -4201,7 +4201,7 @@ class ParserImpl implements Parser {
         return parseName(ctx);
     }
 
-    static final Name parseName(ParserContext ctx) {
+    private static final Name parseName(ParserContext ctx) {
         List<Name> result = new ArrayList<Name>();
         result.add(parseIdentifier(ctx));
 
@@ -4324,7 +4324,7 @@ class ParserImpl implements Parser {
     // Literal parsing
     // -----------------------------------------------------------------------------------------------------------------
 
-    static final char parseCharacterLiteral(ParserContext ctx) {
+    private static final char parseCharacterLiteral(ParserContext ctx) {
         parseWhitespaceIf(ctx);
         parse(ctx, '\'');
 
@@ -4339,7 +4339,7 @@ class ParserImpl implements Parser {
         return c;
     }
 
-    static final Field<?> parseBindVariable(ParserContext ctx) {
+    private static final Field<?> parseBindVariable(ParserContext ctx) {
         switch (ctx.character()) {
             case '?':
                 parse(ctx, '?');
@@ -4354,7 +4354,7 @@ class ParserImpl implements Parser {
         }
     }
 
-    static final String parseStringLiteral(ParserContext ctx) {
+    private static final String parseStringLiteral(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
         if (parseIf(ctx, 'q'))
@@ -4769,12 +4769,12 @@ class ParserImpl implements Parser {
             throw ctx.unexpectedToken();
     }
 
-    static final void parseKeyword(ParserContext ctx, String string) {
+    private static final void parseKeyword(ParserContext ctx, String string) {
         if (!parseKeywordIf(ctx, string))
             throw ctx.unexpectedToken();
     }
 
-    static final boolean parseKeywordIf(ParserContext ctx, String string) {
+    private static final boolean parseKeywordIf(ParserContext ctx, String string) {
         ctx.expectedTokens.add(string);
 
         if (peekKeyword(ctx, string, true, false))
@@ -4857,7 +4857,7 @@ class ParserImpl implements Parser {
         return true;
     }
 
-    static final boolean parseWhitespaceIf(ParserContext ctx) {
+    private static final boolean parseWhitespaceIf(ParserContext ctx) {
         int position = ctx.position;
         ctx.position = afterWhitespace(ctx, ctx.position);
         return position != ctx.position;
@@ -4937,12 +4937,12 @@ class ParserImpl implements Parser {
         ));
     }
 
-    static final class ParserContext {
-        final DSLContext   dsl;
-        final String       sqlString;
-        final char[]       sql;
-        final List<String> expectedTokens;
-        int                position = 0;
+    private static final class ParserContext {
+        private final DSLContext   dsl;
+        private final String       sqlString;
+        private final char[]       sql;
+        private final List<String> expectedTokens;
+        private int                position = 0;
 
         ParserContext(DSLContext dsl, String sqlString) {
             this.dsl = dsl;
@@ -5001,7 +5001,7 @@ class ParserImpl implements Parser {
         }
     }
 
-    static final class ParserException extends DataAccessException {
+    private static final class ParserException extends DataAccessException {
 
         /**
          * Generated UID
@@ -5028,13 +5028,13 @@ class ParserImpl implements Parser {
         }
     }
 
-    static enum TruthValue {
+    private static enum TruthValue {
         TRUE,
         FALSE,
         NULL;
     }
 
-    static enum ComputationalOperation {
+    private static enum ComputationalOperation {
         AVG,
         MAX,
         MIN,
@@ -5053,7 +5053,7 @@ class ParserImpl implements Parser {
 //        INTERSECTION;
     }
 
-    static enum BinarySetFunctionType {
+    private static enum BinarySetFunctionType {
 //        COVAR_POP,
 //        COVAR_SAMP,
 //        CORR,

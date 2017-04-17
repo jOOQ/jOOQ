@@ -65,6 +65,11 @@ public interface Parser {
     Field<?> parseField(String sql);
 
     /**
+     * Parse a SQL string to a row.
+     */
+    Row parseRow(String sql);
+
+    /**
      * Parse a SQL string to a condition.
      */
     Condition parseCondition(String sql);

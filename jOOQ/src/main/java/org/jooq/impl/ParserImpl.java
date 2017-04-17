@@ -282,6 +282,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
 import org.jooq.Schema;
@@ -369,6 +370,17 @@ class ParserImpl implements Parser {
     public final Field<?> parseField(String sql) {
         ParserContext ctx = new ParserContext(dsl, sql);
         Field<?> result = parseField(ctx);
+
+        if (!ctx.done())
+            throw new ParserException(ctx);
+
+        return result;
+    }
+
+    @Override
+    public final Row parseRow(String sql) {
+        ParserContext ctx = new ParserContext(dsl, sql);
+        RowN result = parseRow(ctx);
 
         if (!ctx.done())
             throw new ParserException(ctx);
@@ -1793,7 +1805,7 @@ class ParserImpl implements Parser {
                         : ((RowN) left).compare(comp, DSL.any(parseSelect(ctx, ((RowN) left).size())))
                     : left instanceof Field
                         ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null)))
-                        : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size()));
+                        : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size(), true));
 
                 if (all || any)
                     parse(ctx, ')');
@@ -1995,10 +2007,14 @@ class ParserImpl implements Parser {
     }
 
     private static final RowN parseTuple(ParserContext ctx) {
-        return parseTuple(ctx, null);
+        return parseTuple(ctx, null, false);
     }
 
     private static final RowN parseTuple(ParserContext ctx, Integer degree) {
+        return parseTuple(ctx, degree, false);
+    }
+
+    private static final RowN parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parse(ctx, '(');
         RowN row = row(parseFields(ctx));
 
@@ -2148,6 +2164,12 @@ class ParserImpl implements Parser {
     private static final RowN parseRow(ParserContext ctx, Integer degree) {
         parseKeywordIf(ctx, "ROW");
         RowN row = parseTuple(ctx, degree);
+        return row;
+    }
+
+    private static final RowN parseRow(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+        parseKeywordIf(ctx, "ROW");
+        RowN row = parseTuple(ctx, degree, allowDoubleParens);
         return row;
     }
 

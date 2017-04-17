@@ -1460,8 +1460,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    @Deprecated
     public final Field<BigDecimal> power(Number exponent) {
+        return pow(exponent);
+    }
+
+    @Override
+    public final Field<BigDecimal> pow(Field<? extends Number> exponent) {
+        return DSL.power(numeric(), exponent);
+    }
+
+    @Override
+    public final Field<BigDecimal> power(Field<? extends Number> exponent) {
         return pow(exponent);
     }
 

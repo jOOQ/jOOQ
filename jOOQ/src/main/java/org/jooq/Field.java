@@ -780,6 +780,46 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     @Support
     Field<T> modulo(Field<? extends Number> value);
 
+    /**
+     * An arithmetic expression getting this value raised to the power of <code>exponent</code>.
+     * <p>
+     * This renders the power operation where available:
+     * <code><pre>[this] ^ [value]</pre></code> ... or the power function
+     * elsewhere: <code><pre>power([this], [value])</pre></code>
+     *
+     * @see DSL#power(Field, Number)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Field<BigDecimal> pow(Number exponent);
+
+    /**
+     * An arithmetic expression getting this value raised to the power of <code>exponent</code>.
+     * <p>
+     * This renders the power operation where available:
+     * <code><pre>[this] ^ [value]</pre></code> ... or the power function
+     * elsewhere: <code><pre>power([this], [value])</pre></code>
+     *
+     * @see DSL#power(Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Field<BigDecimal> pow(Field<? extends Number> exponent);
+
+    /**
+     * An alias for {@link #power(Number)}.
+     *
+     * @see #power(Number)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Field<BigDecimal> power(Number exponent);
+
+    /**
+     * An alias for {@link #power(Field)}.
+     *
+     * @see #power(Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Field<BigDecimal> power(Field<? extends Number> exponent);
+
     // ------------------------------------------------------------------------
     // Bitwise operations
     // ------------------------------------------------------------------------
@@ -2512,24 +2552,6 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> log(int base);
-
-    /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
-     * @see DSL#power(Field, Number)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    Field<BigDecimal> pow(Number exponent);
-
-    /**
-     * An alias for {@link #power(Number)}.
-     *
-     * @see #power(Number)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    Field<BigDecimal> power(Number exponent);
 
     /**
      * This method is part of the pre-2.0 API. This API is maintained for

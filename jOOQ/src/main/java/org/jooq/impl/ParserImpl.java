@@ -95,6 +95,7 @@ import static org.jooq.impl.DSL.least;
 import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.level;
+import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.lower;
@@ -4067,6 +4068,8 @@ class ParserImpl implements Parser {
         orderedN = parseHypotheticalSetFunctionIf(ctx);
         if (orderedN == null)
             orderedN = parseInverseDistributionFunctionIf(ctx);
+        if (orderedN == null)
+            orderedN = parseListaggFunctionIf(ctx);
         if (orderedN != null)
             return parseWithinGroupN(ctx, orderedN);
 
@@ -4138,6 +4141,26 @@ class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "PERCENTILE_DISC")) {
             parse(ctx, '(');
             ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, false));
+            parse(ctx, ')');
+        }
+        else
+            ordered = null;
+
+        return ordered;
+    }
+
+    private static final OrderedAggregateFunction<String> parseListaggFunctionIf(ParserContext ctx) {
+        OrderedAggregateFunction<String> ordered;
+
+        if (parseKeywordIf(ctx, "LISTAGG")) {
+            parse(ctx, '(');
+            Field<?> field = parseField(ctx);
+
+            if (parseIf(ctx, ','))
+                ordered = listAgg(field, parseStringLiteral(ctx));
+            else
+                ordered = listAgg(field);
+
             parse(ctx, ')');
         }
         else

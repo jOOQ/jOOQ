@@ -66,5 +66,5 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
      * Add the <code>DO IGNORE</code> clause.
      */
     @Support({ POSTGRES_9_5 })
-    InsertFinalStep<R> doNothing();
+    InsertReturningStep<R> doNothing();
 }

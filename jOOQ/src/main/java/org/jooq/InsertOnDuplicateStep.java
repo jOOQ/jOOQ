@@ -82,7 +82,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })
-    InsertFinalStep<R> onConflictDoNothing();
+    InsertReturningStep<R> onConflictDoNothing();
 
     /**
      * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.
@@ -160,5 +160,5 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * </table>
      */
     @Support
-    InsertFinalStep<R> onDuplicateKeyIgnore();
+    InsertReturningStep<R> onDuplicateKeyIgnore();
 }

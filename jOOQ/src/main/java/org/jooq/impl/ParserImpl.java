@@ -294,7 +294,9 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TablePartitionByStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
@@ -2090,31 +2092,42 @@ class ParserImpl implements Parser {
             return null;
 
         Table<?> right = joinType.qualified() ? parseTable(ctx) : parseTableFactor(ctx);
-        TableOptionalOnStep<?> result1 = left.join(right, joinType);
-        Table<?> result2 = result1;
+
+        TableOptionalOnStep<?> s0;
+        TablePartitionByStep<?> s1;
+        TableOnStep<?> s2;
+        s2 = s1 = s0 = left.join(right, joinType);
 
         switch (joinType) {
-            case JOIN:
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case RIGHT_OUTER_JOIN: {
+            case RIGHT_OUTER_JOIN:
+                if (parseKeywordIf(ctx, "PARTITION BY")) {
+                    parse(ctx, '(');
+                    s2 = s1.partitionBy(parseFields(ctx));
+                    parse(ctx, ')');
+                }
+
+                // No break
+
+            case JOIN:
                 boolean on = parseKeywordIf(ctx, "ON");
 
                 if (on) {
-                    result2 = result1.on(parseCondition(ctx));
+                    return s2.on(parseCondition(ctx));
                 }
                 else {
                     parseKeyword(ctx, "USING");
                     parse(ctx, '(');
-                    result2 = result1.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
+                    Table result = s2.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
                     parse(ctx, ')');
+
+                    return result;
                 }
 
-                break;
-            }
+            default:
+                return s0;
         }
-
-        return result2;
     }
 
     private static final List<Field<?>> parseSelectList(ParserContext ctx) {
@@ -5168,6 +5181,7 @@ class ParserImpl implements Parser {
         "ON",
         "ORDER BY",
         "OUTER",
+        "PARTITION",
         "RETURNING",
         "RIGHT",
         "SELECT",

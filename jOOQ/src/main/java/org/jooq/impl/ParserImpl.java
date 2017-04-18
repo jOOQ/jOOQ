@@ -2041,9 +2041,57 @@ class ParserImpl implements Parser {
 
 
 
-        // TODO PIVOT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // TODO UNPIVOT
-        // TODO MATCH_RECOGNIZE
+//        else if (parseKeywordIf(ctx, "UNPIVOT")) {
+//
+//        }
 
         Name alias = null;
         List<Name> columnAliases = null;
@@ -3682,6 +3730,10 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx) {
+        return parseAggregateFunctionIf(ctx, false);
+    }
+
+    private static final Field<?> parseAggregateFunctionIf(ParserContext ctx, boolean basic) {
         AggregateFunction<?> agg;
         WindowBeforeOverStep<?> over;
         Object keep = null;
@@ -3691,9 +3743,9 @@ class ParserImpl implements Parser {
         keep = over = agg = parseCountIf(ctx);
         if (agg == null)
             keep = over = agg = parseGeneralSetFunctionIf(ctx);
-        if (agg == null)
+        if (agg == null && !basic)
             over = agg = parseBinarySetFunctionIf(ctx);
-        if (agg == null)
+        if (agg == null && !basic)
             over = parseOrderedSetFunctionIf(ctx);
 
         if (agg == null && over == null)
@@ -3719,7 +3771,7 @@ class ParserImpl implements Parser {
 
 
 
-        if (agg != null && parseKeywordIf(ctx, "FILTER")) {
+        if (agg != null && !basic && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
             filter = parseCondition(ctx);
@@ -3732,7 +3784,7 @@ class ParserImpl implements Parser {
         else
             result = over;
 
-        if (parseKeywordIf(ctx, "OVER")) {
+        if (!basic && parseKeywordIf(ctx, "OVER")) {
             Object nameOrSpecification = parseWindowNameOrSpecification(ctx, agg != null);
 
             if (nameOrSpecification instanceof Name)
@@ -5235,5 +5287,9 @@ class ParserImpl implements Parser {
         "UNION",
         "USING",
         "WHERE",
+    };
+
+    private static final String[] PIVOT_KEYWORDS = {
+        "FOR"
     };
 }

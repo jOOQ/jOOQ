@@ -2102,13 +2102,15 @@ class ParserImpl implements Parser {
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
-                if (parseKeywordIf(ctx, "PARTITION BY")) {
-                    parse(ctx, '(');
-                    s2 = s1.partitionBy(parseFields(ctx));
-                    parse(ctx, ')');
-                }
 
-                // No break
+
+
+
+
+
+
+
+
 
             case JOIN:
                 boolean on = parseKeywordIf(ctx, "ON");

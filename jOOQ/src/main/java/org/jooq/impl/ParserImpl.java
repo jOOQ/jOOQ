@@ -303,6 +303,7 @@ import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
 import org.jooq.UpdateReturningStep;
+// ...
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
@@ -1956,14 +1957,10 @@ class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseTableFactor(ParserContext ctx) {
-        return parseTablePrimary(ctx);
-        // TODO Support SAMPLE clause
-    }
-
-    private static final Table<?> parseTablePrimary(ParserContext ctx) {
         Table<?> result = null;
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
+        // TOOD ONLY ( table primary )
         if (parseKeywordIf(ctx, "LATERAL")) {
             parse(ctx, '(');
             result = lateral(parseSelect(ctx));
@@ -1999,7 +1996,54 @@ class ParserImpl implements Parser {
         }
         else {
             result = parseTableName(ctx);
+            // TODO Sample clause
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // TODO PIVOT
+        // TODO UNPIVOT
+        // TODO MATCH_RECOGNIZE
 
         Name alias = null;
         List<Name> columnAliases = null;

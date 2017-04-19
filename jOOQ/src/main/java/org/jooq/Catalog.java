@@ -39,15 +39,13 @@ import java.util.stream.Stream;
 
 /**
  * An object representing a database catalog.
- * <p>
- * NOTE: Catalogs are experimental in jOOQ 3.0
  *
  * @author Lukas Eder
  */
 public interface Catalog extends QueryPart {
 
     /**
-     * The name of this schema.
+     * The name of this catalog.
      */
     String getName();
 

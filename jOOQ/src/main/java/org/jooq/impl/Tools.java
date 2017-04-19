@@ -3121,8 +3121,10 @@ final class Tools {
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
     }
 
+    private static final Pattern NEW_LINES = Pattern.compile("[\\r\\n]+");
+
     static final List<String[]> parseTXT(String string, String nullLiteral) {
-        String[] strings = string.split("[\\r\\n]+");
+        String[] strings = NEW_LINES.split(string);
 
         if (strings.length < 2) {
             throw new DataAccessException("String must contain at least two lines");

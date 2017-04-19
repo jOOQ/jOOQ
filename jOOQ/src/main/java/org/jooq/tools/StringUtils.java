@@ -1262,6 +1262,8 @@ public final class StringUtils {
     // XXX: The following methods are not part of Apache's commons-lang library
     // -------------------------------------------------------------------------
 
+    private static final Pattern UNDERSCORE = Pattern.compile("_");
+
     /**
      * Convert a string to camel case
      */
@@ -1269,7 +1271,7 @@ public final class StringUtils {
         StringBuilder result = new StringBuilder();
 
         // [#2515] - Keep trailing underscores
-        for (String word : string.split("_", -1)) {
+        for (String word : UNDERSCORE.split(string, -1)) {
 
             // Uppercase first letter of a word
             if (word.length() > 0) {

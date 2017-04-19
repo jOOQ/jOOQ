@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
@@ -193,8 +194,10 @@ public class LoggerListener extends DefaultExecuteListener {
         return result;
     }
 
+    private static final Pattern NEW_LINE = Pattern.compile("\n");
+
     private void logMultiline(String comment, String message, Level level) {
-        for (String line : message.split("\n")) {
+        for (String line : NEW_LINE.split(message)) {
             if (level == Level.FINE) {
                 log.debug(comment, line);
             }

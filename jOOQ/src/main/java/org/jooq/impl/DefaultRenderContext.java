@@ -290,11 +290,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return indentLock;
     }
 
+    private static final Pattern NEW_LINE = Pattern.compile("[\\n\\r]");
+
     @Override
     public final RenderContext formatIndentLockStart() {
         if (cachedRenderFormatted) {
             indentLock().push(indent);
-            String[] lines = sql.toString().split("[\\n\\r]");
+            String[] lines = NEW_LINE.split(sql);
             indent = lines[lines.length - 1].length();
         }
 

@@ -340,7 +340,7 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ";"));
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of queries input");
 
         return new QueriesImpl(result);
     }
@@ -351,7 +351,7 @@ class ParserImpl implements Parser {
         Query result = parseQuery(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of query input");
 
         return result;
     }
@@ -362,7 +362,7 @@ class ParserImpl implements Parser {
         Table<?> result = parseTable(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of table input");
 
         return result;
     }
@@ -373,7 +373,7 @@ class ParserImpl implements Parser {
         Field<?> result = parseField(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of field input");
 
         return result;
     }
@@ -384,7 +384,7 @@ class ParserImpl implements Parser {
         RowN result = parseRow(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of row input");
 
         return result;
     }
@@ -395,7 +395,7 @@ class ParserImpl implements Parser {
         Condition result = parseCondition(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of condition input");
 
         return result;
     }
@@ -406,7 +406,7 @@ class ParserImpl implements Parser {
         Name result = parseName(ctx);
 
         if (!ctx.done())
-            throw ctx.exception();
+            throw ctx.exception("Unexpected content after end of name input");
 
         return result;
     }
@@ -508,7 +508,7 @@ class ParserImpl implements Parser {
                 throw ctx.unexpectedToken();
         }
 
-        throw ctx.exception();
+        throw ctx.exception("Unsupported query type");
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -708,7 +708,7 @@ class ParserImpl implements Parser {
 
         List<Field<?>> select = parseSelectList(ctx);
         if (degree != null && select.size() != degree)
-            throw ctx.exception();
+            throw ctx.exception("Select list must contain " + degree + " columns. Got: " + select.size());
 
         Table<?> into = null;
         List<Table<?>> from = null;
@@ -879,7 +879,7 @@ class ParserImpl implements Parser {
                 List<Field<?>> values = parseFields(ctx);
 
                 if (fields != null && fields.length != values.size())
-                    throw ctx.exception();
+                    throw ctx.exception("Insert field size (" + fields.length + ") must match values size (" + values.size() + ")");
 
                 allValues.add(values);
                 parse(ctx, ')');
@@ -910,7 +910,7 @@ class ParserImpl implements Parser {
         }
         else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
             if (fields != null)
-                throw ctx.exception();
+                throw ctx.notImplemented("DEFAULT VALUES without INSERT field list");
             else
                 returning = onDuplicate = ctx.dsl.insertInto(tableName).defaultValues();
         }
@@ -989,7 +989,7 @@ class ParserImpl implements Parser {
             Field<?> field = parseFieldName(ctx);
 
             if (map.containsKey(field))
-                throw ctx.exception();
+                throw ctx.exception("Duplicate column in set clause list: " + field);
 
             parse(ctx, '=');
             Field<?> value = parseField(ctx);
@@ -1032,14 +1032,14 @@ class ParserImpl implements Parser {
                 parse(ctx, ')');
 
                 if (insertColumns.length != insertValues.size())
-                    throw ctx.exception();
+                    throw ctx.exception("Insert column size (" + insertColumns.length + ") must match values size (" + insertValues.size() + ")");
             }
             else
                 break;
         }
 
         if (!update && !insert)
-            throw ctx.exception();
+            throw ctx.exception("At least one of UPDATE or INSERT clauses is required");
 
         // TODO support WHERE
         // TODO support multi clause MERGE
@@ -1154,7 +1154,7 @@ class ParserImpl implements Parser {
         Select<?> select = parseSelect(ctx);
 
         if (fields.length > 0 && fields.length != select.getSelect().size())
-            throw ctx.exception();
+            throw ctx.exception("Select list size (" + select.getSelect().size() + ") must match declared field size (" + fields.length + ")");
 
 
         return ifNotExists
@@ -1320,7 +1320,7 @@ class ParserImpl implements Parser {
 
                     if (parseKeywordIf(ctx, "PRIMARY KEY")) {
                         if (primary) {
-                            throw ctx.exception();
+                            throw ctx.exception("Duplicate primary key specification");
                         }
                         else {
                             primary = true;
@@ -1353,7 +1353,7 @@ class ParserImpl implements Parser {
                         parse(ctx, ')');
 
                         if (referencing.length != referencedFields.length)
-                            throw ctx.exception();
+                            throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
 
                         constraints.add(constraint == null
                             ? foreignKey(referencing).references(referencedTable, referencedFields)
@@ -1437,7 +1437,7 @@ class ParserImpl implements Parser {
                         parse(ctx, ')');
 
                         if (referencing.length != referencedFields.length)
-                            throw ctx.exception();
+                            throw ctx.exception("Number of referencing columns must match number of referenced columns");
 
                         return constraint == null
                             ? s1.add(foreignKey(referencing).references(referencedTable, referencedFields))
@@ -1858,7 +1858,7 @@ class ParserImpl implements Parser {
 
                 // TODO: Support this for ROW as well
                 if (((Field) left) == null)
-                    throw ctx.exception();
+                    throw ctx.notImplemented("DISTINCT predicate for rows");
 
                 Field right = toField(ctx, parseConcat(ctx, null));
                 return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
@@ -1968,7 +1968,7 @@ class ParserImpl implements Parser {
         }
         else if (parseKeywordIf(ctx, "UNNEST")) {
             // TODO
-            throw ctx.exception();
+            throw ctx.notImplemented("UNNEST");
         }
         else if (parseIf(ctx, '(')) {
             if (peekKeyword(ctx, "SELECT")) {
@@ -2153,10 +2153,10 @@ class ParserImpl implements Parser {
         else if (fieldsOrRows.size() == 1)
             row = (RowN) fieldsOrRows.get(0);
         else
-            throw ctx.exception();
+            throw ctx.exception("Unsupported row size");
 
         if (degree != null && row.size() != degree)
-            throw ctx.exception();
+            throw ctx.exception("Expected row of degree: " + degree + ". Got: " + row.size());
 
         parse(ctx, ')');
         return row;
@@ -2380,9 +2380,9 @@ class ParserImpl implements Parser {
             if (((Field) part).getDataType().getType() == Boolean.class)
                 return condition((Field) part);
             else
-                throw ctx.exception();
+                throw ctx.expected("Boolean field");
         else
-            throw ctx.exception();
+            throw ctx.expected("Condition");
     }
 
     private static final FieldOrRow toFieldOrRow(ParserContext ctx, QueryPart part) {
@@ -2395,7 +2395,7 @@ class ParserImpl implements Parser {
         else if (part instanceof Row)
             return (Row) part;
         else
-            throw ctx.exception();
+            throw ctx.expected("Field or row");
     }
 
     private static final Field<?> toField(ParserContext ctx, QueryPart part) {
@@ -2406,7 +2406,7 @@ class ParserImpl implements Parser {
         else if (part instanceof Condition)
             return field((Condition) part);
         else
-            throw ctx.exception();
+            throw ctx.expected("Field");
     }
 
     private static final FieldOrRow parseConcat(ParserContext ctx, Type type) {
@@ -2477,7 +2477,7 @@ class ParserImpl implements Parser {
 
         for (;;)
             if (parseIf(ctx, '+'))
-                sign = 1;
+                sign = sign == null ?  1 :  sign;
             else if (parseIf(ctx, '-'))
                 sign = sign == null ? -1 : -sign;
             else
@@ -2872,7 +2872,7 @@ class ParserImpl implements Parser {
                 if (peekKeyword(ctx, "SELECT")) {
                     SelectQueryImpl<Record> select = parseSelect(ctx);
                     if (select.getSelect().size() > 1)
-                        throw ctx.exception();
+                        throw ctx.exception("Select list must contain at least one column");
 
                     field = field((Select) select);
                     parse(ctx, ')');
@@ -3082,7 +3082,7 @@ class ParserImpl implements Parser {
             return Timestamp.valueOf(parseStringLiteral(ctx));
         }
         catch (IllegalArgumentException e) {
-            throw ctx.exception();
+            throw ctx.exception("Illegal timestamp literal");
         }
     }
 
@@ -3109,7 +3109,7 @@ class ParserImpl implements Parser {
             return Time.valueOf(parseStringLiteral(ctx));
         }
         catch (IllegalArgumentException e) {
-            throw ctx.exception();
+            throw ctx.exception("Illegal time literal");
         }
     }
 
@@ -3133,7 +3133,7 @@ class ParserImpl implements Parser {
             return Date.valueOf(parseStringLiteral(ctx));
         }
         catch (IllegalArgumentException e) {
-            throw ctx.exception();
+            throw ctx.exception("Illegal date literal");
         }
     }
 
@@ -3722,7 +3722,7 @@ class ParserImpl implements Parser {
                 case NULL:
                     return inline((Boolean) null);
                 default:
-                    throw ctx.exception();
+                    throw ctx.exception("Truth value not supported: " + truth);
             }
         }
 
@@ -4186,7 +4186,7 @@ class ParserImpl implements Parser {
             case REGR_SYY:
                 return regrSYY(arg1, arg2);
             default:
-                throw ctx.exception();
+                throw ctx.exception("Binary set function not supported: " + type);
         }
     }
 
@@ -4450,7 +4450,7 @@ class ParserImpl implements Parser {
 
         do {
             if (!result.add(parseIdentifier(ctx)))
-                throw ctx.exception();
+                throw ctx.exception("Duplicate identifier encountered");
         }
         while (parseIf(ctx, ','));
         return new ArrayList<Name>(result);
@@ -4460,7 +4460,7 @@ class ParserImpl implements Parser {
         Name result = parseIdentifierIf(ctx);
 
         if (result == null)
-            throw ctx.exception();
+            throw ctx.expected("Identifier");
 
         return result;
     }
@@ -4486,14 +4486,11 @@ class ParserImpl implements Parser {
         if (ctx.position == start)
             return null;
 
-        if (ctx.position - start < 0)
-            throw ctx.exception();
-
         String result = new String(ctx.sql, start, ctx.position - start);
 
         if (quoteEnd != 0) {
             if (ctx.character() != quoteEnd)
-                throw ctx.exception();
+                throw ctx.exception("Quoted identifier must terminate in " + quoteEnd);
 
             ctx.position = ctx.position + 1;
             return DSL.quotedName(result);
@@ -4584,7 +4581,7 @@ class ParserImpl implements Parser {
                 return DSL.param(parseIdentifier(ctx).last());
 
             default:
-                throw ctx.exception();
+                throw ctx.exception("Illegal bind variable character");
         }
     }
 
@@ -4607,11 +4604,18 @@ class ParserImpl implements Parser {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             char c1 = 0;
             char c2 = 0;
-            int i = ctx.position;
 
             do {
-                c1 = ctx.character(i);
-                c2 = ctx.character(i + 1);
+                for (;;) {
+                    c1 = ctx.character(ctx.position);
+
+                    if (c1 == ' ')
+                        ctx.position = ctx.position + 1;
+                    else
+                        break;
+                }
+
+                c2 = ctx.character(ctx.position + 1);
 
                 if (c1 == '\'')
                     break;
@@ -4622,17 +4626,17 @@ class ParserImpl implements Parser {
                     buffer.write(Integer.parseInt("" + c1 + c2, 16));
                 }
                 catch (NumberFormatException e) {
-                    throw ctx.exception();
+                    throw ctx.exception("Illegal character for binary literal");
                 }
             }
-            while ((i = i + 2) < ctx.sql.length);
+            while ((ctx.position = ctx.position + 2) < ctx.sql.length);
 
             if (c1 == '\'') {
-                ctx.position = i + 1;
+                ctx.position = ctx.position + 1;
                 return buffer.toByteArray();
             }
 
-            throw ctx.exception();
+            throw ctx.exception("Binary literal not terminated");
         }
 
         return null;
@@ -4651,7 +4655,7 @@ class ParserImpl implements Parser {
             case '(': end = ')'; ctx.position = ctx.position + 1; break;
             case '<': end = '>'; ctx.position = ctx.position + 1; break;
             default:
-                throw ctx.exception();
+                throw ctx.exception("Illegal quote string character");
         }
 
         StringBuilder sb = new StringBuilder();
@@ -4670,7 +4674,7 @@ class ParserImpl implements Parser {
             sb.append(c);
         }
 
-        throw ctx.exception();
+        throw ctx.exception("Quoted string literal not terminated");
     }
 
     private static final String parseUnquotedStringLiteral(ParserContext ctx) {
@@ -4693,7 +4697,7 @@ class ParserImpl implements Parser {
             sb.append(c);
         }
 
-        throw ctx.exception();
+        throw ctx.exception("String literal not terminated");
     }
 
     private static final Field<Number> parseFieldUnsignedNumericLiteral(ParserContext ctx, boolean minus) {
@@ -4767,7 +4771,7 @@ class ParserImpl implements Parser {
         Long result = parseUnsignedIntegerIf(ctx);
 
         if (result == null)
-            throw ctx.exception();
+            throw ctx.expected("Unsigned integer");
 
         return result;
     }
@@ -5168,11 +5172,19 @@ class ParserImpl implements Parser {
         }
 
         ParserException internalError() {
-            return new ParserException(mark(), "Internal Error");
+            return exception("Internal Error");
         }
 
-        ParserException exception() {
-            return new ParserException(mark());
+        ParserException expected(String object) {
+            return new ParserException(mark(), object + " expected");
+        }
+
+        ParserException notImplemented(String feature) {
+            return new ParserException(mark(), feature + " not yet implemented");
+        }
+
+        ParserException exception(String message) {
+            return new ParserException(mark(), message);
         }
 
         ParserException unexpectedToken() {

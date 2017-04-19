@@ -3627,6 +3627,16 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("new %s(%s.name(name), null)", className, DSL.class);
 
             out.tab(1).println("}");
+
+            out.tab(1).javadoc("Rename this table");
+            out.tab(1).println("override def rename(name : %s) : %s = {", Name.class, className);
+
+            if (table.isTableValuedFunction())
+                out.tab(2).println("new %s(name, null, parameters)", className);
+            else
+                out.tab(2).println("new %s(name, null)", className);
+
+            out.tab(1).println("}");
         }
 
         // [#2921] With instance fields, tables can be renamed.
@@ -3639,6 +3649,17 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("return new %s(%s.name(name), null, parameters);", className, DSL.class);
             else
                 out.tab(2).println("return new %s(%s.name(name), null);", className, DSL.class);
+
+            out.tab(1).println("}");
+
+            out.tab(1).javadoc("Rename this table");
+            out.tab(1).override();
+            out.tab(1).println("public %s rename(%s name) {", className, Name.class);
+
+            if (table.isTableValuedFunction())
+                out.tab(2).println("return new %s(name, null, parameters);", className);
+            else
+                out.tab(2).println("return new %s(name, null);", className);
 
             out.tab(1).println("}");
         }

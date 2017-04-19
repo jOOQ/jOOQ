@@ -145,21 +145,25 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             default: {
                 ctx.start(TABLE_VALUES)
-                   .visit(K_VALUES)
-                   .formatIndentLockStart();
+                   .visit(K_VALUES);
 
-                boolean firstRow = true;
-                for (Row row : rows) {
-                    if (!firstRow) {
-                        ctx.sql(',').formatSeparator();
-                    }
+                if (rows.length > 1)
+                    ctx.formatIndentStart()
+                       .formatSeparator();
 
-                    ctx.visit(row);
-                    firstRow = false;
+                for (int i = 0; i < rows.length; i++) {
+                    if (i > 0)
+                        ctx.sql(',')
+                           .formatSeparator();
+
+                    ctx.visit(rows[i]);
                 }
 
-                ctx.formatIndentLockEnd()
-                   .end(TABLE_VALUES);
+                if (rows.length > 1)
+                    ctx.formatIndentEnd()
+                       .formatNewLine();
+
+                ctx.end(TABLE_VALUES);
                 break;
             }
         }

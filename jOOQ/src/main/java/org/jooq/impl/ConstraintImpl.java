@@ -224,7 +224,8 @@ implements
                    .sql(')');
             }
 
-            ctx.formatIndentEnd();
+            if (name != null)
+                ctx.formatIndentEnd();
         }
     }
 

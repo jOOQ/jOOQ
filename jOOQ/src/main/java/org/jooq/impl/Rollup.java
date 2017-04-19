@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -72,10 +74,30 @@ final class Rollup extends AbstractField<Object> {
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                return DSL.field("{0} {with rollup}", arguments);
+                return new MySQLWithRollup();
 
             default:
                 return DSL.field("{rollup}({0})", Object.class, arguments);
+        }
+    }
+
+    final class MySQLWithRollup extends AbstractQueryPart {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2814185308000330197L;
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            ctx.visit(arguments)
+               .formatSeparator()
+               .visit(K_WITH_ROLLUP);
+        }
+
+        @Override
+        public final Clause[] clauses(Context<?> ctx) {
+            return null;
         }
     }
 }

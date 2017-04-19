@@ -261,6 +261,7 @@ final class Keywords {
     public static final Keyword K_WITH_LOCK                        = keyword("with lock");
     public static final Keyword K_WITH_PRIMARY_KEY                 = keyword("with primary key");
     public static final Keyword K_WITH_READ_ONLY                   = keyword("with read only");
+    public static final Keyword K_WITH_ROLLUP                      = keyword("with rollup");
     public static final Keyword K_WITHIN_GROUP                     = keyword("within group");
     public static final Keyword K_XMLTABLE                         = keyword("xmltable");
     public static final Keyword K_YEAR_TO_DAY                      = keyword("year to day");

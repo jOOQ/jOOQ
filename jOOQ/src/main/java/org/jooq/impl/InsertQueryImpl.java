@@ -81,6 +81,7 @@ import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -528,7 +529,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             //         re-used.
 
             Select<Record> rows = null;
-            String[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(EMPTY_FIELD));
+            Name[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(EMPTY_FIELD));
 
             for (FieldMapForInsert map : insertMaps.insertMaps) {
                 Select<Record> row =

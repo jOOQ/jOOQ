@@ -728,27 +728,23 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<R> as(Table<?> otherTable) {
-        // [#5997] TODO Change this
-        return as(otherTable.getName());
+        return as(otherTable.getUnqualifiedName());
     }
 
     @Override
     public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
-        // [#5997] TODO Change this
-        return as(otherTable.getName(), Tools.fieldNames(otherFields));
+        return as(otherTable.getUnqualifiedName(), Tools.fieldNames(otherFields));
     }
 
 
     @Override
     public final Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction) {
-        // [#5997] TODO Change this
-        return as(otherTable.getName(), f -> aliasFunction.apply(f).getName());
+        return as(otherTable.getUnqualifiedName(), f -> aliasFunction.apply(f).getUnqualifiedName());
     }
 
     @Override
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
-        // [#5997] TODO Change this
-        return as(otherTable.getName(), (f, i) -> aliasFunction.apply(f, i).getName());
+        return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
 
 

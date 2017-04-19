@@ -90,12 +90,9 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
 
         for (int i = 0; i < size; i++) {
             Field<?> field = row.field(i);
-
-            // [#5997] TODO: Retain quotation flag
-            Name name = DSL.name(field.getName());
-
-            if (fieldAliases != null && fieldAliases.length > i)
-                name = fieldAliases[i];
+            Name name = (fieldAliases != null && fieldAliases.length > i)
+                ? fieldAliases[i]
+                : field.getUnqualifiedName();
 
             result.add(new TableFieldImpl(name, field.getDataType(), this, field.getComment(), field.getBinding()));
         }

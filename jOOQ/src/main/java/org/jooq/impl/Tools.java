@@ -840,7 +840,16 @@ final class Tools {
         return result;
     }
 
-    static final String[] fieldNames(int length) {
+    static final Name[] fieldNames(int length) {
+        Name[] result = new Name[length];
+
+        for (int i = 0; i < length; i++)
+            result[i] = name("v" + i);
+
+        return result;
+    }
+
+    static final String[] fieldNameStrings(int length) {
         String[] result = new String[length];
 
         for (int i = 0; i < length; i++)
@@ -849,21 +858,21 @@ final class Tools {
         return result;
     }
 
-    static final String[] fieldNames(Field<?>[] fields) {
+    static final Name[] fieldNames(Field<?>[] fields) {
         if (fields == null)
             return null;
 
-        String[] result = new String[fields.length];
+        Name[] result = new Name[fields.length];
 
         for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].getName();
+            result[i] = fields[i].getUnqualifiedName();
 
         return result;
     }
 
     static final Field<?>[] fields(int length) {
         Field<?>[] result = new Field[length];
-        String[] names = fieldNames(length);
+        Name[] names = fieldNames(length);
 
         for (int i = 0; i < length; i++)
             result[i] = DSL.field(name(names[i]));
@@ -871,7 +880,7 @@ final class Tools {
         return result;
     }
 
-    static final Field<?>[] aliasedFields(Field<?>[] fields, String[] aliases) {
+    static final Field<?>[] aliasedFields(Field<?>[] fields, Name[] aliases) {
         if (fields == null)
             return null;
 
@@ -893,6 +902,22 @@ final class Tools {
 
     static final Field<?>[] fieldsByName(String tableName, Collection<String> fieldNames) {
         return fieldsByName(tableName, fieldNames.toArray(EMPTY_STRING));
+    }
+
+    static final Field<?>[] fieldsByName(Name tableName, Name[] fieldNames) {
+        if (fieldNames == null)
+            return null;
+
+        Field<?>[] result = new Field[fieldNames.length];
+
+        if (tableName == null)
+            for (int i = 0; i < fieldNames.length; i++)
+                result[i] = DSL.field(fieldNames[i]);
+        else
+            for (int i = 0; i < fieldNames.length; i++)
+                result[i] = DSL.field(name(tableName, fieldNames[i]));
+
+        return result;
     }
 
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
@@ -3205,7 +3230,7 @@ final class Tools {
                     col.add(mColBody.group(1));
 
                 if (result.isEmpty())
-                    result.add(fieldNames(col.size()));
+                    result.add(fieldNameStrings(col.size()));
             }
 
             result.add(col.toArray(EMPTY_STRING));

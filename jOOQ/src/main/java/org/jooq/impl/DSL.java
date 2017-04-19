@@ -7288,8 +7288,8 @@ public class DSL {
      * Create a new SQL identifier using a qualified name.
      * <p>
      * Unlike other {@link #name(String...)} constructors, this one constructs a
-     * name from its argument {@link Name#last()} parts, retaining the quoted
-     * flag, to construct a new name.
+     * name from its argument {@link Name#unqualifiedName()} parts, retaining
+     * the quoted flag, to construct a new name.
      * <p>
      * Use this method to construct syntax-safe, SQL-injection-safe SQL
      * identifiers for use in plain SQL where {@link QueryPart} objects are

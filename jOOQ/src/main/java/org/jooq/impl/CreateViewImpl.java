@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_AS;
@@ -191,7 +192,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(select).as("t", Tools.fieldNames(fields)))
+             ? selectFrom(table(select).as(name("t"), Tools.fieldNames(fields)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);

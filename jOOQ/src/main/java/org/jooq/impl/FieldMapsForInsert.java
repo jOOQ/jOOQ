@@ -36,6 +36,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 

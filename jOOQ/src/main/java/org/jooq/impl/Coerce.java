@@ -51,9 +51,7 @@ final class Coerce<T> extends AbstractField<T> {
     private final Field<?>    field;
 
     public Coerce(Field<?> field, DataType<T> type) {
-
-        // [#5997] TODO Retain quotation flag
-        super(DSL.name(field.getName()), type);
+        super(field.getUnqualifiedName(), type);
 
         this.field = (field instanceof Coerce) ? ((Coerce<?>) field).field : field;
     }

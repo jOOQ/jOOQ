@@ -61,6 +61,11 @@ public interface Schema extends QueryPart {
     Name getQualifiedName();
 
     /**
+     * The unqualified name of this schema.
+     */
+    Name getUnqualifiedName();
+
+    /**
      * Stream all tables contained in this schema.
      */
 

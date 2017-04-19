@@ -103,6 +103,11 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Name getQualifiedName();
 
     /**
+     * The unqualified name of this field.
+     */
+    Name getUnqualifiedName();
+
+    /**
      * The comment given to the field.
      * <p>
      * If this <code>Field</code> is a generated field from your database, it

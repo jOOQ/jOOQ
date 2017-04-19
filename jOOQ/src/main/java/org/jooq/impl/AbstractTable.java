@@ -396,6 +396,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Name getUnqualifiedName() {
+        return tablename.unqualifiedName();
+    }
+
+    @Override
     public final String getComment() {
         return tablecomment;
     }

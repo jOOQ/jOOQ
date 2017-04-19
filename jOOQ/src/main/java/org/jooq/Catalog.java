@@ -57,6 +57,11 @@ public interface Catalog extends QueryPart {
     Name getQualifiedName();
 
     /**
+     * The unqualified name of this catalog.
+     */
+    Name getUnqualifiedName();
+
+    /**
      * List all schemas contained in this catalog.
      */
     List<Schema> getSchemas();

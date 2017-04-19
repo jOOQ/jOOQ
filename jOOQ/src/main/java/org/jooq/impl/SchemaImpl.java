@@ -105,6 +105,11 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     }
 
     @Override
+    public final Name getUnqualifiedName() {
+        return name.unqualifiedName();
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), getCatalog());
 

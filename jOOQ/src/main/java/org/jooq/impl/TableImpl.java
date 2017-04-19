@@ -204,7 +204,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             }
         }
 
-        ctx.visit(Tools.getMappedTable(ctx.configuration(), this).getQualifiedName().unqualifiedName());
+        ctx.visit(Tools.getMappedTable(ctx.configuration(), this).getUnqualifiedName());
 
         if (parameters != null && ctx.declareTables()) {
 

@@ -96,6 +96,11 @@ public interface Table<R extends Record> extends TableLike<R> {
     Name getQualifiedName();
 
     /**
+     * The unqualified name of this table.
+     */
+    Name getUnqualifiedName();
+
+    /**
      * The comment given to the table.
      * <p>
      * If this <code>Table</code> is a generated table from your database, it

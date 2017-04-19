@@ -218,6 +218,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Name getUnqualifiedName() {
+        return name.unqualifiedName();
+    }
+
+    @Override
     public final String getComment() {
         return comment;
     }

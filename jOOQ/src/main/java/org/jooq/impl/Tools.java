@@ -1972,7 +1972,7 @@ final class Tools {
         String separator = "";
 
         for (Field<?> field : list) {
-            context.sql(separator).visit(field.getQualifiedName().unqualifiedName());
+            context.sql(separator).visit(field.getUnqualifiedName());
 
             separator = ", ";
         }
@@ -1994,7 +1994,7 @@ final class Tools {
         String separator = "";
 
         for (Table<?> table : list) {
-            context.sql(separator).visit(table.getQualifiedName().unqualifiedName());
+            context.sql(separator).visit(table.getUnqualifiedName());
 
             separator = ", ";
         }
@@ -3636,7 +3636,7 @@ final class Tools {
         Name[] part = table.getQualifiedName().parts();
         Name[] name = new Name[part.length + 1];
         System.arraycopy(part, 0, name, 0, part.length);
-        name[part.length] = field.getQualifiedName().unqualifiedName();
+        name[part.length] = field.getUnqualifiedName();
 
         return DSL.field(DSL.name(name), field.getDataType());
     }

@@ -84,6 +84,11 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     }
 
     @Override
+    public final Name getUnqualifiedName() {
+        return name.unqualifiedName();
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(name.unqualifiedName());
     }

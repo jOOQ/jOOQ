@@ -36,6 +36,7 @@ package org.jooq.util.postgres;
 
 import static org.jooq.SQLDialect.POSTGRES;
 
+import org.jooq.Condition;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -62,6 +63,54 @@ public class PostgresDSL extends DSL {
     // -------------------------------------------------------------------------
     // PostgreSQL-specific array functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * <p>
+     * Example: <code><pre>
+     * true = array[1, 2, 3] && array[3, 4, 5]
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Condition arrayOverlap(T[] left, T[] right) {
+        return arrayOverlap(val(left), val(right));
+    }
+
+    /**
+     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * <p>
+     * Example: <code><pre>
+     * true = array[1, 2, 3] && array[3, 4, 5]
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Condition arrayOverlap(T[] left, Field<T[]> right) {
+        return arrayOverlap(val(left), right);
+    }
+
+    /**
+     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * <p>
+     * Example: <code><pre>
+     * true = array[1, 2, 3] && array[3, 4, 5]
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Condition arrayOverlap(Field<T[]> left, T[] right) {
+        return arrayOverlap(left, val(right));
+    }
+
+    /**
+     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * <p>
+     * Example: <code><pre>
+     * true = array[1, 2, 3] && array[3, 4, 5]
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Condition arrayOverlap(Field<T[]> left, Field<T[]> right) {
+        return DSL.condition("{0} && {1}", left, right);
+    }
 
     /**
      * The PostgreSQL <code>array(select)</code> function.

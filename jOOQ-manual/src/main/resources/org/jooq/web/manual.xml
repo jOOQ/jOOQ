@@ -644,9 +644,9 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);
 Result&lt;Record&gt; result = create.select()
     .from(T_AUTHOR)
     .join(T_BOOK)
-    .on(T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID))
+    .on(T_AUTHOR.ID.eq(T_BOOK.AUTHOR_ID))
     .where(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920)
-    .and(T_AUTHOR.FIRST_NAME.equal("Paulo")))
+    .and(T_AUTHOR.FIRST_NAME.eq("Paulo")))
     .orderBy(T_BOOK.TITLE).fetch();</java>
     						</code-pair><html>
 
@@ -688,11 +688,11 @@ q.addFrom(T_AUTHOR);
 
 // This example shows some "mixed" API usage, where the JOIN is added with the standard API, and the
 // Condition is created using the DSL API
-q.addJoin(T_BOOK, T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID));
+q.addJoin(T_BOOK, T_AUTHOR.ID.eq(T_BOOK.AUTHOR_ID));
 
 // The AND operator between Conditions is implicit here
 q.addConditions(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920));
-q.addConditions(T_AUTHOR.FIRST_NAME.equal("Paulo"));
+q.addConditions(T_AUTHOR.FIRST_NAME.eq("Paulo"));
 q.addOrderBy(T_BOOK.TITLE);</java><html>
 
 							<h3>Fetching data</h3>
@@ -863,7 +863,7 @@ i.execute();</java><html>
  </sql><java>create.update(T_AUTHOR)
       .set(T_AUTHOR.FIRST_NAME, "Hermann")
       .set(T_AUTHOR.LAST_NAME, "Hesse")
-      .where(T_AUTHOR.ID.equal(3))
+      .where(T_AUTHOR.ID.eq(3))
       .execute();</java></code-pair><html>
 
 							<h3>Example: Non-DSL Query</h3>
@@ -872,7 +872,7 @@ i.execute();</java><html>
 </html><java>UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
 u.addValue(T_AUTHOR.FIRST_NAME, "Hesse");
-u.addConditions(T_AUTHOR.ID.equal(3));
+u.addConditions(T_AUTHOR.ID.eq(3));
 u.execute();</java><html>
 
 
@@ -885,14 +885,14 @@ u.execute();</java><html>
 <sql>DELETE T_AUTHOR
  WHERE ID = 100;
  </sql><java>create.delete(T_AUTHOR)
-      .where(T_AUTHOR.ID.equal(100))
+      .where(T_AUTHOR.ID.eq(100))
       .execute();</java></code-pair><html>
 
 							<h3>Example: Non-DSL Query</h3>
 							<p>Using the <reference class="org.jooq.DeleteQuery"/> class,
 							this is how you could express a DELETE statement: </p>
 </html><java>DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
-d.addConditions(T_AUTHOR.ID.equal(100));
+d.addConditions(T_AUTHOR.ID.eq(100));
 d.execute();</java><html>
 
 
@@ -922,7 +922,7 @@ WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME)
                       VALUES ('Hitchcock')</sql><java>create.mergeInto(T_AUTHOR)
       .using(create.selectOne())
-      .on(T_AUTHOR.LAST_NAME.equal("Hitchcock"))
+      .on(T_AUTHOR.LAST_NAME.eq("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(T_AUTHOR.FIRST_NAME, "John")
       .whenNotMatchedThenInsert(T_AUTHOR.LAST_NAME)
@@ -1105,7 +1105,7 @@ FutureResult<R> fetchLater(ExecutorService executor);]]></java></content>
 								you're actually also adding a bind value:
 							</p>
 </html><java>// In jOOQ, "Poe" will be the bind value bound to the condition
-LAST_NAME.equal("Poe");</java><html>
+LAST_NAME.eq("Poe");</java><html>
 
 
 							<p>
@@ -1113,10 +1113,10 @@ LAST_NAME.equal("Poe");</java><html>
 								a bind value for "Poe". You could also write this, instead:
 							</p>
 </html><java>// The Factory allows for explicitly creating bind values
-LAST_NAME.equal(Factory.val("Poe"));
+LAST_NAME.eq(Factory.val("Poe"));
 
 // Or, when static importing Factory.val:
-LAST_NAME.equal(val("Poe"))</java><html>
+LAST_NAME.eq(val("Poe"))</java><html>
 
 							<p>
 								Once created, bind values are part of the query's syntax tree (see
@@ -1128,11 +1128,11 @@ LAST_NAME.equal(val("Poe"))</java><html>
 							</p>
 
 </html><java><![CDATA[// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
-Query query = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+Query query = create.select().from(T_AUTHOR).where(LAST_NAME.eq("Poe"));
 Param<?> param = query.getParam("1");
 
 // You could now modify the Query's underlying bind value:
-if ("Poe".equal(param.getValue())) {
+if ("Poe".eq(param.getValue())) {
     param.setConverted("Orwell");
 }]]></java><html>
 
@@ -1141,12 +1141,12 @@ if ("Poe".equal(param.getValue())) {
 								using the Factory's param() methods:
 							</p>
 </html><java><![CDATA[// Create a query with a named parameter. You can then use that name for accessing the parameter again
-Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.eq(param("lastName", "Poe")));
 Param<?> param1 = query.getParam("lastName");
 
 // Or, keep a reference to the typed parameter in order not to lose the <T> type information:
 Param<String> param2 = param("lastName", "Poe");
-Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param2));
+Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.eq(param2));
 
 // You can now change the bind value directly on the Param reference:
 param2.setValue("Orwell");
@@ -1157,11 +1157,11 @@ param2.setValue("Orwell");
 								setting new bind values directly, without accessing the Param type:
 							</p>
 
-</html><java>Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+</html><java>Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.eq("Poe"));
 query1.bind(1, "Orwell");
 
 // Or, with named parameters
-Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.eq(param("lastName", "Poe")));
 query2.bind("lastName", "Orwell");</java><html>
 
 							<p>
@@ -1175,7 +1175,7 @@ query2.bind("lastName", "Orwell");</java><html>
 <java>create.renderNamedParams(
     create.select()
           .from(T_AUTHOR)
-          .where(LAST_NAME.equal(
+          .where(LAST_NAME.eq(
                  param("lastName", "Poe"))));</java><sql>-- The named bind variable can be rendered
 
 SELECT *
@@ -1221,7 +1221,7 @@ WHERE LAST_NAME = :lastName
 // --------------------------------------------------
 create.select()
       .from(T_AUTHOR)
-      .where(LAST_NAME.equal(inline("Poe")));
+      .where(LAST_NAME.eq(inline("Poe")));
 
 // Or render the whole query with inlined values
 // --------------------------------------------------
@@ -1234,7 +1234,7 @@ Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 // Run queries that omit rendering schema names
 create.select()
       .from(T_AUTHOR)
-      .where(LAST_NAME.equal("Poe"));]]></java></content>
+      .where(LAST_NAME.eq("Poe"));]]></java></content>
 					</section>
 
 
@@ -2709,9 +2709,9 @@ SELECT *
  ORDER BY b.title</sql><java>Result&lt;Record&gt; result =
 create.select()
       .from(T_AUTHOR.as("a"))
-      .join(T_BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
+      .join(T_BOOK.as("b")).on(a.ID.eq(b.AUTHOR_ID))
       .where(a.YEAR_OF_BIRTH.greaterThan(1920)
-      .and(a.FIRST_NAME.equal("Paulo")))
+      .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE)
       .fetch();</java></code-pair><html>
 
@@ -2819,7 +2819,7 @@ SelectJoinStep using(Field<?>... fields);
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));]]></java><html>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID));]]></java><html>
 
 							<p>
 								See the section about
@@ -2842,8 +2842,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"));</java><html>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"));</java><html>
 
 							<p>Now the returned type
 								<reference class="org.jooq.SelectConditionStep"/> is a special one, where
@@ -2858,8 +2858,8 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')));</java><html>
 
 							<p>Let's assume we have that method parseDate() creating a
@@ -2871,8 +2871,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME);</java><html>
 
@@ -2882,8 +2882,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .having(count().greaterThan(5));</java><html>
@@ -2897,8 +2897,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .having(count().greaterThan(5))
@@ -2916,8 +2916,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .having(count().greaterThan(5))
@@ -2933,8 +2933,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
-      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.eq("DE"))
       .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .having(count().greaterThan(5))
@@ -2984,7 +2984,7 @@ Record fetchOne();
 								and it also binds &lt;R extends Record&gt; to your Table's associated
 								Record. An example of such a Query would then be: </p>
 </html><java>TBook book = create.selectFrom(T_BOOK)
-                   .where(TBook.LANGUAGE.equal("DE"))
+                   .where(TBook.LANGUAGE.eq("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</java></content>
 					</section>
@@ -3159,9 +3159,9 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></java><html>
 (T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</sql><html>
 
 							<p>Just write: </p>
-</html><java>T_BOOK.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                       .and(T_BOOK.LANGUAGE.equal("DE")).or(
-T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUAGE.equal("FR")).or(
-T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</java></content>
+</html><java>T_BOOK.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                       .and(T_BOOK.LANGUAGE.eq("DE")).or(
+T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUAGE.eq("FR")).or(
+T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.eq("EN"))));</java></content>
 					</section>
 
 
@@ -3208,12 +3208,12 @@ Field<Integer> authorID = author.ID;]]></java><html>
 							</p>
 </html><java>create.select(authorID, bookID)
       .from(author)
-      .join(book).on(authorID.equal(book.getField(T_BOOK.AUTHOR_ID)));
+      .join(book).on(authorID.eq(book.getField(T_BOOK.AUTHOR_ID)));
 
 // Or with the instance field model:
 create.select(author.ID, book.ID)
       .from(author)
-      .join(book).on(author.ID.equal(book.AUTHOR_ID))</java><html>
+      .join(book).on(author.ID.eq(book.AUTHOR_ID))</java><html>
 
 
       						<h3>Aliasing nested selects as tables</h3>
@@ -3235,7 +3235,7 @@ GROUP BY FIRST_NAME, LAST_NAME;</sql><html>
          concat(T_AUTHOR.FIRST_NAME, " ", T_AUTHOR.LAST_NAME).as("author"),
          count().as("books"))
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID))
+      .join(T_BOOK).on(T_AUTHOR.ID.eq(T_BOOK.AUTHOR_ID))
       .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME).fetchAny();</java><html>
       						<p>When you alias Fields like above, you can access those Fields' values using the alias name: </p>
 </html><java>System.out.println("Author : " + record.getValue("author"));
@@ -3279,14 +3279,14 @@ SELECT T_BOOK.*
       .from(T_BOOK)
       .where(T_BOOK.AUTHOR_ID.in(
           create.select(T_AUTHOR.ID).from(T_AUTHOR)
-                .where(T_AUTHOR.BORN.equal(1920))));
+                .where(T_AUTHOR.BORN.eq(1920))));
 
 // OR:
 
 create.select(T_BOOK.getFields())
       .from(T_BOOK)
-      .join(T_AUTHOR).on(T_BOOK.AUTHOR_ID.equal(TAuthor.ID)
-                     .and(T_AUTHOR.BORN.equal(1920)));</java></code-pair><html>
+      .join(T_AUTHOR).on(T_BOOK.AUTHOR_ID.eq(TAuthor.ID)
+                     .and(T_AUTHOR.BORN.eq(1920)));</java></code-pair><html>
 						</html></content>
 					</section>
 
@@ -3343,7 +3343,7 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</java><html>
       .from(T_AUTHOR)
       .whereNotExists(create.selectOne()
             .from(T_BOOK)
-            .where(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID)));</java>
+            .where(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID)));</java>
 							</code-pair><html>
 						</html></content>
 					</section>
@@ -3365,10 +3365,10 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</java><html>
           FROM T_AUTHOR
          WHERE LAST_NAME = 'Orwell')</sql><java>create.select()
       .from(T_BOOK)
-      .where(T_BOOK.AUTHOR_ID.equal(create
+      .where(T_BOOK.AUTHOR_ID.eq(create
              .select(T_AUTHOR.ID)
              .from(T_AUTHOR)
-             .where(T_AUTHOR.LAST_NAME.equal("Orwell"))));</java>
+             .where(T_AUTHOR.LAST_NAME.eq("Orwell"))));</java>
                             </code-pair><html>
 
                             <p>More examples like the above can be guessed from the
@@ -3437,7 +3437,7 @@ ORDER BY books DESC
 Field&lt;Object&gt; books =
     create.selectCount()
           .from(T_BOOK)
-          .where(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+          .where(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
           .asField("books");
 create.select(T_AUTHOR.ID, books)
       .from(T_AUTHOR)
@@ -3478,7 +3478,7 @@ SELECT TITLE
       .union(
 create.select(T_BOOK.TITLE)
       .from(T_BOOK)
-      .where(T_BOOK.AUTHOR_ID.equal(1)));</java>
+      .where(T_BOOK.AUTHOR_ID.eq(1)));</java>
 							</code-pair><html>
 
 							<h3>Nested UNIONs</h3>
@@ -3492,7 +3492,7 @@ create.select(T_BOOK.TITLE)
 </html><java>// Create a UNION of several types of books
 Select&lt;?&gt; union =
     create.select(T_BOOK.TITLE, T_BOOK.AUTHOR_ID).from(T_BOOK).where(T_BOOK.PUBLISHED_IN.greaterThan(1945)).union(
-    create.select(T_BOOK.TITLE, T_BOOK.AUTHOR_ID).from(T_BOOK).where(T_BOOK.AUTHOR_ID.equal(1)));
+    create.select(T_BOOK.TITLE, T_BOOK.AUTHOR_ID).from(T_BOOK).where(T_BOOK.AUTHOR_ID.eq(1)));
 
 // Now, re-use the above UNION and order it by author
 create.select(union.getField(T_BOOK.TITLE))
@@ -3550,13 +3550,13 @@ part1.union(part2).union(part3).union(part4);</java><html>
 ) UNION (
   SELECT * FROM emp WHERE dept = 'R&amp;D'
   ORDER BY salary LIMIT 1
-)</sql><java>create.selectFrom(EMP).where(DEPT.equal("IT"))
+)</sql><java>create.selectFrom(EMP).where(DEPT.eq("IT"))
       .orderBy(SALARY).limit(1)
       .union(
-create.selectFrom(EMP).where(DEPT.equal("Marketing"))
+create.selectFrom(EMP).where(DEPT.eq("Marketing"))
       .orderBy(SALARY).limit(1))
       .union(
-create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
+create.selectFrom(EMP).where(DEPT.eq("R&amp;D")
       .orderBy(SALARY).limit(1)))
 
 
@@ -3845,8 +3845,8 @@ CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
                          WHEN 'George' THEN 'english'
                                        ELSE 'unknown'
 END </sql><java>create.decode()
-      .when(T_AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
-      .when(T_AUTHOR.FIRST_NAME.equal("George"), "english")
+      .when(T_AUTHOR.FIRST_NAME.eq("Paulo"), "brazilian")
+      .when(T_AUTHOR.FIRST_NAME.eq("George"), "english")
       .otherwise("unknown");
 
 // OR:
@@ -4780,7 +4780,7 @@ create.select(create.rownum())
  List<?> paths =
  ora.select(ora.sysConnectByPath(DIRECTORY.NAME, "/").substring(2))
     .from(DIRECTORY)
-    .connectBy(ora.prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+    .connectBy(ora.prior(DIRECTORY.ID).eq(DIRECTORY.PARENT_ID))
     .startWith(DIRECTORY.PARENT_ID.isNull())
     .orderBy(ora.literal(1))
     .fetch(0);]]></java><html>
@@ -4849,7 +4849,7 @@ B = C ÷ A</config><html>
 							   by using the following syntax:
 							</p>
 
-</html><java>C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</java><html>
+</html><java>C.divideBy(B).on(C.ID.eq(B.C_ID)).returning(C.TEXT)</java><html>
 
 							<p>The above roughly translates to</p>
 

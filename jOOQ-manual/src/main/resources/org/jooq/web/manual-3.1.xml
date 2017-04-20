@@ -502,8 +502,8 @@ INSERT INTO book_to_book_store VALUES ('Buchhandlung im Volkshaus', 3, 1 );]]></
 String sql = create.select(field("BOOK.TITLE"), field("AUTHOR.FIRST_NAME"), field("AUTHOR.LAST_NAME"))
                    .from(table("BOOK"))
                    .join(table("AUTHOR"))
-                   .on(field("BOOK.AUTHOR_ID").equal(field("AUTHOR.ID")))
-                   .where(field("BOOK.PUBLISHED_IN").equal(1948))
+                   .on(field("BOOK.AUTHOR_ID").eq(field("AUTHOR.ID")))
+                   .where(field("BOOK.PUBLISHED_IN").eq(1948))
                    .getSQL();]]></java><html>
 
                    					<p>
@@ -530,8 +530,8 @@ String sql = create.select(field("BOOK.TITLE"), field("AUTHOR.FIRST_NAME"), fiel
 String sql = create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
                    .from(BOOK)
                    .join(AUTHOR)
-                   .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
-                   .where(BOOK.PUBLISHED_IN.equal(1948))
+                   .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+                   .where(BOOK.PUBLISHED_IN.eq(1948))
                    .getSQL();]]></java><html>
 
                    					<p>
@@ -559,8 +559,8 @@ Result<Record3<String, String, String>> result =
 create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .from(BOOK)
       .join(AUTHOR)
-      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
-      .where(BOOK.PUBLISHED_IN.equal(1948))
+      .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+      .where(BOOK.PUBLISHED_IN.eq(1948))
       .fetch();]]></java><html>
 
                                     <p>
@@ -1238,9 +1238,9 @@ public class QueryTest {
         Result<Record3<String, String, Integer>> result =
         create.select(a.FIRST_NAME, a.LAST_NAME, countDistinct(s.NAME))
               .from(a)
-              .join(b).on(b.AUTHOR_ID.equal(a.ID))
-              .join(t).on(t.BOOK_ID.equal(b.ID))
-              .join(s).on(t.BOOK_STORE_NAME.equal(s.NAME))
+              .join(b).on(b.AUTHOR_ID.eq(a.ID))
+              .join(t).on(t.BOOK_ID.eq(b.ID))
+              .join(s).on(t.BOOK_STORE_NAME.eq(s.NAME))
               .groupBy(a.FIRST_NAME, a.LAST_NAME)
               .orderBy(countDistinct(s.NAME).desc())
               .fetch();
@@ -2095,9 +2095,9 @@ SELECT *
  ORDER BY b.title]]></sql><java><![CDATA[Result<Record> result =
 create.select()
       .from(AUTHOR.as("a"))
-      .join(BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
+      .join(BOOK.as("b")).on(a.ID.eq(b.AUTHOR_ID))
       .where(a.YEAR_OF_BIRTH.greaterThan(1920)
-      .and(a.FIRST_NAME.equal("Paulo")))
+      .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE)
       .fetch();]]></java></code-pair><html>
 
@@ -2113,7 +2113,7 @@ create.select()
 </html><java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 Result<?> result = create.select()
                          .from(AUTHOR)
-                         .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                         .join(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
                          .fetch();]]></java><html>
 
                          			<p>
@@ -2121,7 +2121,7 @@ Result<?> result = create.select()
                          			</p>
 </html><java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 Result<?> result = create.select()
-                         .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                         .join(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
                       //  ^^^^ "join" is not possible here
                          .from(AUTHOR)
                          .fetch();
@@ -2162,7 +2162,7 @@ query.addFrom(AUTHOR);
 
 // Join books only under certain circumstances
 if (join) {
-    query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));
+    query.addJoin(BOOK, BOOK.AUTHOR_ID.eq(AUTHOR.ID));
 }
 
 Result<?> result = query.fetch();]]></java><html>
@@ -2176,7 +2176,7 @@ SelectFinalStep<?> select = create.select().from(AUTHOR);
 
 // Add the JOIN clause on the internal QueryObject representation
 SelectQuery<?> query = select.getQuery();
-query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java><html>
+query.addJoin(BOOK, BOOK.AUTHOR_ID.eq(AUTHOR.ID));]]></java><html>
 
 									<h3>Mutability</h3>
 									<p>
@@ -2185,8 +2185,8 @@ query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java><html>
 
 </html><java><![CDATA[// Conditional expressions (immutable)
 // -----------------------------------
-Condition a = BOOK.TITLE.equal("1984");
-Condition b = BOOK.TITLE.equal("Animal Farm");
+Condition a = BOOK.TITLE.eq("1984");
+Condition b = BOOK.TITLE.eq("Animal Farm");
 
 // The following can be said
 a       != a.or(b); // or() does not modify a
@@ -2243,8 +2243,8 @@ DSLContext create = DSL.using(connection, dialect);
 
 create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
-      .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
-      .where(BOOK.LANGUAGE.equal("DE"))
+      .join(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+      .where(BOOK.LANGUAGE.eq("DE"))
       .and(BOOK.PUBLISHED.greaterThan("2008-01-01"))
       .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .having(count().greaterThan(5))
@@ -2268,7 +2268,7 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 										As you can see, there is no way to further restrict/project the selected fields. This just selects all known TableFields in the supplied Table, and it also binds &lt;R extends Record&gt; to your Table's associated Record. An example of such a Query would then be:
 									</p>
 </html><java><![CDATA[BookRecord book = create.selectFrom(BOOK)
-                        .where(BOOK.LANGUAGE.equal("DE"))
+                        .where(BOOK.LANGUAGE.eq("DE"))
                         .orderBy(BOOK.TITLE)
                         .fetchAny();]]></java><html>
 
@@ -2450,14 +2450,14 @@ DSL.using(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
 // Call "join" directly on the AUTHOR table
 Result<?> result = create.select()
                          .from(AUTHOR.join(BOOK)
-                                     .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID)))
+                                     .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID)))
                          .fetch();
 
 // Call "join" on the type returned by "from"
 Result<?> result = create.select()
                          .from(AUTHOR)
                          .join(BOOK)
-                         .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                         .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
                          .fetch();]]></java><html>
 
 											<p>
@@ -2476,8 +2476,8 @@ create.select()
       .from(AUTHOR
       .leftOuterJoin(BOOK
         .join(BOOK_TO_BOOK_STORE)
-        .on(BOOK_TO_BOOK_STORE.BOOK_ID.equal(BOOK.ID)))
-      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID)));]]></java></code-pair><html>
+        .on(BOOK_TO_BOOK_STORE.BOOK_ID.eq(BOOK.ID)))
+      .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID)));]]></java></code-pair><html>
 
       										<ul>
       											<li>See the section about <reference id="conditional-expressions" title="conditional expressions"/> to learn more about the many ways to create <reference class="org.jooq.Condition"/> objects in jOOQ.</li>
@@ -2544,7 +2544,7 @@ ON BOOK.AUTHOR_ID = AUTHOR.ID]]></sql><java><![CDATA[create.select()
       .from(AUTHOR)
       .leftOuterJoin(BOOK)
       .partitionBy(BOOK.PUBLISHED_IN)
-      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java></code-pair><html>
+      .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID));]]></java></code-pair><html>
 
 										</html></content>
 									</section>
@@ -2562,8 +2562,8 @@ FROM BOOK
 WHERE AUTHOR_ID = 1
 AND TITLE = '1984']]></sql><java><![CDATA[create.select()
       .from(BOOK)
-      .where(BOOK.AUTHOR_ID.equal(1))
-      .and(BOOK.TITLE.equal("1984"));]]></java></code-pair><html>
+      .where(BOOK.AUTHOR_ID.eq(1))
+      .and(BOOK.TITLE.eq("1984"));]]></java></code-pair><html>
 
 											<p>
 												The above syntax is convenience provided by jOOQ, allowing you to connect the <reference class="org.jooq.Condition"/> supplied in the WHERE clause with another condition using an AND operator. You can of course also create a more complex condition and supply that to the WHERE clause directly (observe the different placing of parentheses). The results will be the same:
@@ -2575,8 +2575,8 @@ FROM BOOK
 WHERE AUTHOR_ID = 1
 AND TITLE = '1984']]></sql><java><![CDATA[create.select()
       .from(BOOK)
-      .where(BOOK.AUTHOR_ID.equal(1).and(
-             BOOK.TITLE.equal("1984")));]]></java></code-pair><html>
+      .where(BOOK.AUTHOR_ID.eq(1).and(
+             BOOK.TITLE.eq("1984")));]]></java></code-pair><html>
 
 											<p>
 												You will find more information about creating <reference id="conditional-expressions" title="conditional expressions"/> later in the manual.
@@ -2622,7 +2622,7 @@ ORDER BY 1]]></sql><java><![CDATA[.select(
    sysConnectByPath(DIRECTORY.NAME, "/").substring(2))
 .from(DIRECTORY)
 .connectBy(
-   prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+   prior(DIRECTORY.ID).eq(DIRECTORY.PARENT_ID))
 .startWith(DIRECTORY.PARENT_ID.isNull())
 .orderBy(1);]]></java>
 </code-pair><html>
@@ -2674,7 +2674,7 @@ START WITH DIRECTORY.PARENT_ID IS NULL
 ORDER SIBLINGS BY 1]]></sql><java><![CDATA[.select(DIRECTORY.NAME)
 .from(DIRECTORY)
 .connectBy(
-   prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+   prior(DIRECTORY.ID).eq(DIRECTORY.PARENT_ID))
 .startWith(DIRECTORY.PARENT_ID.isNull())
 .orderSiblingsBy(1);]]></java>
 </code-pair><html>
@@ -2997,7 +2997,7 @@ FROM BOOK
 WHERE ID = 3
 FOR UPDATE]]></sql><java><![CDATA[create.select()
       .from(BOOK)
-      .where(BOOK.ID.equal(3))
+      .where(BOOK.ID.eq(3))
       .forUpdate();]]></java></code-pair><html>
 
 											<p>
@@ -3010,7 +3010,7 @@ FROM BOOK
 WHERE ID = 3
 FOR UPDATE OF TITLE]]></sql><java><![CDATA[create.select()
       .from(BOOK)
-      .where(BOOK.ID.equal(3))
+      .where(BOOK.ID.eq(3))
       .forUpdate().of(BOOK.TITLE);]]></java></code-pair><html>
 
 											<p>
@@ -3025,9 +3025,9 @@ FOR UPDATE OF TITLE]]></sql><java><![CDATA[create.select()
 												With jOOQ, you can use those Oracle extensions as such:
 											</p>
 
-</html><java><![CDATA[create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().nowait();
-create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().wait(5);
-create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().skipLocked();]]></java><html>
+</html><java><![CDATA[create.select().from(BOOK).where(BOOK.ID.eq(3)).forUpdate().nowait();
+create.select().from(BOOK).where(BOOK.ID.eq(3)).forUpdate().wait(5);
+create.select().from(BOOK).where(BOOK.ID.eq(3)).forUpdate().skipLocked();]]></java><html>
 
 											<h3>FOR UPDATE in CUBRID and SQL Server</h3>
 											<p>
@@ -3090,9 +3090,9 @@ SELECT * FROM author ORDER BY id DESC;]]></sql><html>
 </html><code-pair>
 <sql><![CDATA[SELECT * FROM BOOK WHERE ID = 3
 UNION ALL
-SELECT * FROM BOOK WHERE ID = 5]]></sql><java><![CDATA[create.selectFrom(BOOK).where(BOOK.ID.equal(3))
+SELECT * FROM BOOK WHERE ID = 5]]></sql><java><![CDATA[create.selectFrom(BOOK).where(BOOK.ID.eq(3))
       .unionAll(
-create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair><html>
+create.selectFrom(BOOK).where(BOOK.ID.eq(5)));]]></java></code-pair><html>
 
 											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
 											<p>
@@ -3400,7 +3400,7 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
  WHERE ID = 3;</sql><java>create.update(AUTHOR)
       .set(AUTHOR.FIRST_NAME, "Hermann")
       .set(AUTHOR.LAST_NAME, "Hesse")
-      .where(AUTHOR.ID.equal(3));</java>
+      .where(AUTHOR.ID.eq(3));</java>
 </code-pair><html>
 
 									<p>
@@ -3418,9 +3418,9 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .set(AUTHOR.FIRST_NAME,
          select(PERSON.FIRST_NAME)
         .from(PERSON)
-        .where(PERSON.ID.equal(AUTHOR.ID))
+        .where(PERSON.ID.eq(AUTHOR.ID))
       )
-      .where(AUTHOR.ID.equal(3));</java>
+      .where(AUTHOR.ID.eq(3));</java>
 </code-pair><html>
 
 
@@ -3436,7 +3436,7 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
  WHERE ID = 3;</sql><java>create.update(AUTHOR)
       .set(row(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME),
            row("Herman",          "Hesse"))
-      .where(AUTHOR.ID.equal(3));</java>
+      .where(AUTHOR.ID.eq(3));</java>
 </code-pair><html>
 
 									<p>
@@ -3454,9 +3454,9 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .set(row(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME),
            select(PERSON.FIRST_NAME, PERSON.LAST_NAME)
           .from(PERSON)
-          .where(PERSON.ID.equal(AUTHOR.ID))
+          .where(PERSON.ID.eq(AUTHOR.ID))
       )
-      .where(AUTHOR.ID.equal(3));</java>
+      .where(AUTHOR.ID.eq(3));</java>
 </code-pair><html>
 
 									<p>
@@ -3475,7 +3475,7 @@ SET TITLE = 'Animal Farm'
 WHERE ID = 5
 RETURNING TITLE]]></sql><java><![CDATA[String title = create.update(BOOK)
                   .set(BOOK.TITLE, "Animal Farm")
-                  .where(BOOK.ID.equal(5))
+                  .where(BOOK.ID.eq(5))
                   .returning(BOOK.TITLE)
                   .fetchOne().getValue(BOOK.TITLE);]]></java>
 </code-pair><html>
@@ -3496,7 +3496,7 @@ RETURNING TITLE]]></sql><java><![CDATA[String title = create.update(BOOK)
 </html><code-pair>
 <sql>DELETE AUTHOR
  WHERE ID = 100;</sql><java>create.delete(AUTHOR)
-      .where(AUTHOR.ID.equal(100));</java>
+      .where(AUTHOR.ID.eq(100));</java>
 </code-pair><html>
 
 								</html></content>
@@ -3521,7 +3521,7 @@ ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</sql><java>create.mergeInto(AUTHOR)
       .using(create.selectOne())
-      .on(AUTHOR.LAST_NAME.equal("Hitchcock"))
+      .on(AUTHOR.LAST_NAME.eq("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(AUTHOR.FIRST_NAME, "John")
       .whenNotMatchedThenInsert(AUTHOR.LAST_NAME)
@@ -3605,7 +3605,7 @@ JOIN BOOK   -- Table expression BOOK
 ON (AUTHOR.ID = BOOK.AUTHOR_ID)]]></sql><java><![CDATA[create.select()
       .from(AUTHOR) // Table expression AUTHOR
       .join(BOOK)   // Table expression BOOK
-      .on(AUTHOR.ID.equal(BOOK.AUTHOR_ID));]]></java></code-pair><html>
+      .on(AUTHOR.ID.eq(BOOK.AUTHOR_ID));]]></java></code-pair><html>
 
 									<p>
 										The above example shows how AUTHOR and BOOK tables are joined in a <reference id="select-statement" title="SELECT statement"/>. It also shows how you can access <reference id="table-columns" title="table columns"/> by dereferencing the relevant Java attributes of their tables.
@@ -3640,9 +3640,9 @@ Book b = BOOK.as("b");
 // Use aliased tables in your statement
 create.select()
       .from(a)
-      .join(b).on(a.ID.equal(b.AUTHOR_ID))
+      .join(b).on(a.ID.eq(b.AUTHOR_ID))
       .where(a.YEAR_OF_BIRTH.greaterThan(1920)
-      .and(a.FIRST_NAME.equal("Paulo")))
+      .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE);]]></java></code-pair><html>
 
 									<p>
@@ -3831,10 +3831,10 @@ FROM (
           FROM AUTHOR
          WHERE LAST_NAME = 'Orwell')</sql><java>create.select()
       .from(BOOK)
-      .where(BOOK.AUTHOR_ID.equal(create
+      .where(BOOK.AUTHOR_ID.eq(create
              .select(AUTHOR.ID)
              .from(AUTHOR)
-             .where(AUTHOR.LAST_NAME.equal("Orwell"))));</java>
+             .where(AUTHOR.LAST_NAME.eq("Orwell"))));</java>
 </code-pair><html>
 
 									<h3>Example: Derived table</h3>
@@ -3874,7 +3874,7 @@ ORDER BY books DESC
 Field<Object> books =
     create.selectCount()
           .from(BOOK)
-          .where(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+          .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
           .asField("books");
 create.select(AUTHOR.ID, books)
       .from(AUTHOR)
@@ -3918,7 +3918,7 @@ B = C ÷ A</config><html>
 									   With jOOQ, you can simplify using relational divisions by using the following syntax:
 									</p>
 
-</html><java>C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</java><html>
+</html><java>C.divideBy(B).on(C.ID.eq(B.C_ID)).returning(C.TEXT)</java><html>
 
 									<p>
 										The above roughly translates to
@@ -4109,7 +4109,7 @@ GROUP BY FIRST_NAME, LAST_NAME;</sql><html>
          concat(AUTHOR.FIRST_NAME, val(" "), AUTHOR.LAST_NAME).as("author"),
          count().as("books"))
       .from(AUTHOR)
-      .join(BOOK).on(AUTHOR.ID.equal(BOOK.AUTHOR_ID))
+      .join(BOOK).on(AUTHOR.ID.eq(BOOK.AUTHOR_ID))
       .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME).fetchAny();</java><html>
 
       								<p>
@@ -4856,7 +4856,7 @@ END echo;
                                     </p>
 
 </html><code-pair>
-<sql><![CDATA[SELECT echo(1) FROM DUAL WHERE echo(2) = 2]]></sql><java><![CDATA[create.select(echo(1)).where(echo(2).equal(2));]]></java>
+<sql><![CDATA[SELECT echo(1) FROM DUAL WHERE echo(2) = 2]]></sql><java><![CDATA[create.select(echo(1)).where(echo(2).eq(2));]]></java>
 </code-pair><html>
 
                                 	<p>
@@ -4967,8 +4967,8 @@ CASE AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
                        WHEN 'George' THEN 'english'
                                      ELSE 'unknown'
 END]]></sql><java><![CDATA[DSL.decode()
-   .when(AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
-   .when(AUTHOR.FIRST_NAME.equal("George"), "english")
+   .when(AUTHOR.FIRST_NAME.eq("Paulo"), "brazilian")
+   .when(AUTHOR.FIRST_NAME.eq("George"), "english")
    .otherwise("unknown");
 
 // OR:
@@ -5161,8 +5161,8 @@ public static RowN row(Object... values) { ... }]]></java><html>
 
 </html><code-pair>
 <sql><![CDATA[TITLE  = 'Animal Farm'
-TITLE != 'Animal Farm']]></sql><java><![CDATA[BOOK.TITLE.equal("Animal Farm")
-BOOK.TITLE.notEqual("Animal Farm")]]></java>
+TITLE != 'Animal Farm']]></sql><java><![CDATA[BOOK.TITLE.eq("Animal Farm")
+BOOK.TITLE.ne("Animal Farm")]]></java>
 </code-pair><html>
 
 									<h3>Create conditions from the DSL</h3>
@@ -5196,20 +5196,20 @@ TITLE = 'Animal Farm' OR TITLE = '1984'
 -- A more complex conditional expression
         (TITLE = 'Animal Farm' OR TITLE = '1984')
 AND NOT (AUTHOR.LAST_NAME = 'Orwell')]]></sql><java><![CDATA[// A simple boolean connection
-BOOK.TITLE.equal("Animal Farm").or(BOOK.TITLE.equal("1984"))
+BOOK.TITLE.eq("Animal Farm").or(BOOK.TITLE.eq("1984"))
 
 // A more complex conditional expression
-BOOK.TITLE.equal("Animal Farm").or(BOOK.TITLE.equal("1984"))
-    .andNot(AUTHOR.LAST_NAME.equal("Orwell"))]]></java>
+BOOK.TITLE.eq("Animal Farm").or(BOOK.TITLE.eq("1984"))
+    .andNot(AUTHOR.LAST_NAME.eq("Orwell"))]]></java>
 </code-pair><html>
 
 									<p>
 										The above example shows that the number of parentheses in Java can quickly explode. Proper indentation may become crucial in making such code readable. In order to understand how jOOQ composes combined conditional expressions, let's assign component expressions first:
 									</p>
 
-</html><java><![CDATA[Condition a = BOOK.TITLE.equal("Animal Farm");
-Condition b = BOOK.TITLE.equal("1984");
-Condition c = AUTHOR.LAST_NAME.equal("Orwell");
+</html><java><![CDATA[Condition a = BOOK.TITLE.eq("Animal Farm");
+Condition b = BOOK.TITLE.eq("1984");
+Condition c = AUTHOR.LAST_NAME.eq("Orwell");
 
 Condition combined1 = a.or(b);             // These OR-connected conditions form a new condition, wrapped in parentheses
 Condition combined2 = combined1.andNot(c); // The left-hand side of the AND NOT () operator is already wrapped in parentheses]]></java><html>
@@ -5362,13 +5362,13 @@ NOT((A, B) >  (X, Y))]]></sql>
   FROM PERSON
   WHERE PERSON.ID = 1
 )]]></sql><java><![CDATA[// Column expressions
-row(BOOK.AUTHOR_ID, BOOK.TITLE).equal(1, "Animal Farm");
+row(BOOK.AUTHOR_ID, BOOK.TITLE).eq(1, "Animal Farm");
 
 // Subselects
-row(BOOK.AUTHOR_ID, BOOK.TITLE).equal(
+row(BOOK.AUTHOR_ID, BOOK.TITLE).eq(
   select(PERSON.ID, val("Animal Farm"))
   .from(PERSON)
-  .where(PERSON.ID.equal(1))
+  .where(PERSON.ID.eq(1))
 );]]></java>
 </code-pair><html>
 							    </html></content>
@@ -5383,7 +5383,7 @@ row(BOOK.AUTHOR_ID, BOOK.TITLE).equal(
 
 </html><code-pair>
 <sql><![CDATA[TITLE = ANY('Animal Farm', '1982')
-PUBLISHED_IN > ALL(1920, 1940)]]></sql><java><![CDATA[BOOK.TITLE.equal(any("Animal Farm", "1982"));
+PUBLISHED_IN > ALL(1920, 1940)]]></sql><java><![CDATA[BOOK.TITLE.eq(any("Animal Farm", "1982"));
 BOOK.PUBLISHED_IN.greaterThan(all(1920, 1940));]]></java>
 </code-pair><html>
 
@@ -5735,9 +5735,9 @@ NULL                 -- [ANY] AND NULL yields NULL</sql><html>
             WHERE AUTHOR_ID = 3)
 NOT EXISTS (SELECT 1 FROM BOOK
             WHERE AUTHOR_ID = 3)]]></sql><java><![CDATA[   exists(create.selectOne().from(BOOK)
-                .where(BOOK.AUTHOR_ID.equal(3)));
+                .where(BOOK.AUTHOR_ID.eq(3)));
 notExists(create.selectOne().from(BOOK)
-                .where(BOOK.AUTHOR_ID.equal(3)));]]></java>
+                .where(BOOK.AUTHOR_ID.eq(3)));]]></java>
 </code-pair><html>
 
 									<p>
@@ -6061,10 +6061,10 @@ try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM BOOK WH
 										With dynamic SQL, keeping track of the number of question marks and their corresponding index may turn out to be hard. jOOQ abstracts this and lets you provide the bind value right where it is needed. A trivial example is this:
 									</p>
 
-</html><java><![CDATA[create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+</html><java><![CDATA[create.select().from(BOOK).where(BOOK.ID.eq(5)).and(BOOK.TITLE.eq("Animal Farm"));
 
 // This notation is in fact a short form for the equivalent:
-create.select().from(BOOK).where(BOOK.ID.equal(val(5))).and(BOOK.TITLE.equal(val("Animal Farm")));]]></java><html>
+create.select().from(BOOK).where(BOOK.ID.eq(val(5))).and(BOOK.TITLE.eq(val("Animal Farm")));]]></java><html>
 
 									<p>
 										Note the using of <reference class="org.jooq.impl.DSL" anchor="#val(java.lang.Object)" title="DSL.val()"/> to explicitly create an indexed bind value. You don't have to worry about that index. When the query is <reference id="sql-rendering" title="rendered"/>, each bind value will render a question mark. When the query <reference id="variable-binding" title="binds its variables"/>, each bind value will generate the appropriate bind value index.
@@ -6075,7 +6075,7 @@ create.select().from(BOOK).where(BOOK.ID.equal(val(5))).and(BOOK.TITLE.equal(val
 										Should you decide to run the above query outside of jOOQ, using your own <reference class="java.sql.PreparedStatement"/>, you can do so as follows:
 									</p>
 
-</html><java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+</html><java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.eq(5)).and(BOOK.TITLE.eq("Animal Farm"));
 
 // Render the SQL statement:
 String sql = select.getSQL();
@@ -6091,7 +6091,7 @@ assertEquals("Animal Farm", values.get(1));]]></java><html>
 										You can also extract specific bind values by index from a query, if you wish to modify their underlying value after creating a query. This can be achieved as such:
 									</p>
 
-</html><java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+</html><java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.eq(5)).and(BOOK.TITLE.eq("Animal Farm"));
 Param<?> param = select.getParam("2");
 
 // You could now modify the Query's underlying bind value:
@@ -6113,12 +6113,12 @@ if ("Animal Farm".equals(param.getValue())) {
 									</p>
 
 </html><java><![CDATA[// Create a query with a named parameter. You can then use that name for accessing the parameter again
-Query query1 = create.select().from(AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Query query1 = create.select().from(AUTHOR).where(LAST_NAME.eq(param("lastName", "Poe")));
 Param<?> param1 = query.getParam("lastName");
 
 // Or, keep a reference to the typed parameter in order not to lose the <T> type information:
 Param<String> param2 = param("lastName", "Poe");
-Query query2 = create.select().from(AUTHOR).where(LAST_NAME.equal(param2));
+Query query2 = create.select().from(AUTHOR).where(LAST_NAME.eq(param2));
 
 // You can now change the bind value directly on the Param reference:
 param2.setValue("Orwell");]]></java><html>
@@ -6127,11 +6127,11 @@ param2.setValue("Orwell");]]></java><html>
 										The <reference class="org.jooq.Query"/> interface also allows for setting new bind values directly, without accessing the Param type:
 									</p>
 
-</html><java><![CDATA[Query query1 = create.select().from(AUTHOR).where(LAST_NAME.equal("Poe"));
+</html><java><![CDATA[Query query1 = create.select().from(AUTHOR).where(LAST_NAME.eq("Poe"));
 query1.bind(1, "Orwell");
 
 // Or, with named parameters
-Query query2 = create.select().from(AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Query query2 = create.select().from(AUTHOR).where(LAST_NAME.eq(param("lastName", "Poe")));
 query2.bind("lastName", "Orwell");]]></java><html>
 
 									<p>
@@ -6142,7 +6142,7 @@ query2.bind("lastName", "Orwell");]]></java><html>
 <java><![CDATA[create.renderNamedParams(
     create.select()
           .from(AUTHOR)
-          .where(LAST_NAME.equal(
+          .where(LAST_NAME.eq(
                  param("lastName", "Poe"))));]]></java><sql><![CDATA[-- The named bind variable can be rendered
 
 SELECT *
@@ -6176,7 +6176,7 @@ WHERE LAST_NAME = :lastName]]></sql>
 // --------------------------------------------------
 create.select()
       .from(AUTHOR)
-      .where(LAST_NAME.equal(inline("Poe")));
+      .where(LAST_NAME.eq(inline("Poe")));
 
 // Or render the whole query with inlined values
 // --------------------------------------------------
@@ -6189,7 +6189,7 @@ DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
 // Run queries that omit rendering schema names
 create.select()
       .from(AUTHOR)
-      .where(LAST_NAME.equal("Poe"));]]></java></content>
+      .where(LAST_NAME.eq("Poe"));]]></java></content>
 							</section>
 
 						    <section id="sql-injection-and-plain-sql-queryparts">
@@ -6355,10 +6355,10 @@ DSLContext pretty = DSL.using(dialect, new Settings().withRenderFormatted(true))
                        AUTHOR.LAST_NAME, count().as("c"))
                    .from(BOOK)
                    .join(AUTHOR)
-                   .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
-                   .where(BOOK.TITLE.notEqual("1984"))
+                   .on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+                   .where(BOOK.TITLE.ne("1984"))
                    .groupBy(AUTHOR.LAST_NAME)
-                   .having(count().equal(2))
+                   .having(count().eq(2))
                    .getSQL();]]></java><sql><![CDATA[select
   "TEST"."AUTHOR"."LAST_NAME",
   count(*) "c"
@@ -6914,7 +6914,7 @@ ResultSet fetchResultSet();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Use the selectFrom() method:
-BookRecord book = create.selectFrom(BOOK).where(BOOK.ID.equal(1)).fetchOne();
+BookRecord book = create.selectFrom(BOOK).where(BOOK.ID.eq(1)).fetchOne();
 
 // Typesafe field access is now possible:
 System.out.println("Title       : " + book.getTitle());
@@ -7738,8 +7738,8 @@ DSLContext prepare = DSL.using(connection, SQLDialect.ORACLE);
 DSLContext inlined = DSL.using(connection, SQLDialect.ORACLE,
   new Settings().withStatementType(StatementType.STATIC_STATEMENT));
 
-prepare.select(val(1)).where(val(1).equal(1)).fetch();
-inlined.select(val(1)).where(val(1).equal(1)).fetch();]]></java>
+prepare.select(val(1)).where(val(1).eq(1)).fetch();
+inlined.select(val(1)).where(val(1).eq(1)).fetch();]]></java>
 </code-pair><html>
 
 							<h3>Reasons for choosing one or the other</h3>
@@ -8524,7 +8524,7 @@ book1.store();
 Integer id = book1.getId();
 
 // Get another instance of the same book
-BookRecord book2 = create.fetchOne(BOOK, BOOK.ID.equal(id));
+BookRecord book2 = create.fetchOne(BOOK, BOOK.ID.eq(id));
 
 // Update the record: UPDATE BOOK SET TITLE = 'Animal Farm' WHERE ID = [id]
 book2.setTitle("Animal Farm");
@@ -8546,7 +8546,7 @@ book2.store();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Get a previously inserted book
-BookRecord book = create.fetchOne(BOOK, BOOK.ID.equal(5));
+BookRecord book = create.fetchOne(BOOK, BOOK.ID.eq(5));
 
 // Delete the book
 book.delete();]]></java><html>
@@ -8560,7 +8560,7 @@ book.delete();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Fetch an updatable record from the database
-BookRecord book = create.fetchOne(BOOK, BOOK.ID.equal(5));
+BookRecord book = create.fetchOne(BOOK, BOOK.ID.eq(5));
 
 // Refresh the record
 book.refresh();]]></java><html>
@@ -8571,7 +8571,7 @@ book.refresh();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Loop over records returned from a SELECT statement
-for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
+for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.eq(1948))) {
 
   // Perform actions on BookRecords depending on some conditions
   if ("Orwell".equals(book.fetchParent(Keys.FK_BOOK_AUTHOR).getLastName())) {
@@ -8695,7 +8695,7 @@ END my_trigger;]]></sql><html>
   -- [...]
 
   FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID)
-)]]></sql><java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.equal(5));
+)]]></sql><java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.eq(5));
 
 // Find the author of a book (static imported from Keys)
 AuthorRecord author = book.fetchParent(FK_BOOK_AUTHOR);
@@ -8748,8 +8748,8 @@ DSLContext optimistic = DSLContext.using(connection, SQLDialect.ORACLE,
   new Settings().withExecuteWithOptimisticLocking(true));
 
 // Fetch a book two times
-BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
-BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
+BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
 
 // Change the title and store this book. The underlying database record has not been modified, it can be safely updated.
 book1.setTitle("Animal Farm");
@@ -8781,8 +8781,8 @@ DSLContext optimistic = DSL.using(connection, SQLDialect.ORACLE,
   new Settings().withExecuteWithOptimisticLocking(true));
 
 // Fetch a book two times
-BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
-BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
+BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
 
 // Change the title and store this book. The MODIFIED value has not been changed since the book was fetched.
 // It can be safely updated
@@ -9862,7 +9862,7 @@ implements IBook {
 
     // Navigation methods
     public AuthorRecord fetchAuthor() {
-        return create.selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
+        return create.selectFrom(AUTHOR).where(AUTHOR.ID.eq(getValue(BOOK.AUTHOR_ID))).fetchOne();
     }
 
     // [...]
@@ -10377,7 +10377,7 @@ MockConnection connection = new MockConnection(provider);
 DSLContext create = DSL.using(connection, SQLDialect.ORACLE);
 
 // Execute queries transparently, with the above DSLContext:
-Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetch();]]></java><html>
+Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch();]]></java><html>
 
                             <p>
                                 As you can see, the configuration setup is simple. Now, the <code>MockDataProvider</code> acts as your single point of contact with JDBC / jOOQ. It unifies any of these execution modes, transparently:
@@ -10897,9 +10897,9 @@ for (Record record : create.select(
             .when(exists(
                 selectOne()
                 .from(PARAMETERS)
-                .where(PARAMETERS.SPECIFIC_SCHEMA.equal(r1.SPECIFIC_SCHEMA))
-                .and(PARAMETERS.SPECIFIC_NAME.equal(r1.SPECIFIC_NAME))
-                .and(upper(PARAMETERS.PARAMETER_MODE).notEqual("IN"))),
+                .where(PARAMETERS.SPECIFIC_SCHEMA.eq(r1.SPECIFIC_SCHEMA))
+                .and(PARAMETERS.SPECIFIC_NAME.eq(r1.SPECIFIC_NAME))
+                .and(upper(PARAMETERS.PARAMETER_MODE).ne("IN"))),
                     val("void"))
             .otherwise(r1.DATA_TYPE).as("data_type"),
         r1.CHARACTER_MAXIMUM_LENGTH,
@@ -10913,14 +10913,14 @@ for (Record record : create.select(
             selectOne()
             .from(r2)
             .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-            .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-            .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
-            .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
+            .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
+            .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
+            .and(r2.SPECIFIC_NAME.ne(r1.SPECIFIC_NAME))),
             select(count())
             .from(r2)
             .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-            .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-            .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
+            .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
+            .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
             .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
         .as("overload"))
     .from(r1)
@@ -11024,7 +11024,7 @@ create.selectOne()
 
 							<h3>Quantified comparison predicates</h3>
 							<p>
-								Field.equalAny(...) and similar methods have been removed in favour of Field.equal(any(...)). This greatly simplified the Field API. An example:
+								Field.equalAny(...) and similar methods have been removed in favour of Field.eq(any(...)). This greatly simplified the Field API. An example:
 							</p>
 
 </html><java><![CDATA[// jOOQ 2.6
@@ -11032,7 +11032,7 @@ Condition condition = BOOK.ID.equalAny(create.select(BOOK.ID).from(BOOK));
 
 // jOOQ 3.0 adds some typesafety to comparison predicates involving quantified selects
 QuantifiedSelect<Record1<Integer>> subselect = any(select(BOOK.ID).from(BOOK));
-Condition condition = BOOK.ID.equal(subselect);]]></java><html>
+Condition condition = BOOK.ID.eq(subselect);]]></java><html>
 
 							<h3>FieldProvider</h3>
 							<p>
@@ -11056,7 +11056,7 @@ Field<?>   field2c = DSL.one();       // OK]]></java><html>
 
 							<h3>NULL predicate</h3>
 							<p>
-							   Beware! Previously, Field.equal(null) was translated internally to an IS NULL predicate. This is no longer the case. Binding Java "null" to a comparison predicate will result in a regular comparison predicate (which never returns true). This was changed for several reasons:
+							   Beware! Previously, Field.eq(null) was translated internally to an IS NULL predicate. This is no longer the case. Binding Java "null" to a comparison predicate will result in a regular comparison predicate (which never returns true). This was changed for several reasons:
 							</p>
 
 							<ul>
@@ -11073,10 +11073,10 @@ Field<?>   field2c = DSL.one();       // OK]]></java><html>
 </html><java><![CDATA[String possiblyNull = null; // Or else...
 
 // jOOQ 2.6
-Condition condition1 = BOOK.TITLE.equal(possiblyNull);
+Condition condition1 = BOOK.TITLE.eq(possiblyNull);
 
 // jOOQ 3.0
-Condition condition2 = BOOK.TITLE.equal(possiblyNull).or(BOOK.TITLE.isNull().and(val(possiblyNull).isNull()));
+Condition condition2 = BOOK.TITLE.eq(possiblyNull).or(BOOK.TITLE.isNull().and(val(possiblyNull).isNull()));
 Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java><html>
 
 							<h3>Configuration</h3>

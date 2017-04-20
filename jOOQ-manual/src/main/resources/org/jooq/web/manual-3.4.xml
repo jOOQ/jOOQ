@@ -9020,23 +9020,27 @@ List<Integer> ids =
 create.selectFrom(BOOK)
       .orderBy(BOOK.ID)
       .fetch()
-      .map(new RecordMapper<BookRecord, Integer>() {
+      .map(BookRecord::getId);
+
+// Or more concisely, as fetch().map(mapper) can be written as fetch(mapper):
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(BookRecord::getId);
+
+// Or using a lambda expression:
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(book -> book.getId());
+
+// Of course, the lambda could be expanded into the following anonymous RecordMapper:
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(new RecordMapper<BookRecord, Integer>() {
           @Override
           public Integer map(BookRecord book) {
               return book.getId();
           }
-      });
-
-// Or more concisely
-create.selectFrom(BOOK)
-      .orderBy(BOOK.ID)
-      .fetch(new RecordMapper<BookRecord, Integer>() {...});
-
-// Or even more concisely with Java 8's lambda expressions:
-create.selectFrom(BOOK)
-      .orderBy(BOOK.ID)
-      .fetch(book -> book.getId());
-]]></java><html>
+      });]]></java><html>
 
                                     <p>
                                         Your custom <code>RecordMapper</code> types can be used automatically through jOOQ's <reference id="pojos" title="POJO mapping APIs"/>, by injecting a <reference id="pojos-with-recordmapper-provider" title="RecordMapperProvider"/> into your <reference id="dsl-context" title="Configuration"/>.

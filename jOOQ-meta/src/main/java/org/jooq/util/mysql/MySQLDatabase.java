@@ -35,6 +35,7 @@
 
 package org.jooq.util.mysql;
 
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.util.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -142,7 +143,11 @@ public class MySQLDatabase extends AbstractDatabase {
                            Statistics.COLUMN_NAME,
                            Statistics.INDEX_NAME)
                        .from(STATISTICS)
-                       .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()))
+                       // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+                       .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()).or(
+                             getInputSchemata().size() == 1
+                           ? Statistics.TABLE_SCHEMA.in(getInputSchemata())
+                           : falseCondition()))
                        .and(primary
                            ? Statistics.INDEX_NAME.eq(inline("PRIMARY"))
                            : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline(0L))))
@@ -168,7 +173,11 @@ public class MySQLDatabase extends AbstractDatabase {
                 .join(KEY_COLUMN_USAGE)
                 .on(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(KeyColumnUsage.CONSTRAINT_SCHEMA))
                 .and(ReferentialConstraints.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
-                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata()))
+                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata()).or(
+                      getInputSchemata().size() == 1
+                    ? ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata())
+                    : falseCondition()))
                 .orderBy(
                     KeyColumnUsage.CONSTRAINT_SCHEMA.asc(),
                     KeyColumnUsage.CONSTRAINT_NAME.asc(),
@@ -237,7 +246,11 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT)
             .from(TABLES)
-            .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
+            // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+            .where(Tables.TABLE_SCHEMA.in(getInputSchemata()).or(
+                  getInputSchemata().size() == 1
+                ? Tables.TABLE_SCHEMA.in(getInputSchemata())
+                : falseCondition()))
             .orderBy(
                 Tables.TABLE_SCHEMA,
                 Tables.TABLE_NAME)
@@ -268,7 +281,11 @@ public class MySQLDatabase extends AbstractDatabase {
             .from(COLUMNS)
             .where(
                 Columns.COLUMN_TYPE.like("enum(%)").and(
-                Columns.TABLE_SCHEMA.in(getInputSchemata())))
+                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+                Columns.TABLE_SCHEMA.in(getInputSchemata()).or(
+                      getInputSchemata().size() == 1
+                    ? Columns.TABLE_SCHEMA.in(getInputSchemata())
+                    : falseCondition())))
             .orderBy(
                 Columns.TABLE_SCHEMA.asc(),
                 Columns.TABLE_NAME.asc(),

@@ -185,7 +185,7 @@ class DefaultExecuteContext implements ExecuteContext {
                 JDBCUtils.safeFree(array);
             }
 
-            SQLXMLS.remove();
+            ARRAYS.remove();
         }
 
         LOCAL_CONFIGURATION.remove();

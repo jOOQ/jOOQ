@@ -43,6 +43,7 @@ package org.jooq.util.maven;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import static org.jooq.Constants.XSD_CODEGEN;
+import static org.jooq.util.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,6 +57,7 @@ import javax.xml.bind.JAXB;
 
 import org.jooq.util.GenerationTool;
 import org.jooq.util.jaxb.Configuration;
+import org.jooq.util.jaxb.Target;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -170,11 +172,16 @@ public class Plugin extends AbstractMojo {
             // [#2886] Add the surrounding project's dependencies to the current classloader
             Thread.currentThread().setContextClassLoader(getClassLoader());
 
+            // [#5881] Target is allowed to be null
+            if (generator.getTarget() == null)
+                generator.setTarget(new Target());
+
+            if (generator.getTarget().getDirectory() == null)
+                generator.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
+
             // [#2887] Patch relative paths to take plugin execution basedir into account
-            String dir = generator.getTarget().getDirectory();
-            if (!new File(dir).isAbsolute()) {
-                generator.getTarget().setDirectory(project.getBasedir() + File.separator + dir);
-            }
+            if (!new File(generator.getTarget().getDirectory()).isAbsolute())
+                generator.getTarget().setDirectory(project.getBasedir() + File.separator + generator.getTarget().getDirectory());
 
             Configuration configuration = new Configuration();
             configuration.setLogging(logging);

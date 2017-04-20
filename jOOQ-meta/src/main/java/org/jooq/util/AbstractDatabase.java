@@ -897,6 +897,12 @@ public abstract class AbstractDatabase implements Database {
         while (it2.hasNext()) {
             ForcedType type = it2.next();
 
+            if (type.getExpressions() != null) {
+                type.setExpression(type.getExpressions());
+                type.setExpressions(null);
+                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <expression/> instead: " + toString(type));
+            }
+
             if (StringUtils.isBlank(type.getName())) {
                 if (StringUtils.isBlank(type.getUserType())) {
                     log.warn("Bad configuration for <forcedType/>. Either <name/> or <userType/> is required: " + toString(type));
@@ -1227,13 +1233,7 @@ public abstract class AbstractDatabase implements Database {
     public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
         forcedTypeLoop:
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
-            String expression = forcedType.getExpression();
-
-            if (forcedType.getExpressions() != null) {
-                expression = forcedType.getExpressions();
-                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <expression/> instead");
-            }
-
+            String expression = StringUtils.defaultIfNull(forcedType.getExpressions(), forcedType.getExpression());
             String types = forcedType.getTypes();
 
             if (expression != null) {

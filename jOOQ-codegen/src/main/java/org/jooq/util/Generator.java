@@ -377,6 +377,16 @@ public interface Generator {
     void setFluentSetters(boolean fluentSetters);
 
     /**
+     * Whether varargs setters should be generated for array types.
+     */
+    boolean generateVarargsSetters();
+
+    /**
+     * Whether varargs setters should be generated for array types.
+     */
+    void setGenerateVarargsSetters(boolean varargsSetters);
+
+    /**
      * Whether <code>equals()</code> and <code>hashCode()</code> methods should
      * be generated on POJOs
      */

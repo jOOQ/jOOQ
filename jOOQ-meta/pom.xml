@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.9.1</version>
+        <version>3.9.2</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -47,7 +47,7 @@
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                             <bindingDirectory>src/main/resources/xjb/codegen</bindingDirectory>
                             <schemaIncludes>
-                                <include>jooq-codegen-3.9.0.xsd</include>
+                                <include>jooq-codegen-3.9.2.xsd</include>
                             </schemaIncludes>
                             <generatePackage>org.jooq.util.jaxb</generatePackage>
                             <args>

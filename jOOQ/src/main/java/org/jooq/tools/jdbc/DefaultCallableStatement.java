@@ -53,6 +53,7 @@ import java.sql.NClob;
 import java.sql.Ref;
 import java.sql.RowId;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -635,4 +636,66 @@ public class DefaultCallableStatement extends DefaultPreparedStatement implement
     public void setNClob(String parameterName, Reader reader) throws SQLException {
         getDelegate().setNClob(parameterName, reader);
     }
+
+
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.1
+    // ------------------------------------------------------------------------
+
+    @Override
+    public <T> T getObject(int parameterIndex, Class<T> type) throws SQLException {
+        return getDelegate().getObject(parameterIndex, type);
+    }
+
+    @Override
+    public <T> T getObject(String parameterName, Class<T> type) throws SQLException {
+        return getDelegate().getObject(parameterName, type);
+    }
+
+    // ------------------------------------------------------------------------
+    // JDBC 4.2
+    // ------------------------------------------------------------------------
+
+    @Override
+    public void setObject(String parameterName, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+        getDelegate().setObject(parameterName, x, targetSqlType, scaleOrLength);
+    }
+
+    @Override
+    public void setObject(String parameterName, Object x, SQLType targetSqlType) throws SQLException {
+        getDelegate().setObject(parameterName, x, targetSqlType);
+    }
+
+    @Override
+    public void registerOutParameter(int parameterIndex, SQLType sqlType) throws SQLException {
+        getDelegate().registerOutParameter(parameterIndex, sqlType);
+    }
+
+    @Override
+    public void registerOutParameter(int parameterIndex, SQLType sqlType, int scale) throws SQLException {
+        getDelegate().registerOutParameter(parameterIndex, sqlType, scale);
+    }
+
+    @Override
+    public void registerOutParameter(int parameterIndex, SQLType sqlType, String typeName) throws SQLException {
+        getDelegate().registerOutParameter(parameterIndex, sqlType, typeName);
+    }
+
+    @Override
+    public void registerOutParameter(String parameterName, SQLType sqlType) throws SQLException {
+        getDelegate().registerOutParameter(parameterName, sqlType);
+    }
+
+    @Override
+    public void registerOutParameter(String parameterName, SQLType sqlType, int scale) throws SQLException {
+        getDelegate().registerOutParameter(parameterName, sqlType, scale);
+    }
+
+    @Override
+    public void registerOutParameter(String parameterName, SQLType sqlType, String typeName) throws SQLException {
+        getDelegate().registerOutParameter(parameterName, sqlType, typeName);
+    }
+
+
 }

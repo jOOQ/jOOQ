@@ -62,6 +62,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.jooq.BatchBindStep;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -725,15 +727,23 @@ final class LoaderImpl<R extends Record> implements
             rows: while (iterator.hasNext() && ((row = iterator.next()) != null)) {
                 try {
 
+                    // [#5858] Work with non String[] types from here on (e.g. after CSV import)
+                    if (row.getClass() != Object[].class)
+                        row = Arrays.copyOf(row, row.length, Object[].class);
+
                 	// [#5145] Lazy initialisation of fields off the first row
                 	//         in case LoaderFieldMapper was used.
                     if (fields == null)
                         fields0(row);
 
-                    // [#1627] Handle NULL values
+                    // [#1627] [#5858] Handle NULL values and base64 encodings
+                    // [#2741]         TODO: This logic will be externalised in new SPI
                     for (int i = 0; i < row.length; i++)
                         if (StringUtils.equals(nullString, row[i]))
                             row[i] = null;
+                        else if (i < fields.length && fields[i] != null)
+                            if (fields[i].getType() == byte[].class && row[i] instanceof String)
+                                row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
 
                     // TODO: In batch mode, we can probably optimise this by not creating
                     // new statements every time, just to convert bind values to their

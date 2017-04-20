@@ -58,7 +58,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.9.1";
+    public static final String VERSION        = "3.9.2";
 
     /**
      * The latest jOOQ full version.
@@ -66,7 +66,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.9.1";
+    public static final String FULL_VERSION   = "3.9.2";
 
     /**
      * The current jooq-runtime XSD file name.
@@ -101,7 +101,7 @@ public final class Constants {
     /**
      * The current jooq-codegen XSD file name.
      */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.9.0.xsd";
+    public static final String XSD_CODEGEN    = "jooq-codegen-3.9.2.xsd";
 
     /**
      * The current jooq-codegen XML namespace.

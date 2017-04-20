@@ -620,7 +620,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * Get this result formatted as XML.
      *
      * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
+     *      href="http://www.jooq.org/xsd/jooq-export-3.7.0.xsd">http://www.jooq.org/xsd/jooq-export-3.7.0.xsd</a>
      */
     String formatXML();
 
@@ -858,7 +858,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *
      * @see #formatXML()
      * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
+     *      href="http://www.jooq.org/xsd/jooq-export-3.7.0.xsd">http://www.jooq.org/xsd/jooq-export-3.7.0.xsd</a>
      */
     Document intoXML();
 
@@ -869,7 +869,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The argument content handler is returned for convenience.
      * @see #formatXML()
      * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
+     *      href="http://www.jooq.org/xsd/jooq-export-3.7.0.xsd">http://www.jooq.org/xsd/jooq-export-3.7.0.xsd</a>
      */
     <H extends ContentHandler> H intoXML(H handler) throws SAXException;
 

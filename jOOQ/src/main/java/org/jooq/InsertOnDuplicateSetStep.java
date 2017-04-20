@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
 
@@ -74,21 +75,21 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
@@ -99,7 +100,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     InsertOnDuplicateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
     /**
@@ -111,7 +112,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      *
      * @see #set(Map)
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     InsertOnDuplicateSetMoreStep<R> set(Record record);
 
 }

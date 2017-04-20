@@ -11,10 +11,43 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.9.2 - April 20, 2017
+================================================================================
+
+This is a patch release with some useful fixes for the 3.9 branch
+
+Features and Improvements
+-------------------------
+#5861 - Add a configuration option for varargs setters
+
+Bug Fixes
+---------
+#5813 - InformationSchema export contains wrong column name
+#5821 - Missing @Support annotations for PostgreSQL on InsertOnDuplicateSetStep.set()
+#5842 - Shouldn't DEBUG log OUT parameters on procedures that don't have any
+#5856 - Outdated link to jooq-export.xsd in Result.formatXML() Javadoc
+#5860 - Data loader unable to decode Base64 encoding binary types
+#5864 - Work around Oracle 12c issue with INSERT .. SELECT into tables with IDENTITY column
+#5880 - Schema version check does not work with Scala
+#5882 - NullPointerException when running Maven code generator plugin without <target/> specification
+#5891 - <expressions/> deprecation message is logged several times by the code generator
+#5893 - H2Database orders tables by ID instead of NAME
+#5937 - Ignore strategy/name when strategy/matchers is present, in code generator
+#5948 - Boolean data type rewrites on Oracle procedures conflict with PL/SQL BOOLEAN data type logic
+#5950 - Compilation error in generated code when applying converter to Oracle NUMBER procedure parameter
+#5976 - Support JTDS limit of 2000 bind variables also for SQL Server
+#5978 - java.util.impl.Contains should check both sides of the expression for array types
+#5980 - ArrayIndexOutOfBoundsException when generating DSLContext.ddl() for DefaultSchema
+#6036 - Do not throw UnsupportedOperationException in DefaultResultSet etc
+#6040 - Possible leaking JDBC Arrays in DefaultExecuteContext.ARRAYS
+#6049 - UDTRecordImpl.readSQL(SQLInput) and writeSQL(SQLOutput) optimisations
+#6059 - StackOverflowError when DefaultBinding.pgFromString() encounters unknown type
+#6061 - NullPointerException thrown when calling Oracle Function with BOOLEAN parameter
+
 Version 3.9.1 - January 20, 2017
 ================================================================================
 
-This is a patch release with some useful fixes for the 3.8 branch
+This is a patch release with some useful fixes for the 3.9 branch
 
 Features and Improvements
 -------------------------

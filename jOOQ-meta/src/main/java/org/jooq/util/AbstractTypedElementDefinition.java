@@ -118,6 +118,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         return type;
     }
 
+    DataTypeDefinition getDefinedType() {
+        return definedType;
+    }
+
     static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();

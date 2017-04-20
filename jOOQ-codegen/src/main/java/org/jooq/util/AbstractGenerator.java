@@ -92,6 +92,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalQueueReferences    = true;
     boolean                            generateGlobalLinkReferences     = true;
     boolean                            fluentSetters                    = false;
+    boolean                            generateVarargsSetters           = true;
     String                             generateFullyQualifiedTypes      = "";
     boolean                            generateJavaTimeTypes            = false;
     boolean                            generateTableValuedFunctions     = false;
@@ -498,6 +499,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setFluentSetters(boolean fluentSetters) {
         this.fluentSetters = fluentSetters;
+    }
+
+    @Override
+    public boolean generateVarargsSetters() {
+        return generateVarargsSetters;
+    }
+
+    @Override
+    public void setGenerateVarargsSetters(boolean varargsSetters) {
+        this.generateVarargsSetters = varargsSetters;
     }
 
     @Override

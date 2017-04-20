@@ -135,6 +135,7 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1474,6 +1475,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    private static final EnumSet<SQLDialect> UNION_PARENTHESIS = EnumSet.of(DERBY, MARIADB, MYSQL, SQLITE);
+
     private final void unionParenthesis(Context<?> ctx, String parenthesis) {
         if (")".equals(parenthesis)) {
             ctx.formatIndentEnd()
@@ -1482,23 +1485,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
         else if ("(".equals(parenthesis)) {
-            switch (ctx.family()) {
-
-
-
-
-                case DERBY:
-                case SQLITE:
-                case MARIADB:
-                case MYSQL:
-                    ctx.formatNewLine()
-                       .visit(K_SELECT)
-                       .sql(" *")
-                       .formatSeparator()
-                       .visit(K_FROM)
-                       .sql(' ');
-                    break;
-            }
+            if (UNION_PARENTHESIS.contains(ctx.family()))
+                ctx.formatNewLine()
+                   .visit(K_SELECT)
+                   .sql(" *")
+                   .formatSeparator()
+                   .visit(K_FROM)
+                   .sql(' ');
         }
 
         // [#3579] ... but don't use derived tables to emulate nested set operators for Firebird, as that
@@ -1522,18 +1515,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         else if (")".equals(parenthesis)) {
-            switch (ctx.family()) {
-
-
-
-
-                case DERBY:
-                case SQLITE:
-                case MARIADB:
-                case MYSQL:
-                    ctx.sql(" x");
-                    break;
-            }
+            if (UNION_PARENTHESIS.contains(ctx.family()))
+                ctx.sql(" x");
         }
     }
 

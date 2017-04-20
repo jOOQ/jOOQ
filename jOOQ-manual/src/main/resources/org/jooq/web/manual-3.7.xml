@@ -10198,8 +10198,8 @@ public class MyBook3 {
   public final String title;
   public final int id;
 
-  @ConstructorProperties({ "title", "id"})
-  public MyBook2(String title, int id) {
+  @ConstructorProperties({ "title", "id" })
+  public MyBook3(String title, int id) {
     this.title = title;
     this.id = id;
   }

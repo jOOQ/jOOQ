@@ -54,11 +54,15 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
+import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
 import static org.jooq.impl.Keywords.K_IDENTITY;
@@ -71,6 +75,7 @@ import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TEMPORARY;
 import static org.jooq.impl.Keywords.K_WITH_DATA;
+import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
@@ -241,6 +246,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
 
 
+
+
+
             {
                 acceptCreateTableAsSelect(ctx);
             }
@@ -357,6 +365,42 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
         ctx.end(CREATE_TABLE);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLCreateTableName(Context<?> ctx) {
         ctx.start(CREATE_TABLE_NAME)

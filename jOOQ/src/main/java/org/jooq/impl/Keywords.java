@@ -261,6 +261,7 @@ final class Keywords {
     public static final Keyword K_WITH_CHECK_OPTION                = keyword("with check option");
     public static final Keyword K_WITH_DATA                        = keyword("with data");
     public static final Keyword K_WITH_LOCK                        = keyword("with lock");
+    public static final Keyword K_WITH_NO_DATA                     = keyword("with no data");
     public static final Keyword K_WITH_PRIMARY_KEY                 = keyword("with primary key");
     public static final Keyword K_WITH_READ_ONLY                   = keyword("with read only");
     public static final Keyword K_WITH_ROLLUP                      = keyword("with rollup");

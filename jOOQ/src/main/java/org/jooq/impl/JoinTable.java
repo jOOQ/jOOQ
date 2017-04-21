@@ -91,6 +91,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -110,8 +111,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
-import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOuterJoinStep;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -119,7 +120,11 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-final class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Record>, TableOnConditionStep<Record> {
+final class JoinTable extends AbstractTable<Record>
+implements
+    TableOuterJoinStep<Record>,
+    TableOptionalOnStep<Record>,
+    TableOnConditionStep<Record> {
 
     /**
      * Generated UID
@@ -129,18 +134,32 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
 
     private final Table<?>                lhs;
     private final Table<?>                rhs;
-    private final QueryPartList<Field<?>> rhsPartitionBy;
+
+
+
+
 
     private final JoinType                type;
     private final ConditionProviderImpl   condition;
     private final QueryPartList<Field<?>> using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
+
+
+
+
+
+
         super("join");
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
-        this.rhsPartitionBy = new QueryPartList<Field<?>>();
+
+
+
+
+
+
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
@@ -169,13 +188,10 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
 
         Keyword keyword = translatedType.toKeyword();
 
-        if (translatedType == CROSS_APPLY && ctx.family() == POSTGRES) {
+        if (translatedType == CROSS_APPLY && ctx.family() == POSTGRES)
             keyword = K_CROSS_JOIN_LATERAL;
-        }
-        else if (translatedType == OUTER_APPLY && ctx.family() == POSTGRES) {
+        else if (translatedType == OUTER_APPLY && ctx.family() == POSTGRES)
             keyword = K_LEFT_OUTER_JOIN_LATERAL;
-        }
-
 
 
 
@@ -184,6 +200,18 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
 
 
         toSQLTable(ctx, lhs);
+
+
+
+
+
+
+
+
+
+
+
+
 
         switch (translatedType) {
             case LEFT_SEMI_JOIN:
@@ -220,17 +248,18 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
 
         toSQLTable(ctx, rhs);
 
-        // [#1645] The Oracle PARTITION BY clause can be put to the right of an
-        // OUTER JOINed table
-        if (!rhsPartitionBy.isEmpty()) {
-            ctx.formatSeparator()
-                   .start(TABLE_JOIN_PARTITION_BY)
-                   .visit(K_PARTITION_BY)
-                   .sql(" (")
-                   .visit(rhsPartitionBy)
-                   .sql(')')
-                   .end(TABLE_JOIN_PARTITION_BY);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         // CROSS JOIN and NATURAL JOIN do not have any condition clauses
         if (!asList(CROSS_JOIN,

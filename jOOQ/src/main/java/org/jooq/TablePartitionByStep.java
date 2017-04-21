@@ -45,9 +45,8 @@ import java.util.Collection;
  * This step allows for adding Oracle-specific <code>PARTITION BY</code> clauses
  * to the right of an <code>OUTER JOIN</code> keyword. See the Oracle
  * documentation for more details here: <a href=
- * "http://docs.oracle.com/cd/B28359_01/server.111/b28286/queries006.htm#i2054062"
- * >http://docs.oracle.com/cd/B28359_01/server.111/b28286/queries006.htm#
- * i2054062</a>
+ * "https://docs.oracle.com/database/121/SQLRF/statements_10002.htm#BABBCHJA"
+ * >https://docs.oracle.com/database/121/SQLRF/statements_10002.htm#BABBCHJA</a>
  *
  * @author Lukas Eder
  */

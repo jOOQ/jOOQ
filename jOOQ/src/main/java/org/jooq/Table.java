@@ -756,6 +756,22 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     TableOnStep<Record> innerJoin(Name name);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      * <p>

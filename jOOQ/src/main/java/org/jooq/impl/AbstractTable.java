@@ -89,6 +89,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
@@ -927,6 +928,18 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final TableOnStep<Record> innerJoin(Name name) {
         return innerJoin(table(name));
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final TablePartitionByStep<Record> leftJoin(TableLike<?> table) {

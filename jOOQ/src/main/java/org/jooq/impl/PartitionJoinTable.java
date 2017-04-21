@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.impl.DSL.table;
@@ -56,66 +55,6 @@ import org.jooq.TableOuterJoinStep;
  * @author Lukas Eder
  */
 final class PartitionJoinTable implements TableOuterJoinStep<Record> {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

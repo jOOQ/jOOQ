@@ -4547,7 +4547,9 @@ class ParserImpl implements Parser {
         switch (ctx.character()) {
             case 'b':
             case 'B':
-                if (parseKeywordIf(ctx, "BIGINT"))
+                if (parseKeywordIf(ctx, "BIGINT UNSIGNED"))
+                    return SQLDataType.BIGINT;
+                else if (parseKeywordIf(ctx, "BIGINT"))
                     return SQLDataType.BIGINT;
                 else if (parseKeywordIf(ctx, "BINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.BINARY);
@@ -4574,6 +4576,8 @@ class ParserImpl implements Parser {
 
             case 'i':
             case 'I':
+                if (parseKeywordIf(ctx, "INT UNSIGNED") || parseKeywordIf(ctx, "INTEGER UNSIGNED"))
+                    return SQLDataType.INTEGERUNSIGNED;
                 if (parseKeywordIf(ctx, "INT") || parseKeywordIf(ctx, "INTEGER"))
                     return SQLDataType.INTEGER;
 
@@ -4584,7 +4588,9 @@ class ParserImpl implements Parser {
 
             case 's':
             case 'S':
-                if (parseKeywordIf(ctx, "SMALLINT"))
+                if (parseKeywordIf(ctx, "SMALLINT UNSIGNED"))
+                    return SQLDataType.SMALLINTUNSIGNED;
+                else if (parseKeywordIf(ctx, "SMALLINT"))
                     return SQLDataType.SMALLINT;
 
             case 't':
@@ -4603,6 +4609,8 @@ class ParserImpl implements Parser {
 
                 else if (parseKeywordIf(ctx, "TIME"))
                     return SQLDataType.TIME;
+                else if (parseKeywordIf(ctx, "TINYINT UNSIGNED"))
+                    return SQLDataType.TINYINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "TINYINT"))
                     return SQLDataType.TINYINT;
 

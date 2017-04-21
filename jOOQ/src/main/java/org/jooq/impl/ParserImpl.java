@@ -4548,7 +4548,7 @@ class ParserImpl implements Parser {
             case 'b':
             case 'B':
                 if (parseKeywordIf(ctx, "BIGINT UNSIGNED"))
-                    return SQLDataType.BIGINT;
+                    return SQLDataType.BIGINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "BIGINT"))
                     return SQLDataType.BIGINT;
                 else if (parseKeywordIf(ctx, "BINARY"))
@@ -4559,6 +4559,8 @@ class ParserImpl implements Parser {
                     return SQLDataType.BLOB;
                 else if (parseKeywordIf(ctx, "BOOLEAN"))
                     return SQLDataType.BOOLEAN;
+                else
+                    throw ctx.unexpectedToken();
 
             case 'c':
             case 'C':
@@ -4566,6 +4568,8 @@ class ParserImpl implements Parser {
                     return parseDataTypeLength(ctx, SQLDataType.CHAR);
                 else if (parseKeywordIf(ctx, "CLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.CLOB);
+                else
+                    throw ctx.unexpectedToken();
 
             case 'd':
             case 'D':
@@ -4573,18 +4577,75 @@ class ParserImpl implements Parser {
                     return SQLDataType.DATE;
                 else if (parseKeywordIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
+                else if (parseKeywordIf(ctx, "DOUBLE"))
+                    return SQLDataType.DOUBLE;
+                else
+                    throw ctx.unexpectedToken();
+
+            case 'f':
+            case 'F':
+                if (parseKeywordIf(ctx, "FLOAT"))
+                    return SQLDataType.FLOAT;
+                else
+                    throw ctx.unexpectedToken();
 
             case 'i':
             case 'I':
-                if (parseKeywordIf(ctx, "INT UNSIGNED") || parseKeywordIf(ctx, "INTEGER UNSIGNED"))
+                if (parseKeywordIf(ctx, "INT UNSIGNED") ||
+                    parseKeywordIf(ctx, "INTEGER UNSIGNED"))
                     return SQLDataType.INTEGERUNSIGNED;
-                if (parseKeywordIf(ctx, "INT") || parseKeywordIf(ctx, "INTEGER"))
+                else if (parseKeywordIf(ctx, "INT") ||
+                         parseKeywordIf(ctx, "INTEGER"))
                     return SQLDataType.INTEGER;
+                else
+                    throw ctx.unexpectedToken();
+
+            case 'l':
+            case 'L':
+                if (parseKeywordIf(ctx, "LONGBLOB"))
+                    return SQLDataType.BLOB;
+                else if (parseKeywordIf(ctx, "LONGTEXT"))
+                    return SQLDataType.CLOB;
+                else if (parseKeywordIf(ctx, "LONG NVARCHAR"))
+                    return parseDataTypeLength(ctx, SQLDataType.LONGNVARCHAR);
+                else if (parseKeywordIf(ctx, "LONG VARBINARY"))
+                    return parseDataTypeLength(ctx, SQLDataType.LONGVARBINARY);
+                else if (parseKeywordIf(ctx, "LONG VARCHAR"))
+                    return parseDataTypeLength(ctx, SQLDataType.LONGVARCHAR);
+                else
+                    throw ctx.unexpectedToken();
+
+            case 'm':
+            case 'M':
+                if (parseKeywordIf(ctx, "MEDIUMBLOB"))
+                    return SQLDataType.BLOB;
+                else if (parseKeywordIf(ctx, "MEDIUMINT"))
+                    return SQLDataType.INTEGER;
+                else if (parseKeywordIf(ctx, "MEDIUMTEXT"))
+                    return SQLDataType.CLOB;
+                else
+                    throw ctx.unexpectedToken();
 
             case 'n':
             case 'N':
-                if (parseKeywordIf(ctx, "NUMBER") || parseKeywordIf(ctx, "NUMERIC"))
+                if (parseKeywordIf(ctx, "NCHAR"))
+                    return parseDataTypeLength(ctx, SQLDataType.NCHAR);
+                else if (parseKeywordIf(ctx, "NCLOB"))
+                    return SQLDataType.NCLOB;
+                else if (parseKeywordIf(ctx, "NUMBER") ||
+                         parseKeywordIf(ctx, "NUMERIC"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
+                else if (parseKeywordIf(ctx, "NVARCHAR"))
+                    return parseDataTypeLength(ctx, SQLDataType.NVARCHAR);
+                else
+                    throw ctx.unexpectedToken();
+
+            case 'r':
+            case 'R':
+                if (parseKeywordIf(ctx, "REAL"))
+                    return SQLDataType.REAL;
+                else
+                    throw ctx.unexpectedToken();
 
             case 's':
             case 'S':
@@ -4592,36 +4653,55 @@ class ParserImpl implements Parser {
                     return SQLDataType.SMALLINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "SMALLINT"))
                     return SQLDataType.SMALLINT;
+                else
+                    throw ctx.unexpectedToken();
 
             case 't':
             case 'T':
                 if (parseKeywordIf(ctx, "TEXT"))
                     return SQLDataType.CLOB;
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") || parseKeywordIf(ctx, "TIMESTAMPTZ"))
-                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
-
-                else if (parseKeywordIf(ctx, "TIMESTAMP"))
-                    return SQLDataType.TIMESTAMP;
-
-                else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") || parseKeywordIf(ctx, "TIMETZ"))
+                else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") ||
+                         parseKeywordIf(ctx, "TIMETZ"))
                     return SQLDataType.TIMEWITHTIMEZONE;
 
                 else if (parseKeywordIf(ctx, "TIME"))
                     return SQLDataType.TIME;
+
+                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
+                         parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
+
+                else if (parseKeywordIf(ctx, "TIMESTAMP"))
+                    return SQLDataType.TIMESTAMP;
+                else if (parseKeywordIf(ctx, "TINYBLOB"))
+                    return SQLDataType.BLOB;
                 else if (parseKeywordIf(ctx, "TINYINT UNSIGNED"))
                     return SQLDataType.TINYINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "TINYINT"))
                     return SQLDataType.TINYINT;
+                else if (parseKeywordIf(ctx, "TINYTEXT"))
+                    return SQLDataType.CLOB;
+                else
+                    throw ctx.unexpectedToken();
+
+            case 'u':
+            case 'U':
+                if (parseKeywordIf(ctx, "UUID"))
+                    return SQLDataType.UUID;
+                else
+                    throw ctx.unexpectedToken();
 
             case 'v':
             case 'V':
-                if (parseKeywordIf(ctx, "VARCHAR") || parseKeywordIf(ctx, "VARCHAR2") || parseKeywordIf(ctx, "CHARACTER VARYING"))
+                if (parseKeywordIf(ctx, "VARCHAR") ||
+                    parseKeywordIf(ctx, "VARCHAR2") ||
+                    parseKeywordIf(ctx, "CHARACTER VARYING"))
                     return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
                 else if (parseKeywordIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
-
-                break;
+                else
+                    throw ctx.unexpectedToken();
 
         }
 

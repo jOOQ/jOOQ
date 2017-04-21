@@ -34,8 +34,17 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_SCHEMA;
 import static org.jooq.Clause.CREATE_SCHEMA_NAME;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_CREATE_SCHEMA;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 
@@ -79,12 +88,27 @@ final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx)) {
+            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_SCHEMA);
+            accept0(ctx);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_SCHEMA);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.start(CREATE_SCHEMA_NAME)
            .visit(K_CREATE_SCHEMA);
 
-        if (ifNotExists)
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(schema)

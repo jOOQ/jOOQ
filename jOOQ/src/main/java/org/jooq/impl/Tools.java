@@ -52,6 +52,7 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
+import static org.jooq.impl.DDLStatementType.CREATE_SCHEMA;
 import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.CREATE_TABLE;
 import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
@@ -3248,6 +3249,12 @@ final class Tools {
      */
     static final void executeImmediateBegin(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
+
+
+
+
+
+
 
 
 

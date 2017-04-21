@@ -803,17 +803,17 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 
 </html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
 <dependency>
-  <groupId>org.jooq</groupId>
+  <groupId>org.jooq.trial</groupId>
   <artifactId>jooq</artifactId>
   <version>{jooq-version}</version>
 </dependency>
 <dependency>
-  <groupId>org.jooq</groupId>
+  <groupId>org.jooq.trial</groupId>
   <artifactId>jooq-meta</artifactId>
   <version>{jooq-version}</version>
 </dependency>
 <dependency>
-  <groupId>org.jooq</groupId>
+  <groupId>org.jooq.trial</groupId>
   <artifactId>jooq-codegen</artifactId>
   <version>{jooq-version}</version>
 </dependency>]]></xml><html>
@@ -3080,7 +3080,7 @@ DSL.using(connection, dialect)
 </html><java><![CDATA[/**
  * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
  */
-@Support({ SQLDialect.CUBRID, SQLDialect.})
+@Support({ SQLDialect.CUBRID, SQLDialect.ORACLE })
 SelectConnectByConditionStep<R> connectBy(Condition condition);]]></java><html>
 
 									<p>
@@ -3591,7 +3591,7 @@ SELECT *
 create.select()
       .from(AUTHOR.as("a"))
       .join(BOOK.as("b")).on(a.ID.eq(b.AUTHOR_ID))
-      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .where(a.YEAR_OF_BIRTH.gt(1920)
       .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE)
       .fetch();]]></java></code-pair><html>
@@ -3842,9 +3842,9 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
       .join(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
       .where(BOOK.LANGUAGE.eq("DE"))
-      .and(BOOK.PUBLISHED.greaterThan("2008-01-01"))
+      .and(BOOK.PUBLISHED.gt("2008-01-01"))
       .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-      .having(count().greaterThan(5))
+      .having(count().gt(5))
       .orderBy(AUTHOR.LAST_NAME.asc().nullsFirst())
       .limit(2)
       .offset(1)
@@ -4323,7 +4323,7 @@ CONNECT BY LEVEL <= 5
 ]]>&#160;</sql>
 <java><![CDATA[// Get a table with elements 1, 2, 3, 4, 5
 create.select(level())
-      .connectBy(level().lessOrEqual(5))
+      .connectBy(level().le(5))
       .fetch();]]></java></code-pair><html>
 
 											<p>
@@ -4488,7 +4488,7 @@ HAVING COUNT(*) >= 2
 <java><![CDATA[create.select(BOOK.AUTHOR_ID, count())
       .from(BOOK)
       .groupBy(AUTHOR_ID)
-      .having(count().greaterOrEqual(2))
+      .having(count().ge(2))
       .fetch();]]></java></code-pair><html>
 
 											<p>
@@ -4502,7 +4502,7 @@ HAVING COUNT(*) >= 4
 ]]>&#160;</sql>
 <java><![CDATA[create.select(count(*))
       .from(BOOK)
-      .having(count().greaterOrEqual(4))
+      .having(count().ge(4))
       .fetch();]]></java></code-pair>
 
 										</content>
@@ -6005,7 +6005,7 @@ Book b = BOOK.as("b");
 create.select()
       .from(a)
       .join(b).on(a.ID.eq(b.AUTHOR_ID))
-      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .where(a.YEAR_OF_BIRTH.gt(1920)
       .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE)
       .fetch();]]></java></code-pair><html>
@@ -7951,7 +7951,7 @@ row(BOOK.AUTHOR_ID, BOOK.TITLE).eq(
 <sql><![CDATA[TITLE = ANY('Animal Farm', '1982')
 PUBLISHED_IN > ALL(1920, 1940)]]></sql>
 <java><![CDATA[BOOK.TITLE.eq(any("Animal Farm", "1982"));
-BOOK.PUBLISHED_IN.greaterThan(all(1920, 1940));]]></java>
+BOOK.PUBLISHED_IN.gt(all(1920, 1940));]]></java>
 </code-pair><html>
 
 									<p>
@@ -14765,7 +14765,7 @@ public class Book implements java.io.Serializable
 </html><java><![CDATA[// Get all date of births of authors born after 1980
 List<GregorianCalendar> result =
 create.selectFrom(AUTHOR)
-      .where(AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .where(AUTHOR.DATE_OF_BIRTH.gt(new GregorianCalendar(1980, 0, 1)))
       .fetch(AUTHOR.DATE_OF_BIRTH);]]></java>
 
 						</content>
@@ -15306,7 +15306,7 @@ public class Book {
 
            Note: Only the Open Source Edition is hosted on Maven Central.
                  Import the others manually from your distribution -->
-      <groupId>org.jooq</groupId>
+      <groupId>org.jooq.trial</groupId>
       <artifactId>jooq-codegen</artifactId>
       <version>{jooq-version}</version>
     </dependency>
@@ -16161,7 +16161,7 @@ for (Record record : create.select(
                 .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
                 .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
                 .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
-                .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
+                .and(r2.SPECIFIC_NAME.le(r1.SPECIFIC_NAME)).asField())
         .as("overload"))
     .from(r1)
     .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))

@@ -1104,7 +1104,7 @@ Result<?> result = select.fetch();]]></java></content>
 </html><java><![CDATA[/**
  * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
  */
-@Support({ CUBRID })
+@Support({ CUBRID, ORACLE })
 SelectConnectByConditionStep connectBy(Condition condition);]]></java><html>
 									<p>
 									    jOOQ API methods which are not annotated with the <reference class="org.jooq.Support"/> annotation, or which are annotated with the Support annotation, but without any SQL dialects can be safely used in all SQL dialects. An example for this is the <reference id="select-statement" title="SELECT statement"/> factory method:
@@ -1400,7 +1400,7 @@ SELECT *
 create.select()
       .from(AUTHOR.as("a"))
       .join(BOOK.as("b")).on(a.ID.eq(b.AUTHOR_ID))
-      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .where(a.YEAR_OF_BIRTH.gt(1920)
       .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE)
       .fetch();]]></java></code-pair><html>
@@ -1531,9 +1531,9 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
       .join(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
       .where(BOOK.LANGUAGE.eq("DE"))
-      .and(BOOK.PUBLISHED.greaterThan("2008-01-01"))
+      .and(BOOK.PUBLISHED.gt("2008-01-01"))
       .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-      .having(count().greaterThan(5))
+      .having(count().gt(5))
       .orderBy(AUTHOR.LAST_NAME.asc().nullsFirst())
       .limit(2)
       .offset(1)
@@ -1850,7 +1850,7 @@ AND TITLE = '1984']]></sql><java><![CDATA[create.select()
 FROM DUAL
 CONNECT BY LEVEL <= 5]]></sql><java><![CDATA[// Get a table with elements 1, 2, 3, 4, 5
 create.select(level())
-      .connectBy(level().lessOrEqual(5));]]></java></code-pair><html>
+      .connectBy(level().le(5));]]></java></code-pair><html>
 
 											<p>
 												Here's a more complex example where you can recursively fetch directories in your database, and concatenate them to a path:
@@ -1994,7 +1994,7 @@ GROUP BY AUTHOR_ID
 HAVING COUNT(*) >= 2]]></sql><java><![CDATA[create.select(BOOK.AUTHOR_ID, count())
       .from(BOOK)
       .groupBy(AUTHOR_ID)
-      .having(count().greaterOrEqual(2));]]></java></code-pair><html>
+      .having(count().ge(2));]]></java></code-pair><html>
 
 											<p>
 												According to the SQL standard, you may omit the GROUP BY clause and still issue a HAVING clause. This will implicitly GROUP BY (). jOOQ also supports this syntax. The following example selects one record, only if there are at least 4 books in the books table:
@@ -2005,7 +2005,7 @@ HAVING COUNT(*) >= 2]]></sql><java><![CDATA[create.select(BOOK.AUTHOR_ID, count(
 FROM BOOK
 HAVING COUNT(*) >= 4]]></sql><java><![CDATA[create.select(count(*))
       .from(BOOK)
-      .having(count().greaterOrEqual(4));]]></java></code-pair><html>
+      .having(count().ge(4));]]></java></code-pair><html>
 
 										</html></content>
 									</section>
@@ -2676,7 +2676,7 @@ Book b = BOOK.as("b");
 create.select()
       .from(a)
       .join(b).on(a.ID.eq(b.AUTHOR_ID))
-      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .where(a.YEAR_OF_BIRTH.gt(1920)
       .and(a.FIRST_NAME.eq("Paulo")))
       .orderBy(b.TITLE);]]></java></code-pair><html>
 
@@ -8712,7 +8712,7 @@ public class Book implements java.io.Serializable
 </html><java><![CDATA[// Get all date of births of authors born after 1980
 List<GregorianCalendar> result =
 create.selectFrom(AUTHOR)
-      .where(AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .where(AUTHOR.DATE_OF_BIRTH.gt(new GregorianCalendar(1980, 0, 1)))
       .fetch(AUTHOR.DATE_OF_BIRTH);]]></java></content>
 					</section>
 

@@ -47,15 +47,15 @@ public interface ConstraintForeignKeyReferencesStepN {
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
-    ConstraintFinalStep references(String table, String... fields);
+    ConstraintForeignKeyOnStep references(String table, String... fields);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
-    ConstraintFinalStep references(Name table, Name... fields);
+    ConstraintForeignKeyOnStep references(Name table, Name... fields);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
-    ConstraintFinalStep references(Table<?> table, Field<?>... fields);
+    ConstraintForeignKeyOnStep references(Table<?> table, Field<?>... fields);
 }

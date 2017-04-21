@@ -35,6 +35,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_FINAL_TABLE;
+import static org.jooq.impl.Keywords.K_OLD_TABLE;
+
 
 
 

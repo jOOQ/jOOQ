@@ -5102,7 +5102,7 @@ class ParserImpl implements Parser {
                             switch (ctx.sql[i]) {
                                 case '*':
                                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
-                                        position = i = i + 1;
+                                        position = i;
                                         continue loop;
                                     }
 
@@ -5123,7 +5123,7 @@ class ParserImpl implements Parser {
                             switch (ctx.sql[i]) {
                                 case '\r':
                                 case '\n':
-                                    position = i = i + 1;
+                                    position = i;
                                     continue loop;
 
                                 default:
@@ -5140,6 +5140,7 @@ class ParserImpl implements Parser {
 
                 // TODO support Oracle-style hints
                 default:
+                    position = i;
                     break loop;
             }
         }

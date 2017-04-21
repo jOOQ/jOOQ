@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_DROP_SCHEMA;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RESTRICT;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -133,6 +134,10 @@ final class DropSchemaImpl extends AbstractQuery implements
 
         if (cascade)
             ctx.sql(' ').visit(K_CASCADE);
+
+
+
+
 
         ctx.end(DROP_SCHEMA_SCHEMA);
     }

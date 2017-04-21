@@ -51,50 +51,51 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractGenerator implements Generator {
 
-    private static final JooqLogger    log                              = JooqLogger.getLogger(AbstractGenerator.class);
+    private static final JooqLogger    log                                = JooqLogger.getLogger(AbstractGenerator.class);
 
-    boolean                            generateDeprecated               = true;
-    boolean                            generateRelations                = true;
-    boolean                            generateInstanceFields           = true;
-    boolean                            generateGeneratedAnnotation      = true;
-    boolean                            useSchemaVersionProvider         = false;
-    boolean                            useCatalogVersionProvider        = false;
-    boolean                            generateRoutines                 = true;
-    boolean                            generateSequences                = true;
-    boolean                            generateUDTs                     = true;
-    boolean                            generateTables                   = true;
-    boolean                            generateRecords                  = true;
-    boolean                            generatePojos                    = false;
-    boolean                            generatePojosEqualsAndHashCode   = false;
-    boolean                            generatePojosToString            = true;
-    boolean                            generateImmutablePojos           = false;
-    boolean                            generateInterfaces               = false;
-    boolean                            generateImmutableInterfaces      = false;
-    boolean                            generateDaos                     = false;
-    boolean                            generateJPAAnnotations           = false;
-    boolean                            generateValidationAnnotations    = false;
-    boolean                            generateSpringAnnotations        = false;
-    boolean                            generateQueues                   = true;
-    boolean                            generateLinks                    = true;
-    boolean                            generateGlobalObjectReferences   = true;
-    boolean                            generateGlobalCatalogReferences  = true;
-    boolean                            generateGlobalSchemaReferences   = true;
-    boolean                            generateGlobalRoutineReferences  = true;
-    boolean                            generateGlobalSequenceReferences = true;
-    boolean                            generateGlobalTableReferences    = true;
-    boolean                            generateGlobalUDTReferences      = true;
-    boolean                            generateGlobalQueueReferences    = true;
-    boolean                            generateGlobalLinkReferences     = true;
-    boolean                            generateFluentSetters            = false;
-    boolean                            generateVarargsSetters           = true;
-    String                             generateFullyQualifiedTypes      = "";
-    boolean                            generateJavaTimeTypes            = false;
-    boolean                            generateTableValuedFunctions     = false;
-    boolean                            generateEmptyCatalogs            = false;
-    boolean                            generateEmptySchemas             = false;
+    boolean                            generateDeprecated                 = true;
+    boolean                            generateRelations                  = true;
+    boolean                            generateInstanceFields             = true;
+    boolean                            generateGeneratedAnnotation        = true;
+    boolean                            useSchemaVersionProvider           = false;
+    boolean                            useCatalogVersionProvider          = false;
+    boolean                            generateRoutines                   = true;
+    boolean                            generateSequences                  = true;
+    boolean                            generateUDTs                       = true;
+    boolean                            generateTables                     = true;
+    boolean                            generateRecords                    = true;
+    boolean                            generatePojos                      = false;
+    boolean                            generatePojosEqualsAndHashCode     = false;
+    boolean                            generatePojosToString              = true;
+    boolean                            generateImmutablePojos             = false;
+    boolean                            generateInterfaces                 = false;
+    boolean                            generateImmutableInterfaces        = false;
+    boolean                            generateDaos                       = false;
+    boolean                            generateJPAAnnotations             = false;
+    boolean                            generateValidationAnnotations      = false;
+    boolean                            generateSpringAnnotations          = false;
+    boolean                            generateQueues                     = true;
+    boolean                            generateLinks                      = true;
+    boolean                            generateGlobalObjectReferences     = true;
+    boolean                            generateGlobalCatalogReferences    = true;
+    boolean                            generateGlobalSchemaReferences     = true;
+    boolean                            generateGlobalRoutineReferences    = true;
+    boolean                            generateGlobalSequenceReferences   = true;
+    boolean                            generateGlobalTableReferences      = true;
+    boolean                            generateGlobalUDTReferences        = true;
+    boolean                            generateGlobalQueueReferences      = true;
+    boolean                            generateGlobalLinkReferences       = true;
+    boolean                            generateFluentSetters              = false;
+    boolean                            generateJavaBeansGettersAndSetters = false;
+    boolean                            generateVarargsSetters             = true;
+    String                             generateFullyQualifiedTypes        = "";
+    boolean                            generateJavaTimeTypes              = false;
+    boolean                            generateTableValuedFunctions       = false;
+    boolean                            generateEmptyCatalogs              = false;
+    boolean                            generateEmptySchemas               = false;
 
     protected GeneratorStrategyWrapper strategy;
-    protected String                   targetEncoding                   = "UTF-8";
+    protected String                   targetEncoding                     = "UTF-8";
     final Language                     language;
 
     AbstractGenerator(Language language) {
@@ -505,6 +506,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateFluentSetters(boolean fluentSetters) {
         this.generateFluentSetters = fluentSetters;
+    }
+
+    @Override
+    public boolean generateJavaBeansGettersAndSetters() {
+        return generateJavaBeansGettersAndSetters;
+    }
+
+    @Override
+    public void setGenerateJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters) {
+        this.generateJavaBeansGettersAndSetters = javaBeansGettersAndSetters;
     }
 
     @Override

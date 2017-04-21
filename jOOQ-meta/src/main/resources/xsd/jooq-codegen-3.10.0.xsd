@@ -973,6 +973,29 @@
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in
+
+        - records
+        - pojos
+        - interfaces
+
+        If this flag is set to false, then:
+
+        - Column name   : X_INDEX
+        - Attribute name: xIndex
+        - Getter name   : getXIndex()
+        - Setter name   : setXIndex()
+
+        If this flag is set to false, then:
+
+        - Getter name   : getxIndex()
+        - Setter name   : setxIndex()
+
+        Custom GeneratorStrategy implementations are unaffected.
+        -->
+      <element name="javaBeansGettersAndSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate varargs setters for array types for convenience.
 
         This may lead to compilation warnings in current Java versions.

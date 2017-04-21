@@ -108,6 +108,16 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public void setJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters) {
+        delegate.setJavaBeansGettersAndSetters(javaBeansGettersAndSetters);
+    }
+
+    @Override
+    public boolean getJavaBeansGettersAndSetters() {
+        return delegate.getJavaBeansGettersAndSetters();
+    }
+
+    @Override
     public String getFileHeader(Definition definition, Mode mode) {
         return delegate.getFileHeader(definition, mode);
     }

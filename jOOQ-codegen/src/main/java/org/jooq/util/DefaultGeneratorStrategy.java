@@ -49,39 +49,50 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     private String  targetDirectory;
     private String  targetPackage;
-    private boolean instanceFields = true;
+    private boolean instanceFields             = true;
+    private boolean javaBeansGettersAndSetters = false;
 
     // -------------------------------------------------------------------------
     // Initialisation
     // -------------------------------------------------------------------------
 
     @Override
-    public final void setInstanceFields(boolean instanceFields) {
+    public void setInstanceFields(boolean instanceFields) {
         this.instanceFields = instanceFields;
     }
 
     @Override
-    public final boolean getInstanceFields() {
+    public boolean getInstanceFields() {
         return instanceFields;
     }
 
     @Override
-    public final String getTargetDirectory() {
+    public void setJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters) {
+        this.javaBeansGettersAndSetters = javaBeansGettersAndSetters;
+    }
+
+    @Override
+    public boolean getJavaBeansGettersAndSetters() {
+        return javaBeansGettersAndSetters;
+    }
+
+    @Override
+    public String getTargetDirectory() {
         return targetDirectory;
     }
 
     @Override
-    public final void setTargetDirectory(String directory) {
+    public void setTargetDirectory(String directory) {
         this.targetDirectory = directory;
     }
 
     @Override
-    public final String getTargetPackage() {
+    public String getTargetPackage() {
         return targetPackage;
     }
 
     @Override
-    public final void setTargetPackage(String packageName) {
+    public void setTargetPackage(String packageName) {
         this.targetPackage = packageName;
     }
 
@@ -104,14 +115,33 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return definition.getOutputName().toUpperCase();
     }
 
+    private String getterSetterSuffix(Definition definition) {
+
+        // [#5354] Please forgive me but this is how it works.
+        if (javaBeansGettersAndSetters) {
+            String name = getJavaMemberName(definition);
+
+            if (Character.isUpperCase(name.charAt(0)))
+                return name;
+            if (name.length() > 1 && Character.isUpperCase(name.charAt(1)))
+                return name;
+
+            char chars[] = name.toCharArray();
+            chars[0] = Character.toUpperCase(chars[0]);
+            return new String(chars);
+        }
+        else
+            return getJavaClassName0(definition, Mode.DEFAULT);
+    }
+
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return "set" + getJavaClassName0(definition, Mode.DEFAULT);
+        return "set" + getterSetterSuffix(definition);
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return "get" + getJavaClassName0(definition, Mode.DEFAULT);
+        return "get" + getterSetterSuffix(definition);
     }
 
     @Override
@@ -232,7 +262,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         return result.toString();
     }
 
-    private final String getSubPackage(Definition definition) {
+    private String getSubPackage(Definition definition) {
         if (definition instanceof TableDefinition) {
             return "tables";
         }

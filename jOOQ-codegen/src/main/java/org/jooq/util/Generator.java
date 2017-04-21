@@ -387,6 +387,16 @@ public interface Generator {
     void setGenerateFluentSetters(boolean fluentSetters);
 
     /**
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     */
+    boolean generateJavaBeansGettersAndSetters();
+
+    /**
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     */
+    void setGenerateJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters);
+
+    /**
      * Whether varargs setters should be generated for array types.
      */
     boolean generateVarargsSetters();

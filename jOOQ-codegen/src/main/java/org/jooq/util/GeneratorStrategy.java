@@ -76,6 +76,16 @@ public interface GeneratorStrategy {
     boolean getInstanceFields();
 
     /**
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     */
+    void setJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters);
+
+    /**
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     */
+    boolean getJavaBeansGettersAndSetters();
+
+    /**
      * This is applied to definitions that can result in reference static and
      * instance members. For instance, the reference instance of a
      * {@link TableDefinition} is a java identifier

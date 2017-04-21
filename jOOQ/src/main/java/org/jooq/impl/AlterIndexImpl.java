@@ -49,7 +49,9 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER_INDEX;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_TO;
 
 import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
@@ -124,8 +126,10 @@ final class AlterIndexImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+        boolean renameIndex = asList().contains(ctx.family());
+
         ctx.start(ALTER_INDEX_INDEX)
-           .visit(K_ALTER_INDEX);
+           .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
@@ -140,7 +144,7 @@ final class AlterIndexImpl extends AbstractQuery implements
 
             ctx.start(ALTER_INDEX_RENAME)
                .qualify(false)
-               .visit(K_RENAME_TO).sql(' ').visit(renameTo)
+               .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
                .end(ALTER_INDEX_RENAME);
         }

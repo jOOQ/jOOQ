@@ -237,6 +237,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
+import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexStep;
@@ -1355,9 +1356,50 @@ class ParserImpl implements Parser {
                         if (referencing.length != referencedFields.length)
                             throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
 
-                        constraints.add(constraint == null
+                        ConstraintForeignKeyOnStep e = constraint == null
                             ? foreignKey(referencing).references(referencedTable, referencedFields)
-                            : constraint.foreignKey(referencing).references(referencedTable, referencedFields));
+                            : constraint.foreignKey(referencing).references(referencedTable, referencedFields);
+
+                        boolean onDelete = false;
+                        boolean onUpdate = false;
+                        while ((!onDelete || !onUpdate) && parseKeywordIf(ctx, "ON")) {
+                            if (!onDelete && parseKeywordIf(ctx, "DELETE")) {
+                                onDelete = true;
+
+                                if (parseKeywordIf(ctx, "CASCADE"))
+                                    e = e.onDeleteCascade();
+                                else if (parseKeywordIf(ctx, "NO ACTION"))
+                                    e = e.onDeleteNoAction();
+                                else if (parseKeywordIf(ctx, "RESTRICT"))
+                                    e = e.onDeleteRestrict();
+                                else if (parseKeywordIf(ctx, "SET DEFAULT"))
+                                    e = e.onDeleteSetDefault();
+                                else if (parseKeywordIf(ctx, "SET NULL"))
+                                    e = e.onDeleteSetNull();
+                                else
+                                    throw ctx.unexpectedToken();
+                            }
+                            else if (!onUpdate && parseKeywordIf(ctx, "UPDATE")) {
+                                onUpdate = true;
+
+                                if (parseKeywordIf(ctx, "CASCADE"))
+                                    e = e.onUpdateCascade();
+                                else if (parseKeywordIf(ctx, "NO ACTION"))
+                                    e = e.onUpdateNoAction();
+                                else if (parseKeywordIf(ctx, "RESTRICT"))
+                                    e = e.onUpdateRestrict();
+                                else if (parseKeywordIf(ctx, "SET DEFAULT"))
+                                    e = e.onUpdateSetDefault();
+                                else if (parseKeywordIf(ctx, "SET NULL"))
+                                    e = e.onUpdateSetNull();
+                                else
+                                    throw ctx.unexpectedToken();
+                            }
+                            else
+                                throw ctx.unexpectedToken();
+                        }
+
+                        constraints.add(e);
                     }
                     else if (parseKeywordIf(ctx, "CHECK")) {
                         parse(ctx, '(');
@@ -4523,10 +4565,46 @@ class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "CLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.CLOB);
 
+            case 'd':
+            case 'D':
+                if (parseKeywordIf(ctx, "DATE"))
+                    return SQLDataType.DATE;
+                else if (parseKeywordIf(ctx, "DECIMAL"))
+                    return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
+
             case 'i':
             case 'I':
                 if (parseKeywordIf(ctx, "INT") || parseKeywordIf(ctx, "INTEGER"))
                     return SQLDataType.INTEGER;
+
+            case 'n':
+            case 'N':
+                if (parseKeywordIf(ctx, "NUMBER") || parseKeywordIf(ctx, "NUMERIC"))
+                    return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
+
+            case 's':
+            case 'S':
+                if (parseKeywordIf(ctx, "SMALLINT"))
+                    return SQLDataType.SMALLINT;
+
+            case 't':
+            case 'T':
+                if (parseKeywordIf(ctx, "TEXT"))
+                    return SQLDataType.CLOB;
+
+                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") || parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
+
+                else if (parseKeywordIf(ctx, "TIMESTAMP"))
+                    return SQLDataType.TIMESTAMP;
+
+                else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") || parseKeywordIf(ctx, "TIMETZ"))
+                    return SQLDataType.TIMEWITHTIMEZONE;
+
+                else if (parseKeywordIf(ctx, "TIME"))
+                    return SQLDataType.TIME;
+                else if (parseKeywordIf(ctx, "TINYINT"))
+                    return SQLDataType.TINYINT;
 
             case 'v':
             case 'V':
@@ -4545,6 +4623,21 @@ class ParserImpl implements Parser {
     private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
             result = result.length((int) (long) parseUnsignedInteger(ctx));
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
+    private static final DataType<?> parseDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {
+        if (parseIf(ctx, '(')) {
+            int precision = (int) (long) parseUnsignedInteger(ctx);
+
+            if (parseIf(ctx, ','))
+                result = result.precision(precision, (int) (long) parseUnsignedInteger(ctx));
+            else
+                result = result.precision(precision);
+
             parse(ctx, ')');
         }
 
@@ -5221,7 +5314,7 @@ class ParserImpl implements Parser {
         }
 
         String mark() {
-            return sqlString.substring(0, position) + "[*]" + sqlString.substring(position);
+            return sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
         }
 
         @Override

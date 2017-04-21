@@ -4630,6 +4630,8 @@ class ParserImpl implements Parser {
             case 'M':
                 if (parseKeywordIf(ctx, "MEDIUMBLOB"))
                     return SQLDataType.BLOB;
+                else if (parseKeywordIf(ctx, "MEDIUMINT UNSIGNED"))
+                    return SQLDataType.INTEGERUNSIGNED;
                 else if (parseKeywordIf(ctx, "MEDIUMINT"))
                     return SQLDataType.INTEGER;
                 else if (parseKeywordIf(ctx, "MEDIUMTEXT"))

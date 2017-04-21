@@ -70,6 +70,15 @@ import org.jooq.impl.DSL;
 public interface TableOuterJoinStep<R extends Record> {
 
     /**
+     * Join a table to this table using a {@link JoinType}.
+     * <p>
+     * Only {@link JoinType#LEFT_OUTER_JOIN}, {@link JoinType#RIGHT_OUTER_JOIN},
+     * and {@link JoinType#FULL_OUTER_JOIN} are allowed.
+     */
+    @Support
+    TableOnStep<Record> join(TableLike<?> table, JoinType type);
+
+    /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #leftOuterJoin(TableLike)}.

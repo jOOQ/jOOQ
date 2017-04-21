@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.table;
 import java.util.Collection;
 
 import org.jooq.Field;
+import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -62,6 +63,11 @@ final class PartitionJoinTable implements TableOuterJoinStep<Record> {
     PartitionJoinTable(Table<?> lhs, Collection<? extends Field<?>> lhsPartitionBy) {
         this.lhs = lhs;
         this.lhsPartitionBy = lhsPartitionBy;
+    }
+
+    @Override
+    public final TableOnStep<Record> join(TableLike<?> table, JoinType type) {
+        return new JoinTable(lhs, table, type, lhsPartitionBy);
     }
 
     @Override
@@ -96,7 +102,7 @@ final class PartitionJoinTable implements TableOuterJoinStep<Record> {
 
     @Override
     public final TableOnStep<Record> leftOuterJoin(TableLike<?> table) {
-        return new JoinTable(lhs, table, LEFT_OUTER_JOIN, lhsPartitionBy);
+        return join(table, LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -156,7 +162,7 @@ final class PartitionJoinTable implements TableOuterJoinStep<Record> {
 
     @Override
     public final TableOnStep<Record> rightOuterJoin(TableLike<?> table) {
-        return new JoinTable(lhs, table, RIGHT_OUTER_JOIN, lhsPartitionBy);
+        return join(table, RIGHT_OUTER_JOIN);
     }
 
     @Override
@@ -216,7 +222,7 @@ final class PartitionJoinTable implements TableOuterJoinStep<Record> {
 
     @Override
     public final TableOnStep<Record> fullOuterJoin(TableLike<?> table) {
-        return new JoinTable(lhs, table, FULL_OUTER_JOIN, lhsPartitionBy);
+        return join(table, FULL_OUTER_JOIN);
     }
 
     @Override

@@ -4577,7 +4577,8 @@ class ParserImpl implements Parser {
                     return SQLDataType.DATE;
                 else if (parseKeywordIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
-                else if (parseKeywordIf(ctx, "DOUBLE"))
+                else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
+                         parseKeywordIf(ctx, "DOUBLE"))
                     return SQLDataType.DOUBLE;
                 else
                     throw ctx.unexpectedToken();

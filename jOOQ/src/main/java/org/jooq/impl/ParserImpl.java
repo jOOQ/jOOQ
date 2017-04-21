@@ -1254,6 +1254,7 @@ class ParserImpl implements Parser {
                 boolean nullable = false;
                 boolean defaultValue = false;
                 boolean unique = false;
+                boolean identity = type.identity();
 
                 for (;;) {
                     if (!nullable) {
@@ -1296,6 +1297,15 @@ class ParserImpl implements Parser {
                         constraints.add(check(parseCondition(ctx)));
                         parse(ctx, ')');
                         continue;
+                    }
+
+                    if (!identity) {
+                        if (parseKeywordIf(ctx, "AUTO_INCREMENT") ||
+                            parseKeywordIf(ctx, "AUTOINCREMENT")) {
+                            type = type.identity(true);
+                            identity = true;
+                            continue;
+                        }
                     }
 
                     break;
@@ -4592,11 +4602,11 @@ class ParserImpl implements Parser {
 
             case 'i':
             case 'I':
-                if (parseKeywordIf(ctx, "INT UNSIGNED") ||
-                    parseKeywordIf(ctx, "INTEGER UNSIGNED"))
+                if (parseKeywordIf(ctx, "INTEGER UNSIGNED") ||
+                    parseKeywordIf(ctx, "INT UNSIGNED"))
                     return SQLDataType.INTEGERUNSIGNED;
-                else if (parseKeywordIf(ctx, "INT") ||
-                         parseKeywordIf(ctx, "INTEGER"))
+                else if (parseKeywordIf(ctx, "INTEGER") ||
+                         parseKeywordIf(ctx, "INT"))
                     return SQLDataType.INTEGER;
                 else
                     throw ctx.unexpectedToken();
@@ -4650,7 +4660,11 @@ class ParserImpl implements Parser {
 
             case 's':
             case 'S':
-                if (parseKeywordIf(ctx, "SMALLINT UNSIGNED"))
+                if (parseKeywordIf(ctx, "SERIAL4") || parseKeywordIf(ctx, "SERIAL"))
+                    return SQLDataType.INTEGER.identity(true);
+                else if (parseKeywordIf(ctx, "SERIAL8"))
+                    return SQLDataType.BIGINT.identity(true);
+                else if (parseKeywordIf(ctx, "SMALLINT UNSIGNED"))
                     return SQLDataType.SMALLINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "SMALLINT"))
                     return SQLDataType.SMALLINT;
@@ -4661,6 +4675,12 @@ class ParserImpl implements Parser {
             case 'T':
                 if (parseKeywordIf(ctx, "TEXT"))
                     return SQLDataType.CLOB;
+                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
+                         parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
+
+                else if (parseKeywordIf(ctx, "TIMESTAMP"))
+                    return SQLDataType.TIMESTAMP;
 
                 else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") ||
                          parseKeywordIf(ctx, "TIMETZ"))
@@ -4669,12 +4689,6 @@ class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TIME"))
                     return SQLDataType.TIME;
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMESTAMPTZ"))
-                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
-
-                else if (parseKeywordIf(ctx, "TIMESTAMP"))
-                    return SQLDataType.TIMESTAMP;
                 else if (parseKeywordIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
                 else if (parseKeywordIf(ctx, "TINYINT UNSIGNED"))

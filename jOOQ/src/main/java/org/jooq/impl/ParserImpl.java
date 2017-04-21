@@ -5102,7 +5102,7 @@ class ParserImpl implements Parser {
                             switch (ctx.sql[i]) {
                                 case '*':
                                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
-                                        position = i;
+                                        position = i = i + 1;
                                         continue loop;
                                     }
 

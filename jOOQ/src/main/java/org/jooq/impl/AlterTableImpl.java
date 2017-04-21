@@ -76,6 +76,7 @@ import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
@@ -448,12 +449,12 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void accept1(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
-        boolean omitAlterTable =
-            family == HSQLDB && renameConstraint != null;
+        boolean omitAlterTable = family == HSQLDB && renameConstraint != null;
+        boolean renameTable = asList().contains(family);
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
-               .visit(K_ALTER_TABLE);
+               .visit(renameTable ? K_RENAME_TABLE : K_ALTER_TABLE);
 
             if (ifExists && supportsIfExists(ctx))
                 ctx.sql(' ').visit(K_IF_EXISTS);
@@ -469,7 +470,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.start(ALTER_TABLE_RENAME)
                .qualify(false)
-               .visit(K_RENAME_TO).sql(' ')
+               .visit(renameTable ? K_TO : K_RENAME_TO).sql(' ')
                .visit(renameTo)
                .qualify(qualify)
                .end(ALTER_TABLE_RENAME);

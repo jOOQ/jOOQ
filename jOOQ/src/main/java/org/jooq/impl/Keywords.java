@@ -195,9 +195,10 @@ final class Keywords {
     public static final Keyword K_REFERENCES                       = keyword("references");
     public static final Keyword K_REGEXP                           = keyword("regexp");
     public static final Keyword K_RENAME                           = keyword("rename");
-    public static final Keyword K_RENAME_INDEX                     = keyword("rename index");
     public static final Keyword K_RENAME_COLUMN                    = keyword("rename column");
     public static final Keyword K_RENAME_CONSTRAINT                = keyword("rename constraint");
+    public static final Keyword K_RENAME_INDEX                     = keyword("rename index");
+    public static final Keyword K_RENAME_TABLE                     = keyword("rename table");
     public static final Keyword K_RENAME_TO                        = keyword("rename to");
     public static final Keyword K_RESPECT_NULLS                    = keyword("respect nulls");
     public static final Keyword K_RESTART                          = keyword("restart");

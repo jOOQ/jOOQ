@@ -450,7 +450,7 @@ final class AlterTableImpl extends AbstractQuery implements
         SQLDialect family = ctx.family();
 
         boolean omitAlterTable = family == HSQLDB && renameConstraint != null;
-        boolean renameTable = asList().contains(family);
+        boolean renameTable = asList().contains(family) && renameTo != null;
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)

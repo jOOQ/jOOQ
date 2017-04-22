@@ -3609,7 +3609,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLowerIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LOWER")) {
+        if (parseKeywordIf(ctx, "LOWER") || parseKeywordIf(ctx, "LCASE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3620,7 +3620,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldUpperIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "UPPER")) {
+        if (parseKeywordIf(ctx, "UPPER") || parseKeywordIf(ctx, "UCASE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');

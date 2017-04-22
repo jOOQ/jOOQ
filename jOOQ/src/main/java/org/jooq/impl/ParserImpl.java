@@ -1273,8 +1273,67 @@ class ParserImpl implements Parser {
 
                     if (!defaultValue) {
                         if (parseKeywordIf(ctx, "DEFAULT")) {
+
+                            // TODO: Ignored keyword from Oracle
+                            parseKeywordIf(ctx, "ON NULL");
+
                             type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null)));
                             defaultValue = true;
+                            identity = true;
+                            continue;
+                        }
+                        else if (parseKeywordIf(ctx, "GENERATED")) {
+                            if (!parseKeywordIf(ctx, "ALWAYS")) {
+                                parseKeyword(ctx, "BY DEFAULT");
+
+                                // TODO: Ignored keyword from Oracle
+                                parseKeywordIf(ctx, "ON NULL");
+                            }
+
+                            parseKeyword(ctx, "AS IDENTITY");
+
+                            // TODO: Ignored identity options from Oracle
+                            if (parseIf(ctx, '(')) {
+                                boolean identityOption = false;
+
+                                for (;;) {
+                                    if (parseKeywordIf(ctx, "START WITH")) {
+                                        if (!parseKeywordIf(ctx, "LIMIT VALUE"))
+                                            parseUnsignedInteger(ctx);
+                                        identityOption = true;
+                                        continue;
+                                    }
+                                    else if (parseKeywordIf(ctx, "INCREMENT BY")
+                                          || parseKeywordIf(ctx, "MAXVALUE")
+                                          || parseKeywordIf(ctx, "MINVALUE")
+                                          || parseKeywordIf(ctx, "CACHE")) {
+                                        parseUnsignedInteger(ctx);
+                                        identityOption = true;
+                                        continue;
+                                    }
+                                    else if (parseKeywordIf(ctx, "NOMAXVALUE")
+                                          || parseKeywordIf(ctx, "NOMINVALUE")
+                                          || parseKeywordIf(ctx, "CYCLE")
+                                          || parseKeywordIf(ctx, "NOCYCLE")
+                                          || parseKeywordIf(ctx, "NOCACHE")
+                                          || parseKeywordIf(ctx, "ORDER")
+                                          || parseKeywordIf(ctx, "NOORDER")) {
+                                        identityOption = true;
+                                        continue;
+                                    }
+
+                                    if (identityOption)
+                                        break;
+                                    else
+                                        throw ctx.unexpectedToken();
+                                }
+
+                                parse(ctx, ')');
+                            }
+
+                            type = type.identity(true);
+                            defaultValue = true;
+                            identity = true;
                             continue;
                         }
                     }
@@ -2537,28 +2596,48 @@ class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type) {
-        Integer sign = null;
         FieldOrRow r;
+        Sign sign = parseSign(ctx);
 
-        for (;;)
-            if (parseIf(ctx, '+'))
-                sign = sign == null ?  1 :  sign;
-            else if (parseIf(ctx, '-'))
-                sign = sign == null ? -1 : -sign;
-            else
-                break;
-
-        if (sign == null)
+        if (sign == Sign.NONE)
             r = parseTerm(ctx, type);
-        else if (sign == 1)
+        else if (sign == Sign.PLUS)
             r = toField(ctx, parseTerm(ctx, type));
-        else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, true)) == null)
+        else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, Sign.MINUS)) == null)
             r = toField(ctx, parseTerm(ctx, type)).neg();
 
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));
 
         return r;
+    }
+
+    private static final Sign parseSign(ParserContext ctx) {
+        Sign sign = Sign.NONE;
+
+        for (;;)
+            if (parseIf(ctx, '+'))
+                sign = sign == null ? Sign.PLUS  : sign.invert();
+            else if (parseIf(ctx, '-'))
+                sign = sign == null ? Sign.MINUS : sign.invert();
+            else
+                break;
+        return sign;
+    }
+
+    private static enum Sign {
+        NONE,
+        PLUS,
+        MINUS;
+
+        final Sign invert() {
+            if (this == PLUS)
+                return MINUS;
+            else if (this == MINUS)
+                return PLUS;
+            else
+                return NONE;
+        }
     }
 
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
@@ -2926,7 +3005,7 @@ class ParserImpl implements Parser {
             case '9':
             case '.':
                 if (N.is(type))
-                    if ((field = parseFieldUnsignedNumericLiteralIf(ctx, false)) != null)
+                    if ((field = parseFieldUnsignedNumericLiteralIf(ctx, Sign.NONE)) != null)
                         return field;
 
                 break;
@@ -4330,12 +4409,12 @@ class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "PERCENTILE_CONT")) {
             parse(ctx, '(');
-            ordered = percentileCont(parseFieldUnsignedNumericLiteral(ctx, false));
+            ordered = percentileCont(parseFieldUnsignedNumericLiteral(ctx, Sign.NONE));
             parse(ctx, ')');
         }
         else if (parseKeywordIf(ctx, "PERCENTILE_DISC")) {
             parse(ctx, '(');
-            ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, false));
+            ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, Sign.NONE));
             parse(ctx, ')');
         }
         else
@@ -4911,8 +4990,8 @@ class ParserImpl implements Parser {
         throw ctx.exception("String literal not terminated");
     }
 
-    private static final Field<Number> parseFieldUnsignedNumericLiteral(ParserContext ctx, boolean minus) {
-        Field<Number> result = parseFieldUnsignedNumericLiteralIf(ctx, minus);
+    private static final Field<Number> parseFieldUnsignedNumericLiteral(ParserContext ctx, Sign sign) {
+        Field<Number> result = parseFieldUnsignedNumericLiteralIf(ctx, sign);
 
         if (result == null)
             throw ctx.unexpectedToken();
@@ -4920,12 +4999,12 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Field<Number> parseFieldUnsignedNumericLiteralIf(ParserContext ctx, boolean minus) {
-        Number r = parseUnsignedNumericLiteralIf(ctx, minus);
+    private static final Field<Number> parseFieldUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
+        Number r = parseUnsignedNumericLiteralIf(ctx, sign);
         return r == null ? null : inline(r);
     }
 
-    private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, boolean minus) {
+    private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
         StringBuilder sb = new StringBuilder();
         char c;
 
@@ -4948,12 +5027,12 @@ class ParserImpl implements Parser {
                 return null;
 
             try {
-                return minus
+                return sign == Sign.MINUS
                     ? -Long.valueOf(sb.toString())
                     : Long.valueOf(sb.toString());
             }
             catch (Exception e1) {
-                return minus
+                return sign == Sign.MINUS
                     ? new BigInteger(sb.toString()).negate()
                     : new BigInteger(sb.toString());
             }
@@ -4972,10 +5051,37 @@ class ParserImpl implements Parser {
         if (sb.length() == 0)
             return null;
 
-        return minus
+        return sign == Sign.MINUS
             ? new BigDecimal(sb.toString()).negate()
             : new BigDecimal(sb.toString());
         // TODO add floating point support
+    }
+
+    private static final Long parseSignedInteger(ParserContext ctx) {
+        Long result = parseSignedIntegerIf(ctx);
+
+        if (result == null)
+            throw ctx.expected("Signed integer");
+
+        return result;
+    }
+
+    private static final Long parseSignedIntegerIf(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+
+        Sign sign = parseSign(ctx);
+        Long unsigned;
+
+        if (sign == Sign.MINUS)
+            unsigned = parseUnsignedInteger(ctx);
+        else
+            unsigned = parseUnsignedIntegerIf(ctx);
+
+        return unsigned == null
+             ? null
+             : sign == Sign.MINUS
+             ? -unsigned
+             : unsigned;
     }
 
     private static final Long parseUnsignedInteger(ParserContext ctx) {

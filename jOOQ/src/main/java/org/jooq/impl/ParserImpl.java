@@ -1228,6 +1228,7 @@ class ParserImpl implements Parser {
         boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
         Table<?> tableName = parseTableName(ctx);
 
+        // [#5309] TODO: Move this after the column specification
         if (parseKeywordIf(ctx, "AS")) {
             Select<?> select = parseSelect(ctx);
 
@@ -1438,8 +1439,20 @@ class ParserImpl implements Parser {
             CreateTableConstraintStep s3 = constraints.isEmpty()
                 ? s2
                 : s2.constraints(constraints);
+            CreateTableFinalStep s4 = s3;
 
-            return s3;
+            if (temporary && parseKeywordIf(ctx, "ON COMMIT")) {
+                if (parseKeywordIf(ctx, "DELETE ROWS"))
+                    s4 = s3.onCommitDeleteRows();
+                else if (parseKeywordIf(ctx, "DROP"))
+                    s4 = s3.onCommitDrop();
+                else if (parseKeywordIf(ctx, "PRESERVE ROWS"))
+                    s4 = s3.onCommitPreserveRows();
+                else
+                    throw ctx.unexpectedToken();
+            }
+
+            return s4;
         }
     }
 

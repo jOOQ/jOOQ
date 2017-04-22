@@ -2617,11 +2617,12 @@ class ParserImpl implements Parser {
 
         for (;;)
             if (parseIf(ctx, '+'))
-                sign = sign == null ? Sign.PLUS  : sign.invert();
+                sign = sign == Sign.NONE ? Sign.PLUS  : sign;
             else if (parseIf(ctx, '-'))
-                sign = sign == null ? Sign.MINUS : sign.invert();
+                sign = sign == Sign.NONE ? Sign.MINUS : sign.invert();
             else
                 break;
+
         return sign;
     }
 
@@ -4896,7 +4897,7 @@ class ParserImpl implements Parser {
             char c2 = 0;
 
             do {
-                for (;;) {
+                while (ctx.position < ctx.sql.length) {
                     c1 = ctx.character(ctx.position);
 
                     if (c1 == ' ')

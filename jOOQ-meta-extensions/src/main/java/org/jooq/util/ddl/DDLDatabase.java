@@ -116,8 +116,10 @@ public class DDLDatabase extends H2Database {
                             .parser()
                             .parse(s.hasNext() ? s.next() : "");
 
-                        for (Query query : queries)
+                        for (Query query : queries) {
+                            log.info(query);
                             query.execute();
+                        }
                     }
                     else {
                         log.error("Could not find script source : " + scripts);

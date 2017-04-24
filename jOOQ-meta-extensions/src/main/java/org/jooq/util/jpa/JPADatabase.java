@@ -65,7 +65,20 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 /**
- * The JPA database
+ * The JPA database.
+ * <p>
+ * This jOOQ-meta schema source works on an undisclosed in-memory
+ * {@link H2Database}, which is constructed from a set of JPA-annotated entities
+ * using Spring and Hibernate:
+ * <p>
+ * <ul>
+ * <li>Spring discovers all the JPA-annotated entities in the comma-separated
+ * list of <code>packages</code> (configured in the code generator)</li>
+ * <li>Those entities are passed to Hibernate's {@link SchemaExport} to generate
+ * an empty database schema in the in-memory H2 database</li>
+ * <li>A jOOQ {@link H2Database} is used to reverse-engineer this schema
+ * again</li>
+ * </ul>
  *
  * @author Lukas Eder
  */

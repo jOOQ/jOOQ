@@ -41,7 +41,7 @@ import java.util.stream.Stream;
  *
  * @author Lukas Eder
  */
-public interface Queries extends Iterable<Query> {
+public interface Queries extends QueryPart, Iterable<Query> {
 
     /**
      * The wrapped collection of queries.

@@ -40,19 +40,30 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Queries;
 import org.jooq.Query;
 
 /**
  * @author Lukas Eder
  */
-final class QueriesImpl implements Queries {
+final class QueriesImpl extends AbstractQueryPart implements Queries {
+
+    /**
+     * Generated UID
+     */
+    private static final long                 serialVersionUID = 261452207127914269L;
 
     private final Collection<? extends Query> queries;
 
     QueriesImpl(Collection<? extends Query> queries) {
         this.queries = queries;
     }
+
+    // ------------------------------------------------------------------------
+    // Queries API
+    // ------------------------------------------------------------------------
 
     @Override
     public final Query[] queries() {
@@ -77,6 +88,21 @@ final class QueriesImpl implements Queries {
         return (Stream) queries.stream();
     }
 
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        for (Query query : this)
+            ctx.visit(query).sql(';').formatNewLine();
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
 
     // ------------------------------------------------------------------------
     // Object API

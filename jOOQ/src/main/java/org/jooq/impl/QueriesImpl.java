@@ -40,7 +40,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import org.jooq.AttachableInternal;
 import org.jooq.Clause;
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -48,7 +50,7 @@ import org.jooq.Query;
 /**
  * @author Lukas Eder
  */
-final class QueriesImpl extends AbstractQueryPart implements Queries {
+final class QueriesImpl extends AbstractQueryPart implements Queries, AttachableInternal {
 
     /**
      * Generated UID
@@ -56,8 +58,10 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     private static final long                 serialVersionUID = 261452207127914269L;
 
     private final Collection<? extends Query> queries;
+    private Configuration                     configuration;
 
-    QueriesImpl(Collection<? extends Query> queries) {
+    QueriesImpl(Configuration configuration, Collection<? extends Query> queries) {
+        this.configuration = configuration;
         this.queries = queries;
     }
 
@@ -88,6 +92,25 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
         return (Stream) queries.stream();
     }
 
+
+    // ------------------------------------------------------------------------
+    // Attachable API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final void attach(Configuration c) {
+        configuration = c;
+    }
+
+    @Override
+    public final void detach() {
+        attach(null);
+    }
+
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
 
     // ------------------------------------------------------------------------
     // QueryPart API

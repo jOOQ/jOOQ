@@ -8008,7 +8008,7 @@ public class DSL {
      */
     @Support
     public static Queries queries(Collection<? extends Query> queries) {
-        return new QueriesImpl(queries);
+        return new QueriesImpl(new DefaultConfiguration(), queries);
     }
 
 

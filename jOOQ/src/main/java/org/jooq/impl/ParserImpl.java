@@ -343,7 +343,7 @@ class ParserImpl implements Parser {
         if (!ctx.done())
             throw ctx.exception("Unexpected content after end of queries input");
 
-        return new QueriesImpl(result);
+        return new QueriesImpl(dsl.configuration(), result);
     }
 
     @Override

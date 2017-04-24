@@ -128,7 +128,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                     // If the CTE has no explicit column names, inherit those of the subquery
                     name.fieldNames.length > 0
                         ? name.fieldNames[i]
-                        : s.get(i).getName()),
+                        : s.get(i).getUnqualifiedName()),
                 s.get(i).getDataType()
             );
         }

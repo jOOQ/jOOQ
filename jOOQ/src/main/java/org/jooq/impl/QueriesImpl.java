@@ -46,6 +46,9 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.ResultQuery;
+import org.jooq.Results;
+import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 
 /**
  * @author Lukas Eder
@@ -66,7 +69,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries, Attachable
     }
 
     // ------------------------------------------------------------------------
-    // Queries API
+    // Access API
     // ------------------------------------------------------------------------
 
     @Override
@@ -92,6 +95,23 @@ final class QueriesImpl extends AbstractQueryPart implements Queries, Attachable
         return (Stream) queries.stream();
     }
 
+
+    // ------------------------------------------------------------------------
+    // Execution API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Results fetchMany() {
+        ResultsImpl results = new ResultsImpl(configuration());
+
+        for (Query query : this)
+            if (query instanceof ResultQuery)
+                results.resultsOrRows.addAll(((ResultQuery<?>) query).fetchMany().resultsOrRows());
+            else
+                results.resultsOrRows.add(new ResultOrRowsImpl(query.execute()));
+
+        return results;
+    }
 
     // ------------------------------------------------------------------------
     // Attachable API

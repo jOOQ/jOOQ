@@ -53,14 +53,14 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
     /**
      * Generated UID
      */
-    private static final long        serialVersionUID = 1744826140354980500L;
+    private static final long serialVersionUID = 1744826140354980500L;
 
-    private Configuration            configuration;
-    private final List<ResultOrRows> results;
+    private Configuration     configuration;
+    final List<ResultOrRows>  resultsOrRows;
 
     ResultsImpl(Configuration configuration) {
         this.configuration = configuration;
-        this.results = new ArrayList<ResultOrRows>();
+        this.resultsOrRows = new ArrayList<ResultOrRows>();
     }
 
     // ------------------------------------------------------------------------
@@ -69,7 +69,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
 
     @Override
     public final List<ResultOrRows> resultsOrRows() {
-        return results;
+        return resultsOrRows;
     }
 
     // -------------------------------------------------------------------------
@@ -104,7 +104,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
         StringBuilder sb = new StringBuilder();
         String separator = "";
 
-        for (ResultOrRows result : results) {
+        for (ResultOrRows result : resultsOrRows) {
             if (result.result() == null)
                 sb.append(separator).append("Update count: ").append(result.rows());
             else
@@ -118,7 +118,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
 
     @Override
     public int hashCode() {
-        return results.hashCode();
+        return resultsOrRows.hashCode();
     }
 
     @Override
@@ -129,7 +129,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
 
         if (obj instanceof ResultsImpl) {
             ResultsImpl other = (ResultsImpl) obj;
-            return results.equals(other.results);
+            return resultsOrRows.equals(other.resultsOrRows);
         }
 
         return false;
@@ -151,28 +151,28 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
 
     @Override
     public Result<Record> set(int index, Result<Record> element) {
-        return results.set(translatedIndex(index), new ResultOrRowsImpl(element)).result();
+        return resultsOrRows.set(translatedIndex(index), new ResultOrRowsImpl(element)).result();
     }
 
     @Override
     public void add(int index, Result<Record> element) {
-        results.add(translatedIndex(index), new ResultOrRowsImpl(element));
+        resultsOrRows.add(translatedIndex(index), new ResultOrRowsImpl(element));
     }
 
     @Override
     public Result<Record> remove(int index) {
-        return results.remove(translatedIndex(index)).result();
+        return resultsOrRows.remove(translatedIndex(index)).result();
     }
 
     @Override
     public void clear() {
-        results.clear();
+        resultsOrRows.clear();
     }
 
     private final List<Result<Record>> list() {
         List<Result<Record>> list = new ArrayList<Result<Record>>();
 
-        for (ResultOrRows result : results)
+        for (ResultOrRows result : resultsOrRows)
             if (result.result() != null)
                 list.add(result.result());
 
@@ -183,7 +183,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
         int translated = 0;
 
         for (int i = 0; i < index; i++)
-            while (results.get(translated++).result() == null);
+            while (resultsOrRows.get(translated++).result() == null);
 
         return translated;
     }

@@ -43,6 +43,10 @@ import java.util.stream.Stream;
  */
 public interface Queries extends QueryPart, Iterable<Query> {
 
+    // ------------------------------------------------------------------------
+    // Access API
+    // ------------------------------------------------------------------------
+
     /**
      * The wrapped collection of queries.
      */
@@ -62,4 +66,17 @@ public interface Queries extends QueryPart, Iterable<Query> {
      */
     Stream<Query> queryStream();
 
+
+    // ------------------------------------------------------------------------
+    // Execution API
+    // ------------------------------------------------------------------------
+
+    /**
+     * Execute all queries one-by-one and return all results.
+     * <p>
+     * This is a convenience method for calling {@link ResultQuery#fetchMany()}
+     * on each individual {@link ResultQuery}, or {@link Query#execute()} on all
+     * others.
+     */
+    Results fetchMany();
 }

@@ -518,6 +518,7 @@ class ParserImpl implements Parser {
 
     private static final Query parseWith(ParserContext ctx) {
         parseKeyword(ctx, "WITH");
+        boolean recursive = parseKeywordIf(ctx, "RECURSIVE");
 
         List<CommonTableExpression<?>> cte = new ArrayList<CommonTableExpression<?>>();
         do {
@@ -541,7 +542,7 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         // TODO Better model API for WITH clause
-        return parseSelect(ctx, null, (WithImpl) new WithImpl(ctx.dsl.configuration(), false).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
+        return parseSelect(ctx, null, (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
 
         // TODO Other statements than SELECT
     }

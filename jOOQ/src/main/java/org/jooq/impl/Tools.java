@@ -3674,4 +3674,18 @@ final class Tools {
 
         return DSL.field(DSL.name(name), field.getDataType());
     }
+
+    /**
+     * Convert Name array to String array
+     *
+     * @param names Name array
+     * @return String array of last() segments
+     */
+    static final String[] fieldNamesToStrings(Name... names) {
+        String[] result = new String[names.length];
+        for (int i = 0; i < names.length; i++) {
+            result[i] = names[i].last();
+        }
+        return result;
+    }
 }

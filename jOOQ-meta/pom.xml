@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.8.1</version>
+                <version>0.13.1</version>
                 <executions>
                     <execution>
                         <id>codegen</id>
@@ -46,10 +46,11 @@
                             <strict>false</strict>
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                             <bindingDirectory>src/main/resources/xjb/codegen</bindingDirectory>
+                            <generateDirectory>src/main/java</generateDirectory>
+                            <generatePackage>org.jooq.util.jaxb</generatePackage>
                             <schemaIncludes>
                                 <include>jooq-codegen-3.10.0.xsd</include>
                             </schemaIncludes>
-                            <generatePackage>org.jooq.util.jaxb</generatePackage>
                             <args>
                                 <arg>-Xxew</arg>
                                 <arg>-Xxew:instantiate lazy</arg>
@@ -80,6 +81,52 @@
                                     <version>0.6.2</version>
                                 </plugin>
                             </plugins>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Remove XJC-generated header (containing a timestamp) -->
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>replace-java</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>src/main/java/org/jooq/util/jaxb/*.java</include>
+                            </includes>
+                            <token>^//.*?$</token>
+                            <value></value>
+                            <regexFlags>
+                                <regexFlag>DOTALL</regexFlag>
+                                <regexFlag>MULTILINE</regexFlag>
+                            </regexFlags>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>replace-episode</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>src/main/java/META-INF/sun-jaxb.episode</include>
+                            </includes>
+                            <token>&lt;!--.*?--&gt;</token>
+                            <value></value>
+                            <regexFlags>
+                                <regexFlag>DOTALL</regexFlag>
+                                <regexFlag>MULTILINE</regexFlag>
+                            </regexFlags>
                         </configuration>
                     </execution>
                 </executions>

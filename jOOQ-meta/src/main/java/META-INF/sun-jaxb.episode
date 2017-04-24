@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+
+  <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd" if-exists="true" scd="x-schema::tns">
+    <schemaBindings map="false">
+      <package name="org.jooq.util.jaxb"/>
+    </schemaBindings>
+    <bindings if-exists="true" scd="tns:configuration">
+      <class ref="org.jooq.util.jaxb.Configuration"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Jdbc">
+      <class ref="org.jooq.util.jaxb.Jdbc"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Generator">
+      <class ref="org.jooq.util.jaxb.Generator"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Properties">
+      <class ref="org.jooq.util.jaxb.Properties"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Property">
+      <class ref="org.jooq.util.jaxb.Property"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Strategy">
+      <class ref="org.jooq.util.jaxb.Strategy"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Matchers">
+      <class ref="org.jooq.util.jaxb.Matchers"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersSchemasType">
+      <class ref="org.jooq.util.jaxb.MatchersSchemasType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersSchemaType">
+      <class ref="org.jooq.util.jaxb.MatchersSchemaType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersTablesType">
+      <class ref="org.jooq.util.jaxb.MatchersTablesType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersTableType">
+      <class ref="org.jooq.util.jaxb.MatchersTableType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersFieldsType">
+      <class ref="org.jooq.util.jaxb.MatchersFieldsType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersFieldType">
+      <class ref="org.jooq.util.jaxb.MatchersFieldType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersRoutinesType">
+      <class ref="org.jooq.util.jaxb.MatchersRoutinesType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersRoutineType">
+      <class ref="org.jooq.util.jaxb.MatchersRoutineType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersSequencesType">
+      <class ref="org.jooq.util.jaxb.MatchersSequencesType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersSequenceType">
+      <class ref="org.jooq.util.jaxb.MatchersSequenceType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatcherRule">
+      <class ref="org.jooq.util.jaxb.MatcherRule"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Database">
+      <class ref="org.jooq.util.jaxb.Database"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Catalogs">
+      <class ref="org.jooq.util.jaxb.Catalogs"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Catalog">
+      <class ref="org.jooq.util.jaxb.Catalog"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Schemata">
+      <class ref="org.jooq.util.jaxb.Schemata"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Schema">
+      <class ref="org.jooq.util.jaxb.Schema"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:CustomTypes">
+      <class ref="org.jooq.util.jaxb.CustomTypes"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:EnumTypes">
+      <class ref="org.jooq.util.jaxb.EnumTypes"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:ForcedTypes">
+      <class ref="org.jooq.util.jaxb.ForcedTypes"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:CustomType">
+      <class ref="org.jooq.util.jaxb.CustomType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:EnumType">
+      <class ref="org.jooq.util.jaxb.EnumType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:ForcedType">
+      <class ref="org.jooq.util.jaxb.ForcedType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Generate">
+      <class ref="org.jooq.util.jaxb.Generate"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Target">
+      <class ref="org.jooq.util.jaxb.Target"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Logging">
+      <typesafeEnumClass ref="org.jooq.util.jaxb.Logging"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatcherTransformType">
+      <typesafeEnumClass ref="org.jooq.util.jaxb.MatcherTransformType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:RegexFlag">
+      <typesafeEnumClass ref="org.jooq.util.jaxb.RegexFlag"/>
+    </bindings>
+  </bindings>
+</bindings>

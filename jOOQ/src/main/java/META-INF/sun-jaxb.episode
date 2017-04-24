@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+  <!--
+
+Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert
+Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren.
+Generiert: 2017.04.24 um 10:36:23 AM CEST
+
+  -->
+  <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd" if-exists="true" scd="x-schema::tns">
+    <schemaBindings map="false">
+      <package name="org.jooq.util.xml.jaxb"/>
+    </schemaBindings>
+    <bindings if-exists="true" scd="tns:information_schema">
+      <class ref="org.jooq.util.xml.jaxb.InformationSchema"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Schemata">
+      <class ref="org.jooq.util.xml.jaxb.Schemata"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Sequences">
+      <class ref="org.jooq.util.xml.jaxb.Sequences"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Tables">
+      <class ref="org.jooq.util.xml.jaxb.Tables"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Columns">
+      <class ref="org.jooq.util.xml.jaxb.Columns"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:TableConstraints">
+      <class ref="org.jooq.util.xml.jaxb.TableConstraints"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:KeyColumnUsages">
+      <class ref="org.jooq.util.xml.jaxb.KeyColumnUsages"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:ReferentialConstraints">
+      <class ref="org.jooq.util.xml.jaxb.ReferentialConstraints"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Routines">
+      <class ref="org.jooq.util.xml.jaxb.Routines"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Parameters">
+      <class ref="org.jooq.util.xml.jaxb.Parameters"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Schema">
+      <class ref="org.jooq.util.xml.jaxb.Schema"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Sequence">
+      <class ref="org.jooq.util.xml.jaxb.Sequence"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Table">
+      <class ref="org.jooq.util.xml.jaxb.Table"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Column">
+      <class ref="org.jooq.util.xml.jaxb.Column"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:TableConstraint">
+      <class ref="org.jooq.util.xml.jaxb.TableConstraint"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:KeyColumnUsage">
+      <class ref="org.jooq.util.xml.jaxb.KeyColumnUsage"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:ReferentialConstraint">
+      <class ref="org.jooq.util.xml.jaxb.ReferentialConstraint"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Routine">
+      <class ref="org.jooq.util.xml.jaxb.Routine"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Parameter">
+      <class ref="org.jooq.util.xml.jaxb.Parameter"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:TableConstraintType">
+      <typesafeEnumClass ref="org.jooq.util.xml.jaxb.TableConstraintType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:RoutineType">
+      <typesafeEnumClass ref="org.jooq.util.xml.jaxb.RoutineType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:ParameterMode">
+      <typesafeEnumClass ref="org.jooq.util.xml.jaxb.ParameterMode"/>
+    </bindings>
+  </bindings>
+</bindings>

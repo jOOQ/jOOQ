@@ -44,6 +44,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DSLContext;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
@@ -103,14 +104,20 @@ final class QueriesImpl extends AbstractQueryPart implements Queries, Attachable
     @Override
     public final Results fetchMany() {
         ResultsImpl results = new ResultsImpl(configuration());
+        DSLContext ctx = DSL.using(configuration());
 
         for (Query query : this)
             if (query instanceof ResultQuery)
-                results.resultsOrRows.addAll(((ResultQuery<?>) query).fetchMany().resultsOrRows());
+                results.resultsOrRows.addAll(ctx.fetchMany((ResultQuery<?>) query).resultsOrRows());
             else
-                results.resultsOrRows.add(new ResultOrRowsImpl(query.execute()));
+                results.resultsOrRows.add(new ResultOrRowsImpl(ctx.execute(query)));
 
         return results;
+    }
+
+    @Override
+    public final int[] executeBatch() {
+        return DSL.using(configuration()).batch(this).execute();
     }
 
     // ------------------------------------------------------------------------

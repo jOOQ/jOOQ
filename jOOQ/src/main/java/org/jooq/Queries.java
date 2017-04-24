@@ -34,7 +34,10 @@
  */
 package org.jooq;
 
+import java.sql.Statement;
 import java.util.stream.Stream;
+
+import org.jooq.exception.DetachedException;
 
 /**
  * A wrapper for a collection of queries.
@@ -74,9 +77,31 @@ public interface Queries extends QueryPart, Iterable<Query> {
     /**
      * Execute all queries one-by-one and return all results.
      * <p>
-     * This is a convenience method for calling {@link ResultQuery#fetchMany()}
-     * on each individual {@link ResultQuery}, or {@link Query#execute()} on all
-     * others.
+     * This is a convenience method for executing individual {@link #queries()}.
+     * <p>
+     * If this {@link Queries} reference is attached to a {@link Configuration},
+     * then that <code>configuration</code> is used through
+     * {@link DSLContext#fetchMany(ResultQuery)} or
+     * {@link DSLContext#execute(Query)}. If this <code>queries</code> reference
+     * is unattached, then each individual {@link ResultQuery#fetchMany()} or
+     * {@link Query#execute()} method is called.
+     *
+     * @throws DetachedException If this <code>queries</code> reference is
+     *             unattached and at least one of the contained
+     *             {@link #queries()} is also unattached.
      */
     Results fetchMany();
+
+    /**
+     * Sends the entire batch of queries to the server and executes them using a
+     * JDBC {@link Statement#executeBatch()} operation.
+     * <p>
+     * This {@link Queries} reference must be attached to a
+     * {@link Configuration}.
+     *
+     * @throws DetachedException If this <code>queries</code> reference is
+     *             unattached.
+     * @see DSLContext#batch(Queries)
+     */
+    int[] executeBatch();
 }

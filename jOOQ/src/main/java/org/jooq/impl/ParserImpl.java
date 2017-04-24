@@ -1415,62 +1415,7 @@ class ParserImpl implements Parser {
                             : constraint.unique(fieldNames));
                     }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
-                        parse(ctx, '(');
-                        Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-                        parseKeyword(ctx, "REFERENCES");
-                        Table<?> referencedTable = parseTableName(ctx);
-                        parse(ctx, '(');
-                        Field<?>[] referencedFields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-
-                        if (referencing.length != referencedFields.length)
-                            throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
-
-                        ConstraintForeignKeyOnStep e = constraint == null
-                            ? foreignKey(referencing).references(referencedTable, referencedFields)
-                            : constraint.foreignKey(referencing).references(referencedTable, referencedFields);
-
-                        boolean onDelete = false;
-                        boolean onUpdate = false;
-                        while ((!onDelete || !onUpdate) && parseKeywordIf(ctx, "ON")) {
-                            if (!onDelete && parseKeywordIf(ctx, "DELETE")) {
-                                onDelete = true;
-
-                                if (parseKeywordIf(ctx, "CASCADE"))
-                                    e = e.onDeleteCascade();
-                                else if (parseKeywordIf(ctx, "NO ACTION"))
-                                    e = e.onDeleteNoAction();
-                                else if (parseKeywordIf(ctx, "RESTRICT"))
-                                    e = e.onDeleteRestrict();
-                                else if (parseKeywordIf(ctx, "SET DEFAULT"))
-                                    e = e.onDeleteSetDefault();
-                                else if (parseKeywordIf(ctx, "SET NULL"))
-                                    e = e.onDeleteSetNull();
-                                else
-                                    throw ctx.unexpectedToken();
-                            }
-                            else if (!onUpdate && parseKeywordIf(ctx, "UPDATE")) {
-                                onUpdate = true;
-
-                                if (parseKeywordIf(ctx, "CASCADE"))
-                                    e = e.onUpdateCascade();
-                                else if (parseKeywordIf(ctx, "NO ACTION"))
-                                    e = e.onUpdateNoAction();
-                                else if (parseKeywordIf(ctx, "RESTRICT"))
-                                    e = e.onUpdateRestrict();
-                                else if (parseKeywordIf(ctx, "SET DEFAULT"))
-                                    e = e.onUpdateSetDefault();
-                                else if (parseKeywordIf(ctx, "SET NULL"))
-                                    e = e.onUpdateSetNull();
-                                else
-                                    throw ctx.unexpectedToken();
-                            }
-                            else
-                                throw ctx.unexpectedToken();
-                        }
-
-                        constraints.add(e);
+                        constraints.add(parseForeignKeySpecification(ctx, constraint));
                     }
                     else if (parseKeywordIf(ctx, "CHECK")) {
                         parse(ctx, '(');
@@ -1516,6 +1461,65 @@ class ParserImpl implements Parser {
         }
     }
 
+    private static Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parse(ctx, '(');
+        Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
+        parse(ctx, ')');
+        parseKeyword(ctx, "REFERENCES");
+        Table<?> referencedTable = parseTableName(ctx);
+        parse(ctx, '(');
+        Field<?>[] referencedFields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
+        parse(ctx, ')');
+
+        if (referencing.length != referencedFields.length)
+            throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
+
+        ConstraintForeignKeyOnStep e = constraint == null
+            ? foreignKey(referencing).references(referencedTable, referencedFields)
+            : constraint.foreignKey(referencing).references(referencedTable, referencedFields);
+
+        boolean onDelete = false;
+        boolean onUpdate = false;
+        while ((!onDelete || !onUpdate) && parseKeywordIf(ctx, "ON")) {
+            if (!onDelete && parseKeywordIf(ctx, "DELETE")) {
+                onDelete = true;
+
+                if (parseKeywordIf(ctx, "CASCADE"))
+                    e = e.onDeleteCascade();
+                else if (parseKeywordIf(ctx, "NO ACTION"))
+                    e = e.onDeleteNoAction();
+                else if (parseKeywordIf(ctx, "RESTRICT"))
+                    e = e.onDeleteRestrict();
+                else if (parseKeywordIf(ctx, "SET DEFAULT"))
+                    e = e.onDeleteSetDefault();
+                else if (parseKeywordIf(ctx, "SET NULL"))
+                    e = e.onDeleteSetNull();
+                else
+                    throw ctx.unexpectedToken();
+            }
+            else if (!onUpdate && parseKeywordIf(ctx, "UPDATE")) {
+                onUpdate = true;
+
+                if (parseKeywordIf(ctx, "CASCADE"))
+                    e = e.onUpdateCascade();
+                else if (parseKeywordIf(ctx, "NO ACTION"))
+                    e = e.onUpdateNoAction();
+                else if (parseKeywordIf(ctx, "RESTRICT"))
+                    e = e.onUpdateRestrict();
+                else if (parseKeywordIf(ctx, "SET DEFAULT"))
+                    e = e.onUpdateSetDefault();
+                else if (parseKeywordIf(ctx, "SET NULL"))
+                    e = e.onUpdateSetNull();
+                else
+                    throw ctx.unexpectedToken();
+            }
+            else
+                throw ctx.unexpectedToken();
+        }
+
+        return e;
+    }
+
     private static final DDLQuery parseAlterTable(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> tableName = parseTableName(ctx);
@@ -1552,21 +1556,7 @@ class ParserImpl implements Parser {
                             : s1.add(constraint.unique(fieldNames));
                     }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
-                        parse(ctx, '(');
-                        Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-                        parseKeyword(ctx, "REFERENCES");
-                        Table<?> referencedTable = parseTableName(ctx);
-                        parse(ctx, '(');
-                        Field<?>[] referencedFields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-
-                        if (referencing.length != referencedFields.length)
-                            throw ctx.exception("Number of referencing columns must match number of referenced columns");
-
-                        return constraint == null
-                            ? s1.add(foreignKey(referencing).references(referencedTable, referencedFields))
-                            : s1.add(constraint.foreignKey(referencing).references(referencedTable, referencedFields));
+                        return s1.add(parseForeignKeySpecification(ctx, constraint));
                     }
                     else if (parseKeywordIf(ctx, "CHECK")) {
                         parse(ctx, '(');

@@ -603,6 +603,26 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> LoaderOptionsStep<R> loadInto(Table<R> table);
 
     // -------------------------------------------------------------------------
+    // XXX: Queries
+    // -------------------------------------------------------------------------
+
+    /**
+     * Wrap a collection of queries.
+     *
+     * @see DSL#queries(Query...)
+     */
+    @Support
+    Queries queries(Query... queries);
+
+    /**
+     * Wrap a collection of queries.
+     *
+     * @see DSL#queries(Collection)
+     */
+    @Support
+    Queries queries(Collection<? extends Query> queries);
+
+    // -------------------------------------------------------------------------
     // XXX Plain SQL API
     // -------------------------------------------------------------------------
 

@@ -707,6 +707,20 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     // -------------------------------------------------------------------------
+    // XXX: Queries
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Queries queries(Query... queries) {
+        return queries(Arrays.asList(queries));
+    }
+
+    @Override
+    public Queries queries(Collection<? extends Query> queries) {
+        return new QueriesImpl(configuration(), queries);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Plain SQL API
     // -------------------------------------------------------------------------
 

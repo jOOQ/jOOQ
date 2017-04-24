@@ -7997,6 +7997,8 @@ public class DSL {
 
     /**
      * Wrap a collection of queries.
+     *
+     * @see DSLContext#queries(Query...)
      */
     @Support
     public static Queries queries(Query... queries) {
@@ -8005,10 +8007,12 @@ public class DSL {
 
     /**
      * Wrap a collection of queries.
+     *
+     * @see DSLContext#queries(Collection)
      */
     @Support
     public static Queries queries(Collection<? extends Query> queries) {
-        return new QueriesImpl(new DefaultConfiguration(), queries);
+        return DSL.using(new DefaultConfiguration()).queries(queries);
     }
 
 

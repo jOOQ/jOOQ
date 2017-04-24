@@ -120,8 +120,8 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
-//                      TODO This is not yet supported
-//                      column.setIdentityGeneration(co.isIdentity());
+                        if (co.isIdentity())
+                            column.setIdentityGeneration("YES");
                         column.setIsNullable(column.isIsNullable());
                         column.setNumericPrecision(type.getPrecision());
                         column.setNumericScale(type.getScale());

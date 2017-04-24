@@ -66,9 +66,14 @@ final class QueriesImpl implements Queries {
     }
 
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Stream<Query> stream() {
+        return queryStream();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Stream<Query> queryStream() {
         return (Stream) queries.stream();
     }
 

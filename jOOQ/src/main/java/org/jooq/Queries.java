@@ -51,7 +51,15 @@ public interface Queries extends Iterable<Query> {
 
     /**
      * The wrapped collection of queries.
+     *
+     * @deprecated - 3.10 - [#6143] - Use {@link #queryStream()} instead.
      */
+    @Deprecated
     Stream<Query> stream();
+
+    /**
+     * The wrapped collection of queries.
+     */
+    Stream<Query> queryStream();
 
 }

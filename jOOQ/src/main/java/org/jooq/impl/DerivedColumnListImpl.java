@@ -34,8 +34,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.name;
-
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -66,6 +64,7 @@ import org.jooq.DerivedColumnList7;
 import org.jooq.DerivedColumnList8;
 import org.jooq.DerivedColumnList9;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Select;
 
 /**
@@ -107,13 +106,13 @@ implements
      */
     private static final long                                             serialVersionUID = -369633206858851863L;
 
-    final String                                                          name;
-    final String[]                                                        fieldNames;
+    final Name                                                            name;
+    final Name[]                                                          fieldNames;
 
     final BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
 
 
-    DerivedColumnListImpl(String name, String[] fieldNames) {
+    DerivedColumnListImpl(Name name, Name[] fieldNames) {
         this.name = name;
         this.fieldNames = fieldNames;
 
@@ -123,7 +122,7 @@ implements
 
 
     DerivedColumnListImpl(String name, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
-        this.name = name;
+        this.name = DSL.name(name);
         this.fieldNames = null;
         this.fieldNameFunction = fieldNameFunction;
     }
@@ -137,9 +136,9 @@ implements
 
         if (fieldNameFunction != null) {
             List<Field<?>> source = s.getSelect();
-            String[] names = new String[source.size()];
+            Name[] names = new Name[source.size()];
             for (int i = 0; i < names.length; i++)
-                names[i] = fieldNameFunction.apply(source.get(i), i);
+                names[i] = DSL.name(fieldNameFunction.apply(source.get(i), i));
             return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s);
         }
 
@@ -149,7 +148,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name(name));
+        ctx.visit(name);
 
         if (fieldNames != null && fieldNames.length > 0) {
             ctx.sql('(');
@@ -158,7 +157,7 @@ implements
                 if (i > 0)
                     ctx.sql(", ");
 
-                ctx.visit(name(fieldNames[i]));
+                ctx.visit(fieldNames[i]);
             }
 
             ctx.sql(')');

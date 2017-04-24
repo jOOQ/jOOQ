@@ -1354,9 +1354,7 @@ class ParserImpl implements Parser {
                     }
 
                     if (parseKeywordIf(ctx, "CHECK")) {
-                        parse(ctx, '(');
-                        constraints.add(check(parseCondition(ctx)));
-                        parse(ctx, ')');
+                        constraints.add(parseCheckSpecification(ctx, null));
                         continue;
                     }
 
@@ -1391,44 +1389,20 @@ class ParserImpl implements Parser {
                         constraint = constraint(parseIdentifier(ctx));
 
                     if (parseKeywordIf(ctx, "PRIMARY KEY")) {
-                        if (primary) {
+                        if (primary)
                             throw ctx.exception("Duplicate primary key specification");
-                        }
-                        else {
-                            primary = true;
-                            parse(ctx, '(');
-                            Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                            parse(ctx, ')');
 
-                            constraints.add(constraint == null
-                                ? primaryKey(fieldNames)
-                                : constraint.primaryKey(fieldNames));
-                        }
+                        primary = true;
+                        constraints.add(parsePrimaryKeySpecification(ctx, constraint));
                     }
-                    else if (parseKeywordIf(ctx, "UNIQUE")) {
-                        parse(ctx, '(');
-                        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-
-                        constraints.add(constraint == null
-                            ? unique(fieldNames)
-                            : constraint.unique(fieldNames));
-                    }
-                    else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
+                    else if (parseKeywordIf(ctx, "UNIQUE"))
+                        constraints.add(parseUniqueSpecification(ctx, constraint));
+                    else if (parseKeywordIf(ctx, "FOREIGN KEY"))
                         constraints.add(parseForeignKeySpecification(ctx, constraint));
-                    }
-                    else if (parseKeywordIf(ctx, "CHECK")) {
-                        parse(ctx, '(');
-                        Condition condition = parseCondition(ctx);
-                        parse(ctx, ')');
-
-                        constraints.add(constraint == null
-                            ? check(condition)
-                            : constraint.check(condition));
-                    }
-                    else {
+                    else if (parseKeywordIf(ctx, "CHECK"))
+                        constraints.add(parseCheckSpecification(ctx, constraint));
+                    else
                         throw ctx.unexpectedToken();
-                    }
                 }
                 while (parseIf(ctx, ','));
             }
@@ -1461,7 +1435,38 @@ class ParserImpl implements Parser {
         }
     }
 
-    private static Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+    private static Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parse(ctx, '(');
+        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
+        parse(ctx, ')');
+
+        Constraint e = constraint == null
+            ? primaryKey(fieldNames)
+            : constraint.primaryKey(fieldNames);
+        return e;
+    }
+
+    private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parse(ctx, '(');
+        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
+        parse(ctx, ')');
+
+        return constraint == null
+            ? unique(fieldNames)
+            : constraint.unique(fieldNames);
+    }
+
+    private static final Constraint parseCheckSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parse(ctx, '(');
+        Condition condition = parseCondition(ctx);
+        parse(ctx, ')');
+
+        return constraint == null
+            ? check(condition)
+            : constraint.check(condition);
+    }
+
+    private static final Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parse(ctx, '(');
         Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
@@ -1534,42 +1539,20 @@ class ParserImpl implements Parser {
             case 'A':
                 if (parseKeywordIf(ctx, "ADD")) {
                     ConstraintTypeStep constraint = null;
+
                     if (parseKeywordIf(ctx, "CONSTRAINT"))
                         constraint = constraint(parseIdentifier(ctx));
 
-                    if (parseKeywordIf(ctx, "PRIMARY KEY")) {
-                        parse(ctx, '(');
-                        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-
-                        return constraint == null
-                            ? s1.add(primaryKey(fieldNames))
-                            : s1.add(constraint.primaryKey(fieldNames));
-                    }
-                    else if (parseKeywordIf(ctx, "UNIQUE")) {
-                        parse(ctx, '(');
-                        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-                        parse(ctx, ')');
-
-                        return constraint == null
-                            ? s1.add(unique(fieldNames))
-                            : s1.add(constraint.unique(fieldNames));
-                    }
-                    else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
+                    if (parseKeywordIf(ctx, "PRIMARY KEY"))
+                        return s1.add(parsePrimaryKeySpecification(ctx, constraint));
+                    else if (parseKeywordIf(ctx, "UNIQUE"))
+                        return s1.add(parseUniqueSpecification(ctx, constraint));
+                    else if (parseKeywordIf(ctx, "FOREIGN KEY"))
                         return s1.add(parseForeignKeySpecification(ctx, constraint));
-                    }
-                    else if (parseKeywordIf(ctx, "CHECK")) {
-                        parse(ctx, '(');
-                        Condition condition = parseCondition(ctx);
-                        parse(ctx, ')');
-
-                        return constraint == null
-                            ? s1.add(check(condition))
-                            : s1.add(constraint.check(condition));
-                    }
-                    else if (constraint != null) {
+                    else if (parseKeywordIf(ctx, "CHECK"))
+                        return s1.add(parseCheckSpecification(ctx, constraint));
+                    else if (constraint != null)
                         throw ctx.unexpectedToken();
-                    }
                     else {
                         parseKeywordIf(ctx, "COLUMN");
 
@@ -1607,18 +1590,14 @@ class ParserImpl implements Parser {
                                 }
                             }
 
-                            if (!unique) {
-                                if (parseKeywordIf(ctx, "PRIMARY KEY")) {
+                            if (!unique)
+                                if (parseKeywordIf(ctx, "PRIMARY KEY"))
                                     throw ctx.unexpectedToken();
-                                }
-                                else if (parseKeywordIf(ctx, "UNIQUE")) {
+                                else if (parseKeywordIf(ctx, "UNIQUE"))
                                     throw ctx.unexpectedToken();
-                                }
-                            }
 
-                            if (parseKeywordIf(ctx, "CHECK")) {
+                            if (parseKeywordIf(ctx, "CHECK"))
                                 throw ctx.unexpectedToken();
-                            }
 
                             break;
                         }

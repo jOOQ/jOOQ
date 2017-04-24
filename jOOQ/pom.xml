@@ -99,7 +99,6 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <forceRegenerate>true</forceRegenerate>
                             <extension>true</extension>
                             <strict>false</strict>
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>

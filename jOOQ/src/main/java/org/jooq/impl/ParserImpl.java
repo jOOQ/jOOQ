@@ -263,6 +263,8 @@ import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.GroupConcatOrderByStep;
+import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
 import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
@@ -3021,7 +3023,7 @@ class ParserImpl implements Parser {
             return field;
 
         else
-            return parseFieldName(ctx);
+            return parseFieldNameOrSequenceExpression(ctx);
     }
 
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {
@@ -3864,7 +3866,10 @@ class ParserImpl implements Parser {
             over = parseOrderedSetFunctionIf(ctx);
 
         if (agg == null && over == null)
-            return null;
+            if (!basic)
+                return parseSpecialAggregateFunctionIf(ctx);
+            else
+                return null;
 
 
 
@@ -3911,6 +3916,36 @@ class ParserImpl implements Parser {
         }
 
         return result;
+    }
+
+    private static final Field<?> parseSpecialAggregateFunctionIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "GROUP_CONCAT")) {
+            parse(ctx, '(');
+
+            GroupConcatOrderByStep s1;
+            GroupConcatSeparatorStep s2;
+            AggregateFunction<String> s3;
+
+            if (parseKeywordIf(ctx, "DISTINCT"))
+                s1 = DSL.groupConcatDistinct(parseField(ctx));
+            else
+                s1 = DSL.groupConcat(parseField(ctx));
+
+            if (parseKeywordIf(ctx, "ORDER BY"))
+                s2 = s1.orderBy(parseSortSpecification(ctx));
+            else
+                s2 = s1;
+
+            if (parseKeywordIf(ctx, "SEPARATOR"))
+                s3 = s2.separator(parseStringLiteral(ctx));
+            else
+                s3 = s2;
+
+            parse(ctx, ')');
+            return s3;
+        }
+
+        return null;
     }
 
     private static final Object parseWindowNameOrSpecification(ParserContext ctx, boolean orderByAllowed) {
@@ -4525,6 +4560,21 @@ class ParserImpl implements Parser {
 
     private static final Table<?> parseTableName(ParserContext ctx) {
         return table(parseName(ctx));
+    }
+
+    private static final Field<?> parseFieldNameOrSequenceExpression(ParserContext ctx) {
+        Name name = parseName(ctx);
+
+        if (name.qualified()) {
+            String last = name.last();
+
+            if ("NEXTVAL".equalsIgnoreCase(last))
+                return sequence(name.qualifier()).nextval();
+            else if ("CURRVAL".equalsIgnoreCase(last))
+                return sequence(name.qualifier()).currval();
+        }
+
+        return field(name);
     }
 
     private static final TableField<?, ?> parseFieldName(ParserContext ctx) {

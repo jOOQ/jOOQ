@@ -905,7 +905,7 @@ class ParserImpl implements Parser {
 
             returning = onDuplicate =  ctx.dsl.insertInto(tableName).set(map);
         }
-        else if (peekKeyword(ctx, "SELECT", false, true)){
+        else if (peekKeyword(ctx, "SELECT", false, true, false)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             returning = onDuplicate = (fields == null)
@@ -2062,7 +2062,7 @@ class ParserImpl implements Parser {
             result = lateral(parseSelect(ctx));
             parse(ctx, ')');
         }
-        else if (parseKeywordIf(ctx, "UNNEST")) {
+        else if (parseFunctionNameIf(ctx, "UNNEST")) {
             // TODO
             throw ctx.notImplemented("UNNEST");
         }
@@ -2419,13 +2419,13 @@ class ParserImpl implements Parser {
     }
 
     private static final RowN parseRow(ParserContext ctx, Integer degree) {
-        parseKeywordIf(ctx, "ROW");
+        parseFunctionNameIf(ctx, "ROW");
         RowN row = parseTuple(ctx, degree);
         return row;
     }
 
     private static final RowN parseRow(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
-        parseKeywordIf(ctx, "ROW");
+        parseFunctionNameIf(ctx, "ROW");
         RowN row = parseTuple(ctx, degree, allowDoubleParens);
         return row;
     }
@@ -2632,11 +2632,11 @@ class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldAsciiIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "ACOS"))
+                    else if (parseFunctionNameIf(ctx, "ACOS"))
                         return acos((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "ASIN"))
+                    else if (parseFunctionNameIf(ctx, "ASIN"))
                         return asin((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "ATAN"))
+                    else if (parseFunctionNameIf(ctx, "ATAN"))
                         return atan((Field) parseFieldSumParenthesised(ctx));
                     else if ((field = parseFieldAtan2If(ctx)) != null)
                         return field;
@@ -2670,16 +2670,18 @@ class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldCharLengthIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "CEILING") || parseKeywordIf(ctx, "CEIL"))
+                    else if (parseFunctionNameIf(ctx, "CEILING") || parseFunctionNameIf(ctx, "CEIL"))
                         return ceil((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "COSH"))
+                    else if (parseFunctionNameIf(ctx, "COSH"))
                         return cosh((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "COS"))
+                    else if (parseFunctionNameIf(ctx, "COS"))
                         return cos((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "COTH"))
+                    else if (parseFunctionNameIf(ctx, "COTH"))
                         return coth((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "COT"))
+                    else if (parseFunctionNameIf(ctx, "COT"))
                         return cot((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.CURRVAL)) != null)
+                        return field;
 
                 if (D.is(type))
                     if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP"))
@@ -2711,7 +2713,7 @@ class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDayIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "DEGREE") || parseKeywordIf(ctx, "DEG"))
+                    else if (parseFunctionNameIf(ctx, "DEGREE") || parseFunctionNameIf(ctx, "DEG"))
                         return deg((Field) parseFieldSumParenthesised(ctx));
 
                 break;
@@ -2721,7 +2723,7 @@ class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldExtractIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "EXP"))
+                    else if (parseFunctionNameIf(ctx, "EXP"))
                         return exp((Field) parseFieldSumParenthesised(ctx));
 
                 break;
@@ -2729,7 +2731,7 @@ class ParserImpl implements Parser {
             case 'f':
             case 'F':
                 if (N.is(type))
-                    if (parseKeywordIf(ctx, "FLOOR"))
+                    if (parseFunctionNameIf(ctx, "FLOOR"))
                         return floor((Field) parseFieldSumParenthesised(ctx));
 
                 if ((field = parseFieldFirstValueIf(ctx)) != null)
@@ -2782,7 +2784,7 @@ class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldLengthIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "LN"))
+                    else if (parseFunctionNameIf(ctx, "LN"))
                         return ln((Field) parseFieldSumParenthesised(ctx));
                     else if ((field = parseFieldLogIf(ctx)) != null)
                         return field;
@@ -2828,6 +2830,10 @@ class ParserImpl implements Parser {
                 else if ((field = parseFieldNtileIf(ctx)) != null)
                     return field;
                 else if ((field = parseFieldNthValueIf(ctx)) != null)
+                    return field;
+                else if ((field = parseNextValueIf(ctx)) != null)
+                    return field;
+                else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.NEXTVAL)) != null)
                     return field;
 
                 break;
@@ -2886,10 +2892,10 @@ class ParserImpl implements Parser {
                         return field;
                     else if (parseKeywordIf(ctx, "ROWNUM"))
                         return rownum();
-                    else if (parseKeywordIf(ctx, "RADIAN") || parseKeywordIf(ctx, "RAD"))
+                    else if (parseFunctionNameIf(ctx, "RADIAN") || parseFunctionNameIf(ctx, "RAD"))
                         return rad((Field) parseFieldSumParenthesised(ctx));
 
-                if (parseKeywordIf(ctx, "ROW"))
+                if (parseFunctionNameIf(ctx, "ROW"))
                     return parseTuple(ctx);
 
                 break;
@@ -2907,11 +2913,11 @@ class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldSignIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "SQRT") || parseKeywordIf(ctx, "SQR"))
+                    else if (parseFunctionNameIf(ctx, "SQRT") || parseFunctionNameIf(ctx, "SQR"))
                         return sqrt((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "SINH"))
+                    else if (parseFunctionNameIf(ctx, "SINH"))
                         return sinh((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "SIN"))
+                    else if (parseFunctionNameIf(ctx, "SIN"))
                         return sin((Field) parseFieldSumParenthesised(ctx));
 
                 break;
@@ -2929,9 +2935,9 @@ class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldTruncIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "TANH"))
+                    else if (parseFunctionNameIf(ctx, "TANH"))
                         return tanh((Field) parseFieldSumParenthesised(ctx));
-                    else if (parseKeywordIf(ctx, "TAN"))
+                    else if (parseFunctionNameIf(ctx, "TAN"))
                         return tan((Field) parseFieldSumParenthesised(ctx));
 
                 if (D.is(type))
@@ -3026,6 +3032,40 @@ class ParserImpl implements Parser {
             return parseFieldNameOrSequenceExpression(ctx);
     }
 
+    private static final Field<?> parseNextValueIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "NEXT VALUE FOR"))
+            return sequence(parseName(ctx)).nextval();
+
+        return null;
+    }
+
+    private static final Field<?> parseNextvalCurrvalIf(ParserContext ctx, SequenceMethod method) {
+        if (parseFunctionNameIf(ctx, method.name())) {
+            parse(ctx, '(');
+
+            Name name = parseNameIf(ctx);
+            Sequence s = name != null
+                ? sequence(name)
+                : sequence(ctx.dsl.parser().parseName(parseStringLiteral(ctx)));
+
+            parse(ctx, ')');
+
+            if (method == SequenceMethod.NEXTVAL)
+                return s.nextval();
+            else if (method == SequenceMethod.CURRVAL)
+                return s.currval();
+            else
+                throw ctx.exception("Only NEXTVAL and CURRVAL methods supported");
+        }
+
+        return null;
+    }
+
+    private static enum SequenceMethod {
+        NEXTVAL,
+        CURRVAL;
+    }
+
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "ARRAY")) {
             parse(ctx, '[');
@@ -3046,7 +3086,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldAtan2If(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "ATN2") || parseKeywordIf(ctx, "ATAN2")) {
+        if (parseFunctionNameIf(ctx, "ATN2") || parseFunctionNameIf(ctx, "ATAN2")) {
             parse(ctx, '(');
             Field<?> x = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
@@ -3060,7 +3100,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLogIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LOG")) {
+        if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
             Field<?> arg1 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
@@ -3073,7 +3113,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldTruncIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "TRUNC")) {
+        if (parseFunctionNameIf(ctx, "TRUNC")) {
             parse(ctx, '(');
             Field<?> arg1 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
@@ -3086,7 +3126,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRoundIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "ROUND")) {
+        if (parseFunctionNameIf(ctx, "ROUND")) {
             Field arg1 = null;
             Integer arg2 = null;
 
@@ -3103,7 +3143,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldPowerIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "POWER") || parseKeywordIf(ctx, "POW")) {
+        if (parseFunctionNameIf(ctx, "POWER") || parseFunctionNameIf(ctx, "POW")) {
             parse(ctx, '(');
             Field arg1 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
@@ -3116,7 +3156,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldModIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "MOD")) {
+        if (parseFunctionNameIf(ctx, "MOD")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx, N);
             parse(ctx, ',');
@@ -3129,7 +3169,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLeastIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LEAST")) {
+        if (parseFunctionNameIf(ctx, "LEAST")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
             parse(ctx, ')');
@@ -3141,7 +3181,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldGreatestIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "GREATEST")) {
+        if (parseFunctionNameIf(ctx, "GREATEST")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
             parse(ctx, ')');
@@ -3153,7 +3193,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldGroupingIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "GROUPING")) {
+        if (parseFunctionNameIf(ctx, "GROUPING")) {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
             parse(ctx, ')');
@@ -3165,7 +3205,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldGroupingIdIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "GROUPING_ID")) {
+        if (parseFunctionNameIf(ctx, "GROUPING_ID")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
             parse(ctx, ')');
@@ -3255,7 +3295,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldExtractIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "EXTRACT")) {
+        if (parseFunctionNameIf(ctx, "EXTRACT")) {
             parse(ctx, '(');
             DatePart part = parseDatePart(ctx);
             parseKeyword(ctx, "FROM");
@@ -3277,7 +3317,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldAsciiIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "ASCII")) {
+        if (parseFunctionNameIf(ctx, "ASCII")) {
             parse(ctx, '(');
             Field<?> arg = parseField(ctx, S);
             parse(ctx, ')');
@@ -3288,7 +3328,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldConcatIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CONCAT")) {
+        if (parseFunctionNameIf(ctx, "CONCAT")) {
             parse(ctx, '(');
             Field<String> result = concat(parseFields(ctx).toArray(EMPTY_FIELD));
             parse(ctx, ')');
@@ -3299,7 +3339,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldInstrIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "INSTR")) {
+        if (parseFunctionNameIf(ctx, "INSTR")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3312,7 +3352,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCharIndexIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CHARINDEX")) {
+        if (parseFunctionNameIf(ctx, "CHARINDEX")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3325,7 +3365,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLpadIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LPAD")) {
+        if (parseFunctionNameIf(ctx, "LPAD")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3343,7 +3383,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRpadIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "RPAD")) {
+        if (parseFunctionNameIf(ctx, "RPAD")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3361,7 +3401,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldPositionIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "POSITION")) {
+        if (parseFunctionNameIf(ctx, "POSITION")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parseKeyword(ctx, "IN");
@@ -3374,7 +3414,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRepeatIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "REPEAT")) {
+        if (parseFunctionNameIf(ctx, "REPEAT")) {
             parse(ctx, '(');
             Field<String> field = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3387,7 +3427,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldReplaceIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "REPLACE")) {
+        if (parseFunctionNameIf(ctx, "REPLACE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3405,7 +3445,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldReverseIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "REVERSE")) {
+        if (parseFunctionNameIf(ctx, "REVERSE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3416,7 +3456,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldSpaceIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "SPACE")) {
+        if (parseFunctionNameIf(ctx, "SPACE")) {
             parse(ctx, '(');
             Field<Integer> f1 = (Field) parseField(ctx, N);
             parse(ctx, ')');
@@ -3427,8 +3467,8 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldSubstringIf(ParserContext ctx) {
-        boolean substring = parseKeywordIf(ctx, "SUBSTRING");
-        boolean substr = !substring && parseKeywordIf(ctx, "SUBSTR");
+        boolean substring = parseFunctionNameIf(ctx, "SUBSTRING");
+        boolean substr = !substring && parseFunctionNameIf(ctx, "SUBSTR");
 
         if (substring || substr) {
             boolean keywords = !substr;
@@ -3452,7 +3492,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldTrimIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "TRIM")) {
+        if (parseFunctionNameIf(ctx, "TRIM")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3463,7 +3503,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRtrimIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "RTRIM")) {
+        if (parseFunctionNameIf(ctx, "RTRIM")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3474,7 +3514,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLtrimIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LTRIM")) {
+        if (parseFunctionNameIf(ctx, "LTRIM")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3485,7 +3525,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldMidIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "MID")) {
+        if (parseFunctionNameIf(ctx, "MID")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3500,7 +3540,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLeftIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LEFT")) {
+        if (parseFunctionNameIf(ctx, "LEFT")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3513,7 +3553,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRightIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "RIGHT")) {
+        if (parseFunctionNameIf(ctx, "RIGHT")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');
@@ -3526,7 +3566,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldMd5If(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "MD5")) {
+        if (parseFunctionNameIf(ctx, "MD5")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3537,7 +3577,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLengthIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LENGTH")) {
+        if (parseFunctionNameIf(ctx, "LENGTH")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3548,7 +3588,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCharLengthIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CHAR_LENGTH")) {
+        if (parseFunctionNameIf(ctx, "CHAR_LENGTH")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3559,7 +3599,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldBitLengthIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "BIT_LENGTH")) {
+        if (parseFunctionNameIf(ctx, "BIT_LENGTH")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3570,7 +3610,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldOctetLengthIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "OCTET_LENGTH")) {
+        if (parseFunctionNameIf(ctx, "OCTET_LENGTH")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3581,7 +3621,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLowerIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LOWER") || parseKeywordIf(ctx, "LCASE")) {
+        if (parseFunctionNameIf(ctx, "LOWER") || parseFunctionNameIf(ctx, "LCASE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3592,7 +3632,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldUpperIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "UPPER") || parseKeywordIf(ctx, "UCASE")) {
+        if (parseFunctionNameIf(ctx, "UPPER") || parseFunctionNameIf(ctx, "UCASE")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -3603,7 +3643,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldYearIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "YEAR")) {
+        if (parseFunctionNameIf(ctx, "YEAR")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3614,7 +3654,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldMonthIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "MONTH")) {
+        if (parseFunctionNameIf(ctx, "MONTH")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3625,7 +3665,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldDayIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "DAY")) {
+        if (parseFunctionNameIf(ctx, "DAY")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3636,7 +3676,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldHourIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "HOUR")) {
+        if (parseFunctionNameIf(ctx, "HOUR")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3647,7 +3687,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldMinuteIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "MINUTE")) {
+        if (parseFunctionNameIf(ctx, "MINUTE")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3658,7 +3698,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldSecondIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "SECOND")) {
+        if (parseFunctionNameIf(ctx, "SECOND")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
@@ -3669,7 +3709,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldSignIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "SIGN")) {
+        if (parseFunctionNameIf(ctx, "SIGN")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx, N);
             parse(ctx, ')');
@@ -3680,7 +3720,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldIfnullIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "IFNULL")) {
+        if (parseFunctionNameIf(ctx, "IFNULL")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -3694,7 +3734,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldIsnullIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "ISNULL")) {
+        if (parseFunctionNameIf(ctx, "ISNULL")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -3708,7 +3748,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldNvlIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "NVL")) {
+        if (parseFunctionNameIf(ctx, "NVL")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -3722,7 +3762,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldNvl2If(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "NVL2")) {
+        if (parseFunctionNameIf(ctx, "NVL2")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -3738,7 +3778,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldNullifIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "NULLIF")) {
+        if (parseFunctionNameIf(ctx, "NULLIF")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -3752,7 +3792,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCoalesceIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "COALESCE")) {
+        if (parseFunctionNameIf(ctx, "COALESCE")) {
             parse(ctx, '(');
             List<Field<?>> fields = parseFields(ctx);
             parse(ctx, ')');
@@ -3814,7 +3854,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseCastIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CAST")) {
+        if (parseFunctionNameIf(ctx, "CAST")) {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
             parseKeyword(ctx, "AS");
@@ -3919,7 +3959,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseSpecialAggregateFunctionIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "GROUP_CONCAT")) {
+        if (parseFunctionNameIf(ctx, "GROUP_CONCAT")) {
             parse(ctx, '(');
 
             GroupConcatOrderByStep s1;
@@ -4119,7 +4159,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRankIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "RANK")) {
+        if (parseFunctionNameIf(ctx, "RANK")) {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
@@ -4136,7 +4176,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldDenseRankIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "DENSE_RANK")) {
+        if (parseFunctionNameIf(ctx, "DENSE_RANK")) {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
@@ -4153,7 +4193,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldPercentRankIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "PERCENT_RANK")) {
+        if (parseFunctionNameIf(ctx, "PERCENT_RANK")) {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
@@ -4170,7 +4210,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCumeDistIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CUME_DIST")) {
+        if (parseFunctionNameIf(ctx, "CUME_DIST")) {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
@@ -4187,7 +4227,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldRowNumberIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "ROW_NUMBER")) {
+        if (parseFunctionNameIf(ctx, "ROW_NUMBER")) {
             parse(ctx, '(');
             parse(ctx, ')');
             return parseWindowFunction(ctx, null, rowNumber());
@@ -4197,7 +4237,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldNtileIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "NTILE")) {
+        if (parseFunctionNameIf(ctx, "NTILE")) {
             parse(ctx, '(');
             int number = (int) (long) parseUnsignedInteger(ctx);
             parse(ctx, ')');
@@ -4208,8 +4248,8 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLeadLagIf(ParserContext ctx) {
-        boolean lead = parseKeywordIf(ctx, "LEAD");
-        boolean lag = !lead && parseKeywordIf(ctx, "LAG");
+        boolean lead = parseFunctionNameIf(ctx, "LEAD");
+        boolean lag = !lead && parseFunctionNameIf(ctx, "LAG");
 
         if (lead || lag) {
             parse(ctx, '(');
@@ -4242,7 +4282,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldFirstValueIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "FIRST_VALUE")) {
+        if (parseFunctionNameIf(ctx, "FIRST_VALUE")) {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
             parse(ctx, ')');
@@ -4253,7 +4293,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLastValueIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "LAST_VALUE")) {
+        if (parseFunctionNameIf(ctx, "LAST_VALUE")) {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
             parse(ctx, ')');
@@ -4264,7 +4304,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldNthValueIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "NTH_VALUE")) {
+        if (parseFunctionNameIf(ctx, "NTH_VALUE")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
@@ -4384,22 +4424,22 @@ class ParserImpl implements Parser {
         // consumed earlier in parseFieldTerm(). We should implement backtracking...
         OrderedAggregateFunction<?> ordered;
 
-        if (parseKeywordIf(ctx, "RANK")) {
+        if (parseFunctionNameIf(ctx, "RANK")) {
             parse(ctx, '(');
             ordered = rank(parseFields(ctx));
             parse(ctx, ')');
         }
-        else if (parseKeywordIf(ctx, "DENSE_RANK")) {
+        else if (parseFunctionNameIf(ctx, "DENSE_RANK")) {
             parse(ctx, '(');
             ordered = denseRank(parseFields(ctx));
             parse(ctx, ')');
         }
-        else if (parseKeywordIf(ctx, "PERCENT_RANK")) {
+        else if (parseFunctionNameIf(ctx, "PERCENT_RANK")) {
             parse(ctx, '(');
             ordered = percentRank(parseFields(ctx));
             parse(ctx, ')');
         }
-        else if (parseKeywordIf(ctx, "CUME_DIST")) {
+        else if (parseFunctionNameIf(ctx, "CUME_DIST")) {
             parse(ctx, '(');
             ordered = cumeDist(parseFields(ctx));
             parse(ctx, ')');
@@ -4413,12 +4453,12 @@ class ParserImpl implements Parser {
     private static final OrderedAggregateFunction<BigDecimal> parseInverseDistributionFunctionIf(ParserContext ctx) {
         OrderedAggregateFunction<BigDecimal> ordered;
 
-        if (parseKeywordIf(ctx, "PERCENTILE_CONT")) {
+        if (parseFunctionNameIf(ctx, "PERCENTILE_CONT")) {
             parse(ctx, '(');
             ordered = percentileCont(parseFieldUnsignedNumericLiteral(ctx, Sign.NONE));
             parse(ctx, ')');
         }
-        else if (parseKeywordIf(ctx, "PERCENTILE_DISC")) {
+        else if (parseFunctionNameIf(ctx, "PERCENTILE_DISC")) {
             parse(ctx, '(');
             ordered = percentileDisc(parseFieldUnsignedNumericLiteral(ctx, Sign.NONE));
             parse(ctx, ')');
@@ -4432,7 +4472,7 @@ class ParserImpl implements Parser {
     private static final OrderedAggregateFunction<String> parseListaggFunctionIf(ParserContext ctx) {
         OrderedAggregateFunction<String> ordered;
 
-        if (parseKeywordIf(ctx, "LISTAGG")) {
+        if (parseFunctionNameIf(ctx, "LISTAGG")) {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
 
@@ -4452,7 +4492,7 @@ class ParserImpl implements Parser {
     private static final OrderedAggregateFunctionOfDeferredType parseModeIf(ParserContext ctx) {
         OrderedAggregateFunctionOfDeferredType ordered;
 
-        if (parseKeywordIf(ctx, "MODE")) {
+        if (parseFunctionNameIf(ctx, "MODE")) {
             parse(ctx, '(');
             parse(ctx, ')');
             ordered = mode();
@@ -4518,7 +4558,7 @@ class ParserImpl implements Parser {
     }
 
     private static final AggregateFunction<?> parseCountIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "COUNT")) {
+        if (parseFunctionNameIf(ctx, "COUNT")) {
             parse(ctx, '(');
             if (parseIf(ctx, '*')) {
                 parse(ctx, ')');
@@ -4601,8 +4641,22 @@ class ParserImpl implements Parser {
     }
 
     private static final Name parseName(ParserContext ctx) {
+        Name result = parseNameIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Name parseNameIf(ParserContext ctx) {
+        Name identifier = parseIdentifierIf(ctx);
+
+        if (identifier == null)
+            return null;
+
         List<Name> result = new ArrayList<Name>();
-        result.add(parseIdentifier(ctx));
+        result.add(identifier);
 
         while (parseIf(ctx, '.'))
             result.add(parseIdentifier(ctx));
@@ -5229,27 +5283,27 @@ class ParserImpl implements Parser {
     private static final ComputationalOperation parseComputationalOperationIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseKeywordIf(ctx, "AVG"))
+        if (parseFunctionNameIf(ctx, "AVG"))
             return ComputationalOperation.AVG;
-        else if (parseKeywordIf(ctx, "MAX"))
+        else if (parseFunctionNameIf(ctx, "MAX"))
             return ComputationalOperation.MAX;
-        else if (parseKeywordIf(ctx, "MIN"))
+        else if (parseFunctionNameIf(ctx, "MIN"))
             return ComputationalOperation.MIN;
-        else if (parseKeywordIf(ctx, "SUM"))
+        else if (parseFunctionNameIf(ctx, "SUM"))
             return ComputationalOperation.SUM;
-        else if (parseKeywordIf(ctx, "MEDIAN"))
+        else if (parseFunctionNameIf(ctx, "MEDIAN"))
             return ComputationalOperation.MEDIAN;
-        else if (parseKeywordIf(ctx, "EVERY") || parseKeywordIf(ctx, "BOOL_AND"))
+        else if (parseFunctionNameIf(ctx, "EVERY") || parseFunctionNameIf(ctx, "BOOL_AND"))
             return ComputationalOperation.EVERY;
-        else if (parseKeywordIf(ctx, "ANY") || parseKeywordIf(ctx, "SOME") || parseKeywordIf(ctx, "BOOL_OR"))
+        else if (parseFunctionNameIf(ctx, "ANY") || parseFunctionNameIf(ctx, "SOME") || parseFunctionNameIf(ctx, "BOOL_OR"))
             return ComputationalOperation.ANY;
-        else if (parseKeywordIf(ctx, "STDDEV_POP"))
+        else if (parseFunctionNameIf(ctx, "STDDEV_POP"))
             return ComputationalOperation.STDDEV_POP;
-        else if (parseKeywordIf(ctx, "STDDEV_SAMP"))
+        else if (parseFunctionNameIf(ctx, "STDDEV_SAMP"))
             return ComputationalOperation.STDDEV_SAMP;
-        else if (parseKeywordIf(ctx, "VAR_POP"))
+        else if (parseFunctionNameIf(ctx, "VAR_POP"))
             return ComputationalOperation.VAR_POP;
-        else if (parseKeywordIf(ctx, "VAR_SAMP"))
+        else if (parseFunctionNameIf(ctx, "VAR_SAMP"))
             return ComputationalOperation.VAR_SAMP;
 
         return null;
@@ -5260,7 +5314,7 @@ class ParserImpl implements Parser {
 
         // TODO speed this up
         for (BinarySetFunctionType type : BinarySetFunctionType.values())
-            if (parseKeywordIf(ctx, type.name()))
+            if (parseFunctionNameIf(ctx, type.name()))
                 return type;
 
         return null;
@@ -5312,6 +5366,11 @@ class ParserImpl implements Parser {
         return true;
     }
 
+    private static final void parse(ParserContext ctx, char c) {
+        if (!parseIf(ctx, c))
+            throw ctx.unexpectedToken();
+    }
+
     private static final boolean parseIf(ParserContext ctx, char c) {
         parseWhitespaceIf(ctx);
 
@@ -5322,9 +5381,8 @@ class ParserImpl implements Parser {
         return true;
     }
 
-    private static final void parse(ParserContext ctx, char c) {
-        if (!parseIf(ctx, c))
-            throw ctx.unexpectedToken();
+    private static final boolean parseFunctionNameIf(ParserContext ctx, String string) {
+        return peekKeyword(ctx, string, true, false, true);
     }
 
     private static final void parseKeyword(ParserContext ctx, String string) {
@@ -5335,7 +5393,7 @@ class ParserImpl implements Parser {
     private static final boolean parseKeywordIf(ParserContext ctx, String string) {
         ctx.expectedTokens.add(string);
 
-        if (peekKeyword(ctx, string, true, false))
+        if (peekKeyword(ctx, string, true, false, false))
             ctx.expectedTokens.clear();
         else
             return false;
@@ -5352,10 +5410,10 @@ class ParserImpl implements Parser {
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String keyword) {
-        return peekKeyword(ctx, keyword, false, false);
+        return peekKeyword(ctx, keyword, false, false, false);
     }
 
-    private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens) {
+    private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
         parseWhitespaceIf(ctx);
         int length = keyword.length();
         int skip;
@@ -5408,6 +5466,10 @@ class ParserImpl implements Parser {
 
         if (ctx.isIdentifierPart(ctx.position + length + skip))
             return false;
+
+        if (requireFunction)
+            if (ctx.character(afterWhitespace(ctx, ctx.position + length + skip)) != '(')
+                return false;
 
         if (updatePosition)
             ctx.position = ctx.position + length + skip;

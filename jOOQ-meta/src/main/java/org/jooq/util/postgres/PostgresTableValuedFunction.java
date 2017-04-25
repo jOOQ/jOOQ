@@ -35,9 +35,10 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
@@ -49,13 +50,13 @@ import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_PROC;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.impl.DSL;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -68,6 +69,7 @@ import org.jooq.util.postgres.information_schema.tables.Parameters;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.util.postgres.pg_catalog.tables.PgProc;
+import org.jooq.util.postgres.pg_catalog.tables.PgType;
 
 /**
  * @author Lukas Eder
@@ -93,6 +95,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
         PgNamespace pg_n = PG_NAMESPACE;
         PgProc pg_p = PG_PROC;
         Columns c = COLUMNS;
+        PgType pg_t = PG_TYPE;
 
         for (Record record : create()
 
@@ -130,18 +133,18 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             // table reference is reported via a TYPE_UDT that matches a table
             // from INFORMATION_SCHEMA.TABLES
              select(
-                nvl(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
-
-                // Type inference doesn't seem to be possible here with Java 8... ?
-                nvl(c.ORDINAL_POSITION          , DSL.<Integer>inline(1)      ).as(c.ORDINAL_POSITION),
-                nvl(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
-                nvl(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
-                nvl(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),
-                nvl(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
-                nvl(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
-                nvl(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
-                nvl(c.UDT_SCHEMA                , inline((String) null)       ).as(c.UDT_SCHEMA),
-                nvl(c.UDT_NAME                  , r.UDT_NAME                  ).as(c.UDT_NAME)
+                coalesce(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
+                coalesce(c.ORDINAL_POSITION          , inline(1)                   ).as(c.ORDINAL_POSITION),
+                coalesce(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
+                coalesce(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
+                coalesce(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),
+                coalesce(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
+                coalesce(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
+                coalesce(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
+                coalesce(c.UDT_SCHEMA                , inline((String) null)       ).as(c.UDT_SCHEMA),
+                coalesce(c.UDT_NAME                  , r.UDT_NAME                  ,
+                         field(select(pg_t.TYPNAME).from(pg_t).where(oid(pg_t).eq(pg_p.PRORETTYPE)))
+                                                                                   ).as(c.UDT_NAME)
             )
             .from(r)
 

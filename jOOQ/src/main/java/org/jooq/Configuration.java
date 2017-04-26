@@ -51,6 +51,7 @@ import org.jooq.impl.DefaultExecutorProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
+import org.jooq.impl.DefaultRecordUnmapperProvider;
 import org.jooq.impl.DefaultTransactionListenerProvider;
 import org.jooq.impl.DefaultTransactionProvider;
 import org.jooq.impl.DefaultVisitListenerProvider;
@@ -275,6 +276,11 @@ public interface Configuration extends Serializable {
     RecordMapperProvider recordMapperProvider();
 
     /**
+     * Get this configuration's underlying record unmapper provider.
+     */
+    RecordUnmapperProvider recordUnmapperProvider();
+
+    /**
      * Get the configured <code>RecordListenerProvider</code>s from this
      * configuration.
      * <p>
@@ -472,6 +478,33 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(RecordMapperProvider newRecordMapperProvider);
+
+    /**
+     * Change this configuration to hold a new record unmapper.
+     * <p>
+     * This will wrap the argument {@link RecordUnmapper} in a
+     * {@link DefaultRecordUnmapperProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordUnmapper The new record unmapper to be contained in the
+     *            changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(RecordUnmapper<?, ?> newRecordUnmapper);
+
+    /**
+     * Change this configuration to hold a new record unmapper provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordUnmapperProvider The new record unmapper provider to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(RecordUnmapperProvider newRecordUnmapperProvider);
 
     /**
      * Change this configuration to hold a new record listeners.
@@ -714,6 +747,28 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(RecordMapperProvider newRecordMapperProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new record unmapper.
+     * <p>
+     * This will wrap the argument {@link RecordUnmapper} in a
+     * {@link DefaultRecordUnmapperProvider} for convenience.
+     *
+     * @param newRecordUnmapper The new record unmapper to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(RecordUnmapper<?, ?> newRecordUnmapper);
+
+    /**
+     * Create a derived configuration from this one, with a new record unmapper
+     * provider.
+     *
+     * @param newRecordUnmapperProvider The new record unmapper provider to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider);
 
     /**
      * Create a derived configuration from this one, with new record listeners.

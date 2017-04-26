@@ -60,11 +60,11 @@ import org.jooq.exception.MappingException;
 public interface RecordUnmapper<E, R extends Record> {
 
     /**
-     * A callback method indicating that the next record has been fetched.
+     * Unmap a POJO into a record.
      *
      * @param source The source object to copy data from. This is never null.
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records.
      */
-    R map(E source) throws MappingException;
+    R unmap(E source) throws MappingException;
 }

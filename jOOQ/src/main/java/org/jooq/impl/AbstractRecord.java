@@ -37,11 +37,6 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
-import static org.jooq.impl.Tools.getAnnotatedGetter;
-import static org.jooq.impl.Tools.getAnnotatedMembers;
-import static org.jooq.impl.Tools.getMatchingGetter;
-import static org.jooq.impl.Tools.getMatchingMembers;
-import static org.jooq.impl.Tools.hasColumnAnnotations;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
@@ -51,7 +46,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -789,84 +783,46 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return mapper.map(this);
     }
 
-    @Override
-    public final void from(Object source) {
+    private final void from0(Object source, Fields f) {
         if (source == null) return;
 
-        // [#1987] Distinguish between various types to load data from
-        // Maps are loaded using a {field-name -> value} convention
-        if (source instanceof Map) {
-            fromMap((Map<String, ?>) source);
-        }
-
-        // Arrays are loaded through index mapping
-        else if (source instanceof Object[]) {
-            fromArray((Object[]) source);
-        }
-
-        // All other types are expected to be POJOs
-        else {
-            from(source, fields());
-        }
-    }
-
-    @Override
-    public final void from(Object source, Field<?>... f) {
-        if (source == null) return;
-
-        // [#1987] Distinguish between various types to load data from
-        // Maps are loaded using a {field-name -> value} convention
-        if (source instanceof Map) {
-            fromMap((Map<String, ?>) source, f);
-        }
-
-        // Arrays are loaded through index mapping
-        else if (source instanceof Object[]) {
-            fromArray((Object[]) source, f);
-        }
-
-        // All other types are expected to be POJOs
-        else {
-            Class<?> type = source.getClass();
-
-            try {
-                boolean useAnnotations = hasColumnAnnotations(configuration(), type);
-
-                for (Field<?> field : f) {
-                    List<java.lang.reflect.Field> members;
-                    Method method;
-
-                    // Annotations are available and present
-                    if (useAnnotations) {
-                        members = getAnnotatedMembers(configuration(), type, field.getName());
-                        method = getAnnotatedGetter(configuration(), type, field.getName());
-                    }
-
-                    // No annotations are present
-                    else {
-                        members = getMatchingMembers(configuration(), type, field.getName());
-                        method = getMatchingGetter(configuration(), type, field.getName());
-                    }
-
-                    // Use only the first applicable method or member
-                    if (method != null) {
-                        Tools.setValue(this, field, method.invoke(source));
-                    }
-                    else if (members.size() > 0) {
-                        from(source, members.get(0), field);
-                    }
-                }
-            }
-
-            // All reflection exceptions are intercepted
-            catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record from " + type, e);
-            }
-        }
+        // [#2520] TODO: Benchmark this from() method. There's probably a better implementation
+        from(Tools.configuration(this).recordUnmapperProvider().provide(source.getClass(), f).unmap(prepareArrayForUnmap(source, f)));
 
         // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
         // then we should let the database apply DEFAULT values
         resetChangedOnNotNull(this);
+    }
+
+    private final Object prepareArrayForUnmap(Object source, Fields f) {
+        if (source instanceof Object[]) {
+            Object[] array = (Object[]) source;
+
+            if (array.length != f.size()) {
+                Object[] result = new Object[f.size()];
+
+                for (int i = 0; i < result.length; i++) {
+                    int index = fields.indexOf(f.field(i));
+                    result[i] = index >= 0 && index < array.length ? array[index] : null;
+                }
+
+                return result;
+            }
+            else
+                return source;
+        }
+        else
+            return source;
+    }
+
+    @Override
+    public final void from(Object source) {
+        from0(source, fields.fields);
+    }
+
+    @Override
+    public final void from(Object source, Field<?>... f) {
+        from0(source, new Fields(f));
     }
 
     @Override
@@ -891,14 +847,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromMap(Map<String, ?> map, Field<?>... f) {
-        for (int i = 0; i < f.length; i++) {
-            String name = f[i].getName();
-
-            // Set only those values contained in the map
-            if (map.containsKey(name)) {
-                Tools.setValue(this, f[i], map.get(name));
-            }
-        }
+        from0(map, new Fields(f));
     }
 
     @Override
@@ -923,16 +872,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromArray(Object[] array, Field<?>... f) {
-        Fields accept = new Fields(f);
-        int size = fields.size();
-
-        for (int i = 0; i < size && i < array.length; i++) {
-            Field field = fields.field(i);
-
-            if (accept.field(field) != null) {
-                Tools.setValue(this, field, array[i]);
-            }
-        }
+        from0(array, new Fields(f));
     }
 
     @Override
@@ -958,45 +898,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         for (Field<?> field : fields.fields.fields) {
             Field<?> sourceField = source.field(field);
 
-            if (sourceField != null) {
+            if (sourceField != null && source.changed(sourceField))
                 Tools.setValue(this, field, source, sourceField);
-            }
-        }
-    }
-
-    private final void from(Object source, java.lang.reflect.Field member, Field<?> field)
-        throws IllegalAccessException {
-
-        Class<?> mType = member.getType();
-
-        if (mType.isPrimitive()) {
-            if (mType == byte.class) {
-                Tools.setValue(this, field, member.getByte(source));
-            }
-            else if (mType == short.class) {
-                Tools.setValue(this, field, member.getShort(source));
-            }
-            else if (mType == int.class) {
-                Tools.setValue(this, field, member.getInt(source));
-            }
-            else if (mType == long.class) {
-                Tools.setValue(this, field, member.getLong(source));
-            }
-            else if (mType == float.class) {
-                Tools.setValue(this, field, member.getFloat(source));
-            }
-            else if (mType == double.class) {
-                Tools.setValue(this, field, member.getDouble(source));
-            }
-            else if (mType == boolean.class) {
-                Tools.setValue(this, field, member.getBoolean(source));
-            }
-            else if (mType == char.class) {
-                Tools.setValue(this, field, member.getChar(source));
-            }
-        }
-        else {
-            Tools.setValue(this, field, member.get(source));
         }
     }
 

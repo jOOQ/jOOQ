@@ -50,6 +50,8 @@ import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
+import org.jooq.RecordUnmapper;
+import org.jooq.RecordUnmapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
@@ -116,6 +118,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public RecordMapperProvider recordMapperProvider() {
         return delegate.recordMapperProvider();
+    }
+
+    @Override
+    public RecordUnmapperProvider recordUnmapperProvider() {
+        return delegate.recordUnmapperProvider();
     }
 
     @Override
@@ -201,6 +208,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration set(RecordMapperProvider newRecordMapperProvider) {
         return delegate.set(newRecordMapperProvider);
+    }
+
+    @Override
+    public Configuration set(RecordUnmapper<?, ?> newRecordUnmapper) {
+        return delegate.set(newRecordUnmapper);
+    }
+
+    @Override
+    public Configuration set(RecordUnmapperProvider newRecordUnmapperProvider) {
+        return delegate.set(newRecordUnmapperProvider);
     }
 
     @Override
@@ -301,6 +318,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return delegate.derive(newRecordMapperProvider);
+    }
+
+    @Override
+    public Configuration derive(RecordUnmapper<?, ?> newRecordUnmapper) {
+        return delegate.derive(newRecordUnmapper);
+    }
+
+    @Override
+    public Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider) {
+        return delegate.derive(newRecordUnmapperProvider);
     }
 
     @Override

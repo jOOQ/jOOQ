@@ -46,34 +46,38 @@ import org.jooq.impl.DefaultRecordMapperProvider;
  * methods (non-exhaustive list):
  * <h3><code>Cursor</code></h3>
  * <ul>
- * <li> {@link Cursor#fetchInto(Class)}</li>
- * <li> {@link Cursor#fetchOneInto(Class)}</li>
+ * <li>{@link Cursor#fetchInto(Class)}</li>
+ * <li>{@link Cursor#fetchOneInto(Class)}</li>
  * </ul>
  * <h3><code>Record</code></h3>
  * <ul>
- * <li> {@link Record#into(Class)}</li>
+ * <li>{@link Record#into(Class)}</li>
  * </ul>
  * <h3><code>Result</code></h3>
  * <ul>
- * <li> {@link Result#intoMap(Field, Class)}</li>
- * <li> {@link Result#intoMap(Field[], Class)}</li>
- * <li> {@link Result#intoGroups(Field, Class)}</li>
- * <li> {@link Result#intoGroups(Field[], Class)}</li>
- * <li> {@link Result#into(Class)}</li>
+ * <li>{@link Result#intoMap(Field, Class)}</li>
+ * <li>{@link Result#intoMap(Field[], Class)}</li>
+ * <li>{@link Result#intoGroups(Field, Class)}</li>
+ * <li>{@link Result#intoGroups(Field[], Class)}</li>
+ * <li>{@link Result#into(Class)}</li>
  * </ul>
  * <h3><code>ResultQuery</code></h3>
  * <ul>
- * <li> {@link ResultQuery#fetchMap(Field, Class)}</li>
- * <li> {@link ResultQuery#fetchMap(Field[], Class)}</li>
- * <li> {@link ResultQuery#fetchGroups(Field, Class)}</li>
- * <li> {@link ResultQuery#fetchGroups(Field[], Class)}</li>
- * <li> {@link ResultQuery#fetchInto(Class)}</li>
- * <li> {@link ResultQuery#fetchOneInto(Class)}</li>
+ * <li>{@link ResultQuery#fetchMap(Field, Class)}</li>
+ * <li>{@link ResultQuery#fetchMap(Field[], Class)}</li>
+ * <li>{@link ResultQuery#fetchGroups(Field, Class)}</li>
+ * <li>{@link ResultQuery#fetchGroups(Field[], Class)}</li>
+ * <li>{@link ResultQuery#fetchInto(Class)}</li>
+ * <li>{@link ResultQuery#fetchOneInto(Class)}</li>
  * </ul>
  * <h3><code>DAO</code></h3>
  * <ul>
  * <li>Most {@link DAO} methods make use of any of the above methods</li>
  * </ul>
+ * <p>
+ * While not strictly required, it is advisable to implement a
+ * <code>RecordMapperProvider</code> whose behaviour is consistent with the
+ * configured {@link RecordUnmapperProvider}.
  *
  * @author Lukas Eder
  * @see RecordMapper

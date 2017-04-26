@@ -59,7 +59,7 @@ package org.jooq;
 public interface RecordMapper<R extends Record, E> {
 
     /**
-     * A callback method indicating that the next record has been fetched.
+     * Map a record into a POJO.
      *
      * @param record The record to be mapped. This is never null.
      */

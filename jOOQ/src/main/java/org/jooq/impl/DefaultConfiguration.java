@@ -63,6 +63,8 @@ import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
+import org.jooq.RecordUnmapper;
+import org.jooq.RecordUnmapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
@@ -100,6 +102,7 @@ public class DefaultConfiguration implements Configuration {
     private transient ExecutorProvider              executorProvider;
     private transient TransactionProvider           transactionProvider;
     private transient RecordMapperProvider          recordMapperProvider;
+    private transient RecordUnmapperProvider        recordUnmapperProvider;
     private transient RecordListenerProvider[]      recordListenerProviders;
     private transient ExecuteListenerProvider[]     executeListenerProviders;
     private transient VisitListenerProvider[]       visitListenerProviders;
@@ -414,7 +417,14 @@ public class DefaultConfiguration implements Configuration {
      * configuration properties in the future, without breaking client code.
      * Consider creating a configuration by chaining calls to various
      * <code>derive()</code> methods.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordUnmapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], TransactionListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7, 3.8, 3.9 backwards-compatibility if called with
+     *             reflection from Spring configurations.
      */
+    @Deprecated
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
         ExecutorProvider executorProvider,
@@ -429,10 +439,51 @@ public class DefaultConfiguration implements Configuration {
         Settings settings,
         Map<Object, Object> data)
     {
+        this(
+            connectionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            null,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            converterProvider,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * Create the actual configuration object.
+     * <p>
+     * This constructor has been made package-private to allow for adding new
+     * configuration properties in the future, without breaking client code.
+     * Consider creating a configuration by chaining calls to various
+     * <code>derive()</code> methods.
+     */
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        ExecutorProvider executorProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordUnmapperProvider recordUnmapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        TransactionListenerProvider[] transactionListenerProviders,
+        ConverterProvider converterProvider,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
         set(connectionProvider);
         set(executorProvider);
         set(transactionProvider);
         set(recordMapperProvider);
+        set(recordUnmapperProvider);
         set(recordListenerProviders);
         set(executeListenerProviders);
         set(visitListenerProviders);
@@ -472,6 +523,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -495,6 +547,7 @@ public class DefaultConfiguration implements Configuration {
             newExecutorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -513,6 +566,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             newTransactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -536,6 +590,31 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             newRecordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            converterProvider,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(final RecordUnmapper<?, ?> newRecordUnmapper) {
+        return derive(new RecordUnmapperWrapper(newRecordUnmapper));
+    }
+
+    @Override
+    public final Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            newRecordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -559,6 +638,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             newRecordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -582,6 +662,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             newExecuteListenerProviders,
             visitListenerProviders,
@@ -605,6 +686,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             newVisitListenerProviders,
@@ -628,6 +710,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -646,6 +729,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -664,6 +748,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -682,6 +767,7 @@ public class DefaultConfiguration implements Configuration {
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
@@ -759,6 +845,17 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
         this.recordMapperProvider = newRecordMapperProvider;
+        return this;
+    }
+
+    @Override
+    public Configuration set(RecordUnmapper<?, ?> newRecordUnmapper) {
+        return set(new RecordUnmapperWrapper(newRecordUnmapper));
+    }
+
+    @Override
+    public final Configuration set(RecordUnmapperProvider newRecordUnmapperProvider) {
+        this.recordUnmapperProvider = newRecordUnmapperProvider;
         return this;
     }
 
@@ -890,6 +987,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(RecordUnmapperProvider)
+     */
+    public final void setRecordUnmapperProvider(RecordUnmapperProvider newRecordUnmapperProvider) {
+        set(newRecordUnmapperProvider);
+    }
+
+    /**
      * @see #set(RecordListenerProvider[])
      */
     public final void setRecordListenerProvider(RecordListenerProvider... newRecordListenerProviders) {
@@ -975,6 +1079,16 @@ public class DefaultConfiguration implements Configuration {
         return recordMapperProvider != null
              ? recordMapperProvider
              : new DefaultRecordMapperProvider(this);
+    }
+
+    @Override
+    public final RecordUnmapperProvider recordUnmapperProvider() {
+
+        // [#3915] Avoid permanently referencing such a DefaultRecordUnmapperProvider from this
+        // DefaultConfiguration to prevent memory leaks.
+        return recordUnmapperProvider != null
+             ? recordUnmapperProvider
+             : new DefaultRecordUnmapperProvider(this);
     }
 
     @Override
@@ -1069,6 +1183,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(recordMapperProvider instanceof Serializable
             ? recordMapperProvider
             : null);
+        oos.writeObject(recordUnmapperProvider instanceof Serializable
+            ? recordUnmapperProvider
+            : null);
 
         oos.writeObject(cloneSerializables(executeListenerProviders));
         oos.writeObject(cloneSerializables(recordListenerProviders));
@@ -1098,6 +1215,7 @@ public class DefaultConfiguration implements Configuration {
         connectionProvider = (ConnectionProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
+        recordUnmapperProvider = (RecordUnmapperProvider) ois.readObject();
         executeListenerProviders = (ExecuteListenerProvider[]) ois.readObject();
         recordListenerProviders = (RecordListenerProvider[]) ois.readObject();
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
@@ -1129,6 +1247,20 @@ public class DefaultConfiguration implements Configuration {
         @Override
         public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> recordType, Class<? extends E> type) {
             return (RecordMapper<R, E>) newRecordMapper;
+        }
+    }
+
+    private final class RecordUnmapperWrapper implements RecordUnmapperProvider {
+        private final RecordUnmapper<?, ?> newRecordUnmapper;
+
+        private RecordUnmapperWrapper(RecordUnmapper<?, ?> newRecordUnmapper) {
+            this.newRecordUnmapper = newRecordUnmapper;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <E, R extends Record> RecordUnmapper<E, R> provide(Class<? extends E> type, RecordType<R> recordType) {
+            return (RecordUnmapper<E, R>) newRecordUnmapper;
         }
     }
 }

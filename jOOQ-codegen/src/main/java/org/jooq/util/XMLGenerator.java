@@ -122,7 +122,7 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setDataType(type.getType());
                         if (co.isIdentity())
                             column.setIdentityGeneration("YES");
-                        column.setIsNullable(column.isIsNullable());
+                        column.setIsNullable(type.isNullable());
                         column.setNumericPrecision(type.getPrecision());
                         column.setNumericScale(type.getScale());
                         column.setOrdinalPosition(co.getPosition());

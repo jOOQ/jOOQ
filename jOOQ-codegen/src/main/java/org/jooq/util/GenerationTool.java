@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -56,6 +57,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 import javax.xml.XMLConstants;
+import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEvent;
@@ -220,6 +222,12 @@ public class GenerationTool {
                     JooqLogger.globalThreshold(Level.FATAL);
                     break;
             }
+        }
+
+        if (log.isDebugEnabled()) {
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(configuration, writer);
+            log.debug(writer.toString());
         }
 
         Jdbc j = configuration.getJdbc();

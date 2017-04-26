@@ -56,9 +56,19 @@ import static org.jooq.SQLDialect.POSTGRES;
 public interface Sequence<T extends Number> extends QueryPart {
 
     /**
-     * Get the sequence name
+     * Get the sequence name.
      */
     String getName();
+
+    /**
+     * The qualified name of this sequence.
+     */
+    Name getQualifiedName();
+
+    /**
+     * The unqualified name of this sequence.
+     */
+    Name getUnqualifiedName();
 
     /**
      * Get the sequence catalog.
@@ -66,23 +76,23 @@ public interface Sequence<T extends Number> extends QueryPart {
     Catalog getCatalog();
 
     /**
-     * Get the sequence schema
+     * Get the sequence schema.
      */
     Schema getSchema();
 
     /**
-     * Get the sequence data type
+     * Get the sequence data type.
      */
     DataType<T> getDataType();
 
     /**
-     * Get the current value of this sequence
+     * Get the current value of this sequence.
      */
     @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     Field<T> currval();
 
     /**
-     * Increment the sequence and get the next value
+     * Increment the sequence and get the next value.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     Field<T> nextval();

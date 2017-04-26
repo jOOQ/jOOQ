@@ -8642,7 +8642,9 @@ public class DSL {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
@@ -8661,7 +8663,9 @@ public class DSL {
      * @param type The field type
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
@@ -8680,11 +8684,14 @@ public class DSL {
      * @param type The field type
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, DataType)}
+     *             instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<T>(sql, null, type, true);
+        return new SequenceImpl<T>(using(new DefaultConfiguration()).parser().parseName(sql), null, type);
     }
 
     /**

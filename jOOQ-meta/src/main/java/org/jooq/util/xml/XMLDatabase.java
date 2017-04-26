@@ -216,7 +216,7 @@ public class XMLDatabase extends AbstractDatabase {
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
+                relations.addUniqueKey(key, table.getColumn(columnName));
             }
         }
     }

@@ -2286,12 +2286,18 @@ final class Tools {
 
 
 
+    private static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
-    static final int hash(Object object) {
-        return 0x7FFFFFF & object.hashCode();
+    static final int hash(QueryPart part) {
+
+        // [#6025] Prevent unstable alias generation for derived tables due to
+        //         inlined bind variables in hashCode() calculation
+        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
+        return 0x7FFFFFF & CTX.render(part).hashCode();
     }
 
     /**

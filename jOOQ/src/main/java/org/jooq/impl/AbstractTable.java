@@ -971,9 +971,10 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return leftOuterJoin(table(name));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table) {
-        return join(table, LEFT_OUTER_JOIN);
+        return (TablePartitionByStep<Record>) join(table, LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -1031,9 +1032,10 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return rightOuterJoin(table(name));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table) {
-        return join(table, RIGHT_OUTER_JOIN);
+        return (TablePartitionByStep<Record>) join(table, RIGHT_OUTER_JOIN);
     }
 
     @Override

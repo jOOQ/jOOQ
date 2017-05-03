@@ -113,6 +113,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
+import org.jooq.TablePartitionByStep;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -124,6 +125,7 @@ final class JoinTable extends AbstractTable<Record>
 implements
     TableOuterJoinStep<Record>,
     TableOptionalOnStep<Record>,
+    TablePartitionByStep<Record>,
     TableOnConditionStep<Record> {
 
     /**

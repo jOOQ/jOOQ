@@ -2126,7 +2126,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN: {
-                TablePartitionByStep<?> p = getFrom().get(index).join(table, type);
+                TablePartitionByStep<?> p = (TablePartitionByStep<?>) getFrom().get(index).join(table, type);
                 TableOnStep<?> o = p;
 
 

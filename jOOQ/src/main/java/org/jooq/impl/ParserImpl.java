@@ -2284,7 +2284,7 @@ class ParserImpl implements Parser {
         TableOptionalOnStep<?> s0;
         TablePartitionByStep<?> s1;
         TableOnStep<?> s2;
-        s2 = s1 = s0 = left.join(right, joinType);
+        s2 = s1 = (TablePartitionByStep<?>) (s0 = left.join(right, joinType));
 
         switch (joinType) {
             case LEFT_OUTER_JOIN:

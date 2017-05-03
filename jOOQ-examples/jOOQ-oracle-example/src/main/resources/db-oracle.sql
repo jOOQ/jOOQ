@@ -216,7 +216,7 @@ END;
 
 BEGIN
   -- Examples can be found here:
-  -- https://docs.oracle.com/cd/B19306_01/appdev.102/b14255/sdo_objrelschema.htm#SPATL020
+  -- https://docs.oracle.com/database/121/SPATL/spatial-data-types-and-metadata.htm
   BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE cola_markets';
   EXCEPTION WHEN OTHERS THEN

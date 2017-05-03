@@ -48,7 +48,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -70,38 +69,25 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     private static final long     serialVersionUID = 6224349401603636427L;
     private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    final Name                    name;
+    final String                  name;
+    final boolean                 nameIsPlainSQL;
     final Schema                  schema;
     final DataType<T>             type;
 
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
-        this(DSL.name(name), schema, type);
+        this(name, schema, type, false);
     }
 
-    public SequenceImpl(Name name, Schema schema, DataType<T> type) {
+    SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
         this.name = name;
-        this.schema =
-            schema != null
-          ? schema
-          : name.qualified()
-          ? DSL.schema(name.qualifier())
-          : null;
+        this.schema = schema;
         this.type = type;
+        this.nameIsPlainSQL = nameIsPlainSQL;
     }
 
     @Override
     public final String getName() {
-        return name.last();
-    }
-
-    @Override
-    public final Name getQualifiedName() {
         return name;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return name.unqualifiedName();
     }
 
     @Override
@@ -258,8 +244,10 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
         if (asStringLiterals)
             ctx.visit(inline(name));
+        else if (nameIsPlainSQL)
+            ctx.sql(name);
         else
-            ctx.visit(name);
+            ctx.literal(name);
     }
 
     @Override

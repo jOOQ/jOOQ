@@ -8691,7 +8691,7 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<T>(using(new DefaultConfiguration()).parser().parseName(sql), null, type);
+        return new SequenceImpl<T>(sql, null, type, true);
     }
 
     /**

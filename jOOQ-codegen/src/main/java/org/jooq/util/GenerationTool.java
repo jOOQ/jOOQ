@@ -227,7 +227,7 @@ public class GenerationTool {
         if (log.isDebugEnabled()) {
             StringWriter writer = new StringWriter();
             JAXB.marshal(configuration, writer);
-            log.debug(writer.toString());
+            log.debug("Input configuration", writer.toString());
         }
 
         Jdbc j = configuration.getJdbc();

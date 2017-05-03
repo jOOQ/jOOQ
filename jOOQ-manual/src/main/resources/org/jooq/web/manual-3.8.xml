@@ -15104,6 +15104,32 @@ public class Book {
                             <p>
                                 The above will generate all jOOQ artefacts for your <code>AUTHOR</code> and <code>BOOK</code> tables.
                             </p>
+
+                            <h3>How to organise your dependencies</h3>
+
+                            <p>
+                                The <code>JPADatabase</code> will use Spring to look up your annotated entities from the classpath. This means that you have to create several modules with a dependency graph that looks like this:
+                            </p>
+
+</html><text><![CDATA[                        +-------------------+
+                        | Your JPA entities |
+                        +-------------------+
+                             ^         ^
+                  depends on |         | depends on
+                             |         |
+          +---------------------+   +---------------------+
+          | jOOQ codegen plugin |   | Your application    |
+          +---------------------+   +---------------------+
+                             |         |
+                   generates |         | depends on
+                             v         v
+                     +-------------------------+
+                     | jOOQ generated classes  |
+                     +-------------------------+]]></text><html>
+
+                            <p>
+                                You cannot put your JPA entities in the same module as the one that runs the jOOQ code generator.
+                            </p>
                         </html></content>
                     </section>
 

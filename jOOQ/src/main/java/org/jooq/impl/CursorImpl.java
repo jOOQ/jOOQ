@@ -1595,7 +1595,6 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 ctx.record(record);
                 listener.recordStart(ctx);
 
-                try {
 
 
 
@@ -1622,11 +1621,6 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                     if (intern[i])
                         record.intern0(i);
 
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    throw e;
-                }
                 ctx.record(record);
                 listener.recordEnd(ctx);
 

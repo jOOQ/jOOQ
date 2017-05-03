@@ -4844,6 +4844,7 @@ class ParserImpl implements Parser {
             case 'T':
                 if (parseKeywordIf(ctx, "TEXT"))
                     return SQLDataType.CLOB;
+
                 else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
                          parseKeywordIf(ctx, "TIMESTAMPTZ"))
                     return SQLDataType.TIMESTAMPWITHTIMEZONE;

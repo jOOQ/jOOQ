@@ -286,6 +286,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param transactional The transactional code
      * @return The transactional outcome
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
      */
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
@@ -306,6 +314,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *             {@link Configuration#transactionProvider()} is not able to
      *             provide context (i.e. currently, it is not a
      *             {@link ThreadLocalTransactionProvider}).
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
      */
     <T> T transactionResult(ContextTransactionalCallable<T> transactional) throws ConfigurationException;
 
@@ -320,6 +336,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * create new statements.
      *
      * @param transactional The transactional code
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
      */
     void transaction(TransactionalRunnable transactional);
 
@@ -338,6 +362,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *             {@link Configuration#transactionProvider()} is not able to
      *             provide context (i.e. currently, it is not a
      *             {@link ThreadLocalTransactionProvider}).
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
      */
     void transaction(ContextTransactionalRunnable transactional) throws ConfigurationException;
 

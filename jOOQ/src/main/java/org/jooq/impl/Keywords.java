@@ -168,6 +168,7 @@ final class Keywords {
     static final Keyword K_NULL                             = keyword("null");
     static final Keyword K_NULLS_FIRST                      = keyword("nulls first");
     static final Keyword K_NULLS_LAST                       = keyword("nulls last");
+    static final Keyword K_NVARCHAR                         = keyword("nvarchar");
     static final Keyword K_OF                               = keyword("of");
     static final Keyword K_OFFSET                           = keyword("offset");
     static final Keyword K_OLD_TABLE                        = keyword("old table");
@@ -193,6 +194,7 @@ final class Keywords {
     static final Keyword K_PRIMARY_KEY                      = keyword("primary key");
     static final Keyword K_PRIOR                            = keyword("prior");
     static final Keyword K_RAISE                            = keyword("raise");
+    static final Keyword K_RAISERROR                        = keyword("raiserror");
     static final Keyword K_RECURSIVE                        = keyword("recursive");
     static final Keyword K_REFERENCES                       = keyword("references");
     static final Keyword K_REGEXP                           = keyword("regexp");

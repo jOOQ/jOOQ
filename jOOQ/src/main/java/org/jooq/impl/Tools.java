@@ -79,6 +79,7 @@ import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -96,10 +97,13 @@ import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_LOOP;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_NVARCHAR;
 import static org.jooq.impl.Keywords.K_RAISE;
+import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_SERIAL8;
 import static org.jooq.impl.Keywords.K_START_WITH;
@@ -3328,6 +3332,16 @@ final class Tools {
         boolean drop = asList(DROP_INDEX, DROP_SEQUENCE, DROP_TABLE, DROP_VIEW).contains(type);
 
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
 
 
 

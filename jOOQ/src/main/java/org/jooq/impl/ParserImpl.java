@@ -2301,6 +2301,7 @@ class ParserImpl implements Parser {
 
 
             case JOIN:
+            case STRAIGHT_JOIN:
                 boolean on = parseKeywordIf(ctx, "ON");
 
                 if (on) {
@@ -5235,6 +5236,8 @@ class ParserImpl implements Parser {
             else if (parseKeywordIf(ctx, "JOIN"))
                 return JoinType.NATURAL_JOIN;
         }
+        else if (parseKeywordIf(ctx, "STRAIGHT_JOIN"))
+            return JoinType.STRAIGHT_JOIN;
 
         return null;
         // TODO partitioned join
@@ -5698,6 +5701,7 @@ class ParserImpl implements Parser {
         "RIGHT",
         "SELECT",
         "START",
+        "STRAIGHT_JOIN",
         "UNION",
         "USING",
         "WHERE",

@@ -106,6 +106,7 @@ public class JPADatabase extends H2Database {
                     new StandardServiceRegistryBuilder()
                         .applySetting("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
                         .applySetting("javax.persistence.schema-generation-connection", connection)
+                        .applySetting("javax.persistence.create-database-schemas", true)
 
                         // [#5607] JPADatabase causes warnings - This prevents them
                         .applySetting(AvailableSettings.CONNECTION_PROVIDER, new ConnectionProvider() {

@@ -130,6 +130,10 @@ public class JDBCUtils {
         // The below list might not be accurate or complete. Feel free to
         // contribute fixes related to new / different JDBC driver configurations
 
+        // [#6035] Third-party JDBC proxies (e.g. www.testcontainers.org) often work
+        //         by inserting their names into the JDBC URL, e.g. jdbc:tc:mysql://...
+        //         This is why we no longer check for a URL to start with jdbc:mysql:
+        //         but to simply contain :mysql:
 
 
 
@@ -139,39 +143,37 @@ public class JDBCUtils {
 
 
 
-        else if (url.startsWith("jdbc:cubrid:")) {
+
+        else if (url.contains(":cubrid:")) {
             return CUBRID;
         }
-        else if (url.startsWith("jdbc:derby:")) {
+        else if (url.contains(":derby:")) {
             return DERBY;
         }
-        else if (url.startsWith("jdbc:firebirdsql:")) {
+        else if (url.contains(":firebirdsql:")) {
             return FIREBIRD;
         }
-        else if (url.startsWith("jdbc:h2:")) {
+        else if (url.contains(":h2:")) {
             return H2;
         }
-        else if (url.startsWith("jdbc:hsqldb:")) {
+        else if (url.contains(":hsqldb:")) {
             return HSQLDB;
         }
-        else if (url.startsWith("jdbc:mariadb:")) {
+        else if (url.contains(":mariadb:")) {
             return MARIADB;
         }
-        else if (url.startsWith("jdbc:mysql:")
-              || url.startsWith("jdbc:google:")) {
+        else if (url.contains(":mysql:")
+              || url.contains(":google:")) {
             return MYSQL;
         }
-        else if (url.startsWith("jdbc:postgresql:")
-              || url.startsWith("jdbc:pgsql:")) {
+        else if (url.contains(":postgresql:")
+              || url.contains(":pgsql:")) {
             return POSTGRES;
         }
-        else if (url.startsWith("jdbc:sqlite:")
-              || url.startsWith("jdbc:sqldroid:")) {
+        else if (url.contains(":sqlite:")
+              || url.contains(":sqldroid:")) {
             return SQLITE;
         }
-
-
-
 
 
 

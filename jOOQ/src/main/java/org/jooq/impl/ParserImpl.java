@@ -619,12 +619,24 @@ class ParserImpl implements Parser {
             if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
                 Param<Integer> limit = inline((int) (long) parseUnsignedInteger(ctx));
 
-                if (!offsetPostgres && parseIf(ctx, ','))
-                    result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
-                else if (!offsetPostgres && parseKeywordIf(ctx, "OFFSET"))
-                    result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
-                else
+                if (offsetPostgres) {
                     result.addLimit(limit);
+
+                    if (parseKeywordIf(ctx, "WITH TIES"))
+                        result.setWithTies(true);
+                }
+                else if (parseIf(ctx, ',')) {
+                    result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
+                }
+                else {
+                    if (parseKeywordIf(ctx, "WITH TIES"))
+                        result.setWithTies(true);
+
+                    if (parseKeywordIf(ctx, "OFFSET"))
+                        result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
+                    else
+                        result.addLimit(limit);
+                }
             }
             else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
                 if (!parseKeywordIf(ctx, "FIRST") && !parseKeywordIf(ctx, "NEXT"))
@@ -632,8 +644,13 @@ class ParserImpl implements Parser {
 
                 result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)));
 
-                if (!parseKeywordIf(ctx, "ROWS ONLY") && !parseKeywordIf(ctx, "ROW ONLY"))
+                if (!parseKeywordIf(ctx, "ROW") && !parseKeywordIf(ctx, "ROWS"))
                     throw ctx.unexpectedToken();
+
+                if (parseKeywordIf(ctx, "WITH TIES"))
+                    result.setWithTies(true);
+                else
+                    parseKeyword(ctx, "ONLY");
             }
         }
 
@@ -690,6 +707,7 @@ class ParserImpl implements Parser {
 
         Long limit = null;
         Long offset = null;
+        boolean withTies = false;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
@@ -697,6 +715,8 @@ class ParserImpl implements Parser {
 
             if (parseKeywordIf(ctx, "START AT"))
                 offset = parseUnsignedInteger(ctx);
+            else if (parseKeywordIf(ctx, "WITH TIES"))
+                withTies = true;
         }
 
         // Informix style SKIP .. FIRST
@@ -834,6 +854,9 @@ class ParserImpl implements Parser {
                 result.addLimit((int) (long) offset, (int) (long) limit);
             else
                 result.addLimit((int) (long) limit);
+
+        if (withTies)
+            result.setWithTies(true);
 
         return result;
     }

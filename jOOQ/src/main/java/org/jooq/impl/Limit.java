@@ -47,10 +47,12 @@ import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_OFFSET;
 import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_ROWS_ONLY;
+import static org.jooq.impl.Keywords.K_ROWS_WITH_TIES;
 import static org.jooq.impl.Keywords.K_SKIP;
 import static org.jooq.impl.Keywords.K_START_AT;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TOP;
+import static org.jooq.impl.Keywords.K_WITH_TIES;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -78,6 +80,7 @@ final class Limit extends AbstractQueryPart {
     private Field<Integer>              offsetOrZero      = ZERO;
     private Field<Integer>              offsetPlusOne     = ONE;
     private boolean                     rendersParams;
+    private boolean                     withTies;
 
     @Override
     public final void accept(Context<?> context) {
@@ -151,6 +154,14 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+
+
+
+
+
+
+
             case DERBY: {
 
                 // Casts are not supported here...
@@ -163,17 +174,12 @@ final class Limit extends AbstractQueryPart {
                 if (!limitZero())
                     context.sql(' ').visit(K_FETCH_NEXT)
                            .sql(' ').visit(numberOfRows)
-                           .sql(' ').visit(K_ROWS_ONLY);
+                           .sql(' ').visit(withTies ? K_ROWS_WITH_TIES : K_ROWS_ONLY);
 
                 context.castMode(castMode);
 
                 break;
             }
-
-
-
-
-
 
 
 
@@ -308,6 +314,20 @@ final class Limit extends AbstractQueryPart {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
@@ -383,5 +403,13 @@ final class Limit extends AbstractQueryPart {
         this.numberOfRows = numberOfRows;
         this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams = true;
+    }
+
+    final void setWithTies(boolean withTies) {
+        this.withTies = withTies;
+    }
+
+    final boolean withTies() {
+        return withTies;
     }
 }

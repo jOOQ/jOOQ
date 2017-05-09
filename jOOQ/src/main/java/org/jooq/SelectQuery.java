@@ -641,6 +641,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
+     * Specify the <code>TOP n WITH TIES</code> or
+     * <code>FETCH NEXT n WITH TIES</code> clause.
+     */
+    @Support({})
+    void setWithTies(boolean withTies);
+
+    /**
      * Sets the "FOR UPDATE" flag onto the query.
      * <p>
      * <h5>Native implementation</h5>

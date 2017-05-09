@@ -215,6 +215,7 @@ final class Keywords {
     static final Keyword K_ROWS                             = keyword("rows");
     static final Keyword K_ROWS_FROM                        = keyword("rows from");
     static final Keyword K_ROWS_ONLY                        = keyword("rows only");
+    static final Keyword K_ROWS_WITH_TIES                   = keyword("rows with ties");
     static final Keyword K_SELECT                           = keyword("select");
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");
@@ -269,6 +270,7 @@ final class Keywords {
     static final Keyword K_WITH_PRIMARY_KEY                 = keyword("with primary key");
     static final Keyword K_WITH_READ_ONLY                   = keyword("with read only");
     static final Keyword K_WITH_ROLLUP                      = keyword("with rollup");
+    static final Keyword K_WITH_TIES                        = keyword("with ties");
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
     static final Keyword K_YEAR_TO_DAY                      = keyword("year to day");

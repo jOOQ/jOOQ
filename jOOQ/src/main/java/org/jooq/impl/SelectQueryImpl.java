@@ -562,6 +562,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -1475,6 +1488,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS = EnumSet.of(DERBY, MARIADB, MYSQL, SQLITE);
 
     private final void unionParenthesis(Context<?> ctx, String parenthesis) {
@@ -1592,6 +1607,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
         getLimit().setOffset(offset);
         getLimit().setNumberOfRows(numberOfRows);
+    }
+
+    @Override
+    public final void setWithTies(boolean withTies) {
+        getLimit().setWithTies(withTies);
     }
 
     @Override

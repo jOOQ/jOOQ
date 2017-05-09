@@ -8424,6 +8424,54 @@ row(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-
 (C <= B) AND (A <= D)]]></sql>
 								</content>
 							</section>
+
+                            <section id="query-by-example">
+                                <title>Query By Example (QBE)</title>
+                                <content><html>
+                                    <p>
+                                        A popular approach to querying database tables is called <a href="https://en.wikipedia.org/wiki/Query_by_Example">Query by Example</a>, meaning that an "example" of a result record is provided instead of a formal query:
+                                    </p>
+
+</html><code-pair>
+<text><![CDATA[-- example book record:
+ID          :
+AUTHOR_ID   : 1
+TITLE       :
+PUBLISHED_IN: 1970
+LANGUAGE_ID : 1
+]]></text>
+<sql><![CDATA[-- Corresponding query
+SELECT *
+FROM book
+WHERE author_id = 1
+AND published_in = 1970
+AND language_id = 1]]></sql></code-pair><html>
+
+                                    <p>
+                                        The translation from an example record to a query is fairly straight-forward:
+                                    </p>
+
+                                    <ul>
+                                        <li>If a record attribute is set to a value, then that value is used for an equality predicate</li>
+                                        <li>If a record attribute is not set, then that attribute is not used for any predicates</li>
+                                    </ul>
+
+                                    <p>
+                                        jOOQ knows a simple API called <reference class="org.jooq.impl.DSL" title="DSL.condition(Record)" anchor="#condition-org.jooq.Record-"/>, which translates a <reference class="org.jooq.Record"/> to a <reference class="org.jooq.Condition"/>:
+                                    </p>
+
+</html><java><![CDATA[BookRecord book = new BookRecord();
+book.setAuthorId(1);
+book.setPublishedIn(1970);
+book.setLanguageId(1);
+
+Result<BookRecord> books =
+DSL.using(configuration)
+   .selectFrom(BOOK)
+   .where(condition(book))
+   .fetch();]]></java>
+                                </content>
+                            </section>
 						</sections>
 					</section>
 

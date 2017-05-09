@@ -8518,12 +8518,20 @@ book.setAuthorId(1);
 book.setPublishedIn(1970);
 book.setLanguageId(1);
 
-Result<BookRecord> books =
+// Using the explicit condition() API
+Result<BookRecord> books1 =
 DSL.using(configuration)
    .selectFrom(BOOK)
    .where(condition(book))
-   .fetch();]]></java>
-                                </content>
+   .fetch();
+
+// Using the convenience API on DSLContext
+Result<BookRecord> books2 = DSL.using(configuration).fetchByExample(book);]]></java><html>
+
+                                    <p>
+                                        The latter API call makes use of the convenience API <reference class="org.jooq.DSLContext" title="DSLContext.fetchByExample(TableRecord)" anchor="#fetchByExample-org.jooq.TableRecord-"/>.
+                                    </p>
+                                </html></content>
                             </section>
 						</sections>
 					</section>

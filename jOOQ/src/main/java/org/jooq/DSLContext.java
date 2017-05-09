@@ -9249,13 +9249,23 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Fetch all values in a given {@link Table}'s {@link TableField}
+     * Fetch all values in a given {@link Table}'s {@link TableField}.
      *
      * @param field The field for which to fetch all values.
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
+
+    /**
+     * Execute a "Query by Example" (QBE) based on an example record.
+     *
+     * @param example The example record
+     * @return The resulting records matching the example record.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see DSL#condition(Record)
+     */
+    <R extends TableRecord<R>> Result<R> fetchByExample(R example) throws DataAccessException;
 
     /**
      * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return

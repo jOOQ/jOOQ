@@ -37,6 +37,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
@@ -3626,6 +3627,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             throw new InvalidResultException("Record contains more than one value : " + record);
 
         return record.value1();
+    }
+
+    @Override
+    public <R extends TableRecord<R>> Result<R> fetchByExample(R example) {
+        return selectFrom(example.getTable())
+              .where(condition(example))
+              .fetch();
     }
 
     @Override

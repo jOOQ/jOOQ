@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -575,6 +576,31 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+                case CUBRID:
+                case FIREBIRD_3_0:
+                case POSTGRES:
+                case POSTGRES_9_3:
+                case POSTGRES_9_4:
+                case POSTGRES_9_5: {
+                    if (getLimit().isApplicable() && getLimit().withTies())
+                        toSQLReferenceLimitWithWindowFunctions(context);
+                    else
+                        toSQLReferenceLimitDefault(context);
+
+                    break;
+                }
+
+                /* [/pro] */
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -746,109 +772,112 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Emulate the LIMIT / OFFSET clause using window functions, specifically
+     * when the WITH TIES clause is specified.
+     */
+    @SuppressWarnings("serial")
+    private final void toSQLReferenceLimitWithWindowFunctions(Context<?> ctx) {
+
+        // AUTHOR.ID, BOOK.ID, BOOK.TITLE
+        final Field<?>[] originalFields = Tools.fieldArray(getSelect());
+
+        // ID, ID, TITLE
+        final Name[] originalNames = Tools.fieldNames(originalFields);
+
+        // v1, v2, v3
+        final Name[] alternativeNames = Tools.fieldNames(originalFields.length);
+
+        // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
+        // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
+        final Field<?>[] alternativeFields = Tools.combine(
+            alternativeNames.length == 0
+                ? new Field[] { DSL.field("*") }
+                : Tools.aliasedFields(originalFields, alternativeNames),
+
+            null
+        );
+
+        alternativeFields[alternativeFields.length - 1] =
+            new CustomField<Integer>("rn", SQLDataType.INTEGER) {
+                @Override
+                public void accept(Context<?> c) {
+                    boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(c);
+
+                    // [#3575] Ensure that no column aliases from the surrounding SELECT clause
+                    // are referenced from the below ranking functions' ORDER BY clause.
+                    c.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY, !wrapQueryExpressionBodyInDerivedTable);
+
+                    boolean qualify = c.qualify();
+
+                    c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
+                    if (wrapQueryExpressionBodyInDerivedTable)
+                        c.qualify(false);
+
+                    // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+                    // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
+                    // ordering by the SELECT's ORDER BY clause AND all the expressions from
+                    // the projection
+                    // [#6197] TODO: What about the combination of DISTINCT and WITH TIES?
+                    c.visit(distinct
+                        ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+                        : getLimit().withTies()
+                        ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+                        : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+                    );
+
+                    c.data().remove(DATA_UNALIAS_ALIASES_IN_ORDER_BY);
+                    c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
+                    if (wrapQueryExpressionBodyInDerivedTable)
+                        c.qualify(qualify);
+
+                }
+            }.as("rn");
+
+        // v1 as ID, v2 as ID, v3 as TITLE
+        final Field<?>[] unaliasedFields = Tools.aliasedFields(Tools.fields(originalFields.length), originalNames);
+
+        boolean subquery = ctx.subquery();
+
+        ctx.visit(K_SELECT).sql(' ')
+           .declareFields(true)
+           .visit(new SelectFieldList(unaliasedFields))
+           .declareFields(false)
+           .formatSeparator()
+           .visit(K_FROM).sql(" (")
+           .formatIndentStart()
+           .formatNewLine()
+           .subquery(true);
+
+        toSQLReference0(ctx, originalFields, alternativeFields);
+
+        ctx.subquery(subquery)
+           .formatIndentEnd()
+           .formatNewLine()
+           .sql(") ")
+           .visit(name("x"))
+           .formatSeparator()
+           .visit(K_WHERE).sql(' ')
+           .visit(name("rn"))
+           .sql(" > ")
+           .visit(getLimit().getLowerRownum());
+
+        if (!getLimit().limitZero())
+        ctx.formatSeparator()
+           .visit(K_AND).sql(' ')
+           .visit(name("rn"))
+           .sql(" <= ")
+           .visit(getLimit().getUpperRownum());
+
+        // [#5068] Don't rely on nested query's ordering. In most cases, the
+        //         ordering is stable, but in some cases (DISTINCT + JOIN) it is
+        //         not.
+        if (!ctx.subquery())
+            ctx.formatSeparator()
+               .visit(K_ORDER_BY)
+               .sql(' ')
+               .visit(name("rn"));
+    }
 
 
 
@@ -1373,17 +1402,51 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.start(SELECT_ORDER_BY);
 
-        if (!actualOrderBy.isEmpty()) {
-            context.formatSeparator()
-                   .visit(K_ORDER);
+        // [#6197] When emulating WITH TIES using RANK() in a subquery, we must avoid rendering the
+        //         subquery's ORDER BY clause
+        if (!getLimit().withTies()
 
-            if (orderBySiblings) {
-                context.sql(' ').visit(K_SIBLINGS);
 
+
+
+
+
+
+        ) {
+            if (!actualOrderBy.isEmpty()) {
+                context.formatSeparator()
+                       .visit(K_ORDER);
+
+                if (orderBySiblings)
+                    context.sql(' ').visit(K_SIBLINGS);
+
+                context.sql(' ').visit(K_BY)
+                       .sql(' ');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {
+                    context.visit(actualOrderBy);
+                }
             }
 
-            context.sql(' ').visit(K_BY)
-                   .sql(' ');
 
 
 
@@ -1395,31 +1458,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
-
-
-
-
-
-            {
-                context.visit(actualOrderBy);
-            }
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         context.end(SELECT_ORDER_BY);
 
@@ -1431,6 +1470,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
             context.visit(actualLimit);
     }
+
+
+
 
 
 

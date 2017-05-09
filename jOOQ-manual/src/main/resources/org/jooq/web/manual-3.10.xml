@@ -4695,7 +4695,7 @@ ORDER BY CASE TITLE
 										<title>The LIMIT .. OFFSET clause</title>
 										<content><html>
 											<p>
-												While being extremely useful for every application that does paging, or just to limit result sets to reasonable sizes, this clause is not yet part of any SQL standard (up until SQL:2008). Hence, there exist a variety of possible implementations in various SQL dialects, concerning this limit clause. jOOQ chose to implement the LIMIT .. OFFSET clause as understood and supported by MySQL, H2, HSQLDB, Postgres, and SQLite. Here is an example of how to apply limits with jOOQ:
+												While being extremely useful for every application that does pagination, or just to limit result sets to reasonable sizes, this clause is not yet part of any SQL standard (up until SQL:2008). Hence, there exist a variety of possible implementations in various SQL dialects, concerning this limit clause. jOOQ chose to implement the LIMIT .. OFFSET clause as understood and supported by MySQL, H2, HSQLDB, Postgres, and SQLite. Here is an example of how to apply limits with jOOQ:
 											</p>
 
 </html><java><![CDATA[create.select().from(BOOK).limit(1).offset(2).fetch();]]></java><html>
@@ -4835,10 +4835,10 @@ id   actor_id   title
                                         <title>The SEEK clause</title>
                                         <content><html>
                                             <p>
-                                                One of the previous chapters talked about <reference id="limit-clause" title="OFFSET paging"/> using <code>LIMIT .. OFFSET</code>, or <code>OFFSET .. FETCH</code> or some other vendor-specific variant of the same. This can lead to significant performance issues when reaching a high page number, as all unneeded records need to be skipped by the database.
+                                                One of the previous chapters talked about <reference id="limit-clause" title="OFFSET pagination"/> using <code>LIMIT .. OFFSET</code>, or <code>OFFSET .. FETCH</code> or some other vendor-specific variant of the same. This can lead to significant performance issues when reaching a high page number, as all unneeded records need to be skipped by the database.
                                             </p>
                                             <p>
-                                                A much faster and more stable way to perform paging is the so-called <em>keyset paging method</em> also called <em>seek method</em>. jOOQ supports a synthetic <code>seek()</code> clause, that can be used to perform keyset paging. Imagine we have these data:
+                                                A much faster and more stable way to perform pagination is the so-called <em>keyset pagination method</em> also called <em>seek method</em>. jOOQ supports a synthetic <code>seek()</code> clause, that can be used to perform keyset pagination. Imagine we have these data:
                                             </p>
 
 </html><text><![CDATA[|   ID | VALUE | PAGE_BOUNDARY |
@@ -5166,7 +5166,7 @@ FROM table1
 												<li><reference id="select-clause" title="The SELECT clause"/>: Only now, the projection is evaluated. In case of a <code>SELECT DISTINCT</code> statement, data is further reduced to remove duplicates</li>
 												<li><reference id="union-clause" title="The UNION clause"/>: Optionally, the above is repeated for several <code>UNION</code>-connected subqueries. Unless this is a <code>UNION ALL</code> clause, data is further reduced to remove duplicates</li>
 												<li><reference id="order-by-clause" title="The ORDER BY clause"/>: Now, all remaining tuples are ordered</li>
-												<li><reference id="limit-clause" title="The LIMIT clause"/>: Then, a paging view is created for the ordered tuples</li>
+												<li><reference id="limit-clause" title="The LIMIT clause"/>: Then, a paginating view is created for the ordered tuples</li>
 												<li><reference id="for-update-clause" title="The FOR UPDATE clause"/>: Finally, pessimistic locking is applied</li>
 											</ul>
 

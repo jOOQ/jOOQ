@@ -103,7 +103,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * function and nested <code>SELECT</code> statements.
      */
     @Support
-    SelectForUpdateStep<R> limit(int numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -118,6 +118,6 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(Param<Integer> numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(Param<Integer> numberOfRows);
 
 }

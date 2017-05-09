@@ -107,7 +107,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support
-    SelectOffsetStep<R> limit(int numberOfRows);
+    SelectWithTiesStep<R> limit(int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -125,7 +125,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectOffsetStep<R> limit(Param<Integer> numberOfRows);
+    SelectWithTiesStep<R> limit(Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -139,7 +139,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(int offset, int numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(int offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -154,7 +154,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -169,7 +169,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -184,7 +184,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SelectWithTiesAfterOffsetStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
      * Add an <code>OFFSET</code> clause to the query

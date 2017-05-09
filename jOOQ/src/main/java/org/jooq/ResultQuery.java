@@ -44,9 +44,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
@@ -130,17 +132,39 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     ResultSet fetchResultSet() throws DataAccessException;
 
     /**
-     * Execute the query and return the generated result.
-     * <p>
-     * This is essentially the same as {@link #fetch()}, except that being
-     * declared in {@link Iterable}, this method can be used in Java 5 foreach
-     * statements.
+     * Execute the query using {@link #fetch()} and return the generated result
+     * as an {@link Iterator}.
      * <p>
      * {@inheritDoc}
      */
     @Override
     Iterator<R> iterator() throws DataAccessException;
 
+
+
+    /**
+     * Execute the query using {@link #fetch()} and pass all results to a
+     * consumer.
+     * <p>
+     * This is essentially the same as {@link #fetch()}.
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    default void forEach(Consumer<? super R> action) {
+        Iterable.super.forEach(action);
+    }
+
+    /**
+     * Execute the query using {@link #fetch()} and return the generated result
+     * as an {@link Spliterator}.
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    default Spliterator<R> spliterator() {
+        return Iterable.super.spliterator();
+    }
 
     /**
      * Stream this query.

@@ -4780,6 +4780,54 @@ WHERE RN > 2]]></sql><html>
 											<p>
 												As can be seen in the above example, writing correct SQL can be quite tricky, depending on the SQL dialect. For instance, with SQL Server, you cannot have an ORDER BY clause in a subquery, unless you also have a TOP clause. This is illustrated by the fact that jOOQ renders a TOP 100 PERCENT clause for you. The same applies to the fact that ROW_NUMBER() OVER() needs an ORDER BY windowing clause, even if you don't provide one to the jOOQ query. By default, jOOQ adds ordering by the first column of your projection.
 											</p>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="with-ties-clause">
+                                        <title>The WITH TIES clause</title>
+                                        <content><html>
+                                            <p>
+                                                The previous chapter talked about <reference id="limit-clause" title="the LIMIT clause"/>, which limits the result set to a certain number of rows. The SQL standard specifies the following syntax:
+                                            </p>
+
+</html><sql><![CDATA[OFFSET m { ROW | ROWS }
+FETCH { FIRST | NEXT } n { ROW | ROWS } { ONLY | WITH TIES }]]></sql><html>
+
+                                            <p>
+                                                By default, most users will use the semantics of the <code>ONLY</code> keyword, meaning a <code>LIMIT 5</code> expression (or <code>FETCH NEXT 5 ROWS ONLY</code> expression) will result in at most 5 rows. The alternative clause <code>WITH TIES</code> will return at most 5 rows, except if the 5th row and the 6th row (and so on) are "tied" according to the <code>ORDER BY</code> clause, meaning that the <code>ORDER BY</code> clause does not deterministically produce a 5th or 6th row. For example, let's look at our book table:
+                                            </p>
+
+</html><code-pair>
+<sql><![CDATA[SELECT *
+FROM book
+ORDER BY actor_id
+FETCH NEXT 1 ROWS WITH TIES
+]]></sql>
+<java><![CDATA[DSL.using(configuration)
+   .selectFrom(BOOK)
+   .orderBy(BOOK.ACTOR_ID)
+   .limit(1).withTies()
+   .fetch();]]></java>
+</code-pair><html>
+
+                                            <p>
+                                                Resulting in:
+                                            </p>
+
+</html><text>
+id   actor_id   title
+---------------------
+1    1          1984
+2    1          Animal Farm
+</text><html>
+
+                                            <p>
+                                                We're now getting two rows because both rows "tied" when ordering them by <code>ACTOR_ID</code>. The database cannot really pick the next 1 row, so they're both returned. If we omit the <code>WITH TIES</code> clause, then only a random one of the rows would be returned.
+                                            </p>
+
+                                            <p>
+                                                Not all databases support <code>WITH TIES</code>. Oracle 12c supports the clause as specified in the SQL standard, and SQL Server knows <code>TOP n WITH TIES</code> without <code>OFFSET</code> support.
+                                            </p>
 										</html></content>
 									</section>
 
@@ -4787,7 +4835,7 @@ WHERE RN > 2]]></sql><html>
                                         <title>The SEEK clause</title>
                                         <content><html>
                                             <p>
-                                                The previous chapter talked about <reference id="limit-clause" title="OFFSET paging"/> using <code>LIMIT .. OFFSET</code>, or <code>OFFSET .. FETCH</code> or some other vendor-specific variant of the same. This can lead to significant performance issues when reaching a high page number, as all unneeded records need to be skipped by the database.
+                                                One of the previous chapters talked about <reference id="limit-clause" title="OFFSET paging"/> using <code>LIMIT .. OFFSET</code>, or <code>OFFSET .. FETCH</code> or some other vendor-specific variant of the same. This can lead to significant performance issues when reaching a high page number, as all unneeded records need to be skipped by the database.
                                             </p>
                                             <p>
                                                 A much faster and more stable way to perform paging is the so-called <em>keyset paging method</em> also called <em>seek method</em>. jOOQ supports a synthetic <code>seek()</code> clause, that can be used to perform keyset paging. Imagine we have these data:

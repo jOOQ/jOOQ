@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -641,10 +642,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
-     * Specify the <code>TOP n WITH TIES</code> or
-     * <code>FETCH NEXT n WITH TIES</code> clause.
+     * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({})
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     void setWithTies(boolean withTies);
 
     /**

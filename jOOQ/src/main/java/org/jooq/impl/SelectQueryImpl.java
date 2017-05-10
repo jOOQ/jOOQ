@@ -814,15 +814,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (wrapQueryExpressionBodyInDerivedTable)
                         c.qualify(false);
 
-                    // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+                    // [#2580] FETCH NEXT n ROWS ONLY emulation:
+                    // -----------------------------------------
+                    // When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
                     // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
                     // ordering by the SELECT's ORDER BY clause AND all the expressions from
                     // the projection
-                    // [#6197] TODO: What about the combination of DISTINCT and WITH TIES?
-                    c.visit(distinct
-                        ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
-                        : getLimit().withTies()
+                    //
+                    // [#6197] FETCH NEXT n ROWS WITH TIES emulation:
+                    // ----------------------------------------------
+                    // DISTINCT seems irrelevant here (to be proven)
+
+                    c.visit(getLimit().withTies()
                         ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+                        : distinct
+                        ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
                         : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
                     );
 

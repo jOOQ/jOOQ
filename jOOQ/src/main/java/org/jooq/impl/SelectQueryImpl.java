@@ -1471,11 +1471,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.visit(actualLimit);
     }
 
+    private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
+        return true
 
 
 
 
 
+        ;
+    }
 
 
 
@@ -1894,6 +1898,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return (unionOp.size() == 0) ? limit : unionLimit;
     }
 
+    final SortFieldList getNonEmptyOrderBy(Configuration configuration) {
+        if (getOrderBy().isEmpty()) {
+            SortFieldList result = new SortFieldList();
+
+            switch (configuration.family()) {
 
 
 
@@ -1905,30 +1914,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+                default:
+                    result.add(DSL.field("({select} 0)").asc());
+                    break;
+            }
+            return result;
+        }
 
+        return getOrderBy();
+    }
 
+    final SortFieldList getNonEmptyOrderByForDistinct(Configuration configuration) {
+        SortFieldList order = new SortFieldList();
+        order.addAll(getNonEmptyOrderBy(configuration));
 
+        for (Field<?> field : getSelect())
+            order.add(field.asc());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return order;
+    }
 
     @Override
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {

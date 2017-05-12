@@ -12691,6 +12691,46 @@ public class DSL {
     }
 
     /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(LocalDate date1, LocalDate date2) {
+        return localDateDiff(Tools.field(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(Field<LocalDate> date1, LocalDate date2) {
+        return localDateDiff(nullSafe(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(LocalDate date1, Field<LocalDate> date2) {
+        return localDateDiff(Tools.field(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(Field<LocalDate> date1, Field<LocalDate> date2) {
+        return new LocalDateDiff(nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
      * Add an interval to a {@link LocalDate}.
      *
      * @see Field#add(Number)

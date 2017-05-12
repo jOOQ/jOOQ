@@ -12690,6 +12690,59 @@ public class DSL {
         return new DateOrTime<LocalDate>(field, SQLDataType.LOCALDATE);
     }
 
+	/**
+	 * Add an interval to a {@link LocalDate}.
+	 *
+	 * @see Field#add(Number)
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
+		return localDateAdd(Tools.field(date), Tools.field(interval));
+	}
+
+	/**
+	 * Add an interval to a {@link LocalDate}.
+	 *
+	 * @see Field#add(Field)
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
+		return nullSafe(date).add(interval);
+	}
+
+	/**
+	 * Add an interval to {@link LocalDate}, given a date part.
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
+		return localDateAdd(Tools.field(date), Tools.field(interval), datePart);
+	}
+
+	/**
+	 * Add an interval to a {@link LocalDate}, given a date part.
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
+		return localDateAdd(Tools.field(date), nullSafe(interval), datePart);
+	}
+
+	/**
+	 * Add an interval to a {@link LocalDate}, given a date part.
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
+		return localDateAdd(nullSafe(date), Tools.field(interval), datePart);
+	}
+
+	/**
+	 * Add an interval to a {@link LocalDate}, given a date part.
+	 */
+	@Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+	public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval,
+			DatePart datePart) {
+		return new LocalDateAdd(nullSafe(date), nullSafe(interval), datePart);
+	}
+
     /**
      * Convert a string value to a <code>TIME</code>.
      */

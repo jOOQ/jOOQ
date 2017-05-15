@@ -8085,6 +8085,10 @@ Condition condition(String sql, Object... bindings);
 // Example: condition("a = {0}", val(1));
 Condition condition(String sql, QueryPart... parts);]]></java><html>
 
+                            <p>
+                                Both the bind value and the query part argument overloads make use of jOOQ's <reference id="plain-sql-templating" title="plain SQL templating language"/>.
+                            </p>
+
 							<p>
 								Please refer to the <reference class="org.jooq.impl.DSL"/> Javadoc for more details. The following is a more complete listing of plain SQL construction methods from the DSL:
 							</p>
@@ -8184,6 +8188,42 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							</ul>
 						</html></content>
 					</section>
+
+                    <section id="plain-sql-templating">
+                        <title>Plain SQL Templating Language</title>
+                        <content><html>
+                            <p>
+                                The <reference id="plain-sql" title="plain SQL API"/>, as documented in the previous chapter, supports a string templating mini-language that allows for constructing complex SQL string content from smaller parts. A simple example can be seen below, e.g. when looking for support for one of PostgreSQL's various vendor-specific operator types:
+                            </p>
+
+</html><code-pair>
+<sql><![CDATA[ARRAY[1,4,3] && ARRAY[2,1]]]></sql>
+<java><![CDATA[condition("{0} && {1}", array1, array2);]]></java>
+</code-pair><html>
+
+                            <p>
+                                Such a plain SQL template always consists of two things:
+                            </p>
+
+                            <ul>
+                                <li>The SQL string fragment</li>
+                                <li>A set of <reference class="org.jooq.QueryPart"/> arguments, which are expected to be embedded in the SQL string</li>
+                            </ul>
+
+                            <p>
+                                The SQL string may reference the arguments by 0-based indexing. Each argument may be referenced several times. For instance, SQLite's emulation of the <code>REPEAT(string, count)</code> function may look like this:
+                            </p>
+
+</html><java><![CDATA[Field<Integer> count = val(3);
+Field<String> string = val("abc");
+field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
+//                                     ^                  ^          ^                   ^^^^^  ^^^^^^
+//                                     |                  |          |                     |       |
+// argument "count" is repeated twice: \------------------+----------|---------------------/       |
+// argument "string" is used only once:                              \-----------------------------/]]></java><html>
+
+                        </html></content>
+                    </section>
 
                     <section id="names">
                         <title>Names and identifiers</title>

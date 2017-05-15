@@ -93,7 +93,7 @@ final class DDL {
                     constraints.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
         }
 
-        return DSL.queries(
+        return ctx.queries(
             ctx.createTable(table)
                .columns(table.fields())
                .constraints(constraints)
@@ -133,7 +133,7 @@ final class DDL {
                         queries.add(ctx.alterTable(table).add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray())));
         }
 
-        return DSL.queries(queries);
+        return ctx.queries(queries);
     }
 
     final Queries queries(Catalog catalog) {
@@ -142,6 +142,6 @@ final class DDL {
         for (Schema schema : catalog.getSchemas())
             queries.addAll(Arrays.asList(queries(schema).queries()));
 
-        return DSL.queries(queries);
+        return ctx.queries(queries);
     }
 }

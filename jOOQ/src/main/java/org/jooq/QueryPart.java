@@ -36,6 +36,8 @@ package org.jooq;
 
 import java.io.Serializable;
 
+import org.jooq.conf.Settings;
+
 /**
  * The common base type for all objects that can be used for query composition.
  * <p>
@@ -47,13 +49,20 @@ import java.io.Serializable;
 public interface QueryPart extends Serializable {
 
     /**
-     * Render a SQL string of this <code>QueryPart</code>
+     * Render a SQL string representation of this <code>QueryPart</code>.
      * <p>
      * For improved debugging, this renders a SQL string of this
-     * <code>QueryPart</code> with inlined bind variables. If you wish to gain
-     * more control over the concrete SQL rendering of this
-     * <code>QueryPart</code>, use {@link DSLContext#renderContext()} to obtain a
-     * configurable render context for SQL rendering.
+     * <code>QueryPart</code> with inlined bind variables. If this
+     * <code>QueryPart</code> is {@link Attachable}, then the attached
+     * {@link Configuration} may be used for rendering the SQL string, including
+     * {@link SQLDialect} and {@link Settings}. Do note that most
+     * <code>QueryPart</code> instances are not attached to a
+     * {@link Configuration}, and thus there is no guarantee that the SQL string
+     * will make sense in the context of a specific database.
+     * <p>
+     * If you wish to gain more control over the concrete SQL rendering of this
+     * <code>QueryPart</code>, use {@link DSLContext#renderContext()} to obtain
+     * a configurable render context for SQL rendering.
      *
      * @return A SQL string representation of this <code>QueryPart</code>
      */

@@ -36,25 +36,23 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 
-import java.sql.Date;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class DateDiff extends AbstractFunction<Integer> {
+final class DateDiff<T> extends AbstractFunction<Integer> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -4813228000332771961L;
 
-    private final Field<Date> date1;
-    private final Field<Date> date2;
+    private final Field<T>    date1;
+    private final Field<T>    date2;
 
-    DateDiff(Field<Date> date1, Field<Date> date2) {
+    DateDiff(Field<T> date1, Field<T> date2) {
         super("datediff", SQLDataType.INTEGER, date1, date2);
 
         this.date1 = date1;

@@ -12691,6 +12691,152 @@ public class DSL {
     }
 
     /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(LocalDate date1, LocalDate date2) {
+        return localDateDiff(Tools.field(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(Field<LocalDate> date1, LocalDate date2) {
+        return localDateDiff(nullSafe(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(LocalDate date1, Field<LocalDate> date2) {
+        return localDateDiff(Tools.field(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference in number of days.
+     *
+     * @see Field#sub(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> localDateDiff(Field<LocalDate> date1, Field<LocalDate> date2) {
+        return new LocalDateDiff(nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
+     * Add an interval to a {@link LocalDate}.
+     *
+     * @see Field#add(Number)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
+        return localDateAdd(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * Add an interval to a {@link LocalDate}.
+     *
+     * @see Field#add(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
+        return nullSafe(date).add(interval);
+    }
+
+    /**
+     * Add an interval to {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
+        return localDateAdd(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
+        return localDateAdd(Tools.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
+        return localDateAdd(nullSafe(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval,
+            DatePart datePart) {
+        return new LocalDateAdd(nullSafe(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}.
+     *
+     * @see Field#add(Number)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(LocalDate date, Number interval) {
+        return localDateSub(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}.
+     *
+     * @see Field#add(Field)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval) {
+        return nullSafe(date).sub(interval);
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(LocalDate date, Number interval, DatePart datePart) {
+        return localDateSub(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
+        return localDateSub(Tools.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(Field<LocalDate> date, Number interval, DatePart datePart) {
+        return localDateSub(nullSafe(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a {@link LocalDate}, given a date part.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval,
+            DatePart datePart) {
+        return new LocalDateAdd(nullSafe(date), nullSafe(interval).neg(), datePart);
+    }
+
+    /**
      * Convert a string value to a <code>TIME</code>.
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })

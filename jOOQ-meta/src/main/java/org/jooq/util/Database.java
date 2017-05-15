@@ -707,8 +707,31 @@ public interface Database {
 
     /**
      * Database properties.
+     * <p>
+     * These properties are typically used by database implementations like the
+     * jooq-meta-extensions's <code>JPADatabase</code> (reverse-engineering
+     * JPA-annotated entities: properties are used to describe entity lookup
+     * paths) or the <code>XMLDatabase</code> (reverse-engineering an XML file:
+     * properties are used to describe the XML file's location).
+     * <p>
+     * User-defined database implementations may use these properties for the
+     * same reason.
      */
     void setProperties(Properties properties);
+
+    /**
+     * Database properties.
+     * <p>
+     * These properties are typically used by database implementations like the
+     * jooq-meta-extensions's <code>JPADatabase</code> (reverse-engineering
+     * JPA-annotated entities: properties are used to describe entity lookup
+     * paths) or the <code>XMLDatabase</code> (reverse-engineering an XML file:
+     * properties are used to describe the XML file's location).
+     * <p>
+     * User-defined database implementations may use these properties for the
+     * same reason.
+     */
+    Properties getProperties();
 
     /**
      * A filter type that can be used with {@link Database#addFilter(Filter)}

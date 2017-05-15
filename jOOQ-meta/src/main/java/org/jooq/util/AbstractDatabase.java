@@ -612,6 +612,7 @@ public abstract class AbstractDatabase implements Database {
         this.properties = properties;
     }
 
+    @Override
     public final Properties getProperties() {
         return properties;
     }

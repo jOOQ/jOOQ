@@ -55,6 +55,11 @@ public interface Parser {
     Query parseQuery(String sql);
 
     /**
+     * Parse a SQL string to a result query.
+     */
+    ResultQuery<?> parseResultQuery(String sql);
+
+    /**
      * Parse a SQL string to a table.
      */
     Table<?> parseTable(String sql);

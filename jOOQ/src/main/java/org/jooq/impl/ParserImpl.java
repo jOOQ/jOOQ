@@ -287,6 +287,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
@@ -336,7 +337,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql);
         List<Query> result = new ArrayList<Query>();
         do {
-            Query query = parseQuery(ctx);
+            Query query = parseQuery(ctx, false);
             if (query != null)
                 result.add(query);
         }
@@ -351,7 +352,18 @@ class ParserImpl implements Parser {
     @Override
     public final Query parseQuery(String sql) {
         ParserContext ctx = new ParserContext(dsl, sql);
-        Query result = parseQuery(ctx);
+        Query result = parseQuery(ctx, false);
+
+        if (!ctx.done())
+            throw ctx.exception("Unexpected content after end of query input");
+
+        return result;
+    }
+
+    @Override
+    public final ResultQuery<?> parseResultQuery(String sql) {
+        ParserContext ctx = new ParserContext(dsl, sql);
+        ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
 
         if (!ctx.done())
             throw ctx.exception("Unexpected content after end of query input");
@@ -414,7 +426,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Query parseQuery(ParserContext ctx) {
+    private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
         if (ctx.done())
             return null;
 
@@ -423,44 +435,44 @@ class ParserImpl implements Parser {
             switch (ctx.character()) {
                 case 'a':
                 case 'A':
-                    if (peekKeyword(ctx, "ALTER"))
+                    if (!resultQuery && peekKeyword(ctx, "ALTER"))
                         return parseAlter(ctx);
 
                     break;
 
                 case 'c':
                 case 'C':
-                    if (peekKeyword(ctx, "CREATE"))
+                    if (!resultQuery && peekKeyword(ctx, "CREATE"))
                         return parseCreate(ctx);
 
                     break;
 
                 case 'd':
                 case 'D':
-                    if (peekKeyword(ctx, "DELETE"))
+                    if (!resultQuery && peekKeyword(ctx, "DELETE"))
                         return parseDelete(ctx);
-                    else if (peekKeyword(ctx, "DROP"))
+                    else if (!resultQuery && peekKeyword(ctx, "DROP"))
                         return parseDrop(ctx);
 
                     break;
 
                 case 'i':
                 case 'I':
-                    if (peekKeyword(ctx, "INSERT"))
+                    if (!resultQuery && peekKeyword(ctx, "INSERT"))
                         return parseInsert(ctx);
 
                     break;
 
                 case 'm':
                 case 'M':
-                    if (peekKeyword(ctx, "MERGE"))
+                    if (!resultQuery && peekKeyword(ctx, "MERGE"))
                         return parseMerge(ctx);
 
                     break;
 
                 case 'r':
                 case 'R':
-                    if (peekKeyword(ctx, "RENAME"))
+                    if (!resultQuery && peekKeyword(ctx, "RENAME"))
                         return parseRename(ctx);
 
                     break;
@@ -474,14 +486,14 @@ class ParserImpl implements Parser {
 
                 case 't':
                 case 'T':
-                    if (peekKeyword(ctx, "TRUNCATE"))
+                    if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
                         return parseTruncate(ctx);
 
                     break;
 
                 case 'u':
                 case 'U':
-                    if (peekKeyword(ctx, "UPDATE"))
+                    if (!resultQuery && peekKeyword(ctx, "UPDATE"))
                         return parseUpdate(ctx);
 
                     break;

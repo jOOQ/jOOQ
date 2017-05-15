@@ -8855,6 +8855,122 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
                         </html></content>
                     </section>
 
+                    <section id="sql-parser">
+                        <title>SQL Parser</title>
+                        <content><html>
+                            <p>
+                                A full-fledged SQL parser is available from <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> and from <reference class="org.jooq.DSLContext" anchor="#parsingConnection--" title="DSLContext.parsingConnection()"/> (see <reference id="parsing-connection" title="the manual's section about parsing connections for the latter"/>).
+                            </p>
+
+                            <h3>Goal</h3>
+
+                            <p>
+                                Historically, jOOQ implements an <a href="https://en.wikipedia.org/wiki/Domain-specific_language">internal domain-specific language</a> in Java, which generates SQL (an external domain-specific language) for use with JDBC. The jOOQ API is built from two parts: The <reference id="dsl-and-non-dsl" title="DSL and the model API"/> where the DSL API adds lexical convenience for programmers on top of the model API, which is really just a SQL expression tree, similar to what a SQL parser does inside of any database.
+                            </p>
+
+                            <p>
+                                With this parser, the whole set of jOOQ functionality will now also be made available to anyone who is not using jOOQ directly, including JDBC and/or JPA users, e.g. through the <reference id="parsing-connection" title="parsing connection"/>, which proxies all JDBC Connection calls to the jOOQ parser before forwarding them to the database, or through the <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> API, which allows for a more low-level access to the parser directly, e.g. for tool building on top of jOOQ.
+                            </p>
+
+                            <p>
+                                The possibilities are endless, including standardised, SQL string based database migrations that work on any <code>SQLDialect</code> that is supported by jOOQ.
+                            </p>
+
+                            <h3>Example</h3>
+
+                            <p>
+                                This parser API allows for parsing an arbitrary SQL string fragment into a variety of jOOQ API elements:
+                            </p>
+
+                            <ul>
+                                <li><reference class="org.jooq.Parser" anchor="#parse-java.lang-String-" title="Parser.parse(String)"/>: This produces the <reference class="org.jooq.Queries"/> type, containing a batch of queries.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseQuery-java.lang-String-" title="Parser.parseQuery(String)"/>: This produces the <reference class="org.jooq.Query"/> type, containing a single query.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseResultQuery-java.lang-String-" title="Parser.parseResultQuery(String)"/>: This produces the <reference class="org.jooq.ResultQuery"/> type, containing a single query.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseTable-java.lang-String-" title="Parser.parseTable(String)"/>: This produces the <reference class="org.jooq.Table"/> type, containing a table expression.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseField-java.lang-String-" title="Parser.parseField(String)"/>: This produces the <reference class="org.jooq.Field"/> type, containing a field expression.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseRow-java.lang-String-" title="Parser.parseRow(String)"/>: This produces the <reference class="org.jooq.Row"/> type, containing a row expression.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseCondition-java.lang-String-" title="Parser.parseCondition(String)"/>: This produces the <reference class="org.jooq.Condition"/> type, containing a condition expression.</li>
+                                <li><reference class="org.jooq.Parser" anchor="#parseName-java.lang-String-" title="Parser.parseName(String)"/>: This produces the <reference class="org.jooq.Name"/> type, containing a name expression.</li>
+                            </ul>
+
+                            <p>
+                                The parser is able to parse any unspecified dialect to produce a jOOQ representation of the SQL expression, for instance:
+                            </p>
+
+</html><java><![CDATA[ResultQuery<?> query =
+DSL.using(configuration)
+   .parser()
+   .parseResultQuery("SELECT * FROM (VALUES (1, 'a'), (2, 'b')) t(a, b)")]]></java><html>
+
+                            <p>
+                                The above SQL query is valid standard SQL and runs out of the box on PostgreSQL and SQL Server, among others. The jOOQ <code>ResultQuery</code> that is generated from this SQL string, however, will also work on any other database, as jOOQ can emulate the two interesting SQL features being used here:
+                            </p>
+
+                            <ul>
+                                <li>The <reference id="values" title="VALUES() constructor"/></li>
+                                <li>The <reference id="aliased-tables" title="derived column list syntax"/> (aliasing table <em>and</em> columns in one go)</li>
+                            </ul>
+
+                            <p>
+                                The query might be rendered as follows on the H2 database, which supports <code>VALUES()</code>, but not derived column lists:
+                            </p>
+
+</html><sql><![CDATA[select
+  t.a,
+  t.b
+from (
+  (
+    select
+      null a,
+      null b
+    where 1 = 0
+  )
+  union all (
+    select *
+    from (values
+      (1, 'a'),
+      (2, 'b')
+    ) t
+  )
+) t;]]></sql><html>
+
+                            <p>
+                                Or like this on Oracle, which supports neither feature:
+                            </p>
+
+</html><sql><![CDATA[select
+  t.a,
+  t.b
+from (
+  (
+    select
+      null a,
+      null b
+    from dual
+    where 1 = 0
+  )
+  union all (
+    select *
+    from (
+      (
+        select
+          1,
+          'a'
+        from dual
+      )
+      union all (
+        select
+          2,
+          'b'
+        from dual
+      )
+    ) t
+  )
+) t;]]></sql><html>
+
+                        </html></content>
+                    </section>
+
                     <section id="names">
                         <title>Names and identifiers</title>
                         <content><html>
@@ -12914,12 +13030,43 @@ public class DeleteOrUpdateWithoutWhereException extends RuntimeException {}
 							<p>
 								Since jOOQ 3.0, a simple wrapping API has been added to wrap JDBC's rather awkward <reference class="java.sql.DatabaseMetaData"/>. This API is still experimental, as the calls to the underlying JDBC type are not always available for all SQL dialects.
 							</p>
-						</html></content>
-					</section>
+                        </html></content>
+                    </section>
 
-				    <section id="logging">
-						<title>Logging</title>
-						<content><html>
+                    <section id="parsing-connection">
+                        <title>Parsing Connection</title>
+                        <content><html>
+                            <p>
+                                As previously discussed in the <reference id="sql-parser" title="manual's section about the SQL parser"/>, jOOQ exposes a full-fledged SQL parser through <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/>, and often more interestingly: Through <reference class="org.jooq.DSLContext" anchor="#parsingConnection--" title="DSLContext.parsingConnection()"/>.
+                            </p>
+
+                            <p>
+                                A parsing connection is a JDBC <reference class="java.sql.Connection"/>, which proxies all commands through the jOOQ parser, transforming the inbound SQL statement (and bind variables) given the entirety of jOOQ's <reference id="dsl-context" title="Configuration"/>, including <reference id="sql-dialects" title="SQLDialect"/>, <reference id="custom-settings" title="Settings"/> (e.g. formatting SQL or inlining bind variables) and much more. This allows for transparent SQL transformation of the SQL produced by any JDBC client (including JPA!). Here's a simple usage example:
+                            </p>
+
+</html><java><![CDATA[// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration).parsingConnection();
+     Statement s = c.createStatement();
+
+     // This syntax is not supported in Oracle, but thanks to the parser and jOOQ, it will run on Oracle and produce the expected result
+     ResultSet rs = s.executeQuery("SELECT * FROM (VALUES (1, 'a'), (2, 'b')) t(x, y)")) {
+
+    while (rs.next())
+        System.out.println("x: " + rs.getInt(1) + ", y: " + rs.getString());
+}]]></java><html>
+
+                            <p>
+                                Running the above statement will yield:
+                            </p>
+
+</html><text><![CDATA[x: 1, y: a
+x: 2, y: b]]></text><html>
+                        </html></content>
+                    </section>
+
+                    <section id="logging">
+                        <title>Logging</title>
+                        <content><html>
 							<p>
 								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Settings"/>. In order to see any DEBUG log output, put either log4j or slf4j on jOOQ's classpath along with their respective configuration. A sample log4j configuration can be seen here:
 							</p>

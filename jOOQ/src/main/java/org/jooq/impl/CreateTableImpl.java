@@ -328,7 +328,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         }
     }
 
-    private void acceptDefault(Context<?> ctx, DataType<?> type) {
+    private final void acceptDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
     }

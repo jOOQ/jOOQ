@@ -87,6 +87,7 @@ import static org.jooq.impl.Keywords.K_END_CATCH;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_END_LOOP;
 import static org.jooq.impl.Keywords.K_END_TRY;
+import static org.jooq.impl.Keywords.K_ENUM;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
@@ -3534,6 +3535,29 @@ final class Tools {
 
 
                 case POSTGRES: ctx.visit(type.getType() == Long.class ? K_SERIAL8 : K_SERIAL); return;
+            }
+        }
+
+        // [#5299] MySQL enum types
+        if (EnumType.class.isAssignableFrom(type.getType())) {
+            switch (ctx.family()) {
+                case MARIADB:
+                case MYSQL: {
+                    ctx.visit(K_ENUM).sql('(');
+
+                    Object[] enums = type.getType().getEnumConstants();
+                    if (enums == null)
+                        throw new IllegalStateException("EnumType must be a Java enum");
+
+                    String separator = "";
+                    for (Object e : enums) {
+                        ctx.sql(separator).visit(DSL.inline(((EnumType) e).getLiteral()));
+                        separator = ", ";
+                    }
+
+                    ctx.sql(')');
+                    return;
+                }
             }
         }
 

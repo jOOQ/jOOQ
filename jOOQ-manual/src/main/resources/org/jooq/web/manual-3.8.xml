@@ -8740,7 +8740,7 @@ Field<String> b = val("b");
 Field<String> c = val("c");
 
 // These two produce the same result:
-condition("my_column IN ({0}, {1}, {2}), a, b, c); // Using distinct template arguments
+condition("my_column IN ({0}, {1}, {2})", a, b, c); // Using distinct template arguments
 condition("my_column IN ({0})", list(a, b, c));    // Using a single template argument]]></java><html>
 
                         </html></content>

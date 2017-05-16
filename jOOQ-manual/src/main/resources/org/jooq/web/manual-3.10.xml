@@ -8849,7 +8849,7 @@ Field<String> b = val("b");
 Field<String> c = val("c");
 
 // These two produce the same result:
-condition("my_column IN ({0}, {1}, {2}), a, b, c); // Using distinct template arguments
+condition("my_column IN ({0}, {1}, {2})", a, b, c); // Using distinct template arguments
 condition("my_column IN ({0})", list(a, b, c));    // Using a single template argument]]></java><html>
 
                         </html></content>
@@ -9983,36 +9983,6 @@ public class BindValueAbbreviator extends DefaultVisitListener {
                             </section>
 						</sections>
 					</section>
-
-                    <section id="sql-parser">
-                        <title>SQL Parser</title>
-                        <content><html>
-                            <p>
-                                jOOQ includes a SQL parser API (EXPERIMENTAL in jOOQ 3.9), which allows for parsing a SQL String into a <reference id="queryparts" title="QueryPart"/> of a specified type, including:
-                            </p>
-
-                            <ul>
-                                <li>A set of <reference class="org.jooq.Queries"/></li>
-                                <li>A single <reference class="org.jooq.Query"/></li>
-                                <li>A <reference class="org.jooq.Table"/></li>
-                                <li>A <reference class="org.jooq.Field"/></li>
-                                <li>A <reference class="org.jooq.Condition"/></li>
-                            </ul>
-
-                            <p>
-                                The current implementation of the parser is dialect agnostic and will try to parse any SQL dialect into a standard jOOQ expression tree, for instance:
-                            </p>
-
-</html><java><![CDATA[// These two are the same
-assertEquals(ctx.select(inline(1)), ctx.parser().parseQuery("select 1"));
-assertEquals(ctx.select(inline(1)), ctx.parser().parseQuery("select 1 from dual"));
-]]></java><html>
-
-                            <p>
-                                The value of such an API becomes immediately clear as the parser can consume any type of SQL string (as long as it can be represented using jOOQ API) and the generated expression tree can then be serialised again in any possible way. This can be very helpful when migrating from one database dialect to another, even without really using jOOQ as a database abstraction layer.
-                            </p>
-                        </html></content>
-                    </section>
 
 					<section id="scala-sql-building">
 						<title>SQL building in Scala</title>

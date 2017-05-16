@@ -19,9 +19,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für TableConstraint complex type.
+ * <p>Java class for TableConstraint complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="TableConstraint"&gt;
@@ -77,7 +77,7 @@ public class TableConstraint implements Serializable
     protected String tableName;
 
     /**
-     * Ruft den Wert der constraintCatalog-Eigenschaft ab.
+     * Gets the value of the constraintCatalog property.
      *
      * @return
      *     possible object is
@@ -89,7 +89,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintCatalog-Eigenschaft fest.
+     * Sets the value of the constraintCatalog property.
      *
      * @param value
      *     allowed object is
@@ -101,7 +101,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintSchema-Eigenschaft ab.
+     * Gets the value of the constraintSchema property.
      *
      * @return
      *     possible object is
@@ -113,7 +113,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintSchema-Eigenschaft fest.
+     * Sets the value of the constraintSchema property.
      *
      * @param value
      *     allowed object is
@@ -125,7 +125,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintName-Eigenschaft ab.
+     * Gets the value of the constraintName property.
      *
      * @return
      *     possible object is
@@ -137,7 +137,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintName-Eigenschaft fest.
+     * Sets the value of the constraintName property.
      *
      * @param value
      *     allowed object is
@@ -149,7 +149,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintType-Eigenschaft ab.
+     * Gets the value of the constraintType property.
      *
      * @return
      *     possible object is
@@ -161,7 +161,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintType-Eigenschaft fest.
+     * Sets the value of the constraintType property.
      *
      * @param value
      *     allowed object is
@@ -173,7 +173,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableCatalog-Eigenschaft ab.
+     * Gets the value of the tableCatalog property.
      *
      * @return
      *     possible object is
@@ -185,7 +185,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der tableCatalog-Eigenschaft fest.
+     * Sets the value of the tableCatalog property.
      *
      * @param value
      *     allowed object is
@@ -197,7 +197,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableSchema-Eigenschaft ab.
+     * Gets the value of the tableSchema property.
      *
      * @return
      *     possible object is
@@ -209,7 +209,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der tableSchema-Eigenschaft fest.
+     * Sets the value of the tableSchema property.
      *
      * @param value
      *     allowed object is
@@ -221,7 +221,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableName-Eigenschaft ab.
+     * Gets the value of the tableName property.
      *
      * @return
      *     possible object is
@@ -233,7 +233,7 @@ public class TableConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der tableName-Eigenschaft fest.
+     * Sets the value of the tableName property.
      *
      * @param value
      *     allowed object is

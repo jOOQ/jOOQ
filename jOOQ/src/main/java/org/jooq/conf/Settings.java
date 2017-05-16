@@ -17,47 +17,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für Settings complex type.
+ * Settings that influence the way jOOQ renders SQL code.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- *
- * <pre>
- * &lt;complexType name="Settings"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="renderCatalog" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="renderSchema" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="renderMapping" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}RenderMapping" minOccurs="0"/&gt;
- *         &lt;element name="renderNameStyle" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}RenderNameStyle" minOccurs="0"/&gt;
- *         &lt;element name="renderKeywordStyle" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}RenderKeywordStyle" minOccurs="0"/&gt;
- *         &lt;element name="renderFormatted" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="renderScalarSubqueriesForStoredFunctions" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="backslashEscaping" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}BackslashEscaping" minOccurs="0"/&gt;
- *         &lt;element name="paramType" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}ParamType" minOccurs="0"/&gt;
- *         &lt;element name="paramCastMode" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}ParamCastMode" minOccurs="0"/&gt;
- *         &lt;element name="statementType" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}StatementType" minOccurs="0"/&gt;
- *         &lt;element name="executeLogging" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="executeWithOptimisticLocking" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="executeWithOptimisticLockingExcludeUnversioned" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="attachRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="updatablePrimaryKeys" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="reflectionCaching" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="fetchWarnings" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="returnAllOnUpdatableRecord" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="returnRecordToPojo" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="mapJPAAnnotations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="queryTimeout" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="maxRows" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="fetchSize" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="debugInfoOnStackTrace" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="inListPadding" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="delimiter" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -135,7 +96,10 @@ public class Settings
     protected String delimiter = ";";
 
     /**
-     * Ruft den Wert der renderCatalog-Eigenschaft ab.
+     * Whether any catalog name should be rendered at all.
+     * <p>
+     * Use this for single-catalog environments, or when all objects are made
+     * available using synonyms
      *
      * @return
      *     possible object is
@@ -147,7 +111,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderCatalog-Eigenschaft fest.
+     * Sets the value of the renderCatalog property.
      *
      * @param value
      *     allowed object is
@@ -159,7 +123,12 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderSchema-Eigenschaft ab.
+     * Whether any schema name should be rendered at all.
+     * <p>
+     * Setting this to false also implicitly sets "renderCatalog" to false.
+     * <p>
+     * Use this for single-schema environments, or when all objects are made
+     * available using synonyms
      *
      * @return
      *     possible object is
@@ -171,7 +140,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderSchema-Eigenschaft fest.
+     * Sets the value of the renderSchema property.
      *
      * @param value
      *     allowed object is
@@ -183,7 +152,8 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderMapping-Eigenschaft ab.
+     * Configure render mapping for runtime schema / table rewriting in
+     * generated SQL.
      *
      * @return
      *     possible object is
@@ -195,7 +165,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderMapping-Eigenschaft fest.
+     * Sets the value of the renderMapping property.
      *
      * @param value
      *     allowed object is
@@ -207,7 +177,10 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderNameStyle-Eigenschaft ab.
+     * Whether rendered schema, table, column names, etc should be quoted
+     * in rendered SQL, or transformed in any other way.
+     * <p>
+     * This is set to "QUOTED" by default for backwards-compatibility
      *
      * @return
      *     possible object is
@@ -219,7 +192,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderNameStyle-Eigenschaft fest.
+     * Sets the value of the renderNameStyle property.
      *
      * @param value
      *     allowed object is
@@ -231,7 +204,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderKeywordStyle-Eigenschaft ab.
+     * Whether SQL keywords should be rendered with upper or lower case.
      *
      * @return
      *     possible object is
@@ -243,7 +216,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderKeywordStyle-Eigenschaft fest.
+     * Sets the value of the renderKeywordStyle property.
      *
      * @param value
      *     allowed object is
@@ -255,7 +228,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderFormatted-Eigenschaft ab.
+     * Whether rendered SQL should be pretty-printed.
      *
      * @return
      *     possible object is
@@ -267,7 +240,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderFormatted-Eigenschaft fest.
+     * Sets the value of the renderFormatted property.
      *
      * @param value
      *     allowed object is
@@ -279,7 +252,10 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der renderScalarSubqueriesForStoredFunctions-Eigenschaft ab.
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
      *
      * @return
      *     possible object is
@@ -291,7 +267,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der renderScalarSubqueriesForStoredFunctions-Eigenschaft fest.
+     * Sets the value of the renderScalarSubqueriesForStoredFunctions property.
      *
      * @param value
      *     allowed object is
@@ -303,7 +279,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der backslashEscaping-Eigenschaft ab.
+     * Whether string literals should be escaped with backslash.
      *
      * @return
      *     possible object is
@@ -315,7 +291,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der backslashEscaping-Eigenschaft fest.
+     * Sets the value of the backslashEscaping property.
      *
      * @param value
      *     allowed object is
@@ -327,7 +303,17 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der paramType-Eigenschaft ab.
+     * Specify how bind variables are to be rendered.
+     * <p>
+     * Possibilities include:
+     *
+     * - question marks
+     * - named parameters
+     * - named or inlined parameters
+     * - inlined parameters
+     *
+     * This value is overridden by statementType == STATIC_STATEMENT, in
+     * case of which, this defaults to INLINED
      *
      * @return
      *     possible object is
@@ -339,7 +325,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der paramType-Eigenschaft fest.
+     * Sets the value of the paramType property.
      *
      * @param value
      *     allowed object is
@@ -351,7 +337,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der paramCastMode-Eigenschaft ab.
+     * Whether rendered bind values should be cast to their respective type.
      *
      * @return
      *     possible object is
@@ -363,7 +349,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der paramCastMode-Eigenschaft fest.
+     * Sets the value of the paramCastMode property.
      *
      * @param value
      *     allowed object is
@@ -375,7 +361,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der statementType-Eigenschaft ab.
+     * The type of statement that is to be executed.
      *
      * @return
      *     possible object is
@@ -387,7 +373,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der statementType-Eigenschaft fest.
+     * Sets the value of the statementType property.
      *
      * @param value
      *     allowed object is
@@ -399,7 +385,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der executeLogging-Eigenschaft ab.
+     * When set to true, this will add jOOQ's default logging ExecuteListeners.
      *
      * @return
      *     possible object is
@@ -411,7 +397,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der executeLogging-Eigenschaft fest.
+     * Sets the value of the executeLogging property.
      *
      * @param value
      *     allowed object is
@@ -423,7 +409,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der executeWithOptimisticLocking-Eigenschaft ab.
+     * Whether store() and delete() methods should be executed with optimistic locking.
      *
      * @return
      *     possible object is
@@ -435,7 +421,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der executeWithOptimisticLocking-Eigenschaft fest.
+     * Sets the value of the executeWithOptimisticLocking property.
      *
      * @param value
      *     allowed object is
@@ -447,7 +433,10 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der executeWithOptimisticLockingExcludeUnversioned-Eigenschaft ab.
+     * Whether store() and delete() methods should be executed with optimistic locking also on "unversioned" tables,
+     * i.e. on tables that do not have a version and/or timestamp column.
+     * <p>
+     * This flag has no effect when "executeWithOptimisticLocking" is turned off.
      *
      * @return
      *     possible object is
@@ -459,7 +448,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der executeWithOptimisticLockingExcludeUnversioned-Eigenschaft fest.
+     * Sets the value of the executeWithOptimisticLockingExcludeUnversioned property.
      *
      * @param value
      *     allowed object is
@@ -471,7 +460,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der attachRecords-Eigenschaft ab.
+     * Whether fetched records should be attached to the fetching configuration.
      *
      * @return
      *     possible object is
@@ -483,7 +472,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der attachRecords-Eigenschaft fest.
+     * Sets the value of the attachRecords property.
      *
      * @param value
      *     allowed object is
@@ -495,7 +484,10 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der updatablePrimaryKeys-Eigenschaft ab.
+     * Whether primary key values are deemed to be "updatable" in jOOQ.
+     * <p>
+     * Setting this to "true" will allow for updating primary key values through
+     * UpdatableRecord.store() and UpdatableRecord.update().
      *
      * @return
      *     possible object is
@@ -507,7 +499,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der updatablePrimaryKeys-Eigenschaft fest.
+     * Sets the value of the updatablePrimaryKeys property.
      *
      * @param value
      *     allowed object is
@@ -519,7 +511,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der reflectionCaching-Eigenschaft ab.
+     * Whether reflection information should be cached in the configuration.
      *
      * @return
      *     possible object is
@@ -531,7 +523,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der reflectionCaching-Eigenschaft fest.
+     * Sets the value of the reflectionCaching property.
      *
      * @param value
      *     allowed object is
@@ -543,7 +535,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der fetchWarnings-Eigenschaft ab.
+     * Whether warnings should be fetched after each query execution.
      *
      * @return
      *     possible object is
@@ -555,7 +547,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der fetchWarnings-Eigenschaft fest.
+     * Sets the value of the fetchWarnings property.
      *
      * @param value
      *     allowed object is
@@ -567,7 +559,10 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der returnAllOnUpdatableRecord-Eigenschaft ab.
+     * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+     * <p>
+     * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+     * RETURNING clause is fully supported, also for non-IDENTITY columns.
      *
      * @return
      *     possible object is
@@ -579,7 +574,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der returnAllOnUpdatableRecord-Eigenschaft fest.
+     * Sets the value of the returnAllOnUpdatableRecord property.
      *
      * @param value
      *     allowed object is
@@ -591,7 +586,9 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der returnRecordToPojo-Eigenschaft ab.
+     * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
+     * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
+     * IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other values.
      *
      * @return
      *     possible object is
@@ -603,7 +600,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der returnRecordToPojo-Eigenschaft fest.
+     * Sets the value of the returnRecordToPojo property.
      *
      * @param value
      *     allowed object is
@@ -615,7 +612,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der mapJPAAnnotations-Eigenschaft ab.
+     * Whether JPA annotations should be considered by the DefaultRecordMapper.
      *
      * @return
      *     possible object is
@@ -627,7 +624,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der mapJPAAnnotations-Eigenschaft fest.
+     * Sets the value of the mapJPAAnnotations property.
      *
      * @param value
      *     allowed object is
@@ -639,7 +636,8 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der queryTimeout-Eigenschaft ab.
+     * The default JDBC queryTimeout property that should be applied to all
+     * jOOQ queries, for which no specific queryTimeout was specified.
      *
      * @return
      *     possible object is
@@ -651,7 +649,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der queryTimeout-Eigenschaft fest.
+     * Sets the value of the queryTimeout property.
      *
      * @param value
      *     allowed object is
@@ -663,7 +661,8 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der maxRows-Eigenschaft ab.
+     * The default JDBC maxRows property that should be applied to all
+     * jOOQ queries, for which no specific maxRows value was specified.
      *
      * @return
      *     possible object is
@@ -675,7 +674,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der maxRows-Eigenschaft fest.
+     * Sets the value of the maxRows property.
      *
      * @param value
      *     allowed object is
@@ -687,7 +686,8 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der fetchSize-Eigenschaft ab.
+     * The default JDBC fetchSize property that should be applied to all
+     * jOOQ queries, for which no specific fetchSize value was specified.
      *
      * @return
      *     possible object is
@@ -699,7 +699,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der fetchSize-Eigenschaft fest.
+     * Sets the value of the fetchSize property.
      *
      * @param value
      *     allowed object is
@@ -711,7 +711,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der debugInfoOnStackTrace-Eigenschaft ab.
+     * [#5570] Whether exception stack traces should be enhanced with additional debug information.
      *
      * @return
      *     possible object is
@@ -723,7 +723,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der debugInfoOnStackTrace-Eigenschaft fest.
+     * Sets the value of the debugInfoOnStackTrace property.
      *
      * @param value
      *     allowed object is
@@ -735,7 +735,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der inListPadding-Eigenschaft ab.
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of 2.
      *
      * @return
      *     possible object is
@@ -747,7 +747,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der inListPadding-Eigenschaft fest.
+     * Sets the value of the inListPadding property.
      *
      * @param value
      *     allowed object is
@@ -759,7 +759,7 @@ public class Settings
     }
 
     /**
-     * Ruft den Wert der delimiter-Eigenschaft ab.
+     * [#5826] The delimiter character to be used to delimit statements in batches.
      *
      * @return
      *     possible object is
@@ -771,7 +771,7 @@ public class Settings
     }
 
     /**
-     * Legt den Wert der delimiter-Eigenschaft fest.
+     * Sets the value of the delimiter property.
      *
      * @param value
      *     allowed object is

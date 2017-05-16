@@ -22,24 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java-Klasse für MappedSchema complex type.
+ * A schema mapping configuration.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- *
- * <pre>
- * &lt;complexType name="MappedSchema"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="input" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="inputExpression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="output" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}MappedTables" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -66,7 +50,9 @@ public class MappedSchema
     protected List<MappedTable> tables;
 
     /**
-     * Ruft den Wert der input-Eigenschaft ab.
+     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * <p>
+     * Either &lt;input/> or &lt;inputExpression/> must be provided
      *
      * @return
      *     possible object is
@@ -78,7 +64,7 @@ public class MappedSchema
     }
 
     /**
-     * Legt den Wert der input-Eigenschaft fest.
+     * Sets the value of the input property.
      *
      * @param value
      *     allowed object is
@@ -90,7 +76,8 @@ public class MappedSchema
     }
 
     /**
-     * Ruft den Wert der inputExpression-Eigenschaft ab.
+     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * Either &lt;input/> or &lt;inputExpression/> must be provided
      *
      * @return
      *     possible object is
@@ -102,7 +89,7 @@ public class MappedSchema
     }
 
     /**
-     * Legt den Wert der inputExpression-Eigenschaft fest.
+     * Sets the value of the inputExpression property.
      *
      * @param value
      *     allowed object is
@@ -114,7 +101,12 @@ public class MappedSchema
     }
 
     /**
-     * Ruft den Wert der output-Eigenschaft ab.
+     * The output schema as it will be rendered in SQL.
+     * <ul>
+     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
+     * <li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression</li>
+     * </ul>
      *
      * @return
      *     possible object is
@@ -126,7 +118,7 @@ public class MappedSchema
     }
 
     /**
-     * Legt den Wert der output-Eigenschaft fest.
+     * Sets the value of the output property.
      *
      * @param value
      *     allowed object is

@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Column complex type.
+ * <p>Java class for Column complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Column"&gt;
@@ -91,7 +91,7 @@ public class Column implements Serializable
     protected String columnDefault;
 
     /**
-     * Ruft den Wert der tableCatalog-Eigenschaft ab.
+     * Gets the value of the tableCatalog property.
      *
      * @return
      *     possible object is
@@ -103,7 +103,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der tableCatalog-Eigenschaft fest.
+     * Sets the value of the tableCatalog property.
      *
      * @param value
      *     allowed object is
@@ -115,7 +115,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableSchema-Eigenschaft ab.
+     * Gets the value of the tableSchema property.
      *
      * @return
      *     possible object is
@@ -127,7 +127,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der tableSchema-Eigenschaft fest.
+     * Sets the value of the tableSchema property.
      *
      * @param value
      *     allowed object is
@@ -139,7 +139,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableName-Eigenschaft ab.
+     * Gets the value of the tableName property.
      *
      * @return
      *     possible object is
@@ -151,7 +151,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der tableName-Eigenschaft fest.
+     * Sets the value of the tableName property.
      *
      * @param value
      *     allowed object is
@@ -163,7 +163,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der columnName-Eigenschaft ab.
+     * Gets the value of the columnName property.
      *
      * @return
      *     possible object is
@@ -175,7 +175,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der columnName-Eigenschaft fest.
+     * Sets the value of the columnName property.
      *
      * @param value
      *     allowed object is
@@ -187,7 +187,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der dataType-Eigenschaft ab.
+     * Gets the value of the dataType property.
      *
      * @return
      *     possible object is
@@ -199,7 +199,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der dataType-Eigenschaft fest.
+     * Sets the value of the dataType property.
      *
      * @param value
      *     allowed object is
@@ -211,7 +211,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der characterMaximumLength-Eigenschaft ab.
+     * Gets the value of the characterMaximumLength property.
      *
      * @return
      *     possible object is
@@ -223,7 +223,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der characterMaximumLength-Eigenschaft fest.
+     * Sets the value of the characterMaximumLength property.
      *
      * @param value
      *     allowed object is
@@ -235,7 +235,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericPrecision-Eigenschaft ab.
+     * Gets the value of the numericPrecision property.
      *
      * @return
      *     possible object is
@@ -247,7 +247,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der numericPrecision-Eigenschaft fest.
+     * Sets the value of the numericPrecision property.
      *
      * @param value
      *     allowed object is
@@ -259,7 +259,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericScale-Eigenschaft ab.
+     * Gets the value of the numericScale property.
      *
      * @return
      *     possible object is
@@ -271,7 +271,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der numericScale-Eigenschaft fest.
+     * Sets the value of the numericScale property.
      *
      * @param value
      *     allowed object is
@@ -283,7 +283,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der ordinalPosition-Eigenschaft ab.
+     * Gets the value of the ordinalPosition property.
      *
      * @return
      *     possible object is
@@ -295,7 +295,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der ordinalPosition-Eigenschaft fest.
+     * Sets the value of the ordinalPosition property.
      *
      * @param value
      *     allowed object is
@@ -307,7 +307,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der identityGeneration-Eigenschaft ab.
+     * Gets the value of the identityGeneration property.
      *
      * @return
      *     possible object is
@@ -319,7 +319,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der identityGeneration-Eigenschaft fest.
+     * Sets the value of the identityGeneration property.
      *
      * @param value
      *     allowed object is
@@ -331,7 +331,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der isNullable-Eigenschaft ab.
+     * Gets the value of the isNullable property.
      *
      * @return
      *     possible object is
@@ -343,7 +343,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der isNullable-Eigenschaft fest.
+     * Sets the value of the isNullable property.
      *
      * @param value
      *     allowed object is
@@ -355,7 +355,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Ruft den Wert der columnDefault-Eigenschaft ab.
+     * Gets the value of the columnDefault property.
      *
      * @return
      *     possible object is
@@ -367,7 +367,7 @@ public class Column implements Serializable
     }
 
     /**
-     * Legt den Wert der columnDefault-Eigenschaft fest.
+     * Sets the value of the columnDefault property.
      *
      * @param value
      *     allowed object is

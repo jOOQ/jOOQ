@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatchersFieldType complex type.
+ * <p>Java class for MatchersFieldType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatchersFieldType"&gt;
@@ -58,7 +58,7 @@ public class MatchersFieldType implements Serializable
     protected MatcherRule fieldGetter;
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -82,7 +82,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Ruft den Wert der fieldIdentifier-Eigenschaft ab.
+     * Gets the value of the fieldIdentifier property.
      *
      * @return
      *     possible object is
@@ -94,7 +94,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Legt den Wert der fieldIdentifier-Eigenschaft fest.
+     * Sets the value of the fieldIdentifier property.
      *
      * @param value
      *     allowed object is
@@ -106,7 +106,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Ruft den Wert der fieldMember-Eigenschaft ab.
+     * Gets the value of the fieldMember property.
      *
      * @return
      *     possible object is
@@ -118,7 +118,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Legt den Wert der fieldMember-Eigenschaft fest.
+     * Sets the value of the fieldMember property.
      *
      * @param value
      *     allowed object is
@@ -130,7 +130,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Ruft den Wert der fieldSetter-Eigenschaft ab.
+     * Gets the value of the fieldSetter property.
      *
      * @return
      *     possible object is
@@ -142,7 +142,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Legt den Wert der fieldSetter-Eigenschaft fest.
+     * Sets the value of the fieldSetter property.
      *
      * @param value
      *     allowed object is
@@ -154,7 +154,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Ruft den Wert der fieldGetter-Eigenschaft ab.
+     * Gets the value of the fieldGetter property.
      *
      * @return
      *     possible object is
@@ -166,7 +166,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Legt den Wert der fieldGetter-Eigenschaft fest.
+     * Sets the value of the fieldGetter property.
      *
      * @param value
      *     allowed object is

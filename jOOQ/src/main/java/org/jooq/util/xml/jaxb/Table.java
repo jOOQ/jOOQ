@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Table complex type.
+ * <p>Java class for Table complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Table"&gt;
@@ -60,7 +60,7 @@ public class Table implements Serializable
     protected String tableName;
 
     /**
-     * Ruft den Wert der tableCatalog-Eigenschaft ab.
+     * Gets the value of the tableCatalog property.
      *
      * @return
      *     possible object is
@@ -72,7 +72,7 @@ public class Table implements Serializable
     }
 
     /**
-     * Legt den Wert der tableCatalog-Eigenschaft fest.
+     * Sets the value of the tableCatalog property.
      *
      * @param value
      *     allowed object is
@@ -84,7 +84,7 @@ public class Table implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableSchema-Eigenschaft ab.
+     * Gets the value of the tableSchema property.
      *
      * @return
      *     possible object is
@@ -96,7 +96,7 @@ public class Table implements Serializable
     }
 
     /**
-     * Legt den Wert der tableSchema-Eigenschaft fest.
+     * Sets the value of the tableSchema property.
      *
      * @param value
      *     allowed object is
@@ -108,7 +108,7 @@ public class Table implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableName-Eigenschaft ab.
+     * Gets the value of the tableName property.
      *
      * @return
      *     possible object is
@@ -120,7 +120,7 @@ public class Table implements Serializable
     }
 
     /**
-     * Legt den Wert der tableName-Eigenschaft fest.
+     * Sets the value of the tableName property.
      *
      * @param value
      *     allowed object is

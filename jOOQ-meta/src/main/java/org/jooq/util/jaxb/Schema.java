@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Schema complex type.
+ * <p>Java class for Schema complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Schema"&gt;
@@ -58,7 +58,7 @@ public class Schema implements Serializable
     protected Boolean outputSchemaToDefault = false;
 
     /**
-     * Ruft den Wert der inputSchema-Eigenschaft ab.
+     * Gets the value of the inputSchema property.
      *
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Legt den Wert der inputSchema-Eigenschaft fest.
+     * Sets the value of the inputSchema property.
      *
      * @param value
      *     allowed object is
@@ -82,7 +82,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputSchema-Eigenschaft ab.
+     * Gets the value of the outputSchema property.
      *
      * @return
      *     possible object is
@@ -94,7 +94,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Legt den Wert der outputSchema-Eigenschaft fest.
+     * Sets the value of the outputSchema property.
      *
      * @param value
      *     allowed object is
@@ -106,7 +106,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputSchemaToDefault-Eigenschaft ab.
+     * Gets the value of the outputSchemaToDefault property.
      *
      * @return
      *     possible object is
@@ -118,7 +118,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Legt den Wert der outputSchemaToDefault-Eigenschaft fest.
+     * Sets the value of the outputSchemaToDefault property.
      *
      * @param value
      *     allowed object is

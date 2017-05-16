@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Generate complex type.
+ * <p>Java class for Generate complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Generate"&gt;
@@ -160,7 +160,7 @@ public class Generate implements Serializable
     protected Boolean javaTimeTypes = false;
 
     /**
-     * Ruft den Wert der relations-Eigenschaft ab.
+     * Gets the value of the relations property.
      *
      * @return
      *     possible object is
@@ -172,7 +172,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der relations-Eigenschaft fest.
+     * Sets the value of the relations property.
      *
      * @param value
      *     allowed object is
@@ -184,7 +184,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der deprecated-Eigenschaft ab.
+     * Gets the value of the deprecated property.
      *
      * @return
      *     possible object is
@@ -196,7 +196,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der deprecated-Eigenschaft fest.
+     * Sets the value of the deprecated property.
      *
      * @param value
      *     allowed object is
@@ -208,7 +208,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der instanceFields-Eigenschaft ab.
+     * Gets the value of the instanceFields property.
      *
      * @return
      *     possible object is
@@ -220,7 +220,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der instanceFields-Eigenschaft fest.
+     * Sets the value of the instanceFields property.
      *
      * @param value
      *     allowed object is
@@ -232,7 +232,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der generatedAnnotation-Eigenschaft ab.
+     * Gets the value of the generatedAnnotation property.
      *
      * @return
      *     possible object is
@@ -244,7 +244,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der generatedAnnotation-Eigenschaft fest.
+     * Sets the value of the generatedAnnotation property.
      *
      * @param value
      *     allowed object is
@@ -256,7 +256,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der routines-Eigenschaft ab.
+     * Gets the value of the routines property.
      *
      * @return
      *     possible object is
@@ -268,7 +268,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der routines-Eigenschaft fest.
+     * Sets the value of the routines property.
      *
      * @param value
      *     allowed object is
@@ -280,7 +280,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der sequences-Eigenschaft ab.
+     * Gets the value of the sequences property.
      *
      * @return
      *     possible object is
@@ -292,7 +292,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der sequences-Eigenschaft fest.
+     * Sets the value of the sequences property.
      *
      * @param value
      *     allowed object is
@@ -304,7 +304,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der udts-Eigenschaft ab.
+     * Gets the value of the udts property.
      *
      * @return
      *     possible object is
@@ -316,7 +316,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der udts-Eigenschaft fest.
+     * Sets the value of the udts property.
      *
      * @param value
      *     allowed object is
@@ -328,7 +328,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der queues-Eigenschaft ab.
+     * Gets the value of the queues property.
      *
      * @return
      *     possible object is
@@ -340,7 +340,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der queues-Eigenschaft fest.
+     * Sets the value of the queues property.
      *
      * @param value
      *     allowed object is
@@ -352,7 +352,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der links-Eigenschaft ab.
+     * Gets the value of the links property.
      *
      * @return
      *     possible object is
@@ -364,7 +364,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der links-Eigenschaft fest.
+     * Sets the value of the links property.
      *
      * @param value
      *     allowed object is
@@ -376,7 +376,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der tables-Eigenschaft ab.
+     * Gets the value of the tables property.
      *
      * @return
      *     possible object is
@@ -388,7 +388,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der tables-Eigenschaft fest.
+     * Sets the value of the tables property.
      *
      * @param value
      *     allowed object is
@@ -400,7 +400,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der records-Eigenschaft ab.
+     * Gets the value of the records property.
      *
      * @return
      *     possible object is
@@ -412,7 +412,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der records-Eigenschaft fest.
+     * Sets the value of the records property.
      *
      * @param value
      *     allowed object is
@@ -424,7 +424,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojos-Eigenschaft ab.
+     * Gets the value of the pojos property.
      *
      * @return
      *     possible object is
@@ -436,7 +436,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der pojos-Eigenschaft fest.
+     * Sets the value of the pojos property.
      *
      * @param value
      *     allowed object is
@@ -448,7 +448,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojosEqualsAndHashCode-Eigenschaft ab.
+     * Gets the value of the pojosEqualsAndHashCode property.
      *
      * @return
      *     possible object is
@@ -460,7 +460,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der pojosEqualsAndHashCode-Eigenschaft fest.
+     * Sets the value of the pojosEqualsAndHashCode property.
      *
      * @param value
      *     allowed object is
@@ -472,7 +472,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojosToString-Eigenschaft ab.
+     * Gets the value of the pojosToString property.
      *
      * @return
      *     possible object is
@@ -484,7 +484,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der pojosToString-Eigenschaft fest.
+     * Sets the value of the pojosToString property.
      *
      * @param value
      *     allowed object is
@@ -496,7 +496,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der immutablePojos-Eigenschaft ab.
+     * Gets the value of the immutablePojos property.
      *
      * @return
      *     possible object is
@@ -508,7 +508,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der immutablePojos-Eigenschaft fest.
+     * Sets the value of the immutablePojos property.
      *
      * @param value
      *     allowed object is
@@ -520,7 +520,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der interfaces-Eigenschaft ab.
+     * Gets the value of the interfaces property.
      *
      * @return
      *     possible object is
@@ -532,7 +532,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der interfaces-Eigenschaft fest.
+     * Sets the value of the interfaces property.
      *
      * @param value
      *     allowed object is
@@ -544,7 +544,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der immutableInterfaces-Eigenschaft ab.
+     * Gets the value of the immutableInterfaces property.
      *
      * @return
      *     possible object is
@@ -556,7 +556,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der immutableInterfaces-Eigenschaft fest.
+     * Sets the value of the immutableInterfaces property.
      *
      * @param value
      *     allowed object is
@@ -568,7 +568,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der daos-Eigenschaft ab.
+     * Gets the value of the daos property.
      *
      * @return
      *     possible object is
@@ -580,7 +580,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der daos-Eigenschaft fest.
+     * Sets the value of the daos property.
      *
      * @param value
      *     allowed object is
@@ -592,7 +592,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der jpaAnnotations-Eigenschaft ab.
+     * Gets the value of the jpaAnnotations property.
      *
      * @return
      *     possible object is
@@ -604,7 +604,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der jpaAnnotations-Eigenschaft fest.
+     * Sets the value of the jpaAnnotations property.
      *
      * @param value
      *     allowed object is
@@ -616,7 +616,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der validationAnnotations-Eigenschaft ab.
+     * Gets the value of the validationAnnotations property.
      *
      * @return
      *     possible object is
@@ -628,7 +628,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der validationAnnotations-Eigenschaft fest.
+     * Sets the value of the validationAnnotations property.
      *
      * @param value
      *     allowed object is
@@ -640,7 +640,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der springAnnotations-Eigenschaft ab.
+     * Gets the value of the springAnnotations property.
      *
      * @return
      *     possible object is
@@ -652,7 +652,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der springAnnotations-Eigenschaft fest.
+     * Sets the value of the springAnnotations property.
      *
      * @param value
      *     allowed object is
@@ -664,7 +664,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalObjectReferences-Eigenschaft ab.
+     * Gets the value of the globalObjectReferences property.
      *
      * @return
      *     possible object is
@@ -676,7 +676,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalObjectReferences-Eigenschaft fest.
+     * Sets the value of the globalObjectReferences property.
      *
      * @param value
      *     allowed object is
@@ -688,7 +688,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalCatalogReferences-Eigenschaft ab.
+     * Gets the value of the globalCatalogReferences property.
      *
      * @return
      *     possible object is
@@ -700,7 +700,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalCatalogReferences-Eigenschaft fest.
+     * Sets the value of the globalCatalogReferences property.
      *
      * @param value
      *     allowed object is
@@ -712,7 +712,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalSchemaReferences-Eigenschaft ab.
+     * Gets the value of the globalSchemaReferences property.
      *
      * @return
      *     possible object is
@@ -724,7 +724,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalSchemaReferences-Eigenschaft fest.
+     * Sets the value of the globalSchemaReferences property.
      *
      * @param value
      *     allowed object is
@@ -736,7 +736,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalTableReferences-Eigenschaft ab.
+     * Gets the value of the globalTableReferences property.
      *
      * @return
      *     possible object is
@@ -748,7 +748,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalTableReferences-Eigenschaft fest.
+     * Sets the value of the globalTableReferences property.
      *
      * @param value
      *     allowed object is
@@ -760,7 +760,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalSequenceReferences-Eigenschaft ab.
+     * Gets the value of the globalSequenceReferences property.
      *
      * @return
      *     possible object is
@@ -772,7 +772,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalSequenceReferences-Eigenschaft fest.
+     * Sets the value of the globalSequenceReferences property.
      *
      * @param value
      *     allowed object is
@@ -784,7 +784,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalUDTReferences-Eigenschaft ab.
+     * Gets the value of the globalUDTReferences property.
      *
      * @return
      *     possible object is
@@ -796,7 +796,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalUDTReferences-Eigenschaft fest.
+     * Sets the value of the globalUDTReferences property.
      *
      * @param value
      *     allowed object is
@@ -808,7 +808,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalRoutineReferences-Eigenschaft ab.
+     * Gets the value of the globalRoutineReferences property.
      *
      * @return
      *     possible object is
@@ -820,7 +820,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalRoutineReferences-Eigenschaft fest.
+     * Sets the value of the globalRoutineReferences property.
      *
      * @param value
      *     allowed object is
@@ -832,7 +832,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalQueueReferences-Eigenschaft ab.
+     * Gets the value of the globalQueueReferences property.
      *
      * @return
      *     possible object is
@@ -844,7 +844,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalQueueReferences-Eigenschaft fest.
+     * Sets the value of the globalQueueReferences property.
      *
      * @param value
      *     allowed object is
@@ -856,7 +856,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der globalLinkReferences-Eigenschaft ab.
+     * Gets the value of the globalLinkReferences property.
      *
      * @return
      *     possible object is
@@ -868,7 +868,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der globalLinkReferences-Eigenschaft fest.
+     * Sets the value of the globalLinkReferences property.
      *
      * @param value
      *     allowed object is
@@ -880,7 +880,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der fluentSetters-Eigenschaft ab.
+     * Gets the value of the fluentSetters property.
      *
      * @return
      *     possible object is
@@ -892,7 +892,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der fluentSetters-Eigenschaft fest.
+     * Sets the value of the fluentSetters property.
      *
      * @param value
      *     allowed object is
@@ -904,7 +904,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der javaBeansGettersAndSetters-Eigenschaft ab.
+     * Gets the value of the javaBeansGettersAndSetters property.
      *
      * @return
      *     possible object is
@@ -916,7 +916,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der javaBeansGettersAndSetters-Eigenschaft fest.
+     * Sets the value of the javaBeansGettersAndSetters property.
      *
      * @param value
      *     allowed object is
@@ -928,7 +928,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der varargSetters-Eigenschaft ab.
+     * Gets the value of the varargSetters property.
      *
      * @return
      *     possible object is
@@ -940,7 +940,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der varargSetters-Eigenschaft fest.
+     * Sets the value of the varargSetters property.
      *
      * @param value
      *     allowed object is
@@ -952,7 +952,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der fullyQualifiedTypes-Eigenschaft ab.
+     * Gets the value of the fullyQualifiedTypes property.
      *
      * @return
      *     possible object is
@@ -964,7 +964,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der fullyQualifiedTypes-Eigenschaft fest.
+     * Sets the value of the fullyQualifiedTypes property.
      *
      * @param value
      *     allowed object is
@@ -976,7 +976,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der emptyCatalogs-Eigenschaft ab.
+     * Gets the value of the emptyCatalogs property.
      *
      * @return
      *     possible object is
@@ -988,7 +988,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der emptyCatalogs-Eigenschaft fest.
+     * Sets the value of the emptyCatalogs property.
      *
      * @param value
      *     allowed object is
@@ -1000,7 +1000,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der emptySchemas-Eigenschaft ab.
+     * Gets the value of the emptySchemas property.
      *
      * @return
      *     possible object is
@@ -1012,7 +1012,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der emptySchemas-Eigenschaft fest.
+     * Sets the value of the emptySchemas property.
      *
      * @param value
      *     allowed object is
@@ -1024,7 +1024,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Ruft den Wert der javaTimeTypes-Eigenschaft ab.
+     * Gets the value of the javaTimeTypes property.
      *
      * @return
      *     possible object is
@@ -1036,7 +1036,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Legt den Wert der javaTimeTypes-Eigenschaft fest.
+     * Sets the value of the javaTimeTypes property.
      *
      * @param value
      *     allowed object is

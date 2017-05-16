@@ -19,9 +19,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Routine complex type.
+ * <p>Java class for Routine complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Routine"&gt;
@@ -98,7 +98,7 @@ public class Routine implements Serializable
     protected Integer numericScale;
 
     /**
-     * Ruft den Wert der specificCatalog-Eigenschaft ab.
+     * Gets the value of the specificCatalog property.
      *
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der specificCatalog-Eigenschaft fest.
+     * Sets the value of the specificCatalog property.
      *
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificSchema-Eigenschaft ab.
+     * Gets the value of the specificSchema property.
      *
      * @return
      *     possible object is
@@ -134,7 +134,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der specificSchema-Eigenschaft fest.
+     * Sets the value of the specificSchema property.
      *
      * @param value
      *     allowed object is
@@ -146,7 +146,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificPackage-Eigenschaft ab.
+     * Gets the value of the specificPackage property.
      *
      * @return
      *     possible object is
@@ -158,7 +158,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der specificPackage-Eigenschaft fest.
+     * Sets the value of the specificPackage property.
      *
      * @param value
      *     allowed object is
@@ -170,7 +170,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificName-Eigenschaft ab.
+     * Gets the value of the specificName property.
      *
      * @return
      *     possible object is
@@ -182,7 +182,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der specificName-Eigenschaft fest.
+     * Sets the value of the specificName property.
      *
      * @param value
      *     allowed object is
@@ -194,7 +194,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineCatalog-Eigenschaft ab.
+     * Gets the value of the routineCatalog property.
      *
      * @return
      *     possible object is
@@ -206,7 +206,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der routineCatalog-Eigenschaft fest.
+     * Sets the value of the routineCatalog property.
      *
      * @param value
      *     allowed object is
@@ -218,7 +218,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineSchema-Eigenschaft ab.
+     * Gets the value of the routineSchema property.
      *
      * @return
      *     possible object is
@@ -230,7 +230,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der routineSchema-Eigenschaft fest.
+     * Sets the value of the routineSchema property.
      *
      * @param value
      *     allowed object is
@@ -242,7 +242,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der routinePackage-Eigenschaft ab.
+     * Gets the value of the routinePackage property.
      *
      * @return
      *     possible object is
@@ -254,7 +254,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der routinePackage-Eigenschaft fest.
+     * Sets the value of the routinePackage property.
      *
      * @param value
      *     allowed object is
@@ -266,7 +266,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineName-Eigenschaft ab.
+     * Gets the value of the routineName property.
      *
      * @return
      *     possible object is
@@ -278,7 +278,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der routineName-Eigenschaft fest.
+     * Sets the value of the routineName property.
      *
      * @param value
      *     allowed object is
@@ -290,7 +290,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineType-Eigenschaft ab.
+     * Gets the value of the routineType property.
      *
      * @return
      *     possible object is
@@ -302,7 +302,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der routineType-Eigenschaft fest.
+     * Sets the value of the routineType property.
      *
      * @param value
      *     allowed object is
@@ -314,7 +314,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der dataType-Eigenschaft ab.
+     * Gets the value of the dataType property.
      *
      * @return
      *     possible object is
@@ -326,7 +326,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der dataType-Eigenschaft fest.
+     * Sets the value of the dataType property.
      *
      * @param value
      *     allowed object is
@@ -338,7 +338,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der characterMaximumLength-Eigenschaft ab.
+     * Gets the value of the characterMaximumLength property.
      *
      * @return
      *     possible object is
@@ -350,7 +350,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der characterMaximumLength-Eigenschaft fest.
+     * Sets the value of the characterMaximumLength property.
      *
      * @param value
      *     allowed object is
@@ -362,7 +362,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericPrecision-Eigenschaft ab.
+     * Gets the value of the numericPrecision property.
      *
      * @return
      *     possible object is
@@ -374,7 +374,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der numericPrecision-Eigenschaft fest.
+     * Sets the value of the numericPrecision property.
      *
      * @param value
      *     allowed object is
@@ -386,7 +386,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericScale-Eigenschaft ab.
+     * Gets the value of the numericScale property.
      *
      * @return
      *     possible object is
@@ -398,7 +398,7 @@ public class Routine implements Serializable
     }
 
     /**
-     * Legt den Wert der numericScale-Eigenschaft fest.
+     * Sets the value of the numericScale property.
      *
      * @param value
      *     allowed object is

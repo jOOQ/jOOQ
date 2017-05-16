@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Schema complex type.
+ * <p>Java class for Schema complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Schema"&gt;
@@ -56,7 +56,7 @@ public class Schema implements Serializable
     protected String schemaName;
 
     /**
-     * Ruft den Wert der catalogName-Eigenschaft ab.
+     * Gets the value of the catalogName property.
      *
      * @return
      *     possible object is
@@ -68,7 +68,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Legt den Wert der catalogName-Eigenschaft fest.
+     * Sets the value of the catalogName property.
      *
      * @param value
      *     allowed object is
@@ -80,7 +80,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Ruft den Wert der schemaName-Eigenschaft ab.
+     * Gets the value of the schemaName property.
      *
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Legt den Wert der schemaName-Eigenschaft fest.
+     * Sets the value of the schemaName property.
      *
      * @param value
      *     allowed object is

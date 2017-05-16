@@ -22,9 +22,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Jdbc complex type.
+ * <p>Java class for Jdbc complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Jdbc"&gt;
@@ -75,7 +75,7 @@ public class Jdbc implements Serializable
     protected List<Property> properties;
 
     /**
-     * Ruft den Wert der driver-Eigenschaft ab.
+     * Gets the value of the driver property.
      *
      * @return
      *     possible object is
@@ -87,7 +87,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der driver-Eigenschaft fest.
+     * Sets the value of the driver property.
      *
      * @param value
      *     allowed object is
@@ -99,7 +99,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Ruft den Wert der url-Eigenschaft ab.
+     * Gets the value of the url property.
      *
      * @return
      *     possible object is
@@ -111,7 +111,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der url-Eigenschaft fest.
+     * Sets the value of the url property.
      *
      * @param value
      *     allowed object is
@@ -123,7 +123,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Ruft den Wert der schema-Eigenschaft ab.
+     * Gets the value of the schema property.
      *
      * @return
      *     possible object is
@@ -135,7 +135,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der schema-Eigenschaft fest.
+     * Sets the value of the schema property.
      *
      * @param value
      *     allowed object is
@@ -147,7 +147,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Ruft den Wert der user-Eigenschaft ab.
+     * Gets the value of the user property.
      *
      * @return
      *     possible object is
@@ -159,7 +159,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der user-Eigenschaft fest.
+     * Sets the value of the user property.
      *
      * @param value
      *     allowed object is
@@ -171,7 +171,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Ruft den Wert der username-Eigenschaft ab.
+     * Gets the value of the username property.
      *
      * @return
      *     possible object is
@@ -183,7 +183,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der username-Eigenschaft fest.
+     * Sets the value of the username property.
      *
      * @param value
      *     allowed object is
@@ -195,7 +195,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Ruft den Wert der password-Eigenschaft ab.
+     * Gets the value of the password property.
      *
      * @return
      *     possible object is
@@ -207,7 +207,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Legt den Wert der password-Eigenschaft fest.
+     * Sets the value of the password property.
      *
      * @param value
      *     allowed object is

@@ -18,23 +18,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java-Klasse für MappedTable complex type.
+ * A table mapping configuration.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- *
- * <pre>
- * &lt;complexType name="MappedTable"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="input" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="inputExpression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -59,7 +44,8 @@ public class MappedTable
     protected String output;
 
     /**
-     * Ruft den Wert der input-Eigenschaft ab.
+     * The input table as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/> or &lt;inputExpression/> must be provided.
      *
      * @return
      *     possible object is
@@ -71,7 +57,7 @@ public class MappedTable
     }
 
     /**
-     * Legt den Wert der input-Eigenschaft fest.
+     * Sets the value of the input property.
      *
      * @param value
      *     allowed object is
@@ -83,7 +69,8 @@ public class MappedTable
     }
 
     /**
-     * Ruft den Wert der inputExpression-Eigenschaft ab.
+     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/> or &lt;inputExpression/> must be provided
      *
      * @return
      *     possible object is
@@ -95,7 +82,7 @@ public class MappedTable
     }
 
     /**
-     * Legt den Wert der inputExpression-Eigenschaft fest.
+     * Sets the value of the inputExpression property.
      *
      * @param value
      *     allowed object is
@@ -107,7 +94,11 @@ public class MappedTable
     }
 
     /**
-     * Ruft den Wert der output-Eigenschaft ab.
+     * The output table as it will be rendered in SQL.
+     * <ul>
+     * <li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
+     * <li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression.</li>
+     * </ul>
      *
      * @return
      *     possible object is
@@ -119,7 +110,7 @@ public class MappedTable
     }
 
     /**
-     * Legt den Wert der output-Eigenschaft fest.
+     * Sets the value of the output property.
      *
      * @param value
      *     allowed object is

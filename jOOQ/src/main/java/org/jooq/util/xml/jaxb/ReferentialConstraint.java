@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für ReferentialConstraint complex type.
+ * <p>Java class for ReferentialConstraint complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="ReferentialConstraint"&gt;
@@ -72,7 +72,7 @@ public class ReferentialConstraint implements Serializable
     protected String uniqueConstraintName;
 
     /**
-     * Ruft den Wert der constraintCatalog-Eigenschaft ab.
+     * Gets the value of the constraintCatalog property.
      *
      * @return
      *     possible object is
@@ -84,7 +84,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintCatalog-Eigenschaft fest.
+     * Sets the value of the constraintCatalog property.
      *
      * @param value
      *     allowed object is
@@ -96,7 +96,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintSchema-Eigenschaft ab.
+     * Gets the value of the constraintSchema property.
      *
      * @return
      *     possible object is
@@ -108,7 +108,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintSchema-Eigenschaft fest.
+     * Sets the value of the constraintSchema property.
      *
      * @param value
      *     allowed object is
@@ -120,7 +120,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintName-Eigenschaft ab.
+     * Gets the value of the constraintName property.
      *
      * @return
      *     possible object is
@@ -132,7 +132,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintName-Eigenschaft fest.
+     * Sets the value of the constraintName property.
      *
      * @param value
      *     allowed object is
@@ -144,7 +144,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der uniqueConstraintCatalog-Eigenschaft ab.
+     * Gets the value of the uniqueConstraintCatalog property.
      *
      * @return
      *     possible object is
@@ -156,7 +156,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der uniqueConstraintCatalog-Eigenschaft fest.
+     * Sets the value of the uniqueConstraintCatalog property.
      *
      * @param value
      *     allowed object is
@@ -168,7 +168,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der uniqueConstraintSchema-Eigenschaft ab.
+     * Gets the value of the uniqueConstraintSchema property.
      *
      * @return
      *     possible object is
@@ -180,7 +180,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der uniqueConstraintSchema-Eigenschaft fest.
+     * Sets the value of the uniqueConstraintSchema property.
      *
      * @param value
      *     allowed object is
@@ -192,7 +192,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Ruft den Wert der uniqueConstraintName-Eigenschaft ab.
+     * Gets the value of the uniqueConstraintName property.
      *
      * @return
      *     possible object is
@@ -204,7 +204,7 @@ public class ReferentialConstraint implements Serializable
     }
 
     /**
-     * Legt den Wert der uniqueConstraintName-Eigenschaft fest.
+     * Sets the value of the uniqueConstraintName property.
      *
      * @param value
      *     allowed object is

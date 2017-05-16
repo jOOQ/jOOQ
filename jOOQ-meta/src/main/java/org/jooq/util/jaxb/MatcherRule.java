@@ -19,9 +19,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatcherRule complex type.
+ * <p>Java class for MatcherRule complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatcherRule"&gt;
@@ -56,7 +56,7 @@ public class MatcherRule implements Serializable
     protected String expression;
 
     /**
-     * Ruft den Wert der transform-Eigenschaft ab.
+     * Gets the value of the transform property.
      *
      * @return
      *     possible object is
@@ -68,7 +68,7 @@ public class MatcherRule implements Serializable
     }
 
     /**
-     * Legt den Wert der transform-Eigenschaft fest.
+     * Sets the value of the transform property.
      *
      * @param value
      *     allowed object is
@@ -80,7 +80,7 @@ public class MatcherRule implements Serializable
     }
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class MatcherRule implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is

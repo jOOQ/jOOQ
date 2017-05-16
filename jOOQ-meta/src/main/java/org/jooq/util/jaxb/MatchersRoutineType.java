@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatchersRoutineType complex type.
+ * <p>Java class for MatchersRoutineType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatchersRoutineType"&gt;
@@ -57,7 +57,7 @@ public class MatchersRoutineType implements Serializable
     protected String routineImplements;
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -69,7 +69,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -81,7 +81,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineClass-Eigenschaft ab.
+     * Gets the value of the routineClass property.
      *
      * @return
      *     possible object is
@@ -93,7 +93,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Legt den Wert der routineClass-Eigenschaft fest.
+     * Sets the value of the routineClass property.
      *
      * @param value
      *     allowed object is
@@ -105,7 +105,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineMethod-Eigenschaft ab.
+     * Gets the value of the routineMethod property.
      *
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Legt den Wert der routineMethod-Eigenschaft fest.
+     * Sets the value of the routineMethod property.
      *
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Ruft den Wert der routineImplements-Eigenschaft ab.
+     * Gets the value of the routineImplements property.
      *
      * @return
      *     possible object is
@@ -141,7 +141,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Legt den Wert der routineImplements-Eigenschaft fest.
+     * Sets the value of the routineImplements property.
      *
      * @param value
      *     allowed object is

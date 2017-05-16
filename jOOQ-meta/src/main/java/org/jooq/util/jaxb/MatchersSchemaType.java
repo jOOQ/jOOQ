@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatchersSchemaType complex type.
+ * <p>Java class for MatchersSchemaType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatchersSchemaType"&gt;
@@ -57,7 +57,7 @@ public class MatchersSchemaType implements Serializable
     protected String schemaImplements;
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -69,7 +69,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -81,7 +81,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Ruft den Wert der schemaClass-Eigenschaft ab.
+     * Gets the value of the schemaClass property.
      *
      * @return
      *     possible object is
@@ -93,7 +93,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Legt den Wert der schemaClass-Eigenschaft fest.
+     * Sets the value of the schemaClass property.
      *
      * @param value
      *     allowed object is
@@ -105,7 +105,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Ruft den Wert der schemaIdentifier-Eigenschaft ab.
+     * Gets the value of the schemaIdentifier property.
      *
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Legt den Wert der schemaIdentifier-Eigenschaft fest.
+     * Sets the value of the schemaIdentifier property.
      *
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Ruft den Wert der schemaImplements-Eigenschaft ab.
+     * Gets the value of the schemaImplements property.
      *
      * @return
      *     possible object is
@@ -141,7 +141,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Legt den Wert der schemaImplements-Eigenschaft fest.
+     * Sets the value of the schemaImplements property.
      *
      * @param value
      *     allowed object is

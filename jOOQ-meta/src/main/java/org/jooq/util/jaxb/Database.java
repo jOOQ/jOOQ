@@ -24,9 +24,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Database complex type.
+ * <p>Java class for Database complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Database"&gt;
@@ -180,7 +180,7 @@ public class Database implements Serializable
     protected List<ForcedType> forcedTypes;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -192,7 +192,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -233,7 +233,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includes-Eigenschaft ab.
+     * Gets the value of the includes property.
      *
      * @return
      *     possible object is
@@ -245,7 +245,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includes-Eigenschaft fest.
+     * Sets the value of the includes property.
      *
      * @param value
      *     allowed object is
@@ -257,7 +257,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der excludes-Eigenschaft ab.
+     * Gets the value of the excludes property.
      *
      * @return
      *     possible object is
@@ -269,7 +269,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der excludes-Eigenschaft fest.
+     * Sets the value of the excludes property.
      *
      * @param value
      *     allowed object is
@@ -281,7 +281,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeExcludeColumns-Eigenschaft ab.
+     * Gets the value of the includeExcludeColumns property.
      *
      * @return
      *     possible object is
@@ -293,7 +293,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeExcludeColumns-Eigenschaft fest.
+     * Sets the value of the includeExcludeColumns property.
      *
      * @param value
      *     allowed object is
@@ -305,7 +305,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeTables-Eigenschaft ab.
+     * Gets the value of the includeTables property.
      *
      * @return
      *     possible object is
@@ -317,7 +317,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeTables-Eigenschaft fest.
+     * Sets the value of the includeTables property.
      *
      * @param value
      *     allowed object is
@@ -329,7 +329,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeRoutines-Eigenschaft ab.
+     * Gets the value of the includeRoutines property.
      *
      * @return
      *     possible object is
@@ -341,7 +341,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeRoutines-Eigenschaft fest.
+     * Sets the value of the includeRoutines property.
      *
      * @param value
      *     allowed object is
@@ -353,7 +353,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includePackages-Eigenschaft ab.
+     * Gets the value of the includePackages property.
      *
      * @return
      *     possible object is
@@ -365,7 +365,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includePackages-Eigenschaft fest.
+     * Sets the value of the includePackages property.
      *
      * @param value
      *     allowed object is
@@ -377,7 +377,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeUDTs-Eigenschaft ab.
+     * Gets the value of the includeUDTs property.
      *
      * @return
      *     possible object is
@@ -389,7 +389,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeUDTs-Eigenschaft fest.
+     * Sets the value of the includeUDTs property.
      *
      * @param value
      *     allowed object is
@@ -401,7 +401,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeSequences-Eigenschaft ab.
+     * Gets the value of the includeSequences property.
      *
      * @return
      *     possible object is
@@ -413,7 +413,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeSequences-Eigenschaft fest.
+     * Sets the value of the includeSequences property.
      *
      * @param value
      *     allowed object is
@@ -425,7 +425,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includePrimaryKeys-Eigenschaft ab.
+     * Gets the value of the includePrimaryKeys property.
      *
      * @return
      *     possible object is
@@ -437,7 +437,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includePrimaryKeys-Eigenschaft fest.
+     * Sets the value of the includePrimaryKeys property.
      *
      * @param value
      *     allowed object is
@@ -449,7 +449,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeUniqueKeys-Eigenschaft ab.
+     * Gets the value of the includeUniqueKeys property.
      *
      * @return
      *     possible object is
@@ -461,7 +461,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeUniqueKeys-Eigenschaft fest.
+     * Sets the value of the includeUniqueKeys property.
      *
      * @param value
      *     allowed object is
@@ -473,7 +473,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der includeForeignKeys-Eigenschaft ab.
+     * Gets the value of the includeForeignKeys property.
      *
      * @return
      *     possible object is
@@ -485,7 +485,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der includeForeignKeys-Eigenschaft fest.
+     * Sets the value of the includeForeignKeys property.
      *
      * @param value
      *     allowed object is
@@ -497,7 +497,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der recordVersionFields-Eigenschaft ab.
+     * Gets the value of the recordVersionFields property.
      *
      * @return
      *     possible object is
@@ -509,7 +509,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der recordVersionFields-Eigenschaft fest.
+     * Sets the value of the recordVersionFields property.
      *
      * @param value
      *     allowed object is
@@ -521,7 +521,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der recordTimestampFields-Eigenschaft ab.
+     * Gets the value of the recordTimestampFields property.
      *
      * @return
      *     possible object is
@@ -533,7 +533,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der recordTimestampFields-Eigenschaft fest.
+     * Sets the value of the recordTimestampFields property.
      *
      * @param value
      *     allowed object is
@@ -545,7 +545,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der syntheticIdentities-Eigenschaft ab.
+     * Gets the value of the syntheticIdentities property.
      *
      * @return
      *     possible object is
@@ -557,7 +557,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der syntheticIdentities-Eigenschaft fest.
+     * Sets the value of the syntheticIdentities property.
      *
      * @param value
      *     allowed object is
@@ -569,7 +569,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der syntheticPrimaryKeys-Eigenschaft ab.
+     * Gets the value of the syntheticPrimaryKeys property.
      *
      * @return
      *     possible object is
@@ -581,7 +581,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der syntheticPrimaryKeys-Eigenschaft fest.
+     * Sets the value of the syntheticPrimaryKeys property.
      *
      * @param value
      *     allowed object is
@@ -593,7 +593,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der overridePrimaryKeys-Eigenschaft ab.
+     * Gets the value of the overridePrimaryKeys property.
      *
      * @return
      *     possible object is
@@ -605,7 +605,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der overridePrimaryKeys-Eigenschaft fest.
+     * Sets the value of the overridePrimaryKeys property.
      *
      * @param value
      *     allowed object is
@@ -617,7 +617,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der dateAsTimestamp-Eigenschaft ab.
+     * Gets the value of the dateAsTimestamp property.
      *
      * @return
      *     possible object is
@@ -629,7 +629,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der dateAsTimestamp-Eigenschaft fest.
+     * Sets the value of the dateAsTimestamp property.
      *
      * @param value
      *     allowed object is
@@ -641,7 +641,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der ignoreProcedureReturnValues-Eigenschaft ab.
+     * Gets the value of the ignoreProcedureReturnValues property.
      *
      * @return
      *     possible object is
@@ -653,7 +653,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der ignoreProcedureReturnValues-Eigenschaft fest.
+     * Sets the value of the ignoreProcedureReturnValues property.
      *
      * @param value
      *     allowed object is
@@ -665,7 +665,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der unsignedTypes-Eigenschaft ab.
+     * Gets the value of the unsignedTypes property.
      *
      * @return
      *     possible object is
@@ -677,7 +677,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der unsignedTypes-Eigenschaft fest.
+     * Sets the value of the unsignedTypes property.
      *
      * @param value
      *     allowed object is
@@ -689,7 +689,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der inputCatalog-Eigenschaft ab.
+     * Gets the value of the inputCatalog property.
      *
      * @return
      *     possible object is
@@ -701,7 +701,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der inputCatalog-Eigenschaft fest.
+     * Sets the value of the inputCatalog property.
      *
      * @param value
      *     allowed object is
@@ -713,7 +713,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputCatalog-Eigenschaft ab.
+     * Gets the value of the outputCatalog property.
      *
      * @return
      *     possible object is
@@ -725,7 +725,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der outputCatalog-Eigenschaft fest.
+     * Sets the value of the outputCatalog property.
      *
      * @param value
      *     allowed object is
@@ -737,7 +737,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputCatalogToDefault-Eigenschaft ab.
+     * Gets the value of the outputCatalogToDefault property.
      *
      * @return
      *     possible object is
@@ -749,7 +749,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der outputCatalogToDefault-Eigenschaft fest.
+     * Sets the value of the outputCatalogToDefault property.
      *
      * @param value
      *     allowed object is
@@ -761,7 +761,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der inputSchema-Eigenschaft ab.
+     * Gets the value of the inputSchema property.
      *
      * @return
      *     possible object is
@@ -773,7 +773,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der inputSchema-Eigenschaft fest.
+     * Sets the value of the inputSchema property.
      *
      * @param value
      *     allowed object is
@@ -785,7 +785,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputSchema-Eigenschaft ab.
+     * Gets the value of the outputSchema property.
      *
      * @return
      *     possible object is
@@ -797,7 +797,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der outputSchema-Eigenschaft fest.
+     * Sets the value of the outputSchema property.
      *
      * @param value
      *     allowed object is
@@ -809,7 +809,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputSchemaToDefault-Eigenschaft ab.
+     * Gets the value of the outputSchemaToDefault property.
      *
      * @return
      *     possible object is
@@ -821,7 +821,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der outputSchemaToDefault-Eigenschaft fest.
+     * Sets the value of the outputSchemaToDefault property.
      *
      * @param value
      *     allowed object is
@@ -833,7 +833,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der schemaVersionProvider-Eigenschaft ab.
+     * Gets the value of the schemaVersionProvider property.
      *
      * @return
      *     possible object is
@@ -845,7 +845,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der schemaVersionProvider-Eigenschaft fest.
+     * Sets the value of the schemaVersionProvider property.
      *
      * @param value
      *     allowed object is
@@ -857,7 +857,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der catalogVersionProvider-Eigenschaft ab.
+     * Gets the value of the catalogVersionProvider property.
      *
      * @return
      *     possible object is
@@ -869,7 +869,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der catalogVersionProvider-Eigenschaft fest.
+     * Sets the value of the catalogVersionProvider property.
      *
      * @param value
      *     allowed object is
@@ -881,7 +881,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableValuedFunctions-Eigenschaft ab.
+     * Gets the value of the tableValuedFunctions property.
      *
      * @return
      *     possible object is
@@ -893,7 +893,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Legt den Wert der tableValuedFunctions-Eigenschaft fest.
+     * Sets the value of the tableValuedFunctions property.
      *
      * @param value
      *     allowed object is

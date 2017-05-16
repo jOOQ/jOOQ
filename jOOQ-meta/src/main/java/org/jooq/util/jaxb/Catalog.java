@@ -22,9 +22,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Catalog complex type.
+ * <p>Java class for Catalog complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Catalog"&gt;
@@ -66,7 +66,7 @@ public class Catalog implements Serializable
     protected List<Schema> schemata;
 
     /**
-     * Ruft den Wert der inputCatalog-Eigenschaft ab.
+     * Gets the value of the inputCatalog property.
      *
      * @return
      *     possible object is
@@ -78,7 +78,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Legt den Wert der inputCatalog-Eigenschaft fest.
+     * Sets the value of the inputCatalog property.
      *
      * @param value
      *     allowed object is
@@ -90,7 +90,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputCatalog-Eigenschaft ab.
+     * Gets the value of the outputCatalog property.
      *
      * @return
      *     possible object is
@@ -102,7 +102,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Legt den Wert der outputCatalog-Eigenschaft fest.
+     * Sets the value of the outputCatalog property.
      *
      * @param value
      *     allowed object is
@@ -114,7 +114,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Ruft den Wert der outputCatalogToDefault-Eigenschaft ab.
+     * Gets the value of the outputCatalogToDefault property.
      *
      * @return
      *     possible object is
@@ -126,7 +126,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Legt den Wert der outputCatalogToDefault-Eigenschaft fest.
+     * Sets the value of the outputCatalogToDefault property.
      *
      * @param value
      *     allowed object is

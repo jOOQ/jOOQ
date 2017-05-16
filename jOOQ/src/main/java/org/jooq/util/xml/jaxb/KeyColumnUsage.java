@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für KeyColumnUsage complex type.
+ * <p>Java class for KeyColumnUsage complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="KeyColumnUsage"&gt;
@@ -79,7 +79,7 @@ public class KeyColumnUsage implements Serializable
     protected String tableName;
 
     /**
-     * Ruft den Wert der columnName-Eigenschaft ab.
+     * Gets the value of the columnName property.
      *
      * @return
      *     possible object is
@@ -91,7 +91,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der columnName-Eigenschaft fest.
+     * Sets the value of the columnName property.
      *
      * @param value
      *     allowed object is
@@ -103,7 +103,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintCatalog-Eigenschaft ab.
+     * Gets the value of the constraintCatalog property.
      *
      * @return
      *     possible object is
@@ -115,7 +115,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintCatalog-Eigenschaft fest.
+     * Sets the value of the constraintCatalog property.
      *
      * @param value
      *     allowed object is
@@ -127,7 +127,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintSchema-Eigenschaft ab.
+     * Gets the value of the constraintSchema property.
      *
      * @return
      *     possible object is
@@ -139,7 +139,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintSchema-Eigenschaft fest.
+     * Sets the value of the constraintSchema property.
      *
      * @param value
      *     allowed object is
@@ -151,7 +151,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der constraintName-Eigenschaft ab.
+     * Gets the value of the constraintName property.
      *
      * @return
      *     possible object is
@@ -163,7 +163,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der constraintName-Eigenschaft fest.
+     * Sets the value of the constraintName property.
      *
      * @param value
      *     allowed object is
@@ -175,7 +175,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der ordinalPosition-Eigenschaft ab.
+     * Gets the value of the ordinalPosition property.
      *
      */
     public int getOrdinalPosition() {
@@ -183,7 +183,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der ordinalPosition-Eigenschaft fest.
+     * Sets the value of the ordinalPosition property.
      *
      */
     public void setOrdinalPosition(int value) {
@@ -191,7 +191,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableCatalog-Eigenschaft ab.
+     * Gets the value of the tableCatalog property.
      *
      * @return
      *     possible object is
@@ -203,7 +203,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der tableCatalog-Eigenschaft fest.
+     * Sets the value of the tableCatalog property.
      *
      * @param value
      *     allowed object is
@@ -215,7 +215,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableSchema-Eigenschaft ab.
+     * Gets the value of the tableSchema property.
      *
      * @return
      *     possible object is
@@ -227,7 +227,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der tableSchema-Eigenschaft fest.
+     * Sets the value of the tableSchema property.
      *
      * @param value
      *     allowed object is
@@ -239,7 +239,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableName-Eigenschaft ab.
+     * Gets the value of the tableName property.
      *
      * @return
      *     possible object is
@@ -251,7 +251,7 @@ public class KeyColumnUsage implements Serializable
     }
 
     /**
-     * Legt den Wert der tableName-Eigenschaft fest.
+     * Sets the value of the tableName property.
      *
      * @param value
      *     allowed object is

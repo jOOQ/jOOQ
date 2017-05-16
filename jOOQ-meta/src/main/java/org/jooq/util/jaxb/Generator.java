@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Generator complex type.
+ * <p>Java class for Generator complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Generator"&gt;
@@ -60,7 +60,7 @@ public class Generator implements Serializable
     protected Target target;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -72,7 +72,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -84,7 +84,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Ruft den Wert der strategy-Eigenschaft ab.
+     * Gets the value of the strategy property.
      *
      * @return
      *     possible object is
@@ -96,7 +96,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Legt den Wert der strategy-Eigenschaft fest.
+     * Sets the value of the strategy property.
      *
      * @param value
      *     allowed object is
@@ -108,7 +108,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Ruft den Wert der database-Eigenschaft ab.
+     * Gets the value of the database property.
      *
      * @return
      *     possible object is
@@ -120,7 +120,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Legt den Wert der database-Eigenschaft fest.
+     * Sets the value of the database property.
      *
      * @param value
      *     allowed object is
@@ -132,7 +132,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Ruft den Wert der generate-Eigenschaft ab.
+     * Gets the value of the generate property.
      *
      * @return
      *     possible object is
@@ -144,7 +144,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Legt den Wert der generate-Eigenschaft fest.
+     * Sets the value of the generate property.
      *
      * @param value
      *     allowed object is
@@ -156,7 +156,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Ruft den Wert der target-Eigenschaft ab.
+     * Gets the value of the target property.
      *
      * @return
      *     possible object is
@@ -168,7 +168,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Legt den Wert der target-Eigenschaft fest.
+     * Sets the value of the target property.
      *
      * @param value
      *     allowed object is

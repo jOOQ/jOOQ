@@ -20,22 +20,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für RenderMapping complex type.
+ * The runtime schema and table mapping.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- *
- * <pre>
- * &lt;complexType name="RenderMapping"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="defaultSchema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd}MappedSchemata" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -58,7 +44,9 @@ public class RenderMapping
     protected List<MappedSchema> schemata;
 
     /**
-     * Ruft den Wert der defaultSchema-Eigenschaft ab.
+     * The default schema as defined in {@link org.jooq.Schema#getName()}.
+     * <p>
+     * This schema will be omitted in rendered SQL.
      *
      * @return
      *     possible object is
@@ -70,7 +58,7 @@ public class RenderMapping
     }
 
     /**
-     * Legt den Wert der defaultSchema-Eigenschaft fest.
+     * Sets the value of the defaultSchema property.
      *
      * @param value
      *     allowed object is

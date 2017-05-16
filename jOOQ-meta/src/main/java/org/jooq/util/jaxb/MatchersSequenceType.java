@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatchersSequenceType complex type.
+ * <p>Java class for MatchersSequenceType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatchersSequenceType"&gt;
@@ -52,7 +52,7 @@ public class MatchersSequenceType implements Serializable
     protected MatcherRule sequenceIdentifier;
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -64,7 +64,7 @@ public class MatchersSequenceType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -76,7 +76,7 @@ public class MatchersSequenceType implements Serializable
     }
 
     /**
-     * Ruft den Wert der sequenceIdentifier-Eigenschaft ab.
+     * Gets the value of the sequenceIdentifier property.
      *
      * @return
      *     possible object is
@@ -88,7 +88,7 @@ public class MatchersSequenceType implements Serializable
     }
 
     /**
-     * Legt den Wert der sequenceIdentifier-Eigenschaft fest.
+     * Sets the value of the sequenceIdentifier property.
      *
      * @param value
      *     allowed object is

@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für CustomType complex type.
+ * <p>Java class for CustomType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="CustomType"&gt;
@@ -65,7 +65,7 @@ public class CustomType implements Serializable
     protected String binding;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -77,7 +77,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -89,7 +89,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Ruft den Wert der type-Eigenschaft ab.
+     * Gets the value of the type property.
      *
      * @return
      *     possible object is
@@ -101,7 +101,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Legt den Wert der type-Eigenschaft fest.
+     * Sets the value of the type property.
      *
      * @param value
      *     allowed object is
@@ -113,7 +113,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Ruft den Wert der converter-Eigenschaft ab.
+     * Gets the value of the converter property.
      *
      * @return
      *     possible object is
@@ -125,7 +125,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Legt den Wert der converter-Eigenschaft fest.
+     * Sets the value of the converter property.
      *
      * @param value
      *     allowed object is
@@ -137,7 +137,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Ruft den Wert der enumConverter-Eigenschaft ab.
+     * Gets the value of the enumConverter property.
      *
      * @return
      *     possible object is
@@ -149,7 +149,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Legt den Wert der enumConverter-Eigenschaft fest.
+     * Sets the value of the enumConverter property.
      *
      * @param value
      *     allowed object is
@@ -161,7 +161,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Ruft den Wert der binding-Eigenschaft ab.
+     * Gets the value of the binding property.
      *
      * @return
      *     possible object is
@@ -173,7 +173,7 @@ public class CustomType implements Serializable
     }
 
     /**
-     * Legt den Wert der binding-Eigenschaft fest.
+     * Sets the value of the binding property.
      *
      * @param value
      *     allowed object is

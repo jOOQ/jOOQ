@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Sequence complex type.
+ * <p>Java class for Sequence complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Sequence"&gt;
@@ -73,7 +73,7 @@ public class Sequence implements Serializable
     protected Integer numericScale;
 
     /**
-     * Ruft den Wert der sequenceCatalog-Eigenschaft ab.
+     * Gets the value of the sequenceCatalog property.
      *
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der sequenceCatalog-Eigenschaft fest.
+     * Sets the value of the sequenceCatalog property.
      *
      * @param value
      *     allowed object is
@@ -97,7 +97,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der sequenceSchema-Eigenschaft ab.
+     * Gets the value of the sequenceSchema property.
      *
      * @return
      *     possible object is
@@ -109,7 +109,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der sequenceSchema-Eigenschaft fest.
+     * Sets the value of the sequenceSchema property.
      *
      * @param value
      *     allowed object is
@@ -121,7 +121,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der sequenceName-Eigenschaft ab.
+     * Gets the value of the sequenceName property.
      *
      * @return
      *     possible object is
@@ -133,7 +133,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der sequenceName-Eigenschaft fest.
+     * Sets the value of the sequenceName property.
      *
      * @param value
      *     allowed object is
@@ -145,7 +145,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der dataType-Eigenschaft ab.
+     * Gets the value of the dataType property.
      *
      * @return
      *     possible object is
@@ -157,7 +157,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der dataType-Eigenschaft fest.
+     * Sets the value of the dataType property.
      *
      * @param value
      *     allowed object is
@@ -169,7 +169,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der characterMaximumLength-Eigenschaft ab.
+     * Gets the value of the characterMaximumLength property.
      *
      * @return
      *     possible object is
@@ -181,7 +181,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der characterMaximumLength-Eigenschaft fest.
+     * Sets the value of the characterMaximumLength property.
      *
      * @param value
      *     allowed object is
@@ -193,7 +193,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericPrecision-Eigenschaft ab.
+     * Gets the value of the numericPrecision property.
      *
      * @return
      *     possible object is
@@ -205,7 +205,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der numericPrecision-Eigenschaft fest.
+     * Sets the value of the numericPrecision property.
      *
      * @param value
      *     allowed object is
@@ -217,7 +217,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericScale-Eigenschaft ab.
+     * Gets the value of the numericScale property.
      *
      * @return
      *     possible object is
@@ -229,7 +229,7 @@ public class Sequence implements Serializable
     }
 
     /**
-     * Legt den Wert der numericScale-Eigenschaft fest.
+     * Sets the value of the numericScale property.
      *
      * @param value
      *     allowed object is

@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für MatchersTableType complex type.
+ * <p>Java class for MatchersTableType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="MatchersTableType"&gt;
@@ -80,7 +80,7 @@ public class MatchersTableType implements Serializable
     protected String pojoImplements;
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -104,7 +104,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableClass-Eigenschaft ab.
+     * Gets the value of the tableClass property.
      *
      * @return
      *     possible object is
@@ -116,7 +116,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der tableClass-Eigenschaft fest.
+     * Sets the value of the tableClass property.
      *
      * @param value
      *     allowed object is
@@ -128,7 +128,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableIdentifier-Eigenschaft ab.
+     * Gets the value of the tableIdentifier property.
      *
      * @return
      *     possible object is
@@ -140,7 +140,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der tableIdentifier-Eigenschaft fest.
+     * Sets the value of the tableIdentifier property.
      *
      * @param value
      *     allowed object is
@@ -152,7 +152,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der tableImplements-Eigenschaft ab.
+     * Gets the value of the tableImplements property.
      *
      * @return
      *     possible object is
@@ -164,7 +164,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der tableImplements-Eigenschaft fest.
+     * Sets the value of the tableImplements property.
      *
      * @param value
      *     allowed object is
@@ -176,7 +176,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der recordClass-Eigenschaft ab.
+     * Gets the value of the recordClass property.
      *
      * @return
      *     possible object is
@@ -188,7 +188,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der recordClass-Eigenschaft fest.
+     * Sets the value of the recordClass property.
      *
      * @param value
      *     allowed object is
@@ -200,7 +200,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der recordImplements-Eigenschaft ab.
+     * Gets the value of the recordImplements property.
      *
      * @return
      *     possible object is
@@ -212,7 +212,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der recordImplements-Eigenschaft fest.
+     * Sets the value of the recordImplements property.
      *
      * @param value
      *     allowed object is
@@ -224,7 +224,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der interfaceClass-Eigenschaft ab.
+     * Gets the value of the interfaceClass property.
      *
      * @return
      *     possible object is
@@ -236,7 +236,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der interfaceClass-Eigenschaft fest.
+     * Sets the value of the interfaceClass property.
      *
      * @param value
      *     allowed object is
@@ -248,7 +248,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der interfaceImplements-Eigenschaft ab.
+     * Gets the value of the interfaceImplements property.
      *
      * @return
      *     possible object is
@@ -260,7 +260,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der interfaceImplements-Eigenschaft fest.
+     * Sets the value of the interfaceImplements property.
      *
      * @param value
      *     allowed object is
@@ -272,7 +272,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der daoClass-Eigenschaft ab.
+     * Gets the value of the daoClass property.
      *
      * @return
      *     possible object is
@@ -284,7 +284,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der daoClass-Eigenschaft fest.
+     * Sets the value of the daoClass property.
      *
      * @param value
      *     allowed object is
@@ -296,7 +296,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der daoImplements-Eigenschaft ab.
+     * Gets the value of the daoImplements property.
      *
      * @return
      *     possible object is
@@ -308,7 +308,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der daoImplements-Eigenschaft fest.
+     * Sets the value of the daoImplements property.
      *
      * @param value
      *     allowed object is
@@ -320,7 +320,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojoClass-Eigenschaft ab.
+     * Gets the value of the pojoClass property.
      *
      * @return
      *     possible object is
@@ -332,7 +332,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der pojoClass-Eigenschaft fest.
+     * Sets the value of the pojoClass property.
      *
      * @param value
      *     allowed object is
@@ -344,7 +344,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojoExtends-Eigenschaft ab.
+     * Gets the value of the pojoExtends property.
      *
      * @return
      *     possible object is
@@ -356,7 +356,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der pojoExtends-Eigenschaft fest.
+     * Sets the value of the pojoExtends property.
      *
      * @param value
      *     allowed object is
@@ -368,7 +368,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Ruft den Wert der pojoImplements-Eigenschaft ab.
+     * Gets the value of the pojoImplements property.
      *
      * @return
      *     possible object is
@@ -380,7 +380,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Legt den Wert der pojoImplements-Eigenschaft fest.
+     * Sets the value of the pojoImplements property.
      *
      * @param value
      *     allowed object is

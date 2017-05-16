@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Strategy complex type.
+ * <p>Java class for Strategy complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Strategy"&gt;
@@ -55,7 +55,7 @@ public class Strategy implements Serializable
     protected Matchers matchers;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -67,7 +67,7 @@ public class Strategy implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -79,7 +79,7 @@ public class Strategy implements Serializable
     }
 
     /**
-     * Ruft den Wert der matchers-Eigenschaft ab.
+     * Gets the value of the matchers property.
      *
      * @return
      *     possible object is
@@ -91,7 +91,7 @@ public class Strategy implements Serializable
     }
 
     /**
-     * Legt den Wert der matchers-Eigenschaft fest.
+     * Sets the value of the matchers property.
      *
      * @param value
      *     allowed object is

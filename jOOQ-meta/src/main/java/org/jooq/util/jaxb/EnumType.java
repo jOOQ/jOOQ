@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für EnumType complex type.
+ * <p>Java class for EnumType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="EnumType"&gt;
@@ -56,7 +56,7 @@ public class EnumType implements Serializable
     protected String literals;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -68,7 +68,7 @@ public class EnumType implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -80,7 +80,7 @@ public class EnumType implements Serializable
     }
 
     /**
-     * Ruft den Wert der literals-Eigenschaft ab.
+     * Gets the value of the literals property.
      *
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class EnumType implements Serializable
     }
 
     /**
-     * Legt den Wert der literals-Eigenschaft fest.
+     * Sets the value of the literals property.
      *
      * @param value
      *     allowed object is

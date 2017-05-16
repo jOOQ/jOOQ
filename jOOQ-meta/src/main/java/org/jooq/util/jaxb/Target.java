@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Target complex type.
+ * <p>Java class for Target complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Target"&gt;
@@ -60,7 +60,7 @@ public class Target implements Serializable
     protected String encoding = "UTF-8";
 
     /**
-     * Ruft den Wert der packageName-Eigenschaft ab.
+     * Gets the value of the packageName property.
      *
      * @return
      *     possible object is
@@ -72,7 +72,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Legt den Wert der packageName-Eigenschaft fest.
+     * Sets the value of the packageName property.
      *
      * @param value
      *     allowed object is
@@ -84,7 +84,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Ruft den Wert der directory-Eigenschaft ab.
+     * Gets the value of the directory property.
      *
      * @return
      *     possible object is
@@ -96,7 +96,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Legt den Wert der directory-Eigenschaft fest.
+     * Sets the value of the directory property.
      *
      * @param value
      *     allowed object is
@@ -108,7 +108,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Ruft den Wert der encoding-Eigenschaft ab.
+     * Gets the value of the encoding property.
      *
      * @return
      *     possible object is
@@ -120,7 +120,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Legt den Wert der encoding-Eigenschaft fest.
+     * Sets the value of the encoding property.
      *
      * @param value
      *     allowed object is

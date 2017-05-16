@@ -17,9 +17,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für ForcedType complex type.
+ * <p>Java class for ForcedType complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="ForcedType"&gt;
@@ -72,7 +72,7 @@ public class ForcedType implements Serializable
     protected String types;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Gets the value of the name property.
      *
      * @return
      *     possible object is
@@ -84,7 +84,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Sets the value of the name property.
      *
      * @param value
      *     allowed object is
@@ -96,7 +96,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der userType-Eigenschaft ab.
+     * Gets the value of the userType property.
      *
      * @return
      *     possible object is
@@ -108,7 +108,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der userType-Eigenschaft fest.
+     * Sets the value of the userType property.
      *
      * @param value
      *     allowed object is
@@ -120,7 +120,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der converter-Eigenschaft ab.
+     * Gets the value of the converter property.
      *
      * @return
      *     possible object is
@@ -132,7 +132,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der converter-Eigenschaft fest.
+     * Sets the value of the converter property.
      *
      * @param value
      *     allowed object is
@@ -144,7 +144,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der enumConverter-Eigenschaft ab.
+     * Gets the value of the enumConverter property.
      *
      * @return
      *     possible object is
@@ -156,7 +156,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der enumConverter-Eigenschaft fest.
+     * Sets the value of the enumConverter property.
      *
      * @param value
      *     allowed object is
@@ -168,7 +168,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der binding-Eigenschaft ab.
+     * Gets the value of the binding property.
      *
      * @return
      *     possible object is
@@ -180,7 +180,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der binding-Eigenschaft fest.
+     * Sets the value of the binding property.
      *
      * @param value
      *     allowed object is
@@ -192,7 +192,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der expression-Eigenschaft ab.
+     * Gets the value of the expression property.
      *
      * @return
      *     possible object is
@@ -204,7 +204,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der expression-Eigenschaft fest.
+     * Sets the value of the expression property.
      *
      * @param value
      *     allowed object is
@@ -216,7 +216,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der expressions-Eigenschaft ab.
+     * Gets the value of the expressions property.
      *
      * @return
      *     possible object is
@@ -228,7 +228,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der expressions-Eigenschaft fest.
+     * Sets the value of the expressions property.
      *
      * @param value
      *     allowed object is
@@ -240,7 +240,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Ruft den Wert der types-Eigenschaft ab.
+     * Gets the value of the types property.
      *
      * @return
      *     possible object is
@@ -252,7 +252,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Legt den Wert der types-Eigenschaft fest.
+     * Sets the value of the types property.
      *
      * @param value
      *     allowed object is

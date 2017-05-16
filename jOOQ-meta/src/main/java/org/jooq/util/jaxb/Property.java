@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Property complex type.
+ * <p>Java class for Property complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Property"&gt;
@@ -56,7 +56,7 @@ public class Property implements Serializable
     protected String value;
 
     /**
-     * Ruft den Wert der key-Eigenschaft ab.
+     * Gets the value of the key property.
      *
      * @return
      *     possible object is
@@ -68,7 +68,7 @@ public class Property implements Serializable
     }
 
     /**
-     * Legt den Wert der key-Eigenschaft fest.
+     * Sets the value of the key property.
      *
      * @param value
      *     allowed object is
@@ -80,7 +80,7 @@ public class Property implements Serializable
     }
 
     /**
-     * Ruft den Wert der value-Eigenschaft ab.
+     * Gets the value of the value property.
      *
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class Property implements Serializable
     }
 
     /**
-     * Legt den Wert der value-Eigenschaft fest.
+     * Sets the value of the value property.
      *
      * @param value
      *     allowed object is

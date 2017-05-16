@@ -19,9 +19,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java-Klasse für Parameter complex type.
+ * <p>Java class for Parameter complex type.
  *
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="Parameter"&gt;
@@ -93,7 +93,7 @@ public class Parameter implements Serializable
     protected String parameterDefault;
 
     /**
-     * Ruft den Wert der specificCatalog-Eigenschaft ab.
+     * Gets the value of the specificCatalog property.
      *
      * @return
      *     possible object is
@@ -105,7 +105,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der specificCatalog-Eigenschaft fest.
+     * Sets the value of the specificCatalog property.
      *
      * @param value
      *     allowed object is
@@ -117,7 +117,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificSchema-Eigenschaft ab.
+     * Gets the value of the specificSchema property.
      *
      * @return
      *     possible object is
@@ -129,7 +129,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der specificSchema-Eigenschaft fest.
+     * Sets the value of the specificSchema property.
      *
      * @param value
      *     allowed object is
@@ -141,7 +141,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificPackage-Eigenschaft ab.
+     * Gets the value of the specificPackage property.
      *
      * @return
      *     possible object is
@@ -153,7 +153,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der specificPackage-Eigenschaft fest.
+     * Sets the value of the specificPackage property.
      *
      * @param value
      *     allowed object is
@@ -165,7 +165,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der specificName-Eigenschaft ab.
+     * Gets the value of the specificName property.
      *
      * @return
      *     possible object is
@@ -177,7 +177,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der specificName-Eigenschaft fest.
+     * Sets the value of the specificName property.
      *
      * @param value
      *     allowed object is
@@ -189,7 +189,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der ordinalPosition-Eigenschaft ab.
+     * Gets the value of the ordinalPosition property.
      *
      */
     public int getOrdinalPosition() {
@@ -197,7 +197,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der ordinalPosition-Eigenschaft fest.
+     * Sets the value of the ordinalPosition property.
      *
      */
     public void setOrdinalPosition(int value) {
@@ -205,7 +205,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der parameterMode-Eigenschaft ab.
+     * Gets the value of the parameterMode property.
      *
      * @return
      *     possible object is
@@ -217,7 +217,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der parameterMode-Eigenschaft fest.
+     * Sets the value of the parameterMode property.
      *
      * @param value
      *     allowed object is
@@ -229,7 +229,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der parameterName-Eigenschaft ab.
+     * Gets the value of the parameterName property.
      *
      * @return
      *     possible object is
@@ -241,7 +241,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der parameterName-Eigenschaft fest.
+     * Sets the value of the parameterName property.
      *
      * @param value
      *     allowed object is
@@ -253,7 +253,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der dataType-Eigenschaft ab.
+     * Gets the value of the dataType property.
      *
      * @return
      *     possible object is
@@ -265,7 +265,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der dataType-Eigenschaft fest.
+     * Sets the value of the dataType property.
      *
      * @param value
      *     allowed object is
@@ -277,7 +277,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der characterMaximumLength-Eigenschaft ab.
+     * Gets the value of the characterMaximumLength property.
      *
      * @return
      *     possible object is
@@ -289,7 +289,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der characterMaximumLength-Eigenschaft fest.
+     * Sets the value of the characterMaximumLength property.
      *
      * @param value
      *     allowed object is
@@ -301,7 +301,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericPrecision-Eigenschaft ab.
+     * Gets the value of the numericPrecision property.
      *
      * @return
      *     possible object is
@@ -313,7 +313,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der numericPrecision-Eigenschaft fest.
+     * Sets the value of the numericPrecision property.
      *
      * @param value
      *     allowed object is
@@ -325,7 +325,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der numericScale-Eigenschaft ab.
+     * Gets the value of the numericScale property.
      *
      * @return
      *     possible object is
@@ -337,7 +337,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der numericScale-Eigenschaft fest.
+     * Sets the value of the numericScale property.
      *
      * @param value
      *     allowed object is
@@ -349,7 +349,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Ruft den Wert der parameterDefault-Eigenschaft ab.
+     * Gets the value of the parameterDefault property.
      *
      * @return
      *     possible object is
@@ -361,7 +361,7 @@ public class Parameter implements Serializable
     }
 
     /**
-     * Legt den Wert der parameterDefault-Eigenschaft fest.
+     * Sets the value of the parameterDefault property.
      *
      * @param value
      *     allowed object is

@@ -133,6 +133,7 @@ public final class Convert {
         trueValues.add("ON");
         trueValues.add("enabled");
         trueValues.add("ENABLED");
+        trueValues.add("t"); //added for Vertica DB, Vertica return t or f
 
         falseValues.add("0");
         falseValues.add("0.0");
@@ -148,6 +149,7 @@ public final class Convert {
         falseValues.add("OFF");
         falseValues.add("disabled");
         falseValues.add("DISABLED");
+        falseValues.add("f"); //added for Vertica DB, Vertica return t or f
 
         TRUE_VALUES = Collections.unmodifiableSet(trueValues);
         FALSE_VALUES = Collections.unmodifiableSet(falseValues);

@@ -61,6 +61,10 @@ public class DefaultColumnDefinition
 
         this.position = position;
         this.isIdentity = isIdentity || isSyntheticIdentity(this);
+
+        // [#6222] Copy the column's identity flag to the data type definition
+        if (type instanceof DefaultDataTypeDefinition)
+            ((DefaultDataTypeDefinition) type).identity(this.isIdentity);
     }
 
     private static boolean isSyntheticIdentity(DefaultColumnDefinition column) {

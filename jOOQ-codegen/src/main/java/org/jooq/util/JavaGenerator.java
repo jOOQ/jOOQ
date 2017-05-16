@@ -5223,6 +5223,7 @@ public class JavaGenerator extends AbstractGenerator {
                 0,
                 0,
                 true,
+                false,
                 null,
                 baseType
             ) + ".getArrayDataType()";
@@ -5236,6 +5237,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.getScale(),
                 type.getLength(),
                 type.isNullable(),
+                type.isIdentity(),
                 type.getDefaultValue(),
                 type.getQualifiedUserType()
             );
@@ -5374,15 +5376,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    /**
-     * @deprecated - Use {@link #getTypeReference(Database, SchemaDefinition, String, int, int, int, boolean, String, Name)} instead.
-     */
-    @Deprecated
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, String d, String u) {
-        return getTypeReference(db, schema, t, p, s, l, n, d, name(u));
-    }
-
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, String d, Name u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, boolean i, String d, Name u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
@@ -5417,7 +5411,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).nullable(n);
+                dataType = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).nullable(n).identity(i);
 
                 if (d != null)
                     dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
@@ -5453,6 +5447,9 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (!dataType.nullable())
                     sb.append(".nullable(false)");
+
+                if (dataType.identity())
+                    sb.append(".identity(true)");
 
                 // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
                 //         report actual values (e.g. MySQL).

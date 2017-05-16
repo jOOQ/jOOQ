@@ -64,6 +64,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
+    private boolean                isIdentity;
     private final String           defaultValue;
     private final int              length;
     private final int              precision;
@@ -222,6 +223,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final boolean isNullable() {
         return nullable;
+    }
+
+    public final DefaultDataTypeDefinition identity(boolean identity) {
+        this.isIdentity = identity;
+        return this;
+    }
+
+    @Override
+    public final boolean isIdentity() {
+        return isIdentity;
     }
 
     @Override

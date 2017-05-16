@@ -96,6 +96,11 @@ public interface DataTypeDefinition {
     boolean isNullable();
 
     /**
+     * Whether this data type is an identity.
+     */
+    boolean isIdentity();
+
+    /**
      * Whether this data type is defaultable.
      */
     boolean isDefaulted();

@@ -542,12 +542,8 @@ class ParserImpl implements Parser {
             // [#6022] Allow unquoted identifiers for columns
             parse(ctx, '(');
             List<Name> columnNames = parseIdentifiers(ctx);
-            String[] columns = new String[columnNames.size()];
-            for (int i = 0; i < columns.length; i++)
-                columns[i] = columnNames.get(i).last();
             parse(ctx, ')');
-
-            DerivedColumnList dcl = table.fields(columns);
+            DerivedColumnList dcl = table.fields(columnNames.toArray(EMPTY_NAME));
             parseKeyword(ctx, "AS");
             parse(ctx, '(');
             cte.add(dcl.as(parseSelect(ctx)));

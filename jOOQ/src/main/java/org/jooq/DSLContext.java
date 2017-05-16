@@ -3880,6 +3880,380 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep1 with(Name alias, Name fieldAlias1);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
+
 // [jooq-tools] END [with]
 
     /**
@@ -4433,6 +4807,446 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep1 withRecursive(Name alias, Name fieldAlias1);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
 // [jooq-tools] END [with-recursive]
 

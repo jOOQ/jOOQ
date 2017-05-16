@@ -88,6 +88,18 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep with(Name alias);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep with(Name alias, Name... fieldAliases);
+
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
@@ -265,6 +277,160 @@ public interface WithStep extends QueryPart {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep1 with(Name alias, Name fieldAlias1);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
 // [jooq-tools] END [with]
 

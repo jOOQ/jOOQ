@@ -40,7 +40,8 @@
   * and Maintenance Agreement for more details: http://www.jooq.org/licensing
   -->
 <xsl:stylesheet version="2.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:str="xalan://java.lang.String">
 
 	<xsl:import href="src/main/resources/org/jooq/web/html-util.xsl"/>
 
@@ -85,7 +86,7 @@ function printContent() {
             This page in other versions:
 
             <xsl:for-each select="/manuals/manual">
-                <xsl:sort select="@version" order="descending"/>
+                <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
 
                 <xsl:variable name="position" select="position()"/>
                 <xsl:variable name="version" select="@version"/>

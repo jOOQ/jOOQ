@@ -194,41 +194,8 @@ final class InCondition<T> extends AbstractCondition {
         PaddedList(List<T> delegate, int maxPadding) {
             this.delegate = delegate;
             this.realSize = delegate.size();
-            this.padSize = Math.min(maxPadding,
-                  realSize <= 0x00000000 ? 0x00000000
-                : realSize <= 0x00000001 ? 0x00000001
-                : realSize <= 0x00000002 ? 0x00000002
-                : realSize <= 0x00000004 ? 0x00000004
-                : realSize <= 0x00000008 ? 0x00000008
-                : realSize <= 0x00000010 ? 0x00000010
-                : realSize <= 0x00000020 ? 0x00000020
-                : realSize <= 0x00000040 ? 0x00000040
-                : realSize <= 0x00000080 ? 0x00000080
-                : realSize <= 0x00000100 ? 0x00000100
-                : realSize <= 0x00000200 ? 0x00000200
-                : realSize <= 0x00000400 ? 0x00000400
-                : realSize <= 0x00000800 ? 0x00000800
-                : realSize <= 0x00001000 ? 0x00001000
-                : realSize <= 0x00002000 ? 0x00002000
-                : realSize <= 0x00004000 ? 0x00004000
-                : realSize <= 0x00008000 ? 0x00008000
-                : realSize <= 0x00010000 ? 0x00010000
-                : realSize <= 0x00020000 ? 0x00020000
-                : realSize <= 0x00040000 ? 0x00040000
-                : realSize <= 0x00080000 ? 0x00080000
-                : realSize <= 0x00100000 ? 0x00100000
-                : realSize <= 0x00200000 ? 0x00200000
-                : realSize <= 0x00400000 ? 0x00400000
-                : realSize <= 0x00800000 ? 0x00800000
-                : realSize <= 0x01000000 ? 0x01000000
-                : realSize <= 0x02000000 ? 0x02000000
-                : realSize <= 0x04000000 ? 0x04000000
-                : realSize <= 0x08000000 ? 0x08000000
-                : realSize <= 0x10000000 ? 0x10000000
-                : realSize <= 0x20000000 ? 0x20000000
-                : realSize <= 0x40000000 ? 0x40000000
-                : realSize <= 0x80000000 ? 0x80000000
-                : realSize);
+            int r = Integer.highestOneBit(realSize);
+            this.padSize = Math.min(maxPadding, r == realSize ? realSize : r << 1);
         }
 
         @Override

@@ -2994,7 +2994,7 @@ DSL.concat(DSL.trim(FIRST_NAME), DSL.trim(LAST_NAME));</java>
                         <redirect id="custom-data" redirect-to="custom-data"/>
                         <redirect id="custom-execute-listeners" redirect-to="custom-execute-listeners"/>
                         <redirect id="custom-settings" redirect-to="custom-settings"/>
-                        <redirect id="runtime-schema-mapping" redirect-to="runtime-schema-mapping"/>
+                        <redirect id="runtime-schema-mapping" redirect-to="settings-render-mapping"/>
                     </redirect>
 
 					<section id="dsl-context">
@@ -3277,182 +3277,134 @@ configuration.set(
 								</html></content>
 							</section>
 
-							<section id="custom-settings">
-								<title>Custom Settings</title>
-								<content><html>
-									<p>
-										The jOOQ Configuration allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to a Configuration in several ways:
-									</p>
-									<ul>
-										<li>In the DSLContext constructor (<code>DSL.using()</code>). This will override default settings below</li>
-										<li>in the <reference class="org.jooq.impl.DefaultConfiguration"/> constructor. This will override default settings below</li>
+                            <section id="custom-settings">
+                                <title>Custom Settings</title>
+                                <content><html>
+                                    <p>
+                                        The jOOQ Configuration allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to a Configuration in several ways:
+                                    </p>
+
+                                    <ul>
+                                        <li>In the DSLContext constructor (<code>DSL.using()</code>). This will override default settings below</li>
+                                        <li>in the <reference class="org.jooq.impl.DefaultConfiguration"/> constructor. This will override default settings below</li>
                                         <li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
-										<li>From the classpath at /jooq-settings.xml</li>
-										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a></li>
-									</ul>
-									<h3>Example</h3>
-									<p>
-										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by creating the following DSLContext:
-									</p>
+                                        <li>From the classpath at /jooq-settings.xml</li>
+                                        <li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a></li>
+                                    </ul>
+
+                                    <p>
+                                        The most specific settings for a given context will apply.
+                                    </p>
+
+                                    <p>
+                                        If you wish to configure your settings through XML, but explicitly load them for a given <code>Configuration</code>, you can do so as well, using JAXB:
+                                    </p>
+
+</html><java><![CDATA[Settings settings = JAXB.unmarshal(new File("/path/to/settings.xml"), Settings.class);]]></java><html>
+
+                                    <h3>Example</h3>
+
+                                    <p>
+                                        For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by creating the following DSLContext:
+                                    </p>
+
 </html><java><![CDATA[Settings settings = new Settings();
 settings.setStatementType(StatementType.STATIC_STATEMENT);
 DSLContext create = DSL.using(connection, dialect, settings);]]></java><html>
-									<p>
-										Subsequent sections of the manual contain some more in-depth explanations about these settings and what is controlled by these settings:
-									</p>
-									<ul>
-										<li>
-		     								<reference id="schema-mapping" title="Runtime schema and table mapping"/>
-		   								</li>
-                                        <li>
-                                            <reference id="names" title="Names and identifiers"/>
-                                        </li>
-		     							<li>
-		     								<reference id="optimistic-locking" title="Execute CRUD with optimistic locking enabled"/>
-		     							</li>
-		     							<li>
-		     								<reference id="logging" title="Enabling DEBUG logging of all executed SQL"/>
-		     							</li>
-		   							</ul>
-
-                                    <h3>All Settings</h3>
-
-                                    <p>
-                                        This section of the manual explains all the available Settings flags as available from the <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">XSD specification</a>.
-                                    </p>
-
-</html>
-<xml><![CDATA[<settings>
-    <!-- Whether any schema name should be rendered at all.
-         Use this for single-schema environments, or when all objects are made
-         available using synonyms.
-
-         Defaults to "true" -->
-    <renderSchema>false</renderSchema>
-
-    <!-- Configure render mapping for runtime schema / table rewriting in
-         generated SQL. This is described in another section of the manual -->
-    <renderMapping>...</renderMapping>
-
-    <!-- Whether rendered schema, table, column names, etc should be quoted
-         in rendered SQL, or transformed in any other way.
-         - "Quoted", `Quoted`, or [Quoted] : QUOTED
-         - UPPER_CASED                     : UPPER
-         - lower_cased                     : LOWER
-         - CasedAsReportedByTheDatabase    : AS_IS
-
-         Defaults to "QUOTED" -->
-    <renderNameStyle>LOWER</renderNameStyle>
-
-    <!-- Whether SQL keywords should be rendered with upper or lower case.
-
-         Defaults to "LOWER" -->
-    <renderKeywordStyle>UPPER</renderKeywordStyle>
-
-    <!-- Whether rendered SQL should be pretty-printed.
-
-         Defaults to "false" -->
-    <renderFormatted>false</renderFormatted>
-
-    <!-- Whether rendered bind values should be rendered as:
-         - question marks   : INDEXED
-         - named parameters : NAMED
-         - inlined values   : INLINED
-
-         Defaults to "INDEXED".
-
-         This value is overridden by statementType == STATIC_STATEMENT, in
-         case of which, this defaults to INLINED -->
-    <paramType>INDEXED</paramType>
-
-    <!-- The type of statement that is to be executed.
-         - PreparedStatement with bind values : PREPARED_STATEMENT
-         - Statement without bind values      : STATIC_STATEMENT
-
-         Defaults to "PREPARED_STATEMENT" -->
-    <statementType>PREPARED_STATEMENT</statementType>
-
-    <!-- When set to true, this will add jOOQ's default logging ExecuteListeners
-
-         Defaults to "true" -->
-    <executeLogging>true</executeLogging>
-
-    <!-- Whether store() and delete() methods should be executed with optimistic locking.
-
-         Defaults to "false" -->
-    <executeWithOptimisticLocking>false</executeWithOptimisticLocking>
-
-    <!-- Whether fetched records should be attached to the fetching configuration.
-
-         Defaults to "true" -->
-    <attachRecords>true</attachRecords>
-
-    <!-- Whether primary key values are deemed to be "updatable" in jOOQ
-
-         Setting this to "true" will allow for updating primary key values through
-         UpdatableRecord.store() and UpdatableRecord.update()
-
-         Defaults to "false" -->
-    <updatablePrimaryKeys>false</updatablePrimaryKeys>
-</settings>]]></xml>
-<html>
 
                                     <h3>More details</h3>
 
-		   							<p>
-										Please refer to the jOOQ runtime configuration XSD for more details:<br/>
-										<a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a>
-									</p>
-								</html></content>
-							</section>
+                                    <p>
+                                        Please refer to the jOOQ runtime configuration XSD for more details:<br/>
+                                        <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a>
+                                    </p>
+                                </html></content>
 
-							<section id="runtime-schema-mapping">
-								<title>Runtime schema and table mapping</title>
-								<content><html>
-									<h3>Mapping your DEV schema to a productive environment</h3>
-									<p>
-										You may wish to design your database in a way that you have several instances of your schema. This is useful when you want to cleanly separate data belonging to several customers / organisation units / branches / users and put each of those entities' data in a separate database or schema.
-									</p>
+                                <sections>
+                                    <section id="setting-qualification">
+                                        <title>Object qualification</title>
+                                        <content><html>
+                                            <p>
+                                                By default, jOOQ fully qualifies all objects with their catalog and schema names, if such qualification is made available by the <reference id="code-generation" title="code generator"/>. For instance, the following SQL statement containing full qualification may be produced by jOOQ code with seemingly no qualification:
+                                            </p>
 
-									<p>
-										In our AUTHOR example this would mean that you provide a book reference database to several companies, such as My Book World and Books R Us. In that case, you'll probably have a schema setup like this:
-									</p>
-									<ul>
-										<li>DEV: Your development schema. This will be the schema that you base code generation upon, with jOOQ </li>
-										<li>MY_BOOK_WORLD: The schema instance for My Book World </li>
-										<li>BOOKS_R_US: The schema instance for Books R Us </li>
-									</ul>
+</html><code-pair>
+<sql><![CDATA[-- Full qualification on columns and tables
+SELECT catalog.schema.table.column
+FROM catalog.schema.table]]></sql>
+<java><![CDATA[DSL.using(configuration)
+   .select(TABLE.COLUMN) // Column only qualified with table
+   .from(TABLE)          // No qualification on table]]></java>
+</code-pair><html>
 
-									<h3>Mapping DEV to MY_BOOK_WORLD with jOOQ</h3>
-									<p>
-										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Configuration's <reference id="custom-settings" title="settings"/> with. Take the following example:
-									</p>
+                                            <p>
+                                                While the jOOQ code is also implicitly fully qualified (<reference id="the-manual" title="see implied imports"/>), it may not be desireable to use fully qualified object names in SQL. The <code>renderCatalog</code> and <code>renderSchema</code> settings are used for this.
+                                            </p>
 
-</html><java>Settings settings = new Settings()
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[new Settings()
+  .withRenderCatalog(false) // Defaults to true
+  .withRenderSchema(false)  // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderCatalog>false</renderCatalog>
+  <renderSchema>false</renderSchema>
+</settings>]]></xml><html>
+
+                                            <p>
+                                                By turning off the rendering of full qualification as can be seen above, it will be possible to use code generated from one schema on an entirely different schema of the same structure, e.g. for multitenancy purposes.
+                                            </p>
+
+                                            <p>
+                                                More sophisticated multitenancy approaches are available through the <reference id="settings-render-mapping" title="render mapping feature"/>.
+                                            </p>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-render-mapping">
+                                        <title>Runtime schema and table mapping</title>
+                                        <content><html>
+                                            <h3>Mapping your DEV schema to a productive environment</h3>
+                                            <p>
+                                                You may wish to design your database in a way that you have several instances of your schema. This is useful when you want to cleanly separate data belonging to several customers / organisation units / branches / users and put each of those entities' data in a separate database or schema.
+                                            </p>
+
+                                            <p>
+                                                In our AUTHOR example this would mean that you provide a book reference database to several companies, such as My Book World and Books R Us. In that case, you'll probably have a schema setup like this:
+                                            </p>
+                                            <ul>
+                                                <li>DEV: Your development schema. This will be the schema that you base code generation upon, with jOOQ </li>
+                                                <li>MY_BOOK_WORLD: The schema instance for My Book World </li>
+                                                <li>BOOKS_R_US: The schema instance for Books R Us </li>
+                                            </ul>
+
+                                            <h3>Mapping DEV to MY_BOOK_WORLD with jOOQ</h3>
+                                            <p>
+                                                When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Configuration's <reference id="custom-settings" title="settings"/> with. Take the following example:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
     .withRenderMapping(new RenderMapping()
     .withSchemata(
         new MappedSchema().withInput("DEV")
-                          .withOutput("MY_BOOK_WORLD")));
+                          .withOutput("MY_BOOK_WORLD"),
+        new MappedSchema().withInput("LOG")
+                          .withOutput("MY_BOOK_WORLD_LOG")));]]></java><html>
 
-// Add the settings to the DSLContext
-DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
-
-// Run queries with the "mapped" Configuration
-create.selectFrom(AUTHOR).fetch();</java><html>
-
-									<p>
-										The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
-									</p>
-
-</html><sql>SELECT * FROM MY_BOOK_WORLD.AUTHOR</sql><html>
-									<p>
-										Even if AUTHOR was generated from DEV.
-									</p>
-
-									<h3>Mapping several schemata</h3>
-									<p>
-										Your development database may not be restricted to hold only one DEV schema. You may also have a LOG schema and a MASTER schema. Let's say the MASTER schema is shared among all customers, but each customer has their own LOG schema instance. Then you can enhance your RenderMapping like this (e.g. using an XML configuration file):
-									</p>
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
 
 </html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
   <renderMapping>
@@ -3469,95 +3421,751 @@ create.selectFrom(AUTHOR).fetch();</java><html>
   </renderMapping>
 </settings>]]></xml><html>
 
-                            		<p>
-                            			Note, you can load the above XML file like this:
-                           			</p>
+                                            <p>
+                                                The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
+                                            </p>
 
-</html><java>Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</java><html>
+</html><code-pair>
+<sql><![CDATA[SELECT *
+FROM MY_BOOK_WORLD.AUTHOR]]></sql>
+<java><![CDATA[DSL.using(connection, dialect, settings)
+   .selectFrom(DEV.AUTHOR)]]></java>
+</code-pair><html>
 
-									<p>
-										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Configuration.
-									</p>
+                                            <p>
+                                                This works because <code>AUTHOR</code> was generated from the <code>DEV</code> schema, which is mapped to the <code>MY_BOOK_WORLD</code> schema by the above settings.
+                                            </p>
 
+                                            <h3>Mapping of tables</h3>
 
-									<h3>Using a default schema</h3>
-                            		<p>
-                            			If you wish not to render any schema name at all, use the following Settings property for this:
-                           			</p>
+                                            <p>
+                                                Not only schemata can be mapped, but also tables. If you are not the owner of the database your application connects to, you might need to install your schema with some sort of prefix to every table. In our examples, this might mean that you will have to map DEV.AUTHOR to something MY_BOOK_WORLD.MY_APP__AUTHOR, where MY_APP__ is a prefix applied to all of your tables. This can be achieved by creating the following mapping:
+                                            </p>
 
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
-</html><java>Settings settings = new Settings()
-    .withRenderSchema(false);
-
-// Add the settings to the Configuration
-DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
-
-// Run queries that omit rendering schema names
-create.selectFrom(AUTHOR).fetch();</java><html>
-
-									<h3>Mapping of tables</h3>
-									<p>
-										Not only schemata can be mapped, but also tables. If you are not the owner of the database your application connects to, you might need to install your schema with some sort of prefix to every table. In our examples, this might mean that you will have to map DEV.AUTHOR to something MY_BOOK_WORLD.MY_APP__AUTHOR, where MY_APP__ is a prefix applied to all of your tables. This can be achieved by creating the following mapping:
-									</p>
-
-</html><java>Settings settings = new Settings()
+</html><java><![CDATA[Settings settings = new Settings()
     .withRenderMapping(new RenderMapping()
     .withSchemata(
         new MappedSchema().withInput("DEV")
-                          .withOutput("MY_BOOK_WORLD")
                           .withTables(
          new MappedTable().withInput("AUTHOR")
-                          .withOutput("MY_APP__AUTHOR"))));
+                          .withOutput("MY_APP__AUTHOR"))));]]></java><html>
 
-// Add the settings to the Configuration
-DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
 
-// Run queries with the "mapped" configuration
-create.selectFrom(AUTHOR).fetch();</java><html>
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderMapping>
+    <schemata>
+      <schema>
+        <input>DEV</input>
+        <tables>
+          <table>
+            <input>AUTHOR</input>
+            <output>MY_APP__AUTHOR</output>
+          </table>
+        </tables>
+      </schema>
+    </schemata>
+  </renderMapping>
+</settings>]]></xml><html>
 
-									<p>
-										The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
-									</p>
+                                            <p>
+                                                The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
+                                            </p>
 
-</html><sql>SELECT * FROM MY_BOOK_WORLD.MY_APP__AUTHOR</sql><html>
+</html><sql><![CDATA[SELECT * FROM DEV.MY_APP__AUTHOR]]></sql><html>
 
-		                            <p>
-		                           		Table mapping and schema mapping can be applied independently, by specifying several MappedSchema entries in the above configuration. jOOQ will process them in order of appearance and map at first match. Note that you can always omit a MappedSchema's output value, in case of which, only the table mapping is applied. If you omit a MappedSchema's input value, the table mapping is applied to all schemata!
-		                            </p>
+                                            <p>
+                                                Table mapping and schema mapping can be applied independently, by specifying several MappedSchema entries in the above configuration. jOOQ will process them in order of appearance and map at first match. Note that you can always omit a MappedSchema's output value, in case of which, only the table mapping is applied. If you omit a MappedSchema's input value, the table mapping is applied to all schemata!
+                                            </p>
 
-                                    <h3>Using regular expressions</h3>
-                                    <p>
-                                        All of the above examples were using 1:1 constant name mappings where the input and output schema or table names are fixed by the configuration. With jOOQ 3.8, regular expression can be used as well for mapping, for example:
-                                    </p>
+                                            <h3>Using regular expressions</h3>
 
-</html><java>Settings settings = new Settings()
+                                            <p>
+                                                All of the above examples were using 1:1 constant name mappings where the input and output schema or table names are fixed by the configuration. With jOOQ 3.8, regular expression can be used as well for mapping, for example:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
     .withRenderMapping(new RenderMapping()
     .withSchemata(
         new MappedSchema().withInputExpression(Pattern.compile("DEV_(.*)"))
                           .withOutput("PROD_$1")
                           .withTables(
          new MappedTable().withInputExpression(Pattern.compile("DEV_(.*)"))
-                          .withOutput("PROD_$1"))));
+                          .withOutput("PROD_$1"))));]]></java><html>
 
-// Add the settings to the Configuration
-DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
 
-// Run queries with the "mapped" configuration
-create.selectFrom(AUTHOR).fetch();</java><html>
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderMapping>
+    <schemata>
+      <schema>
+        <inputExpression>DEV_(.*)</inputExpression>
+        <output>PROD_$1</output>
+        <tables>
+          <table>
+            <inputExpression>DEV_(.*)</inputExpression>
+            <output>PROD_$1</output>
+          </table>
+        </tables>
+      </schema>
+    </schemata>
+  </renderMapping>
+</settings>]]></xml><html>
 
-                                    <p>
-                                        The only difference to the constant version is that the <code>input</code> field is replaced by the <code>inputExpression</code> field of type <reference class="java.util.regex.Pattern"/>, in case of which the meaning of the <code>output</code> field is a pattern replacement, not a constant replacement.
-                                    </p>
+                                            <p>
+                                                The only difference to the constant version is that the <code>input</code> field is replaced by the <code>inputExpression</code> field of type <reference class="java.util.regex.Pattern"/>, in case of which the meaning of the <code>output</code> field is a pattern replacement, not a constant replacement.
+                                            </p>
 
+                                            <h3>Hard-wiring mappings at code-generation time</h3>
 
-									<h3>Hard-wiring mappings at code-generation time</h3>
-									<p>
-										Note that the manual's section about <reference id="schema-mapping" title="code generation schema mapping"/> explains how you can hard-wire your schema mappings at code generation time
-									</p>
-								</html></content>
-							</section>
-						</sections>
-					</section>
+                                            <p>
+                                                Note that the manual's section about <reference id="schema-mapping" title="code generation schema mapping"/> explains how you can hard-wire your schema mappings at code generation time
+                                            </p>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-name-style">
+                                        <title>Identifier style</title>
+                                        <content><html>
+                                            <p>
+                                                By default, jOOQ will always generate quoted names for all identifiers (even if this manual omits this for readability). For instance:
+                                            </p>
+
+</html><sql><![CDATA[SELECT "TABLE"."COLUMN" FROM "TABLE" -- SQL standard style
+SELECT `TABLE`.`COLUMN` FROM `TABLE` -- MySQL style
+SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
+
+                                            <p>
+                                                Quoting has the following effect on identifiers in most (but not all) databases:
+                                            </p>
+
+                                            <ul>
+                                                <li>It allows for using reserved names as object names, e.g. a table called <code>"FROM"</code> is usually possible only when quoted.</li>
+                                                <li>It allows for using special characters in object names, e.g. a column called <code>"FIRST NAME"</code> can be achieved only with quoting.</li>
+                                                <li>It turns what are mostly case-insensitive identifiers into case-sensitive ones, e.g. <code>"name"</code> and <code>"NAME"</code> are different identifiers, whereas <code>name</code> and <code>NAME</code> are not. Please consider your database manual to learn what the proper default case and default case sensitivity is.</li>
+                                            </ul>
+
+                                            <p>
+                                                The <code>renderNameStyle</code> setting allows for overriding the name of all identifiers in jOOQ to a consistent style. Possible options are:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>QUOTED</code> (the default): This will generate all names in their proper case with quotes around them.</li>
+                                                <li><code>AS_IS</code>: This will generate all names in their proper case without quotes.</li>
+                                                <li><code>LOWER</code>: This will transform all names to lower case.</li>
+                                                <li><code>UPPER</code>: This will transform all names to upper case.</li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withRenderNameStyle(RenderNameStyle.AS_IS); // Defaults to QUOTED]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderNameStyle>AS_IS</renderNameStyle>
+</settings>]]></xml><html>
+
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-keyword-style">
+                                        <title>Keyword style</title>
+                                        <content><html>
+                                            <p>
+                                                In all SQL dialects, keywords are case insensitive, and this is also the default in jOOQ, which mostly generates lower-case keywords.
+                                            </p>
+
+                                            <p>
+                                                Users may wish to adapt this and they have these options for the <code>renderKeywordStyle</code> setting:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>AS_IS</code> (the default): Generate keywords as they are defined in the codebase (mostly lower case).</li>
+                                                <li><code>LOWER</code>: Generate keywords in lower case.</li>
+                                                <li><code>UPPER</code>: Generate keywords in upper case.</li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withRenderKeywordStyle(RenderKeywordStyle.UPPER); // Defaults to AS_IS]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderKeywordStyle>UPPER</renderKeywordStyle>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-parameter-type">
+                                        <title>Parameter types</title>
+                                        <content><html>
+                                            <p>
+                                                Bind values or bind parameters come in different flavours in different SQL databases. JDBC standardises on their syntax by allowing only <code>?</code> (question mark) characters as placeholders for bind variables. Thus, jOOQ, by default, generates <code>?</code> placeholders for JDBC consumptions.
+                                            </p>
+
+                                            <p>
+                                                Users who wish to use jOOQ with a different backend than JDBC can specify that all jOOQ <reference id="bind-values" title="bind values"/>, including <reference id="indexed-parameters" title="indexed parameters"/> and <reference id="named-parameters" title="named parameters"/> generate alternative strings, other than <code>?</code>. These are the current options:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>INDEXED</code> (the default): Generates indexed parameter placeholders using <code>?</code>.</li>
+                                                <li><code>NAMED</code>: Generates named parameter placeholders, such as <code>:param</code> for parameters that are named explicitly or <code>:1</code> for unnamed, indexed parameters.</li>
+                                                <li><code>NAMED_OR_INLINED:</code> Generates named parameter placeholders for parameters that are named explicitly and inlines all unnamed parameters.</li>
+                                                <li><code>INLINED</code>: Inlines all parameters.</li>
+                                            </ul>
+
+                                            <p>
+                                                An example:
+                                            </p>
+
+</html><code-pair>
+<sql><![CDATA[-- INDEXED
+SELECT FIRST_NAME || ? FROM AUTHOR WHERE ID = ?
+-- NAMED
+SELECT FIRST_NAME || :1 FROM AUTHOR WHERE ID = :x
+-- NAMED_OR_INLINED
+SELECT FIRST_NAME || 'x' FROM AUTHOR WHERE ID = :x
+-- INLINED
+SELECT FIRST_NAME || 'x' FROM AUTHOR WHERE ID = 42]]></sql>
+<java><![CDATA[Param<String> x = val("x");
+Param<Integer> i = param("x", 42);
+
+DSL.using(configuration)
+   .select(FIRST_NAME.concat(x))
+   .from(AUTHOR)
+   .where(ID.eq(i))
+   .fetch();]]></java>
+</code-pair><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withParamType(ParamType.NAMED); // Defaults to INDEXED]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <paramType>NAMED</paramType>
+</settings>]]></xml><html>
+
+                                            <p>
+                                                The following setting <reference id="settings-statement-type" title="statementType"/> may override this setting.
+                                            </p>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-statement-type">
+                                        <title>Statement Type</title>
+                                        <content><html>
+                                            <p>
+                                                JDBC knows two types of statements:
+                                            </p>
+
+                                            <ul>
+                                                <li><reference class="java.sql.PreparedStatement"/>: This allows for sending bind variables to the server. jOOQ uses prepared statements by default.</li>
+                                                <li><reference class="java.sql.Statement"/>: Also "static statement". These do not support bind variables and may be useful for one-shot commands like <reference id="ddl-statements" title="DDL statements"/>.</li>
+                                            </ul>
+
+                                            <p>
+                                                The <code>statementType</code> setting allows for overriding the default of using prepared statements internally. There are two possible options for this setting:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>PREPARED_STATEMENT</code> (the default): Use prepared statements.</li>
+                                                <li><code>STATIC_STATEMENT</code>: Use static statements. This enforces the <code>paramType == INLINED</code>. See <reference id="settings-parameter-type" title="parameter types"/></li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withStatementType(StatementType.STATIC_STATEMENT); // Defaults to PREPARED_STATEMENT]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <statementType>STATIC_STATEMENT</statementType>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-execute-logging">
+                                        <title>Execute Logging</title>
+                                        <content><html>
+                                            <p>
+                                                The <code>executeLogging</code> setting turns off the default <reference id="logging" title="logging"/> implemented through <reference class="org.jooq.tools.LoggerListener"/>
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withExecuteLogging(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <executeLogging>false</executeLogging>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-optimistic-locking">
+                                        <title>Optimistic Locking</title>
+                                        <content><html>
+                                            <p>
+                                                There are two settings governing the behaviour of the jOOQ <reference id="optimistic-locking" title="optimistic locking feature"/>:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>executeWithOptimisticLocking</code>: This allows for turning off the feature entirely.</li>
+                                                <li><code>executeWithOptimisticLockingExcludeUnversioned</code>: This allows for turning off the feature for <reference id="crud-with-updatablerecords" title="updatable records"/> who are not explicitly versioned.</li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withExecuteWithOptimisticLocking(true)                     // Defaults to false
+    .withExecuteWithOptimisticLockingExcludeUnversioned(false); // Defaults to false]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <executeWithOptimisticLocking>true</executeWithOptimisticLocking>
+  <executeWithOptimisticLockingExcludeUnversioned>false</executeWithOptimisticLockingExcludeUnversioned>
+</settings>]]></xml><html>
+
+                                            <p>
+                                                For more details, please refer to the <reference id="optimistic-locking" title="manual's section about the optimistic locking feature"/>.
+                                            </p>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-attach-records">
+                                        <title>Auto-attach Records</title>
+                                        <content><html>
+                                            <p>
+                                                By default, all records fetched through jOOQ are "attached" to the <reference id="dsl-context" title="configuration"/> that created them. This allows for features like <reference id="crud-with-updatablerecords" title="updatable records"/> as can be seen here:
+                                            </p>
+
+</html><java><![CDATA[AuthorRecord author =
+DSL.using(configuration) // This configuration will be attached to any record produced by the below query.
+   .selectFrom(AUTHOR)
+   .where(AUTHOR.ID.eq(1))
+   .fetchOne();
+
+author.setLastName("Smith");
+author.store(); // This store call operates on the "attached" configuration.]]></java><html>
+
+                                            <p>
+                                                In some cases (e.g. when serialising records), it may be desirable not to attach the <code>Configuration</code> that created a record to the record. This can be achieved with the <code>attachRecords</code> setting:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withAttachRecords(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <attachRecords>false</attachRecords>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-updatable-primary-keys">
+                                        <title>Updatable Primary Keys</title>
+                                        <content><html>
+                                            <p>
+                                                In most database design guidelines, primary key values are expected to never change - an assumption that is essential to a normalised database.
+                                            </p>
+
+                                            <p>
+                                                As always, there are exceptions to these rules, and users may wish to allow for updatable primary key values in the <reference id="crud-with-updatablerecords" title="updatable records feature"/> (note: any value can always be updated through ordinary <reference id="update-statement" title="update statements"/>). An example:
+                                            </p>
+
+</html><java><![CDATA[AuthorRecord author =
+DSL.using(configuration) // This configuration will be attached to any record produced by the below query.
+   .selectFrom(AUTHOR)
+   .where(AUTHOR.ID.eq(1))
+   .fetchOne();
+
+author.setId(2);
+author.store(); // The behaviour of this store call is governed by the updatablePrimaryKeys flag]]></java><html>
+
+                                            <p>
+                                                The above store call depends on the value of the <code>updatablePrimaryKeys</code> flag:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>false</code> (the default): Since immutability of primary keys is assumed, the store call will create a new record (a copy) with the new primary key value.</li>
+                                                <li><code>true</code>: Since mutablity of primary keys is allowed, the store call will change the primary key value from <code>1</code> to <code>2</code>.</li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withUpdatablePrimaryKeys(true); // Defaults to false]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <updatablePrimaryKeys>true</updatablePrimaryKeys>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-reflection-caching">
+                                        <title>Reflection caching</title>
+                                        <content><html>
+                                            <p>
+                                                All operations of the <reference id="recordmapper" title="DefaultRecordMapper"/> are cached in the <code>Configuration</code> by default for improved mapping and reflection speed. Users who prefer to override this cache, or work with <reference id="pojos-with-recordmapper-provider" title="their own custom record mapper provider"/> may wish to turn off the out-of-the-box caching feature.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withReflectionCaching(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <reflectionCaching>false</reflectionCaching>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-fetch-warnings">
+                                        <title>Fetch Warnings</title>
+                                        <content><html>
+                                            <p>
+                                                Apart from JDBC exceptions, there is also the possibility to handle <reference class="java.sql.SQLWarning"/>, which are made available to jOOQ users through the <reference class="java.sql.ExecuteListener"/> SPI and the <reference id="logging" title="log"/>
+                                            </p>
+
+                                            <p>
+                                                Users who do not wish to get these notifications (e.g. for performance reasons), may turn off fetching of warnings through the <code>fetchWarnings</code> setting:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withFetchWarnings(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <fetchWarnings>false</fetchWarnings>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-return-all-on-store">
+                                        <title>Return All Columns On Store</title>
+                                        <content><html>
+                                            <p>
+                                                When using the <reference id="crud-with-updatablerecords" title="updatable records feature"/>, jOOQ always fetches the generated <reference id="identity-values" title="identity value"/>, if such a value is available.
+                                            </p>
+
+                                            <p>
+                                                The identity value is not the only value that is generated by default. Specifically, there may be triggers that are used for auditing or other reasons, which generate <code>LAST_UPDATE</code> or <code>LAST_UPDATE_BY</code> values in a record. Users who wish to also automatically fetch these values after all <code>store()</code>, <code>insert()</code>, or <code>update()</code> calls may do so by specifying the <code>returnAllOnUpdatableRecord</code> setting. This setting depends on the availability of <reference id="insert-returning" title="INSERT .. RETURNING"/>, <code>UPDATE .. RETURNING</code>, and <code>DELETE .. RETURNING</code> statements, which are not available from all databases.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withReturnAllOnUpdatableRecord(true); // Defaults to false]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <returnAllOnUpdatableRecord>true</returnAllOnUpdatableRecord>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-map-jpa">
+                                        <title>Map JPA Annotations</title>
+                                        <content><html>
+                                            <p>
+                                                The <reference class="org.jooq.impl.DefaultRecordMapper"/> supports basic JPA mapping (mostly <code>@Table</code> and <code>@Column</code> annotations). Looking up these annotations costs a slight extra overhead (mostly taken care of through <reference id="settings-reflection-caching" title="reflection caching"/>). It can be turned off using the <code>mapJPAAnnotations</code> setting:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withMapJPAAnnotations(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <mapJPAAnnotations>false</mapJPAAnnotations>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-jdbc-flags">
+                                        <title>JDBC Flags</title>
+                                        <content><html>
+                                            <p>
+                                                JDBC statements feature a couple of flags that influence the execution of such a statement. Each of these flags can be configured through jOOQ's <reference class="org.jooq.Query"/> and <reference class="org.jooq.ResultQuery"/> on a statement-per-statement basis, but there's also the possibility to centrally specify a value for these flags. These are the three flags:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>queryTimeout</code>: Corresponds to <reference class="org.jooq.Query" anchor="#queryTimeout-int-" title="Query.queryTimeout()"/> or <reference class="java.sql.Statement" anchor="#setQueryTimeout-int-" title="Statement.setQueryTimeout()"/></li>
+                                                <li><code>maxRows</code>: Corresponds to <reference class="org.jooq.Query" anchor="#maxRows-int-" title="ResultQuery.maxRows()"/> or <reference class="java.sql.Statement" anchor="#setMaxRows-int-" title="Statement.setMaxRows()"/></li>
+                                                <li><code>fetchSize</code>: Corresponds to <reference class="org.jooq.Query" anchor="#fetchSize-int-" title="ResultQuery.fetchSize()"/> or <reference class="java.sql.Statement" anchor="#setFetchSize-int-" title="Statement.setFetchSize()"/></li>
+                                            </ul>
+
+                                            <p>
+                                                All of these flags are JDBC-only features with no direct effect on jOOQ. jOOQ only passes them through to the underlying statement.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withQueryTimeout(5)
+    .withMaxRows(1000)
+    .withFetchSize(20);]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <queryTimeout>5</queryTimeout>
+  <maxRows>1000</maxRows>
+  <fetchSize>20</fetchSize>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-in-list-padding">
+                                        <title>IN-list Padding</title>
+                                        <content><html>
+                                            <p>
+                                                Databases that feature a cursor cache / statement cache (e.g. Oracle, SQL Server, DB2, etc.) are highly optimised for prepared statement re-use. When a client sends a prepared statement to the server, the server will go to the cache and look up whether there already exists a previously calculated execution plan for the statement (i.e. the SQL string). This is called a "soft-parse" (in Oracle). If not, the execution plan is calculated on the fly. This is called a "hard-parse" (in Oracle).
+                                            </p>
+
+                                            <p>
+                                                Preventing hard-parses is extremely important in high throughput OLTP systems where queries are usually not very complex but are run millions of times in a short amount of time. Using bind variables, this is usually not a problem, with the exception of the <reference id="in-predicate" title="IN predicate"/>, which generates different SQL strings even when using bind variables:
+                                            </p>
+
+</html><sql><![CDATA[-- All of these are different SQL statements:
+SELECT * FROM AUTHOR WHERE ID IN (?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?, ?)]]></sql><html>
+
+                                            <p>
+                                                This problem may not be obvious to Java / jOOQ developers, as they are always produced from the same jOOQ statement:
+                                            </p>
+
+</html><java><![CDATA[-- All of these are the same jOOQ statement
+DSL.using(configuration)
+   .select()
+   .from(AUTHOR)
+   .where(AUTHOR.ID.in(collection))
+   .fetch();]]></java><html>
+
+                                            <p>
+                                                Depending on the possible sizes of the collection, it may be worth exploring using arrays or temporary tables as a workaround, or to reuse the original query that produced the set of IDs in the first place (through a semi-join). But sometimes, this is not possible. In this case, users can opt in to a third workaround: enabling the <code>inListPadding</code> setting. If enabled, jOOQ will "pad" the <code>IN</code> list to a length that is a power of two. So, the original queries would look like this instead:
+                                            </p>
+
+</html><code-pair>
+<sql><![CDATA[-- Original
+SELECT * FROM AUTHOR WHERE ID IN (?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?, ?, ?)]]></sql>
+<sql><![CDATA[-- Padded
+SELECT * FROM AUTHOR WHERE ID IN (?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?, ?, ?, ?, ?)
+SELECT * FROM AUTHOR WHERE ID IN (?, ?, ?, ?, ?, ?, ?, ?)]]></sql>
+</code-pair><html>
+
+                                            <p>
+                                                This technique will drastically reduce the number of possible SQL strings without impairing too much the usual cases where the <code>IN</code> list is small. When padding, the last bind variable will simply be repeated many times.
+                                            </p>
+
+                                            <p>
+                                                Usually, there is a better way - use this as a last resort!
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withInListPadding(true); // Default to false]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <inListPadding>true</inListPadding>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-backslash-escaping">
+                                        <title>Backslash Escaping</title>
+                                        <content><html>
+                                            <p>
+                                                Some databases (mainly MySQL and MariaDB) unfortunately chose to go an alternative, non-SQL-standard route when escaping string literals. Here's an example of how to escape a string containing apostrophes in different dialects:
+                                            </p>
+
+</html><sql><![CDATA[SELECT 'I''m sure this is OK' AS val             -- Standard SQL escaping of apostrophe by doubling it.
+SELECT 'I\'m certain this causes trouble' AS val -- Vendor-specific escaping of apostrophe by using a backslash.]]></sql><html>
+
+                                            <p>
+                                                As most databases don't support backslash escaping (and MySQL also allows for turning it off!), jOOQ by default also doesn't support it when <reference id="inlined-parameters" title="inlining bind variables"/>. However, this can lead to SQL injection vulnerabilities and syntax errors when not dealing with it carefully!
+                                            </p>
+
+                                            <p>
+                                                This feature is turned on by default and for historic reasons for MySQL and MariaDB.
+                                            </p>
+
+                                            <ul>
+                                                <li><code>DEFAULT</code> (the - surprise! - default): Turns the feature <code>ON</code> for MySQL and MariaDB and <code>OFF</code> for all other dialects</li>
+                                                <li><code>ON</code>: Turn the feature on.</li>
+                                                <li><code>OFF</code>: Turn the feature off.</li>
+                                            </ul>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withBackslashEscaping(BackslashEscaping.OFF); // Default to DEFAULT]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <backslashEscaping>OFF</backslashEscaping>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-scalar-subqueries">
+                                        <title>Scalar subqueries for stored functions</title>
+                                        <content><html>
+                                            <p>
+                                                This setting is useful mostly for the Oracle database, which implements a feature called <a href="https://blog.jooq.org/2011/09/02/oracle-scalar-subquery-caching/">scalar subquery caching</a>, which is a good tool to avoid the expensive PL/SQL-to-SQL context switch when predicates make use of stored function calls.
+                                            </p>
+
+                                            <p>
+                                                With this setting in place, all stored function calls embedded in SQL statements will be wrapped in a scalar subquery:
+                                            </p>
+
+</html><code-pair>
+<sql><![CDATA[SELECT
+  (SELECT my_package.format(LANGUAGE_ID) FROM dual)
+FROM BOOK]]></sql>
+<java><![CDATA[DSL.using(configuration)
+   .select(MyPackage.format(BOOK.LANGUAGE_ID))
+   .from(BOOK)]]></java>
+</code-pair><html>
+
+                                            <p>
+                                                If our table contains thousands of books, but only a dozen of <code>LANGUAGE_ID</code> values, then with scalar subquery caching, we can avoid most of the function calls and cache the result per <code>LANGUAGE_ID</code>.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withRenderScalarSubqueriesForStoredFunctions(true);]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderScalarSubqueriesForStoredFunctions>true</renderScalarSubqueriesForStoredFunctions>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+                                </sections>
+                            </section>
+
+                            <redirect id="runtime-schema-mapping" redirect-to="settings-render-mapping"/>
+                        </sections>
+                    </section>
 
 					<section id="sql-statements">
 						<title>SQL Statements (DML)</title>
@@ -16686,7 +17294,7 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
 						<title>Mapping generated catalogs and schemas</title>
 						<content><html>
 							<p>
-								We've seen previously in the chapter about <reference id="runtime-schema-mapping" title="runtime schema mapping"/>, that catalogs, schemata and tables can be mapped at runtime to other names. But you can also hard-wire catalog and schema mapping in generated artefacts at code generation time, e.g. when you have 5 developers with their own dedicated developer databases, and a common integration database. In the code generation configuration, you would then write.
+								We've seen previously in the chapter about <reference id="settings-render-mapping" title="runtime schema mapping"/>, that catalogs, schemata and tables can be mapped at runtime to other names. But you can also hard-wire catalog and schema mapping in generated artefacts at code generation time, e.g. when you have 5 developers with their own dedicated developer databases, and a common integration database. In the code generation configuration, you would then write.
 							</p>
 
                             <h3>Schema mapping</h3>

@@ -43,6 +43,7 @@ import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_RENAME;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_CONSTRAINT;
+import static org.jooq.Clause.ALTER_TABLE_RENAME_INDEX;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 // ...
 // ...
@@ -76,6 +77,7 @@ import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
@@ -91,6 +93,7 @@ import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableRenameColumnToStep;
 import org.jooq.AlterTableRenameConstraintToStep;
+import org.jooq.AlterTableRenameIndexToStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTableUsingIndexStep;
 import org.jooq.Clause;
@@ -116,6 +119,7 @@ final class AlterTableImpl extends AbstractQuery implements
     AlterTableAlterStep,
     AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
+    AlterTableRenameIndexToStep,
     AlterTableRenameConstraintToStep {
 
     /**
@@ -129,6 +133,8 @@ final class AlterTableImpl extends AbstractQuery implements
     private Table<?>              renameTo;
     private Field<?>              renameColumn;
     private Field<?>              renameColumnTo;
+    private Name                  renameIndex;
+    private Name                  renameIndexTo;
     private Constraint            renameConstraint;
     private Constraint            renameConstraintTo;
     private Field<?>              addColumn;
@@ -198,6 +204,17 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl renameIndex(Name oldName) {
+        renameIndex = oldName;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl renameIndex(String oldName) {
+        return renameIndex(name(oldName));
+    }
+
+    @Override
     public final AlterTableImpl renameConstraint(Name oldName) {
         return renameConstraint(constraint(oldName));
     }
@@ -233,6 +250,10 @@ final class AlterTableImpl extends AbstractQuery implements
             return to(field(newName));
         else if (renameConstraint != null)
             return to(constraint(newName));
+        else if (renameIndex != null) {
+            renameIndexTo = newName;
+            return this;
+        }
         else
             throw new IllegalStateException();
     }
@@ -443,6 +464,23 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+        if (renameIndexTo != null) {
+            switch (family) {
+
+                // [#5724] These databases use table-scoped index names
+
+
+
+                case MYSQL:
+                    break;
+
+                // [#5724] Most databases use schema-scoped index names: Ignore the table.
+                default:
+                    ctx.visit(DSL.alterIndex(renameIndex).renameTo(renameIndexTo));
+                    return;
+            }
+        }
+
         accept1(ctx);
     }
 
@@ -502,6 +540,19 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.qualify(qualify)
                .end(ALTER_TABLE_RENAME_COLUMN);
+        }
+        else if (renameIndex != null) {
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_RENAME_INDEX)
+               .qualify(false)
+               .visit(K_RENAME_INDEX).sql(' ')
+               .visit(renameIndex)
+               .formatSeparator()
+               .visit(K_TO).sql(' ')
+               .visit(renameIndexTo)
+               .qualify(qualify)
+               .end(ALTER_TABLE_RENAME_INDEX);
         }
         else if (renameConstraint != null) {
             boolean qualify = ctx.qualify();

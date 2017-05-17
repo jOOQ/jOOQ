@@ -37,37 +37,27 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
- * The step in the <code>ALTER INDEX</code> where the action can be decided.
+ * The step in the <code>ALTER TABLE</code> DSL used to <code>RENAME</code>
+ * indexes.
  *
  * @author Lukas Eder
  */
-public interface AlterIndexStep {
+public interface AlterTableRenameIndexToStep {
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
-     * statement.
-     * <p>
-     * Note that in some databases, including MySQL and SQL Server, the index
-     * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(Name)} with
-     * {@link AlterTableStep#renameIndex(Name)} instead.
+     * Specify a new index name.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexFinalStep renameTo(Name newName);
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    AlterTableFinalStep to(Name newName);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
-     * statement.
-     * <p>
-     * Note that in some databases, including MySQL and SQL Server, the index
-     * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(String)} with
-     * {@link AlterTableStep#renameIndex(String)} instead.
+     * Specify a new index name.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexFinalStep renameTo(String newName);
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    AlterTableFinalStep to(String newName);
 }

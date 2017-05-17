@@ -108,6 +108,20 @@ public interface AlterTableStep {
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
     /**
+     * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    AlterTableRenameIndexToStep renameIndex(Name oldName);
+
+    /**
+     * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    AlterTableRenameIndexToStep renameIndex(String oldName);
+
+    /**
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

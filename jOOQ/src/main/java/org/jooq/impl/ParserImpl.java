@@ -1682,6 +1682,13 @@ class ParserImpl implements Parser {
 
                         return s1.renameColumn(oldName).to(newName);
                     }
+                    else if (parseKeywordIf(ctx, "INDEX")) {
+                        Name oldName = parseIdentifier(ctx);
+                        parseKeyword(ctx, "TO");
+                        Name newName = parseIdentifier(ctx);
+
+                        return s1.renameIndex(oldName).to(newName);
+                    }
                     else if (parseKeywordIf(ctx, "CONSTRAINT")) {
                         Name oldName = parseIdentifier(ctx);
                         parseKeyword(ctx, "TO");

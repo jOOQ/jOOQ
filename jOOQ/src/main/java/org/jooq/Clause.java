@@ -1027,9 +1027,9 @@ public enum Clause {
      * This clause surrounds
      * <ul>
      * <li>the <code>RENAME CONSTRAINT</code> keywords</li>
-     * <li>the old column name</li>
+     * <li>the old constraint name</li>
      * <li>the <code>TO</code> keyword</li>
-     * <li>the new column name</li>
+     * <li>the new constraint name</li>
      * </ul>
      */
     ALTER_TABLE_RENAME_CONSTRAINT,

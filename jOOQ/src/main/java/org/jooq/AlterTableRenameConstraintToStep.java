@@ -43,17 +43,17 @@ package org.jooq;
 public interface AlterTableRenameConstraintToStep {
 
     /**
-     * Specify a new column name.
+     * Specify a new constraint name.
      */
     AlterTableFinalStep to(Constraint newName);
 
     /**
-     * Specify a new column name.
+     * Specify a new constraint name.
      */
     AlterTableFinalStep to(Name newName);
 
     /**
-     * Specify a new column name.
+     * Specify a new constraint name.
      */
     AlterTableFinalStep to(String newName);
 }

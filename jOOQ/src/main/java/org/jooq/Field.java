@@ -526,6 +526,23 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Field<T> neg();
 
     /**
+     * Negate this field to get its negative value.
+     * <p>
+     * This is an alias for {@link #neg()}, which can be recognised by the
+     * Kotlin language for operator overloading.
+     */
+    @Support
+    Field<T> unaryMinus();
+
+    /**
+     * Get this field as its positive value (no effect on SQL).
+     * <p>
+     * This can be recognised by the Kotlin language for operator overloading.
+     */
+    @Support
+    Field<T> unaryPlus();
+
+    /**
      * An arithmetic expression adding this to value.
      *
      * @see #add(Field)
@@ -708,6 +725,22 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Field<T> multiply(Field<? extends Number> value);
 
     /**
+     * An alias for {@link #mul(Number)}.
+     *
+     * @see #mul(Number)
+     */
+    @Support
+    Field<T> times(Number value);
+
+    /**
+     * An alias for {@link #mul(Field)}.
+     *
+     * @see #mul(Field)
+     */
+    @Support
+    Field<T> times(Field<? extends Number> value);
+
+    /**
      * An arithmetic expression dividing this by value.
      * <p>
      * <ul>
@@ -784,6 +817,22 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      */
     @Support
     Field<T> modulo(Field<? extends Number> value);
+
+    /**
+     * An alias for {@link #mod(Number)}.
+     *
+     * @see #mod(Number)
+     */
+    @Support
+    Field<T> rem(Number value);
+
+    /**
+     * An alias for {@link #mod(Field)}.
+     *
+     * @see #mod(Field)
+     */
+    @Support
+    Field<T> rem(Field<? extends Number> value);
 
     /**
      * An arithmetic expression getting this value raised to the power of <code>exponent</code>.

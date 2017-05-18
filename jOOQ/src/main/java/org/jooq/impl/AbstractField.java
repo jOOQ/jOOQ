@@ -404,6 +404,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Field<T> unaryMinus() {
+        return neg();
+    }
+
+    @Override
+    public final Field<T> unaryPlus() {
+        return this;
+    }
+
+    @Override
     public final Field<T> add(Number value) {
         return add(Tools.field(value));
     }
@@ -506,6 +516,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Field<T> times(Number value) {
+        return mul(value);
+    }
+
+    @Override
+    public final Field<T> times(Field<? extends Number> value) {
+        return mul(value);
+    }
+
+    @Override
     public final Field<T> divide(Number value) {
         return div(value);
     }
@@ -522,6 +542,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> modulo(Field<? extends Number> value) {
+        return mod(value);
+    }
+
+    @Override
+    public final Field<T> rem(Number value) {
+        return mod(value);
+    }
+
+    @Override
+    public final Field<T> rem(Field<? extends Number> value) {
         return mod(value);
     }
 

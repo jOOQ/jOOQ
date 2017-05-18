@@ -63,3 +63,12 @@ inline fun <T : AutoCloseable, R> T.use(block: (T) -> R): R {
         }
     }
 }
+
+/**
+ * Just some nice formatted header printing
+ */
+fun header(text : String) {
+    println()
+    println(text)
+    println(text.toCharArray().map { _ -> '-' }.joinToString(separator = ""))
+}

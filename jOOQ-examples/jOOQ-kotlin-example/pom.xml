@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.1.2-4</kotlin.version>
         <org.jooq.version>3.10.0-SNAPSHOT</org.jooq.version>
-        <org.h2.version>1.4.193</org.h2.version>
+        <org.h2.version>1.4.195</org.h2.version>
         <java.version>1.8</java.version>
     </properties>
 
@@ -58,6 +58,15 @@
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
+        <resources>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
 
             <!-- We're using the properties plugin to load external properties into Maven.
@@ -152,7 +161,7 @@
                                 </generate>
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>
-                                    <directory>target/generated-sources/jooq-h2</directory>
+                                    <directory>src/main/java</directory>
                                 </target>
                             </generator>
                         </configuration>
@@ -184,9 +193,9 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
+                                <source>src/main/java</source>
                                 <source>src/main/kotlin</source>
                                 <source>src/main/resources</source>
-                                <source>target/generated-sources/jooq-h2</source>
                             </sourceDirs>
                         </configuration>
                     </execution>
@@ -205,6 +214,28 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Run the example application right after building
+                 (why isn't this working with Kotlin??)
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>run-example</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>org.jooq.example.kotlin.FunWithKotlinAndJOOQKt</mainClass>
+                            <classpathScope>test</classpathScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
         </plugins>
     </build>
 </project>

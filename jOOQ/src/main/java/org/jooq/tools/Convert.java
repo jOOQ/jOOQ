@@ -980,6 +980,17 @@ public final class Convert {
                     }
                 }
 
+                // Some users may find it useful to convert Enum
+                // literals to Enum values without a Converter
+                else if (java.lang.Enum.class.isAssignableFrom(fromClass) && java.lang.Enum.class.isAssignableFrom(toClass)) {
+                    try {
+                        return (U) java.lang.Enum.valueOf((Class) toClass, ((EnumType) from).getLiteral());
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
                 // [#1624] UUID data types can be read from Strings
                 else if ((fromClass == String.class) && toClass == UUID.class) {
                     try {

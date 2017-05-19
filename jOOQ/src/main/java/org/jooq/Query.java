@@ -120,8 +120,12 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * DML queries may be incomplete in structure and thus not executable.
      * Calling {@link #execute()} on such queries has no effect, but beware that
      * {@link #getSQL()} may not render valid SQL!
+     * <p>
+     * Subclasses may override the default implementation of this method.
      */
-    boolean isExecutable();
+    default boolean isExecutable() {
+        return true;
+    }
 
     /**
      * Retrieve the SQL code rendered by this Query.

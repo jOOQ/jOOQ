@@ -91,11 +91,6 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
-    public /* non-final */ CatalogDefinition getCatalog() {
-        return getSchema().getCatalog();
-    }
-
-    @Override
     public final SchemaDefinition getSchema() {
         return schema;
     }
@@ -108,16 +103,6 @@ public abstract class AbstractDefinition implements Definition {
     @Override
     public final String getInputName() {
         return name;
-    }
-
-    /**
-     * Subclasses may override this method
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String getOutputName() {
-        return getInputName();
     }
 
     @Override

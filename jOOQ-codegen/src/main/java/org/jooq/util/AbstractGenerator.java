@@ -549,18 +549,6 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
-    @Deprecated
-    public String fullyQualifiedTypes() {
-        return generateFullyQualifiedTypes();
-    }
-
-    @Override
-    @Deprecated
-    public void setFullyQualifiedTypes(String fullyQualifiedTypes) {
-        setGenerateFullyQualifiedTypes(fullyQualifiedTypes);
-    }
-
-    @Override
     public String generateFullyQualifiedTypes() {
         return generateFullyQualifiedTypes;
     }

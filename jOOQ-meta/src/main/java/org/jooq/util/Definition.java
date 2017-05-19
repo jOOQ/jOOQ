@@ -35,6 +35,7 @@
 
 package org.jooq.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Name;
@@ -55,7 +56,9 @@ public interface Definition {
     /**
      * @return The catalog of this object.
      */
-    CatalogDefinition getCatalog();
+    default CatalogDefinition getCatalog() {
+        return getSchema().getCatalog();
+    }
 
     /**
      * @return The schema of this object or <code>null</code> if this object is
@@ -76,11 +79,14 @@ public interface Definition {
     String getInputName();
 
     /**
+     * Subclasses may override the default implementation of this method
      * @return The name of this object, e.g. [my_table], as defined for the
      *         target database. This may differ from the input name if schema /
      *         table rewriting is applied.
      */
-    String getOutputName();
+    default String getOutputName() {
+        return getInputName();
+    }
 
     /**
      * @return The comment of this object
@@ -91,7 +97,14 @@ public interface Definition {
      * @return A path of definitions for this definition, e.g.
      *         <code>[schema].[package].[routine].[parameter]</code>
      */
-    List<Definition> getDefinitionPath();
+    default List<Definition> getDefinitionPath() {
+        List<Definition> result = new ArrayList<Definition>();
+    
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+    
+        return result;
+    }
 
     /**
      * @return A qualified name for this object (corresponding to

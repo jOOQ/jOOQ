@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.SQLITE;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -148,18 +149,26 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * Note: Unfortunately, this is not supported in the Oracle dialect, where
      * identities emulated by triggers cannot be formally detected.
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
      */
-    Identity<R, ?> getIdentity();
+    default Identity<R, ?> getIdentity() {
+        return null;
+    }
     /**
      * Retrieve the table's primary key
+     * <p>
+     * Subclasses may override the default implementation of this method
      *
      * @return The primary key. This is never <code>null</code> for an updatable
      *         table.
      */
-    UniqueKey<R> getPrimaryKey();
+    default UniqueKey<R> getPrimaryKey() {
+        return null;
+    }
 
     /**
      * A "version" field holding record version information used for optimistic
@@ -213,12 +222,16 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Retrieve all of the table's unique keys.
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return All keys. This is never <code>null</code>. This is never empty
      *         for a {@link Table} with a {@link Table#getPrimaryKey()}. This
      *         method returns an unmodifiable list.
      */
-    List<UniqueKey<R>> getKeys();
+    default List<UniqueKey<R>> getKeys() {
+        return Collections.emptyList();
+    }
 
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
@@ -234,11 +247,15 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Get the list of <code>FOREIGN KEY</code>'s of this table
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return This table's <code>FOREIGN KEY</code>'s. This is never
      *         <code>null</code>.
      */
-    List<ForeignKey<R, ?>> getReferences();
+    default List<ForeignKey<R, ?>> getReferences() {
+        return Collections.emptyList();
+    }
 
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of this table, referencing a

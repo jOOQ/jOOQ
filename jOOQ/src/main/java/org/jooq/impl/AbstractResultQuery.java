@@ -1258,16 +1258,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().intoSet(field, converter);
     }
 
-    /**
-     * Subclasses may override this method
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public Class<? extends R> getRecordType() {
-        return null;
-    }
-
     @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return fetch().into(type);

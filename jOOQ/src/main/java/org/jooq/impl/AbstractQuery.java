@@ -438,15 +438,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         }
     }
 
-    /**
-     * Default implementation for executable check. Subclasses may override this
-     * method.
-     */
-    @Override
-    public boolean isExecutable() {
-        return true;
-    }
-
     static class Rendered {
         String                  sql;
         QueryPartList<Param<?>> bindValues;

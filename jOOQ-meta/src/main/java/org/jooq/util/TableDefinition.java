@@ -116,6 +116,8 @@ public interface TableDefinition extends Definition {
     /**
      * Whether this table is a table-valued function.
      */
-    boolean isTableValuedFunction();
+    default boolean isTableValuedFunction() {
+        return false;
+    }
 
 }

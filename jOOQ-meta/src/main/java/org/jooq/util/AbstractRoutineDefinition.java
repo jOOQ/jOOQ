@@ -158,11 +158,6 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public /* non-final */ boolean isSQLUsable() {
-        return getReturnValue() != null && getOutParameters().isEmpty();
-    }
-
-    @Override
     public final boolean isAggregate() {
         return aggregate;
     }

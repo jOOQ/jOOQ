@@ -55,16 +55,6 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
-
-        result.addAll(getSchema().getDefinitionPath());
-        result.add(this);
-
-        return result;
-    }
-
-    @Override
     public final List<RoutineDefinition> getRoutines() {
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();

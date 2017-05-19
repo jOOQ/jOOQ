@@ -34,7 +34,6 @@
  */
 package org.jooq.util;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,9 +82,4 @@ implements
     }
 
     protected abstract List<RoutineDefinition> getRoutines0();
-
-    @Override
-    public List<AttributeDefinition> getConstants() {
-        return Collections.emptyList();
-    }
 }

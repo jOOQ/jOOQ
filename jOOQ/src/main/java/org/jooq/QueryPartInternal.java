@@ -108,8 +108,12 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
-    boolean declaresFields();
+    default boolean declaresFields() {
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare tables in a
@@ -119,8 +123,12 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
-    boolean declaresTables();
+    default boolean declaresTables() {
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare windows in a
@@ -130,8 +138,12 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
-    boolean declaresWindows();
+    default boolean declaresWindows() {
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare common table
@@ -141,8 +153,12 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
-    boolean declaresCTE();
+    default boolean declaresCTE() {
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to generate
@@ -152,6 +168,10 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
-    boolean generatesCast();
+    default boolean generatesCast() {
+        return false;
+    }
 }

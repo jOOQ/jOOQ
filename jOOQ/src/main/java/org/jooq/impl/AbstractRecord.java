@@ -779,7 +779,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <E> E map(RecordMapper<Record, E> mapper) {
+    public final <E> E map(RecordMapper<? extends Record, E> mapper) {
         return mapper.map(this);
     }
 

@@ -45,6 +45,7 @@ import java.sql.SQLOutput;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private final Routine<?>                       routine;
     private String                                 sql;
 
+    private final boolean                          batch;
     private final Query[]                          batchQueries;
     private final String[]                         batchSQL;
     private final int[]                            batchRows;
@@ -351,7 +353,7 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     DefaultExecuteContext(Configuration configuration, Query query) {
-        this(configuration, query, new Query[] { query }, null);
+        this(configuration, query, null, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Routine<?> routine) {
@@ -362,23 +364,27 @@ class DefaultExecuteContext implements ExecuteContext {
         this.configuration = configuration;
         this.data = new DataMap();
         this.query = query;
-        this.batchQueries = (batchQueries == null ? new Query[0] : batchQueries);
         this.routine = routine;
 
-        if (this.batchQueries.length > 0) {
-            this.batchSQL = new String[this.batchQueries.length];
-            this.batchRows = new int[this.batchQueries.length];
-
-            for (int i = 0; i < this.batchQueries.length; i++)
-                this.batchRows[i] = -1;
-        }
-        else if (routine != null) {
-            this.batchSQL = new String[1];
+        if (routine != null) {
+            this.batch = false;
+            this.batchQueries = new Query[0];
             this.batchRows = new int[] { -1 };
+            this.batchSQL = new String[1];
+        }
+        else if (batchQueries != null) {
+            this.batch = true;
+            this.batchQueries = batchQueries;
+            this.batchRows = new int[batchQueries.length];
+            this.batchSQL = new String[batchQueries.length];
+
+            Arrays.fill(this.batchRows, -1);
         }
         else {
-            this.batchSQL = new String[0];
+            this.batch = false;
+            this.batchQueries = new Query[0];
             this.batchRows = new int[0];
+            this.batchSQL = new String[0];
         }
 
         clean();
@@ -413,13 +419,8 @@ class DefaultExecuteContext implements ExecuteContext {
             return ExecuteType.ROUTINE;
         }
 
-        // This can only be a BatchSingle execution
-        else if (batchQueries.length == 1 && query == null) {
-            return ExecuteType.BATCH;
-        }
-
-        // This can only be a BatchMultiple execution
-        else if (batchQueries.length > 1) {
+        // This can only be a BatchSingle or BatchMultiple execution
+        else if (batch) {
             return ExecuteType.BATCH;
         }
 
@@ -499,10 +500,9 @@ class DefaultExecuteContext implements ExecuteContext {
     public final void sql(String s) {
         this.sql = s;
 
-        // If this isn't a batch query
-        if (batchSQL.length == 1) {
+        // If this isn't a BatchMultiple query
+        if (batchSQL.length == 1)
             batchSQL[0] = s;
-        }
     }
 
     @Override
@@ -608,10 +608,9 @@ class DefaultExecuteContext implements ExecuteContext {
     public final void rows(int r) {
         this.rows = r;
 
-        // If this isn't a batch query
-        if (batchRows.length == 1) {
+        // If this isn't a BatchMultiple query
+        if (batchRows.length == 1)
             batchRows[0] = r;
-        }
     }
 
     @Override

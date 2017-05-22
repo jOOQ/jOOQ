@@ -84,15 +84,15 @@ final class BatchMultiple implements Batch {
             for (int i = 0; i < queries.length; i++) {
                 listener.renderStart(ctx);
                 batchSQL[i] = DSL.using(configuration).renderInlined(queries[i]);
+                ctx.sql(batchSQL[i]);
                 listener.renderEnd(ctx);
             }
 
-            for (String sql : batchSQL) {
-                ctx.sql(sql);
+            for (int i = 0; i < queries.length; i++) {
+                ctx.sql(batchSQL[i]);
                 listener.prepareStart(ctx);
-                ctx.statement().addBatch(sql);
+                ctx.statement().addBatch(batchSQL[i]);
                 listener.prepareEnd(ctx);
-                ctx.sql(null);
             }
 
             listener.executeStart(ctx);

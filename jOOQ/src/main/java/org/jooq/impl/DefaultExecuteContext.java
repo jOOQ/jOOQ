@@ -380,11 +380,17 @@ class DefaultExecuteContext implements ExecuteContext {
 
             Arrays.fill(this.batchRows, -1);
         }
-        else {
+        else if (query == null) {
             this.batch = false;
             this.batchQueries = new Query[0];
             this.batchRows = new int[0];
             this.batchSQL = new String[0];
+        }
+        else {
+            this.batch = false;
+            this.batchQueries = new Query[] { query };
+            this.batchRows = new int[] { -1 };
+            this.batchSQL = new String[1];
         }
 
         clean();

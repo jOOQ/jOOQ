@@ -982,7 +982,7 @@ public final class Convert {
 
                 // Some users may find it useful to convert Enum
                 // literals to Enum values without a Converter
-                else if (java.lang.Enum.class.isAssignableFrom(fromClass) && java.lang.Enum.class.isAssignableFrom(toClass)) {
+                else if ((from instanceof EnumType) && java.lang.Enum.class.isAssignableFrom(toClass)) {
                     try {
                         return (U) java.lang.Enum.valueOf((Class) toClass, ((EnumType) from).getLiteral());
                     }

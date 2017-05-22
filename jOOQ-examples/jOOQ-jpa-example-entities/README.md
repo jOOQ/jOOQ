@@ -6,7 +6,13 @@ To install and run this example, simply check it out and run the following Maven
 ```
 $ pwd
 /path/to/checkout/dir
-$ cd jOOQ-examples/jOOQ-javafx-example
+$ cd jOOQ-examples/jOOQ-jpa-example-entities
 ...
 $ mvn clean install
+$ cd ../jOOQ-examples/jOOQ-jpa-example
+...
+$ mvn clean install
+
 ```
+
+Note that the JPA-annotated entities need to be placed in a dependency of the example project

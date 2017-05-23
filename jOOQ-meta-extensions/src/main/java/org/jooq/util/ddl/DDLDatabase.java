@@ -74,7 +74,6 @@ public class DDLDatabase extends H2Database {
 
     private Connection              connection;
 
-    @SuppressWarnings("serial")
     @Override
     protected DSLContext create0() {
         if (connection == null) {

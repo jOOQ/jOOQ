@@ -17417,7 +17417,7 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
                     </section>
 
                     <section id="codegen-jpa">
-                        <title>Generating code from JPA annotated entities</title>
+                        <title>JPADatabase: Code generation from entities</title>
                         <content><html>
                             <p>
                                 Many jOOQ users use jOOQ as a complementary SQL API in applications that mostly use JPA for their database interactions, e.g. to perform reporting, batch processing, analytics, etc.
@@ -17530,7 +17530,7 @@ public class Book {
                     </section>
 
                     <section id="codegen-xml">
-                        <title>Generating code from XML files</title>
+                        <title>XMLDatabase: Code generation from XML files</title>
                         <content><html>
                             <p>
                                 By default, jOOQ's code generator takes live database connections as a database meta data source. In many project setups, this might not be optimal, as the live database is not always available.
@@ -17664,6 +17664,117 @@ public class Book {
                             <p>
                                 This XML configuration can now be checked in and versioned, and modified independently from your live database schema.
                             </p>
+                        </html></content>
+                    </section>
+
+                    <section id="codegen-ddl">
+                        <title>DDLDatabase: Code generation from SQL files</title>
+                        <content><html>
+                            <p>
+                                In many cases, the schema is defined in the form of a SQL script, which can be used with <reference id="jooq-with-flyway" title="Flyway"/>, or some other database migration tool.
+                            </p>
+
+                            <p>
+                                If you have a complete schema definition in a single file, or perhaps a set of incremental files that can reproduce your schema in any SQL dialect, then the <code>DDLDatabase</code> might be the right choice for you. It uses the <reference id="sql-parser" title="SQL parser"/> internally and applies all your DDL increments to an in-memory H2 database, in order to produce a replica of your schema prior to reverse engineering it again using ordinary code generation.
+                            </p>
+
+                            <p>
+                                For example, the following <code>database.sql</code> script (the <reference id="sample-database" title="sample database from this manual"/>) could be used:
+                            </p>
+
+</html><sql><![CDATA[CREATE TABLE language (
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  cd              CHAR(2)       NOT NULL,
+  description     VARCHAR2(50)
+);
+
+CREATE TABLE author (
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  first_name      VARCHAR2(50),
+  last_name       VARCHAR2(50)  NOT NULL,
+  date_of_birth   DATE,
+  year_of_birth   NUMBER(7),
+  distinguished   NUMBER(1)
+);
+
+CREATE TABLE book (
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  author_id       NUMBER(7)     NOT NULL,
+  title           VARCHAR2(400) NOT NULL,
+  published_in    NUMBER(7)     NOT NULL,
+  language_id     NUMBER(7)     NOT NULL,
+
+  CONSTRAINT fk_book_author     FOREIGN KEY (author_id)   REFERENCES author(id),
+  CONSTRAINT fk_book_language   FOREIGN KEY (language_id) REFERENCES language(id)
+);
+
+CREATE TABLE book_store (
+  name            VARCHAR2(400) NOT NULL UNIQUE
+);
+
+CREATE TABLE book_to_book_store (
+  name            VARCHAR2(400) NOT NULL,
+  book_id         INTEGER       NOT NULL,
+  stock           INTEGER,
+
+  PRIMARY KEY(name, book_id),
+  CONSTRAINT fk_b2bs_book_store FOREIGN KEY (name)        REFERENCES book_store (name) ON DELETE CASCADE,
+  CONSTRAINT fk_b2bs_book       FOREIGN KEY (book_id)     REFERENCES book (id)         ON DELETE CASCADE
+);]]></sql><html>
+
+                            <p>
+                                While the script uses pretty standard SQL constructs, you may well use some vendor-specific extensions, and even <reference id="sql-statements" title="DML statements"/> in between to set up your schema - it doesn't matter. You will simply need to set up your code generation configuration as follows:
+                            </p>
+
+                            <p>
+                                <strong>XML configuration (standalone and Maven)</strong></strong>
+                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <database>
+      <name>org.jooq.util.ddl.DDLDatabase</name>
+      <properties>
+
+        <!-- Specify the location of your SQL script. Future versions may also support more than one script, or directories -->
+        <property>
+          <key>scripts</key>
+          <value>src/main/resources/database.sql</value>
+        </property>
+      </properties>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                    <p>
+                                        <strong>Programmatic configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      .withName("org.jooq.util.ddl.DDLDatabase")
+      .withProperties(new Property()
+        .withKey("scripts")
+        .withValue("src/main/resources/database.sql")))));]]></java><html>
+
+                                    <p>
+                                        <strong>Gradle configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    database {
+      name = 'org.jooq.util.ddl.DDLDatabase'
+      properties {
+        property {
+          key = 'scripts'
+          value = 'src/main/resources/database.sql'
+        }
+      }
+    }
+  }
+}]]></java><html>
                         </html></content>
                     </section>
 

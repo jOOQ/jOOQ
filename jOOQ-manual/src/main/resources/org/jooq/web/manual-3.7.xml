@@ -15374,7 +15374,7 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
                     </section>
 
                     <section id="codegen-jpa">
-                        <title>Generating code from JPA annotated entities</title>
+                        <title>JPADatabase: Code generation from entities</title>
                         <content><html>
                             <p>
                                 Many jOOQ users use jOOQ as a complementary SQL API in applications that mostly use JPA for their database interactions, e.g. to perform reporting, batch processing, analytics, etc.
@@ -15487,7 +15487,7 @@ public class Book {
                     </section>
 
                     <section id="codegen-xml">
-                        <title>Generating code from XML files</title>
+                        <title>XMLDatabase: Code generation from XML files</title>
                         <content><html>
                             <p>
                                 By default, jOOQ's code generator takes live database connections as a database meta data source. In many project setups, this might not be optimal, as the live database is not always available.

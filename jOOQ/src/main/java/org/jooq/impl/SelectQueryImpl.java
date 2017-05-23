@@ -1542,7 +1542,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS = EnumSet.of(DERBY, MARIADB, MYSQL, SQLITE);
 
     private final void unionParenthesis(Context<?> ctx, String parenthesis) {

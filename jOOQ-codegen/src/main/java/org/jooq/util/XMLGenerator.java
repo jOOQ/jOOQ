@@ -184,7 +184,7 @@ public class XMLGenerator extends AbstractGenerator {
                     rc.setConstraintCatalog(catalogName);
                     rc.setConstraintSchema(schemaName);
                     rc.setConstraintName(constraintName);
-                    rc.setUniqueConstraintCatalog(referenced.getOutputName());
+                    rc.setUniqueConstraintCatalog(referenced.getCatalog().getOutputName());
                     rc.setUniqueConstraintSchema(referenced.getSchema().getOutputName());
                     rc.setUniqueConstraintName(referenced.getOutputName());
 

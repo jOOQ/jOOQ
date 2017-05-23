@@ -3405,6 +3405,7 @@ final class Tools {
 
 
 
+
             case FIREBIRD: {
                 ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
                    .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()

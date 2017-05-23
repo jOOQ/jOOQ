@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_CREATE_SCHEMA;
+import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 
 import org.jooq.Clause;
@@ -105,6 +106,23 @@ final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            accept1(ctx);
+    }
+
+    private final void accept1(Context<?> ctx) {
         ctx.start(CREATE_SCHEMA_NAME)
            .visit(K_CREATE_SCHEMA);
 

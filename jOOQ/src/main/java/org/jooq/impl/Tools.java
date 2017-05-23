@@ -57,6 +57,7 @@ import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.CREATE_TABLE;
 import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
 import static org.jooq.impl.DDLStatementType.DROP_INDEX;
+import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
@@ -3330,9 +3331,13 @@ final class Tools {
      * <code>IF EXISTS</code> is not supported.
      */
     static final void executeImmediateEnd(Context<?> ctx, DDLStatementType type) {
-        boolean drop = asList(DROP_INDEX, DROP_SEQUENCE, DROP_TABLE, DROP_VIEW).contains(type);
-
         switch (ctx.family()) {
+
+
+
+
+
+
 
 
 

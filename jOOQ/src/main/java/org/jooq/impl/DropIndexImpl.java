@@ -42,6 +42,8 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.impl.DSL.name;
@@ -136,7 +138,8 @@ final class DropIndexImpl extends AbstractQuery implements
         ctx.visit(index);
 
         if (on != null)
-            ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
+            if (asList(MARIADB, MYSQL).contains(ctx.family()))
+                ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
     }
 
     @Override

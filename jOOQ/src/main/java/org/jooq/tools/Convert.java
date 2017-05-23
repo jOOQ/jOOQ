@@ -537,9 +537,8 @@ public final class Convert {
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
-                    if (from instanceof EnumType) {
+                    if (from instanceof EnumType)
                         return (U) ((EnumType) from).getLiteral();
-                    }
 
                     return (U) from.toString();
                 }
@@ -969,22 +968,15 @@ public final class Convert {
                 }
 
 
-                // [#1448] Some users may find it useful to convert string
-                // literals to Enum values without a Converter
-                else if ((fromClass == String.class) && java.lang.Enum.class.isAssignableFrom(toClass)) {
+                // [#1448] [#6255] To Enum conversion
+                else if (java.lang.Enum.class.isAssignableFrom(toClass) && (fromClass == String.class || from instanceof Enum || from instanceof EnumType)) {
                     try {
-                        return (U) java.lang.Enum.valueOf((Class) toClass, (String) from);
-                    }
-                    catch (IllegalArgumentException e) {
-                        return null;
-                    }
-                }
-
-                // Some users may find it useful to convert Enum
-                // literals to Enum values without a Converter
-                else if ((from instanceof EnumType) && java.lang.Enum.class.isAssignableFrom(toClass)) {
-                    try {
-                        return (U) java.lang.Enum.valueOf((Class) toClass, ((EnumType) from).getLiteral());
+                        if (fromClass == String.class)
+                            return (U) java.lang.Enum.valueOf((Class) toClass, (String) from);
+                        else if (from instanceof EnumType)
+                            return (U) java.lang.Enum.valueOf((Class) toClass, ((EnumType) from).getLiteral());
+                        else
+                            return (U) java.lang.Enum.valueOf((Class) toClass, ((Enum) from).name());
                     }
                     catch (IllegalArgumentException e) {
                         return null;

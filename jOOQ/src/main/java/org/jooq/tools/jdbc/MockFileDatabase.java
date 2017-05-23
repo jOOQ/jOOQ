@@ -172,7 +172,6 @@ public class MockFileDatabase implements MockDataProvider {
     }
 
     private static final Pattern END_OF_STATEMENT = Pattern.compile("^(.*?);[ \t]*$");
-    private static final Pattern NEW_LINE         = Pattern.compile("\n");
 
     private void load() throws FileNotFoundException, IOException {
 
@@ -286,7 +285,7 @@ public class MockFileDatabase implements MockDataProvider {
                 if (log.isDebugEnabled()) {
                     String comment = "Loaded Result";
 
-                    for (String l : NEW_LINE.split(mock.data.format(5))) {
+                    for (String l : mock.data.format(5).split("\n")) {
                         log.debug(comment, l);
                         comment = "";
                     }

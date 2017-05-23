@@ -2218,8 +2218,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private static final Pattern WHITESPACE = Pattern.compile(" ");
-
     private static final long parse(Class<? extends java.util.Date> type, String date) throws SQLException {
 
         // Try reading a plain number first
@@ -2235,7 +2233,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Dates may come with " 00:00:00". This is safely trimming time information
             if (type == Date.class)
-                return Date.valueOf(WHITESPACE.split(date)[0]).getTime();
+                return Date.valueOf(date.split(" ")[0]).getTime();
 
             if (type == Time.class)
                 return Time.valueOf(date).getTime();

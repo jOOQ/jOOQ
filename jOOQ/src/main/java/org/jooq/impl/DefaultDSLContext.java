@@ -286,36 +286,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(dialect, null);
     }
 
-    @SuppressWarnings("deprecation")
     public DefaultDSLContext(SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect) {
         this(connection, dialect, null);
     }
 
-    @SuppressWarnings("deprecation")
     public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect) {
         this(datasource, dialect, null);
     }
 
-    @SuppressWarnings("deprecation")
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect) {
         this(connectionProvider, dialect, null);
     }
 
-    @SuppressWarnings("deprecation")
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Configuration configuration) {

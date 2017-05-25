@@ -926,7 +926,9 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public final Configuration set(SQLDialect newDialect) {
-        this.dialect = newDialect;
+
+        // [#6274] The reported dialect should never be null
+        this.dialect = newDialect == null ? SQLDialect.DEFAULT : newDialect;
         return this;
     }
 

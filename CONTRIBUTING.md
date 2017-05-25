@@ -11,6 +11,7 @@ In order to make our cooperation as smooth as possible, we have a couple of guid
 - Try to make your commits as atomic as possible. Related changes to three files should be committed in one commit.
 - The commit message should reference the issue number, e.g. `[#5873] Add Setting.quoteEscaping to allow for alternative escaping of single quotes`.
 - Try not to modify anything unrelated, i.e. don't make unimportant whitespace / formatting changes, which will just distract during review.
+- **In particular, please do not remove excess whitespace / unnecessary imports etc. The jOOQ Open Source Edition is a "slave clone" of the commercial jOOQ distributions. We'd like to keep all line numbers intact between the two versions!**
 - Don't worry about tests. Our unit and integration tests are not open source. If your change is substantial, we'll add tests ourselves.
 - Add your name to our [jOOQ/src/main/resources/META-INF/ABOUT.txt](https://github.com/jOOQ/jOOQ/blob/master/jOOQ/src/main/resources/META-INF/ABOUT.txt) file
 - Be sure you agree to transfer your rights to us (see below) before contributing.

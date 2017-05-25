@@ -71,7 +71,6 @@ import java.util.stream.Stream;
 import javax.persistence.Column;
 
 import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -886,14 +885,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     private static <E> E attach(E attachable, Record record) {
         // [#2869] Attach the mapped outcome if it is Attachable and if the context's
         // Settings.attachRecords flag is set
-        if (attachable instanceof Attachable && record instanceof AttachableInternal) {
-            Attachable a = (Attachable) attachable;
-            AttachableInternal r = (AttachableInternal) record;
-
-            if (Tools.attachRecords(r.configuration())) {
-                a.attach(r.configuration());
-            }
-        }
+        if (attachable instanceof Attachable)
+            if (Tools.attachRecords(record.configuration()))
+                ((Attachable) attachable).attach(record.configuration());
 
         return attachable;
     }

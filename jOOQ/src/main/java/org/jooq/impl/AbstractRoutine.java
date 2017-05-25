@@ -89,7 +89,6 @@ import java.util.Set;
 
 import org.jooq.AggregateFunction;
 // ...
-import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Binding;
 import org.jooq.Catalog;
@@ -129,7 +128,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Routine<T>, AttachableInternal {
+public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Routine<T> {
 
     /**
      * Generated UID

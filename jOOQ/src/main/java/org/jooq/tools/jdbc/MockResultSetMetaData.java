@@ -38,7 +38,6 @@ import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Schema;
@@ -164,19 +163,16 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
                 Schema schema = table.getSchema();
 
                 if (schema != null) {
-                    Configuration configuration = ((AttachableInternal) rs.result).configuration();
+                    Configuration configuration = rs.result.configuration();
                     Schema mapped = null;
 
-                    if (configuration != null) {
+                    if (configuration != null)
                         mapped = DSL.using(configuration).map(schema);
-                    }
 
-                    if (mapped != null) {
+                    if (mapped != null)
                         return mapped.getName();
-                    }
-                    else {
+                    else
                         return schema.getName();
-                    }
                 }
             }
         }

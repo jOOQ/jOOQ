@@ -60,7 +60,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -78,7 +77,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery extends AbstractQueryPart implements Query, AttachableInternal {
+abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);

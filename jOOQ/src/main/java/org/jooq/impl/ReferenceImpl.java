@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Constraint;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -196,12 +195,11 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     /**
      * Extract a configuration from the first record of a collection of records
      */
-    private static <R extends Record> DSLContext extractDSLContext(Collection<? extends R> records)
-        throws DetachedException {
+    private static <R extends Record> DSLContext extractDSLContext(Collection<? extends R> records) {
         R first = first(records);
 
-        if (first instanceof AttachableInternal)
-            return DSL.using(((AttachableInternal) first).configuration());
+        if (first != null)
+            return DSL.using(first.configuration());
         else
             throw new DetachedException("Supply at least one attachable record");
     }

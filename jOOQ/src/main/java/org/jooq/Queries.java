@@ -44,7 +44,7 @@ import org.jooq.exception.DetachedException;
  *
  * @author Lukas Eder
  */
-public interface Queries extends QueryPart, Iterable<Query> {
+public interface Queries extends QueryPart, Attachable, Iterable<Query> {
 
     // ------------------------------------------------------------------------
     // Access API

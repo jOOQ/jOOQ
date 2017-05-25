@@ -81,7 +81,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public interface Routine<T> extends QueryPart {
+public interface Routine<T> extends QueryPart, Attachable {
 
     // -------------------------------------------------------------------------
     // XXX: Meta information

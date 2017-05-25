@@ -75,4 +75,10 @@ public interface Attachable extends Serializable {
      * This is the same as calling <code>attach(null)</code>.
      */
     void detach();
+
+    /**
+     * Get the currently attached {@link Configuration}, or <code>null</code> if
+     * no <code>Configuration</code> is attached.
+     */
+    Configuration configuration();
 }

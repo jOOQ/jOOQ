@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
@@ -112,7 +111,7 @@ final class BatchCRUD implements Batch {
         local.settings().setExecuteLogging(false);
 
         for (int i = 0; i < records.length; i++) {
-            Configuration previous = ((AttachableInternal) records[i]).configuration();
+            Configuration previous = records[i].configuration();
 
             try {
                 records[i].attach(local);
@@ -175,7 +174,7 @@ final class BatchCRUD implements Batch {
         ));
 
         for (int i = 0; i < records.length; i++) {
-            Configuration previous = ((AttachableInternal) records[i]).configuration();
+            Configuration previous = records[i].configuration();
 
             try {
                 records[i].attach(local);

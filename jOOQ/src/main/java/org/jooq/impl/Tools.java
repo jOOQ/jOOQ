@@ -160,7 +160,6 @@ import javax.persistence.Id;
 
 // ...
 import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -673,11 +672,7 @@ final class Tools {
      * Extract the configuration from an attachable.
      */
     static final Configuration getConfiguration(Attachable attachable) {
-        if (attachable instanceof AttachableInternal) {
-            return ((AttachableInternal) attachable).configuration();
-        }
-
-        return null;
+        return attachable.configuration();
     }
 
     /**
@@ -685,9 +680,7 @@ final class Tools {
      * if <code>null</code>.
      */
     static final Configuration configuration(Attachable attachable) {
-        return configuration(attachable instanceof AttachableInternal
-            ? ((AttachableInternal) attachable).configuration()
-            : null);
+        return configuration(attachable.configuration());
     }
 
     /**

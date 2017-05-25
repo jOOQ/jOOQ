@@ -73,7 +73,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jooq.AttachableInternal;
 import org.jooq.CSVFormat;
 import org.jooq.Configuration;
 import org.jooq.Constants;
@@ -138,7 +137,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * @author Ivan Dugic
  */
 @SuppressWarnings({"rawtypes", "unchecked" })
-final class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
+final class ResultImpl<R extends Record> implements Result<R> {
 
     /**
      * Generated UID

@@ -38,7 +38,6 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -48,7 +47,7 @@ import org.jooq.Results;
 /**
  * @author Lukas Eder
  */
-final class ResultsImpl extends AbstractList<Result<Record>> implements Results, AttachableInternal {
+final class ResultsImpl extends AbstractList<Result<Record>> implements Results {
 
     /**
      * Generated UID

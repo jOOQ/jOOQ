@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -64,11 +63,7 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
 
     @Override
     public final Configuration configuration() {
-        if (delegate instanceof AttachableInternal) {
-            return ((AttachableInternal) delegate).configuration();
-        }
-
-        return super.configuration();
+        return delegate.configuration();
     }
 
     @Override

@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -54,7 +53,7 @@ import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 /**
  * @author Lukas Eder
  */
-final class QueriesImpl extends AbstractQueryPart implements Queries, AttachableInternal {
+final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     /**
      * Generated UID

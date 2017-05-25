@@ -36,11 +36,9 @@ package org.jooq.tools.jdbc;
 
 import static org.jooq.impl.DSL.using;
 
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.impl.DefaultConfiguration;
 
 /**
  * Various utilities related to {@link MockDataProvider}.
@@ -90,11 +88,7 @@ public final class Mock {
      * Wrap a record in a result.
      */
     static final Result<?> result(Record data) {
-        Configuration configuration = data instanceof AttachableInternal
-            ? ((AttachableInternal) data).configuration()
-            : new DefaultConfiguration();
-
-        Result<Record> result = using(configuration).newResult(data.fields());
+        Result<Record> result = using(data.configuration()).newResult(data.fields());
         result.add(data);
 
         return result;

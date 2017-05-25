@@ -39,7 +39,6 @@ import java.util.List;
 
 // ...
 import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -52,7 +51,7 @@ import org.jooq.Record;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStore implements AttachableInternal {
+abstract class AbstractStore implements Attachable {
 
     /**
      * Generated UID

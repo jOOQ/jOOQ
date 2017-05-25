@@ -37,6 +37,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the <code>ALTER VIEW</code> where the action can be decided.

@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
@@ -135,7 +136,6 @@ final class AlterViewImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        switch (ctx.family()) {
 
 
 
@@ -146,12 +146,26 @@ final class AlterViewImpl extends AbstractQuery implements
 
 
 
-            default:
-                accept1(ctx);
-                break;
-        }
 
+
+
+        accept1(ctx);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -499,7 +499,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <li> <code>{@link RenderContext#qualify()} == true</code></li>
      * <li> <code>{@link RenderContext#subquery()} == false</code></li>
      * </ul>
+     *
+     * @deprecated - [#6280] - 3.10 - Do not reuse this method. It will be
+     *             completely internal with jOOQ 4.0
      */
+    @Deprecated
     RenderContext renderContext();
 
     /**
@@ -588,16 +592,21 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Param<?> extractParam(QueryPart part, String name);
 
     /**
-     * Get a new {@link BindContext} for the context of this <code>DSLContext</code>.
+     * Get a new {@link BindContext} for the context of this
+     * <code>DSLContext</code>.
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
-     * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
-     * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
+     * <li><code>{@link RenderContext#declareFields()} == false</code></li>
+     * <li><code>{@link RenderContext#declareTables()} == false</code></li>
      * </ul>
      * <p>
      * BindContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     *
+     * @deprecated - [#6280] - 3.10 - Do not reuse this method. It will be
+     *             completely internal with jOOQ 4.0
      */
+    @Deprecated
     BindContext bindContext(PreparedStatement stmt);
 
     /**

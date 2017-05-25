@@ -12201,6 +12201,43 @@ Finishing                : Total: 4.814ms, +3.375ms
 						</html></content>
 					</section>
 
+                    <section id="codegen-maven">
+                        <title>Running the code generator with Maven</title>
+                        <content><html>
+                            <p>
+                                There is no substantial difference between running the code generator with Maven or in standalone mode. Both modes use the exact same <code>&lt;configuration/&gt;</code> element. The Maven plugin configuration adds some additional boilerplate around that:
+                            </p>
+
+</html><xml><![CDATA[<plugin>
+  <!-- Specify the maven code generator plugin -->
+  <!-- Use org.jooq            for the Open Source Edition
+           org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-6 for commercial editions with Java 6 support,
+           org.jooq.trial      for the free trial edition
+
+       Note: Only the Open Source Edition is hosted on Maven Central.
+             Import the others manually from your distribution -->
+  <groupId>org.jooq</groupId>
+  <artifactId>jooq-codegen-maven</artifactId>
+  <version>{jooq-version}</version>
+
+  <executions>
+    <execution>
+      <id>jooq-codegen</id>
+      <phase>generate-sources</phase>
+      <goals>
+        <goal>generate</goal>
+      </goals>
+      <configuration>
+        ...
+      </configuration>
+    </execution>
+  </executions>
+</plugin>]]></xml><html>
+
+                        </html></content>
+                    </section>
+
                     <section id="codegen-ant">
                         <title>Running the code generator with Ant</title>
                         <content><html>

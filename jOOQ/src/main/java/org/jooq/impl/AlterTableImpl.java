@@ -71,6 +71,7 @@ import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
 import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
@@ -774,6 +775,8 @@ final class AlterTableImpl extends AbstractQuery implements
         if (!omitAlterTable)
             ctx.formatIndentEnd();
     }
+
+
 
 
 

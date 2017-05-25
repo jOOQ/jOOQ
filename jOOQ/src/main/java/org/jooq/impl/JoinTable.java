@@ -49,6 +49,7 @@ import static org.jooq.Clause.TABLE_JOIN_OUTER_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
+import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
 import static org.jooq.Clause.TABLE_JOIN_SEMI_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_STRAIGHT;
 import static org.jooq.Clause.TABLE_JOIN_USING;
@@ -80,14 +81,17 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
+import static org.jooq.impl.Keywords.K_INNER_JOIN;
 import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -558,14 +562,10 @@ implements
             return onKey((ForeignKey<?, ?>) rightToLeft.get(0), rhs, lhs);
         }
 
-        if (rightToLeft.isEmpty() && leftToRight.isEmpty()) {
-            throw new DataAccessException("No matching Key found between tables " + lhs + " and " + rhs);
-        } else {
-            throw new DataAccessException(
-                    "`onKey()` was ambiguous between tables " + lhs + " and " + rhs + ".\n" +
-                            "Found possible keys: " + leftToRight + " and " + rightToLeft + ".\n" +
-                            "Please use .onKey(ForeignKey) instead.");
-        }
+        if (rightToLeft.isEmpty() && leftToRight.isEmpty())
+            throw onKeyException(OnKeyExceptionReason.NOT_FOUND, leftToRight, rightToLeft);
+        else
+            throw onKeyException(OnKeyExceptionReason.AMBIGUOUS, null, null);
     }
 
     @Override
@@ -587,7 +587,7 @@ implements
             }
         }
 
-        throw new DataAccessException("No matching key found in tables " + lhs + " and " + rhs);
+        throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
     }
 
     @Override
@@ -597,8 +597,7 @@ implements
         else if (search(rhs, key.getTable()) != null)
             return onKey(key, rhs, lhs);
 
-        throw new DataAccessException(
-                "The specified key was not found in tables " + lhs + " and " + rhs);
+        throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
     }
 
     private final Table<?> search(Table<?> tree, Table<?> search) {
@@ -652,6 +651,20 @@ implements
         }
 
         return result;
+    }
+
+    private enum OnKeyExceptionReason {
+        AMBIGUOUS, NOT_FOUND
+    }
+
+    private final DataAccessException onKeyException(OnKeyExceptionReason reason, List<?> leftToRight, List<?> rightToLeft) {
+        switch (reason) {
+            case AMBIGUOUS:
+                return new DataAccessException("Key ambiguous between tables [" + lhs + "] and [" + rhs + "]. Found: " + leftToRight + " and " + rightToLeft);
+            case NOT_FOUND:
+            default:
+                return new DataAccessException("No matching Key found between tables [" + lhs + "] and [" + rhs + "]");
+        }
     }
 
     @Override

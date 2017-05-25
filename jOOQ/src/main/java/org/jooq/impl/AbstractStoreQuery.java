@@ -37,6 +37,8 @@ package org.jooq.impl;
 import java.util.Map;
 
 import org.jooq.Configuration;
+import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.StoreQuery;
@@ -74,11 +76,35 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Tools.field(value, field));
+        if (field == null)
+            addValue(new UnknownField<T>(getValues().size()), value);
+        else
+            getValues().put(field, Tools.field(value, field));
     }
 
     @Override
     public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Tools.field(value, field));
+        if (field == null)
+            addValue(new UnknownField<T>(getValues().size()), value);
+        else
+            getValues().put(field, Tools.field(value, field));
+    }
+
+    static class UnknownField<T> extends AbstractField<T> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -8950654583203020935L;
+
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        UnknownField(int index) {
+            super(DSL.name("unknown field " + index), (DataType) SQLDataType.OTHER);
+        }
+
+        @Override
+        public void accept(Context<?> ctx) {
+            ctx.visit(getUnqualifiedName());
+        }
     }
 }

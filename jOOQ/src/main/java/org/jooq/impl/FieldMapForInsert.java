@@ -43,6 +43,7 @@ import java.util.Map;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.impl.AbstractStoreQuery.UnknownField;
 
 /**
  * @author Lukas Eder
@@ -90,6 +91,15 @@ final class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
         // [#2995] Do not generate empty column lists.
         if (size() == 0)
             return;
+
+        // [#4629] Do not generate column lists for unknown columns
+        unknownFields: {
+            for (Field<?> field : keySet())
+                if (!(field instanceof UnknownField))
+                    break unknownFields;
+
+            return;
+        }
 
         boolean indent = (size() > 1);
 

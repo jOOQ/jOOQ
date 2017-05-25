@@ -149,12 +149,10 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             if (map != null) {
                 Select<Record> iteration = DSL.using(context.configuration()).select(map.values());
 
-                if (select == null) {
+                if (select == null)
                     select = iteration;
-                }
-                else {
+                else
                     select = select.unionAll(iteration);
-                }
             }
         }
 
@@ -189,17 +187,15 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     public final FieldMapForInsert getMap() {
-        if (insertMaps.get(index()) == null) {
+        if (insertMaps.get(index()) == null)
             insertMaps.set(index(), new FieldMapForInsert());
-        }
 
         return insertMaps.get(index());
     }
 
     public final void newRecord() {
-        if (insertMaps.get(index()) != null) {
+        if (insertMaps.get(index()) != null)
             insertMaps.add(null);
-        }
     }
 
     private final int index() {

@@ -42,7 +42,6 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,9 +51,9 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldLike;
-import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictDoUpdateStep;
+import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
@@ -87,8 +86,8 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
-import org.jooq.Select;
 import org.jooq.SQL;
+import org.jooq.Select;
 import org.jooq.Table;
 
 /**
@@ -273,14 +272,18 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl values(Object... values) {
-        if (fields.length != values.length) {
+
+        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+        if (fields.length > 0 && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
-        }
 
         getDelegate().newRecord();
-        for (int i = 0; i < fields.length; i++) {
-            addValue(getDelegate(), fields[i], values[i]);
-        }
+        if (fields.length == 0)
+            for (Object value : values)
+                addValue(getDelegate(), null, value);
+        else
+            for (int i = 0; i < fields.length; i++)
+                addValue(getDelegate(), fields.length > 0 ? fields[i] : null, values[i]);
 
         return this;
     }
@@ -293,15 +296,16 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
-        if (object instanceof Field) {
+        if (object instanceof Field)
             delegate.addValue(field, (Field<T>) object);
-        }
-        else if (object instanceof FieldLike) {
+        else if (object instanceof FieldLike)
             delegate.addValue(field, ((FieldLike) object).<T>asField());
-        }
-        else {
+        else if (field != null)
             delegate.addValue(field, field.getDataType().convert(object));
-        }
+
+        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+        else
+            delegate.addValue(field, (T) object);
     }
 
     @Override
@@ -416,16 +420,20 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl values(Field<?>... values) {
-        List<Field<?>> values1 = Arrays.asList(values);
-        if (fields.length != values1.size()) {
+
+        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+        if (fields.length > 0 && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
-        }
 
         getDelegate().newRecord();
-        for (int i = 0; i < fields.length; i++) {
-            // javac has trouble when inferring Object for T. Use Void instead
-            getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values1.get(i));
-        }
+
+        // javac has trouble when inferring Object for T. Use Void instead
+        if (fields.length == 0)
+            for (Field<?> value : values)
+                getDelegate().addValue((Field<Void>) null, (Field<Void>) value);
+        else
+            for (int i = 0; i < fields.length; i++)
+                getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values[i]);
 
         return this;
     }

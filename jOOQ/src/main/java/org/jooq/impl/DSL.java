@@ -15697,6 +15697,14 @@ public class DSL {
         return new org.jooq.impl.Function<T[]>(Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
     }
 
+    /**
+     * Get the <code>array_agg()</code> aggregate function.
+     */
+    @Support({ HSQLDB, POSTGRES })
+    public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
+        return new org.jooq.impl.Function<T[]>(Term.ARRAY_AGG, true, field.getDataType().getArrayDataType(), nullSafe(field));
+    }
+
 
 
 

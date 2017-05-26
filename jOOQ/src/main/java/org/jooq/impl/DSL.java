@@ -13871,7 +13871,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
         return Tools.field(Convert.convert(value, OffsetDateTime.class), OffsetDateTime.class);
     }
@@ -13885,7 +13885,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
         return offsetDateTime(Tools.field(value));
     }
@@ -13899,7 +13899,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
         return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
     }

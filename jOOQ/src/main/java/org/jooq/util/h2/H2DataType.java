@@ -39,6 +39,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
@@ -64,47 +65,50 @@ public class H2DataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Byte>       TINYINT               = new DefaultDataType<Byte>(SQLDialect.H2, SQLDataType.TINYINT, "tinyint");
-    public static final DataType<Short>      SMALLINT              = new DefaultDataType<Short>(SQLDialect.H2, SQLDataType.SMALLINT, "smallint");
-    public static final DataType<Short>      INT2                  = new DefaultDataType<Short>(SQLDialect.H2, SQLDataType.SMALLINT, "int2");
-    public static final DataType<Integer>    INT                   = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "int");
-    public static final DataType<Integer>    INTEGER               = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "integer");
-    public static final DataType<Integer>    MEDIUMINT             = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "mediumint");
-    public static final DataType<Integer>    INT4                  = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "int4");
-    public static final DataType<Integer>    SIGNED                = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "signed");
-    public static final DataType<Boolean>    BOOLEAN               = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BOOLEAN, "boolean");
-    public static final DataType<Boolean>    BOOL                  = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BOOLEAN, "bool");
-    public static final DataType<Boolean>    BIT                   = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BIT, "bit");
-    public static final DataType<Long>       BIGINT                = new DefaultDataType<Long>(SQLDialect.H2, SQLDataType.BIGINT, "bigint");
-    public static final DataType<Long>       INT8                  = new DefaultDataType<Long>(SQLDialect.H2, SQLDataType.BIGINT, "int8");
-    public static final DataType<BigDecimal> DECIMAL               = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.DECIMAL, "decimal");
-    public static final DataType<BigDecimal> DEC                   = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.DECIMAL, "dec");
-    public static final DataType<BigDecimal> NUMBER                = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.NUMERIC, "number");
-    public static final DataType<BigDecimal> NUMERIC               = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.NUMERIC, "numeric");
-    public static final DataType<Double>     DOUBLE                = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.DOUBLE, "double");
-    public static final DataType<Double>     FLOAT                 = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float");
-    public static final DataType<Double>     FLOAT4                = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float4");
-    public static final DataType<Double>     FLOAT8                = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float8");
-    public static final DataType<Float>      REAL                  = new DefaultDataType<Float>(SQLDialect.H2, SQLDataType.REAL, "real");
-    public static final DataType<Time>       TIME                  = new DefaultDataType<Time>(SQLDialect.H2, SQLDataType.TIME, "time");
-    public static final DataType<Date>       DATE                  = new DefaultDataType<Date>(SQLDialect.H2, SQLDataType.DATE, "date");
-    public static final DataType<Timestamp>  TIMESTAMP             = new DefaultDataType<Timestamp>(SQLDialect.H2, SQLDataType.TIMESTAMP, "timestamp");
-    public static final DataType<Timestamp>  DATETIME              = new DefaultDataType<Timestamp>(SQLDialect.H2, SQLDataType.TIMESTAMP, "datetime");
-    public static final DataType<byte[]>     BINARY                = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BINARY, "binary");
-    public static final DataType<byte[]>     VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.VARBINARY, "varbinary");
-    public static final DataType<byte[]>     LONGVARBINARY         = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.LONGVARBINARY, "longvarbinary");
-    public static final DataType<byte[]>     BLOB                  = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BLOB, "blob");
-    public static final DataType<Object>     OTHER                 = new DefaultDataType<Object>(SQLDialect.H2, SQLDataType.OTHER, "other");
-    public static final DataType<String>     VARCHAR               = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar");
-    public static final DataType<String>     VARCHAR2              = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar2");
-    public static final DataType<String>     CHAR                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CHAR, "char");
-    public static final DataType<String>     CHARACTER             = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CHAR, "character");
-    public static final DataType<String>     LONGVARCHAR           = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.LONGVARCHAR, "longvarchar");
-    public static final DataType<String>     CLOB                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CLOB, "clob");
-    public static final DataType<String>     NVARCHAR              = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NVARCHAR, "nvarchar");
-    public static final DataType<String>     NVARCHAR2             = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NVARCHAR, "nvarchar2");
-    public static final DataType<String>     NCHAR                 = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NCHAR, "nchar");
-    public static final DataType<String>     NCLOB                 = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NCLOB, "nclob");
+    public static final DataType<Byte>       TINYINT                   = new DefaultDataType<Byte>(SQLDialect.H2, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>      SMALLINT                  = new DefaultDataType<Short>(SQLDialect.H2, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Short>      INT2                      = new DefaultDataType<Short>(SQLDialect.H2, SQLDataType.SMALLINT, "int2");
+    public static final DataType<Integer>    INT                       = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER                   = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>    MEDIUMINT                 = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "mediumint");
+    public static final DataType<Integer>    INT4                      = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "int4");
+    public static final DataType<Integer>    SIGNED                    = new DefaultDataType<Integer>(SQLDialect.H2, SQLDataType.INTEGER, "signed");
+    public static final DataType<Boolean>    BOOLEAN                   = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Boolean>    BOOL                      = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BOOLEAN, "bool");
+    public static final DataType<Boolean>    BIT                       = new DefaultDataType<Boolean>(SQLDialect.H2, SQLDataType.BIT, "bit");
+    public static final DataType<Long>       BIGINT                    = new DefaultDataType<Long>(SQLDialect.H2, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Long>       INT8                      = new DefaultDataType<Long>(SQLDialect.H2, SQLDataType.BIGINT, "int8");
+    public static final DataType<BigDecimal> DECIMAL                   = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DEC                       = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.DECIMAL, "dec");
+    public static final DataType<BigDecimal> NUMBER                    = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.NUMERIC, "number");
+    public static final DataType<BigDecimal> NUMERIC                   = new DefaultDataType<BigDecimal>(SQLDialect.H2, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<Double>     DOUBLE                    = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>     FLOAT                     = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float");
+    public static final DataType<Double>     FLOAT4                    = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float4");
+    public static final DataType<Double>     FLOAT8                    = new DefaultDataType<Double>(SQLDialect.H2, SQLDataType.FLOAT, "float8");
+    public static final DataType<Float>      REAL                      = new DefaultDataType<Float>(SQLDialect.H2, SQLDataType.REAL, "real");
+    public static final DataType<Time>       TIME                      = new DefaultDataType<Time>(SQLDialect.H2, SQLDataType.TIME, "time");
+    public static final DataType<Date>       DATE                      = new DefaultDataType<Date>(SQLDialect.H2, SQLDataType.DATE, "date");
+    public static final DataType<Timestamp>  TIMESTAMP                 = new DefaultDataType<Timestamp>(SQLDialect.H2, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<Timestamp>  DATETIME                  = new DefaultDataType<Timestamp>(SQLDialect.H2, SQLDataType.TIMESTAMP, "datetime");
+
+    public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = new DefaultDataType<OffsetDateTime>(SQLDialect.H2, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp with time zone");
+
+    public static final DataType<byte[]>     BINARY                    = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BINARY, "binary");
+    public static final DataType<byte[]>     VARBINARY                 = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.VARBINARY, "varbinary");
+    public static final DataType<byte[]>     LONGVARBINARY             = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.LONGVARBINARY, "longvarbinary");
+    public static final DataType<byte[]>     BLOB                      = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BLOB, "blob");
+    public static final DataType<Object>     OTHER                     = new DefaultDataType<Object>(SQLDialect.H2, SQLDataType.OTHER, "other");
+    public static final DataType<String>     VARCHAR                   = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     VARCHAR2                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar2");
+    public static final DataType<String>     CHAR                      = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CHAR, "char");
+    public static final DataType<String>     CHARACTER                 = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CHAR, "character");
+    public static final DataType<String>     LONGVARCHAR               = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.LONGVARCHAR, "longvarchar");
+    public static final DataType<String>     CLOB                      = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CLOB, "clob");
+    public static final DataType<String>     NVARCHAR                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     NVARCHAR2                 = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NVARCHAR, "nvarchar2");
+    public static final DataType<String>     NCHAR                     = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NCLOB                     = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.NCLOB, "nclob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.H2, SQLDataTypes

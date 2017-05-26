@@ -674,8 +674,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+                // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
+                if (family == H2) {
+                    render.visit(K_CAST).sql("('").sql(escape(string, render)).sql("' ")
+                          .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
+                }
+
                 // Some dialects implement SQL standard time literals
-                {
+                else {
                     render.visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(string, render)).sql('\'');
                 }
             }

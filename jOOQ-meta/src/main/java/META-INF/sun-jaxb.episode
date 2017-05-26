@@ -77,17 +77,11 @@
     <bindings if-exists="true" scd="~tns:CustomTypes">
       <class ref="org.jooq.util.jaxb.CustomTypes"/>
     </bindings>
-    <bindings if-exists="true" scd="~tns:EnumTypes">
-      <class ref="org.jooq.util.jaxb.EnumTypes"/>
-    </bindings>
     <bindings if-exists="true" scd="~tns:ForcedTypes">
       <class ref="org.jooq.util.jaxb.ForcedTypes"/>
     </bindings>
     <bindings if-exists="true" scd="~tns:CustomType">
       <class ref="org.jooq.util.jaxb.CustomType"/>
-    </bindings>
-    <bindings if-exists="true" scd="~tns:EnumType">
-      <class ref="org.jooq.util.jaxb.EnumType"/>
     </bindings>
     <bindings if-exists="true" scd="~tns:ForcedType">
       <class ref="org.jooq.util.jaxb.ForcedType"/>

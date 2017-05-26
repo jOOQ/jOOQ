@@ -24,56 +24,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Database complex type.
+ * Configuration of the database meta data source.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Database"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="properties" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Properties" minOccurs="0"/&gt;
- *         &lt;element name="regexFlags" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}RegexFlags" minOccurs="0"/&gt;
- *         &lt;element name="includes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="excludes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="includeExcludeColumns" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeTables" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeRoutines" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includePackages" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeUDTs" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeSequences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includePrimaryKeys" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeUniqueKeys" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="includeForeignKeys" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="recordVersionFields" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="recordTimestampFields" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="syntheticIdentities" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="syntheticPrimaryKeys" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="overridePrimaryKeys" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="dateAsTimestamp" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="ignoreProcedureReturnValues" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="unsignedTypes" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="inputCatalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputCatalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputCatalogToDefault" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="inputSchema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputSchema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputSchemaToDefault" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Catalogs" minOccurs="0"/&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Schemata" minOccurs="0"/&gt;
- *         &lt;element name="schemaVersionProvider" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="catalogVersionProvider" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="customTypes" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}CustomTypes" minOccurs="0"/&gt;
- *         &lt;element name="enumTypes" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}EnumTypes" minOccurs="0"/&gt;
- *         &lt;element name="forcedTypes" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}ForcedTypes" minOccurs="0"/&gt;
- *         &lt;element name="tableValuedFunctions" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -180,7 +132,49 @@ public class Database implements Serializable
     protected List<ForcedType> forcedTypes;
 
     /**
-     * Gets the value of the name property.
+     * The database dialect from jooq-meta.
+     * Available dialects are named <code>org.util.[database].[database]Database</code>.
+     * <p>
+     * Natively supported values are:
+     * <ul>
+     * <li>{@link org.jooq.util.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.util.cubrid.CUBRIDDatabase}</li>
+     * <li>{@link org.jooq.util.db2.DB2Database}</li>
+     * <li>{@link org.jooq.util.derby.DerbyDatabase}</li>
+     * <li>{@link org.jooq.util.firebird.FirebirdDatabase}</li>
+     * <li>{@link org.jooq.util.h2.H2Database}</li>
+     * <li>{@link org.jooq.util.hana.HanaDatabase}</li>
+     * <li>{@link org.jooq.util.hsqldb.HSQLDBDatabase}</li>
+     * <li>{@link org.jooq.util.informix.InformixDatabase}</li>
+     * <li>{@link org.jooq.util.ingres.IngresDatabase}</li>
+     * <li>{@link org.jooq.util.mariadb.MariaDBDatabase}</li>
+     * <li>{@link org.jooq.util.mysql.MySQLDatabase}</li>
+     * <li>{@link org.jooq.util.oracle.OracleDatabase}</li>
+     * <li>{@link org.jooq.util.postgres.PostgresDatabase}</li>
+     * <li>{@link org.jooq.util.redshift.RedshiftDatabase}</li>
+     * <li>{@link org.jooq.util.sqlite.SQLiteDatabase}</li>
+     * <li>{@link org.jooq.util.sqlserver.SQLServerDatabase}</li>
+     * <li>{@link org.jooq.util.sybase.SybaseDatabase}</li>
+     * <li>{@link org.jooq.util.vertica.VerticaDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
+     * <ul>
+     * <li>{@link org.jooq.util.jdbc.JDBCDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer standard jOOQ-meta XML formats.
+     * <ul>
+     * <li>{@link org.jooq.util.xml.XMLDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer JPA annotated entities
+     * <ul>
+     * <li>{@link org.jooq.util.jpa.JPADatabase}</li>
+     * </ul>
+     * <p>
+     * You can also provide your own org.jooq.util.Database implementation
+     * here, if your database is currently not supported
      *
      * @return
      *     possible object is
@@ -204,7 +198,9 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the regexFlags property.
+     * The flags that will be applied to all regular expressions from this configuration by default.
+     * <p>
+     * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
      *
      * <p>
      * This accessor method returns a reference to the live list,
@@ -233,7 +229,16 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includes property.
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
      *
      * @return
      *     possible object is
@@ -257,7 +262,10 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the excludes property.
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Excludes match before includes, i.e. excludes have a higher priority.
      *
      * @return
      *     possible object is
@@ -281,7 +289,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeExcludeColumns property.
+     * This flag indicates whether include / exclude patterns should also match columns within tables.
      *
      * @return
      *     possible object is
@@ -305,7 +313,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeTables property.
+     * This flag indicates whether tables should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -329,7 +337,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeRoutines property.
+     * This flag indicates whether routines should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -353,7 +361,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includePackages property.
+     * This flag indicates whether packages should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -377,7 +385,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeUDTs property.
+     * This flag indicates whether udts should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -401,7 +409,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeSequences property.
+     * This flag indicates whether sequences should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -425,7 +433,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includePrimaryKeys property.
+     * This flag indicates whether primary keys should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -449,7 +457,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeUniqueKeys property.
+     * This flag indicates whether unique keys should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -473,7 +481,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the includeForeignKeys property.
+     * This flag indicates whether foreign keys should be included in output produced by this database
      *
      * @return
      *     possible object is
@@ -497,7 +505,10 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the recordVersionFields property.
+     * All table and view columns that are used as "version" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.
      *
      * @return
      *     possible object is
@@ -521,7 +532,10 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the recordTimestampFields property.
+     * All table and view columns that are used as "timestamp" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.
      *
      * @return
      *     possible object is
@@ -545,7 +559,9 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the syntheticIdentities property.
+     * A regular expression matching all columns that represent identities.
+     * <p>
+     * To be used if columns are not detected as automatically as identities.
      *
      * @return
      *     possible object is
@@ -569,7 +585,18 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the syntheticPrimaryKeys property.
+     * A regular expression matching all columns that participate in "synthetic" primary keys,
+     * which should be placed on generated {@link org.jooq.UpdatableRecord}
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord.store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+     * </ul>
+     * <p>
+     * Synthetic primary keys will override existing primary keys.
      *
      * @return
      *     possible object is
@@ -593,7 +620,20 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the overridePrimaryKeys property.
+     * All (UNIQUE) key names that should be used instead of primary keys on
+     * generated {@link org.jooq.UpdatableRecord}.
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord.store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+     * </ul>
+     * <p>
+     * If several keys match, a warning is emitted and the first one encountered will be used.
+     * <p>
+     * This flag will also replace synthetic primary keys, if it matches.
      *
      * @return
      *     possible object is
@@ -617,7 +657,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the dateAsTimestamp property.
+     * Generate {@link java.sql.Timestamp} fields for DATE columns. This is particularly useful for Oracle databases
      *
      * @return
      *     possible object is
@@ -641,7 +681,15 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the ignoreProcedureReturnValues property.
+     * Ignore procedure return values in Transact-SQL generated code.
+     * <p>
+     * In jOOQ 3.6.0, #4106 was implemented to support Transact-SQL's
+     * optional return values from stored procedures. This turns all procedures
+     * into Routine<Integer> (instead of Routine<Void>). For backwards-
+     * compatibility reasons, users can suppress this change in jOOQ 3.x
+     * <p>
+     * @deprecated This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
+     * jOOQ 4.0.
      *
      * @return
      *     possible object is
@@ -665,7 +713,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the unsignedTypes property.
+     * Generate jOOU data types for your unsigned data types, which are not natively supported in Java
      *
      * @return
      *     possible object is
@@ -689,7 +737,10 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the inputCatalog property.
+     * The catalog that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getCatalogs()} configuration element.
+     * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
      *
      * @return
      *     possible object is
@@ -713,7 +764,13 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the outputCatalog property.
+     * The catalog that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * catalog name for source code generation. If not specified, this
+     * will be the same as {@link #getInputCatalog()}
+     * <p>
+     * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
      *
      * @return
      *     possible object is
@@ -737,7 +794,8 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the outputCatalogToDefault property.
+     * A flag to indicate that the outputCatalog should be the "default" catalog,
+     * which generates catalog-less, unqualified tables, procedures, etc.
      *
      * @return
      *     possible object is
@@ -761,7 +819,10 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the inputSchema property.
+     * The schema that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getSchemata()} configuration element.
+     * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
      *
      * @return
      *     possible object is
@@ -785,7 +846,13 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the outputSchema property.
+     * The schema that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * schema name for source code generation. If not specified, this
+     * will be the same as {@link #getInputSchema()}.
+     *
+     * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
      *
      * @return
      *     possible object is
@@ -809,7 +876,8 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the outputSchemaToDefault property.
+     * A flag to indicate that the outputSchema should be the "default" schema,
+     * which generates schema-less, unqualified tables, procedures, etc.
      *
      * @return
      *     possible object is
@@ -833,7 +901,20 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the schemaVersionProvider property.
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputSchema()} will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.util.SchemaVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :schema_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * </ul>
+     * <p>
+     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
      *
      * @return
      *     possible object is
@@ -857,7 +938,19 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the catalogVersionProvider property.
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputCatalog()} from a given catalog will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.util.CatalogVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :catalog_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * <p>
+     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
      *
      * @return
      *     possible object is
@@ -881,7 +974,15 @@ public class Database implements Serializable
     }
 
     /**
-     * Gets the value of the tableValuedFunctions property.
+     * Whether table valued functions should be reported as tables.
+     * <p>
+     * If this is deactivated, such functions are not generated as tables, but
+     * as ordinary routines. This is particularly useful for backwards-
+     * compatibility between jOOQ 3.8 and previous versions, when using TABLE
+     * and VARRAY types in Oracle.
+     * <p>
+     * While this flag defaults to true for most databases, it defaults to false
+     * for Oracle.
      *
      * @return
      *     possible object is

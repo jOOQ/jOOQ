@@ -18,23 +18,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Target complex type.
+ * Options to define where the generated code should be located.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Target"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="packageName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="directory" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="encoding" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -60,7 +45,10 @@ public class Target implements Serializable
     protected String encoding = "UTF-8";
 
     /**
-     * Gets the value of the packageName property.
+     * The destination package of your generated classes (within the destination directory)
+     * <p>
+     * jOOQ may append the schema name to this package if generating multiple schemas,
+     * e.g. org.jooq.generated.schema1, org.jooq.generated.schema2
      *
      * @return
      *     possible object is
@@ -84,7 +72,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Gets the value of the directory property.
+     * The destination directory of your generated classes
      *
      * @return
      *     possible object is
@@ -108,7 +96,7 @@ public class Target implements Serializable
     }
 
     /**
-     * Gets the value of the encoding property.
+     * The file encoding to be used with all output files.
      *
      * @return
      *     possible object is

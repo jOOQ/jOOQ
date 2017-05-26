@@ -18,22 +18,9 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Property complex type.
+ * Custom properties that are useful for Database implementations like
+ * <code>JPADatabase</code>, <code>XMLDatabase</code>, or <code>DDLDatabase</code>, or to pass to JDBC drivers.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Property"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */

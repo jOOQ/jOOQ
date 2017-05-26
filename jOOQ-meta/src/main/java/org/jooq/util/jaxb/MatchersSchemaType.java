@@ -17,24 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for MatchersSchemaType complex type.
+ * Declarative naming strategy configuration for schema names.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="MatchersSchemaType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="schemaClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="schemaIdentifier" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="schemaImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -57,7 +41,7 @@ public class MatchersSchemaType implements Serializable
     protected String schemaImplements;
 
     /**
-     * Gets the value of the expression property.
+     * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
      *
      * @return
      *     possible object is
@@ -81,7 +65,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Gets the value of the schemaClass property.
+     * This rule influences the naming of the generated {@link org.jooq.Schema} object.
      *
      * @return
      *     possible object is
@@ -105,7 +89,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Gets the value of the schemaIdentifier property.
+     * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
      *
      * @return
      *     possible object is
@@ -129,7 +113,7 @@ public class MatchersSchemaType implements Serializable
     }
 
     /**
-     * Gets the value of the schemaImplements property.
+     * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
      *
      * @return
      *     possible object is

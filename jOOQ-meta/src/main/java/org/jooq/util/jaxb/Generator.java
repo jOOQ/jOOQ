@@ -18,25 +18,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Generator complex type.
+ * Configuration that affects the way code is being generated.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Generator"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="strategy" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Strategy" minOccurs="0"/&gt;
- *         &lt;element name="database" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Database" minOccurs="0"/&gt;
- *         &lt;element name="generate" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Generate" minOccurs="0"/&gt;
- *         &lt;element name="target" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Target" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -60,7 +43,7 @@ public class Generator implements Serializable
     protected Target target;
 
     /**
-     * Gets the value of the name property.
+     * The class used to generate source code. This can be overridden with a custom code generator implementation.
      *
      * @return
      *     possible object is
@@ -84,7 +67,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Gets the value of the strategy property.
+     * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
      *
      * @return
      *     possible object is
@@ -108,7 +91,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Gets the value of the database property.
+     * Configuration of the database meta data source.
      *
      * @return
      *     possible object is
@@ -132,7 +115,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Gets the value of the generate property.
+     * Options strictly related to generated code.
      *
      * @return
      *     possible object is
@@ -156,7 +139,7 @@ public class Generator implements Serializable
     }
 
     /**
-     * Gets the value of the target property.
+     * Options to define where the generated code should be located.
      *
      * @return
      *     possible object is

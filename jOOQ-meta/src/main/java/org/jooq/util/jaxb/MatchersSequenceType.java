@@ -17,22 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for MatchersSequenceType complex type.
+ * Declarative naming strategy configuration for sequence names.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="MatchersSequenceType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="sequenceIdentifier" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -52,7 +38,7 @@ public class MatchersSequenceType implements Serializable
     protected MatcherRule sequenceIdentifier;
 
     /**
-     * Gets the value of the expression property.
+     * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
      *
      * @return
      *     possible object is
@@ -76,7 +62,7 @@ public class MatchersSequenceType implements Serializable
     }
 
     /**
-     * Gets the value of the sequenceIdentifier property.
+     * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
      *
      * @return
      *     possible object is

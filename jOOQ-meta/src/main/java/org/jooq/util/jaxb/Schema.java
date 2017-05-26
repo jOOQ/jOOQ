@@ -18,23 +18,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Schema complex type.
+ * Configuration of an input schema and its mappings.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Schema"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="inputSchema" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="outputSchema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputSchemaToDefault" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -58,7 +43,7 @@ public class Schema implements Serializable
     protected Boolean outputSchemaToDefault = false;
 
     /**
-     * Gets the value of the inputSchema property.
+     * See also {@link Database#getInputSchema()}
      *
      * @return
      *     possible object is
@@ -82,7 +67,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Gets the value of the outputSchema property.
+     * See also {@link Database#getOutputSchema()}
      *
      * @return
      *     possible object is
@@ -106,7 +91,7 @@ public class Schema implements Serializable
     }
 
     /**
-     * Gets the value of the outputSchemaToDefault property.
+     * See also {@link Database#isOutputSchemaToDefault()}
      *
      * @return
      *     possible object is

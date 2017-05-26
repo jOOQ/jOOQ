@@ -22,27 +22,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Jdbc complex type.
+ * JDBC connection configuration.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Jdbc"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="driver" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="user" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="properties" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Properties" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -75,7 +56,7 @@ public class Jdbc implements Serializable
     protected List<Property> properties;
 
     /**
-     * Gets the value of the driver property.
+     * The JDBC driver class.
      *
      * @return
      *     possible object is
@@ -99,7 +80,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Gets the value of the url property.
+     * The JDBC connection URL.
      *
      * @return
      *     possible object is
@@ -123,7 +104,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Gets the value of the schema property.
+     * @deprecated Use database schema configuration elements instead.
      *
      * @return
      *     possible object is
@@ -147,7 +128,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Gets the value of the user property.
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
      *
      * @return
      *     possible object is
@@ -171,7 +152,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Gets the value of the username property.
+     * Just a synonym for "user" to be compatible with other Maven plugins.
      *
      * @return
      *     possible object is
@@ -195,7 +176,7 @@ public class Jdbc implements Serializable
     }
 
     /**
-     * Gets the value of the password property.
+     * The JDBC connection password.
      *
      * @return
      *     possible object is

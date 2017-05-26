@@ -57,7 +57,7 @@ public class Configuration implements Serializable
     protected Generator generator;
 
     /**
-     * Gets the value of the logging property.
+     * The logging configuration element specifies the code generation logging threshold.
      *
      * @return
      *     possible object is
@@ -81,7 +81,7 @@ public class Configuration implements Serializable
     }
 
     /**
-     * Gets the value of the jdbc property.
+     * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
      * @return
      *     possible object is
@@ -105,7 +105,7 @@ public class Configuration implements Serializable
     }
 
     /**
-     * Gets the value of the generator property.
+     * The GENERATOR configuration element contains information about source code generation itself.
      *
      * @return
      *     possible object is

@@ -22,24 +22,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Catalog complex type.
+ * Configuration of an input catalog and its mappings.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Catalog"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="inputCatalog" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="outputCatalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="outputCatalogToDefault" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Schemata" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -66,7 +50,7 @@ public class Catalog implements Serializable
     protected List<Schema> schemata;
 
     /**
-     * Gets the value of the inputCatalog property.
+     * See also {@link Database#getInputCatalog()}
      *
      * @return
      *     possible object is
@@ -90,7 +74,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Gets the value of the outputCatalog property.
+     * See also {@link Database#getOutputCatalog()}
      *
      * @return
      *     possible object is
@@ -114,7 +98,7 @@ public class Catalog implements Serializable
     }
 
     /**
-     * Gets the value of the outputCatalogToDefault property.
+     * See also {@link Database#isOutputCatalogToDefault()}
      *
      * @return
      *     possible object is

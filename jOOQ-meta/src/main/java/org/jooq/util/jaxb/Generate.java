@@ -18,57 +18,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Generate complex type.
+ * Options strictly related to generated code.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Generate"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="relations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="deprecated" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="instanceFields" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="generatedAnnotation" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="routines" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="sequences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="udts" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="queues" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="links" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="records" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="pojos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="pojosEqualsAndHashCode" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="pojosToString" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="immutablePojos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="interfaces" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="immutableInterfaces" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="daos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="jpaAnnotations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="validationAnnotations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="springAnnotations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalObjectReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalCatalogReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalSchemaReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalTableReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalSequenceReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalUDTReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalRoutineReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalQueueReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="globalLinkReferences" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="fluentSetters" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="javaBeansGettersAndSetters" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="varargSetters" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="fullyQualifiedTypes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="emptyCatalogs" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="emptySchemas" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="javaTimeTypes" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -160,7 +111,8 @@ public class Generate implements Serializable
     protected Boolean javaTimeTypes = false;
 
     /**
-     * Gets the value of the relations property.
+     * Primary key / foreign key relations should be generated and used.
+     * This is a prerequisite for various advanced features
      *
      * @return
      *     possible object is
@@ -184,7 +136,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the deprecated property.
+     * Generate deprecated code for backwards compatibility
      *
      * @return
      *     possible object is
@@ -208,7 +160,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the instanceFields property.
+     * @deprecated
      *
      * @return
      *     possible object is
@@ -232,7 +184,8 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the generatedAnnotation property.
+     * Generate the {@link javax.annotation.Generated} annotation to indicate
+     * jOOQ version used for source code
      *
      * @return
      *     possible object is
@@ -256,7 +209,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the routines property.
+     * Generate Routine classes.
      *
      * @return
      *     possible object is
@@ -280,7 +233,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the sequences property.
+     * Generate Sequence classes.
      *
      * @return
      *     possible object is
@@ -304,7 +257,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the udts property.
+     * Generate UDT classes.
      *
      * @return
      *     possible object is
@@ -328,7 +281,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the queues property.
+     * Generate Queue classes.
      *
      * @return
      *     possible object is
@@ -352,7 +305,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the links property.
+     * Generate database Link classes.
      *
      * @return
      *     possible object is
@@ -376,7 +329,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the tables property.
+     * Generate Table classes.
      *
      * @return
      *     possible object is
@@ -400,7 +353,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the records property.
+     * Generate TableRecord classes.
      *
      * @return
      *     possible object is
@@ -424,7 +377,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the pojos property.
+     * Generate POJOs.
      *
      * @return
      *     possible object is
@@ -448,7 +401,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the pojosEqualsAndHashCode property.
+     * Generate basic equals() and hashCode() methods in POJOs.
      *
      * @return
      *     possible object is
@@ -472,7 +425,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the pojosToString property.
+     * Generate basic toString() methods in POJOs.
      *
      * @return
      *     possible object is
@@ -496,7 +449,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the immutablePojos property.
+     * Generate immutable POJOs.
      *
      * @return
      *     possible object is
@@ -520,7 +473,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the interfaces property.
+     * Generated interfaces to be implemented by records and/or POJOs.
      *
      * @return
      *     possible object is
@@ -544,7 +497,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the immutableInterfaces property.
+     * Generate immutable interfaces.
      *
      * @return
      *     possible object is
@@ -568,7 +521,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the daos property.
+     * Generate DAOs.
      *
      * @return
      *     possible object is
@@ -592,7 +545,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the jpaAnnotations property.
+     * Annotate POJOs and Records with JPA annotations.
      *
      * @return
      *     possible object is
@@ -616,7 +569,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the validationAnnotations property.
+     * Annotate POJOs and Records with JSR-303 validation annotations
      *
      * @return
      *     possible object is
@@ -640,7 +593,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the springAnnotations property.
+     * Annotate DAOs with useful spring annotations such as @Repository or @Autowired.
      *
      * @return
      *     possible object is
@@ -664,7 +617,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalObjectReferences property.
+     * Turn off generation of all global object references.
      *
      * @return
      *     possible object is
@@ -688,7 +641,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalCatalogReferences property.
+     * Turn off generation of global catalog references.
      *
      * @return
      *     possible object is
@@ -712,7 +665,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalSchemaReferences property.
+     * Turn off generation of global schema references.
      *
      * @return
      *     possible object is
@@ -736,7 +689,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalTableReferences property.
+     * Turn off generation of global table references.
      *
      * @return
      *     possible object is
@@ -760,7 +713,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalSequenceReferences property.
+     * Turn off generation of global sequence references.
      *
      * @return
      *     possible object is
@@ -784,7 +737,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalUDTReferences property.
+     * Turn off generation of global UDT references.
      *
      * @return
      *     possible object is
@@ -808,7 +761,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalRoutineReferences property.
+     * Turn off generation of global routine references.
      *
      * @return
      *     possible object is
@@ -832,7 +785,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalQueueReferences property.
+     * Turn off generation of global queue references.
      *
      * @return
      *     possible object is
@@ -856,7 +809,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the globalLinkReferences property.
+     * Turn off generation of global database link references.
      *
      * @return
      *     possible object is
@@ -880,7 +833,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the fluentSetters property.
+     * Generate fluent setters in records, POJOs, interfaces.
      *
      * @return
      *     possible object is
@@ -904,7 +857,24 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the javaBeansGettersAndSetters property.
+     * Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in records, POJOs, interfaces.
+     * <p>
+     * If this flag is set to false, then:
+     * <p>
+     * <ul>
+     * <li>Column name   : X_INDEX</li>
+     * <li>Attribute name: xIndex</li>
+     * <li>Getter name   : getXIndex()</li>
+     * <li>Setter name   : setXIndex()</li>
+     * </ul>
+     * <p>
+     * If this flag is set to true, then:
+     * <ul>
+     * <li>Getter name   : getxIndex()</li>
+     * <li>Setter name   : setxIndex()</li>
+     * </ul>
+     * <p>
+     * Custom GeneratorStrategy implementations are unaffected
      *
      * @return
      *     possible object is
@@ -928,7 +898,9 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the varargSetters property.
+     * Generate varargs setters for array types for convenience.
+     * <p>
+     * This may lead to compilation warnings in current Java versions.
      *
      * @return
      *     possible object is
@@ -952,7 +924,11 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the fullyQualifiedTypes property.
+     * A regular expression matching all the types in generated code that should be fully qualified.
+     * <p>
+     * This can be useful if you have a database object that generates a String
+     * class, and you want to avoid naming clashes with the java.lang package
+     * by specifying <code>java\.lang\..*</code>
      *
      * @return
      *     possible object is
@@ -976,7 +952,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the emptyCatalogs property.
+     * Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still be generated.
      *
      * @return
      *     possible object is
@@ -1000,7 +976,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the emptySchemas property.
+     * Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.
      *
      * @return
      *     possible object is
@@ -1024,7 +1000,10 @@ public class Generate implements Serializable
     }
 
     /**
-     * Gets the value of the javaTimeTypes property.
+     * A flag indicating whether Java 8's java.time types should be used by the
+     * source code generator, rather than JDBC's java.sql types.
+     * <p>
+     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
      *
      * @return
      *     possible object is

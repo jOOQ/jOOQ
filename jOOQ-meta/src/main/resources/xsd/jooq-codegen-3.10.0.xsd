@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
   xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
-  elementFormDefault="qualified">
+  elementFormDefault="qualified"
+  jxb:version="2.1">
 
   <element name="configuration">
     <complexType>
       <all>
+        <element name="logging" type="tns:Logging" minOccurs="0" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The logging configuration element specifies the code generation logging threshold.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
 
-        <!--
-          The logging configuration element specifies the code generation
-          logging threshold.
-          -->
-        <element name="logging" type="tns:Logging" minOccurs="0" maxOccurs="1" />
+        <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC configuration element contains information about how to set up the database connection used for source code generation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
 
-        <!--
-          The JDBC configuration element contains information about how
-          to set up the database connection used for source code generation.
-          -->
-        <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1" />
-
-        <!--
-          The GENERATOR configuration element contains information about
-          source code generation itself.
-          -->
-        <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1" />
+        <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The GENERATOR configuration element contains information about source code generation itself.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
       </all>
     </complexType>
   </element>
@@ -41,36 +36,35 @@
   </simpleType>
 
   <complexType name="Jdbc">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[JDBC connection configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!-- The JDBC driver -->
-      <element name="driver" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="driver" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC driver class.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The JDBC connection URL -->
-      <element name="url" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="url" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection URL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- Deprecated. Use database schema configuration elements instead -->
-      <element name="schema" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="schema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use database schema configuration elements instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The JDBC connection user. Be sure this user has all required
-        GRANTs to the dictionary views/tables to generate the desired artefacts
-        -->
-      <element name="user" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="user" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Just a synonym for "user" to be compatible with other Maven plugins
-        -->
-      <element name="username" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="username" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Just a synonym for "user" to be compatible with other Maven plugins.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
+      <element name="password" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection password.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The JDBC connection password -->
-      <element name="password" type="string" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Enlist custom JDBC driver properties that are provided to the
-        java.sql.DriverManager when fetching a connection
-        -->
-      <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1" />
+      <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enlist custom JDBC driver properties that are provided to the java.sql.DriverManager when fetching a connection]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -81,6 +75,8 @@
   </complexType>
 
   <complexType name="Property">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Custom properties that are useful for Database implementations like
+<code>JPADatabase</code>, <code>XMLDatabase</code>, or <code>DDLDatabase</code>, or to pass to JDBC drivers.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="key" type="string" minOccurs="1" maxOccurs="1"/>
       <element name="value" type="string" minOccurs="1" maxOccurs="1"/>
@@ -88,80 +84,66 @@
   </complexType>
 
   <complexType name="Generator">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration that affects the way code is being generated.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!--
-       The class used to generate source code. You may override this with
-       your custom source code generator
-       -->
-      <element name="name" type="string" default="org.jooq.util.DefaultGenerator"
-        minOccurs="0" maxOccurs="1" />
+      <element name="name" type="string" default="org.jooq.util.DefaultGenerator" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to generate source code. This can be overridden with a custom code generator implementation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <!-- The naming strategy used for class and field names -->
-      <element name="strategy" type="tns:Strategy" minOccurs="0" maxOccurs="1" />
+      <element name="strategy" type="tns:Strategy" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The jooq-meta configuration -->
-      <element name="database" type="tns:Database" minOccurs="0" maxOccurs="1" />
+      <element name="database" type="tns:Database" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configuration of the database meta data source.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The jooq-codegen configuration -->
-      <element name="generate" type="tns:Generate" minOccurs="0" maxOccurs="1" />
+      <element name="generate" type="tns:Generate" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Options strictly related to generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- Some information about generation output -->
-      <element name="target" type="tns:Target" minOccurs="0" maxOccurs="1" />
+      <element name="target" type="tns:Target" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Options to define where the generated code should be located.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="Strategy">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <choice>
-      <!--
-        The class used to provide a naming strategy for generated source
-        code. You may override this with your custom naming strategy
-        -->
-      <element name="name" type="string" minOccurs="0" maxOccurs="1"
-        default="org.jooq.util.DefaultGeneratorStrategy" />
+      <element name="name" type="string" minOccurs="0" maxOccurs="1" default="org.jooq.util.DefaultGeneratorStrategy">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The matcher strategy configuration used when applying an
-        XML-based strategy
-        -->
-      <element name="matchers" type="tns:Matchers" minOccurs="0" maxOccurs="1"/>
+      <element name="matchers" type="tns:Matchers" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </choice>
   </complexType>
 
-  <!--
-    Matchers can be used to provide a naming strategy by regular expression configuration.
-    -->
   <complexType name="Matchers">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <sequence>
+      <element name="schemas" type="tns:MatchersSchemasType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for schema names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Specify 0..n schema matchers in order to provide a naming strategy for objects
-        created from schemas.
-        -->
-      <element name="schemas" type="tns:MatchersSchemasType" minOccurs="0" maxOccurs="1"/>
+      <element name="tables" type="tns:MatchersTablesType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for table names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Specify 0..n table matchers in order to provide a naming strategy for objects
-        created from database tables.
-        -->
-      <element name="tables" type="tns:MatchersTablesType" minOccurs="0" maxOccurs="1"/>
+      <element name="fields" type="tns:MatchersFieldsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for field names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Specify 0..n field matchers in order to provide a naming strategy for objects
-        created from table fields.
-        -->
-      <element name="fields" type="tns:MatchersFieldsType" minOccurs="0" maxOccurs="1"/>
+      <element name="routines" type="tns:MatchersRoutinesType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for routine names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Specify 0..n routine matchers in order to provide a naming strategy for objects
-        created from routines.
-        -->
-      <element name="routines" type="tns:MatchersRoutinesType" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        Specify 0..n sequence matchers in order to provide a naming strategy for objects
-        created from sequences.
-        -->
-      <element name="sequences" type="tns:MatchersSequencesType" minOccurs="0" maxOccurs="1"/>
+      <element name="sequences" type="tns:MatchersSequencesType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for sequence names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </sequence>
   </complexType>
 
@@ -172,20 +154,23 @@
   </complexType>
 
   <complexType name="MatchersSchemaType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for schema names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This schema matcher applies to all unqualified or qualified schema names
-        matched by this expression. If left empty, this matcher applies to all schemas.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="schemaClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Schema} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.Schema object.
-        -->
-      <element name="schemaClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-      <element name="schemaIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-      <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="schemaIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Schema} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -196,46 +181,59 @@
   </complexType>
 
   <complexType name="MatchersTableType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for table names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This table matcher applies to all unqualified or qualified table names
-        matched by this expression. If left empty, this matcher applies to all tables.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="tableClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Table} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.Table object.
-        -->
-      <element name="tableClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="tableIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="tableImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="tableIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Table} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.Record object.
-        -->
-      <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="tableImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated interface, implemented by
-        generated org.jooq.Record objects and by generated POJOs.
-        -->
-      <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.TableRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.DAO object.
-        -->
-      <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.TableRecord} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated POJO object.
-        -->
-      <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1"/>
-      <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated interface implemented by the {@link org.jooq.TableRecord} and/or the POJO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.TableRecord} and/or POJO) should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.DAO} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.DAO} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated POJOs object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated POJO should extend.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated POJO should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -246,21 +244,27 @@
   </complexType>
 
   <complexType name="MatchersFieldType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for field names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This field matcher applies to all unqualified or qualified field names matched by this expression. If left empty, this matcher applies to all fields.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This field matcher applies to all unqualified or qualified field names
-        matched by this expression. If left empty, this matcher applies to all fields.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="fieldIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Field} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.Field object.
-        -->
-      <element name="fieldIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="fieldMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="fieldSetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-      <element name="fieldGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="fieldMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.Field}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fieldSetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated setters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fieldGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -271,20 +275,23 @@
   </complexType>
 
   <complexType name="MatchersRoutineType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for routine names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This routine matcher applies to all unqualified or qualified routine names
-        matched by this expression. If left empty, this matcher applies to all routines.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="routineClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Routine} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        These elements influence the naming of a generated org.jooq.Routine object.
-        -->
-      <element name="routineClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-      <element name="routineMethod" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-      <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="routineMethod" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -295,25 +302,27 @@
   </complexType>
 
   <complexType name="MatchersSequenceType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for sequence names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This sequence matcher applies to all unqualified or qualified sequence names
-        matched by this expression. If left empty, this matcher applies to all sequences.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        These elements influence the naming of the generated Sequences class.
-        -->
-      <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+      <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="MatcherRule">
     <all>
-      <element name="transform" type="tns:MatcherTransformType" minOccurs="0" maxOccurs="1"/>
-      <element name="expression" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="transform" type="tns:MatcherTransformType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A pre-defined transformation type that transforms this rule's output into a specific format.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="expression" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A replacement expression that transforms the matched expression in a new value.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -328,649 +337,604 @@
   </simpleType>
 
   <complexType name="Database">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration of the database meta data source.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <!--
-        The database dialect from jooq-meta. Available dialects are
-        named org.util.[database].[database]Database.
-
-        Natively supported values are:
-
-            org.jooq.util.ase.ASEDatabase
-            org.jooq.util.cubrid.CUBRIDDatabase
-            org.jooq.util.db2.DB2Database
-            org.jooq.util.derby.DerbyDatabase
-            org.jooq.util.firebird.FirebirdDatabase
-            org.jooq.util.h2.H2Database
-            org.jooq.util.hana.HanaDatabse
-            org.jooq.util.hsqldb.HSQLDBDatabase
-            org.jooq.util.informix.InformixDatabase
-            org.jooq.util.ingres.IngresDatabase
-            org.jooq.util.mariadb.MariaDBDatabase
-            org.jooq.util.mysql.MySQLDatabase
-            org.jooq.util.oracle.OracleDatabase
-            org.jooq.util.postgres.PostgresDatabase
-            org.jooq.util.redshift.RedshiftDatabase
-            org.jooq.util.sqlite.SQLiteDatabaes
-            org.jooq.util.sqlserver.SQLServerDatabase
-            org.jooq.util.sybase.SybaseDatabase
-            org.jooq.util.vertica.VerticaDatabase
-
-        This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
-
-            org.jooq.util.jdbc.JDBCDatabase
-
-        This value can be used to reverse-engineer standard jOOQ-meta XML formats
-
-            org.jooq.util.xml.XMLDatabase
-
-        This value can be used to reverse-engineer JPA annotated entities
-
-            org.jooq.util.jpa.JPADatabase
-
-        You can also provide your own org.jooq.util.Database implementation
-        here, if your database is currently not supported
-        -->
-      <element name="name" type="string" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        The properties that will be passed to the Database instance as configured above.
-
-        Known supported properties include:
-
-            org.jooq.util.xml.XMLDatabase
-
-                dialect=ORACLE
-                xml-file=C:\path\to\database.xml
-                xsl-files=C:\path\to\1.xsl,C:\path\to\2.xsl
 
         -->
-      <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1" />
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database dialect from jooq-meta.
+Available dialects are named <code>org.util.[database].[database]Database</code>.
+<p>
+Natively supported values are:
+<ul>
+<li>{@link org.jooq.util.ase.ASEDatabase}</li>
+<li>{@link org.jooq.util.cubrid.CUBRIDDatabase}</li>
+<li>{@link org.jooq.util.db2.DB2Database}</li>
+<li>{@link org.jooq.util.derby.DerbyDatabase}</li>
+<li>{@link org.jooq.util.firebird.FirebirdDatabase}</li>
+<li>{@link org.jooq.util.h2.H2Database}</li>
+<li>{@link org.jooq.util.hana.HanaDatabase}</li>
+<li>{@link org.jooq.util.hsqldb.HSQLDBDatabase}</li>
+<li>{@link org.jooq.util.informix.InformixDatabase}</li>
+<li>{@link org.jooq.util.ingres.IngresDatabase}</li>
+<li>{@link org.jooq.util.mariadb.MariaDBDatabase}</li>
+<li>{@link org.jooq.util.mysql.MySQLDatabase}</li>
+<li>{@link org.jooq.util.oracle.OracleDatabase}</li>
+<li>{@link org.jooq.util.postgres.PostgresDatabase}</li>
+<li>{@link org.jooq.util.redshift.RedshiftDatabase}</li>
+<li>{@link org.jooq.util.sqlite.SQLiteDatabase}</li>
+<li>{@link org.jooq.util.sqlserver.SQLServerDatabase}</li>
+<li>{@link org.jooq.util.sybase.SybaseDatabase}</li>
+<li>{@link org.jooq.util.vertica.VerticaDatabase}</li>
+</ul>
+<p>
+This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
+<ul>
+<li>{@link org.jooq.util.jdbc.JDBCDatabase}</li>
+</ul>
+<p>
+This value can be used to reverse-engineer standard jOOQ-meta XML formats.
+<ul>
+<li>{@link org.jooq.util.xml.XMLDatabase}</li>
+</ul>
+<p>
+This value can be used to reverse-engineer JPA annotated entities
+<ul>
+<li>{@link org.jooq.util.jpa.JPADatabase}</li>
+</ul>
+<p>
+You can also provide your own org.jooq.util.Database implementation
+here, if your database is currently not supported]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The flags that will be applied to all regular expressions from this configuration by default.
+      <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The properties that will be passed to the Database instance as configured above.
+<p>
+Known supported properties include:
+<p>
+<ul>
+<li>{@link org.jooq.util.xml.XMLDatabase}<p>
+<pre>dialect=ORACLE
+xml-file=C:\path\to\database.xml
+xsl-files=C:\path\to\1.xsl,C:\path\to\2.xsl</pre></li>
+<li>{@link org.jooq.util.jpa.JPADatabase}<p>
+<pre>packages=com.example.entities</pre></li>
+<li>{@link org.jooq.util.ddl.DDLDatabase}<p>
+<pre>scripts=C:\path\to\database.sql
+encoding=UTF-8</pre></li>
+</ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        The default value is "COMMENTS CASE_INSENSITIVE"
-        -->
-      <element name="regexFlags" type="tns:RegexFlags" minOccurs="0" maxOccurs="1" default="COMMENTS CASE_INSENSITIVE"/>
+      <element name="regexFlags" type="tns:RegexFlags" minOccurs="0" maxOccurs="1" default="COMMENTS CASE_INSENSITIVE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The flags that will be applied to all regular expressions from this configuration by default.
+<p>
+The default value is "COMMENTS CASE_INSENSITIVE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        All elements that are generated from your schema (A Java regular expression.
-        Use the pipe to separate several expressions) Watch out for
-        case-sensitivity. Depending on your database, this might be
-        important!
+      <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are generated from your schema.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        You can create case-insensitive regular expressions
-        using this syntax: (?i:expr)
+      <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are excluded from your schema.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        Whitespace is ignored and comments are possible.
-        -->
-      <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1" />
+      <element name="includeExcludeColumns" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether include / exclude patterns should also match columns within tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        All elements that are excluded from your schema (A Java regular expression.
-        Use the pipe to separate several expressions). Excludes match before
-        includes, i.e. excludes have a higher priority.
-        -->
-      <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="includeTables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether tables should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        This flag indicates whether include / exclude patterns should also match
-        columns within tables.
-        -->
-      <element name="includeExcludeColumns" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="includeRoutines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether routines should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <element name="includeTables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includeRoutines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includePackages" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includeUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includeSequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includePrimaryKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includeUniqueKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      <element name="includeForeignKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includePackages" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether packages should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        All table and view columns that are used as "version" fields for
-        optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
-        See UpdatableRecord.store() and UpdatableRecord.delete() for details
-        -->
-      <element name="recordVersionFields" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="includeUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether udts should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        All table and view columns that are used as "timestamp" fields for
-        optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
-        See UpdatableRecord.store() and UpdatableRecord.delete() for details
-        -->
-      <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="includeSequences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether sequences should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A regular expression matching all columns that represent identities
-        To be used if columns are not detected as automatically as identities.
-        -->
-      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
+      <element name="includePrimaryKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether primary keys should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A regular expression matching all columns that participate in "synthetic" primary keys,
-        which should be placed on generated UpdatableRecords, to be used with
+      <element name="includeUniqueKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether unique keys should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        - UpdatableRecord.store()
-        - UpdatableRecord.update()
-        - UpdatableRecord.delete()
-        - UpdatableRecord.refresh()
+      <element name="includeForeignKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether foreign keys should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        Synthetic primary keys will override existing primary keys.
-        -->
-      <element name="syntheticPrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="recordVersionFields" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All table and view columns that are used as "version" fields for optimistic locking.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        All (UNIQUE) key names that should be used instead of primary keys on
-        generated UpdatableRecords, to be used with
+      <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All table and view columns that are used as "timestamp" fields for optimistic locking.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        - UpdatableRecord.store()
-        - UpdatableRecord.update()
-        - UpdatableRecord.delete()
-        - UpdatableRecord.refresh()
+      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all columns that represent identities.
+<p>
+To be used if columns are not detected as automatically as identities.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        If several keys match, a warning is emitted and the first one encountered will be used.
+      <element name="syntheticPrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all columns that participate in "synthetic" primary keys,
+which should be placed on generated {@link org.jooq.UpdatableRecord}
+<p>
+To be used with:
+<ul>
+<li>{@link org.jooq.UpdatableRecord.store()}</li>
+<li>{@link org.jooq.UpdatableRecord.update()}</li>
+<li>{@link org.jooq.UpdatableRecord.delete()}</li>
+<li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+</ul>
+<p>
+Synthetic primary keys will override existing primary keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This flag will also replace synthetic primary keys, if it matches.
-        -->
-      <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All (UNIQUE) key names that should be used instead of primary keys on
+generated {@link org.jooq.UpdatableRecord}.
+<p>
+To be used with:
+<ul>
+<li>{@link org.jooq.UpdatableRecord.store()}</li>
+<li>{@link org.jooq.UpdatableRecord.update()}</li>
+<li>{@link org.jooq.UpdatableRecord.delete()}</li>
+<li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+</ul>
+<p>
+If several keys match, a warning is emitted and the first one encountered will be used.
+<p>
+This flag will also replace synthetic primary keys, if it matches.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate java.sql.Timestamp fields for DATE columns. This is
-        particularly useful for Oracle databases
-        -->
-      <element name="dateAsTimestamp" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="dateAsTimestamp" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate {@link java.sql.Timestamp} fields for DATE columns. This is particularly useful for Oracle databases]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        In jOOQ 3.6.0, #4106 was implemented to support Transact-SQL's
-        optional return values from stored procedures. This turns all procedures
-        into Routine<Integer> (instead of Routine<Void>). For backwards-
-        compatibility reasons, users can suppress this change in jOOQ 3.x
+      <element name="ignoreProcedureReturnValues" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Ignore procedure return values in Transact-SQL generated code.
+<p>
+In jOOQ 3.6.0, #4106 was implemented to support Transact-SQL's
+optional return values from stored procedures. This turns all procedures
+into Routine<Integer> (instead of Routine<Void>). For backwards-
+compatibility reasons, users can suppress this change in jOOQ 3.x
+<p>
+@deprecated This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
+jOOQ 4.0.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
-        jOOQ 4.0.
-        -->
-      <element name="ignoreProcedureReturnValues" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate jOOU data types for your unsigned data types, which are not natively supported in Java]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate jOOU data types for your unsigned data types, which are
-        not natively supported in Java
-        -->
-      <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="inputCatalog" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The catalog that is used locally as a source for meta information.
+<p>
+This cannot be combined with the {@link #getCatalogs()} configuration element.
+If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The catalog that is used locally as a source for meta information.
+      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The catalog that is used in generated source code.
+<p>
+Use this to override your local development
+catalog name for source code generation. If not specified, this
+will be the same as {@link #getInputCatalog()}
+<p>
+This will be ignored if {@link #isOutputCatalogToDefault()} is set to true]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This cannot be combined with the catalogs element.
-        If left empty (and without any catalogs element), jOOQ will generate all available catalogs.
-        -->
-      <element name="inputCatalog" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag to indicate that the outputCatalog should be the "default" catalog,
+which generates catalog-less, unqualified tables, procedures, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The catalog that is used in generated source code. This will be the
-        production catalog. Use this to override your local development
-        catalog name for source code generation. If not specified, this
-        will be the same as the input-catalog.
+      <element name="inputSchema" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The schema that is used locally as a source for meta information.
+<p>
+This cannot be combined with the {@link #getSchemata()} configuration element.
+If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This will be ignored if outputCatalogToDefault is set to true
-        -->
-      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The schema that is used in generated source code.
+<p>
+Use this to override your local development
+schema name for source code generation. If not specified, this
+will be the same as {@link #getInputSchema()}.
 
-      <!--
-        A flag to indicate that the outputCatalog should be the "default" catalog,
-        which generates catalog-less, unqualified tables, procedures, etc.
-        -->
-      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+This will be ignored if {@link #isOutputSchemaToDefault()} is set to true]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The schema that is used locally as a source for meta information.
+      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag to indicate that the outputSchema should be the "default" schema,
+which generates schema-less, unqualified tables, procedures, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This cannot be combined with the schemata element.
-        If left empty (and without any schemata element), jOOQ will generate all available schemata.
-        For backwards compatibility, this defaults to jdbc/schema
-        -->
-      <element name="inputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A configuration element to configure several input and/or output
+catalogs for jooq-meta, in case you're using jooq-meta in a multi-catalog environment.
+<p>
+This configuration element cannot be used at the same time as the {@link #getSchemata()} configuration element.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The schema that is used in generated source code. This will be the
-        production schema. Use this to override your local development
-        schema name for source code generation. If not specified, this
-        will be the same as the input-schema.
+      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A configuration element to configure several input and/or output
+schemata for jooq-meta, in case you're using jooq-meta in a multi-schema environment.
+<p>
+Using this configuration element in an enviroment that supports multiple
+catalogs means that all catalogs are generated.
+<p>
+This configuration element cannot be used at the same time as the {@link #getCatalogs()} configuration element.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This will be ignored if outputSchemaToDefault is set to true
-        -->
-      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="schemaVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom version number that, if available, will be used to assess whether the
+{@link #getInputSchema()} will need to be regenerated.
+<p>
+There are three operation modes for this element:
+<ul>
+<li>The value is a class that can be found on the classpath and that implements
+  {@link org.jooq.util.SchemaVersionProvider}. Such classes must provide a default constructor</li>
+<li>The value is a SELECT statement that returns one record with one column. The
+  SELECT statement may contain a named variable called :schema_name</li>
+<li>The value is a constant, such as a Maven property</li>
+</ul>
+<p>
+Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A flag to indicate that the outputSchema should be the "default" schema,
-        which generates schema-less, unqualified tables, procedures, etc.
-        -->
-      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+      <element name="catalogVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom version number that, if available, will be used to assess whether the
+{@link #getInputCatalog()} from a given catalog will need to be regenerated.
+<p>
+There are three operation modes for this element:
+<ul>
+<li>The value is a class that can be found on the classpath and that implements
+  {@link org.jooq.util.CatalogVersionProvider}. Such classes must provide a default constructor</li>
+<li>The value is a SELECT statement that returns one record with one column. The
+  SELECT statement may contain a named variable called :catalog_name</li>
+<li>The value is a constant, such as a Maven property</li>
+<p>
+Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A configuration element to configure several input and/or output
-        catalogs for jooq-meta, in case you're using jooq-meta in a multi-
-        catalog environment.
+      <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use {@link #getForcedTypes()} only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This element cannot be used at the same time as the schemata element.
-        -->
-      <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1"/>
+      <element name="enumTypes" type="tns:EnumTypes" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A configuration element to configure several input and/or output
-        schemata for jooq-meta, in case you're using jooq-meta in a multi-
-        schema environment.
+      <element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure type overrides for generated fields, attributes, sequences, parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        Using this configuration element in an enviroment that supports multiple
-        catalogs means that all catalogs are generated.
-
-        This element cannot be used at the same time as the catalogs element.
-        -->
-      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A custom version number that, if available, will be used to assess whether the above
-        <inputSchema/> will need to be regenerated.
-
-        There are three operation modes for this element:
-
-        - The value is a class that can be found on the classpath and that implements
-          org.jooq.util.SchemaVersionProvider. Such classes must provide a default constructor
-        - The value is a SELECT statement that returns one record with one column. The
-          SELECT statement may contain a named variable called :schema_name
-        - The value is a constant, such as a Maven property
-
-        Schema versions will be generated into the javax.annotation.Generated annotation on
-        generated artefacts.
-        -->
-      <element name="schemaVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A custom version number that, if available, will be used to assess whether the above
-        <inputCatalog/> from a given catalog will need to be regenerated.
-
-        There are three operation modes for this element:
-
-        - The value is a class that can be found on the classpath and that implements
-          org.jooq.util.CatalogVersionProvider. Such classes must provide a default constructor
-        - The value is a SELECT statement that returns one record with one column. The
-          SELECT statement may contain a named variable called :catalog_name
-        - The value is a constant, such as a Maven property
-
-        Catalog versions will be generated into the javax.annotation.Generated annotation on
-        generated artefacts.
-        -->
-      <element name="catalogVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A configuration element to configure custom types introduced to jOOQ
-        using converters.
-        This is DEPRECATED functionality. Use forcedTypes only!
-        -->
-      <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A configuration element to configure synthetic enum types
-        This is EXPERIMENTAL / DEPRECATED functionality. Do not re-use
-        -->
-      <element name="enumTypes" type="tns:EnumTypes" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A configuration element to configure type overrides for generated
-        artefacts (e.g. in combination with enumTypes)
-        -->
-      <element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        Whether table valued functions should be reported as tables.
-
-        If this is deactivated, such functions are not generated as tables, but
-        as ordinary routines. This is particularly useful for backwards-
-        compatibility between jOOQ 3.8 and previous versions, when using TABLE
-        and VARRAY types in Oracle.
-
-        While this flag defaults to true for most databases, it defaults to false
-        for Oracle.
-        -->
-      <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1" />
+      <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether table valued functions should be reported as tables.
+<p>
+If this is deactivated, such functions are not generated as tables, but
+as ordinary routines. This is particularly useful for backwards-
+compatibility between jOOQ 3.8 and previous versions, when using TABLE
+and VARRAY types in Oracle.
+<p>
+While this flag defaults to true for most databases, it defaults to false
+for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="Catalogs">
     <sequence>
-      <!--
-        A configuration element for a single catalog in multi-catalog
-        environments
-        -->
       <element name="catalog" type="tns:Catalog" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
   <complexType name="Catalog">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration of an input catalog and its mappings.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!-- See also database/inputCatalog -->
-      <element name="inputCatalog" type="string" default="" minOccurs="1" maxOccurs="1" />
+      <element name="inputCatalog" type="string" default="" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#getInputCatalog()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- See also database/outputCatalog -->
-      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#getOutputCatalog()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- See also database/outputCatalogDefault -->
-      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#isOutputCatalogToDefault()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The configuration of schemas inside of this catalog, if any. -->
-      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
+      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The configuration of schemas inside of this catalog, if any.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="Schemata">
     <sequence>
-      <!--
-        A configuration element for a single schema in multi-schema
-        environments
-        -->
       <element name="schema" type="tns:Schema" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
   <complexType name="Schema">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration of an input schema and its mappings.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!-- See also database/inputSchema -->
-      <element name="inputSchema" type="string" default="" minOccurs="1" maxOccurs="1" />
+      <element name="inputSchema" type="string" default="" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#getInputSchema()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- See also database/outputSchema -->
-      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#getOutputSchema()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- See also database/outputSchemaDefault -->
-      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#isOutputSchemaToDefault()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="CustomTypes">
     <sequence>
-      <!-- A configuration element for a custom type -->
       <element name="customType" type="tns:CustomType" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
 
   <complexType name="EnumTypes">
     <sequence>
-      <!-- A configuration element for a synthetic enum type -->
       <element name="enumType" type="tns:EnumType" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
 
   <complexType name="ForcedTypes">
     <sequence>
-      <!-- A configuration element for a forced type override -->
       <element name="forcedType" type="tns:ForcedType" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
 
   <complexType name="CustomType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!-- The name of the custom type -->
-      <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The type of the custom type - e.g. java.time.LocalDateTime.
-           For backwards-compatibility reasons, this information is optional. If left undefined,
-           the "type" value will default to the "name" value. -->
-      <element name="type" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="type" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <choice>
-        <!-- A converter implementation for the custom type -->
-        <element name="converter" type="string" minOccurs="0" maxOccurs="1" />
+        <element name="converter" type="string" minOccurs="0" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
 
-        <!-- A converter implementation for the custom type -->
-        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true" />
+        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
       </choice>
 
-      <!-- A binding implementation for the custom type -->
-      <element name="binding" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="binding" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="EnumType">
     <all>
-      <!-- The name of the synthetic enum type -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-
-      <!-- A comma separated (CSV format) list of enum literals -->
       <element name="literals" type="string" minOccurs="1" maxOccurs="1" />
     </all>
   </complexType>
 
   <complexType name="ForcedType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A forced type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!-- The name of the type to be forced upon various artefacts. -->
-      <element name="name" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The type of the user type - e.g. java.time.LocalDateTime.
-
-           If provided, <name/> will be ignored, and either <converter/>
-           or <binding/> is required -->
-      <element name="userType" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="userType" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The type of the user type - e.g. java.time.LocalDateTime.
+<p>
+If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
+or {@link #getBinding()} is required]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <choice>
-        <!-- A converter implementation for the custom type -->
-        <element name="converter" type="string" minOccurs="0" maxOccurs="1" />
+        <element name="converter" type="string" minOccurs="0" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A converter implementation for the {@link #getUserType()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
 
-        <!-- A converter implementation for the custom type -->
-        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" />
+        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.impl.EnumConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
       </choice>
 
-      <!-- A binding implementation for the custom type. -->
-      <element name="binding" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="binding" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Binding} implementation for the custom type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A Java regular expression matching columns, parameters, attributes,
-        etc to be forced to have this type. If provided, both "expressions" and
-        "types" must match.
-        -->
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching columns, parameters, attributes,
+etc to be forced to have this type. If provided, both "expressions" and
+"types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        The same as expression. This is kept for backwards compatibility reasons.
-        -->
-      <element name="expressions" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="expressions" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as expression. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A Java regular expression matching data types to be forced to have this
-        type. If provided, both "expressions" and "types" must match.
-        -->
-      <element name="types" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="types" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching data types to be forced to have this
+type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="Generate">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options strictly related to generated code.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!--
-        Primary key / foreign key relations should be generated and used.
-        This is a prerequisite for various advanced features
-        -->
-      <element name="relations" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="relations" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Primary key / foreign key relations should be generated and used.
+This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- Generate deprecated code for backwards compatibility -->
-      <element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecated code for backwards compatibility]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Do not reuse this property. It is deprecated as of jOOQ 3.3.0
-        -->
-      <element name="instanceFields" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="instanceFields" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate the javax.annotation.Generated annotation to indicate
-        jOOQ version used for source code
-        -->
-      <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} annotation to indicate
+jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate Routine classes.
-        -->
-      <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Routine classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate Sequence classes.
-        -->
-      <element name="sequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="sequences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Sequence classes. ]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate UDT classes.
-        -->
-      <element name="udts" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="udts" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate UDT classes. ]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of queue related code
-        -->
-      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Queue classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of link related code
-        -->
-      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate database Link classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate Table classes.
-        -->
-      <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Table classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate TableRecord classes. Disable this when you don't
-        need the additional type-safety
-        -->
-      <element name="records" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="records" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate POJOs for usage of the ResultQuery.fetchInto(Class) API
-        -->
-      <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate basic equals() and hashCode() methods in POJOs
-        -->
-      <element name="pojosEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="pojosEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate basic toString() methods in POJOs
-        -->
-      <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic toString() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate immutable POJOs for usage of the ResultQuery.fetchInto(Class) API
-        This overrides any value set in <pojos/>.
-        This forces <immutableInterfaces/> to be true, if <interfaces/> is set.
-        -->
-      <element name="immutablePojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="immutablePojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate immutable POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate interfaces that will be implemented by records and/or pojos.
-        You can also use these interfaces in Record.into(Class<?>) and similar
-        methods, to let jOOQ return proxy objects for them.
-        This forces <immutableInterfaces/> to be true, if <immutablePojos/> is set.
-        -->
-      <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generated interfaces to be implemented by records and/or POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate immutable interfaces.
-        Setting this to true will force <interfaces/> to be set to true.
-        This cannot be set to false when <immutablePojos/> is set to true.
-        -->
-      <element name="immutableInterfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="immutableInterfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate immutable interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate DAOs in addition to POJO classes
-        -->
-      <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate DAOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Annotate POJOs and Records with JPA annotations for increased
-        compatibility and better integration with JPA/Hibernate, etc
-        -->
-      <element name="jpaAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="jpaAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JPA annotations.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Annotate POJOs and Records with JSR-303 validation annotations
-        -->
-      <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JSR-303 validation annotations]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Annotate DAOs with useful spring annotations such as @Repository or @Autowired
-        -->
-      <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate DAOs with useful spring annotations such as @Repository or @Autowired.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of ALL global object references, which include
+      <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all global object references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        - Tables.java
-        - Sequences.java
-        - UDTs.java
-        - Routines.java
+      <element name="globalCatalogReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global catalog references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        Turning off the generation of the above files may be necessary for very
-        large schemas, which exceed the amount of allowed constants in a class's
-        constant pool (64k) or, whose static initialiser would exceed 64k of
-        byte code.
+      <element name="globalSchemaReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global schema references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        Setting this flag to false will force all other global reference flags to be false:
+      <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global table references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        - <globalTableReferences/>
-        - <globalSequenceReferences/>
-        - <globalUDTReferences/>
-        - <globalRoutineReferences/>
-        -->
-      <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="globalSequenceReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global sequence references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of global catalog references in Catalogs.java
-        -->
-      <element name="globalCatalogReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="globalUDTReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global UDT references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of global schema references in Schemas.java and each catalog
-        -->
-      <element name="globalSchemaReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="globalRoutineReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global routine references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of global table references in Tables.java and each schema
-        -->
-      <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="globalQueueReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global queue references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of global table references in Sequences.java
-        -->
-      <element name="globalSequenceReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global database link references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Allow to turn off the generation of global table references in UDTs.java
-        -->
-      <element name="globalUDTReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of global table references in Routines.java
-        -->
-      <element name="globalRoutineReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of global queue references in Queues.java
-        -->
-      <element name="globalQueueReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of global link references in Links.java
-        -->
-      <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Generate fluent setters in
-
-        - records
-        - pojos
-        - interfaces
-
-        Fluent setters are against the JavaBeans specification, but can be quite
-        useful to those users who do not depend on EL, JSP, JSF, etc.
-        -->
-      <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate fluent setters in records, POJOs, interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <!--
         Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in
@@ -993,64 +957,75 @@
 
         Custom GeneratorStrategy implementations are unaffected.
         -->
-      <element name="javaBeansGettersAndSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="javaBeansGettersAndSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in records, POJOs, interfaces.
+<p>
+If this flag is set to false, then:
+<p>
+<ul>
+<li>Column name   : X_INDEX</li>
+<li>Attribute name: xIndex</li>
+<li>Getter name   : getXIndex()</li>
+<li>Setter name   : setXIndex()</li>
+</ul>
+<p>
+If this flag is set to true, then:
+<ul>
+<li>Getter name   : getxIndex()</li>
+<li>Setter name   : setxIndex()</li>
+</ul>
+<p>
+Custom GeneratorStrategy implementations are unaffected]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Generate varargs setters for array types for convenience.
+      <element name="varargSetters" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate varargs setters for array types for convenience.
+<p>
+This may lead to compilation warnings in current Java versions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This may lead to compilation warnings in current Java versions.
-        -->
-      <element name="varargSetters" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all the types in generated code that should be fully qualified.
+<p>
+This can be useful if you have a database object that generates a String
+class, and you want to avoid naming clashes with the java.lang package
+by specifying <code>java\.lang\..*</code>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        A regular expression matching all the types in generated code that should
-        be fully qualified.
+      <element name="emptyCatalogs" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        This can be useful if you have a database object that generates a String
-        class, and you want to avoid naming clashes with the java.lang package
-        by specifying <fullyQualifiedTypes>java\.lang\..*</fullyQualifiedTypes>
-        -->
-      <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="emptySchemas" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!--
-        Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still
-        be generated.
-        -->
-      <element name="emptyCatalogs" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Whether empty schemas (e.g. empty because of <excludes/> configurations) should still
-        be generated.
-        -->
-      <element name="emptySchemas" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        A flag indicating whether Java 8's java.time types should be used by the
-        source code generator, rather than JDBC's java.sql types.
-
-        This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
-        -->
-      <element name="javaTimeTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="javaTimeTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether Java 8's java.time types should be used by the
+source code generator, rather than JDBC's java.sql types.
+<p>
+This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
   <complexType name="Target">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options to define where the generated code should be located.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <!--
-        The destination package of your generated classes (within the
-        destination directory)
+      <element name="packageName" type="string" default="org.jooq.generated" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The destination package of your generated classes (within the destination directory)
+<p>
+jOOQ may append the schema name to this package if generating multiple schemas,
+e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        jOOQ may append the schema name to this package if generating multiple schemas,
-        e.g. org.jooq.generated.schema1
-             org.jooq.generated.schema2
-        -->
-      <element name="packageName" type="string" default="org.jooq.generated" minOccurs="0" maxOccurs="1" />
+      <element name="directory" type="string" default="target/generated-sources/jooq" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The destination directory of your generated classes]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <!-- The destination directory of your generated classes -->
-      <element name="directory" type="string" default="target/generated-sources/jooq" minOccurs="0" maxOccurs="1"/>
-
-      <!-- The file encoding to be used with all output files. -->
-      <element name="encoding" type="string" default="UTF-8" minOccurs="0" maxOccurs="1"/>
+      <element name="encoding" type="string" default="UTF-8" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The file encoding to be used with all output files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

@@ -56,7 +56,7 @@ public class MatcherRule implements Serializable
     protected String expression;
 
     /**
-     * Gets the value of the transform property.
+     * A pre-defined transformation type that transforms this rule's output into a specific format.
      *
      * @return
      *     possible object is
@@ -80,7 +80,7 @@ public class MatcherRule implements Serializable
     }
 
     /**
-     * Gets the value of the expression property.
+     * A replacement expression that transforms the matched expression in a new value.
      *
      * @return
      *     possible object is

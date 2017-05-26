@@ -17,33 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for MatchersTableType complex type.
+ * Declarative naming strategy configuration for table names.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="MatchersTableType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="tableClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="tableIdentifier" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="tableImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="recordClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="recordImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="interfaceClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="interfaceImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="daoClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="daoImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="pojoClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="pojoExtends" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="pojoImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -80,7 +55,7 @@ public class MatchersTableType implements Serializable
     protected String pojoImplements;
 
     /**
-     * Gets the value of the expression property.
+     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
      *
      * @return
      *     possible object is
@@ -104,7 +79,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the tableClass property.
+     * This rule influences the naming of the generated {@link org.jooq.Table} object.
      *
      * @return
      *     possible object is
@@ -128,7 +103,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the tableIdentifier property.
+     * This rule influences the naming of the generated {@link org.jooq.Table} identifier.
      *
      * @return
      *     possible object is
@@ -152,7 +127,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the tableImplements property.
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.
      *
      * @return
      *     possible object is
@@ -176,7 +151,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the recordClass property.
+     * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      *
      * @return
      *     possible object is
@@ -200,7 +175,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the recordImplements property.
+     * This string provides additional interfaces that a generated {@link org.jooq.TableRecord} should implement.
      *
      * @return
      *     possible object is
@@ -224,7 +199,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the interfaceClass property.
+     * This rule influences the naming of the generated interface implemented by the {@link org.jooq.TableRecord} and/or the POJO.
      *
      * @return
      *     possible object is
@@ -248,7 +223,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the interfaceImplements property.
+     * This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.TableRecord} and/or POJO) should implement.
      *
      * @return
      *     possible object is
@@ -272,7 +247,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the daoClass property.
+     * This rule influences the naming of the generated {@link org.jooq.DAO} object.
      *
      * @return
      *     possible object is
@@ -296,7 +271,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the daoImplements property.
+     * This string provides additional interfaces that a generated {@link org.jooq.DAO} should implement.
      *
      * @return
      *     possible object is
@@ -320,7 +295,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the pojoClass property.
+     * This rule influences the naming of the generated POJOs object.
      *
      * @return
      *     possible object is
@@ -344,7 +319,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the pojoExtends property.
+     * This string provides a super class that a generated POJO should extend.
      *
      * @return
      *     possible object is
@@ -368,7 +343,7 @@ public class MatchersTableType implements Serializable
     }
 
     /**
-     * Gets the value of the pojoImplements property.
+     * This string provides additional interfaces that a generated POJO should implement.
      *
      * @return
      *     possible object is

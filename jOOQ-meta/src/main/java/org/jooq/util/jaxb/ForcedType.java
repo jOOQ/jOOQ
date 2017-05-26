@@ -17,30 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for ForcedType complex type.
+ * A forced type declaration
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="ForcedType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="userType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;choice&gt;
- *           &lt;element name="converter" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *           &lt;element name="enumConverter" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;/choice&gt;
- *         &lt;element name="binding" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="expressions" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="types" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -72,7 +50,7 @@ public class ForcedType implements Serializable
     protected String types;
 
     /**
-     * Gets the value of the name property.
+     * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
      *
      * @return
      *     possible object is
@@ -96,7 +74,10 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the userType property.
+     * The type of the user type - e.g. java.time.LocalDateTime.
+     * <p>
+     * If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
+     * or {@link #getBinding()} is required
      *
      * @return
      *     possible object is
@@ -120,7 +101,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the converter property.
+     * A converter implementation for the {@link #getUserType()}.
      *
      * @return
      *     possible object is
@@ -144,7 +125,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the enumConverter property.
+     * Whether the converter is an {@link org.jooq.impl.EnumConverter}.
      *
      * @return
      *     possible object is
@@ -168,7 +149,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the binding property.
+     * A {@link org.jooq.Binding} implementation for the custom type.
      *
      * @return
      *     possible object is
@@ -192,7 +173,9 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the expression property.
+     * A Java regular expression matching columns, parameters, attributes,
+     * etc to be forced to have this type. If provided, both "expressions" and
+     * "types" must match.
      *
      * @return
      *     possible object is
@@ -216,7 +199,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the expressions property.
+     * The same as expression. This is kept for backwards compatibility reasons.
      *
      * @return
      *     possible object is
@@ -240,7 +223,8 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * Gets the value of the types property.
+     * A Java regular expression matching data types to be forced to have this
+     * type. If provided, both "expression" and "types" must match.
      *
      * @return
      *     possible object is

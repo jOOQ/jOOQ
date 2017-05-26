@@ -17,25 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for MatchersFieldType complex type.
+ * Declarative naming strategy configuration for field names.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="MatchersFieldType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="fieldIdentifier" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="fieldMember" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="fieldSetter" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="fieldGetter" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -58,7 +41,7 @@ public class MatchersFieldType implements Serializable
     protected MatcherRule fieldGetter;
 
     /**
-     * Gets the value of the expression property.
+     * This field matcher applies to all unqualified or qualified field names matched by this expression. If left empty, this matcher applies to all fields.
      *
      * @return
      *     possible object is
@@ -82,7 +65,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Gets the value of the fieldIdentifier property.
+     * This rule influences the naming of the generated {@link org.jooq.Field} identifier.
      *
      * @return
      *     possible object is
@@ -106,7 +89,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Gets the value of the fieldMember property.
+     * This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.Field}
      *
      * @return
      *     possible object is
@@ -130,7 +113,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Gets the value of the fieldSetter property.
+     * This rule influences the naming of generated setters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
      *
      * @return
      *     possible object is
@@ -154,7 +137,7 @@ public class MatchersFieldType implements Serializable
     }
 
     /**
-     * Gets the value of the fieldGetter property.
+     * This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
      *
      * @return
      *     possible object is

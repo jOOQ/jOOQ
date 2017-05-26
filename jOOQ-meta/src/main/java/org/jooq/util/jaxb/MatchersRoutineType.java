@@ -17,24 +17,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for MatchersRoutineType complex type.
+ * Declarative naming strategy configuration for routine names.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="MatchersRoutineType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="routineClass" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="routineMethod" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherRule" minOccurs="0"/&gt;
- *         &lt;element name="routineImplements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -57,7 +41,7 @@ public class MatchersRoutineType implements Serializable
     protected String routineImplements;
 
     /**
-     * Gets the value of the expression property.
+     * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
      *
      * @return
      *     possible object is
@@ -81,7 +65,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Gets the value of the routineClass property.
+     * This rule influences the naming of the generated {@link org.jooq.Routine} object.
      *
      * @return
      *     possible object is
@@ -105,7 +89,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Gets the value of the routineMethod property.
+     * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
      *
      * @return
      *     possible object is
@@ -129,7 +113,7 @@ public class MatchersRoutineType implements Serializable
     }
 
     /**
-     * Gets the value of the routineImplements property.
+     * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
      *
      * @return
      *     possible object is

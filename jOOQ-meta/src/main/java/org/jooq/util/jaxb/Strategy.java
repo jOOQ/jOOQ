@@ -18,22 +18,8 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Strategy complex type.
+ * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Strategy"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;choice&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="matchers" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}Matchers" minOccurs="0"/&gt;
- *       &lt;/choice&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */
@@ -55,7 +41,7 @@ public class Strategy implements Serializable
     protected Matchers matchers;
 
     /**
-     * Gets the value of the name property.
+     * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
      *
      * @return
      *     possible object is
@@ -79,7 +65,7 @@ public class Strategy implements Serializable
     }
 
     /**
-     * Gets the value of the matchers property.
+     * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
      *
      * @return
      *     possible object is

@@ -3234,7 +3234,11 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     Result<R> intern(Field<?>... fields);
 
     /**
@@ -3255,7 +3259,11 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     Result<R> intern(int... fieldIndexes);
 
     /**
@@ -3267,7 +3275,11 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     Result<R> intern(String... fieldNames);
 
     /**
@@ -3279,7 +3291,11 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     Result<R> intern(Name... fieldNames);
 
     // ------------------------------------------------------------------------

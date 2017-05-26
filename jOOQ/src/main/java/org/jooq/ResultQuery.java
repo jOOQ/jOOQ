@@ -3353,7 +3353,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The same result query
      * @see Result#intern(Field...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     ResultQuery<R> intern(Field<?>... fields);
 
     /**
@@ -3367,7 +3371,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The same result query
      * @see Result#intern(int...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     ResultQuery<R> intern(int... fieldIndexes);
 
     /**
@@ -3381,7 +3389,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The same result query
      * @see Result#intern(String...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     ResultQuery<R> intern(String... fieldNames);
 
     /**
@@ -3395,7 +3407,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The same result query
      * @see Result#intern(Name...)
      * @see String#intern()
+     *
+     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
+     *             and will be removed in 4.0
      */
+    @Deprecated
     ResultQuery<R> intern(Name... fieldNames);
 
 }

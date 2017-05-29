@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -3565,9 +3566,12 @@ final class Tools {
         }
 
         if (type.hasLength()) {
-            if (type.length() > 0) {
+
+            // [#6289] Some databases don't support lengths on binary types
+            if (type.isBinary() && asList(POSTGRES).contains(ctx.family()))
+                ctx.sql(typeName);
+            else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
-            }
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else {

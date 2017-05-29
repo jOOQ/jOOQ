@@ -68,6 +68,7 @@ import static org.jooq.impl.Keywords.K_BLOB;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_DATETIME;
+import static org.jooq.impl.Keywords.K_DATETIMEOFFSET;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_NULL;
@@ -552,10 +553,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Date date = getDate(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement date literals
+                // [#1253] Sybase does not implement date literals
                 if (asList(SQLITE).contains(family)) {
                     render.sql('\'').sql(escape(date, render)).sql('\'');
                 }
+
+
+
+
+
 
 
 
@@ -587,10 +593,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Timestamp ts = getTimestamp(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement timestamp literals
+                // [#1253] Sybase does not implement timestamp literals
                 if (asList(SQLITE).contains(family)) {
                     render.sql('\'').sql(escape(ts, render)).sql('\'');
                 }
+
+
+
+
+
+
 
 
 
@@ -626,7 +638,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Time time = getTime(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement time literals
+                // [#1253] Sybase does not implement time literals
                 if (asList(SQLITE).contains(family)) {
                     render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(time)).sql('\'');
                 }
@@ -657,6 +669,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
                 // Most dialects implement SQL standard time literals
                 else {
                     render.visit(K_TIME).sql(" '").sql(escape(time, render)).sql('\'');
@@ -665,24 +683,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             else if (type == OffsetDateTime.class) {
-                String string = format((OffsetDateTime) val);
-
-
-
-
-
-
-
 
                 // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
                 if (family == H2) {
-                    render.visit(K_CAST).sql("('").sql(escape(string, render)).sql("' ")
+                    render.visit(K_CAST).sql("('").sql(escape(format((OffsetDateTime) val), render)).sql("' ")
                           .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
                 }
 
+
+
+
+
+
+
+
+
+
+
+
+
                 // Some dialects implement SQL standard time literals
                 else {
-                    render.visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(string, render)).sql('\'');
+                    render.visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format((OffsetDateTime) val), render)).sql('\'');
                 }
             }
 
@@ -1713,8 +1735,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final String format(OffsetDateTime val) {
 
         // Remove the ISO standard T character, as some databases don't like that
-        String format = val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        String format = formatISO(val);
         return replaceZ(format.substring(0, 10) + ' ' + format.substring(11));
+    }
+
+    private static final String formatISO(OffsetDateTime val) {
+        return val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 
 

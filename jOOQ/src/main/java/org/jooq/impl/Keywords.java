@@ -82,6 +82,7 @@ final class Keywords {
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
+    static final Keyword K_DATETIMEOFFSET                   = keyword("datetimeoffset");
     static final Keyword K_DECIMAL                          = keyword("decimal");
     static final Keyword K_DECLARE                          = keyword("declare");
     static final Keyword K_DEFAULT                          = keyword("default");

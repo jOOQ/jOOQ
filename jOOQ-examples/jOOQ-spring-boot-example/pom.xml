@@ -11,7 +11,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-spring-boot-example</artifactId>
-    <version>${org.jooq.version}</version>
+    <version>${jooq.version}</version>
     <packaging>jar</packaging>
     <name>jOOQ Spring Boot Example</name>
 
@@ -26,7 +26,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>org.jooq.example.spring.Application</start-class>
-        <org.jooq.version>3.10.0-SNAPSHOT</org.jooq.version>
+        <jooq.version>3.10.0-SNAPSHOT</jooq.version>
         <java.version>1.8</java.version>
     </properties>
 
@@ -39,7 +39,6 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
         </dependency>
 
         <dependency>
@@ -127,7 +126,6 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
 
                 <executions>
                     <execution>

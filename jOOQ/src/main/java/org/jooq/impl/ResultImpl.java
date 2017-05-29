@@ -819,8 +819,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[])
-            return DatatypeConverter.printBase64Binary((byte[]) value);
-
+            return "BASE64:" + DatatypeConverter.printBase64Binary((byte[]) value);
         return value;
     }
 
@@ -838,7 +837,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
             formatted += visual ? "{null}" : null;
         }
         else if (value.getClass() == byte[].class) {
-            formatted += DatatypeConverter.printBase64Binary((byte[]) value);
+            formatted += "BASE64:" + DatatypeConverter.printBase64Binary((byte[]) value);
         }
         else if (value.getClass().isArray()) {
             formatted += Arrays.toString((Object[]) value);

@@ -73,6 +73,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import javax.xml.bind.DatatypeConverter;
 
 // ...
 import org.jooq.Converter;
@@ -554,7 +555,12 @@ public final class Convert {
                         return (U)b.array();
                     }
                     else {
-                        return (U) from.toString().getBytes();
+                        String val = from.toString();
+                        if (val.startsWith("BASE64:")) {
+                            return (U) DatatypeConverter.parseBase64Binary(val.substring("BASE64:".length()));
+                        } else {
+                            return (U) val.getBytes();
+                        }
                     }
                 }
 

@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -1588089089;
+    private static final long serialVersionUID = -641241662;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -54,7 +54,7 @@ public class Language extends TableImpl<LanguageRecord> {
     /**
      * The column <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
      */
-    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField("LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_1618BD03_9A26_4D48_B0A6_877B02459E15)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField("LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_925527C0_2EA0_41B8_A03F_BDDA372A5FF9)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>PUBLIC.LANGUAGE.NAME</code>.

@@ -3134,10 +3134,10 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 if (getJavaType(column.getType()).endsWith("[]")) {
-                    out.tab(2).println("result = prime * result + (if (%s == null) 0 else %s.hashCode(%s))", columnMember, Arrays.class, columnMember);
+                    out.tab(2).println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
                 }
                 else {
-                    out.tab(2).println("result = prime * result + (if (%s == null) 0 else %s.hashCode())", columnMember, columnMember);
+                    out.tab(2).println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode())", columnMember, columnMember);
                 }
             }
 
@@ -3154,10 +3154,10 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 if (getJavaType(column.getType()).endsWith("[]")) {
-                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode(%s));", columnMember, Arrays.class, columnMember);
+                    out.tab(2).println("result = prime * result + ((this.%s == null) ? 0 : %s.hashCode(this.%s));", columnMember, Arrays.class, columnMember);
                 }
                 else {
-                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());", columnMember, columnMember);
+                    out.tab(2).println("result = prime * result + ((this.%s == null) ? 0 : this.%s.hashCode());", columnMember, columnMember);
                 }
             }
 

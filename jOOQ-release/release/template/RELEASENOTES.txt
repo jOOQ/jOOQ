@@ -10,6 +10,37 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.9.3 - May 30, 2017
+================================================================================
+
+This is a patch release with some useful fixes for the 3.9 branch
+
+Bug Fixes
+---------
+#5778 - Bad Inlining of LocalDate, LocalTime, LocalDateTime, OffsetTime, OffsetDateTime bind values
+#5787 - DataType.getSQLType() doesn't return the right value for java.time types
+#6107 - Bad formatting when combining constraints in CREATE TABLE statement
+#6112 - File does not get renamed on Windows when TABLE_A is renamed to TABLEA
+#6113 - NullPointerException when generating code in single-uppercase-named-database setup on MariaDB and MySQL
+#6119 - Several DB2 fixes
+#6142 - Add identity column support to XMLGenerator
+#6153 - NullPointerException in GenerationUtil with Postgres CITEXT extension applied
+#6164 - XMLGenerator doesn't export <is_nullable/> for columns
+#6166 - XMLDatabase doesn't correctly load UNIQUE keys
+#6176 - Unstable alias generation for derived tables
+#6178 - DefaultTransactionProvider should not roll back to savepoint in top transaction
+#6180 - ClassNotFoundException occures when generate codes form JPA entity by maven plugin
+#6184 - IF EXISTS emulation using THROW doesn't work for SQL Server 2008
+#6190 - JPADatabase doesn't correctly generate tables for multi-schema entities
+#6192 - Compilation error in generated code when column is called RESULT or PRIME
+#6205 - PL/SQL Records not generated depending on the order of procedures in a package
+#6224 - Field.contains(T) doesn't delegate to Field.contains(Field<T>) when using plain SQL
+#6227 - Edit New issue NoSuchFieldError when using commercial dialect with open source edition in Maven code generation
+#6228 - MySQL enum type doesn't generate correct DDL via DSLContext.ddl()
+#6262 - XMLGenerator: UniqueConstraintCatalog set to referenced key instead of catalog
+#6290 - Don't generate type length modifier for PostgreSQL bytea types in DDL
+#6293 - Improve support for SQL Server date time literals
+#6295 - Configuration.dialect() should return SQLDialect.DEFAULT when null
 
 Version 3.9.2 - April 20, 2017
 ================================================================================

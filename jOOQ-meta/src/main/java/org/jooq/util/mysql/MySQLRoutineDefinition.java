@@ -111,7 +111,8 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                     Parameters.NUMERIC_SCALE
                 )
                 .from(PARAMETERS)
-                .where(Parameters.SPECIFIC_SCHEMA.eq(getSchema().getInputName()))
+                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+                .where(Parameters.SPECIFIC_SCHEMA.in(getSchema().getInputName(), getSchema().getInputName()))
                 .and(Parameters.SPECIFIC_NAME.eq(getInputName()))
                 .and(Parameters.ROUTINE_TYPE.eq(procType.name()))
                 .orderBy(Parameters.ORDINAL_POSITION.asc())

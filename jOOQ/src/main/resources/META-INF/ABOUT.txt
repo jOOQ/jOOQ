@@ -45,7 +45,8 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Tsukasa Kitachi
 - Vladimir Kulev
 - Vladimir Vinogradov
+- Wang Gaoyuan
 - Zoltan Tamasi
 
 See the following website for details about contributing to jOOQ:
-http://www.jooq.org/legal/contributions
+https://github.com/jOOQ/jOOQ/blob/master/CONTRIBUTING.md

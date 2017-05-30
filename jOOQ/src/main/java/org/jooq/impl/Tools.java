@@ -47,6 +47,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -91,6 +92,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -2175,12 +2177,18 @@ final class Tools {
 
 
 
+    private static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
-    static final int hash(Object object) {
-        return 0x7FFFFFF & object.hashCode();
+    static final int hash(QueryPart part) {
+
+        // [#6025] Prevent unstable alias generation for derived tables due to
+        //         inlined bind variables in hashCode() calculation
+        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
+        return 0x7FFFFFF & CTX.render(part).hashCode();
     }
 
     /**
@@ -3192,6 +3200,16 @@ final class Tools {
 
 
 
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD: {
                 ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
                    .keyword("when").sql(" sqlcode -607 ").keyword("do").formatIndentStart().formatSeparator()
@@ -3221,10 +3239,36 @@ final class Tools {
             }
         }
 
-        if (type.hasLength()) {
-            if (type.length() > 0) {
-                ctx.keyword(typeName).sql('(').sql(type.length()).sql(')');
+        // [#5299] MySQL enum types
+        if (EnumType.class.isAssignableFrom(type.getType())) {
+            switch (ctx.family()) {
+                case MARIADB:
+                case MYSQL: {
+                    ctx.keyword("enum").sql('(');
+
+                    Object[] enums = type.getType().getEnumConstants();
+                    if (enums == null)
+                        throw new IllegalStateException("EnumType must be a Java enum");
+
+                    String separator = "";
+                    for (Object e : enums) {
+                        ctx.sql(separator).visit(DSL.inline(((EnumType) e).getLiteral()));
+                        separator = ", ";
+                    }
+
+                    ctx.sql(')');
+                    return;
+                }
             }
+        }
+
+        if (type.hasLength()) {
+
+            // [#6289] Some databases don't support lengths on binary types
+            if (type.isBinary() && asList(POSTGRES).contains(ctx.family()))
+                ctx.sql(typeName);
+            else if (type.length() > 0)
+                ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else {
@@ -3342,5 +3386,26 @@ final class Tools {
                 return true;
 
         return false;
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#TIME}.
+     */
+    static final boolean isTime(Class<?> t) {
+        return t == Time.class  || t == LocalTime.class ;
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#TIMESTAMP}.
+     */
+    static final boolean isTimestamp(Class<?> t) {
+        return t == Timestamp.class  || t == LocalDateTime.class ;
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#DATE}.
+     */
+    static final boolean isDate(Class<?> t) {
+        return t == Date.class  || t == LocalDate.class ;
     }
 }

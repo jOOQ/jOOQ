@@ -148,19 +148,20 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Deque<Savepoint> savepoints = savepoints(ctx.configuration());
 
         // This is the top-level transaction
-        if (savepoints.isEmpty())
+        boolean topLevel = savepoints.isEmpty();
+        if (topLevel)
             brace(ctx.configuration(), true);
 
-        Savepoint savepoint = setSavepoint(ctx.configuration());
+        Savepoint savepoint = setSavepoint(ctx.configuration(), topLevel);
 
-        if (savepoint == UNSUPPORTED_SAVEPOINT && !savepoints.isEmpty())
+        if (savepoint == UNSUPPORTED_SAVEPOINT && !topLevel)
             throw new DataAccessException("Cannot nest transactions because Savepoints are not supported");
 
         savepoints.push(savepoint);
     }
 
-    private final Savepoint setSavepoint(Configuration configuration) {
-        if (!nested())
+    private final Savepoint setSavepoint(Configuration configuration, boolean topLevel) {
+        if (topLevel || !nested())
             return IGNORED_SAVEPOINT;
 
         switch (configuration.family()) {

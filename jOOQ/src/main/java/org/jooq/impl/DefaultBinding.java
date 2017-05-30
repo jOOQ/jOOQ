@@ -95,6 +95,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -330,15 +331,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-
-        if (type == OffsetTime.class || type == OffsetDateTime.class) {
-            switch (ctx.family()) {
-                case POSTGRES:
-                    return true;
-            }
-        }
-
-
         return false;
     }
 
@@ -544,15 +536,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 render.sql(((Number) val).toString());
             }
 
-            // [#1156] Date/Time data types should be inlined using JDBC
-            // escape syntax
-            else if (type == Date.class) {
+            // [#1156] DATE / TIME inlining is very vendor-specific
+            else if (Tools.isDate(type)) {
+                Date date = getDate(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement date literals
+                // [#1253] Sybase does not implement date literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(escape(val, render)).sql('\'');
+                    render.sql('\'').sql(escape(date, render)).sql('\'');
                 }
+
+
+
+
+
 
 
 
@@ -567,26 +564,33 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("date('").sql(escape(val, render)).sql("')");
+                    render.keyword("date('").sql(escape(date, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{d '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{d '").sql(escape(date, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    render.keyword("date '").sql(escape(val, render)).sql('\'');
+                    render.keyword("date '").sql(escape(date, render)).sql('\'');
                 }
             }
-            else if (type == Timestamp.class) {
+            else if (Tools.isTimestamp(type)) {
+                Timestamp ts = getTimestamp(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement timestamp literals
+                // [#1253] Sybase does not implement timestamp literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(escape(val, render)).sql('\'');
+                    render.sql('\'').sql(escape(ts, render)).sql('\'');
                 }
+
+
+
+
+
+
 
 
 
@@ -600,30 +604,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("timestamp('").sql(escape(val, render)).sql("')");
+                    render.keyword("timestamp('").sql(escape(ts, render)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    render.keyword("datetime '").sql(escape(val, render)).sql('\'');
+                    render.keyword("datetime '").sql(escape(ts, render)).sql('\'');
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{ts '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{ts '").sql(escape(ts, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    render.keyword("timestamp '").sql(escape(val, render)).sql('\'');
+                    render.keyword("timestamp '").sql(escape(ts, render)).sql('\'');
                 }
             }
-            else if (type == Time.class) {
+            else if (Tools.isTime(type)) {
+                Time time = getTime(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                // [#1253] SQL Server and Sybase do not implement time literals
+                // [#1253] Sybase does not implement time literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql('\'');
+                    render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(time)).sql('\'');
                 }
 
 
@@ -638,13 +643,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("time").sql("('").sql(escape(val, render)).sql("')");
+                    render.keyword("time").sql("('").sql(escape(time, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{t '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{t '").sql(escape(time, render)).sql("'}");
                 }
+
+
+
+
+
+
 
 
 
@@ -654,9 +665,55 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Most dialects implement SQL standard time literals
                 else {
-                    render.keyword("time").sql(" '").sql(escape(val, render)).sql('\'');
+                    render.keyword("time").sql(" '").sql(escape(time, render)).sql('\'');
                 }
             }
+
+
+            else if (type == OffsetDateTime.class) {
+
+                // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
+                if (family == H2) {
+                    render.keyword("cast").sql("('").sql(escape(format((OffsetDateTime) val), render)).sql("' ")
+                          .keyword("as").sql(' ').keyword("timestamp with time zone").sql(')');
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Some dialects implement SQL standard time literals
+                else {
+                    render.keyword("timestamp with time zone").sql(" '").sql(escape(format((OffsetDateTime) val), render)).sql('\'');
+                }
+            }
+
+            else if (type == OffsetTime.class) {
+                String string = format((OffsetTime) val);
+
+
+
+
+
+
+
+
+
+                // Some dialects implement SQL standard time literals
+                {
+                    render.keyword("time with time zone").sql(" '").sql(escape(string, render)).sql('\'');
+                }
+            }
+
+
             else if (type.isArray()) {
                 String separator = "";
 
@@ -766,6 +823,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    private final Time getTime(Class<?> t, Object val) {
+        return  t == Time.class ?  (Time) val  : Time.valueOf((LocalTime) val) ;
+    }
+
+    private final Timestamp getTimestamp(Class<?> t, Object val) {
+        return  t == Timestamp.class ?  (Timestamp) val  : Timestamp.valueOf((LocalDateTime) val) ;
+    }
+
+    private final Date getDate(Class<?> t, Object val) {
+        return  t == Date.class ?  (Date) val  : Date.valueOf((LocalDate) val) ;
+    }
+
     /**
      * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
      */
@@ -810,7 +879,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     @Override
     public void register(BindingRegisterContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
-        int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
+        int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType(ctx.configuration());
 
         if (log.isTraceEnabled())
             log.trace("Registering variable " + ctx.index(), "" + type);
@@ -1017,8 +1086,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // There is potential for trouble when binding date time as such
             // -------------------------------------------------------------
-            else if (actualType == Date.class) {
-                Date date = (Date) value;
+            else if (Tools.isDate(actualType)) {
+                Date date = getDate(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), date.toString());
@@ -1035,8 +1104,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setDate(ctx.index(), date);
                 }
             }
-            else if (actualType == Time.class) {
-                Time time = (Time) value;
+            else if (Tools.isTime(actualType)) {
+                Time time = getTime(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), time.toString());
@@ -1045,8 +1114,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setTime(ctx.index(), time);
                 }
             }
-            else if (actualType == Timestamp.class) {
-                Timestamp timestamp = (Timestamp) value;
+            else if (Tools.isTimestamp(actualType)) {
+                Timestamp timestamp = getTimestamp(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), timestamp.toString());
@@ -1057,20 +1126,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
 
-            else if (actualType == LocalDate.class) {
-                ctx.statement().setDate(ctx.index(), Date.valueOf((LocalDate) value));
-            }
-            else if (actualType == LocalTime.class) {
-                ctx.statement().setTime(ctx.index(), Time.valueOf((LocalTime) value));
-            }
-            else if (actualType == LocalDateTime.class) {
-                ctx.statement().setTimestamp(ctx.index(), Timestamp.valueOf((LocalDateTime) value));
-            }
             else if (actualType == OffsetTime.class) {
-                ctx.statement().setString(ctx.index(), value.toString());
+                String string = format((OffsetTime) value);
+
+
+
+
+
+
+
+                ctx.statement().setString(ctx.index(), string);
             }
             else if (actualType == OffsetDateTime.class) {
-                ctx.statement().setString(ctx.index(), value.toString());
+                ctx.statement().setString(ctx.index(), format((OffsetDateTime) value));
             }
 
 
@@ -1560,54 +1628,84 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
+    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
+        "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
+
     private final OffsetTime offsetTime(String string) {
-        if (string == null)
-            return null;
-
-        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
-            string = string + ":00";
-
-        return OffsetTime.parse(string);
+        return string == null ? null : OffsetTime.parse(preparse(string, false));
     }
 
-    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
-        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
-
     private final OffsetDateTime offsetDateTime(String string) {
-        if (string == null)
-            return null;
+        return string == null ? null : OffsetDateTime.parse(preparse(string, true));
+    }
 
-        Matcher m = LENIENT_OFFSET_PATTERN.matcher(string);
+    private final String preparse(String formatted, boolean includeDate) {
+        Matcher m = LENIENT_OFFSET_PATTERN.matcher(formatted);
+
         if (m.find()) {
-            StringBuilder sb = new StringBuilder(m.group(1));
+            StringBuilder sb = new StringBuilder();
+            String group1 = m.group(1);
 
-            // [#4338] SQL supports the alternative ISO 8601 date format, where a
-            // whitespace character separates date and time. java.time does not
-            sb.append('T');
+            if (includeDate && group1 != null) {
+                sb.append(group1);
+
+                // [#4338] SQL supports the alternative ISO 8601 date format, where a
+                // whitespace character separates date and time. java.time does not
+                sb.append('T');
+            }
+
             sb.append(m.group(2));
 
-            if (m.group(3) != null) {
-                sb.append(m.group(4));
+            if (m.group(3) == null)
+                sb.append(":00");
+
+            if (m.group(4) != null) {
+                sb.append(m.group(5));
+
+                String group6 = m.group(6);
+                String group8 = m.group(8);
 
                 // [#4965] Oracle might return a single-digit hour offset (and some spare space)
-                sb.append(m.group(5) == null ? "0" : m.group(5));
-                sb.append(m.group(6));
+                sb.append(group6 == null ? "0" : group6);
+                sb.append(m.group(7));
 
                 // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
-                sb.append(m.group(7) == null ? ":00" : m.group(7));
+                sb.append(group8 == null ? ":00" : group8);
             }
             else {
                 sb.append("+00:00");
             }
 
-            return OffsetDateTime.parse(sb.toString());
+            return sb.toString();
         }
 
-        // Probably a bug, let OffsetDateTime report it
-        else
-            return OffsetDateTime.parse(string);
+        // Probably a bug, let OffsetDateTime or OffsetTime report it
+        else {
+            return formatted;
+        }
     }
+
+    private final String replaceZ(String format) {
+
+        // Replace the ISO standard Z character for UTC, as some databases don't like that
+        return format.replace("Z", "+00:00");
+    }
+
+    private final String format(OffsetTime val) {
+        return replaceZ(val.format(DateTimeFormatter.ISO_OFFSET_TIME));
+    }
+
+    private final String format(OffsetDateTime val) {
+
+        // Remove the ISO standard T character, as some databases don't like that
+        String format = formatISO(val);
+        return replaceZ(format.substring(0, 10) + ' ' + format.substring(11));
+    }
+
+    private static final String formatISO(OffsetDateTime val) {
+        return val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    }
+
 
 
     @SuppressWarnings("unchecked")
@@ -1637,7 +1735,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Clob.class) {
             result = (T) ctx.statement().getClob(ctx.index());
         }
-        else if (type == Date.class) {
+        else if (Tools.isDate(type)) {
 
 
 
@@ -1648,6 +1746,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             result = (T) ctx.statement().getDate(ctx.index());
+
+
+            if (result != null && type == LocalDate.class)
+                result = (T) ((Date) result).toLocalDate();
+
         }
         else if (type == Double.class) {
             result = (T) wasNull(ctx.statement(), Double.valueOf(ctx.statement().getDouble(ctx.index())));
@@ -1667,12 +1770,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == String.class) {
             result = (T) ctx.statement().getString(ctx.index());
         }
-        else if (type == Time.class) {
+        else if (Tools.isTime(type)) {
             result = (T) ctx.statement().getTime(ctx.index());
+
+
+            if (result != null && type == LocalTime.class)
+                result = (T) ((Time) result).toLocalTime();
+
         }
-        else if (type == Timestamp.class) {
+        else if (Tools.isTimestamp(type)) {
             result = (T) ctx.statement().getTimestamp(ctx.index());
+
+
+            if (result != null && type == LocalDateTime.class)
+                result = (T) ((Timestamp) result).toLocalDateTime();
+
         }
+
+
+        else if (type == OffsetTime.class) {
+            result = (T) offsetTime(ctx.statement().getString(ctx.index()));
+        }
+        else if (type == OffsetDateTime.class) {
+            result = (T) offsetDateTime(ctx.statement().getString(ctx.index()));
+        }
+
+
         else if (type == YearToMonth.class) {
             if (ctx.family() == POSTGRES) {
                 Object object = ctx.statement().getObject(ctx.index());

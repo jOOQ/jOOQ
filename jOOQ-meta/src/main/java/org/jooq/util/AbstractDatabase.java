@@ -218,7 +218,17 @@ public abstract class AbstractDatabase implements Database {
 
         // [#3800] Make sure that faulty queries are logged in a formatted
         //         way to help users provide us with bug reports
-        final Configuration configuration = create0().configuration();
+        final Configuration configuration;
+
+        try {
+            configuration = create0().configuration();
+        }
+
+        // [#6226] This is mostly due to a wrong Maven groupId
+        catch (NoSuchFieldError e) {
+            log.error("NoSuchFieldError may happen when the jOOQ Open Source Edition (Maven groupId 'org.jooq') is used with a commercial SQLDialect. Use an appropriate groupId instead: 'org.jooq.trial', 'org.jooq.pro', or 'org.jooq.pro-java-6'. See also: https://www.jooq.org/doc/latest/manual/getting-started/tutorials/jooq-in-7-steps/jooq-in-7-steps-step1/");
+            throw e;
+        }
 
         if (muteExceptions) {
             return DSL.using(configuration);

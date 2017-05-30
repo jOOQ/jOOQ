@@ -137,6 +137,10 @@ final class DropSchemaImpl extends AbstractQuery implements
         if (cascade)
             ctx.sql(' ').keyword("cascade");
 
+
+
+
+
         ctx.end(DROP_SCHEMA_SCHEMA);
     }
 

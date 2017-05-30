@@ -121,9 +121,9 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
-//                      TODO This is not yet supported
-//                      column.setIdentityGeneration(co.isIdentity());
-                        column.setIsNullable(column.isIsNullable());
+                        if (co.isIdentity())
+                            column.setIdentityGeneration("YES");
+                        column.setIsNullable(type.isNullable());
                         column.setNumericPrecision(type.getPrecision());
                         column.setNumericScale(type.getScale());
                         column.setOrdinalPosition(co.getPosition());
@@ -185,7 +185,7 @@ public class XMLGenerator extends AbstractGenerator {
                     rc.setConstraintCatalog(catalogName);
                     rc.setConstraintSchema(schemaName);
                     rc.setConstraintName(constraintName);
-                    rc.setUniqueConstraintCatalog(referenced.getOutputName());
+                    rc.setUniqueConstraintCatalog(referenced.getCatalog().getOutputName());
                     rc.setUniqueConstraintSchema(referenced.getSchema().getOutputName());
                     rc.setUniqueConstraintName(referenced.getOutputName());
 

@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.9.2</version>
+        <version>3.9.3</version>
     </parent>
 
     <groupId>org.jooq</groupId>

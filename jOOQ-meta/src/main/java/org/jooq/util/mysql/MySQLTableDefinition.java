@@ -87,7 +87,8 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     Columns.NUMERIC_SCALE,
                     Columns.EXTRA)
                 .from(COLUMNS)
-                .where(TABLE_SCHEMA.equal(getSchema().getName()))
+                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+                .where(TABLE_SCHEMA.in(getSchema().getName(), getSchema().getName()))
                 .and(TABLE_NAME.equal(getName()))
                 .orderBy(ORDINAL_POSITION)) {
 

@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.9.2</version>
+    <version>3.9.3</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -267,6 +267,57 @@
                 </plugins>
             </build>
         </profile>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

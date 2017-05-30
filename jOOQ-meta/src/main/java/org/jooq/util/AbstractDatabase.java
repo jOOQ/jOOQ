@@ -46,6 +46,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -128,6 +129,7 @@ public abstract class AbstractDatabase implements Database {
     private List<ForcedType>                                                 configuredForcedTypes;
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
+    private Comparator<Definition>                                           orderProvider;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
@@ -999,6 +1001,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final Comparator<Definition> getOrderProvider() {
+        return orderProvider;
+    }
+
+    @Override
+    public final void setOrderProvider(Comparator<Definition> provider) {
+        this.orderProvider = provider;
+    }
+
+    @Override
     public final void setSupportsUnsignedTypes(boolean supportsUnsignedTypes) {
         this.supportsUnsignedTypes = supportsUnsignedTypes;
     }
@@ -1057,7 +1069,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<SequenceDefinition> s = getSequences0();
 
-                    sequences = filterExcludeInclude(s);
+                    sequences = sort(filterExcludeInclude(s));
                     log.info("Sequences fetched", fetchedSize(s, sequences));
                 }
                 catch (Exception e) {
@@ -1159,7 +1171,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<TableDefinition> t = getTables0();
 
-                    tables = filterExcludeInclude(t);
+                    tables = sort(filterExcludeInclude(t));
                     log.info("Tables fetched", fetchedSize(t, tables));
                 }
                 catch (Exception e) {
@@ -1204,7 +1216,7 @@ public abstract class AbstractDatabase implements Database {
             try {
                 List<EnumDefinition> e = getEnums0();
 
-                enums = filterExcludeInclude(e);
+                enums = sort(filterExcludeInclude(e));
                 enums.addAll(getConfiguredEnums());
 
                 log.info("Enums fetched", fetchedSize(e, enums));
@@ -1310,7 +1322,7 @@ public abstract class AbstractDatabase implements Database {
             try {
                 List<DomainDefinition> e = getDomains0();
 
-                domains = filterExcludeInclude(e);
+                domains = sort(filterExcludeInclude(e));
                 log.info("Domains fetched", fetchedSize(e, domains));
             }
             catch (Exception e) {
@@ -1350,7 +1362,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<ArrayDefinition> a = getArrays0();
 
-                    arrays = filterExcludeInclude(a);
+                    arrays = sort(filterExcludeInclude(a));
                     log.info("ARRAYs fetched", fetchedSize(a, arrays));
                 }
                 catch (Exception e) {
@@ -1395,7 +1407,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<UDTDefinition> u = getUDTs0();
 
-                    udts = filterExcludeInclude(u);
+                    udts = sort(filterExcludeInclude(u));
                     log.info("UDTs fetched", fetchedSize(u, udts));
                 }
                 catch (Exception e) {
@@ -1481,7 +1493,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<RoutineDefinition> r = getRoutines0();
 
-                    routines = filterExcludeInclude(r);
+                    routines = sort(filterExcludeInclude(r));
                     log.info("Routines fetched", fetchedSize(r, routines));
                 }
                 catch (Exception e) {
@@ -1507,7 +1519,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<PackageDefinition> p = getPackages0();
 
-                    packages = filterExcludeInclude(p);
+                    packages = sort(filterExcludeInclude(p));
                     log.info("Packages fetched", fetchedSize(p, packages));
                 }
                 catch (Exception e) {
@@ -1593,6 +1605,14 @@ public abstract class AbstractDatabase implements Database {
         this.excluded.removeAll(result);
 
         return result;
+    }
+
+    @Override
+    public final <T extends Definition> List<T> sort(List<T> definitions) {
+        if (orderProvider != null)
+            Collections.sort(definitions, orderProvider);
+
+        return definitions;
     }
 
     @Override

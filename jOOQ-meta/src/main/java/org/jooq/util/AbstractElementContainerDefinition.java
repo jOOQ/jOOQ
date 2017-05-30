@@ -127,6 +127,8 @@ extends AbstractDefinition {
                 else {
                     elements = e;
                 }
+
+                db.sort(elements);
             }
             catch (Exception e) {
                 log.error("Error while initialising type", e);

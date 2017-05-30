@@ -15710,6 +15710,94 @@ configuration {
                                 </html></content>
                             </section>
 
+                            <section id="codegen-config-order-provider">
+                                <title>Custom ordering of generated code</title>
+                                <content><html>
+                                    <p>
+                                        By default, the jOOQ code generator maintains the following ordering of objects:
+                                    </p>
+
+                                    <ul>
+                                        <li>Catalogs, schemas, tables, user-defined types, packages, routines, sequences, constraints are ordered alphabetically</li>
+                                        <li>Table columns, user-defined type attributes, routine parameters are ordered in their order of definition</li>
+                                    </ul>
+
+                                    <p>
+                                        Sometimes, it may be desireable to override this default ordering to a custom ordering. In particular, the default ordering may be case-sensitive, when case-insensitive ordering is really more desireable at times. Users may define an order provider by specifying a fully qualified class on the code generator's class path, which must implement <reference class="java.util.Comparator" title="java.util.Comparator&lt;org.jooq.util.Definition&gt;"/> as follows:
+                                    </p>
+
+                                    <p>
+                                        <strong>XML configuration (standalone and Maven)</strong>
+                                    </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <database>
+      <orderProvider>com.example.CaseInsensitiveOrderProvider</orderProvider>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                    <p>
+                                        <strong>Programmatic configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      .withOrderProvider("com.example.CaseInsensitiveOrderProvider");]]></java><html>
+
+                                    <p>
+                                        <strong>Gradle configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    database {
+      orderProvider = 'com.example.CaseInsensitiveOrderProvider'
+    }
+  }
+}]]></java><html>
+
+                                    <p>
+                                        This order provider may then look as follows:
+                                    </p>
+
+</html><java><![CDATA[package com.example;
+
+import java.util.Comparator;
+
+import org.jooq.util.Definition;
+
+public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
+    @Override
+    public int compare(Definition o1, Definition o2) {
+        return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
+    }
+}]]></java><html>
+                                    <p>
+                                        While changing the order of "top level types" (like tables) is irrelevant to the jOOQ runtime, there may be some side-effects to changing the order of table columns, user-defined type attributes, routine parameters, as the database might expect the exact same order as is defined in the database. In order to only change the ordering for tables, the following order provider can be implemented instead:
+                                    </p>
+
+</html><java><![CDATA[package com.example;
+
+import java.util.Comparator;
+
+import org.jooq.util.Definition;
+import org.jooq.util.TableDefinition;
+
+public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
+    @Override
+    public int compare(Definition o1, Definition o2) {
+        if (o1 instanceof TableDefinition && o2 instanceof TableDefinition)
+            return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
+        else
+            return 0; // Retain input ordering
+    }
+}]]></java><html>
+                                </html></content>
+                            </section>
+
                             <section id="codegen-config-forced-types">
                                 <title>Forced types</title>
                                 <content><html>

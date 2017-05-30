@@ -52,6 +52,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -477,6 +478,15 @@ public class GenerationTool {
 
             database.setSchemaVersionProvider(svp);
             database.setCatalogVersionProvider(cvp);
+
+            if (!StringUtils.isBlank(d.getOrderProvider())) {
+                Class<?> orderProvider = Class.forName(d.getOrderProvider());
+
+                if (Comparator.class.isAssignableFrom(orderProvider))
+                    database.setOrderProvider((Comparator<Definition>) orderProvider.newInstance());
+                else
+                    log.warn("Order provider must be of type java.util.Comparator: " + orderProvider);
+            }
 
             if (d.getEnumTypes().size() > 0)
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");

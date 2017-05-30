@@ -634,6 +634,12 @@ Catalog versions will be generated into the {@link javax.annotation.Generated} a
 generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="orderProvider" type="string" default="" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom {@link java.util.Comparator} that can compare two {@link org.jooq.util.Definition} objects to determine their order.
+<p>
+This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use {@link #getForcedTypes()} only]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

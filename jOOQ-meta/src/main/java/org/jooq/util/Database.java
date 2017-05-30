@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.sql.Connection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -464,6 +465,11 @@ public interface Database {
     <D extends Definition> List<D> filterExcludeInclude(List<D> definitions);
 
     /**
+     * Sort a list of definitions according to the {@link #getOrderProvider()} defined in this database.
+     */
+    <D extends Definition> List<D> sort(List<D> definitions);
+
+    /**
      * Retrieve all included objects.
      */
     List<Definition> getIncluded();
@@ -611,6 +617,16 @@ public interface Database {
      * The database's catalog version provider.
      */
     void setCatalogVersionProvider(CatalogVersionProvider provider);
+
+    /**
+     * The database's order provider.
+     */
+    Comparator<Definition> getOrderProvider();
+
+    /**
+     * The database's order provider.
+     */
+    void setOrderProvider(Comparator<Definition> provider);
 
     /**
      * Database objects matching any of these field names will be generated as

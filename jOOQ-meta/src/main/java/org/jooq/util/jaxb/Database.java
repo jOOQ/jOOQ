@@ -111,6 +111,9 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalogVersionProvider = "";
+    @XmlElement(defaultValue = "")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String orderProvider = "";
     protected Boolean tableValuedFunctions;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
@@ -974,6 +977,32 @@ public class Database implements Serializable
     }
 
     /**
+     * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.util.Definition} objects to determine their order.
+     * <p>
+     * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getOrderProvider() {
+        return orderProvider;
+    }
+
+    /**
+     * Sets the value of the orderProvider property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setOrderProvider(String value) {
+        this.orderProvider = value;
+    }
+
+    /**
      * Whether table valued functions should be reported as tables.
      * <p>
      * If this is deactivated, such functions are not generated as tables, but
@@ -1224,6 +1253,11 @@ public class Database implements Serializable
 
     public Database withCatalogVersionProvider(String value) {
         setCatalogVersionProvider(value);
+        return this;
+    }
+
+    public Database withOrderProvider(String value) {
+        setOrderProvider(value);
         return this;
     }
 

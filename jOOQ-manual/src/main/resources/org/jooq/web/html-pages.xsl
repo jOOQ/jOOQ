@@ -131,45 +131,24 @@ function printContent() {
             </div>
 
             <div class="row col col-100 col-red">
-				<p>
-                This page in other versions:
+                <p>
+                    <xsl:text>All versions: </xsl:text>
 
-                <xsl:for-each select="/manuals/manual[.//section[@id = $sectionID]]">
-                    <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                    <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][(@end-of-life = 'false' or not(@end-of-life)) and (@development = 'false' or not(@development))]" mode="version-links">
+                        <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                    </xsl:apply-templates>
 
-                    <xsl:variable name="position" select="position()"/>
-                    <xsl:variable name="version" select="@version"/>
-                    <xsl:variable name="manual" select="."/>
+                    <xsl:text> | Development versions: </xsl:text>
 
-                    <xsl:if test="$position > 1">
-                        <xsl:text> | </xsl:text>
-                        <xsl:if test="@end-of-life = 'true' and not(/manuals/manual[count(/manuals/manual) - $position + 2]/@end-of-life = 'true')">
-                            <xsl:text> Old, end-of-life releases: </xsl:text>
-                        </xsl:if>
-                    </xsl:if>
+                    <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][@development = 'true']" mode="version-links">
+                        <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                    </xsl:apply-templates>
 
-                    <xsl:choose>
-                        <xsl:when test="@version != $minorVersion">
-                            <xsl:variable name="href">
-                                <xsl:call-template name="replace">
-                                    <xsl:with-param name="text">
-                                        <xsl:apply-templates select="$manual//section[@id = $sectionID]" mode="href"/>
-                                    </xsl:with-param>
-                                    <xsl:with-param name="replace" select="$minorVersion"/>
-                                    <xsl:with-param name="by" select="$version"/>
-                                </xsl:call-template>
-                            </xsl:variable>
-                            <a href="{$href}">
-                                <xsl:value-of select="$version"/>
-                            </a>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <strong style="font-size: 2em">
-                                <xsl:value-of select="$version"/>
-                            </strong>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:for-each>
+                    <xsl:text> | Unsupported versions: </xsl:text>
+
+                    <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][@end-of-life = 'true']" mode="version-links">
+                        <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                    </xsl:apply-templates>
                 </p>
             </div>
 
@@ -288,5 +267,42 @@ function printContent() {
                 <xsl:value-of select="@id"/>
             </xsl:if>
         </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="manual" mode="version-links">
+        <xsl:variable name="position" select="position()"/>
+
+        <xsl:if test="$position > 1">
+            <xsl:text> | </xsl:text>
+        </xsl:if>
+
+        <xsl:apply-templates select="." mode="version-link"/>
+    </xsl:template>
+
+    <xsl:template match="manual" mode="version-link">
+        <xsl:variable name="manual" select="."/>
+
+        <xsl:choose>
+            <xsl:when test="@version != $minorVersion">
+                <xsl:variable name="href">
+                    <xsl:call-template name="replace">
+                        <xsl:with-param name="text">
+                            <xsl:apply-templates select="$manual//section[@id = $sectionID]" mode="href"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="replace" select="$minorVersion"/>
+                        <xsl:with-param name="by" select="@version"/>
+                    </xsl:call-template>
+                </xsl:variable>
+
+                <a href="{$href}">
+                    <xsl:value-of select="@version"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <strong style="font-size: 2em">
+                    <xsl:value-of select="@version"/>
+                </strong>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

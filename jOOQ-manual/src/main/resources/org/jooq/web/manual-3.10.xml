@@ -39,7 +39,7 @@
   * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
   * and Maintenance Agreement for more details: http://www.jooq.org/licensing
   -->
-<manual version="3.10" end-of-life="false">
+<manual version="3.10" end-of-life="false" development="true">
 	<section id="manual">
 		<title>The jOOQ User Manual. Multiple Pages</title>
 		<content><html>
@@ -13626,7 +13626,8 @@ public class DeleteOrUpdateWithoutWhereException extends RuntimeException {}
 try (Connection c = DSL.using(configuration).parsingConnection();
      Statement s = c.createStatement();
 
-     // This syntax is not supported in Oracle, but thanks to the parser and jOOQ, it will run on Oracle and produce the expected result
+     // This syntax is not supported in Oracle, but thanks to the parser and jOOQ,
+     // it will run on Oracle and produce the expected result
      ResultSet rs = s.executeQuery("SELECT * FROM (VALUES (1, 'a'), (2, 'b')) t(x, y)")) {
 
     while (rs.next())

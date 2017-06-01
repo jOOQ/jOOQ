@@ -41,15 +41,23 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_BULK_COLLECT_INTO;
+import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_INTO;
+import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_ROWCOUNT;
+import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
+import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.unqualify;
@@ -60,14 +68,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -190,10 +202,99 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -437,6 +538,46 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
 
                 // These dialects have full JDBC support
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

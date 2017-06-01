@@ -64,6 +64,7 @@ final class Keywords {
     static final Keyword K_BETWEEN                          = keyword("between");
     static final Keyword K_BLOB                             = keyword("blob");
     static final Keyword K_BOOLEAN                          = keyword("boolean");
+    static final Keyword K_BULK_COLLECT_INTO                = keyword("bulk collect into");
     static final Keyword K_BY                               = keyword("by");
     static final Keyword K_CASCADE                          = keyword("cascade");
     static final Keyword K_CASE                             = keyword("case");

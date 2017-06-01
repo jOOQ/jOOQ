@@ -602,25 +602,10 @@ implements
 
     private final Table<?> search(Table<?> tree, Table<?> search) {
 
-        // TODO: Another instanceof, and we should probably resort to
-        //       implementing a new org.jooq.Context to traverse the AST
-        if (tree instanceof TableImpl) {
-            TableImpl<?> t = (TableImpl<?>) tree;
-
-            if (t.alias == null && search.equals(t))
-                return t;
-            else if (t.alias != null && search.equals(t.alias.wrapped()))
-                return t;
-            else
-                return null;
-        }
-        else if (tree instanceof TableAlias) {
-            TableAlias<?> t = (TableAlias<?>) tree;
-
-            if (search.equals(t.alias.wrapped()))
-                return t;
-            else
-                return null;
+        // [#6304] Improved alias discovery
+        Alias<? extends Table<?>> alias = Tools.alias(tree);
+        if (alias != null) {
+            return search(alias.wrapped(), search);
         }
         else if (tree instanceof JoinTable) {
             JoinTable t = (JoinTable) tree;
@@ -631,8 +616,9 @@ implements
 
             return r;
         }
-
-        return tree;
+        else {
+            return search.equals(tree) ? tree : null;
+        }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

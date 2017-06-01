@@ -3735,7 +3735,7 @@ final class Tools {
             return null;
     }
 
-    static final Alias<?> alias(Table<?> table) {
+    static final Alias<? extends Table<?>> alias(Table<?> table) {
         if (table instanceof TableImpl)
             return ((TableImpl<?>) table).alias;
         else if (table instanceof TableAlias)

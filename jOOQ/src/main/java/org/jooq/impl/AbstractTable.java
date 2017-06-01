@@ -487,19 +487,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
                 result.add((ForeignKey<R, O>) reference);
             }
 
-            // TODO: Refactor the following two blocks and make things more OO
-            // [#1460] In case the other table was aliased using
-            else if (other instanceof TableImpl) {
-                Table<O> aliased = ((TableImpl<O>) other).getAliasedTable();
-
-                if (aliased != null && aliased.equals(reference.getKey().getTable())) {
-                    result.add((ForeignKey<R, O>) reference);
-                }
-            }
-
-            // [#1460] In case the other table was aliased using
-            else if (other instanceof TableAlias) {
-                Table<O> aliased = ((TableAlias<O>) other).getAliasedTable();
+            // [#1460] [#6304] In case the other table was aliased
+            else {
+                Table<O> aliased = Tools.aliased(other);
 
                 if (aliased != null && aliased.equals(reference.getKey().getTable())) {
                     result.add((ForeignKey<R, O>) reference);

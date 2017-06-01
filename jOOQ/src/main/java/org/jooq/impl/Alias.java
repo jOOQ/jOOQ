@@ -87,10 +87,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final Clause[] CLAUSES_FIELD_REFERENCE = { FIELD, FIELD_REFERENCE };
     private static final Clause[] CLAUSES_FIELD_ALIAS     = { FIELD, FIELD_ALIAS };
 
-    private final Q               wrapped;
-    private final Name            alias;
-    private final Name[]          fieldAliases;
-    private final boolean         wrapInParentheses;
+    final Q                       wrapped;
+    final Name                    alias;
+    final Name[]                  fieldAliases;
+    final boolean                 wrapInParentheses;
 
     Alias(Q wrapped, Name alias) {
         this(wrapped, alias, null, false);

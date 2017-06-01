@@ -3734,4 +3734,13 @@ final class Tools {
         else
             return null;
     }
+
+    static final Alias<?> alias(Table<?> table) {
+        if (table instanceof TableImpl)
+            return ((TableImpl<?>) table).alias;
+        else if (table instanceof TableAlias)
+            return ((TableAlias<?>) table).alias;
+        else
+            return null;
+    }
 }

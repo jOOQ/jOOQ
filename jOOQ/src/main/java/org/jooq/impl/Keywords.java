@@ -218,6 +218,7 @@ final class Keywords {
     static final Keyword K_ROWS_FROM                        = keyword("rows from");
     static final Keyword K_ROWS_ONLY                        = keyword("rows only");
     static final Keyword K_ROWS_WITH_TIES                   = keyword("rows with ties");
+    static final Keyword K_SCN                              = keyword("scn");
     static final Keyword K_SELECT                           = keyword("select");
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");

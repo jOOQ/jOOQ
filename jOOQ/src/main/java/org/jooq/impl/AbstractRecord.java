@@ -1028,14 +1028,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             throw new NullPointerException();
         }
         if (size() != that.size()) {
-            throw new ClassCastException(String.format("Trying to compare incomparable records (wrong degree):\n%s\n%s", this, that));
+            throw new ClassCastException(String.format("Trying to compare incomparable records (wrong degree):%n%s%n%s", this, that));
         }
 
         Class<?>[] thisTypes = this.fieldsRow().types();
         Class<?>[] thatTypes = that.fieldsRow().types();
 
         if (!asList(thisTypes).equals(asList(thatTypes))) {
-            throw new ClassCastException(String.format("Trying to compare incomparable records (type mismatch):\n%s\n%s", this, that));
+            throw new ClassCastException(String.format("Trying to compare incomparable records (type mismatch):%n%s%n%s", this, that));
         }
 
         for (int i = 0; i < size(); i++) {

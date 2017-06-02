@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
@@ -104,6 +105,7 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -134,8 +136,8 @@ final class AlterTableImpl extends AbstractQuery implements
     private Table<?>              renameTo;
     private Field<?>              renameColumn;
     private Field<?>              renameColumnTo;
-    private Name                  renameIndex;
-    private Name                  renameIndexTo;
+    private Index                 renameIndex;
+    private Index                 renameIndexTo;
     private Constraint            renameConstraint;
     private Constraint            renameConstraintTo;
     private Field<?>              addColumn;
@@ -205,14 +207,19 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
-    public final AlterTableImpl renameIndex(Name oldName) {
-        renameIndex = oldName;
-        return this;
+    public final AlterTableImpl renameIndex(String oldName) {
+        return renameIndex(name(oldName));
     }
 
     @Override
-    public final AlterTableImpl renameIndex(String oldName) {
-        return renameIndex(name(oldName));
+    public final AlterTableImpl renameIndex(Name oldName) {
+        return renameIndex(index(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl renameIndex(Index oldName) {
+        renameIndex = oldName;
+        return this;
     }
 
     @Override
@@ -223,6 +230,24 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl renameConstraint(String oldName) {
         return renameConstraint(name(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl to(String newName) {
+        return to(name(newName));
+    }
+
+    @Override
+    public final AlterTableImpl to(Name newName) {
+        if (renameColumn != null)
+            return to(field(newName));
+        else if (renameConstraint != null)
+            return to(constraint(newName));
+        else if (renameIndex != null) {
+            return to(index(newName));
+        }
+        else
+            throw new IllegalStateException();
     }
 
     @Override
@@ -246,22 +271,13 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
-    public final AlterTableImpl to(Name newName) {
-        if (renameColumn != null)
-            return to(field(newName));
-        else if (renameConstraint != null)
-            return to(constraint(newName));
-        else if (renameIndex != null) {
+    public final AlterTableImpl to(Index newName) {
+        if (renameIndex != null)
             renameIndexTo = newName;
-            return this;
-        }
         else
             throw new IllegalStateException();
-    }
 
-    @Override
-    public final AlterTableImpl to(String newName) {
-        return to(name(newName));
+        return this;
     }
 
     @Override
@@ -301,6 +317,11 @@ final class AlterTableImpl extends AbstractQuery implements
         addConstraint = constraint;
         return this;
     }
+
+
+
+
+
 
 
 

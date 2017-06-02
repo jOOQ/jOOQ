@@ -40,11 +40,12 @@ import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.True;
 
 /**
  * @author Lukas Eder
  */
-final class TrueCondition extends AbstractCondition {
+final class TrueCondition extends AbstractCondition implements True {
 
     private static final long     serialVersionUID = 775364624704563687L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };

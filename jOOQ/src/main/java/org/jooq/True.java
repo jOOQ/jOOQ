@@ -32,32 +32,13 @@
  *
  *
  */
-package org.jooq.impl;
-
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
-
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.False;
+package org.jooq;
 
 /**
+ * A predicate that always yields <code>true</code>.
+ *
  * @author Lukas Eder
  */
-final class FalseCondition extends AbstractCondition implements False {
+public interface True extends Condition {
 
-    private static final long     serialVersionUID = -3972466479081463547L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.sql("1 = 0");
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
-
-    FalseCondition() {}
 }

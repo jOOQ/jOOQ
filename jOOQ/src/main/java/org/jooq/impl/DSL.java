@@ -154,6 +154,7 @@ import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
+import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GroupConcatOrderByStep;
@@ -282,6 +283,7 @@ import org.jooq.SortField;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.True;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
 import org.jooq.Update;
@@ -10242,7 +10244,7 @@ public class DSL {
      * Return a <code>Condition</code> that will always evaluate to true.
      */
     @Support
-    public static Condition trueCondition() {
+    public static True trueCondition() {
         return new TrueCondition();
     }
 
@@ -10250,7 +10252,7 @@ public class DSL {
      * Return a <code>Condition</code> that will always evaluate to false.
      */
     @Support
-    public static Condition falseCondition() {
+    public static False falseCondition() {
         return new FalseCondition();
     }
 

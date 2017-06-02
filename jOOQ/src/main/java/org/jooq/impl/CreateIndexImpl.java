@@ -55,6 +55,7 @@ import static org.jooq.impl.Keywords.K_INDEX;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
 import java.util.Collection;
 
@@ -65,6 +66,7 @@ import org.jooq.Context;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
@@ -86,7 +88,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { CREATE_INDEX };
 
-    private final Name            index;
+    private final Index           index;
     private final boolean         unique;
     private final boolean         ifNotExists;
     private Table<?>              table;
@@ -94,12 +96,15 @@ final class CreateIndexImpl extends AbstractQuery implements
     private SortField<?>[]        sortFields;
     private Condition             where;
 
-    CreateIndexImpl(Configuration configuration, Name index, boolean unique, boolean ifNotExists) {
+    CreateIndexImpl(Configuration configuration, Index index, boolean unique, boolean ifNotExists) {
         super(configuration);
 
         this.index = index;
         this.unique = unique;
         this.ifNotExists = ifNotExists;
+        this.table = index.getTable();
+        this.sortFields = index.getFields().toArray(EMPTY_SORTFIELD);
+        this.where = index.getWhere();
     }
 
     // ------------------------------------------------------------------------

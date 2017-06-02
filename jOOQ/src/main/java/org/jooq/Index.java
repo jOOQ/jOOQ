@@ -34,37 +34,49 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
+import java.util.List;
 
 /**
- * The step in the <code>ALTER TABLE</code> DSL used to <code>RENAME</code>
- * indexes.
+ * A DDL index definition.
  *
  * @author Lukas Eder
  */
-public interface AlterTableRenameIndexToStep {
+public interface Index extends QueryPart {
 
     /**
-     * Specify a new index name.
+     * The name of the index.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
-    AlterTableFinalStep to(String newName);
+    String getName();
 
     /**
-     * Specify a new index name.
+     * The qualified name of this field.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
-    AlterTableFinalStep to(Name newName);
+    Name getQualifiedName();
 
     /**
-     * Specify a new index name.
+     * The unqualified name of this field.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
-    AlterTableFinalStep to(Index newName);
+    Name getUnqualifiedName();
+
+    /**
+     * The table on which this index is defined.
+     */
+    Table<?> getTable();
+
+    /**
+     * The sort field expressions on which this index is defined.
+     */
+    List<SortField<?>> getFields();
+
+    /**
+     * The condition of a filtered / partial index, or <code>null</code>, if
+     * this is an ordinary index.
+     */
+    Condition getWhere();
+
+    /**
+     * Whether this is a <code>UNIQUE</code> index.
+     */
+    boolean getUnique();
 
 }

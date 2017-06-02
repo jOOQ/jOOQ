@@ -177,6 +177,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Query;
@@ -228,21 +229,22 @@ final class Tools {
     // Empty arrays for use with Collection.toArray()
     // ------------------------------------------------------------------------
 
+    static final byte[]                     EMPTY_BYTE                    = {};
     static final Class<?>[]                 EMPTY_CLASS                   = {};
     static final Clause[]                   EMPTY_CLAUSE                  = {};
     static final Collection<?>[]            EMPTY_COLLECTION              = {};
+    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
     static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};
     static final Field<?>[]                 EMPTY_FIELD                   = {};
     static final int[]                      EMPTY_INT                     = {};
-    static final byte[]                     EMPTY_BYTE                    = {};
+    static final Name[]                     EMPTY_NAME                    = {};
     static final Param<?>[]                 EMPTY_PARAM                   = {};
     static final Query[]                    EMPTY_QUERY                   = {};
     static final QueryPart[]                EMPTY_QUERYPART               = {};
     static final Record[]                   EMPTY_RECORD                  = {};
     static final RowN[]                     EMPTY_ROWN                    = {};
-    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
+    static final SortField<?>[]             EMPTY_SORTFIELD               = {};
     static final String[]                   EMPTY_STRING                  = {};
-    static final Name[]                     EMPTY_NAME                    = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
 

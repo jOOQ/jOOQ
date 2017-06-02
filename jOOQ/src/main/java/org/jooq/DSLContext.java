@@ -8489,6 +8489,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateIndexStep createIndex(Name index);
 
     /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Index)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createIndex(Index index);
+
+    /**
      * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
      *
      * @see DSL#createIndexIfNotExists(String)
@@ -8503,6 +8511,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Name index);
+
+    /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Index)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Index index);
 
     /**
      * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
@@ -8523,6 +8539,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
      *
+     * @see DSL#createIndex(Index)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndex(Index index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
      * @see DSL#createIndex(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
@@ -8535,6 +8559,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(Name index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Index)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Index index);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -8795,6 +8827,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
      *
+     * @see DSL#alterIndex(Name)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    AlterIndexStep alterIndex(Index index);
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
      * @see DSL#alterIndexIfExists(String)
      */
     @Support({ H2, POSTGRES })
@@ -8807,6 +8847,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ H2, POSTGRES })
     AlterIndexStep alterIndexIfExists(Name index);
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    AlterIndexStep alterIndexIfExists(Index index);
 
     /**
      * Create a new DSL <code>DROP SCHEMA</code> statement.
@@ -8987,6 +9035,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropIndexOnStep dropIndex(Name index);
 
     /**
+     * Create a new DSL <code>DROP INDEX</code> statement.
+     *
+     * @see DSL#dropIndex(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropIndexOnStep dropIndex(Index index);
+
+    /**
      * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
@@ -9007,6 +9063,17 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Name index);
+
+    /**
+     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropIndexIfExists(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropIndexOnStep dropIndexIfExists(Index index);
 
     /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.

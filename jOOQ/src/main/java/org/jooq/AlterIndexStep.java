@@ -53,6 +53,18 @@ public interface AlterIndexStep {
      * <p>
      * Note that in some databases, including MySQL and SQL Server, the index
      * namespace is tied to a table, not a schema. In those databases, it is
+     * recommended to call {@link DSLContext#alterTable(String)} with
+     * {@link AlterTableStep#renameIndex(String)} instead.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    AlterIndexFinalStep renameTo(String newName);
+
+    /**
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
+     * statement.
+     * <p>
+     * Note that in some databases, including MySQL and SQL Server, the index
+     * namespace is tied to a table, not a schema. In those databases, it is
      * recommended to call {@link DSLContext#alterTable(Name)} with
      * {@link AlterTableStep#renameIndex(Name)} instead.
      */
@@ -65,9 +77,9 @@ public interface AlterIndexStep {
      * <p>
      * Note that in some databases, including MySQL and SQL Server, the index
      * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(String)} with
-     * {@link AlterTableStep#renameIndex(String)} instead.
+     * recommended to call {@link DSLContext#alterTable(Name)} with
+     * {@link AlterTableStep#renameIndex(Index)} instead.
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexFinalStep renameTo(String newName);
+    AlterIndexFinalStep renameTo(Index newName);
 }

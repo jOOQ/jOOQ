@@ -159,6 +159,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
+import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep1;
@@ -6849,6 +6850,16 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(Index)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createIndex(Index index) {
+        return using(new DefaultConfiguration()).createIndex(index);
+    }
+
+    /**
      * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
      *
      * @see DSLContext#createIndexIfNotExists(String)
@@ -6865,6 +6876,16 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Name index) {
+        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Index)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static CreateIndexStep createIndexIfNotExists(Index index) {
         return using(new DefaultConfiguration()).createIndexIfNotExists(index);
     }
 
@@ -6889,6 +6910,16 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Index)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createUniqueIndex(Index index) {
+        return using(new DefaultConfiguration()).createUniqueIndex(index);
+    }
+
+    /**
      * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
      *
      * @see DSLContext#createUniqueIndexIfNotExists(String)
@@ -6905,6 +6936,16 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Index)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
     }
 
@@ -7231,6 +7272,16 @@ public class DSL {
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
      *
+     * @see DSLContext#alterIndex(Index)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static AlterIndexStep alterIndex(Index index) {
+        return using(new DefaultConfiguration()).alterIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
      * @see DSLContext#alterIndexIfExists(String)
      */
     @Support({ H2, POSTGRES })
@@ -7245,6 +7296,16 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Name index) {
+        return using(new DefaultConfiguration()).alterIndexIfExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(Index)
+     */
+    @Support({ H2, POSTGRES })
+    public static AlterIndexStep alterIndexIfExists(Index index) {
         return using(new DefaultConfiguration()).alterIndexIfExists(index);
     }
 
@@ -7467,6 +7528,16 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(Index)
+     */
+    @Support
+    public static DropIndexOnStep dropIndex(Index index) {
+        return using(new DefaultConfiguration()).dropIndex(index);
+    }
+
+    /**
      * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
@@ -7485,10 +7556,23 @@ public class DSL {
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
      * emulated by catching (and ignoring) the relevant {@link SQLException}.
      *
-     * @see DSLContext#dropIndexIfExists(String)
+     * @see DSLContext#dropIndexIfExists(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Name index) {
+        return using(new DefaultConfiguration()).dropIndexIfExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropIndexIfExists(Index)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static DropIndexOnStep dropIndexIfExists(Index index) {
         return using(new DefaultConfiguration()).dropIndexIfExists(index);
     }
 
@@ -8893,6 +8977,14 @@ public class DSL {
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<T>(name, type);
+    }
+
+    /**
+     * Create a qualified index reference by name.
+     */
+    @Support
+    public static Index index(Name name) {
+        return new IndexImpl(name);
     }
 
     // -------------------------------------------------------------------------

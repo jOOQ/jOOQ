@@ -57,6 +57,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Table;
 
@@ -74,19 +75,20 @@ final class DropIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { DROP_INDEX };
 
-    private final Name    index;
+    private final Index   index;
     private final boolean ifExists;
     private Table<?>      on;
 
-    DropIndexImpl(Configuration configuration, Name index) {
+    DropIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);
     }
 
-    DropIndexImpl(Configuration configuration, Name index, boolean ifExists) {
+    DropIndexImpl(Configuration configuration, Index index, boolean ifExists) {
         super(configuration);
 
         this.index = index;
         this.ifExists = ifExists;
+        this.on = index.getTable();
     }
 
     // ------------------------------------------------------------------------

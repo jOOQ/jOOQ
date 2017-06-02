@@ -39,6 +39,7 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.sequence;
@@ -117,6 +118,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep1;
@@ -2966,7 +2968,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createIndex(Name index) {
-        return new CreateIndexImpl(configuration(), index, false, false);
+        return createIndex(index(index));
+    }
+
+    @Override
+    public CreateIndexStep createIndex(Index index) {
+        return new CreateIndexImpl(configuration(), index, index.getUnique(), false);
     }
 
     @Override
@@ -2976,7 +2983,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createIndexIfNotExists(Name index) {
-        return new CreateIndexImpl(configuration(), index, false, true);
+        return createIndexIfNotExists(index(index));
+    }
+
+    @Override
+    public CreateIndexStep createIndexIfNotExists(Index index) {
+        return new CreateIndexImpl(configuration(), index, index.getUnique(), true);
     }
 
     @Override
@@ -2986,6 +2998,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createUniqueIndex(Name index) {
+        return createUniqueIndex(index(index));
+    }
+
+    @Override
+    public CreateIndexStep createUniqueIndex(Index index) {
         return new CreateIndexImpl(configuration(), index, true, false);
     }
 
@@ -2996,6 +3013,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return createUniqueIndexIfNotExists(index(index));
+    }
+
+    @Override
+    public CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return new CreateIndexImpl(configuration(), index, true, true);
     }
 
@@ -3156,6 +3178,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public AlterIndexStep alterIndex(Name index) {
+        return alterIndex(index(index));
+    }
+
+    @Override
+    public AlterIndexStep alterIndex(Index index) {
         return new AlterIndexImpl(configuration(), index);
     }
 
@@ -3166,6 +3193,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public AlterIndexStep alterIndexIfExists(Name index) {
+        return alterIndexIfExists(index(index));
+    }
+
+    @Override
+    public AlterIndexStep alterIndexIfExists(Index index) {
         return new AlterIndexImpl(configuration(), index, true);
     }
 
@@ -3266,6 +3298,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropIndexOnStep dropIndex(Name index) {
+        return dropIndex(index(index));
+    }
+
+    @Override
+    public DropIndexOnStep dropIndex(Index index) {
         return new DropIndexImpl(configuration(), index);
     }
 
@@ -3276,6 +3313,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropIndexOnStep dropIndexIfExists(Name index) {
+        return dropIndexIfExists(index(index));
+    }
+
+    @Override
+    public DropIndexOnStep dropIndexIfExists(Index index) {
         return new DropIndexImpl(configuration(), index, true);
     }
 

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER_INDEX;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
@@ -58,6 +59,7 @@ import org.jooq.AlterIndexStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Index;
 import org.jooq.Name;
 
 /**
@@ -75,15 +77,15 @@ final class AlterIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { ALTER_INDEX };
 
-    private final Name            index;
+    private final Index           index;
     private final boolean         ifExists;
-    private Name                  renameTo;
+    private Index                 renameTo;
 
-    AlterIndexImpl(Configuration configuration, Name index) {
+    AlterIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);
     }
 
-    AlterIndexImpl(Configuration configuration, Name index, boolean ifExists) {
+    AlterIndexImpl(Configuration configuration, Index index, boolean ifExists) {
         super(configuration);
 
         this.index = index;
@@ -95,14 +97,19 @@ final class AlterIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final AlterIndexImpl renameTo(Name newName) {
-        this.renameTo = newName;
-        return this;
+    public final AlterIndexImpl renameTo(String newName) {
+        return renameTo(name(newName));
     }
 
     @Override
-    public final AlterIndexImpl renameTo(String newName) {
-        return renameTo(name(newName));
+    public final AlterIndexImpl renameTo(Name newName) {
+        return renameTo(index(newName));
+    }
+
+    @Override
+    public final AlterIndexImpl renameTo(Index newName) {
+        this.renameTo = newName;
+        return this;
     }
 
     // ------------------------------------------------------------------------

@@ -29,6 +29,12 @@
     <bindings if-exists="true" scd="~tns:ReferentialConstraints">
       <class ref="org.jooq.util.xml.jaxb.ReferentialConstraints"/>
     </bindings>
+    <bindings if-exists="true" scd="~tns:Indexes">
+      <class ref="org.jooq.util.xml.jaxb.Indexes"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:IndexColumnUsages">
+      <class ref="org.jooq.util.xml.jaxb.IndexColumnUsages"/>
+    </bindings>
     <bindings if-exists="true" scd="~tns:Routines">
       <class ref="org.jooq.util.xml.jaxb.Routines"/>
     </bindings>
@@ -55,6 +61,12 @@
     </bindings>
     <bindings if-exists="true" scd="~tns:ReferentialConstraint">
       <class ref="org.jooq.util.xml.jaxb.ReferentialConstraint"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Index">
+      <class ref="org.jooq.util.xml.jaxb.Index"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:IndexColumnUsage">
+      <class ref="org.jooq.util.xml.jaxb.IndexColumnUsage"/>
     </bindings>
     <bindings if-exists="true" scd="~tns:Routine">
       <class ref="org.jooq.util.xml.jaxb.Routine"/>

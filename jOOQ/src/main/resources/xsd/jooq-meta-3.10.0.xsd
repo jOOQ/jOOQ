@@ -14,6 +14,8 @@
                 <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
+                <element name="index_column_usages" type="tns:IndexColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
                 <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
             </all>
@@ -148,6 +150,44 @@
             <element name="unique_constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="Indexes">
+        <sequence>
+            <element name="index" type="tns:Index" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Index">
+        <all>
+            <element name="index_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="index_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="index_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="is_unique" type="boolean" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="IndexColumnUsages">
+        <sequence>
+            <element name="index_column_usage" type="tns:IndexColumnUsage" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="IndexColumnUsage">
+        <all>
+            <element name="index_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="index_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="index_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="column_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="ordinal_position" type="int" minOccurs="1" maxOccurs="1" />
+            <element name="is_descending" type="boolean" minOccurs="0" maxOccurs="1"/>
         </all>
     </complexType>
 

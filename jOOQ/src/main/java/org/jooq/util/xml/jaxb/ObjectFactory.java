@@ -101,6 +101,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Index }
+     *
+     */
+    public Index createIndex() {
+        return new Index();
+    }
+
+    /**
+     * Create an instance of {@link IndexColumnUsage }
+     *
+     */
+    public IndexColumnUsage createIndexColumnUsage() {
+        return new IndexColumnUsage();
+    }
+
+    /**
      * Create an instance of {@link Routine }
      *
      */

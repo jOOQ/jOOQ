@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}TableConstraints" minOccurs="0"/&gt;
  *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
  *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Indexes" minOccurs="0"/&gt;
+ *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
  *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Routines" minOccurs="0"/&gt;
  *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Parameters" minOccurs="0"/&gt;
  *       &lt;/all&gt;
@@ -80,6 +82,12 @@ public class InformationSchema implements Serializable
     @XmlElementWrapper(name = "referential_constraints")
     @XmlElement(name = "referential_constraint")
     protected List<ReferentialConstraint> referentialConstraints;
+    @XmlElementWrapper(name = "indexes")
+    @XmlElement(name = "index")
+    protected List<Index> indexes;
+    @XmlElementWrapper(name = "index_column_usages")
+    @XmlElement(name = "index_column_usage")
+    protected List<IndexColumnUsage> indexColumnUsages;
     @XmlElementWrapper(name = "routines")
     @XmlElement(name = "routine")
     protected List<Routine> routines;
@@ -162,6 +170,28 @@ public class InformationSchema implements Serializable
 
     public void setReferentialConstraints(List<ReferentialConstraint> referentialConstraints) {
         this.referentialConstraints = referentialConstraints;
+    }
+
+    public List<Index> getIndexes() {
+        if (indexes == null) {
+            indexes = new ArrayList<Index>();
+        }
+        return indexes;
+    }
+
+    public void setIndexes(List<Index> indexes) {
+        this.indexes = indexes;
+    }
+
+    public List<IndexColumnUsage> getIndexColumnUsages() {
+        if (indexColumnUsages == null) {
+            indexColumnUsages = new ArrayList<IndexColumnUsage>();
+        }
+        return indexColumnUsages;
+    }
+
+    public void setIndexColumnUsages(List<IndexColumnUsage> indexColumnUsages) {
+        this.indexColumnUsages = indexColumnUsages;
     }
 
     public List<Routine> getRoutines() {
@@ -330,6 +360,48 @@ public class InformationSchema implements Serializable
 
     public InformationSchema withReferentialConstraints(List<ReferentialConstraint> referentialConstraints) {
         setReferentialConstraints(referentialConstraints);
+        return this;
+    }
+
+    public InformationSchema withIndexes(Index... values) {
+        if (values!= null) {
+            for (Index value: values) {
+                getIndexes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withIndexes(Collection<Index> values) {
+        if (values!= null) {
+            getIndexes().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withIndexes(List<Index> indexes) {
+        setIndexes(indexes);
+        return this;
+    }
+
+    public InformationSchema withIndexColumnUsages(IndexColumnUsage... values) {
+        if (values!= null) {
+            for (IndexColumnUsage value: values) {
+                getIndexColumnUsages().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withIndexColumnUsages(Collection<IndexColumnUsage> values) {
+        if (values!= null) {
+            getIndexColumnUsages().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withIndexColumnUsages(List<IndexColumnUsage> indexColumnUsages) {
+        setIndexColumnUsages(indexColumnUsages);
         return this;
     }
 

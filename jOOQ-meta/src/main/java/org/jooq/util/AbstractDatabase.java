@@ -1507,7 +1507,8 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<IndexDefinition> r = getIndexes0();
 
-                    indexes = sort(filterExcludeInclude(r));
+                    indexes = sort(r);
+                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
                     log.info("Indexes fetched", fetchedSize(r, indexes));
                 }
                 catch (Exception e) {

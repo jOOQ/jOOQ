@@ -45,8 +45,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXB;
 
+import org.jooq.SortOrder;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.Index;
+import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.Parameter;
@@ -128,6 +131,41 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setOrdinalPosition(co.getPosition());
 
                         is.getColumns().add(column);
+                    }
+                }
+
+                for (IndexDefinition i : db.getIndexes(s)) {
+                    String indexName = i.getOutputName();
+                    TableDefinition table = i.getTable();
+                    List<IndexColumnDefinition> columns = i.getIndexColumns();
+
+                    Index index = new Index();
+                    index.setIndexCatalog(catalogName);
+                    index.setIndexSchema(schemaName);
+                    index.setIndexName(indexName);
+                    index.setTableCatalog(table.getCatalog().getOutputName());
+                    index.setTableSchema(table.getSchema().getOutputName());
+                    index.setTableName(table.getOutputName());
+                    index.setIsUnique(i.isUnique());
+
+                    is.getIndexes().add(index);
+
+                    for (int j = 0; j < columns.size(); j++) {
+                        IndexColumnDefinition indexColumn = columns.get(j);
+                        ColumnDefinition column = indexColumn.getColumn();
+
+                        IndexColumnUsage ic = new IndexColumnUsage();
+                        ic.setIndexCatalog(catalogName);
+                        ic.setIndexSchema(schemaName);
+                        ic.setIndexName(indexName);
+                        ic.setColumnName(column.getOutputName());
+                        ic.setOrdinalPosition(j + 1);
+                        ic.setIsDescending(indexColumn.getSortOrder() == SortOrder.DESC);
+                        ic.setTableCatalog(table.getCatalog().getOutputName());
+                        ic.setTableSchema(table.getSchema().getOutputName());
+                        ic.setTableName(table.getOutputName());
+
+                        is.getIndexColumnUsages().add(ic);
                     }
                 }
 

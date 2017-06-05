@@ -35,6 +35,7 @@
 
 package org.jooq.util.xml;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -51,9 +52,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.Transformer;
@@ -63,26 +68,34 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.xml.jaxb.Index;
+import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
@@ -192,6 +205,90 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        final Map<Name, SortedSet<IndexColumnUsage>> indexColumnUsage = new HashMap<Name, SortedSet<IndexColumnUsage>>();
+        for (IndexColumnUsage ic : info().getIndexColumnUsages()) {
+            Name name = name(ic.getIndexCatalog(), ic.getIndexSchema(), ic.getTableName(), ic.getIndexName());
+
+            SortedSet<IndexColumnUsage> list = indexColumnUsage.get(name);
+            if (list == null) {
+                list = new TreeSet<IndexColumnUsage>(new Comparator<IndexColumnUsage>() {
+                    @Override
+                    public int compare(IndexColumnUsage o1, IndexColumnUsage o2) {
+                        int r = 0;
+
+                        r = defaultIfNull(o1.getIndexCatalog(), "").compareTo(defaultIfNull(o2.getIndexCatalog(), ""));
+                        if (r != 0)
+                            return r;
+
+                        r = defaultIfNull(o1.getIndexSchema(), "").compareTo(defaultIfNull(o2.getIndexSchema(), ""));
+                        if (r != 0)
+                            return r;
+
+                        r = defaultIfNull(o1.getTableName(), "").compareTo(defaultIfNull(o2.getTableName(), ""));
+                        if (r != 0)
+                            return r;
+
+                        r = defaultIfNull(o1.getIndexName(), "").compareTo(defaultIfNull(o2.getIndexName(), ""));
+                        if (r != 0)
+                            return r;
+
+                        return Integer.valueOf(o1.getOrdinalPosition()).compareTo(o2.getOrdinalPosition());
+                    }
+                });
+                indexColumnUsage.put(name, list);
+            }
+
+            list.add(ic);
+        }
+
+        for (Index i : info().getIndexes()) {
+            if (getInputSchemata().contains(i.getTableSchema())) {
+                final SchemaDefinition schema = getSchema(i.getTableSchema());
+                final TableDefinition table = getTable(schema, i.getTableName());
+                final Name name = name(i.getIndexCatalog(), i.getIndexSchema(), i.getTableName(), i.getIndexName());
+
+                IndexDefinition index = new AbstractIndexDefinition(schema, i.getIndexName(), table, Boolean.TRUE.equals(i.isIsUnique())) {
+                    private final List<IndexColumnDefinition> indexColumns;
+
+                    {
+                        indexColumns = new ArrayList<IndexColumnDefinition>();
+                        SortedSet<IndexColumnUsage> list = indexColumnUsage.get(name);
+
+                        if (list != null)
+                            for (IndexColumnUsage ic : list) {
+                                ColumnDefinition column = table.getColumn(ic.getColumnName());
+
+                                if (column != null)
+                                    indexColumns.add(new DefaultIndexColumnDefinition(
+                                        this,
+                                        column,
+                                        Boolean.TRUE.equals(ic.isIsDescending()) ? SortOrder.DESC : SortOrder.ASC,
+                                        ic.getOrdinalPosition()
+                                    ));
+                                else
+                                    log.error(String.format("Column %s not found in table %s.", ic.getColumnName(), table));
+                            }
+                        else
+                            log.error(String.format("No columns found for index %s.", name));
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                };
+
+                result.add(index);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     protected void loadPrimaryKeys(DefaultRelations relations) {
         for (KeyColumnUsage usage : keyColumnUsage(PRIMARY_KEY)) {
             SchemaDefinition schema = getSchema(usage.getConstraintSchema());
@@ -224,20 +321,15 @@ public class XMLDatabase extends AbstractDatabase {
     private List<KeyColumnUsage> keyColumnUsage(TableConstraintType constraintType) {
         List<KeyColumnUsage> result = new ArrayList<KeyColumnUsage>();
 
-        for (TableConstraint constraint : info().getTableConstraints()) {
+        for (TableConstraint constraint : info().getTableConstraints())
             if (constraintType == constraint.getConstraintType()
-                    && getInputSchemata().contains(constraint.getConstraintSchema())) {
-
-                for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
+                    && getInputSchemata().contains(constraint.getConstraintSchema()))
+                for (KeyColumnUsage usage : info().getKeyColumnUsages())
                     if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
                          && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName())) {
+                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName()))
 
                         result.add(usage);
-                    }
-                }
-            }
-        }
 
         Collections.sort(result, new Comparator<KeyColumnUsage>() {
             @Override

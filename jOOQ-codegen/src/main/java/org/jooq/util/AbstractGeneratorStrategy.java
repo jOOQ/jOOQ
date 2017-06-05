@@ -120,6 +120,12 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
             sb.append(getFullJavaClassName(e.getContainer()));
         }
 
+        // Indexes
+        else if (definition instanceof IndexDefinition) {
+            sb.append(getJavaPackageName(definition.getSchema()));
+            sb.append(".Keys");
+        }
+
         // Identities
         else if (definition instanceof IdentityDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));

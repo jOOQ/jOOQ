@@ -74,6 +74,7 @@ import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
@@ -444,6 +445,16 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public TableField<R, ?> getRecordTimestamp() {
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Collections.emptyList();
     }
 
     /**

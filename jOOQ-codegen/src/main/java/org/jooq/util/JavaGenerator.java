@@ -3526,6 +3526,28 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
+        // Add index information
+        if (generateIndexes()) {
+            List<IndexDefinition> indexes = table.getIndexes();
+
+            if (!indexes.isEmpty()) {
+                final List<String> indexFullIds = out.ref(getStrategy().getFullJavaIdentifiers(indexes), 2);
+
+                if (scala) {
+                    out.println();
+                    out.tab(1).println("override def getIndexes : %s[ %s ] = {", List.class, Index.class);
+                    out.tab(2).println("return %s.asList[ %s ]([[%s]])", Arrays.class, Index.class, indexFullIds);
+                    out.tab(1).println("}");
+                }
+                else {
+                    out.tab(1).overrideInherit();
+                    out.tab(1).println("public %s<%s> getIndexes() {", List.class, Index.class);
+                    out.tab(2).println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
+                    out.tab(1).println("}");
+                }
+            }
+        }
+
         // Add primary / unique / foreign key information
         if (generateRelations()) {
             IdentityDefinition identity = table.getIdentity();

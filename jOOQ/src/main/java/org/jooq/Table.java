@@ -212,6 +212,15 @@ public interface Table<R extends Record> extends TableLike<R> {
     TableField<R, ?> getRecordTimestamp();
 
     /**
+     * Retrieve all of the table's indexes.
+     *
+     * @return All indexes. This is never <code>null</code>. Indexes that are
+     *         used to enforce a unique / primary key constraint are not
+     *         contained in this list. This method returns an unmodifiable list.
+     */
+    List<Index> getIndexes();
+
+    /**
      * Retrieve all of the table's unique keys.
      *
      * @return All keys. This is never <code>null</code>. This is never empty

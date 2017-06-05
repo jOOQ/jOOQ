@@ -111,6 +111,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includePackages          = true;
     private boolean                                                          includeUDTs              = true;
     private boolean                                                          includeSequences         = true;
+    private boolean                                                          includeIndexes           = true;
     private boolean                                                          includePrimaryKeys       = true;
     private boolean                                                          includeUniqueKeys        = true;
     private boolean                                                          includeForeignKeys       = true;
@@ -142,6 +143,7 @@ public abstract class AbstractDatabase implements Database {
     private List<SchemaDefinition>                                           schemata;
     private List<SequenceDefinition>                                         sequences;
     private List<IdentityDefinition>                                         identities;
+    private List<IndexDefinition>                                            indexes;
     private List<UniqueKeyDefinition>                                        uniqueKeys;
     private List<ForeignKeyDefinition>                                       foreignKeys;
     private List<CheckConstraintDefinition>                                  checkConstraints;
@@ -158,6 +160,8 @@ public abstract class AbstractDatabase implements Database {
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
+    private transient Map<SchemaDefinition, List<IndexDefinition>>           indexesBySchema;
+    private transient Map<TableDefinition, List<IndexDefinition>>            indexesByTable;
     private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       uniqueKeysBySchema;
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
@@ -729,6 +733,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setIncludeSequences(boolean includeSequences) {
         this.includeSequences = includeSequences;
+    }
+
+    @Override
+    public final void setIncludeIndexes(boolean includeIndexes) {
+        this.includeIndexes = includeIndexes;
+    }
+
+    @Override
+    public final boolean getIncludeIndexes() {
+        return includeIndexes;
     }
 
     @Override
@@ -1485,6 +1499,59 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<IndexDefinition> getIndexes(SchemaDefinition schema) {
+        if (indexes == null) {
+            indexes = new ArrayList<IndexDefinition>();
+
+            if (getIncludeIndexes()) {
+                try {
+                    List<IndexDefinition> r = getIndexes0();
+
+                    indexes = sort(filterExcludeInclude(r));
+                    log.info("Indexes fetched", fetchedSize(r, indexes));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching indexes", e);
+                }
+            }
+            else
+                log.info("Indexes excluded");
+        }
+
+        if (indexesBySchema == null)
+            indexesBySchema = new LinkedHashMap<SchemaDefinition, List<IndexDefinition>>();
+
+        List<IndexDefinition> result = filterSchema(indexes, schema, indexesBySchema);
+
+        if (indexesByTable == null)
+            indexesByTable = new HashMap<TableDefinition, List<IndexDefinition>>();
+
+        for (IndexDefinition index : result) {
+            List<IndexDefinition> list = indexesByTable.get(index.getTable());
+
+            if (list == null) {
+                list = new ArrayList<IndexDefinition>();
+                indexesByTable.put(index.getTable(), list);
+            }
+
+            list.add(index);
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<IndexDefinition> getIndexes(TableDefinition table) {
+
+        // Lazy initialise indexes
+        if (indexesByTable == null)
+            getIndexes(table.getSchema());
+
+        List<IndexDefinition> list = indexesByTable.get(table);
+        return list == null ? Collections.emptyList() : list;
+    }
+
+    @Override
     public final List<RoutineDefinition> getRoutines(SchemaDefinition schema) {
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();
@@ -1799,6 +1866,13 @@ public abstract class AbstractDatabase implements Database {
      * Create a new Factory
      */
     protected abstract DSLContext create0();
+
+    /**
+     * Retrieve ALL indexes from the database
+     */
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        return Collections.emptyList();
+    }
 
     /**
      * Retrieve primary keys and store them to relations

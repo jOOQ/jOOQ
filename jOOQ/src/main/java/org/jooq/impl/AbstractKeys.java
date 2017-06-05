@@ -36,29 +36,38 @@ package org.jooq.impl;
 
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.Record;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 
 /**
- * A base class for generated static references
+ * A base class for generated static references.
  * <p>
- * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly.
  *
  * @author Lukas Eder
  */
 public abstract class AbstractKeys {
 
     /**
-     * Factory method for identities
+     * Factory method for indexes.
+     */
+    protected static Index createIndex(String name, Table<?> table, SortField<?>[] sortFields, boolean unique) {
+        return new IndexImpl(DSL.name(name), table, sortFields, null, unique);
+    }
+
+    /**
+     * Factory method for identities.
      */
     protected static <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
         return new IdentityImpl<R, T>(table, field);
     }
 
     /**
-     * Factory method for unique keys
+     * Factory method for unique keys.
      */
 
     @SafeVarargs
@@ -68,7 +77,7 @@ public abstract class AbstractKeys {
     }
 
     /**
-     * Factory method for unique keys
+     * Factory method for unique keys.
      */
 
     @SafeVarargs
@@ -78,7 +87,7 @@ public abstract class AbstractKeys {
     }
 
     /**
-     * Factory method for foreign keys
+     * Factory method for foreign keys.
      */
 
     @SafeVarargs
@@ -88,7 +97,7 @@ public abstract class AbstractKeys {
     }
 
     /**
-     * Factory method for foreign keys
+     * Factory method for foreign keys.
      */
 
     @SafeVarargs

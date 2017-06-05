@@ -70,6 +70,16 @@ public interface Generator {
     void setGenerateDeprecated(boolean generateDeprecated);
 
     /**
+     * Whether indexes should be generated.
+     */
+    boolean generateIndexes();
+
+    /**
+     * Whether indexes should be generated.
+     */
+    void setGenerateIndexes(boolean generateIndexes);
+
+    /**
      * Whether foreign key relations should be resolved
      */
     boolean generateRelations();

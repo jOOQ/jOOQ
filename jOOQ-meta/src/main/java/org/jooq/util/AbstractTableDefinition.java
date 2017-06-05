@@ -80,6 +80,11 @@ implements TableDefinition {
     }
 
     @Override
+    public final List<IndexDefinition> getIndexes() {
+        return getDatabase().getIndexes(this);
+    }
+
+    @Override
     public final List<UniqueKeyDefinition> getUniqueKeys() {
         return getDatabase().getRelations().getUniqueKeys(this);
     }

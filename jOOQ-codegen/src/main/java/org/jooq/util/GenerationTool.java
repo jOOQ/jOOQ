@@ -418,6 +418,7 @@ public class GenerationTool {
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
             database.setIncludeForeignKeys(!FALSE.equals(d.isIncludeForeignKeys()));
             database.setIncludePackages(!FALSE.equals(d.isIncludePackages()));
+            database.setIncludeIndexes(!FALSE.equals(d.isIncludeIndexes()));
             database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
             database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
@@ -517,6 +518,8 @@ public class GenerationTool {
             // [#1394] The <generate/> element should be optional
             if (g.getGenerate() == null)
                 g.setGenerate(new Generate());
+            if (g.getGenerate().isIndexes() != null)
+                generator.setGenerateIndexes(g.getGenerate().isIndexes());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
             if (g.getGenerate().isDeprecated() != null)

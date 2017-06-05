@@ -456,6 +456,10 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether sequences should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeIndexes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether indexes should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includePrimaryKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether primary keys should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -816,6 +820,10 @@ type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></j
   <complexType name="Generate">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options strictly related to generated code.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="indexes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate index information.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="relations" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Primary key / foreign key relations should be generated and used.
 This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:property></appinfo></annotation>

@@ -35,6 +35,8 @@ public class Generate implements Serializable
 
     private final static long serialVersionUID = 31000L;
     @XmlElement(defaultValue = "true")
+    protected Boolean indexes = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean relations = true;
     @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
@@ -109,6 +111,30 @@ public class Generate implements Serializable
     protected Boolean emptySchemas = false;
     @XmlElement(defaultValue = "false")
     protected Boolean javaTimeTypes = false;
+
+    /**
+     * Generate index information.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIndexes() {
+        return indexes;
+    }
+
+    /**
+     * Sets the value of the indexes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIndexes(Boolean value) {
+        this.indexes = value;
+    }
 
     /**
      * Primary key / foreign key relations should be generated and used.
@@ -1024,6 +1050,11 @@ public class Generate implements Serializable
      */
     public void setJavaTimeTypes(Boolean value) {
         this.javaTimeTypes = value;
+    }
+
+    public Generate withIndexes(Boolean value) {
+        setIndexes(value);
+        return this;
     }
 
     public Generate withRelations(Boolean value) {

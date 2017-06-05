@@ -99,6 +99,16 @@ public interface Database {
     List<IdentityDefinition> getIdentities(SchemaDefinition schema);
 
     /**
+     * The indexes contained in this database.
+     */
+    List<IndexDefinition> getIndexes(SchemaDefinition schema);
+
+    /**
+     * The indexes contained in this database.
+     */
+    List<IndexDefinition> getIndexes(TableDefinition schema);
+
+    /**
      * The unique keys contained in this database.
      */
     List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
@@ -397,6 +407,16 @@ public interface Database {
      * whether primary keys should be included.
      */
     boolean getIncludePrimaryKeys();
+
+    /**
+     * whether indexes should be included.
+     */
+    void setIncludeIndexes(boolean includeIndexes);
+
+    /**
+     * whether indexes should be included.
+     */
+    boolean getIncludeIndexes();
 
     /**
      * whether sequences should be included.

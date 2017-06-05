@@ -54,6 +54,7 @@ abstract class AbstractGenerator implements Generator {
     private static final JooqLogger    log                                = JooqLogger.getLogger(AbstractGenerator.class);
 
     boolean                            generateDeprecated                 = true;
+    boolean                            generateIndexes                    = true;
     boolean                            generateRelations                  = true;
     boolean                            generateInstanceFields             = true;
     boolean                            generateGeneratedAnnotation        = true;
@@ -172,6 +173,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateDeprecated(boolean generateDeprecated) {
         this.generateDeprecated = generateDeprecated;
+    }
+
+    @Override
+    public boolean generateIndexes() {
+        return generateIndexes;
+    }
+
+    @Override
+    public void setGenerateIndexes(boolean generateIndexes) {
+        this.generateIndexes = generateIndexes;
     }
 
     @Override

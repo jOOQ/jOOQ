@@ -68,6 +68,11 @@ public interface TableDefinition extends Definition {
     ColumnDefinition getColumn(int columnIndex);
 
     /**
+     * Get the indexes for this table.
+     */
+    List<IndexDefinition> getIndexes();
+
+    /**
      * Get the primary key for this table.
      */
     UniqueKeyDefinition getPrimaryKey();

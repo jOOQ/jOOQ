@@ -65,6 +65,8 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean includeSequences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeIndexes = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includePrimaryKeys = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeUniqueKeys = true;
@@ -433,6 +435,30 @@ public class Database implements Serializable
      */
     public void setIncludeSequences(Boolean value) {
         this.includeSequences = value;
+    }
+
+    /**
+     * This flag indicates whether indexes should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeIndexes() {
+        return includeIndexes;
+    }
+
+    /**
+     * Sets the value of the includeIndexes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeIndexes(Boolean value) {
+        this.includeIndexes = value;
     }
 
     /**
@@ -1158,6 +1184,11 @@ public class Database implements Serializable
 
     public Database withIncludeSequences(Boolean value) {
         setIncludeSequences(value);
+        return this;
+    }
+
+    public Database withIncludeIndexes(Boolean value) {
+        setIncludeIndexes(value);
         return this;
     }
 

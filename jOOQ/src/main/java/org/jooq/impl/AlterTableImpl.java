@@ -76,7 +76,6 @@ import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
-import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
@@ -88,6 +87,7 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import org.jooq.AlterTableAlterStep;
@@ -619,15 +619,7 @@ final class AlterTableImpl extends AbstractQuery implements
                .visit(addColumn).sql(' ')
                .qualify(qualify);
 
-            toSQLDDLTypeDeclaration(ctx, addColumnType);
-
-            if (!addColumnType.nullable())
-                ctx.sql(' ').visit(K_NOT_NULL);
-
-            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
-            // [#3400] [#4321] ... but not in Derby, Firebird
-            else if (!asList(DERBY, FIREBIRD).contains(family))
-                ctx.sql(' ').visit(K_NULL);
+            toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
 
 
 

@@ -40,6 +40,9 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -84,6 +87,7 @@ import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
 import static org.jooq.impl.Keywords.K_DECLARE;
+import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -105,6 +109,7 @@ import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_LOOP;
+import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
 import static org.jooq.impl.Keywords.K_RAISE;
@@ -3528,6 +3533,47 @@ final class Tools {
                 break;
         }
     }
+
+    static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {
+        toSQLDDLTypeDeclaration(ctx, type);
+
+        // [#5356] Some dialects require the DEFAULT clause prior to the
+        //         NULL constraints clause
+        if (asList(HSQLDB).contains(ctx.family()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+
+        if (!type.nullable())
+            ctx.sql(' ').visit(K_NOT_NULL);
+
+            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
+            // [#3400] [#4321] ... but not in Derby, Firebird
+        else if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
+            ctx.sql(' ').visit(K_NULL);
+
+        if (type.identity()) {
+
+            // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
+            switch (ctx.family()) {
+
+
+
+
+
+                case H2:
+                case MARIADB:
+                case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
+            }
+        }
+
+        if (!asList(HSQLDB).contains(ctx.family()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+    }
+
+    private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
+        if (type.defaulted())
+            ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
+    }
+
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         String typeName = type.getTypeName(ctx.configuration());

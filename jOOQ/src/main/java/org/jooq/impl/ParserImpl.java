@@ -2343,6 +2343,8 @@ class ParserImpl implements Parser {
 
             case JOIN:
             case STRAIGHT_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 boolean on = parseKeywordIf(ctx, "ON");
 
                 if (on) {
@@ -5247,9 +5249,19 @@ class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "JOIN"))
             return JoinType.JOIN;
         else if (parseKeywordIf(ctx, "LEFT")) {
-            parseKeywordIf(ctx, "OUTER");
-            parseKeyword(ctx, "JOIN");
-            return JoinType.LEFT_OUTER_JOIN;
+            if (parseKeywordIf(ctx, "SEMI")) {
+                parseKeyword(ctx, "JOIN");
+                return JoinType.LEFT_SEMI_JOIN;
+            }
+            else if (parseKeywordIf(ctx, "ANTI")) {
+                parseKeyword(ctx, "JOIN");
+                return JoinType.LEFT_ANTI_JOIN;
+            }
+            else {
+                parseKeywordIf(ctx, "OUTER");
+                parseKeyword(ctx, "JOIN");
+                return JoinType.LEFT_OUTER_JOIN;
+            }
         }
         else if (parseKeywordIf(ctx, "RIGHT")) {
             parseKeywordIf(ctx, "OUTER");

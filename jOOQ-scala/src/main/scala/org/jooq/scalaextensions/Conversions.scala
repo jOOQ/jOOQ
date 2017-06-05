@@ -56,7 +56,7 @@ import scala.collection.convert.WrapAsScala
  * import org.jooq._
  * import org.jooq.impl._
  * import org.jooq.impl.DSL._
- * import org.jooq.examples.scala.h2.Tables._
+ * import org.jooq.examples.generated.h2.Tables._
  * import collection.JavaConversions._
  * import org.jooq.scalaextensions.Conversions._
  *
@@ -156,7 +156,7 @@ object Conversions {
   }
 
   implicit class ScalaResultQuery[R <: Record](val query : ResultQuery[R]) {
-    import _root_.scala.collection.mutable._
+    import scala.collection.mutable._
 
     def fetchAnyOption                 ()                                                         : Option[R]                   = Option(query.fetchAny)
     def fetchAnyOption[E]              (mapper : RecordMapper[_ >: R, E])                         : Option[E]                   = Option(query.fetchAny(mapper))

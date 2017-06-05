@@ -1058,6 +1058,12 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * In {@link SQLDialect#SQLITE}, this can be emulated through
      * <code><pre>[this] IS NOT [value]</pre></code>
      * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * NOT EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
+     * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
      * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN FALSE
@@ -1080,6 +1086,12 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <p>
      * In {@link SQLDialect#SQLITE}, this can be emulated through
      * <code><pre>[this] IS NOT [value]</pre></code>
+     * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * NOT EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -1104,6 +1116,12 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * In {@link SQLDialect#SQLITE}, this can be emulated through
      * <code><pre>[this] IS [value]</pre></code>
      * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
+     * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
      * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN TRUE
@@ -1126,6 +1144,12 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <p>
      * In {@link SQLDialect#SQLITE}, this can be emulated through
      * <code><pre>[this] IS [value]</pre></code>
+     * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>

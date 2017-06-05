@@ -536,18 +536,21 @@ class ParserImpl implements Parser {
 
         List<CommonTableExpression<?>> cte = new ArrayList<CommonTableExpression<?>>();
         do {
-
             Name table = parseIdentifier(ctx);
+            DerivedColumnList dcl = null;
 
-            // [#6022] Allow unquoted identifiers for columns
-            parse(ctx, '(');
-            List<Name> columnNames = parseIdentifiers(ctx);
-            parse(ctx, ')');
-            DerivedColumnList dcl = table.fields(columnNames.toArray(EMPTY_NAME));
+            if (parseIf(ctx, '(')) {
+                List<Name> columnNames = parseIdentifiers(ctx);
+                parse(ctx, ')');
+                dcl = table.fields(columnNames.toArray(EMPTY_NAME));
+            }
+
             parseKeyword(ctx, "AS");
             parse(ctx, '(');
-            cte.add(dcl.as(parseSelect(ctx)));
+            Select<?> select = parseSelect(ctx);
             parse(ctx, ')');
+
+            cte.add(dcl != null ? dcl.as(select) : table.as(select));
         }
         while (parseIf(ctx, ','));
 

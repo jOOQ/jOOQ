@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
@@ -45,13 +46,17 @@ import java.util.Set;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.SortField;
+import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
@@ -187,6 +192,55 @@ final class InformationSchemaExport {
         for (ForeignKey<?, ?> fk : t.getReferences())
             if (includedTables.contains(fk.getKey().getTable()))
                 exportKey0(result, t, fk, FOREIGN_KEY);
+
+        for (Index index : t.getIndexes())
+            exportIndex0(result, t, index);
+    }
+
+    private static final void exportIndex0(InformationSchema result, Table<?> t, Index index) {
+        org.jooq.util.xml.jaxb.Index i = new org.jooq.util.xml.jaxb.Index();
+
+        String catalogName = t.getCatalog().getName();
+        String schemaName = t.getSchema().getName();
+
+        if (!StringUtils.isBlank(catalogName)) {
+            i.setIndexCatalog(catalogName);
+            i.setTableCatalog(catalogName);
+        }
+
+        if (!StringUtils.isBlank(schemaName)) {
+            i.setIndexSchema(schemaName);
+            i.setTableSchema(schemaName);
+        }
+
+        i.setIndexName(index.getName());
+        i.setTableName(t.getName());
+        i.setIsUnique(index.getUnique());
+        result.getIndexes().add(i);
+
+        int position = 1;
+        for (SortField<?> sortField : index.getFields()) {
+            IndexColumnUsage ic = new IndexColumnUsage();
+
+            if (!StringUtils.isBlank(catalogName)) {
+                ic.setIndexCatalog(catalogName);
+                ic.setTableCatalog(catalogName);
+            }
+
+            if (!StringUtils.isBlank(schemaName)) {
+                ic.setIndexSchema(schemaName);
+                ic.setTableSchema(schemaName);
+            }
+
+            ic.setIndexName(index.getName());
+            ic.setTableName(t.getName());
+
+            ic.setOrdinalPosition(position++);
+            ic.setColumnName(sortField.getName());
+            ic.setIsDescending(sortField.getOrder() == SortOrder.DESC);
+
+            result.getIndexColumnUsages().add(ic);
+        }
     }
 
     private static final void exportKey0(InformationSchema result, Table<?> t, Key<?> key, TableConstraintType constraintType) {

@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.io.StringWriter;
@@ -52,16 +53,19 @@ import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
@@ -87,6 +91,7 @@ final class InformationSchemaMetaImpl implements Meta {
     private final List<UniqueKeyImpl<Record>>               primaryKeys;
     private final Map<Name, UniqueKeyImpl<Record>>          uniqueKeysByName;
     private final Map<Name, Name>                           referentialKeys;
+    private final Map<Name, IndexImpl>                      indexesByName;
 
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         this.configuration = configuration;
@@ -103,14 +108,12 @@ final class InformationSchemaMetaImpl implements Meta {
         this.primaryKeys = new ArrayList<UniqueKeyImpl<Record>>();
         this.uniqueKeysByName = new HashMap<Name, UniqueKeyImpl<Record>>();
         this.referentialKeys = new HashMap<Name, Name>();
+        this.indexesByName = new HashMap<Name, IndexImpl>();
 
         init(source);
     }
-public static void main(String[] args) {
-    System.out.println(String.format("x y %0$s", "abc"));
-}
-    private final void init(InformationSchema meta) {
 
+    private final void init(InformationSchema meta) {
         List<String> errors = new ArrayList<String>();
 
         // Catalogs / Schemas
@@ -185,6 +188,73 @@ public static void main(String[] args) {
                 type(typeName, length, precision, scale, nullable),
                 table
             );
+        }
+
+        // Indexes
+        // -------------------------------------------------------------------------------------------------------------
+        Map<Name, List<SortField<?>>> columnsByIndex = new HashMap<Name, List<SortField<?>>>();
+        List<IndexColumnUsage> indexColumnUsages = new ArrayList<IndexColumnUsage>(meta.getIndexColumnUsages());
+        Collections.sort(indexColumnUsages, new Comparator<IndexColumnUsage>() {
+            @Override
+            public int compare(IndexColumnUsage o1, IndexColumnUsage o2) {
+                int p1 = o1.getOrdinalPosition();
+                int p2 = o2.getOrdinalPosition();
+
+                return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
+            }
+        });
+
+        indexColumnLoop:
+        for (IndexColumnUsage ic : indexColumnUsages) {
+            Name indexName = name(ic.getIndexCatalog(), ic.getIndexSchema(), ic.getTableName(), ic.getIndexName());
+            List<SortField<?>> fields = columnsByIndex.get(indexName);
+
+            if (fields == null) {
+                fields = new ArrayList<SortField<?>>();
+                columnsByIndex.put(indexName, fields);
+            }
+
+            Name tableName = name(ic.getTableCatalog(), ic.getTableSchema(), ic.getTableName());
+            InformationSchemaTable table = tablesByName.get(tableName);
+
+            if (table == null) {
+                errors.add(String.format("Table " + tableName + " not defined for index " + indexName));
+                continue indexColumnLoop;
+            }
+
+            TableField<Record, ?> field = (TableField<Record, ?>) table.field(ic.getColumnName());
+
+            if (field == null) {
+                errors.add(String.format("Column " + ic.getColumnName() + " not defined for table " + tableName));
+                continue indexColumnLoop;
+            }
+
+            fields.add(Boolean.TRUE.equals(ic.isIsDescending()) ? field.desc() : field.asc());
+        }
+
+
+        indexLoop:
+        for (org.jooq.util.xml.jaxb.Index i : meta.getIndexes()) {
+            Name tableName = name(i.getTableCatalog(), i.getTableSchema(), i.getTableName());
+            Name indexName = name(i.getIndexCatalog(), i.getIndexSchema(), i.getTableName(), i.getIndexName());
+            InformationSchemaTable table = tablesByName.get(tableName);
+
+            if (table == null) {
+                errors.add(String.format("Table " + tableName + " not defined for index " + indexName));
+                continue indexLoop;
+            }
+
+            List<SortField<?>> c = columnsByIndex.get(indexName);
+
+            if (c == null || c.isEmpty()) {
+                errors.add(String.format("No columns defined for index " + indexName));
+                continue indexLoop;
+            }
+
+            IndexImpl index = (IndexImpl) AbstractKeys.createIndex(i.getIndexName(), table, c.toArray(EMPTY_SORTFIELD), Boolean.TRUE.equals(i.isIsUnique()));
+
+            table.indexes.add(index);
+            indexesByName.put(indexName, index);
         }
 
         // Constraints
@@ -468,9 +538,15 @@ public static void main(String[] args) {
         UniqueKey<Record>                      primaryKey;
         final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<UniqueKey<Record>>();
         final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<ForeignKey<Record, Record>>();
+        final List<Index>                      indexes          = new ArrayList<Index>();
 
         public InformationSchemaTable(String name, Schema schema) {
             super(name, schema);
+        }
+
+        @Override
+        public List<Index> getIndexes() {
+            return Collections.unmodifiableList(indexes);
         }
 
         @Override

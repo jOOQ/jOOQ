@@ -721,6 +721,7 @@ final class MetaImpl implements Meta, Serializable {
 
                 if (!indexName.equals(previousIndexName)) {
                     previousIndexName = indexName;
+                    sortFields.clear();
 
                     name = DSL.name(
                         record.get(0, String.class), // TABLE_CAT

@@ -123,7 +123,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         // Indexes
         else if (definition instanceof IndexDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Keys");
+            sb.append(".Indexes");
         }
 
         // Identities

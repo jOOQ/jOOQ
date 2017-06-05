@@ -73,7 +73,9 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -91,6 +93,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.Catalog;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
 import org.jooq.Constraint;
@@ -98,6 +101,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -105,6 +109,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -219,7 +224,7 @@ final class MetaImpl implements Meta, Serializable {
         return result;
     }
 
-    private class MetaCatalog extends CatalogImpl {
+    private final class MetaCatalog extends CatalogImpl {
 
         /**
          * Generated UID
@@ -288,7 +293,7 @@ final class MetaImpl implements Meta, Serializable {
         }
     }
 
-    private class MetaSchema extends SchemaImpl {
+    private final class MetaSchema extends SchemaImpl {
 
         /**
          * Generated UID
@@ -458,7 +463,7 @@ final class MetaImpl implements Meta, Serializable {
         }
     }
 
-    private class MetaTable extends TableImpl<Record> {
+    private final class MetaTable extends TableImpl<Record> {
 
         /**
          * Generated UID
@@ -473,6 +478,48 @@ final class MetaImpl implements Meta, Serializable {
             if (columns != null) {
                 init(columns);
             }
+        }
+
+        @Override
+        public final List<Index> getIndexes() {
+            final String schema = getSchema() == null ? null : getSchema().getName();
+            Result<Record> result = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    ResultSet rs;
+
+                    if (!inverseSchemaCatalog) {
+                        rs = meta.getIndexInfo(null, schema, getName(), false, true);
+                    }
+
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    else {
+                        rs = meta.getIndexInfo(schema, null, getName(), false, true);
+                    }
+
+                    return
+                    ctx.fetch(
+                        rs,
+                        String.class,  // TABLE_CAT
+                        String.class,  // TABLE_SCHEM
+                        String.class,  // TABLE_NAME
+                        boolean.class, // NON_UNIQUE
+                        String.class,  // INDEX_QUALIFIER
+                        String.class,  // INDEX_NAME
+                        int.class,     // TYPE
+                        int.class,     // ORDINAL_POSITION
+                        String.class,  // COLUMN_NAME
+                        String.class,  // ASC_OR_DESC
+                        long.class,    // CARDINALITY
+                        long.class,    // PAGES
+                        String.class   // FILTER_CONDITION
+                    );
+                }
+            });
+
+            // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
+            result.sortAsc(7).sortAsc(5);
+            return createIndexes(result);
         }
 
         @Override
@@ -657,6 +704,46 @@ final class MetaImpl implements Meta, Serializable {
             }
         }
 
+        private final List<Index> createIndexes(Result<Record> result) {
+            List<Index> indexes = new ArrayList<Index>();
+            List<SortField<?>> sortFields = new ArrayList<SortField<?>>();
+            String previousIndexName = null;
+            Name name = null;
+            Condition where = null;
+            boolean unique = false;
+
+            for (int i = 0; i < result.size(); i++) {
+                Record record = result.get(i);
+
+                String indexName = record.get(5, String.class); // INDEX_NAME
+                if (indexName == null)
+                    continue;
+
+                if (!indexName.equals(previousIndexName)) {
+                    previousIndexName = indexName;
+
+                    name = DSL.name(
+                        record.get(0, String.class), // TABLE_CAT
+                        record.get(1, String.class), // TABLE_SCHEM
+                        indexName
+                    );
+
+                    String filter = record.get(12, String.class); // FILTER_CONDITION
+                    where = filter != null ? condition(filter) : null;
+                    unique = !record.get(3, boolean.class); // NON_UNIQUE
+                }
+
+                Field<?> field = field(record.get(8, String.class)); // COLUMN_NAME
+                boolean desc = "D".equalsIgnoreCase(record.get(9, String.class)); // ASC_OR_DESC
+                sortFields.add(desc ? field.desc() : field.asc());
+
+                if (i + 1 == result.size() || !result.get(i + 1).get(5, String.class).equals(previousIndexName))
+                    indexes.add(new IndexImpl(name, this, sortFields.toArray(EMPTY_SORTFIELD), where, unique));
+            }
+
+            return indexes;
+        }
+
         private final void init(Result<Record> columns) {
             for (Record column : columns) {
                 String columnName = column.getValue(3, String.class); // COLUMN_NAME
@@ -686,7 +773,7 @@ final class MetaImpl implements Meta, Serializable {
         }
     }
 
-    private class MetaPrimaryKey implements UniqueKey<Record> {
+    private final class MetaPrimaryKey implements UniqueKey<Record> {
 
         /**
          * Generated UID

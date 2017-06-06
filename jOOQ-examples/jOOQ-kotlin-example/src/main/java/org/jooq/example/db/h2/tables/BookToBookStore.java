@@ -11,11 +11,13 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.db.h2.Indexes;
 import org.jooq.example.db.h2.Keys;
 import org.jooq.example.db.h2.Public;
 import org.jooq.example.db.h2.tables.records.BookToBookStoreRecord;
@@ -36,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
 
-    private static final long serialVersionUID = -1543000134;
+    private static final long serialVersionUID = 1712050974;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_TO_BOOK_STORE</code>
@@ -101,6 +103,14 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.FK_B2BS_B_ID_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
     /**

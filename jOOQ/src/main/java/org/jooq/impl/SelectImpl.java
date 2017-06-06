@@ -68,6 +68,7 @@ import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
+import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -119,7 +120,6 @@ import org.jooq.SelectSeekStepN;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWithTiesAfterOffsetStep;
 import org.jooq.SelectWithTiesStep;
-import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -672,292 +672,150 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return this;
     }
 
-// [jooq-tools] START [order-by-field-array]
+// [jooq-tools] START [order-by-orderfield-array]
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep1 orderBy(Field t1) {
-        return orderBy(new Field[] { t1 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep2 orderBy(Field t1, Field t2) {
-        return orderBy(new Field[] { t1, t2 });
+    public final SelectSeekStep1 orderBy(OrderField t1) {
+        return orderBy(new OrderField[] { t1 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep3 orderBy(Field t1, Field t2, Field t3) {
-        return orderBy(new Field[] { t1, t2, t3 });
+    public final SelectSeekStep2 orderBy(OrderField t1, OrderField t2) {
+        return orderBy(new OrderField[] { t1, t2 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep4 orderBy(Field t1, Field t2, Field t3, Field t4) {
-        return orderBy(new Field[] { t1, t2, t3, t4 });
+    public final SelectSeekStep3 orderBy(OrderField t1, OrderField t2, OrderField t3) {
+        return orderBy(new OrderField[] { t1, t2, t3 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep5 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5 });
+    public final SelectSeekStep4 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep6 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6 });
+    public final SelectSeekStep5 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep7 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7 });
+    public final SelectSeekStep6 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep8 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    public final SelectSeekStep7 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep9 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    public final SelectSeekStep8 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep10 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    public final SelectSeekStep9 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep11 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    public final SelectSeekStep10 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep12 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    public final SelectSeekStep11 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep13 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    public final SelectSeekStep12 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep14 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    public final SelectSeekStep13 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep15 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    public final SelectSeekStep14 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep16 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    public final SelectSeekStep15 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep17 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    public final SelectSeekStep16 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep18 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    public final SelectSeekStep17 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep19 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    public final SelectSeekStep18 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17, OrderField t18) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep20 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    public final SelectSeekStep19 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17, OrderField t18, OrderField t19) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep21 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    public final SelectSeekStep20 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17, OrderField t18, OrderField t19, OrderField t20) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep22 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
-        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
-    }
-
-// [jooq-tools] END [order-by-field-array]
-
-    @Override
-    public final SelectImpl orderBy(Field<?>... fields) {
-        getQuery().addOrderBy(fields);
-        return this;
-    }
-
-// [jooq-tools] START [order-by-sortfield-array]
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep1 orderBy(SortField t1) {
-        return orderBy(new SortField[] { t1 });
+    public final SelectSeekStep21 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17, OrderField t18, OrderField t19, OrderField t20, OrderField t21) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep2 orderBy(SortField t1, SortField t2) {
-        return orderBy(new SortField[] { t1, t2 });
+    public final SelectSeekStep22 orderBy(OrderField t1, OrderField t2, OrderField t3, OrderField t4, OrderField t5, OrderField t6, OrderField t7, OrderField t8, OrderField t9, OrderField t10, OrderField t11, OrderField t12, OrderField t13, OrderField t14, OrderField t15, OrderField t16, OrderField t17, OrderField t18, OrderField t19, OrderField t20, OrderField t21, OrderField t22) {
+        return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep3 orderBy(SortField t1, SortField t2, SortField t3) {
-        return orderBy(new SortField[] { t1, t2, t3 });
-    }
+// [jooq-tools] END [order-by-orderfield-array]
 
     @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep4 orderBy(SortField t1, SortField t2, SortField t3, SortField t4) {
-        return orderBy(new SortField[] { t1, t2, t3, t4 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep5 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep6 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep7 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep8 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep9 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep10 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep11 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep12 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep13 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep14 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep15 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep16 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep17 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep18 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep19 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep20 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep21 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20, SortField t21) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
-    }
-
-    @Override
-    @Generated("This method was generated using jOOQ-tools")
-    public final SelectSeekStep22 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20, SortField t21, SortField t22) {
-        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
-    }
-
-// [jooq-tools] END [order-by-sortfield-array]
-
-    @Override
-    public final SelectImpl orderBy(SortField<?>... fields) {
+    public final SelectImpl orderBy(OrderField<?>... fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl orderBy(Collection<? extends SortField<?>> fields) {
+    public final SelectImpl orderBy(Collection<? extends OrderField<?>> fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
@@ -969,21 +827,14 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(Field<?>... fields) {
+    public final SelectImpl orderSiblingsBy(OrderField<?>... fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(SortField<?>... fields) {
-        getQuery().addOrderBy(fields);
-        getQuery().setOrderBySiblings(true);
-        return this;
-    }
-
-    @Override
-    public final SelectImpl orderSiblingsBy(Collection<? extends SortField<?>> fields) {
+    public final SelectImpl orderSiblingsBy(Collection<? extends OrderField<?>> fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;

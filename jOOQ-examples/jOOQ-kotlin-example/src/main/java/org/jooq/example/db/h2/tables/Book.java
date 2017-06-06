@@ -13,11 +13,13 @@ import javax.annotation.Generated;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.db.h2.Indexes;
 import org.jooq.example.db.h2.Keys;
 import org.jooq.example.db.h2.Public;
 import org.jooq.example.db.h2.tables.records.BookRecord;
@@ -38,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -1407256897;
+    private static final long serialVersionUID = 126975315;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -56,7 +58,7 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.ID</code>.
      */
-    public final TableField<BookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_D8B3D50F_9168_4860_A3E1_2FEB0B1B4BF0)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<BookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_49E7A2A7_7321_4CE9_BC66_5FD0863DF24C)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.AUTHOR_ID</code>.
@@ -143,6 +145,14 @@ public class Book extends TableImpl<BookRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.FK_T_BOOK_AUTHOR_ID_INDEX_1, Indexes.FK_T_BOOK_CO_AUTHOR_ID_INDEX_1, Indexes.PRIMARY_KEY_1);
     }
 
     /**

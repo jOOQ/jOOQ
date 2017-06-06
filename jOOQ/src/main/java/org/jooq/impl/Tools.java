@@ -184,6 +184,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -839,13 +840,37 @@ final class Tools {
     // XXX: General utility methods
     // ------------------------------------------------------------------------
 
-    static final SortField<?>[] sortFields(Field<?>[] fields) {
+    static final <T> SortField<T> sortField(OrderField<T> field) {
+        if (field instanceof SortField)
+            return (SortField<T>) field;
+        else if (field instanceof Field)
+            return ((Field<T>) field).sortDefault();
+        else
+            throw new IllegalArgumentException("Field not supported : " + field);
+    }
+
+    static final SortField<?>[] sortFields(OrderField<?>[] fields) {
         if (fields == null)
             return null;
 
+        if (fields instanceof SortField<?>[])
+            return (SortField<?>[]) fields;
+
         SortField<?>[] result = new SortField[fields.length];
         for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].asc();
+            result[i] = sortField(fields[i]);
+
+        return result;
+    }
+
+    static final List<SortField<?>> sortFields(Collection<? extends OrderField<?>> fields) {
+        if (fields == null)
+            return null;
+
+        int size = fields.size();
+        List<SortField<?>> result = new ArrayList<SortField<?>>(size);
+        for (OrderField<?> field : fields)
+            result.add(sortField(field));
 
         return result;
     }

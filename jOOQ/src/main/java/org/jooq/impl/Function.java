@@ -83,11 +83,11 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
-import org.jooq.SortField;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
@@ -494,35 +494,15 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
-        withinGroupOrderBy.addAll(fields);
-        return this;
+    public final AggregateFunction<T> withinGroupOrderBy(OrderField<?>... fields) {
+        return withinGroupOrderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
-        withinGroupOrderBy.addAll(Arrays.asList(fields));
+    public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields) {
+        withinGroupOrderBy.addAll(Tools.sortFields(fields));
         return this;
     }
-
-    @Override
-    public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields) {
-        withinGroupOrderBy.addAll(fields);
-        return this;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -648,7 +628,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final Function<T> orderBy(Field<?>... fields) {
+    public final Function<T> orderBy(OrderField<?>... fields) {
         if (windowSpecification != null)
             windowSpecification.orderBy(fields);
         else
@@ -658,17 +638,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final Function<T> orderBy(SortField<?>... fields) {
-        if (windowSpecification != null)
-            windowSpecification.orderBy(fields);
-        else
-            withinGroupOrderBy(fields);
-
-        return this;
-    }
-
-    @Override
-    public final Function<T> orderBy(Collection<? extends SortField<?>> fields) {
+    public final Function<T> orderBy(Collection<? extends OrderField<?>> fields) {
         if (windowSpecification != null)
             windowSpecification.orderBy(fields);
         else

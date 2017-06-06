@@ -12,11 +12,13 @@ import javax.annotation.Generated;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.FilmRecord;
@@ -37,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1340097938;
+    private static final long serialVersionUID = -1430753716;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -55,7 +57,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>PUBLIC.FILM.FILMID</code>.
      */
-    public final TableField<FilmRecord, Integer> FILMID = createField("FILMID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_D447815C_93BB_46CA_B530_862FB2804A86)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FilmRecord, Integer> FILMID = createField("FILMID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_19DC280A_2BA5_4C8D_BBEC_7914EB6BE5F5)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>PUBLIC.FILM.LENGTH</code>.
@@ -112,6 +114,14 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2, Indexes.FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
     /**

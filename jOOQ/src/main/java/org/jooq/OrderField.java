@@ -34,31 +34,13 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-
-import java.util.Collection;
-
-import org.jooq.impl.DSL;
 
 /**
- * The SQL standard <code>ARRAY_AGG()</code> function.
+ * A <code>QueryPart</code> to be used exclusively in <code>ORDER BY</code>
+ * clauses.
  *
  * @author Lukas Eder
- * @see DSL#arrayAgg(Field)
  */
-public interface ArrayAggOrderByStep<T> extends AggregateFilterStep<T> {
+public interface OrderField<T> extends QueryPart {
 
-    /**
-     * Add an <code>ORDER BY</code> clause to the function.
-     */
-    @Support({ HSQLDB, POSTGRES })
-    AggregateFilterStep<T> orderBy(OrderField<?>... fields);
-
-    /**
-     * Add an <code>ORDER BY</code> clause to the function.
-     */
-    @Support({ HSQLDB, POSTGRES })
-    AggregateFilterStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

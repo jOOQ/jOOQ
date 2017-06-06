@@ -436,12 +436,12 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**
-     * Adds ordering fields, ordering by the default sort order.
+     * Adds ordering fields.
      *
      * @param fields The ordering fields
      */
     @Support
-    void addOrderBy(Field<?>... fields);
+    void addOrderBy(OrderField<?>... fields);
 
     /**
      * Adds ordering fields.
@@ -449,15 +449,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields The ordering fields
      */
     @Support
-    void addOrderBy(SortField<?>... fields);
-
-    /**
-     * Adds ordering fields.
-     *
-     * @param fields The ordering fields
-     */
-    @Support
-    void addOrderBy(Collection<? extends SortField<?>> fields);
+    void addOrderBy(Collection<? extends OrderField<?>> fields);
 
     /**
      * Adds ordering fields.

@@ -47,9 +47,9 @@ import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
-import org.jooq.SortField;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
 import org.jooq.WindowPartitionByStep;
@@ -96,16 +96,6 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
 
         return result.withinGroupOrderBy(orderBy);
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -202,20 +192,13 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
     }
 
     @Override
-    public final GroupConcatSeparatorStep orderBy(Field<?>... fields) {
-        orderBy.addAll(fields);
-        return this;
+    public final GroupConcatSeparatorStep orderBy(OrderField<?>... fields) {
+        return orderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final GroupConcatSeparatorStep orderBy(SortField<?>... fields) {
-        orderBy.addAll(Arrays.asList(fields));
-        return this;
-    }
-
-    @Override
-    public final GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields) {
-        orderBy.addAll(fields);
+    public final GroupConcatSeparatorStep orderBy(Collection<? extends OrderField<?>> fields) {
+        orderBy.addAll(Tools.sortFields(fields));
         return this;
     }
 }

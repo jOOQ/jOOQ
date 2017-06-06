@@ -67,17 +67,11 @@ public interface WindowSpecificationOrderByStep extends WindowSpecificationRowsS
      * Add an <code>ORDER BY</code> clause to the window specification.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowSpecificationRowsStep orderBy(Field<?>... fields);
+    WindowSpecificationRowsStep orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window specification.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowSpecificationRowsStep orderBy(SortField<?>... fields);
-
-    /**
-     * Add an <code>ORDER BY</code> clause to the window specification.
-     */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields);
+    WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields);
 }

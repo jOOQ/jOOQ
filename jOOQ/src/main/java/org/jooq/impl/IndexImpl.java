@@ -44,6 +44,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.SortField;
 import org.jooq.Table;
 
@@ -67,10 +68,10 @@ class IndexImpl extends AbstractQueryPart implements Index {
         this(name, null, EMPTY_SORTFIELD, null, false);
     }
 
-    IndexImpl(Name name, Table<?> table, SortField<?>[] fields, Condition where, boolean unique) {
+    IndexImpl(Name name, Table<?> table, OrderField<?>[] fields, Condition where, boolean unique) {
         this.name = name;
         this.table = table;
-        this.fields = fields;
+        this.fields = Tools.sortFields(fields);
         this.where = where;
         this.unique = unique;
     }

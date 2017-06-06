@@ -214,6 +214,7 @@ import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.Operator;
+import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
@@ -280,7 +281,6 @@ import org.jooq.SelectField;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
-import org.jooq.SortField;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -16473,7 +16473,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    public static WindowSpecificationRowsStep orderBy(SortField<?>... fields) {
+    public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
 
@@ -16481,7 +16481,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    public static WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields) {
+    public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
 

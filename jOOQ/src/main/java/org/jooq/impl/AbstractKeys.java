@@ -37,8 +37,8 @@ package org.jooq.impl;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.OrderField;
 import org.jooq.Record;
-import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -55,7 +55,7 @@ public abstract class AbstractKeys {
     /**
      * Factory method for indexes.
      */
-    protected static Index createIndex(String name, Table<?> table, SortField<?>[] sortFields, boolean unique) {
+    protected static Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
         return new IndexImpl(DSL.name(name), table, sortFields, null, unique);
     }
 

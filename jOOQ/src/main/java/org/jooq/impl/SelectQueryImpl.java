@@ -156,6 +156,7 @@ import org.jooq.JoinType;
 import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Operator;
+import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -163,7 +164,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectQuery;
-import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -1941,17 +1941,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addOrderBy(Collection<? extends SortField<?>> fields) {
-        getOrderBy().addAll(fields);
+    public final void addOrderBy(Collection<? extends OrderField<?>> fields) {
+        getOrderBy().addAll(Tools.sortFields(fields));
     }
 
     @Override
-    public final void addOrderBy(Field<?>... fields) {
-        getOrderBy().addAll(fields);
-    }
-
-    @Override
-    public final void addOrderBy(SortField<?>... fields) {
+    public final void addOrderBy(OrderField<?>... fields) {
         addOrderBy(Arrays.asList(fields));
     }
 

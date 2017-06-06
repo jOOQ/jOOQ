@@ -84,6 +84,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 // ...
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
@@ -857,12 +858,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         // (Name name, Table<?> table, SortField<?>[] sortFields, boolean unique)
         String sortFieldSeparator = "";
-        StringBuilder sortFields = new StringBuilder();
+        StringBuilder orderFields = new StringBuilder();
 
         for (IndexColumnDefinition column : index.getIndexColumns()) {
-            sortFields.append(sortFieldSeparator);
-            sortFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(null)));
-            sortFields.append(column.getSortOrder() == DESC ? ".desc()" : ".asc()");
+            orderFields.append(sortFieldSeparator);
+            orderFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(null)));
+            orderFields.append(column.getSortOrder() == DESC ? ".desc()" : "");
 
             sortFieldSeparator = ", ";
         }
@@ -874,8 +875,8 @@ public class JavaGenerator extends AbstractGenerator {
                 AbstractKeys.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
-                SortField.class,
-                sortFields,
+                OrderField.class,
+                orderFields,
                 index.isUnique()
             );
         else
@@ -884,8 +885,8 @@ public class JavaGenerator extends AbstractGenerator {
                 getStrategy().getJavaIdentifier(index),
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
-                SortField.class,
-                sortFields,
+                OrderField.class,
+                orderFields,
                 index.isUnique()
             );
     }

@@ -35,9 +35,8 @@
 package org.jooq.impl;
 
 import org.jooq.AggregateFilterStep;
-import org.jooq.Field;
+import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
-import org.jooq.SortField;
 
 /**
  * @author Lukas Eder
@@ -45,12 +44,7 @@ import org.jooq.SortField;
 final class Mode implements OrderedAggregateFunctionOfDeferredType {
 
     @Override
-    public final <T> AggregateFilterStep<T> withinGroupOrderBy(Field<T> field) {
-        return new Function<T>("mode", field.getDataType()).withinGroupOrderBy(field);
-    }
-
-    @Override
-    public final <T> AggregateFilterStep<T> withinGroupOrderBy(SortField<T> field) {
+    public final <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field) {
         return new Function<T>("mode", ((SortFieldImpl<T>) field).getField().getDataType()).withinGroupOrderBy(field);
     }
 }

@@ -11,11 +11,13 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.FilmActorRecord;
@@ -36,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -1783014959;
+    private static final long serialVersionUID = 264847594;
 
     /**
      * The reference instance of <code>PUBLIC.FILM_ACTOR</code>
@@ -96,6 +98,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7, Indexes.PRIMARY_KEY_7);
     }
 
     /**

@@ -58,7 +58,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
-import org.jooq.SortField;
+import org.jooq.OrderField;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
@@ -175,19 +175,13 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final WindowSpecificationOrderByStep orderBy(Field<?>... fields) {
-        orderBy.addAll(fields);
-        return this;
-    }
-
-    @Override
-    public final WindowSpecificationOrderByStep orderBy(SortField<?>... fields) {
+    public final WindowSpecificationOrderByStep orderBy(OrderField<?>... fields) {
         return orderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final WindowSpecificationOrderByStep orderBy(Collection<? extends SortField<?>> fields) {
-        orderBy.addAll(fields);
+    public final WindowSpecificationOrderByStep orderBy(Collection<? extends OrderField<?>> fields) {
+        orderBy.addAll(Tools.sortFields(fields));
         return this;
     }
 

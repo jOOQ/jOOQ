@@ -70,17 +70,11 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowRowsStep<T> orderBy(Field<?>... fields);
+    WindowRowsStep<T> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowRowsStep<T> orderBy(SortField<?>... fields);
-
-    /**
-     * Add an <code>ORDER BY</code> clause to the window function.
-     */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields);
+    WindowRowsStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

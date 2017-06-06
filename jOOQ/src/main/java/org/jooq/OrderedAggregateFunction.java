@@ -78,19 +78,12 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AggregateFilterStep<T> withinGroupOrderBy(Field<?>... fields);
+    AggregateFilterStep<T> withinGroupOrderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AggregateFilterStep<T> withinGroupOrderBy(SortField<?>... fields);
-
-    /**
-     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
-     * aggregate function
-     */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields);
+    AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields);
 }

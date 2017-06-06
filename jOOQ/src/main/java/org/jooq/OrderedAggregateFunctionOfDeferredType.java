@@ -66,12 +66,5 @@ public interface OrderedAggregateFunctionOfDeferredType {
      * aggregate function
      */
     @Support({ POSTGRES_9_4 })
-    <T> AggregateFilterStep<T> withinGroupOrderBy(Field<T> field);
-
-    /**
-     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
-     * aggregate function
-     */
-    @Support({ POSTGRES_9_4 })
-    <T> AggregateFilterStep<T> withinGroupOrderBy(SortField<T> field);
+    <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field);
 }

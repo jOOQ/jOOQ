@@ -43,7 +43,7 @@ package org.jooq;
  * @see Field#asc()
  * @see Field#desc()
  */
-public interface SortField<T> extends QueryPart {
+public interface SortField<T> extends OrderField<T> {
 
     /**
      * The name of this sort field

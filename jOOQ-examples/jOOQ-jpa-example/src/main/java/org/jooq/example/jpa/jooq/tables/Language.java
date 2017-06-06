@@ -11,11 +11,13 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
@@ -36,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -641241662;
+    private static final long serialVersionUID = -1952045324;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -54,7 +56,7 @@ public class Language extends TableImpl<LanguageRecord> {
     /**
      * The column <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
      */
-    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField("LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_925527C0_2EA0_41B8_A03F_BDDA372A5FF9)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField("LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_0B2F3736_FD28_4F70_9981_27E255E167DC)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>PUBLIC.LANGUAGE.NAME</code>.
@@ -96,6 +98,14 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_C);
     }
 
     /**

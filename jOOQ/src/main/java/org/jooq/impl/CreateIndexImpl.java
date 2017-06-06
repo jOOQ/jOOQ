@@ -68,6 +68,7 @@ import org.jooq.CreateIndexWhereStep;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SortField;
@@ -112,17 +113,9 @@ final class CreateIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateIndexImpl on(Table<?> t, SortField<?>... f) {
+    public final CreateIndexImpl on(Table<?> t, OrderField<?>... f) {
         this.table = t;
-        this.sortFields = f;
-
-        return this;
-    }
-
-    @Override
-    public final CreateIndexImpl on(Table<?> t, Field<?>... f) {
-        this.table = t;
-        this.fields = f;
+        this.sortFields = Tools.sortFields(f);
 
         return this;
     }

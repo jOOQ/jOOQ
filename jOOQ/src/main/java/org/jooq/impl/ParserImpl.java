@@ -2406,8 +2406,10 @@ class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "DESC"))
             sort = field.desc();
-        else if (parseKeywordIf(ctx, "ASC") || true)
+        else if (parseKeywordIf(ctx, "ASC"))
             sort = field.asc();
+        else
+            sort = field.sortDefault();
 
         if (parseKeywordIf(ctx, "NULLS FIRST"))
             sort = sort.nullsFirst();
@@ -3114,16 +3116,17 @@ class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "ARRAY")) {
             parse(ctx, '[');
 
-            List<? extends Field<? extends Object[]>> fields;
+            List<Field<?>> fields;
             if (parseIf(ctx, ']')) {
-                fields = Collections.emptyList();
+                fields = Collections.<Field<?>>emptyList();
             }
             else {
-                fields = (List) parseFields(ctx);
+                fields = parseFields(ctx);
                 parse(ctx, ']');
             }
 
-            return DSL.array(fields);
+            // Prevent "wrong" javac method bind
+            return DSL.array((Collection) fields);
         }
 
         return null;

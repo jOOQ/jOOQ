@@ -868,7 +868,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).println("val %s : %s = %s.createIndex(\"%s\", %s, Array[%s](%s), %s)",
+            out.tab(2).println("val %s : %s = %s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
                 getStrategy().getJavaIdentifier(index),
                 Index.class,
                 AbstractKeys.class,

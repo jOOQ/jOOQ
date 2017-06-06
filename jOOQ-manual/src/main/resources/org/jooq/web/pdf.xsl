@@ -559,6 +559,12 @@
 		<xsl:apply-templates mode="content"/>
 	</xsl:template>
 
+    <xsl:template match="grammar" mode="content">
+        <p>
+            The grammar is currently not supported in the PDF version of the manual. Please visit the HTML documentation to see the grammar.
+        </p>
+    </xsl:template>
+
 	<xsl:template match="@*|node()" mode="content">
 		<xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="content"/>

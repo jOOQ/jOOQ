@@ -86,6 +86,12 @@
         <xsl:value-of select="@id"/>
     </xsl:template>
 
+    <xsl:template match="grammar" mode="content">
+        <p>
+            The grammar is currently not supported in the EPUB version of the manual. Please visit the HTML documentation to see the grammar.
+        </p>
+    </xsl:template>
+
     <!-- Overridden attributes in EPUB -->
     <xsl:template match="img/@src" mode="content">
         <xsl:attribute name="src">

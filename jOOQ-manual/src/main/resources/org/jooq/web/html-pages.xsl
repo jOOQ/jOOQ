@@ -50,6 +50,7 @@
     <xsl:param name="relativePath"/>
     <xsl:param name="root"/>
     <xsl:param name="minorVersion"/>
+    <xsl:param name="bnf"/>
 
     <xsl:variable name="apos">&apos;</xsl:variable>
 

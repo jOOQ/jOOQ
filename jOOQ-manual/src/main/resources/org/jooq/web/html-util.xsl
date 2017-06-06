@@ -92,6 +92,25 @@
         </div>
     </xsl:template>
 
+    <xsl:template match="grammar" mode="content">
+        <xsl:apply-templates match="rule" mode="grammar-content"/>
+    </xsl:template>
+
+    <xsl:template match="rule" mode="grammar-content">
+        <p>
+            <strong><xsl:attribute name="id" value="@id"></xsl:attribute><xsl:value-of select="@id"/> ::=</strong>
+        </p>
+        <p>
+            <xsl:apply-templates select="@*|node()" mode="grammar-content"/>
+        </p>
+    </xsl:template>
+
+    <xsl:template match="@*|node()" mode="grammar-content">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="grammar-content"/>
+        </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="@*|node()" mode="content">
         <xsl:param name="colwidth" select="'100'"/>
         <xsl:param name="col1" select="false()"/>

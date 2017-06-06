@@ -9469,59 +9469,64 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
                             <p>
                                 A full-fledged SQL parser is available from <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> and from <reference class="org.jooq.DSLContext" anchor="#parsingConnection--" title="DSLContext.parsingConnection()"/> (see <reference id="parsing-connection" title="the manual's section about parsing connections for the latter"/>).
                             </p>
+                        </html></content>
 
-                            <h3>Goal</h3>
+                        <sections>
+                            <section id="sql-parser-api">
+                                <title>SQL Parser API</title>
+                                <content><html>
+                                    <h3>Goal</h3>
 
-                            <p>
-                                Historically, jOOQ implements an <a href="https://en.wikipedia.org/wiki/Domain-specific_language">internal domain-specific language</a> in Java, which generates SQL (an external domain-specific language) for use with JDBC. The jOOQ API is built from two parts: The <reference id="dsl-and-non-dsl" title="DSL and the model API"/> where the DSL API adds lexical convenience for programmers on top of the model API, which is really just a SQL expression tree, similar to what a SQL parser does inside of any database.
-                            </p>
+                                    <p>
+                                        Historically, jOOQ implements an <a href="https://en.wikipedia.org/wiki/Domain-specific_language">internal domain-specific language</a> in Java, which generates SQL (an external domain-specific language) for use with JDBC. The jOOQ API is built from two parts: The <reference id="dsl-and-non-dsl" title="DSL and the model API"/> where the DSL API adds lexical convenience for programmers on top of the model API, which is really just a SQL expression tree, similar to what a SQL parser does inside of any database.
+                                    </p>
 
-                            <p>
-                                With this parser, the whole set of jOOQ functionality will now also be made available to anyone who is not using jOOQ directly, including JDBC and/or JPA users, e.g. through the <reference id="parsing-connection" title="parsing connection"/>, which proxies all JDBC Connection calls to the jOOQ parser before forwarding them to the database, or through the <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> API, which allows for a more low-level access to the parser directly, e.g. for tool building on top of jOOQ.
-                            </p>
+                                    <p>
+                                        With this parser, the whole set of jOOQ functionality will now also be made available to anyone who is not using jOOQ directly, including JDBC and/or JPA users, e.g. through the <reference id="parsing-connection" title="parsing connection"/>, which proxies all JDBC Connection calls to the jOOQ parser before forwarding them to the database, or through the <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> API, which allows for a more low-level access to the parser directly, e.g. for tool building on top of jOOQ.
+                                    </p>
 
-                            <p>
-                                The possibilities are endless, including standardised, SQL string based database migrations that work on any <code>SQLDialect</code> that is supported by jOOQ.
-                            </p>
+                                    <p>
+                                        The possibilities are endless, including standardised, SQL string based database migrations that work on any <code>SQLDialect</code> that is supported by jOOQ.
+                                    </p>
 
-                            <h3>Example</h3>
+                                    <h3>Example</h3>
 
-                            <p>
-                                This parser API allows for parsing an arbitrary SQL string fragment into a variety of jOOQ API elements:
-                            </p>
+                                    <p>
+                                        This parser API allows for parsing an arbitrary SQL string fragment into a variety of jOOQ API elements:
+                                    </p>
 
-                            <ul>
-                                <li><reference class="org.jooq.Parser" anchor="#parse-java.lang-String-" title="Parser.parse(String)"/>: This produces the <reference class="org.jooq.Queries"/> type, containing a batch of queries.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseQuery-java.lang-String-" title="Parser.parseQuery(String)"/>: This produces the <reference class="org.jooq.Query"/> type, containing a single query.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseResultQuery-java.lang-String-" title="Parser.parseResultQuery(String)"/>: This produces the <reference class="org.jooq.ResultQuery"/> type, containing a single query.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseTable-java.lang-String-" title="Parser.parseTable(String)"/>: This produces the <reference class="org.jooq.Table"/> type, containing a table expression.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseField-java.lang-String-" title="Parser.parseField(String)"/>: This produces the <reference class="org.jooq.Field"/> type, containing a field expression.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseRow-java.lang-String-" title="Parser.parseRow(String)"/>: This produces the <reference class="org.jooq.Row"/> type, containing a row expression.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseCondition-java.lang-String-" title="Parser.parseCondition(String)"/>: This produces the <reference class="org.jooq.Condition"/> type, containing a condition expression.</li>
-                                <li><reference class="org.jooq.Parser" anchor="#parseName-java.lang-String-" title="Parser.parseName(String)"/>: This produces the <reference class="org.jooq.Name"/> type, containing a name expression.</li>
-                            </ul>
+                                    <ul>
+                                        <li><reference class="org.jooq.Parser" anchor="#parse-java.lang-String-" title="Parser.parse(String)"/>: This produces the <reference class="org.jooq.Queries"/> type, containing a batch of queries.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseQuery-java.lang-String-" title="Parser.parseQuery(String)"/>: This produces the <reference class="org.jooq.Query"/> type, containing a single query.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseResultQuery-java.lang-String-" title="Parser.parseResultQuery(String)"/>: This produces the <reference class="org.jooq.ResultQuery"/> type, containing a single query.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseTable-java.lang-String-" title="Parser.parseTable(String)"/>: This produces the <reference class="org.jooq.Table"/> type, containing a table expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseField-java.lang-String-" title="Parser.parseField(String)"/>: This produces the <reference class="org.jooq.Field"/> type, containing a field expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseRow-java.lang-String-" title="Parser.parseRow(String)"/>: This produces the <reference class="org.jooq.Row"/> type, containing a row expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseCondition-java.lang-String-" title="Parser.parseCondition(String)"/>: This produces the <reference class="org.jooq.Condition"/> type, containing a condition expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseName-java.lang-String-" title="Parser.parseName(String)"/>: This produces the <reference class="org.jooq.Name"/> type, containing a name expression.</li>
+                                    </ul>
 
-                            <p>
-                                The parser is able to parse any unspecified dialect to produce a jOOQ representation of the SQL expression, for instance:
-                            </p>
+                                    <p>
+                                        The parser is able to parse any unspecified dialect to produce a jOOQ representation of the SQL expression, for instance:
+                                    </p>
 
 </html><java><![CDATA[ResultQuery<?> query =
 DSL.using(configuration)
    .parser()
    .parseResultQuery("SELECT * FROM (VALUES (1, 'a'), (2, 'b')) t(a, b)")]]></java><html>
 
-                            <p>
-                                The above SQL query is valid standard SQL and runs out of the box on PostgreSQL and SQL Server, among others. The jOOQ <code>ResultQuery</code> that is generated from this SQL string, however, will also work on any other database, as jOOQ can emulate the two interesting SQL features being used here:
-                            </p>
+                                    <p>
+                                        The above SQL query is valid standard SQL and runs out of the box on PostgreSQL and SQL Server, among others. The jOOQ <code>ResultQuery</code> that is generated from this SQL string, however, will also work on any other database, as jOOQ can emulate the two interesting SQL features being used here:
+                                    </p>
 
-                            <ul>
-                                <li>The <reference id="values" title="VALUES() constructor"/></li>
-                                <li>The <reference id="aliased-tables" title="derived column list syntax"/> (aliasing table <em>and</em> columns in one go)</li>
-                            </ul>
+                                    <ul>
+                                        <li>The <reference id="values" title="VALUES() constructor"/></li>
+                                        <li>The <reference id="aliased-tables" title="derived column list syntax"/> (aliasing table <em>and</em> columns in one go)</li>
+                                    </ul>
 
-                            <p>
-                                The query might be rendered as follows on the H2 database, which supports <code>VALUES()</code>, but not derived column lists:
-                            </p>
+                                    <p>
+                                        The query might be rendered as follows on the H2 database, which supports <code>VALUES()</code>, but not derived column lists:
+                                    </p>
 
 </html><sql><![CDATA[select
   t.a,
@@ -9542,9 +9547,9 @@ from (
   )
 ) t;]]></sql><html>
 
-                            <p>
-                                Or like this on Oracle, which supports neither feature:
-                            </p>
+                                    <p>
+                                        Or like this on Oracle, which supports neither feature:
+                                    </p>
 
 </html><sql><![CDATA[select
   t.a,
@@ -9576,7 +9581,39 @@ from (
   )
 ) t;]]></sql><html>
 
-                        </html></content>
+                                </html></content>
+                            </section>
+
+                            <section id="sql-parser-grammar">
+                                <title>SQL Parser Grammar</title>
+                                <content><html>
+                                    <p>
+                                        The existing implementation of the SQL parser is a hand-written, recursive descent parser. There are great advantages of this approach over formal grammar-based, generated parsers (e.g. by using ANTLR). These advantages are, among others:
+                                    </p>
+
+                                    <ul>
+                                        <li>They can be tuned easily for performance</li>
+                                        <li>They are very simple and easy to maintain</li>
+                                        <li>It's easy to implement corner cases of the grammar, which might require context (that's a big plus with SQL)</li>
+                                        <li>It's the easiest way to bind a grammar to an existing backing expression tree implementation (which is what jOOQ really is)</li>
+                                    </ul>
+
+                                    <p>
+                                        Nevertheless, there is a grammar available for documentation purposes and it is included in the manual here:
+                                    </p>
+
+                                    <p>
+                                        (The layout of the grammar and the grammar itself is still work in progress)
+                                    </p>
+
+                                    {parser-grammar}
+
+                                    <p>
+                                        The diagrams have been created with the neat <a href="https://github.com/Chrriis/RRDiagram">RRDiagram library by Christopher Deckers</a>.
+                                    </p>
+                                </html></content>
+                            </section>
+                        </sections>
                     </section>
 
                     <section id="names">

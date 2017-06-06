@@ -5712,7 +5712,7 @@ VALUES (
 										<title>INSERT .. SET</title>
 										<content><html>
 											<p>
-												MySQL (and some other RDBMS) allow for using a non-SQL-standard, UPDATE-like syntax for INSERT statements. This is also supported in jOOQ, should you prefer that syntax. The above INSERT statement can also be expressed as follows:
+												MySQL (and some other RDBMS) allow for using a non-SQL-standard, UPDATE-like syntax for INSERT statements. This is also supported in jOOQ (and emulated for all databases), should you prefer that syntax. The above INSERT statement can also be expressed as follows:
 											</p>
 
 </html><java>create.insertInto(AUTHOR)

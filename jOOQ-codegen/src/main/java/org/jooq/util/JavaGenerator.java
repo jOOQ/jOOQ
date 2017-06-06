@@ -861,7 +861,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (IndexColumnDefinition column : index.getIndexColumns()) {
             sortFields.append(sortFieldSeparator);
-            sortFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), 3));
+            sortFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(null)));
             sortFields.append(column.getSortOrder() == DESC ? ".desc()" : ".asc()");
 
             sortFieldSeparator = ", ";

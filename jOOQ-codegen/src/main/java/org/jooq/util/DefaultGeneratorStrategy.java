@@ -35,6 +35,8 @@
 package org.jooq.util;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 
 import java.util.ArrayList;
@@ -117,7 +119,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // [#6307] Some databases work with per-table namespacing for indexes, not per-schema namespacing.
         //         In order to have non-ambiguous identifiers, we need to include the table name.
-        else if (definition instanceof IndexDefinition && asList().contains(definition.getDatabase().getDialect().family()))
+        else if (definition instanceof IndexDefinition && asList(MYSQL, MARIADB).contains(definition.getDatabase().getDialect().family()))
             return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase() + "_" + definition.getOutputName().toUpperCase();
         else
             return definition.getOutputName().toUpperCase();

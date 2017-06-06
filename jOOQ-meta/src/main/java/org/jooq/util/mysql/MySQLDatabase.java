@@ -61,18 +61,23 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultEnumDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
@@ -94,6 +99,77 @@ import org.jooq.util.mysql.mysql.tables.Proc;
 public class MySQLDatabase extends AbstractDatabase {
 
     private static final JooqLogger log = JooqLogger.getLogger(MySQLDatabase.class);
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        Map<Record, Result<Record>> indexes = create()
+            .select(
+                Statistics.TABLE_SCHEMA,
+                Statistics.TABLE_NAME,
+                Statistics.INDEX_NAME,
+                Statistics.NON_UNIQUE,
+                Statistics.COLUMN_NAME,
+                Statistics.SEQ_IN_INDEX)
+            .from(STATISTICS)
+            // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+            .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()).or(
+                  getInputSchemata().size() == 1
+                ? Statistics.TABLE_SCHEMA.in(getInputSchemata())
+                : falseCondition()))
+            .orderBy(
+                Statistics.TABLE_SCHEMA,
+                Statistics.TABLE_NAME,
+                Statistics.INDEX_NAME,
+                Statistics.SEQ_IN_INDEX)
+            .fetchGroups(
+                new Field[] {
+                    Statistics.TABLE_SCHEMA,
+                    Statistics.TABLE_NAME,
+                    Statistics.INDEX_NAME,
+                    Statistics.NON_UNIQUE
+                },
+                new Field[] {
+                    Statistics.COLUMN_NAME,
+                    Statistics.SEQ_IN_INDEX
+                });
+
+        for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
+            final Record index = entry.getKey();
+            final Result<Record> columns = entry.getValue();
+
+            final SchemaDefinition tableSchema = getSchema(index.get(Statistics.TABLE_SCHEMA));
+            final String indexName = index.get(Statistics.INDEX_NAME);
+            final String tableName = index.get(Statistics.TABLE_NAME);
+            final TableDefinition table = getTable(tableSchema, tableName);
+            final boolean unique = !index.get(Statistics.NON_UNIQUE, boolean.class);
+
+            if (table != null) {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+
+                    {
+                        for (Record column : columns) {
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                table.getColumn(column.get(Statistics.COLUMN_NAME)),
+                                SortOrder.ASC,
+                                column.get(Statistics.SEQ_IN_INDEX, int.class)
+                            ));
+                        }
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+        }
+
+        return result;
+    }
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {

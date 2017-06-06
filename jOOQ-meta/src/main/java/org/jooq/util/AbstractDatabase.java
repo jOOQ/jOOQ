@@ -1522,34 +1522,33 @@ public abstract class AbstractDatabase implements Database {
         if (indexesBySchema == null)
             indexesBySchema = new LinkedHashMap<SchemaDefinition, List<IndexDefinition>>();
 
-        List<IndexDefinition> result = filterSchema(indexes, schema, indexesBySchema);
-
-        if (indexesByTable == null)
-            indexesByTable = new HashMap<TableDefinition, List<IndexDefinition>>();
-
-        for (IndexDefinition index : result) {
-            List<IndexDefinition> list = indexesByTable.get(index.getTable());
-
-            if (list == null) {
-                list = new ArrayList<IndexDefinition>();
-                indexesByTable.put(index.getTable(), list);
-            }
-
-            list.add(index);
-        }
-
-        return result;
+        return filterSchema(indexes, schema, indexesBySchema);
     }
 
     @Override
     public final List<IndexDefinition> getIndexes(TableDefinition table) {
-
-        // Lazy initialise indexes
         if (indexesByTable == null)
-            getIndexes(table.getSchema());
+            indexesByTable = new HashMap<TableDefinition, List<IndexDefinition>>();
 
         List<IndexDefinition> list = indexesByTable.get(table);
-        return list == null ? Collections.emptyList() : list;
+        if (list == null) {
+            indexesByTable.put(table, list = new ArrayList<IndexDefinition>());
+
+            for (TableDefinition otherTable : getTables(table.getSchema()))
+                if (!indexesByTable.containsKey(otherTable))
+                    indexesByTable.put(otherTable, new ArrayList<IndexDefinition>());
+
+            for (IndexDefinition index : getIndexes(table.getSchema())) {
+                List<IndexDefinition> otherList = indexesByTable.get(index.getTable());
+
+                if (otherList == null)
+                    indexesByTable.put(index.getTable(), otherList = new ArrayList<IndexDefinition>());
+
+                otherList.add(index);
+            }
+        }
+
+        return list;
     }
 
     @Override

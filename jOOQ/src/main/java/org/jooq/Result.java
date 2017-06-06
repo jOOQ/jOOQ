@@ -1336,6 +1336,86 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Map<Record, R> intoMap(Name[] keyFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
+     * Return a {@link Map} with the given keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Field[], Field[])} instead, if your keys
+     * are non-unique.
+     *
+     * @param keys The keys. Client code must assure that keys are unique in the
+     *            result set. If this is <code>null</code> or an empty array,
+     *            the resulting map will contain at most one entry.
+     * @param values The values.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    Map<Record, Record> intoMap(Field<?>[] keys, Field<?>[] values) throws IllegalArgumentException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with the given keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(int[], int[])} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyFieldIndexes The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param valueFieldIndexes The values.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field indexes is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    Map<Record, Record> intoMap(int[] keyFieldIndexes, int[] valueFieldIndexes) throws IllegalArgumentException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with the given keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(String[], String[])} instead,
+     * if your keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param valueFieldNames The values.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    Map<Record, Record> intoMap(String[] keyFieldNames, String[] valueFieldNames) throws IllegalArgumentException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with the given keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Name[], Name[])} instead, if
+     * your keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param valueFieldNames The values.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    Map<Record, Record> intoMap(Name[] keyFieldNames, Name[] valueFieldNames) throws IllegalArgumentException, InvalidResultException;
+
+    /**
      * Return a {@link Map} with results grouped by the given keys and mapped
      * into the given entity type.
      * <p>
@@ -1688,6 +1768,25 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     <S extends Record> Map<S, R> intoMap(Table<S> table) throws IllegalArgumentException, InvalidResultException;
 
     /**
+     * Return a {@link Map} with the given key table as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Table, Table)} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyTable The key table. Client code must assure that keys are
+     *            unique in the result set. May not be <code>null</code>.
+     * @param valueTable The value table. May not be <code>null</code>.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) throws IllegalArgumentException, InvalidResultException;
+
+    /**
      * Return a {@link Map} with results grouped by the given key table and
      * mapped into the given entity type.
      * <p>
@@ -2033,6 +2132,66 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Map<Record, Result<R>> intoGroups(Name[] keyFieldNames) throws IllegalArgumentException;
 
     /**
+     * Return a {@link Map} with the result grouped by the given keys.
+     * <p>
+     * Unlike {@link #intoMap(Field[], Field[])}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keys The keys. If this is <code>null</code> or an empty array, the
+     *            resulting map will contain at most one entry.
+     * @param values The values.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Map<Record, Result<Record>> intoGroups(Field<?>[] keys, Field<?>[] values) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with the result grouped by the given keys.
+     * <p>
+     * Unlike {@link #intoMap(int[], int[])}, this method allows for non-unique keys in
+     * the result set.
+     *
+     * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param valueFieldIndexes The values.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument field indexes is
+     *             not contained in {@link #fieldsRow()}
+     */
+    Map<Record, Result<Record>> intoGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with the result grouped by the given keys.
+     * <p>
+     * Unlike {@link #intoMap(String[], String[])}, this method allows for non-unique keys
+     * in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param valueFieldNames The values.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     */
+    Map<Record, Result<Record>> intoGroups(String[] keyFieldNames, String[] valueFieldNames) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with the result grouped by the given keys.
+     * <p>
+     * Unlike {@link #intoMap(Name[], Name[])}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param valueFieldNames The values.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     */
+    Map<Record, Result<Record>> intoGroups(Name[] keyFieldNames, Name[] valueFieldNames) throws IllegalArgumentException;
+
+    /**
      * Return a {@link Map} with results grouped by the given keys and mapped
      * into the given entity type.
      * <p>
@@ -2326,6 +2485,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             contained in {@link #fieldsRow()}
      */
     <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with the result grouped by the given key table.
+     * <p>
+     * Unlike {@link #intoMap(Table, Table)}, this method allows for non-unique
+     * keys in the result set.
+     *
+     * @param keyTable The key table. May not be <code>null</code>.
+     * @param valueTable The value table. May not be <code>null</code>.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     */
+    <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) throws IllegalArgumentException;
 
     /**
      * Return a {@link Map} with results grouped by the given key table and

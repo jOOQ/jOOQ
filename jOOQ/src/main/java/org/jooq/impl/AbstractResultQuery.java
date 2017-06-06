@@ -852,6 +852,26 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final Map<Record, Record> fetchMap(Field<?>[] keys, Field<?>[] values) {
+        return fetch().intoMap(keys, values);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return fetch().intoMap(keyFieldIndexes, valueFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(String[] keyFieldNames, String[] valueFieldNames) {
+        return fetch().intoMap(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return fetch().intoMap(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
     public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
         return fetch().intoMap(keys, type);
     }
@@ -924,6 +944,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <S extends Record> Map<S, R> fetchMap(Table<S> table) {
         return fetch().intoMap(table);
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) {
+        return fetch().intoMap(keyTable, valueTable);
     }
 
     @Override
@@ -1042,6 +1067,26 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final Map<Record, Result<Record>> fetchGroups(Field<?>[] keys, Field<?>[] values) {
+        return fetch().intoGroups(keys, values);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return fetch().intoGroups(keyFieldIndexes, valueFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames) {
+        return fetch().intoGroups(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return fetch().intoGroups(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return fetch().intoGroups(keys, type);
     }
@@ -1114,6 +1159,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) {
         return fetch().intoGroups(table);
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) {
+        return fetch().intoGroups(keyTable, valueTable);
     }
 
     @Override

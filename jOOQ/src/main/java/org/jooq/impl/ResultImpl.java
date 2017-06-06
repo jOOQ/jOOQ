@@ -1540,21 +1540,56 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final Map<Record, R> intoMap(Field<?>[] keys) {
-        if (keys == null) {
+        if (keys == null)
             keys = new Field[0];
-        }
 
         Map<Record, R> map = new LinkedHashMap<Record, R>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
-            for (Field<?> field : keys) {
+            for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
-            }
 
-            if (map.put(key, record) != null) {
+            if (map.put(key, record) != null)
                 throw new InvalidResultException("Key list " + Arrays.asList(keys) + " is not unique in Result for " + this);
-            }
+        }
+
+        return map;
+    }
+
+    @Override
+    public final Map<Record, Record> intoMap(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return intoMap(fields(keyFieldIndexes), fields(valueFieldIndexes));
+    }
+
+    @Override
+    public final Map<Record, Record> intoMap(String[] keyFieldNames, String[] valueFieldNames) {
+        return intoMap(fields(keyFieldNames), fields(valueFieldNames));
+    }
+
+    @Override
+    public final Map<Record, Record> intoMap(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return intoMap(fields(keyFieldNames), fields(valueFieldNames));
+    }
+
+    @Override
+    public final Map<Record, Record> intoMap(Field<?>[] keys, Field<?>[] values) {
+        if (keys == null)
+            keys = new Field[0];
+
+        Map<Record, Record> map = new LinkedHashMap<Record, Record>();
+        for (R record : this) {
+            RecordImpl key = new RecordImpl(keys);
+            RecordImpl value = new RecordImpl(values);
+
+            for (Field<?> field : keys)
+                Tools.copyValue(key, field, record, field);
+
+            for (Field<?> field : values)
+                Tools.copyValue(value, field, record, field);
+
+            if (map.put(key, value) != null)
+                throw new InvalidResultException("Key list " + Arrays.asList(keys) + " is not unique in Result for " + this);
         }
 
         return map;
@@ -1597,21 +1632,19 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
-        if (keys == null) {
+        if (keys == null)
             keys = new Field[0];
-        }
 
         Map<List<?>, E> map = new LinkedHashMap<List<?>, E>();
 
         for (R record : this) {
             List<Object> keyValueList = new ArrayList<Object>();
-            for (Field<?> key : keys) {
-                keyValueList.add(record.get(key));
-            }
 
-            if (map.put(keyValueList, mapper.map(record)) != null) {
+            for (Field<?> key : keys)
+                keyValueList.add(record.get(key));
+
+            if (map.put(keyValueList, mapper.map(record)) != null)
                 throw new InvalidResultException("Key list " + keyValueList + " is not unique in Result for " + this);
-            }
         }
 
         return map;
@@ -1677,6 +1710,21 @@ final class ResultImpl<R extends Record> implements Result<R> {
             S key = record.into(table);
 
             if (map.put(key, record) != null)
+                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) {
+        Map<S, T> map = new LinkedHashMap<S, T>();
+
+        for (R record : this) {
+            S key = record.into(keyTable);
+            T value = record.into(valueTable);
+
+            if (map.put(key, value) != null)
                 throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
         }
 
@@ -1779,10 +1827,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
             K val = (K) record.get(keyFieldIndex);
             Result<R> result = map.get(val);
 
-            if (result == null) {
-                result = new ResultImpl<R>(configuration, fields);
-                map.put(val, result);
-            }
+            if (result == null)
+                map.put(val, result = new ResultImpl<R>(configuration, fields));
 
             result.add(record);
         }
@@ -1819,12 +1865,10 @@ final class ResultImpl<R extends Record> implements Result<R> {
         for (R record : this) {
             K k = (K) record.get(kIndex);
             V v = (V) record.get(vIndex);
-            List<V> result = map.get(k);
 
-            if (result == null) {
-                result = new ArrayList<V>();
-                map.put(k, result);
-            }
+            List<V> result = map.get(k);
+            if (result == null)
+                map.put(k, result = new ArrayList<V>());
 
             result.add(v);
         }
@@ -1879,10 +1923,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
             K keyVal = (K) record.get(keyFieldIndex);
 
             List<E> list = map.get(keyVal);
-            if (list == null) {
-                list = new ArrayList<E>();
-                map.put(keyVal, list);
-            }
+            if (list == null)
+                map.put(keyVal, list = new ArrayList<E>());
 
             list.add(mapper.map(record));
         }
@@ -1907,25 +1949,65 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final Map<Record, Result<R>> intoGroups(Field<?>[] keys) {
-        if (keys == null) {
+        if (keys == null)
             keys = new Field[0];
-        }
 
         Map<Record, Result<R>> map = new LinkedHashMap<Record, Result<R>>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
-            for (Field<?> field : keys) {
+            for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
-            }
 
             Result<R> result = map.get(key);
-            if (result == null) {
-                result = new ResultImpl<R>(configuration(), this.fields);
-                map.put(key, result);
-            }
+            if (result == null)
+                map.put(key, result = new ResultImpl<R>(configuration(), this.fields));
 
             result.add(record);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> intoGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return intoGroups(fields(keyFieldIndexes), fields(valueFieldIndexes));
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> intoGroups(String[] keyFieldNames, String[] valueFieldNames) {
+        return intoGroups(fields(keyFieldNames), fields(valueFieldNames));
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> intoGroups(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return intoGroups(fields(keyFieldNames), fields(keyFieldNames));
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> intoGroups(Field<?>[] keys, Field<?>[] values) {
+        if (keys == null)
+            keys = new Field[0];
+
+        if (values == null)
+            values = new Field[0];
+
+        Map<Record, Result<Record>> map = new LinkedHashMap<Record, Result<Record>>();
+        for (R record : this) {
+            RecordImpl key = new RecordImpl(keys);
+            RecordImpl value = new RecordImpl(values);
+
+            for (Field<?> field : keys)
+                Tools.copyValue(key, field, record, field);
+
+            for (Field<?> field : values)
+                Tools.copyValue(value, field, record, field);
+
+            Result<Record> result = map.get(key);
+            if (result == null)
+                map.put(key, result = new ResultImpl<Record>(configuration(), values));
+
+            result.add(value);
         }
 
         return map;
@@ -1968,23 +2050,19 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
-        if (keys == null) {
+        if (keys == null)
             keys = new Field[0];
-        }
 
         Map<Record, List<E>> map = new LinkedHashMap<Record, List<E>>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
-            for (Field<?> field : keys) {
+            for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
-            }
 
             List<E> list = map.get(key);
-            if (list == null) {
-                list = new ArrayList<E>();
-                map.put(key, list);
-            }
+            if (list == null)
+                map.put(key, list = new ArrayList<E>());
 
             list.add(mapper.map(record));
         }
@@ -2018,10 +2096,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
             K key = keyMapper.map(record);
 
             Result<R> result = map.get(key);
-            if (result == null) {
-                result = new ResultImpl(configuration(), fields());
-                map.put(key, result);
-            }
+            if (result == null)
+                map.put(key, result = new ResultImpl(configuration(), fields()));
 
             result.add(record);
         }
@@ -2042,10 +2118,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
             K key = keyMapper.map(record);
 
             List<V> list = map.get(key);
-            if (list == null) {
-                list = new ArrayList<V>();
-                map.put(key, list);
-            }
+            if (list == null)
+                map.put(key, list = new ArrayList<V>());
 
             list.add(valueMapper.map(record));
         }
@@ -2061,12 +2135,28 @@ final class ResultImpl<R extends Record> implements Result<R> {
             S key = record.into(table);
 
             Result<R> result = map.get(key);
-            if (result == null) {
-                result = new ResultImpl<R>(configuration(), this.fields);
-                map.put(key, result);
-            }
+            if (result == null)
+                map.put(key, result = new ResultImpl<R>(configuration(), this.fields));
 
             result.add(record);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
+        Map<S, Result<T>> map = new LinkedHashMap<S, Result<T>>();
+
+        for (R record : this) {
+            S key = record.into(keyTable);
+            T value = record.into(valueTable);
+
+            Result<T> result = map.get(key);
+            if (result == null)
+                map.put(key, result = DSL.using(configuration()).newResult(valueTable));
+
+            result.add(value);
         }
 
         return map;
@@ -2545,7 +2635,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
         }
 
         @Override
-        public int compare(R record1, R record2) {
+        public final int compare(R record1, R record2) {
             return comparator.compare((T) record1.get(fieldIndex), (T) record2.get(fieldIndex));
         }
     }
@@ -2556,7 +2646,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
     private static class NaturalComparator<T extends Comparable<? super T>> implements Comparator<T> {
 
         @Override
-        public int compare(T o1, T o2) {
+        public final int compare(T o1, T o2) {
             if (o1 == null && o2 == null) {
                 return 0;
             }

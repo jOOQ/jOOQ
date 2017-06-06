@@ -1805,25 +1805,25 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public SelectSeekLimitStep<R> seekAfter(Object... values) {
+    public final SelectSeekLimitStep<R> seekAfter(Object... values) {
         getQuery().addSeekAfter(Tools.fields(values));
         return this;
     }
 
     @Override
-    public SelectSeekLimitStep<R> seekAfter(Field<?>... fields) {
+    public final SelectSeekLimitStep<R> seekAfter(Field<?>... fields) {
         getQuery().addSeekAfter(fields);
         return this;
     }
 
     @Override
-    public SelectSeekLimitStep<R> seekBefore(Object... values) {
+    public final SelectSeekLimitStep<R> seekBefore(Object... values) {
         getQuery().addSeekBefore(Tools.fields(values));
         return this;
     }
 
     @Override
-    public SelectSeekLimitStep<R> seekBefore(Field<?>... fields) {
+    public final SelectSeekLimitStep<R> seekBefore(Field<?>... fields) {
         getQuery().addSeekBefore(fields);
         return this;
     }
@@ -2762,7 +2762,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) {
+    public final <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) {
         return getDelegate().fetchStreamInto(table);
     }
 
@@ -3221,6 +3221,26 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final Map<Record, Record> fetchMap(Field<?>[] keys, Field<?>[] values) {
+        return getDelegate().fetchMap(keys, values);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return getDelegate().fetchMap(keyFieldIndexes, valueFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(String[] keyFieldNames, String[] valueFieldNames) {
+        return getDelegate().fetchMap(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
+    public final Map<Record, Record> fetchMap(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return getDelegate().fetchMap(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
     public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
         return getDelegate().fetchMap(keys, type);
     }
@@ -3293,6 +3313,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final <S extends Record> Map<S, R> fetchMap(Table<S> table) {
         return getDelegate().fetchMap(table);
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) {
+        return getDelegate().fetchMap(keyTable, valueTable);
     }
 
     @Override
@@ -3411,6 +3436,26 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final Map<Record, Result<Record>> fetchGroups(Field<?>[] keys, Field<?>[] values) {
+        return getDelegate().fetchGroups(keys, values);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) {
+        return getDelegate().fetchGroups(keyFieldIndexes, valueFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames) {
+        return getDelegate().fetchGroups(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
+    public final Map<Record, Result<Record>> fetchGroups(Name[] keyFieldNames, Name[] valueFieldNames) {
+        return getDelegate().fetchGroups(keyFieldNames, valueFieldNames);
+    }
+
+    @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return getDelegate().fetchGroups(keys, type);
     }
@@ -3483,6 +3528,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) {
         return getDelegate().fetchGroups(table);
+    }
+
+    @Override
+    public final <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) {
+        return getDelegate().fetchGroups(keyTable, valueTable);
     }
 
     @Override

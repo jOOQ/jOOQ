@@ -48,23 +48,31 @@ import static org.jooq.util.h2.information_schema.tables.TypeInfo.TYPE_INFO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
@@ -91,6 +99,75 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.H2);
+    }
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        // Same implementation as in MySQLDatabase
+        Map<Record, Result<Record>> indexes = create()
+            .select(
+                Indexes.TABLE_SCHEMA,
+                Indexes.TABLE_NAME,
+                Indexes.INDEX_NAME,
+                Indexes.NON_UNIQUE,
+                Indexes.COLUMN_NAME,
+                Indexes.ORDINAL_POSITION,
+                Indexes.ASC_OR_DESC)
+            .from(INDEXES)
+            .where(Indexes.TABLE_SCHEMA.in(getInputSchemata()))
+            .orderBy(
+                Indexes.TABLE_SCHEMA,
+                Indexes.TABLE_NAME,
+                Indexes.INDEX_NAME,
+                Indexes.ORDINAL_POSITION)
+            .fetchGroups(
+                new Field[] {
+                    Indexes.TABLE_SCHEMA,
+                    Indexes.TABLE_NAME,
+                    Indexes.INDEX_NAME,
+                    Indexes.NON_UNIQUE
+                },
+                new Field[] {
+                    Indexes.COLUMN_NAME,
+                    Indexes.ORDINAL_POSITION
+                });
+
+        for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
+            final Record index = entry.getKey();
+            final Result<Record> columns = entry.getValue();
+
+            final SchemaDefinition tableSchema = getSchema(index.get(Indexes.TABLE_SCHEMA));
+            final String indexName = index.get(Indexes.INDEX_NAME);
+            final String tableName = index.get(Indexes.TABLE_NAME);
+            final TableDefinition table = getTable(tableSchema, tableName);
+            final boolean unique = !index.get(Indexes.NON_UNIQUE, boolean.class);
+
+            if (table != null) {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+
+                    {
+                        for (Record column : columns) {
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                table.getColumn(column.get(Indexes.COLUMN_NAME)),
+                                SortOrder.ASC,
+                                column.get(Indexes.ORDINAL_POSITION, int.class)
+                            ));
+                        }
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+        }
+
+        return result;
     }
 
     @Override

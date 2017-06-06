@@ -38,23 +38,29 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * The sorting order used in OrderByFieldLists
+ * The sorting order used in <code>ORDER BY</code> clauses.
  *
  * @author Lukas Eder
  */
 public enum SortOrder {
 
     /**
-     * Ascending sort order
+     * Ascending sort order.
      */
     @Support
     ASC("asc"),
 
     /**
-     * Descending sort order
+     * Descending sort order.
      */
     @Support
-    DESC("desc");
+    DESC("desc"),
+
+    /**;
+     * Default sort order.
+     */
+    @Support
+    DEFAULT("");
 
     private final String  sql;
     private final Keyword keyword;

@@ -395,6 +395,17 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     SortField<T> desc();
 
     /**
+     * Create a default sorted (implicit <code>ASC</code>) from this field.
+     * <p>
+     * This is the same as calling {@link #sort(SortOrder)} with
+     * {@link SortOrder#DEFAULT}
+     *
+     * @return This field as a default sorted sort field
+     */
+    @Support
+    SortField<T> sortDefault();
+
+    /**
      * Create an ascending/descending sort field from this field.
      *
      * @param order The sort order

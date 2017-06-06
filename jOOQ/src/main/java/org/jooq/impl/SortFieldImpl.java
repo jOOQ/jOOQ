@@ -127,36 +127,37 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
                     ctx.visit(nvl2(field, ifNotNull, ifNull))
-                       .sql(", ")
-                       .visit(field)
-                       .sql(' ')
-                       .visit(order.toKeyword());
+                       .sql(", ");
+
+                    acceptFieldAndOrder(ctx);
 
                     break;
                 }
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    ctx.visit(field)
-                       .sql(' ')
-                       .visit(order.toKeyword());
+                    acceptFieldAndOrder(ctx);
 
-                    if (nullsFirst) {
+                    if (nullsFirst)
                         ctx.sql(' ').visit(K_NULLS_FIRST);
-                    }
-                    else {
+                    else
                         ctx.sql(' ').visit(K_NULLS_LAST);
-                    }
 
                     break;
                 }
             }
         }
         else {
-            ctx.visit(field)
-               .sql(' ')
-               .visit(order.toKeyword());
+            acceptFieldAndOrder(ctx);
         }
+    }
+
+    private final void acceptFieldAndOrder(Context<?> ctx) {
+        ctx.visit(field);
+
+        if (order != SortOrder.DEFAULT)
+           ctx.sql(' ')
+              .visit(order.toKeyword());
     }
 
     @Override

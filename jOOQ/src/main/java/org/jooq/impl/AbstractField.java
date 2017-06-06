@@ -328,6 +328,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final SortField<T> sortDefault() {
+        return sort(SortOrder.DEFAULT);
+    }
+
+    @Override
     public final SortField<T> sort(SortOrder order) {
         return new SortFieldImpl<T>(this, order);
     }

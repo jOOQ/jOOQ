@@ -152,7 +152,7 @@ public class PostgresDatabase extends AbstractDatabase {
         PgClass irel = PG_CLASS.as("irel");
         PgNamespace tnsp = PG_NAMESPACE.as("tnsp");
 
-        for (Record5<String, String, String, Boolean, String[]> record : create()
+        for (Record6<String, String, String, Boolean, String[], Integer[]> record : create()
                 .select(
                     tnsp.NSPNAME,
                     trel.RELNAME,
@@ -162,7 +162,8 @@ public class PostgresDatabase extends AbstractDatabase {
                         select(field("pg_get_indexdef({0}, k + 1, true)", String.class, i.INDEXRELID))
                         .from("generate_subscripts({0}, 1) as k", i.INDKEY)
                         .orderBy(field("k"))
-                    ).as("columns")
+                    ).as("columns"),
+                    field("{0}::int[]", Integer[].class, i.INDOPTION).as("asc_or_desc")
                 )
                 .from(i)
                 .join(irel).on(oid(irel).eq(i.INDEXRELID))
@@ -174,6 +175,7 @@ public class PostgresDatabase extends AbstractDatabase {
             final String indexName = record.get(irel.RELNAME);
             final String tableName = record.get(trel.RELNAME);
             final String[] columns = record.value5();
+            final Integer[] options = record.value6();
             final TableDefinition table = getTable(tableSchema, tableName);
             final boolean unique = record.get(i.INDISUNIQUE);
 
@@ -184,11 +186,12 @@ public class PostgresDatabase extends AbstractDatabase {
                     {
                         for (int ordinal = 0; ordinal < columns.length; ordinal++) {
                             String column = columns[ordinal];
+                            SortOrder order = (options[ordinal] & 1) == 1 ? SortOrder.DESC : SortOrder.ASC;
 
                             indexColumns.add(new DefaultIndexColumnDefinition(
                                 this,
                                 table.getColumn(column),
-                                SortOrder.ASC,
+                                order,
                                 ordinal + 1
                             ));
                         }

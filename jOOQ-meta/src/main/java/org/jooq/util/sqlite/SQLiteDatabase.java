@@ -34,6 +34,10 @@
  */
 package org.jooq.util.sqlite;
 
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.util.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
 import java.sql.SQLException;
@@ -41,18 +45,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
@@ -85,6 +97,75 @@ public class SQLiteDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.SQLITE);
+    }
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        Field<String> fIndexName = field("il.name", String.class).as("index_name");
+        Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as("unique");
+        Field<Integer> fSeqno = field("ii.seqno", int.class).add(one()).as("seqno");
+        Field<String> fColumnName = field("ii.name", String.class).as("column_name");
+
+        Map<Record, Result<Record>> indexes = create()
+            .select(
+                SQLiteMaster.NAME,
+                fIndexName,
+                fUnique,
+                fSeqno,
+                fColumnName)
+            .from(
+                SQLITE_MASTER,
+                table("pragma_index_list({0})", SQLiteMaster.NAME).as("il"),
+                table("pragma_index_info(il.name)").as("ii"))
+            .where(SQLiteMaster.TYPE.eq(inline("table")))
+            .orderBy(1, 2, 4)
+            .fetchGroups(
+                new Field[] {
+                    SQLiteMaster.NAME,
+                    fIndexName,
+                    fUnique
+                },
+                new Field[] {
+                    fColumnName,
+                    fSeqno
+                });
+
+        for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
+            final Record index = entry.getKey();
+            final Result<Record> columns = entry.getValue();
+
+            final SchemaDefinition tableSchema = getSchemata().get(0);
+            final String indexName = index.get(fIndexName);
+            final String tableName = index.get(SQLiteMaster.NAME);
+            final TableDefinition table = getTable(tableSchema, tableName);
+            final boolean unique = index.get(fUnique);
+
+            if (table != null) {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+
+                    {
+                        for (Record column : columns) {
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                table.getColumn(column.get(fColumnName)),
+                                SortOrder.ASC,
+                                column.get(fSeqno, int.class)
+                            ));
+                        }
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+        }
+
+        return result;
     }
 
     @Override

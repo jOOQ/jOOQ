@@ -186,6 +186,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     {
                         for (int ordinal = 0; ordinal < columns.length; ordinal++) {
                             String column = columns[ordinal];
+
+                            // [#6307] Some background info on this bitwise operation here:
+                            // https://stackoverflow.com/a/18128104/521799
                             SortOrder order = (options[ordinal] & 1) == 1 ? SortOrder.DESC : SortOrder.ASC;
 
                             indexColumns.add(new DefaultIndexColumnDefinition(

@@ -186,7 +186,6 @@ fun main(args: Array<String>) {
             }
 
         // If you parse a SQL (multiline) string with jOOQ, jOOQ will try to translate the syntax to
-        // the target dialect.
         header("Using multiline strings with the parser")
         val colX = field("x")
         val colY = field("y")

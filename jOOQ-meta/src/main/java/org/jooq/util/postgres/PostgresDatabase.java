@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
@@ -66,6 +67,7 @@ import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_CONSTRAINT;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_INDEX;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_INHERITS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_PROC;
@@ -88,10 +90,12 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SortOrder;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -100,10 +104,13 @@ import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultDomainDefinition;
 import org.jooq.util.DefaultEnumDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
@@ -116,6 +123,7 @@ import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
 import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
+import org.jooq.util.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.util.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.util.postgres.pg_catalog.tables.PgType;
@@ -134,6 +142,68 @@ public class PostgresDatabase extends AbstractDatabase {
     private static Boolean is84;
     private static Boolean is94;
     private static Boolean canCastToEnumType;
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        PgIndex i = PG_INDEX.as("i");
+        PgClass trel = PG_CLASS.as("trel");
+        PgClass irel = PG_CLASS.as("irel");
+        PgNamespace tnsp = PG_NAMESPACE.as("tnsp");
+
+        for (Record5<String, String, String, Boolean, String[]> record : create()
+                .select(
+                    tnsp.NSPNAME,
+                    trel.RELNAME,
+                    irel.RELNAME,
+                    i.INDISUNIQUE,
+                    array(
+                        select(field("pg_get_indexdef({0}, k + 1, true)", String.class, i.INDEXRELID))
+                        .from("generate_subscripts({0}, 1) as k", i.INDKEY)
+                        .orderBy(field("k"))
+                    ).as("columns")
+                )
+                .from(i)
+                .join(irel).on(oid(irel).eq(i.INDEXRELID))
+                .join(trel).on(oid(trel).eq(i.INDRELID))
+                .join(tnsp).on(oid(tnsp).eq(trel.RELNAMESPACE))
+                .orderBy(1, 2, 3)) {
+
+            final SchemaDefinition tableSchema = getSchema(record.get(tnsp.NSPNAME));
+            final String indexName = record.get(irel.RELNAME);
+            final String tableName = record.get(trel.RELNAME);
+            final String[] columns = record.value5();
+            final TableDefinition table = getTable(tableSchema, tableName);
+            final boolean unique = record.get(i.INDISUNIQUE);
+
+            if (table != null) {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+
+                    {
+                        for (int ordinal = 0; ordinal < columns.length; ordinal++) {
+                            String column = columns[ordinal];
+
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                table.getColumn(column),
+                                SortOrder.ASC,
+                                ordinal + 1
+                            ));
+                        }
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+        }
+
+        return result;
+    }
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {

@@ -17905,11 +17905,7 @@ CREATE TABLE book_to_book_store (
                     </section>
 
                     <section id="xmlgenerator">
-<<<<<<< HEAD
                         <title>XMLGenerator: Generating XML</title>
-=======
-                        <title>Generating XML</title>
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq-website.git
                         <content><html>
                             <p>
                                 By default the code generator produces Java files for use with the jOOQ API as documented throughout this manual. In some cases, however, it may be desireable to generate other meta data formats, such as an XML document. This can be done with the <code>XMLGenerator</code>.

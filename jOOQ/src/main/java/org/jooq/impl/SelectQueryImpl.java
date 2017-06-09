@@ -79,7 +79,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SortOrder.ASC;
+import static org.jooq.SortOrder.DESC;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
 import static org.jooq.impl.CombineOperator.INTERSECT;
@@ -1835,12 +1835,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // predicates can be applied, which can be heavily optimised on some
             // databases.
             if (o.size() > 1 && o.uniform()) {
-                if (o.get(0).getOrder() == ASC ^ seekBefore) {
+                if (o.get(0).getOrder() != DESC ^ seekBefore)
                     c = row(o.fields()).gt(row(getSeek()));
-                }
-                else {
+                else
                     c = row(o.fields()).lt(row(getSeek()));
-                }
             }
 
             // With alternating sorting, the SEEK clause has to be explicitly
@@ -1851,18 +1849,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 for (int i = 0; i < o.size(); i++) {
                     ConditionProviderImpl and = new ConditionProviderImpl();
 
-                    for (int j = 0; j < i; j++) {
-                        SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(j);
-                        and.addConditions(((Field) s.getField()).eq(getSeek().get(j)));
-                    }
+                    for (int j = 0; j < i; j++)
+                        and.addConditions(((Field) ((SortFieldImpl<?>) o.get(j)).getField()).eq(getSeek().get(j)));
 
                     SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
-                    if (s.getOrder() == ASC ^ seekBefore) {
+                    if (s.getOrder() != DESC ^ seekBefore)
                         and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
-                    }
-                    else {
+                    else
                         and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
-                    }
 
                     or.addConditions(OR, and);
                 }

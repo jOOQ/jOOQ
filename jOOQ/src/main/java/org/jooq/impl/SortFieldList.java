@@ -35,6 +35,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SortOrder.DESC;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -76,7 +78,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      */
     final boolean uniform() {
         for (SortField<?> field : this)
-            if (field.getOrder() != get(0).getOrder())
+            if ((field.getOrder() == DESC) != (get(0).getOrder() == DESC))
                 return false;
 
         return true;

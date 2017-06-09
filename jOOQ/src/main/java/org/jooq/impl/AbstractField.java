@@ -265,12 +265,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final <Z> Field<Z> cast(DataType<Z> type) {
 
         // [#473] Prevent unnecessary casts
-        if (getDataType().equals(type)) {
+        if (getDataType().equals(type))
             return (Field<Z>) this;
-        }
-        else {
+        else
             return new Cast<Z>(this, type);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -278,12 +276,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final <Z> Field<Z> cast(Class<Z> type) {
 
         // [#2597] Prevent unnecessary casts
-        if (getType() == type) {
+        if (getType() == type)
             return (Field<Z>) this;
-        }
-        else {
+        else
             return cast(DefaultDataType.getDataType(null, type));
-        }
     }
 
     // ------------------------------------------------------------------------
@@ -300,12 +296,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final <Z> Field<Z> coerce(DataType<Z> type) {
 
         // [#473] Prevent unnecessary coercions
-        if (getDataType().equals(type)) {
+        if (getDataType().equals(type))
             return (Field<Z>) this;
-        }
-        else {
+        else
             return new Coerce<Z>(this, type);
-        }
     }
 
     @Override
@@ -342,9 +336,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Map<T, Integer> map = new LinkedHashMap<T, Integer>();
 
         int i = 0;
-        for (T value : sortList) {
+        for (T value : sortList)
             map.put(value, i++);
-        }
 
         return sort(map);
     }
@@ -362,9 +355,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Map<T, Integer> map = new LinkedHashMap<T, Integer>();
 
         int i = 0;
-        for (T value : sortList) {
+        for (T value : sortList)
             map.put(value, i--);
-        }
 
         return sort(map);
     }
@@ -377,26 +369,22 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return sortDesc(Arrays.asList(sortList));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
         CaseValueStep<T> decode = DSL.choose(this);
         CaseWhenStep<T, Z> result = null;
 
-        for (Entry<T, Z> entry : sortMap.entrySet()) {
-            if (result == null) {
+        for (Entry<T, Z> entry : sortMap.entrySet())
+            if (result == null)
                 result = decode.when(entry.getKey(), inline(entry.getValue()));
-            }
-            else {
+            else
                 result.when(entry.getKey(), inline(entry.getValue()));
-            }
-        }
 
-        if (result == null) {
-            return null;
-        }
-        else {
+        if (result == null)
+            return (SortField) DSL.NULL().sortDefault();
+        else
             return result.asc();
-        }
     }
 
     // ------------------------------------------------------------------------

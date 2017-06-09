@@ -20124,6 +20124,27 @@ public class DSL {
     }
 
     /**
+     * Get the null field.
+     */
+    static <T> Field<T> NULL(Field<T> field) {
+        return NULL(field.getDataType());
+    }
+
+    /**
+     * Get the null field.
+     */
+    static <T> Field<T> NULL(DataType<T> type) {
+        return field("null", type);
+    }
+
+    /**
+     * Get the null field.
+     */
+    static <T> Field<T> NULL(Class<T> type) {
+        return field("null", type);
+    }
+
+    /**
      * Null-safety of a field.
      */
     protected static <T> Field<T> nullSafe(Field<T> field) {

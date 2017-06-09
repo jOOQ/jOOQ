@@ -7,7 +7,7 @@ package org.jooq.example.jpa.jooq;
 import javax.annotation.Generated;
 
 import org.jooq.Index;
-import org.jooq.SortField;
+import org.jooq.OrderField;
 import org.jooq.example.jpa.jooq.tables.Actor;
 import org.jooq.example.jpa.jooq.tables.Film;
 import org.jooq.example.jpa.jooq.tables.FilmActor;
@@ -45,12 +45,12 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     private static class Indexes0 extends AbstractKeys {
-        public static Index PRIMARY_KEY_3 = createIndex("PRIMARY_KEY_3", Actor.ACTOR, new SortField[] { Actor.ACTOR.ACTORID.asc() }, true);
-        public static Index FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2 = createIndex("FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2", Film.FILM, new SortField[] { Film.FILM.LANGUAGE_LANGUAGEID.asc() }, false);
-        public static Index FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2 = createIndex("FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2", Film.FILM, new SortField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID.asc() }, false);
-        public static Index PRIMARY_KEY_2 = createIndex("PRIMARY_KEY_2", Film.FILM, new SortField[] { Film.FILM.FILMID.asc() }, true);
-        public static Index FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7 = createIndex("FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7", FilmActor.FILM_ACTOR, new SortField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID.asc() }, false);
-        public static Index PRIMARY_KEY_7 = createIndex("PRIMARY_KEY_7", FilmActor.FILM_ACTOR, new SortField[] { FilmActor.FILM_ACTOR.FILMS_FILMID.asc(), FilmActor.FILM_ACTOR.ACTORS_ACTORID.asc() }, true);
-        public static Index PRIMARY_KEY_C = createIndex("PRIMARY_KEY_C", Language.LANGUAGE, new SortField[] { Language.LANGUAGE.LANGUAGEID.asc() }, true);
+        public static Index PRIMARY_KEY_3 = createIndex("PRIMARY_KEY_3", Actor.ACTOR, new OrderField[] { Actor.ACTOR.ACTORID }, true);
+        public static Index FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2 = createIndex("FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2", Film.FILM, new OrderField[] { Film.FILM.LANGUAGE_LANGUAGEID }, false);
+        public static Index FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2 = createIndex("FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2", Film.FILM, new OrderField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, false);
+        public static Index PRIMARY_KEY_2 = createIndex("PRIMARY_KEY_2", Film.FILM, new OrderField[] { Film.FILM.FILMID }, true);
+        public static Index FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7 = createIndex("FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7", FilmActor.FILM_ACTOR, new OrderField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, false);
+        public static Index PRIMARY_KEY_7 = createIndex("PRIMARY_KEY_7", FilmActor.FILM_ACTOR, new OrderField[] { FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
+        public static Index PRIMARY_KEY_C = createIndex("PRIMARY_KEY_C", Language.LANGUAGE, new OrderField[] { Language.LANGUAGE.LANGUAGEID }, true);
     }
 }

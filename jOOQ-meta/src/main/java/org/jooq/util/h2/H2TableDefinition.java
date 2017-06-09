@@ -83,6 +83,13 @@ public class H2TableDefinition extends AbstractTableDefinition {
             .orderBy(Columns.ORDINAL_POSITION)
             .fetch()) {
 
+            // [#5331] AUTO_INCREMENT (MySQL style)
+            // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
+            // [#6332] [#6339] system-generated defaults shouldn't produce a default clause
+            boolean isIdentity =
+                   null != record.get(Columns.SEQUENCE_NAME)
+                || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
@@ -91,19 +98,14 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(Columns.NUMERIC_PRECISION),
                 record.get(Columns.NUMERIC_SCALE),
                 record.get(Columns.IS_NULLABLE, boolean.class),
-                record.get(Columns.COLUMN_DEFAULT));
+                isIdentity ? null : record.get(Columns.COLUMN_DEFAULT));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.get(Columns.COLUMN_NAME),
                 record.get(Columns.ORDINAL_POSITION),
                 type,
-
-                // [#5331] AUTO_INCREMENT (MySQL style)
-                null != record.get(Columns.SEQUENCE_NAME)
-
-                // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
-             || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
+                isIdentity,
                 record.get(Columns.REMARKS));
 
             result.add(column);

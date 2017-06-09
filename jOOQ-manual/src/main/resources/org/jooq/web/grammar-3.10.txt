@@ -33,10 +33,10 @@ dmlStatement =
 | updateStatement
 ;
 
-alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName
+alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 (
-  'ADD CONSTRAINT' constraintName constraintSpecification
-| 'ADD' constraintSpecification
+  'ADD CONSTRAINT' constraintName constraint
+| 'ADD' constraint
 | 'ADD COLUMN' identifier dataType
   {
     (
@@ -71,17 +71,19 @@ alterViewStatement = 'ALTER VIEW' [ 'IF EXISTS' ] tableName
 ;
 
 createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT EXISTS' ] tableName
+( break )
 (
   'AS' select
 | '('
-  columnSpecification { ',' columnSpecification }
-  { ',' constraintSpecification }
+  column { ',' column }
+  { ',' constraint }
   ')'
 )
+break
 [ 'ON COMMIT' ( 'DELETE ROWS' | 'DROP' | 'PRESERVE ROWS' ) ]
 ;
 
-createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] indexName
+createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] indexName break
   'ON' tableName '(' identifiers ')'
   [ 'WHERE' condition ]
 ;
@@ -133,28 +135,30 @@ insertStatement = 'INSERT INTO' tableName
   (
     values
   | 'DEFAULT VALUES'
-  | 'SET' setClauseList
+  | 'SET' setClauses
   | select
   )
+  break
   [
-    'ON DUPLICATE KEY UPDATE' 'SET' setClauseList
+    'ON DUPLICATE KEY UPDATE' 'SET' setClauses
   | 'ON DUPLICATE KEY IGNORE'
   | 'ON CONFLICT' '(' fieldNames ')' 'DO'
     (
       'NOTHING'
-    | 'UPDATE' 'SET' setClauseList [ 'WHERE' condition ]
+    | 'UPDATE' 'SET' setClauses [ 'WHERE' condition ]
     )
   ]
+  break
   [ RETURNING ( '*' | fields ) ]
 ;
 
 values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 ;
 
-updateStatement = 'UPDATE' tableName 'SET' setClauseList [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
+updateStatement = 'UPDATE' tableName 'SET' setClauses [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
 ;
 
-setClauseList = setClause { ',' setClause }
+setClauses = setClause { ',' setClause }
 ;
 
 setClause = fieldName '=' field
@@ -165,14 +169,14 @@ deleteStatement = 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNI
 
 mergeStatement = 'MERGE INTO' tableName
   'USING' '(' select ')' [ 'AS' identifier ]
-  'ON' condition
+  'ON' condition break
   {
-    'WHEN MATCHED THEN UPDATE' 'SET' setClauseList
+    'WHEN MATCHED THEN UPDATE' 'SET' setClauses
   | 'WHEN NOT MATCHED THEN INSERT' '(' identifiers ')' 'VALUES' '(' fields ')'
   }
 ;
 
-columnSpecification =
+column =
 (
   identifier dataType
   {
@@ -180,7 +184,7 @@ columnSpecification =
       [ 'NOT' ] 'NULL'
     | 'DEFAULT' [ 'ON NULL' ] concat
     | 'GENERATED' ( 'ALWAYS' | 'BY DEFAULT' [ 'ON NULL' ] ) 'AS IDENTITY' '('
-        [ identitySpecification ]
+        [ identity ]
       ')'
     | 'PRIMARY KEY'
     | 'UNIQUE'
@@ -189,11 +193,10 @@ columnSpecification =
     | 'AUTOINCREMENT'
     )
   }
-|
 )
 ;
 
-constraintSpecification =
+constraint =
   'PRIMARY KEY' '(' fieldNames ')'
 | 'UNIQUE' '(' fieldNames ')'
 | 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCS' '(' fieldNames ')'
@@ -210,7 +213,7 @@ constraintSpecification =
 | 'CHECK' '(' condition ')'
 ;
 
-identitySpecification =
+identity =
 (
   'START WITH' ( 'LIMIT VALUE' | unsignedInteger )
 | 'INCREMENT BY' unsignedInteger
@@ -233,10 +236,11 @@ select =
 | queryPrimary
   {
     (
-      'UNION' [ ( 'ALL' | 'DISTINCT' ) ]
-    | ( 'EXCEPT' | 'MINUS' ) [ ( 'ALL' | 'DISTINCT' ) ]
-    | 'INTERSECT' [ ( 'ALL' | 'DISTINCT' ) ]
+      'UNION'
+    | ( 'EXCEPT' | 'MINUS' )
+    | 'INTERSECT'
     )
+    [ 'ALL' | 'DISTINCT' ]
     queryPrimary
   }
   [ orderBy ]

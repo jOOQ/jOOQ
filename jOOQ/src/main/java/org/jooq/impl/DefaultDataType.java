@@ -169,9 +169,16 @@ public class DefaultDataType<T> implements DataType<T> {
     private final DataType<T>                            sqlDataType;
 
     /**
-     * The Java class corresponding to this data type.
+     * The Java class corresponding to this data type's <code>&lt;U></code>
+     * type, i.e. the user type in case a {@link Binding} applies.
      */
-    private final Class<T>                               type;
+    private final Class<T>                               uType;
+
+    /**
+     * The Java class corresponding to this data type's <code>&lt;T></code>
+     * type, i.e. the database type in case a {@link Binding} applies.
+     */
+    private final Class<?>                               tType;
 
     /**
      * The data type binding corresponding to this data type.
@@ -265,7 +272,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
         // [#858] SQLDataTypes should reference themselves for more convenience
         this.sqlDataType = (dialect == null) ? this : sqlDataType;
-        this.type = type;
+        this.uType = type;
         this.typeName = typeName;
         this.castTypeName = castTypeName;
         this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
@@ -311,6 +318,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.binding = binding != null
             ? binding
             : new DefaultBinding<T, T>(Converters.identity(type), this.isLob());
+        this.tType = this.binding.converter().fromType();
     }
 
     /**
@@ -319,7 +327,8 @@ public class DefaultDataType<T> implements DataType<T> {
     private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, boolean identity, Field<T> defaultValue) {
         this.dialect = t.dialect;
         this.sqlDataType = t.sqlDataType;
-        this.type = t.type;
+        this.uType = t.uType;
+        this.tType = t.tType;
         this.typeName = t.typeName;
         this.castTypeName = t.castTypeName;
         this.castTypeBase = t.castTypeBase;
@@ -328,7 +337,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.nullable = nullable;
         this.identity = identity;
         this.defaultValue = defaultValue;
-        this.precision = precision0(type, precision);
+        this.precision = precision0(uType, precision);
         this.scale = scale;
         this.length = length;
 
@@ -424,7 +433,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasPrecision() {
-        return type == BigInteger.class || type == BigDecimal.class;
+        return tType == BigInteger.class || tType == BigDecimal.class;
     }
 
     @Override
@@ -446,7 +455,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasScale() {
-        return type == BigDecimal.class;
+        return tType == BigDecimal.class;
     }
 
     @Override
@@ -468,7 +477,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasLength() {
-        return (type == byte[].class || type == String.class) && !isLob();
+        return (tType == byte[].class || tType == String.class) && !isLob();
     }
 
     @Override
@@ -524,28 +533,21 @@ public class DefaultDataType<T> implements DataType<T> {
         // TODO [#1227] There is some confusion with these types, especially
         // when it comes to byte[] which can be mapped to BLOB, BINARY, VARBINARY
 
-        if (type == Blob.class) {
+        if (tType == Blob.class)
             return Types.BLOB;
-        }
-        else if (type == Boolean.class) {
+        else if (tType == Boolean.class)
             return Types.BOOLEAN;
-        }
-        else if (type == BigInteger.class) {
+        else if (tType == BigInteger.class)
             return Types.BIGINT;
-        }
-        else if (type == BigDecimal.class) {
+        else if (tType == BigDecimal.class)
             return Types.DECIMAL;
-        }
-        else if (type == Byte.class) {
+        else if (tType == Byte.class)
             return Types.TINYINT;
-        }
-        else if (type == byte[].class) {
+        else if (tType == byte[].class)
             return Types.BLOB;
-        }
-        else if (type == Clob.class) {
+        else if (tType == Clob.class)
             return Types.CLOB;
-        }
-        else if (Tools.isDate(type)) {
+        else if (Tools.isDate(tType)) {
             switch (configuration.family()) {
 
 
@@ -557,45 +559,34 @@ public class DefaultDataType<T> implements DataType<T> {
                     return Types.DATE;
             }
         }
-        else if (type == Double.class) {
+        else if (tType == Double.class)
             return Types.DOUBLE;
-        }
-        else if (type == Float.class) {
+        else if (tType == Float.class)
             return Types.FLOAT;
-        }
-        else if (type == Integer.class) {
+        else if (tType == Integer.class)
             return Types.INTEGER;
-        }
-        else if (type == Long.class) {
+        else if (tType == Long.class)
             return Types.BIGINT;
-        }
-        else if (type == Short.class) {
+        else if (tType == Short.class)
             return Types.SMALLINT;
-        }
-        else if (type == String.class) {
+        else if (tType == String.class)
             return Types.VARCHAR;
-        }
-        else if (Tools.isTime(type)) {
+        else if (Tools.isTime(tType))
             return Types.TIME;
-        }
-        else if (Tools.isTimestamp(type)) {
+        else if (Tools.isTimestamp(tType))
             return Types.TIMESTAMP;
-        }
 
 
         // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
-        else if (type == OffsetTime.class) {
+        else if (tType == OffsetTime.class)
             return Types.VARCHAR;
-        }
-        else if (type == OffsetDateTime.class) {
+        else if (tType == OffsetDateTime.class)
             return Types.VARCHAR;
-        }
 
 
         // The type byte[] is handled earlier.
-        else if (type.isArray()) {
+        else if (tType.isArray())
             return Types.ARRAY;
-        }
 
 
 
@@ -610,13 +601,11 @@ public class DefaultDataType<T> implements DataType<T> {
 
 
 
-        else if (EnumType.class.isAssignableFrom(type)) {
+        else if (EnumType.class.isAssignableFrom(tType))
             return Types.VARCHAR;
-        }
-        else if (UDTRecord.class.isAssignableFrom(type)) {
+        else if (UDTRecord.class.isAssignableFrom(tType))
             return Types.STRUCT;
-        }
-        else if (Result.class.isAssignableFrom(type)) {
+        else if (Result.class.isAssignableFrom(tType)) {
             switch (configuration.family()) {
 
 
@@ -629,14 +618,13 @@ public class DefaultDataType<T> implements DataType<T> {
                     return Types.OTHER;
             }
         }
-        else {
+        else
             return Types.OTHER;
-        }
     }
 
     @Override
     public final Class<T> getType() {
-        return type;
+        return uType;
     }
 
     @Override
@@ -734,22 +722,22 @@ public class DefaultDataType<T> implements DataType<T> {
         if (object == null) {
             return null;
         }
-        else if (object.getClass() == type) {
+        else if (object.getClass() == uType) {
             return (T) object;
         }
         else {
-            return Convert.convert(object, type);
+            return Convert.convert(object, uType);
         }
     }
 
     @Override
     public final T[] convert(Object... objects) {
-        return (T[]) Convert.convertArray(objects, type);
+        return (T[]) Convert.convertArray(objects, uType);
     }
 
     @Override
     public final List<T> convert(Collection<?> objects) {
-        return Convert.convert(objects, type);
+        return Convert.convert(objects, uType);
     }
 
     public static DataType<Object> getDefaultDataType(String typeName) {
@@ -853,19 +841,19 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isNumeric() {
-        return Number.class.isAssignableFrom(type) && !isInterval();
+        return Number.class.isAssignableFrom(tType) && !isInterval();
     }
 
     @Override
     public final boolean isString() {
-        return type == String.class;
+        return tType == String.class;
     }
 
     @Override
     public final boolean isDateTime() {
-        return java.util.Date.class.isAssignableFrom(type)
+        return java.util.Date.class.isAssignableFrom(tType)
 
-            || java.time.temporal.Temporal.class.isAssignableFrom(type)
+            || java.time.temporal.Temporal.class.isAssignableFrom(tType)
 
         ;
     }
@@ -877,7 +865,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isInterval() {
-        return Interval.class.isAssignableFrom(type);
+        return Interval.class.isAssignableFrom(tType);
     }
 
     @Override
@@ -892,18 +880,18 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isBinary() {
-        return type == byte[].class;
+        return tType == byte[].class;
     }
 
     @Override
     public final boolean isArray() {
         return
-            (!isBinary() && type.isArray());
+            (!isBinary() && tType.isArray());
     }
 
     @Override
     public final boolean isUDT() {
-        return UDTRecord.class.isAssignableFrom(type);
+        return UDTRecord.class.isAssignableFrom(tType);
     }
 
     // ------------------------------------------------------------------------
@@ -912,7 +900,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public String toString() {
-        return getCastTypeName() + " (" + type.getName() + ")";
+        return getCastTypeName() + " (" + uType.getName() + ")";
     }
 
     @Override
@@ -923,7 +911,8 @@ public class DefaultDataType<T> implements DataType<T> {
         result = prime * result + length;
         result = prime * result + precision;
         result = prime * result + scale;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((uType == null) ? 0 : uType.hashCode());
+        result = prime * result + ((tType == null) ? 0 : tType.hashCode());
         result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
         return result;
     }
@@ -945,11 +934,17 @@ public class DefaultDataType<T> implements DataType<T> {
             return false;
         if (scale != other.scale)
             return false;
-        if (type == null) {
-            if (other.type != null)
+        if (uType == null) {
+            if (other.uType != null)
                 return false;
         }
-        else if (!type.equals(other.type))
+        else if (!uType.equals(other.uType))
+            return false;
+        if (tType == null) {
+            if (other.tType != null)
+                return false;
+        }
+        else if (!tType.equals(other.tType))
             return false;
         if (typeName == null) {
             if (other.typeName != null)

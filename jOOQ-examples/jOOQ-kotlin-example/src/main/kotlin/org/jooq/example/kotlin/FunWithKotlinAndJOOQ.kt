@@ -48,6 +48,8 @@ import java.sql.*
 
 fun main(args: Array<String>) {
 
+    // This example project simply uses a standalone JDBC connection, but you're free to use any other
+    // means to connect to your database, including standard DataSources
     val properties = Properties();
     properties.load(properties::class.java.getResourceAsStream("/config.properties"));
 
@@ -60,6 +62,9 @@ fun main(args: Array<String>) {
         val a = AUTHOR
         val b = BOOK
 
+        // This example shows just standard jOOQ API usage, which selects a couple of columns from a join expression
+        // and then uses a closure to iterate over results. String interpolation is used, along with the implicit
+        // it variable and the nice Record.get(Field) syntax sugar using it[field] syntax
         header("Books and their authors")
         ctx.select(a.FIRST_NAME, a.LAST_NAME, b.TITLE)
            .from(a)
@@ -69,6 +74,10 @@ fun main(args: Array<String>) {
                println("${it[b.TITLE]} by ${it[a.FIRST_NAME]} ${it[a.LAST_NAME]}")
            }
 
+        // Kotlin allows for destructuring any type that has component1(), component2(), component3(), ... methods
+        // into a tuple of local variables. These methods are currently added ad-hoc as operators further down in this
+        // file (scroll down). Future support for these methods is on the roadmap:
+        // https://github.com/jOOQ/jOOQ/issues/6245
         header("Books and their authors with destructuring")
         for ((first, last, title) in ctx.select(a.FIRST_NAME, a.LAST_NAME, b.TITLE)
            .from(a)
@@ -76,10 +85,13 @@ fun main(args: Array<String>) {
            .orderBy(1, 2, 3))
                println("$title by $first $last")
 
+        // Generated records (available through selectFrom()) contain getters (and setters) for each column.
+        // Kotlin allows for property access syntax of Java getters!
         header("An author")
         val author = ctx.selectFrom(a).where(a.ID.eq(1)).fetchOne();
         println("${author.firstName} ${author.lastName}")
 
+        // Setters can profit from this property access syntax as well.
         header("Creating a new author")
         val author2 = ctx.newRecord(a);
         author2.firstName = "Alice"
@@ -87,6 +99,8 @@ fun main(args: Array<String>) {
         author2.store()
         println("${author2.firstName} ${author2.lastName}")
 
+        // With "imports" the namespace of an object for a closure, so we can avoid repeating the owner
+        // reference of the properties (and methods) every time
         header("Using the with 'clause'")
         with (author2) {
             firstName = "Bob"
@@ -94,6 +108,7 @@ fun main(args: Array<String>) {
             store()
         }
 
+        // This also works with tables, and their columns!
         header("With can be used with statements too, to locally import tables")
         with (a) {
             ctx.select(FIRST_NAME, LAST_NAME)
@@ -105,21 +120,46 @@ fun main(args: Array<String>) {
                }
         }
 
+        // Apply is a nice method that also closes over an object making all its methods available without the
+        // need to explicitly reference the owner object. That's very very nice for this type of dynamic SQL!
+        header("Conditional query clauses")
+        val filtering = true;
+        val joining = true;
+        ctx.select(a.FIRST_NAME, a.LAST_NAME, if (joining) count() else value(""))
+           .from(a)
+           .apply { if (filtering) where(a.ID.eq(1)) }
+           .apply { if (joining) join(b).on(a.ID.eq(b.AUTHOR_ID)) }
+           .apply { if (joining) groupBy(a.FIRST_NAME, a.LAST_NAME) }
+           .orderBy(a.ID)
+           .fetch {
+               println("${it[a.FIRST_NAME]} ${it[a.LAST_NAME]} ${if (joining) it[count()] else ""}")
+           }
+
+        // Map (key, value) destructuring in foreach loops!
         header("As a map")
         for ((k, v) in author2.intoMap())
             println("${k.padEnd(20)} = $v")
 
+        // More destructuring
         header("As maps")
         for (r in ctx.fetch(b))
             for ((k, v) in r.intoMap())
                 println("${r[b.ID]}: ${k.padEnd(20)} = $v")
 
+        // We can use inline functions that we design ourselves very easily. E.g. ilike() is not part of the
+        // jOOQ API. It's defined further down in this file
         header("Custom jOOQ API extensions")
         println("${ctx.select(b.TITLE).from(b).where(b.TITLE.ilike("%animal%")).fetchOne(b.TITLE)}")
 
+        // Classic elvis operator, etc.
         header("Null safe dereferencing")
         println("${ctx.fetchOne(b, b.ID.eq(5))?.title ?: "book not found"}")
 
+        // Some operators can profit from "overloading" in Kotlin. E.g.
+        // - the unary minus operator "-" maps to Field.unaryMinus()
+        // - the binary plus operator "+" maps to Field.plus(Number)
+        // - the unary negation operator "!" maps to Condition.not()
+        // - etc.
         header("Operator overloading")
         ctx.select(a.FIRST_NAME, a.LAST_NAME, -count(), a.ID + 3)
            .from(a)
@@ -131,6 +171,7 @@ fun main(args: Array<String>) {
                println("Actor ID ${id - 3}: $first $last wrote ${-count} books")
            }
 
+        // Don't we wish for multiline strings in Java?
         header("Using multiline strings with the plain SQL API")
         ctx.resultQuery("""
             SELECT *
@@ -144,6 +185,8 @@ fun main(args: Array<String>) {
                 println("${it.intoMap()}")
             }
 
+        // If you parse a SQL (multiline) string with jOOQ, jOOQ will try to translate the syntax to
+        // the target dialect.
         header("Using multiline strings with the parser")
         val colX = field("x")
         val colY = field("y")
@@ -160,6 +203,15 @@ fun main(args: Array<String>) {
                println("${it[colX]}, ${it[colY]}")
            }
     }
+}
+
+/**
+ * Just some nice formatted header printing
+ */
+fun header(text : String) {
+    println()
+    println(text)
+    println(text.toCharArray().map { _ -> '-' }.joinToString(separator = ""))
 }
 
 // Operators for Kotlin language-supported operator overloading

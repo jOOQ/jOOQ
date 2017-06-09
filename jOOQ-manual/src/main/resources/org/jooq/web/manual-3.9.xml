@@ -17494,6 +17494,55 @@ public class Book {
                         </html></content>
                     </section>
 
+                    <section id="xmlgenerator">
+                        <title>Generating XML</title>
+                        <content><html>
+                            <p>
+                                By default the code generator produces Java files for use with the jOOQ API as documented throughout this manual. In some cases, however, it may be desireable to generate other meta data formats, such as an XML document. This can be done with the <code>XMLGenerator</code>.
+                            </p>
+
+                            <p>
+                                The format produced by the <code>XMLGenerator</code> is the same as the one consumed by the <reference id="codegen-xml" title="XMLDatabase"/>, which can read such XML content to produce Java code. It is specified in the <a href="http://www.jooq.org/xsd/jooq-meta-{meta-xsd-version}.xsd">http://www.jooq.org/xsd/jooq-meta-{meta-xsd-version}.xsd</a> schema. Essentially, this schema is an XML representation of the SQL standard <code>INFORMATION_SCHEMA</code>, as implemented by databases like H2, HSQLDB, MySQL, PostgreSQL, or SQL Server.
+                            </p>
+
+                            <p>
+                                In order to use the <code>XMLGenerator</code>, simply place the following class reference into your code generation configuration:
+                            </p>
+
+                            <p>
+                                <strong>XML configuration (standalone and Maven)</strong>
+                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <name>org.jooq.util.XMLGenerator</name>
+  </generator>
+  ...
+</configuration>]]></xml><html>
+
+                            <p>
+                                <strong>Programmatic configuration</strong>
+                            </p>
+
+</html><java><![CDATA[configuration.withGenerator(new Generator()
+  .withName("org.jooq.util.XMLGenerator"));]]></java><html>
+
+                            <p>
+                                <strong>Gradle configuration</strong>
+                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    name = 'org.jooq.util.XMLGenerator'
+  }
+}]]></java><html>
+
+                            <p>
+                                This configuration does not interfere with most of the remaining code generation configuration, e.g. you can still specify the JDBC connection or the generation output target as usual.
+                            </p>
+                        </html></content>
+                    </section>
+
                     <section id="codegen-maven">
                         <title>Running the code generator with Maven</title>
                         <content><html>

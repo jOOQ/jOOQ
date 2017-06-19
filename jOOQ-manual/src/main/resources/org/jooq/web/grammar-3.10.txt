@@ -44,7 +44,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
     | 'DEFAULT' concat
     )
   }
-| 'DROP COLUMN' identifier [ ( 'CASCADE' | 'RESTRICT' ) ]
+| 'DROP COLUMN' identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
 | 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] 'TO' identifier
 |
@@ -233,19 +233,18 @@ commonTableExpression = identifier [ '(' identifiers ')' ] 'AS' '(' select ')'
 
 select =
   with select
-| queryPrimary
-  {
-    (
-      'UNION'
-    | ( 'EXCEPT' | 'MINUS' )
-    | 'INTERSECT'
-    )
-    [ 'ALL' | 'DISTINCT' ]
-    queryPrimary
-  }
+| queryExpressionBody
   [ orderBy ]
   [ offsetFetch ]
   [ forUpdate ]
+;
+
+queryExpressionBody =
+  queryTerm { ( 'UNION' | 'EXCEPT' | 'MINUS' ) [ 'ALL' | 'DISTINCT' ] queryTerm }
+;
+
+queryTerm =
+  queryPrimary { 'INTERSECT' [ 'ALL' | 'DISTINCT' ] queryTerm }
 ;
 
 queryPrimary =
@@ -262,7 +261,7 @@ distinct = ( 'DISTINCT' | 'UNIQUE' ) [ 'ON' '(' fields ')' ] | 'ALL'
 ;
 
 top =
-  'TOP' unsignedInteger [ ( 'START AT' unsignedInteger | 'WITH TIES' ) ]
+  'TOP' unsignedInteger [ 'START AT' unsignedInteger | 'WITH TIES' ]
 | 'SKIP' unsignedInteger [ 'FIRST' unsignedInteger ]
 ;
 
@@ -307,7 +306,7 @@ orderBy =
 offsetFetch =
   'OFFSET' unsignedInteger
   [
-    [ ( 'ROW' | 'ROWS' ) ] 'FETCH' ( 'FIRST' | 'NEXT' ) unsignedInteger ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
+    [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) unsignedInteger ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
   | [ 'LIMIT' unsignedInteger [ 'WITH TIES' ] ]
   ]
 | 'LIMIT' unsignedInteger
@@ -319,13 +318,13 @@ offsetFetch =
 
 forUpdate =
   'FOR SHARE'
-| 'FOR UPDATE' [ 'OF' fields ] [ ( 'NOWAIT' | 'WAIT' unsignedInteger | 'SKIP LOCKED' ) ]
+| 'FOR UPDATE' [ 'OF' fields ] [ 'NOWAIT' | 'WAIT' unsignedInteger | 'SKIP LOCKED' ]
 ;
 
 sortFields = sortField { ',' sortField }
 ;
 
-sortField = field [ ( 'ASC' | 'DESC' ) ] [ ( 'NULLS FIRST' | 'NULLS LAST' ) ]
+sortField = field [ 'ASC' | 'DESC' ] [ 'NULLS FIRST' | 'NULLS LAST' ]
 ;
 
 tables = table { ',' table }
@@ -398,26 +397,26 @@ not = [ 'NOT' ] predicate
 predicate =
   'EXISTS' '(' select ')'
 | concat
-  [ (
-      comparator
-      (
-        ( 'ALL' | 'ANY' | 'SOME' ) '(' select ')'
-      | concat
-      )
-    | 'IS' [ 'NOT' ]
-      (
-        'NULL'
-      | 'DISTINCT FROM' concat
-      )
-    | 'IN' '('
-      (
-        select
-      | fields
-      )
-      ')'
-    | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
-    | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
-  ) ]
+  [
+    comparator
+    (
+      ( 'ALL' | 'ANY' | 'SOME' ) '(' select ')'
+    | concat
+    )
+  | 'IS' [ 'NOT' ]
+    (
+      'NULL'
+    | 'DISTINCT FROM' concat
+    )
+  | 'IN' '('
+    (
+      select
+    | fields
+    )
+    ')'
+  | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
+  | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
+  ]
 | row2 'OVERLAPS' row2
 ;
 

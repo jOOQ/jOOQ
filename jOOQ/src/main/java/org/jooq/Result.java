@@ -630,6 +630,10 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     String formatXML(XMLFormat format);
 
+    String formatChart();
+
+    String formatChart(ChartFormat format);
+
     /**
      * Get this result as a set of <code>INSERT</code> statements.
      * <p>
@@ -748,6 +752,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatXML(OutputStream stream, XMLFormat format) throws IOException;
 
     /**
+     * Like {@link #formatChart()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatChart(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatChart(ChartFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatChart(OutputStream stream, ChartFormat format) throws IOException;
+
+    /**
      * Like {@link #formatInsert()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -858,6 +876,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatXML(Writer writer, XMLFormat format) throws IOException;
+
+    /**
+     * Like {@link #formatChart()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatChart(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatChart(ChartFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatChart(Writer writer, ChartFormat format) throws IOException;
 
     /**
      * Like {@link #formatInsert()}, but the data is output onto a {@link Writer}.

@@ -2771,11 +2771,7 @@ fun main(args: Array<String>) {
         properties.getProperty("db.url"),
         properties.getProperty("db.username"),
         properties.getProperty("db.password")
-
-    // The below "use" method is an adapted version of the one in kotlin.io
-    // See also: https://github.com/JetBrains/kotlin/pull/807
-    ).use {
-        val ctx = it
+    ).use { ctx ->
         val a = AUTHOR
         val b = BOOK
 

@@ -65,7 +65,7 @@ public final class Constants {
     /**
      * The current jooq-runtime XSD file name.
      */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.9.0.xsd";
+    public static final String XSD_RUNTIME    = "jooq-runtime-3.10.0.xsd";
 
     /**
      * The current jooq-runtime XML namespace
@@ -85,7 +85,7 @@ public final class Constants {
     /**
      * The current jooq-meta XSD file name.
      */
-    public static final String XSD_META       = "jooq-meta-3.5.4.xsd";
+    public static final String XSD_META       = "jooq-meta-3.10.0.xsd";
 
     /**
      * The current jooq-meta XML namespace.
@@ -95,7 +95,7 @@ public final class Constants {
     /**
      * The current jooq-codegen XSD file name.
      */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.9.0.xsd";
+    public static final String XSD_CODEGEN    = "jooq-codegen-3.10.0.xsd";
 
     /**
      * The current jooq-codegen XML namespace.

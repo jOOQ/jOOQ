@@ -244,10 +244,15 @@ public class XMLDatabase extends AbstractDatabase {
             list.add(ic);
         }
 
+        indexLoop:
         for (Index i : info().getIndexes()) {
             if (getInputSchemata().contains(i.getTableSchema())) {
                 final SchemaDefinition schema = getSchema(i.getTableSchema());
                 final TableDefinition table = getTable(schema, i.getTableName());
+
+                if (table == null)
+                    continue indexLoop;
+
                 final Name name = name(i.getIndexCatalog(), i.getIndexSchema(), i.getTableName(), i.getIndexName());
 
                 IndexDefinition index = new AbstractIndexDefinition(schema, i.getIndexName(), table, Boolean.TRUE.equals(i.isIsUnique())) {

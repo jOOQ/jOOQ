@@ -56,6 +56,14 @@ import org.jooq.impl.DefaultRecordMapper;
  * Client code must close this {@link Cursor} in order to close the underlying
  * {@link PreparedStatement} and {@link ResultSet}
  * <p>
+ * The cursor can be consumed in two ways:
+ * <ul>
+ * <li>Record by record: Such methods can be recognised by the term "Next" in
+ * the method name, e.g. {@link #fetchNext(int)}.</li>
+ * <li>Completely in one go: Such methods do not have the term "Next" in their
+ * method names, e.g. {@link #fetch()}.</li>
+ * </ul>
+ * <p>
  * Note: Unlike usual implementations of {@link Iterable}, a <code>Cursor</code>
  * can only provide one {@link Iterator}!
  *
@@ -169,6 +177,12 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
     Result<R> fetch() throws DataAccessException;
 
     /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext(int)} instead.
+     */
+    @Deprecated
+    Result<R> fetch(int number) throws DataAccessException;
+
+    /**
      * Fetch the next couple of records from the cursor.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
@@ -184,7 +198,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      *            records, then all remaining records are returned.
      * @throws DataAccessException if something went wrong executing the query
      */
-    Result<R> fetch(int number) throws DataAccessException;
+    Result<R> fetchNext(int number) throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback.
@@ -246,6 +260,30 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchOne()} instead.
+     */
+    @Deprecated
+    R fetchOne() throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(RecordHandler)} instead.
+     */
+    @Deprecated
+    <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext(RecordMapper)} instead.
+     */
+    @Deprecated
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(Table)} instead.
+     */
+    @Deprecated
+    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
+
+    /**
      * Fetch the next record from the cursor.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
@@ -259,7 +297,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      *         no next record.
      * @throws DataAccessException if something went wrong executing the query
      */
-    R fetchOne() throws DataAccessException;
+    R fetchNext() throws DataAccessException;
 
     /**
      * Fetch the next record into a custom handler callback.
@@ -275,7 +313,13 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
-    <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
+    <H extends RecordHandler<? super R>> H fetchNextInto(H handler) throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(Class)} instead.
+     */
+    @Deprecated
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Map the next resulting record onto a custom type.
@@ -292,7 +336,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> E fetchNextInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Fetch the next record into a custom mapper callback.
@@ -304,7 +348,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
      */
-    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
+    <E> E fetchNext(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * Map the next resulting record onto a custom record.
@@ -324,8 +368,32 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
+    <Z extends Record> Z fetchNextInto(Table<Z> table) throws DataAccessException, MappingException;
 
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptional()} instead.
+     */
+    @Deprecated
+    Optional<R> fetchOptional() throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptionalInto(Class)} instead.
+     */
+    @Deprecated
+    <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptional(RecordMapper)} instead.
+     */
+    @Deprecated
+    <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptionalInto(Table)} instead.
+     */
+    @Deprecated
+    <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * Fetch the next record from the cursor.
@@ -340,7 +408,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @return The next record from the cursor
      * @throws DataAccessException if something went wrong executing the query
      */
-    Optional<R> fetchOptional() throws DataAccessException;
+    Optional<R> fetchNextOptional() throws DataAccessException;
 
     /**
      * Map the next resulting record onto a custom type.
@@ -357,7 +425,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Optional<E> fetchNextOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Fetch the next record into a custom mapper callback.
@@ -369,7 +437,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
      */
-    <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
+    <E> Optional<E> fetchNextOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * Map the next resulting record onto a custom record.
@@ -389,7 +457,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
+    <Z extends Record> Optional<Z> fetchNextOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * Turn this <code>Cursor</code> into a {@link Stream}.

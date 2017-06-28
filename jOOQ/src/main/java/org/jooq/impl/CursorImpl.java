@@ -290,7 +290,37 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
+    @Deprecated
     public final R fetchOne() {
+        return fetchNext();
+    }
+
+    @Override
+    @Deprecated
+    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
+        return fetchNext(mapper);
+    }
+
+    @Override
+    @Deprecated
+    public final <H extends RecordHandler<? super R>> H fetchOneInto(H handler) {
+        return fetchNextInto(handler);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        return fetchNextInto(table);
+    }
+
+    @Override
+    @Deprecated
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        return fetchNextInto(type);
+    }
+
+    @Override
+    public final R fetchNext() {
         Result<R> result = fetch(1);
 
         if (result.size() == 1) {
@@ -301,29 +331,55 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
 
+
     @Override
-    public final Optional<R> fetchOptional() throws DataAccessException {
-        return Optional.ofNullable(fetchOne());
+    public Optional<R> fetchOptional() {
+        return fetchNextOptional();
     }
 
     @Override
-    public final <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
-        return Optional.ofNullable(fetchOneInto(type));
+    public <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
+        return fetchNextOptional(mapper);
     }
 
     @Override
-    public final <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
-        return Optional.ofNullable(fetchOne(mapper));
+    public <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
+        return fetchNextOptionalInto(type);
     }
 
     @Override
-    public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
-        return Optional.ofNullable(fetchOneInto(table));
+    public <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
+        return fetchNextOptionalInto(table);
+    }
+
+    @Override
+    public final Optional<R> fetchNextOptional() {
+        return Optional.ofNullable(fetchNext());
+    }
+
+    @Override
+    public final <E> Optional<E> fetchNextOptional(RecordMapper<? super R, E> mapper) {
+        return Optional.ofNullable(fetchNext(mapper));
+    }
+
+    @Override
+    public final <E> Optional<E> fetchNextOptionalInto(Class<? extends E> type) {
+        return Optional.ofNullable(fetchNextInto(type));
+    }
+
+    @Override
+    public final <Z extends Record> Optional<Z> fetchNextOptionalInto(Table<Z> table) {
+        return Optional.ofNullable(fetchNextInto(table));
     }
 
 
     @Override
     public final Result<R> fetch(int number) {
+        return fetchNext(number);
+    }
+
+    @Override
+    public final Result<R> fetchNext(int number) {
         // [#1157] This invokes listener.fetchStart(ctx), which has to be called
         // Before listener.resultStart(ctx)
         iterator();
@@ -344,23 +400,23 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <H extends RecordHandler<? super R>> H fetchOneInto(H handler) {
-        handler.next(fetchOne());
+    public final <H extends RecordHandler<? super R>> H fetchNextInto(H handler) {
+        handler.next(fetchNext());
         return handler;
     }
 
     @Override
     public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         while (hasNext()) {
-            fetchOneInto(handler);
+            fetchNextInto(handler);
         }
 
         return handler;
     }
 
     @Override
-    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
-        R record = fetchOne();
+    public final <E> E fetchNext(RecordMapper<? super R, E> mapper) {
+        R record = fetchNext();
         return record == null ? null : mapper.map(record);
     }
 
@@ -370,8 +426,8 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <E> E fetchOneInto(Class<? extends E> clazz) {
-        R record = fetchOne();
+    public final <E> E fetchNextInto(Class<? extends E> clazz) {
+        R record = fetchNext();
         return record == null ? null : record.into(clazz);
     }
 
@@ -381,8 +437,8 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
-        return fetchOne().into(table);
+    public final <Z extends Record> Z fetchNextInto(Table<Z> table) {
+        return fetchNext().into(table);
     }
 
     @Override
@@ -1511,7 +1567,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 if (maxRows > 0 && rows >= maxRows)
                     return false;
 
-                next = fetchOne();
+                next = fetchNext();
                 hasNext = (next != null);
             }
 
@@ -1530,7 +1586,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
         }
 
         @SuppressWarnings("unchecked")
-        private final R fetchOne() {
+        private final R fetchNext() {
             AbstractRecord record = null;
 
             try {

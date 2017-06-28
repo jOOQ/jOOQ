@@ -189,6 +189,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
@@ -1010,17 +1011,19 @@ final class Tools {
     static final <T> Field<T> field(T value) {
 
         // Fields can be mixed with constant values
-        if (value instanceof Field<?>) {
+        if (value instanceof Field<?>)
             return (Field<T>) value;
-        }
+
+        // [#6362] Single-column selects can be considered fields, too
+        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+            return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart) {
+        else if (value instanceof QueryPart)
             throw fieldExpected(value);
-        }
-        else {
+
+        else
             return val(value);
-        }
     }
 
     // The following overloads help performance by avoiding runtime data type lookups

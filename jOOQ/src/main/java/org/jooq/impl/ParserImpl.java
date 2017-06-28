@@ -567,38 +567,16 @@ class ParserImpl implements Parser {
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree) {
         return parseSelect(ctx, degree, null);
     }
+/*
+ *  QueryPart condition = parseNot(ctx);
 
+        while (parseKeywordIf(ctx, "AND"))
+            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx)));
+
+        return condition;
+ */
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
-        SelectQueryImpl<Record> result = parseQueryPrimary(ctx, degree, with);
-        CombineOperator combine;
-        while ((combine = parseCombineOperatorIf(ctx)) != null) {
-            if (degree == null)
-                degree = result.getSelect().size();
-
-            switch (combine) {
-                case UNION:
-                    result = (SelectQueryImpl<Record>) result.union(parseQueryPrimary(ctx, degree));
-                    break;
-                case UNION_ALL:
-                    result = (SelectQueryImpl<Record>) result.unionAll(parseQueryPrimary(ctx, degree));
-                    break;
-                case EXCEPT:
-                    result = (SelectQueryImpl<Record>) result.except(parseQueryPrimary(ctx, degree));
-                    break;
-                case EXCEPT_ALL:
-                    result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryPrimary(ctx, degree));
-                    break;
-                case INTERSECT:
-                    result = (SelectQueryImpl<Record>) result.intersect(parseQueryPrimary(ctx, degree));
-                    break;
-                case INTERSECT_ALL:
-                    result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree));
-                    break;
-                default:
-                    ctx.unexpectedToken();
-                    break;
-            }
-        }
+        SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with);
 
         if (parseKeywordIf(ctx, "ORDER"))
             if (parseKeywordIf(ctx, "SIBLINGS BY")) {
@@ -686,6 +664,64 @@ class ParserImpl implements Parser {
             }
             else
                 throw ctx.unexpectedToken();
+        }
+
+        return result;
+    }
+
+    private static final SelectQueryImpl<Record> parseQueryExpressionBody(ParserContext ctx, Integer degree, WithImpl with) {
+        SelectQueryImpl<Record> result = parseQueryTerm(ctx, degree, with);
+
+        CombineOperator combine;
+        while ((combine = parseCombineOperatorIf(ctx, false)) != null) {
+            if (degree == null)
+                degree = result.getSelect().size();
+
+            switch (combine) {
+                case UNION:
+                    result = (SelectQueryImpl<Record>) result.union(parseQueryTerm(ctx, degree));
+                    break;
+                case UNION_ALL:
+                    result = (SelectQueryImpl<Record>) result.unionAll(parseQueryTerm(ctx, degree));
+                    break;
+                case EXCEPT:
+                    result = (SelectQueryImpl<Record>) result.except(parseQueryTerm(ctx, degree));
+                    break;
+                case EXCEPT_ALL:
+                    result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryTerm(ctx, degree));
+                    break;
+                default:
+                    ctx.unexpectedToken();
+                    break;
+            }
+        }
+
+        return result;
+    }
+
+    private static final SelectQueryImpl<Record> parseQueryTerm(ParserContext ctx, Integer degree) {
+        return parseQueryTerm(ctx, degree, null);
+    }
+
+    private static final SelectQueryImpl<Record> parseQueryTerm(ParserContext ctx, Integer degree, WithImpl with) {
+        SelectQueryImpl<Record> result = parseQueryPrimary(ctx, degree, with);
+
+        CombineOperator combine;
+        while ((combine = parseCombineOperatorIf(ctx, true)) != null) {
+            if (degree == null)
+                degree = result.getSelect().size();
+
+            switch (combine) {
+                case INTERSECT:
+                    result = (SelectQueryImpl<Record>) result.intersect(parseQueryPrimary(ctx, degree));
+                    break;
+                case INTERSECT_ALL:
+                    result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree));
+                    break;
+                default:
+                    ctx.unexpectedToken();
+                    break;
+            }
         }
 
         return result;
@@ -1471,7 +1507,7 @@ class ParserImpl implements Parser {
         }
     }
 
-    private static Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+    private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parse(ctx, '(');
         Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
@@ -5312,24 +5348,24 @@ class ParserImpl implements Parser {
         return null;
     }
 
-    private static final CombineOperator parseCombineOperatorIf(ParserContext ctx) {
+    private static final CombineOperator parseCombineOperatorIf(ParserContext ctx, boolean intersectOnly) {
         parseWhitespaceIf(ctx);
 
-        if (parseKeywordIf(ctx, "UNION"))
+        if (!intersectOnly && parseKeywordIf(ctx, "UNION"))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.UNION_ALL;
             else if (parseKeywordIf(ctx, "DISTINCT"))
                 return CombineOperator.UNION;
             else
                 return CombineOperator.UNION;
-        else if (parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS"))
+        else if (!intersectOnly && parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS"))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.EXCEPT_ALL;
             else if (parseKeywordIf(ctx, "DISTINCT"))
                 return CombineOperator.EXCEPT;
             else
                 return CombineOperator.EXCEPT;
-        else if (parseKeywordIf(ctx, "INTERSECT"))
+        else if (intersectOnly && parseKeywordIf(ctx, "INTERSECT"))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.INTERSECT_ALL;
             else if (parseKeywordIf(ctx, "DISTINCT"))

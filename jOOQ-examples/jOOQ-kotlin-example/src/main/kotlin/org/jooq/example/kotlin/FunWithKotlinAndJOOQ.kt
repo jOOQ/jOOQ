@@ -53,12 +53,11 @@ fun main(args: Array<String>) {
     val properties = Properties();
     properties.load(properties::class.java.getResourceAsStream("/config.properties"));
 
-    DriverManager.getConnection(
+    DSL.using(
         properties.getProperty("db.url"),
         properties.getProperty("db.username"),
         properties.getProperty("db.password")
-    ).use {
-        val ctx = DSL.using(it)
+    ).use { ctx ->
         val a = AUTHOR
         val b = BOOK
 

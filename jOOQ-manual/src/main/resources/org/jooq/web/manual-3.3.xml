@@ -10188,26 +10188,6 @@ id INTEGER IDENTITY NOT NULL
 -- Sybase SQL Anywhere
 id INTEGER NOT NULL IDENTITY]]></sql><html>
 
-									<p>
-										<strong>Oracle</strong>
-									</p>
-									<p>
-										Oracle does not know any identity columns at all. Instead, you will have to use a trigger and update the ID column yourself, using a custom sequence. Something along these lines:
-									</p>
-</html><sql><![CDATA[CREATE OR REPLACE TRIGGER my_trigger
-BEFORE INSERT
-ON my_table
-REFERENCING NEW AS new
-FOR EACH ROW
-BEGIN
-  SELECT my_sequence.nextval
-  INTO :new.id
-  FROM dual;
-END my_trigger;]]></sql><html>
-
-									<p>
-										Note, that this approach can be employed in most databases supporting sequences and triggers! It is a lot more flexible than standard identities
-									</p>
 								</html></content>
 							</section>
 

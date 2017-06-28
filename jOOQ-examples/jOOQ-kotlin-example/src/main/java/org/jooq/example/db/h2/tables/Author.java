@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -558423724;
+    private static final long serialVersionUID = -259612025;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -57,7 +57,7 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>PUBLIC.AUTHOR.ID</code>.
      */
-    public final TableField<AuthorRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_428E0FE3_9D55_4EFE_978E_3C4A0D1539E3)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<AuthorRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.FIRST_NAME</code>.

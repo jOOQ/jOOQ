@@ -24,22 +24,17 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
     /**
-     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_428E0FE3_9D55_4EFE_978E_3C4A0D1539E3</code>
+     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_8CD71463_69CD_4A57_B8AB_B9985402B0A2</code>
      */
-    public static final Sequence<Long> SYSTEM_SEQUENCE_428E0FE3_9D55_4EFE_978E_3C4A0D1539E3 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_428E0FE3_9D55_4EFE_978E_3C4A0D1539E3", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
+    public static final Sequence<Long> SYSTEM_SEQUENCE_8CD71463_69CD_4A57_B8AB_B9985402B0A2 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_8CD71463_69CD_4A57_B8AB_B9985402B0A2", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
     /**
-     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_49E7A2A7_7321_4CE9_BC66_5FD0863DF24C</code>
+     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_A76C8A36_BAEB_4088_8A30_29365F363038</code>
      */
-    public static final Sequence<Long> SYSTEM_SEQUENCE_49E7A2A7_7321_4CE9_BC66_5FD0863DF24C = new SequenceImpl<Long>("SYSTEM_SEQUENCE_49E7A2A7_7321_4CE9_BC66_5FD0863DF24C", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
+    public static final Sequence<Long> SYSTEM_SEQUENCE_A76C8A36_BAEB_4088_8A30_29365F363038 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_A76C8A36_BAEB_4088_8A30_29365F363038", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
     /**
      * The sequence <code>PUBLIC.S_AUTHOR_ID</code>
      */
     public static final Sequence<Long> S_AUTHOR_ID = new SequenceImpl<Long>("S_AUTHOR_ID", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
-
-    /**
-     * The sequence <code>PUBLIC.S_BOOK_ID</code>
-     */
-    public static final Sequence<Long> S_BOOK_ID = new SequenceImpl<Long>("S_BOOK_ID", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 }

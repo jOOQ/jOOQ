@@ -67,6 +67,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
@@ -74,6 +75,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jooq.CSVFormat;
+import org.jooq.ChartFormat;
+import org.jooq.ChartFormat.Display;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Converter;
@@ -1220,6 +1223,207 @@ final class ResultImpl<R extends Record> implements Result<R> {
         }
 
         writer.append(newline).append(format.indentString(recordLevel)).append("</record>");
+    }
+
+    @Override
+    public final String formatChart() {
+        StringWriter writer = new StringWriter();
+        formatChart(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final String formatChart(ChartFormat format) {
+        StringWriter writer = new StringWriter();
+        formatChart(writer, format);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatChart(OutputStream stream) {
+        formatChart(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void formatChart(OutputStream stream, ChartFormat format) {
+        formatChart(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
+    public final void formatChart(Writer writer) {
+        formatChart(writer, ChartFormat.DEFAULT);
+    }
+
+    @Override
+    public final void formatChart(Writer writer, ChartFormat format) {
+        try {
+            Field<?> category = field(format.category());
+            TreeMap<Object, Result<R>> groups = new TreeMap<Object, Result<R>>(intoGroups(format.category()));
+
+            if (!format.categoryAsText()) {
+                if (Date.class.isAssignableFrom(category.getType())) {
+                    Date categoryMin = (Date) groups.firstKey();
+                    Date categoryMax = (Date) groups.lastKey();
+
+                    for (Date i = categoryMin; i.before(categoryMax); i = new Date(i.getYear(), i.getMonth(), i.getDate() + 1))
+                        if (!groups.containsKey(i))
+                            groups.put(i, (Result) DSL.using(configuration).newResult(fields()));
+                }
+            }
+
+            List<?> categories = new ArrayList<Object>(groups.keySet());
+
+            int categoryPadding = 1;
+            int categoryWidth = 0;
+            for (Object o : categories)
+                categoryWidth = Math.max(categoryWidth, ("" + o).length());
+
+            double axisMin = Double.POSITIVE_INFINITY;
+            double axisMax = Double.NEGATIVE_INFINITY;
+
+            for (Result<R> values : groups.values()) {
+                double sum = 0;
+
+                for (int i = 0; i < format.values().length; i++) {
+                    if (format.display() == Display.DEFAULT)
+                        sum = 0;
+
+                    for (Record r : values)
+                        sum = sum + r.get(format.values()[i], double.class);
+
+                    if (sum < axisMin)
+                        axisMin = sum;
+
+                    if (sum > axisMax)
+                        axisMax = sum;
+                }
+            }
+
+            int verticalLegendWidth = format.showVerticalLegend()
+                ? Math.max(
+                      format.numericFormat().format(axisMin).length(),
+                      format.numericFormat().format(axisMax).length()
+                  )
+                : 0;
+
+            int horizontalLegendHeight = format.showHorizontalLegend() ? 1 : 0;
+
+            int verticalBorderWidth = format.showVerticalLegend() ? 1 : 0;
+            int horizontalBorderHeight = format.showHorizontalLegend() ? 1 : 0;
+
+            int chartHeight = format.height() - horizontalLegendHeight - horizontalBorderHeight;
+            int chartWidth = format.width() - verticalLegendWidth - verticalBorderWidth;
+
+            double barWidth = (double) chartWidth / groups.size();
+            double axisStep = (axisMax - axisMin) / (chartHeight - 1);
+
+            for (int y = chartHeight - 1; y >= 0; y--) {
+                double axisLegend = axisMax - (axisStep * (chartHeight - 1 - y));
+                double axisLegendPercent = (axisLegend - axisMin) / (axisMax - axisMin);
+
+                if (format.showVerticalLegend()) {
+                    String axisLegendString = (format.display() == Display.HUNDRED_PERCENT_STACKED)
+                        ? format.numericFormat().format(axisLegendPercent * 100.0) + "%"
+                        : format.numericFormat().format(axisLegend);
+
+                    for (int x = axisLegendString.length(); x < verticalLegendWidth; x++)
+                        writer.write(' ');
+
+                    writer.write(axisLegendString);
+
+                    for (int x = 0; x < verticalBorderWidth; x++)
+                        writer.write('|');
+                }
+
+                for (int x = 0; x < chartWidth; x++) {
+                    int index = (int) (x / barWidth);
+
+                    Result<R> group = groups.get(categories.get(index));
+                    double[] values = new double[format.values().length];
+
+                    for (Record record : group)
+                        for (int i = 0; i < values.length; i++)
+                            values[i] = values[i] + record.get(format.values()[i], double.class);
+
+                    if (format.display() == Display.STACKED || format.display() == Display.HUNDRED_PERCENT_STACKED)
+                        for (int i = 1; i < values.length; i++)
+                            values[i] = values[i] + values[i - 1];
+
+                    if (format.display() == Display.HUNDRED_PERCENT_STACKED)
+                        for (int i = 0; i < values.length; i++)
+                            values[i] = values[i] / values[values.length - 1];
+
+                    int shadeIndex = -1;
+                    for (int i = values.length - 1; i >= 0; i--)
+                        if ((format.display() == Display.HUNDRED_PERCENT_STACKED ? axisLegendPercent : axisLegend) > values[i])
+                            break;
+                        else
+                            shadeIndex = i;
+
+                    if (shadeIndex == -1)
+                        writer.write(' ');
+                    else
+                        writer.write(format.shades()[shadeIndex % format.shades().length]);
+                }
+
+                writer.write(format.newline());
+            }
+
+            if (format.showHorizontalLegend()) {
+                for (int y = 0; y < horizontalBorderHeight; y++) {
+                    if (format.showVerticalLegend()) {
+                        for (int x = 0; x < verticalLegendWidth; x++)
+                            writer.write('-');
+
+                        for (int x = 0; x < verticalBorderWidth; x++)
+                            writer.write('+');
+                    }
+
+                    for (int x = 0; x < chartWidth; x++)
+                        writer.write('-');
+
+                    writer.write(format.newline());
+                }
+
+                for (int y = 0; y < horizontalLegendHeight; y++) {
+                    if (format.showVerticalLegend()) {
+                        for (int x = 0; x < verticalLegendWidth; x++)
+                            writer.write(' ');
+
+                        for (int x = 0; x < verticalBorderWidth; x++)
+                            writer.write('|');
+                    }
+
+                    double rounding = 0.0;
+                    for (double x = 0.0; x < chartWidth;) {
+                        String label = "" + categories.get((int) (x / barWidth));
+                        int length = label.length();
+
+                        double padding = Math.max(categoryPadding, (barWidth - length) / 2);
+
+                        rounding = (rounding + padding - Math.floor(padding)) % 1;
+                        x = x + (padding + rounding);
+                        for (int i = 0; i < (int) (padding + rounding); i++)
+                            writer.write(' ');
+
+                        x = x + length;
+                        if (x >= chartWidth)
+                            break;
+                        writer.write(label);
+
+                        rounding = (rounding + padding - Math.floor(padding)) % 1;
+                        x = x + (padding + rounding);
+                        for (int i = 0; i < (int) (padding + rounding); i++)
+                            writer.write(' ');
+                    }
+
+                    writer.write(format.newline());
+                }
+            }
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing Chart", e);
+        }
     }
 
     @Override

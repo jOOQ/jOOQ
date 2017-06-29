@@ -3701,6 +3701,56 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().fields(fieldIndexes);
     }
 
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction) {
+        return getDelegate().fields(aliasFunction);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>[] fields) {
+        return getDelegate().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames) {
+        return getDelegate().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames) {
+        return getDelegate().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes) {
+        return getDelegate().fields(aliasFunction, fieldIndexes);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        return getDelegate().fields(aliasFunction);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>[] fields) {
+        return getDelegate().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames) {
+        return getDelegate().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames) {
+        return getDelegate().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes) {
+        return getDelegate().fields(aliasFunction, fieldIndexes);
+    }
+
     /**
      * The {@link SelectImpl} current condition step
      * <p>

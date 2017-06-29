@@ -388,6 +388,56 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction) {
+        return asTable().fields(aliasFunction);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>[] fields) {
+        return asTable().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames) {
+        return asTable().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames) {
+        return asTable().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes) {
+        return asTable().fields(aliasFunction, fieldIndexes);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        return asTable().fields(aliasFunction);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>[] fields) {
+        return asTable().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames) {
+        return asTable().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames) {
+        return asTable().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes) {
+        return asTable().fields(aliasFunction, fieldIndexes);
+    }
+
+    @Override
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query

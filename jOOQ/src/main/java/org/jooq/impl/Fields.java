@@ -40,6 +40,8 @@ import static org.jooq.impl.Tools.indexOrFail;
 
 import java.sql.SQLWarning;
 import java.util.Collection;
+import java.util.function.*;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -255,6 +257,154 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
         for (int i = 0; i < result.length; i++)
             result[i] = field(f[i]);
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = field(fields[i].as(aliasFunction.apply(fields[i])));
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>[] fields) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fields[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldNames[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldNames[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes) {
+        Field<?>[] result = new Field[fieldIndexes.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldIndexes[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = field(fields[i].as(aliasFunction.apply(fields[i], i)));
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>[] fields) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fields[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field, i));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldNames[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field, i));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldNames[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field, i));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes) {
+        Field<?>[] result = new Field[fieldIndexes.length];
+
+        for (int i = 0; i < result.length; i++) {
+            Field<?> field = field(fieldIndexes[i]);
+            if(field == null){
+                result[i] = null;
+                continue;
+            }
+            result[i] = field.as(aliasFunction.apply(field, i));
+        }
 
         return result;
     }

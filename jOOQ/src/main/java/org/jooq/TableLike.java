@@ -166,6 +166,86 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(Name... fieldNames);
 
     /**
+     * Create an alias for fields from this table.
+     *
+     * @return All fields
+     * @see Row#fields(Function)
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction);
+
+    /**
+     * Create an alias for fields from this table, providing some fields.
+     *
+     * @return All available fields
+     * @see Row#fields(Function, Field...)
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>... fields);
+
+    /**
+     * Create an alias for fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(Function, String...)
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames);
+
+    /**
+     * Create an alias for fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(Function, Name...)
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames);
+
+    /**
+     * Create an alias for fields from this table, providing some field indexes.
+     *
+     * @return All available fields
+     * @see Row#fields(Function, int...)
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes);
+
+    /**
+     * Create an alias for fields from this table.
+     *
+     * @return All fields
+     * @see Row#fields(BiFunction)
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
+
+    /**
+     * Create an alias for fields from this table, providing some fields.
+     *
+     * @return All available fields
+     * @see Row#fields(BiFunction, Field...)
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>... fields);
+
+    /**
+     * Create an alias for fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(BiFunction, String...)
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames);
+
+    /**
+     * Create an alias for fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(BiFunction, Name...)
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames);
+
+    /**
+     * Create an alias for fields from this table, providing some field indexes.
+     *
+     * @return All available fields
+     * @see Row#fields(BiFunction, int...)
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes);
+
+    /**
      * Get all fields from this table, providing some field indexes.
      *
      * @return All available fields

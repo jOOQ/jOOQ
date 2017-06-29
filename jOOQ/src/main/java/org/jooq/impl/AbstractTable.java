@@ -295,6 +295,56 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction) {
+        return fieldsRow().fields(aliasFunction);
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>[] fields) {
+        return fieldsRow().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames) {
+        return fieldsRow().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames) {
+        return fieldsRow().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes) {
+        return fieldsRow().fields(aliasFunction, fieldIndexes);
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        return fieldsRow().fields(aliasFunction);
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>[] fields) {
+        return fieldsRow().fields(aliasFunction, fields);
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames) {
+        return fieldsRow().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames) {
+        return fieldsRow().fields(aliasFunction, fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes) {
+        return fieldsRow().fields(aliasFunction, fieldIndexes);
+    }
+
+    @Override
     public final Table<R> asTable() {
         return this;
     }

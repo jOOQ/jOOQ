@@ -34,6 +34,9 @@
  */
 package org.jooq;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 /**
  * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
  * objects.
@@ -185,12 +188,96 @@ public interface RecordType<R extends Record> {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Create an alias for fields from this row.
+     *
+     * @param aliasFunction The function providing field aliases.
+     * @return The all fields
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction);
+
+    /**
+     * Create an alias for fields from this row, providing some fields.
+     * @see #fields(Function)
+     * @see #fields(Field...)
+     * @return All available fields
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Field<?>... fields);
+
+    /**
+     * Create an alias for fields from this row, providing some field names.
+     * @see #fields(Function)
+     * @see #fields(String...)
+     * @return All available fields
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, String... fieldNames);
+
+    /**
+     * Create an alias for fields from this row, providing some field names.
+     * @see #fields(Function)
+     * @see #fields(Name...)
+     * @return All available fields
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, Name... fieldNames);
+
+    /**
+     * Create an alias for fields from this row, providing some field indexes.
+     * @see #fields(Function)
+     * @see #fields(int...)
+     * @return All available fields
+     */
+    Field<?>[] fields(Function<? super Field<?>, ? extends String> aliasFunction, int... fieldIndexes);
+
+    /**
+     * Create an alias for fields from this row.
+     *
+     * @param aliasFunction The function providing field aliases.
+     * @return The all fields
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
+
+    /**
+     * Create an alias for fields from this row, providing some fields.
+     * @see #fields(BiFunction)
+     * @see #fields(Field...)
+     * @return All available fields
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Field<?>... fields);
+
+    /**
+     * Create an alias for fields from this row, providing some field names.
+     * @see #fields(BiFunction)
+     * @see #fields(String...)
+     * @return All available fields
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, String... fieldNames);
+
+    /**
+     * Create an alias for fields from this row, providing some field names.
+     * @see #fields(BiFunction)
+     * @see #fields(Name...)
+     * @return All available fields
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, Name... fieldNames);
+
+    /**
+     * Create an alias for fields from this row, providing some field indexes.
+     * @see #fields(BiFunction)
+     * @see #fields(int...)
+     * @return All available fields
+     */
+    Field<?>[] fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction, int... fieldIndexes);
+
+
+    /**
      * Get a field's index from this record type.
      *
      * @param field The field to look for
      * @return The field's index or <code>-1</code> if the field is not
      *         contained in this <code>Row</code>
      */
+
+
+
     int indexOf(Field<?> field);
 
     /**

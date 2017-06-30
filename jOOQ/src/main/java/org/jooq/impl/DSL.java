@@ -13774,7 +13774,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(String value) {
-        return Tools.field(Convert.convert(value, Date.class), Date.class);
+        return Tools.field(Convert.convert(value, Date.class), SQLDataType.DATE);
     }
 
     /**
@@ -13782,7 +13782,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
-        return date(Tools.field(value));
+        return Tools.field(Convert.convert(value, Date.class), SQLDataType.DATE);
     }
 
     /**
@@ -13798,7 +13798,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(String value) {
-        return Tools.field(Convert.convert(value, Time.class), Time.class);
+        return Tools.field(Convert.convert(value, Time.class), SQLDataType.TIME);
     }
 
     /**
@@ -13806,7 +13806,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
-        return time(Tools.field(value));
+        return Tools.field(Convert.convert(value, Time.class), SQLDataType.TIME);
     }
 
     /**
@@ -13822,7 +13822,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(String value) {
-        return Tools.field(Convert.convert(value, Timestamp.class), Timestamp.class);
+        return Tools.field(Convert.convert(value, Timestamp.class), SQLDataType.TIMESTAMP);
     }
 
     /**
@@ -13830,7 +13830,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
-        return timestamp(Tools.field(value));
+        return Tools.field(Convert.convert(value, Timestamp.class), SQLDataType.TIMESTAMP);
     }
 
     /**
@@ -13847,7 +13847,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(String value) {
-        return Tools.field(Convert.convert(value, LocalDate.class), LocalDate.class);
+        return Tools.field(Convert.convert(value, LocalDate.class), SQLDataType.LOCALDATE);
     }
 
     /**
@@ -13871,7 +13871,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(String value) {
-        return Tools.field(Convert.convert(value, LocalTime.class), LocalTime.class);
+        return Tools.field(Convert.convert(value, LocalTime.class), SQLDataType.LOCALTIME);
     }
 
     /**
@@ -13895,7 +13895,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(String value) {
-        return Tools.field(Convert.convert(value, LocalDateTime.class), LocalDateTime.class);
+        return Tools.field(Convert.convert(value, LocalDateTime.class), SQLDataType.LOCALDATETIME);
     }
 
     /**
@@ -13925,7 +13925,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<OffsetTime> offsetTime(String value) {
-        return Tools.field(Convert.convert(value, OffsetTime.class), OffsetTime.class);
+        return Tools.field(Convert.convert(value, OffsetTime.class), SQLDataType.OFFSETTIME);
     }
 
     /**
@@ -13967,7 +13967,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
-        return Tools.field(Convert.convert(value, OffsetDateTime.class), OffsetDateTime.class);
+        return Tools.field(Convert.convert(value, OffsetDateTime.class), SQLDataType.OFFSETDATETIME);
     }
 
     /**

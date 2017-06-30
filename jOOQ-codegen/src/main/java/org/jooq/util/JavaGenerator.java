@@ -92,7 +92,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Sequence;
-import org.jooq.SortField;
+import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDT;
@@ -4247,38 +4247,77 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("\"");
             }
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb1 = new StringBuilder();
             String glue1 = "\n";
 
             for (UniqueKeyDefinition uk : table.getUniqueKeys()) {
 
                 // Single-column keys are annotated on the column itself
                 if (uk.getKeyColumns().size() > 1) {
-                    sb.append(glue1);
-                    sb.append("\t")
-                      .append(scala ? "new " : "@")
-                      .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
+                    sb1.append(glue1);
+                    sb1.append("\t")
+                       .append(scala ? "new " : "@")
+                       .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
 
-                    String glue2 = "";
+                    String glue1Inner = "";
                     for (ColumnDefinition column : uk.getKeyColumns()) {
-                        sb.append(glue2);
-                        sb.append("\"");
-                        sb.append(column.getName().replace("\"", "\\\""));
-                        sb.append("\"");
+                        sb1.append(glue1Inner);
+                        sb1.append("\"");
+                        sb1.append(column.getName().replace("\"", "\\\""));
+                        sb1.append("\"");
 
-                        glue2 = ", ";
+                        glue1Inner = ", ";
                     }
 
-                    sb.append(scala ? ")" : "}").append(")");
+                    sb1.append(scala ? ")" : "}").append(")");
 
                     glue1 = ",\n";
                 }
             }
 
-            if (sb.length() > 0) {
+            if (sb1.length() > 0) {
                 out.print(", uniqueConstraints = ")
                    .print(scala ? "Array(" : "{");
-                out.println(sb.toString());
+                out.println(sb1.toString());
+                out.print(scala ? ")" : "}");
+            }
+
+            StringBuilder sb2 = new StringBuilder();
+            String glue2 = "\n";
+
+            for (IndexDefinition index : table.getIndexes()) {
+                sb2.append(glue2);
+                sb2.append("\t")
+                   .append(scala ? "new " : "@")
+                   .append(out.ref("javax.persistence.Index"))
+                   .append("(name = \"").append(index.getOutputName().replace("\"", "\\\"")).append("\"");
+
+                if (index.isUnique())
+                    sb2.append(", unique = true");
+
+                sb2.append(", columnList = \"");
+
+                String glue2Inner = "";
+                for (IndexColumnDefinition column : index.getIndexColumns()) {
+                    sb2.append(glue2Inner)
+                       .append(column.getOutputName().replace("\"", "\\\""));
+
+                    if (column.getSortOrder() == SortOrder.ASC)
+                        sb2.append(" ASC");
+                    else if (column.getSortOrder() == SortOrder.DESC)
+                        sb2.append(" DESC");
+
+                    glue2Inner = ", ";
+                }
+
+                sb2.append("\")");
+                glue2 = ",\n";
+            }
+
+            if (sb2.length() > 0) {
+                out.print(", indexes = ")
+                   .print(scala ? "Array(" : "{");
+                out.println(sb2.toString());
                 out.print(scala ? ")" : "}");
             }
 

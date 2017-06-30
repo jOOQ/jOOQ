@@ -198,11 +198,16 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * has been obtained from {@link ConnectionProvider#acquire()} and must be
      * released by calling {@link Connection#close()}.
      * <p>
-     * This is experimental functionality. While this works well for static
-     * {@link Statement} executions, bind variables and their position
-     * calculation might cause issues when the generated SQL output involves
-     * more complex SQL transformation. See also <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/5759">https://github.com/jOOQ/jOOQ/issues/5759</a>.
+     * <strong>This is experimental functionality:</strong>
+     * <ul>
+     * <li>While this works well for static {@link Statement} executions, bind
+     * variables and their position calculation might cause issues when the
+     * generated SQL output involves more complex SQL transformation. See also
+     * <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/5759">https://github.com/jOOQ/jOOQ/issues/5759</a>.</li>
+     * <li>Batching statements is currently not supported. See also <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/5757">https://github.com/jOOQ/jOOQ/issues/5757</a>.</li>
+     * </ul>
      */
     Connection parsingConnection();
 

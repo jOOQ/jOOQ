@@ -625,4 +625,114 @@ implements
         fromArray(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
         return this;
     }
+
+    @Override
+    public final T1 component1() {
+        return (T1) get(0);
+    }
+
+    @Override
+    public final T2 component2() {
+        return (T2) get(1);
+    }
+
+    @Override
+    public final T3 component3() {
+        return (T3) get(2);
+    }
+
+    @Override
+    public final T4 component4() {
+        return (T4) get(3);
+    }
+
+    @Override
+    public final T5 component5() {
+        return (T5) get(4);
+    }
+
+    @Override
+    public final T6 component6() {
+        return (T6) get(5);
+    }
+
+    @Override
+    public final T7 component7() {
+        return (T7) get(6);
+    }
+
+    @Override
+    public final T8 component8() {
+        return (T8) get(7);
+    }
+
+    @Override
+    public final T9 component9() {
+        return (T9) get(8);
+    }
+
+    @Override
+    public final T10 component10() {
+        return (T10) get(9);
+    }
+
+    @Override
+    public final T11 component11() {
+        return (T11) get(10);
+    }
+
+    @Override
+    public final T12 component12() {
+        return (T12) get(11);
+    }
+
+    @Override
+    public final T13 component13() {
+        return (T13) get(12);
+    }
+
+    @Override
+    public final T14 component14() {
+        return (T14) get(13);
+    }
+
+    @Override
+    public final T15 component15() {
+        return (T15) get(14);
+    }
+
+    @Override
+    public final T16 component16() {
+        return (T16) get(15);
+    }
+
+    @Override
+    public final T17 component17() {
+        return (T17) get(16);
+    }
+
+    @Override
+    public final T18 component18() {
+        return (T18) get(17);
+    }
+
+    @Override
+    public final T19 component19() {
+        return (T19) get(18);
+    }
+
+    @Override
+    public final T20 component20() {
+        return (T20) get(19);
+    }
+
+    @Override
+    public final T21 component21() {
+        return (T21) get(20);
+    }
+
+    @Override
+    public final T22 component22() {
+        return (T22) get(21);
+    }
 }

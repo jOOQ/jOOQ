@@ -102,4 +102,15 @@ public interface Record1<T1> extends Record {
 //   */
 //  @Override
 //  <T, U> Record1<T1> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
+
+    // ------------------------------------------------------------------------
+    // Value accessors for record destructuring in Kotlin
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the first value.
+     * <p>
+     * This is the same as {@link #value1()}.
+     */
+    T1 component1();
 }

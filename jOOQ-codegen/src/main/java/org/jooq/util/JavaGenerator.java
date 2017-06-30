@@ -1207,6 +1207,24 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
+            // component[N]()
+            for (int i = 1; i <= degree; i++) {
+                TypedElementDefinition<?> column = columns.get(i - 1);
+
+                final String colType = out.ref(getJavaType(column.getType()));
+                final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
+
+                if (scala) {
+                    out.tab(1).println("override def component%s : %s = %s", i, colType, colGetter);
+                }
+                else {
+                    out.tab(1).overrideInherit();
+                    out.tab(1).println("public %s component%s() {", colType, i);
+                    out.tab(2).println("return %s();", colGetter);
+                    out.tab(1).println("}");
+                }
+            }
+
             // value[N]()
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);

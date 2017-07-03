@@ -498,6 +498,15 @@ public class DefaultConfiguration implements Configuration {
     }
 
     // -------------------------------------------------------------------------
+    // XXX: Wrap this Configuration
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DSLContext dsl() {
+        return DSL.using(this);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: Deriving configurations
     // -------------------------------------------------------------------------
 

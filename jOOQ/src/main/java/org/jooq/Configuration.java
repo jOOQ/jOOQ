@@ -165,6 +165,17 @@ import org.jooq.tools.StopWatchListener;
 public interface Configuration extends Serializable {
 
     // -------------------------------------------------------------------------
+    // Wrap this Configuration
+    // -------------------------------------------------------------------------
+
+    /**
+     * Wrap this <code>Configuration</code> in a {@link DSLContext}, providing
+     * access to the configuration-contextual DSL to construct executable
+     * queries.
+     */
+    DSLContext dsl();
+
+    // -------------------------------------------------------------------------
     // Custom data
     // -------------------------------------------------------------------------
 

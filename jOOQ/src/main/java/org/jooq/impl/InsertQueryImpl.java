@@ -121,8 +121,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    protected final FieldMapForInsert getValues() {
-        return insertMaps.getMap();
+    protected final Map<Field<?>, Field<?>> getValues() {
+        return insertMaps.lastMap();
     }
 
     @Override
@@ -195,13 +195,13 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void setSelect(Field<?>[] f, Select<?> s) {
-        insertMaps.getMap().putFields(Arrays.asList(f));
+        insertMaps.addFields(Arrays.asList(f));
         select = s;
     }
 
     @Override
     public final void addValues(Map<? extends Field<?>, ?> map) {
-        insertMaps.getMap().set(map);
+        insertMaps.set(map);
     }
 
     @Override
@@ -424,10 +424,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .visit(table)
            .declareTables(declareTables);
 
-        // [#1506] with DEFAULT VALUES, we might not have any columns to render
-        if (insertMaps.isExecutable())
-            insertMaps.insertMaps.get(0).toSQLReferenceKeys(ctx);
-
+        insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);
 
         if (select != null) {
@@ -435,7 +432,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#2995] Prevent the generation of wrapping parentheses around the
             //         INSERT .. SELECT statement's SELECT because they would be
             //         interpreted as the (missing) INSERT column list's parens.
-            if (insertMaps.insertMaps.get(0).size() == 0)
+            if (insertMaps.fields().size() == 0)
                 ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
 
 
@@ -530,9 +527,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             //         re-used.
 
             Select<Record> rows = null;
-            Name[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(EMPTY_FIELD));
+            Name[] aliases = fieldNames(insertMaps.fields().toArray(EMPTY_FIELD));
 
-            for (FieldMapForInsert map : insertMaps.insertMaps) {
+            for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
                 Select<Record> row =
                     select(aliasedFields(map.values().toArray(EMPTY_FIELD), aliases))
                     .whereNotExists(
@@ -549,7 +546,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             return create(configuration)
                 .insertInto(table)
-                .columns(insertMaps.getMap().keySet())
+                .columns(insertMaps.fields())
                 .select(selectFrom(table(rows).as("t")));
         }
         else {
@@ -562,7 +559,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             MergeOnConditionStep<R> on =
             create(configuration).mergeInto(table)
                                  .usingDual()
-                                 .on(matchByPrimaryKey(insertMaps.getMap()));
+                                 .on(matchByPrimaryKey(insertMaps.lastMap()));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             // not with ON DUPLICATE KEY IGNORE
@@ -572,8 +569,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                                .set(updateMap);
             }
 
-            return notMatched.whenNotMatchedThenInsert(insertMaps.getMap().keySet())
-                             .values(insertMaps.getMap().values());
+            return notMatched.whenNotMatchedThenInsert(insertMaps.fields())
+                             .values(insertMaps.lastMap().values());
         }
         else {
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
@@ -585,7 +582,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByPrimaryKey(FieldMapForInsert map) {
+    private final Condition matchByPrimaryKey(Map<Field<?>, Field<?>> map) {
         Condition result = null;
 
         for (Field<?> f : table.getPrimaryKey().getFields()) {

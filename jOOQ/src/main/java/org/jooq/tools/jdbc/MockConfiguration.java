@@ -43,6 +43,7 @@ import javax.sql.DataSource;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
@@ -83,6 +84,11 @@ public class MockConfiguration implements Configuration {
     public MockConfiguration(Configuration delegate, MockDataProvider provider) {
         this.delegate = delegate;
         this.provider = provider;
+    }
+
+    @Override
+    public DSLContext dsl() {
+        return delegate.dsl();
     }
 
     @Override

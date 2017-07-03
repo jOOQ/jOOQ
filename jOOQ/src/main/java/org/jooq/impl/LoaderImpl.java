@@ -716,6 +716,7 @@ final class LoaderImpl<R extends Record> implements
         Object[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
+        boolean newRecord = false;
 
         execution: {
             rows: while (iterator.hasNext() && ((row = iterator.next()) != null)) {
@@ -770,6 +771,11 @@ final class LoaderImpl<R extends Record> implements
                     if (insert == null)
                         insert = create.insertQuery(table);
 
+                    if (newRecord) {
+                        newRecord = false;
+                        insert.newRecord();
+                    }
+
                     for (int i = 0; i < row.length; i++)
                         if (i < fields.length && fields[i] != null)
                             addValue0(insert, fields[i], row[i]);
@@ -790,7 +796,7 @@ final class LoaderImpl<R extends Record> implements
                     try {
                         if (bulk != BULK_NONE) {
                             if (bulk == BULK_ALL || processed % bulkAfter != 0) {
-                                insert.newRecord();
+                                newRecord = true;
                                 continue rows;
                             }
                         }

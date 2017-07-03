@@ -240,7 +240,7 @@ implements
     private boolean                     matchedClause;
     private FieldMapForUpdate           matchedUpdate;
     private boolean                     notMatchedClause;
-    private FieldMapForInsert           notMatchedInsert;
+    private FieldMapsForInsert          notMatchedInsert;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
     private boolean                     upsertStyle;
@@ -721,8 +721,8 @@ implements
             getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
         else {
-            Field<?>[] fields = notMatchedInsert.keySet().toArray(EMPTY_FIELD);
-            notMatchedInsert.putValues(Tools.fields(values, fields));
+            Field<?>[] fields = notMatchedInsert.fields().toArray(EMPTY_FIELD);
+            notMatchedInsert.set(Tools.fields(values, fields));
         }
 
         return this;
@@ -937,7 +937,7 @@ implements
             matchedUpdate.put(field, nullSafe(value));
         }
         else if (notMatchedClause) {
-            notMatchedInsert.put(field, nullSafe(value));
+            notMatchedInsert.set(field, nullSafe(value));
         }
         else {
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
@@ -1124,8 +1124,8 @@ implements
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
-        notMatchedInsert = new FieldMapForInsert();
-        notMatchedInsert.putFields(fields);
+        notMatchedInsert = new FieldMapsForInsert();
+        notMatchedInsert.addFields(fields);
 
         matchedClause = false;
         return this;
@@ -1524,9 +1524,9 @@ implements
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)
-               .visit(K_VALUES).sql(' ')
-               .visit(notMatchedInsert)
-               .end(MERGE_VALUES);
+               .visit(K_VALUES).sql(' ');
+            notMatchedInsert.toSQL92Values(ctx);
+            ctx.end(MERGE_VALUES);
         }
 
         ctx.start(MERGE_WHERE);

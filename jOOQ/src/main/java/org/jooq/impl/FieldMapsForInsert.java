@@ -41,13 +41,25 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 
+import java.util.AbstractList;
+import java.util.AbstractMap;
+import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Select;
+import org.jooq.impl.AbstractStoreQuery.UnknownField;
 
 /**
  * @author Lukas Eder
@@ -57,13 +69,15 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID      = -6227074228534414225L;
+    private static final long           serialVersionUID = -6227074228534414225L;
 
-    final List<FieldMapForInsert> insertMaps;
+    final List<Field<?>>                empty;
+    final Map<Field<?>, List<Field<?>>> values;
+    int                                 rows;
 
     FieldMapsForInsert() {
-        insertMaps = new ArrayList<FieldMapForInsert>();
-        insertMaps.add(null);
+        values = new LinkedHashMap<Field<?>, List<Field<?>>>();
+        empty = new ArrayList<Field<?>>();
     }
 
     // -------------------------------------------------------------------------
@@ -80,13 +94,13 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
 
         // Single record inserts can use the standard syntax in any dialect
-        else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
+        else if (rows == 1) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .visit(K_VALUES)
-               .sql(' ')
-               .visit(insertMaps.get(0))
-               .end(INSERT_VALUES);
+               .sql(' ');
+            toSQL92Values(ctx);
+            ctx.end(INSERT_VALUES);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -145,31 +159,51 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     private final Select<Record> insertSelect(Context<?> context) {
         Select<Record> select = null;
 
-        for (FieldMapForInsert map : insertMaps) {
-            if (map != null) {
-                Select<Record> iteration = DSL.using(context.configuration()).select(map.values());
+        for (int row = 0; row < rows; row++) {
+            List<Field<?>> fields = new ArrayList<Field<?>>();
 
-                if (select == null)
-                    select = iteration;
-                else
-                    select = select.unionAll(iteration);
-            }
+            for (List<Field<?>> list : values.values())
+                fields.add(list.get(row));
+
+            Select<Record> iteration = DSL.using(context.configuration()).select(fields);
+
+            if (select == null)
+                select = iteration;
+            else
+                select = select.unionAll(iteration);
         }
 
         return select;
     }
 
-    private final void toSQL92Values(Context<?> context) {
-        context.visit(insertMaps.get(0));
+    final void toSQL92Values(Context<?> ctx) {
+        boolean indent = (values.size() > 1);
 
-        int i = 0;
-        for (FieldMapForInsert map : insertMaps) {
-            if (map != null && i > 0) {
-                context.sql(", ");
-                context.visit(map);
+        for (int row = 0; row < rows; row++) {
+            if (row > 0)
+                ctx.sql(", ");
+
+            ctx.sql('(');
+
+            if (indent)
+                ctx.formatIndentStart();
+
+            String separator = "";
+            for (List<Field<?>> list : values.values()) {
+                ctx.sql(separator);
+
+                if (indent)
+                    ctx.formatNewLine();
+
+                ctx.visit(list.get(row));
+                separator = ", ";
             }
 
-            i++;
+            if (indent)
+                ctx.formatIndentEnd()
+                   .formatNewLine();
+
+            ctx.sql(')');
         }
     }
 
@@ -182,23 +216,216 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     // The FieldMapsForInsert API
     // -------------------------------------------------------------------------
 
+    final void addFields(Collection<? extends Field<?>> fields) {
+        if (rows == 0)
+            newRecord();
+
+        for (Field<?> field : fields) {
+            Field<?> e = DSL.val(null, field);
+            empty.add(e);
+
+            if (!values.containsKey(field)) {
+                values.put(field, rows > 0
+                    ? new ArrayList<Field<?>>(Collections.nCopies(rows, e))
+                    : new ArrayList<Field<?>>()
+                );
+            }
+        }
+    }
+
+    final void set(Collection<? extends Field<?>> fields) {
+        Iterator<? extends Field<?>> it1 = fields.iterator();
+        Iterator<List<Field<?>>> it2 = values.values().iterator();
+
+        while (it1.hasNext() && it2.hasNext())
+            it2.next().set(rows - 1, it1.next());
+
+        if (it1.hasNext() || it2.hasNext())
+            throw new IllegalArgumentException("Added record size (" + fields.size() + ") must match fields size (" + values.size() + ")");
+    }
+
+    @SuppressWarnings("unchecked")
+    final <T> Field<T> set(Field<T> field, Field<T> value) {
+        addFields(Collections.singletonList(field));
+        return (Field<T>) values.get(field).set(rows - 1, value);
+    }
+
+    final void set(Map<? extends Field<?>, ?> map) {
+        addFields(map.keySet());
+        for (Entry<? extends Field<?>, ?> entry : map.entrySet())
+            values.get(entry.getKey())
+                  .set(rows - 1, Tools.field(entry.getValue(), entry.getKey()));
+    }
+
+    final void newRecord() {
+        int i = 0;
+
+        for (List<Field<?>> list : values.values())
+            list.add(empty.get(i++));
+
+        rows++;
+    }
+
+    final Collection<Field<?>> fields() {
+        return values.keySet();
+    }
+
+    final List<Map<Field<?>, Field<?>>> maps() {
+        return new AbstractList<Map<Field<?>, Field<?>>>() {
+            @Override
+            public Map<Field<?>, Field<?>> get(int index) {
+                return map(index);
+            }
+
+            @Override
+            public int size() {
+                return rows;
+            }
+        };
+    }
+
+    final Map<Field<?>, Field<?>> map(int index) {
+        return new AbstractMap<Field<?>, Field<?>>() {
+            transient Set<Entry<Field<?>, Field<?>>> entrySet;
+
+            @Override
+            public Set<Entry<Field<?>, Field<?>>> entrySet() {
+                if (entrySet == null)
+                    entrySet = new EntrySet();
+
+                return entrySet;
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                return values.containsKey(key);
+            }
+
+            @Override
+            public boolean containsValue(Object value) {
+                for (List<Field<?>> list : values.values())
+                    if (list.get(index).equals(value))
+                        return true;
+
+                return false;
+            }
+
+            @Override
+            public Field<?> get(Object key) {
+                List<Field<?>> list = values.get(key);
+                return list == null ? null : list.get(index);
+            }
+
+            @SuppressWarnings({ "unchecked", "rawtypes" })
+            @Override
+            public Field<?> put(Field<?> key, Field<?> value) {
+                return FieldMapsForInsert.this.set((Field) key, (Field) value);
+            }
+
+            @Override
+            public Field<?> remove(Object key) {
+                List<Field<?>> list = values.get(key);
+                values.remove(key);
+                return list == null ? null : list.get(index);
+            }
+
+            @Override
+            public Set<Field<?>> keySet() {
+                return values.keySet();
+            }
+
+            final class EntrySet extends AbstractSet<Entry<Field<?>, Field<?>>> {
+                @Override
+                public final int size() {
+                    return values.size();
+                }
+
+                @Override
+                public final void clear() {
+                    values.clear();
+                }
+
+                @Override
+                public final Iterator<Entry<Field<?>, Field<?>>> iterator() {
+                    return new Iterator<Entry<Field<?>, Field<?>>>() {
+                        Iterator<Entry<Field<?>, List<Field<?>>>> delegate = values.entrySet().iterator();
+
+                        @Override
+                        public boolean hasNext() {
+                            return delegate.hasNext();
+                        }
+
+                        @Override
+                        public Entry<Field<?>, Field<?>> next() {
+                            Entry<Field<?>, List<Field<?>>> entry = delegate.next();
+                            return new SimpleImmutableEntry<Field<?>, Field<?>>(entry.getKey(), entry.getValue().get(index));
+                        }
+
+                        @Override
+                        public void remove() {
+                            delegate.remove();
+                        }
+                    };
+                }
+            }
+        };
+    }
+
+    final Map<Field<?>, Field<?>> lastMap() {
+        return map(rows - 1);
+    }
+
     final boolean isExecutable() {
-        return !insertMaps.isEmpty() && insertMaps.get(0) != null;
+        return rows > 0;
     }
 
-    public final FieldMapForInsert getMap() {
-        if (insertMaps.get(index()) == null)
-            insertMaps.set(index(), new FieldMapForInsert());
+    final void toSQLReferenceKeys(Context<?> ctx) {
 
-        return insertMaps.get(index());
-    }
+        // [#1506] with DEFAULT VALUES, we might not have any columns to render
+        if (!isExecutable())
+            return;
 
-    public final void newRecord() {
-        if (insertMaps.get(index()) != null)
-            insertMaps.add(null);
-    }
+        // [#2995] Do not generate empty column lists.
+        if (values.size() == 0)
+            return;
 
-    private final int index() {
-        return insertMaps.size() - 1;
+        // [#4629] Do not generate column lists for unknown columns
+        unknownFields: {
+            for (Field<?> field : values.keySet())
+                if (!(field instanceof UnknownField))
+                    break unknownFields;
+
+            return;
+        }
+
+        boolean indent = (values.size() > 1);
+
+        ctx.sql(" (");
+
+        if (indent)
+            ctx.formatIndentStart();
+
+        // [#989] Avoid qualifying fields in INSERT field declaration
+        boolean qualify = ctx.qualify();
+        ctx.qualify(false);
+
+        String separator = "";
+        for (Field<?> field : values.keySet()) {
+            ctx.sql(separator);
+
+            if (indent)
+                ctx.formatNewLine();
+
+            ctx.visit(field);
+            separator = ", ";
+        }
+
+        ctx.qualify(qualify);
+
+        if (indent)
+            ctx.formatIndentEnd()
+               .formatNewLine();
+
+        ctx.sql(')');
     }
 }

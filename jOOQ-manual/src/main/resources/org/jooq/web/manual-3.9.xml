@@ -17825,11 +17825,11 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch()
         // You decide, whether any given statement returns results, and how many
         else if (sql.toUpperCase().startsWith("SELECT")) {
 
-            // Always return one author record
-            Result<AuthorRecord> result = create.newResult(AUTHOR);
-            result.add(create.newRecord(AUTHOR));
-            result.get(0).setValue(AUTHOR.ID, 1);
-            result.get(0).setValue(AUTHOR.LAST_NAME, "Orwell");
+            // Always return one record
+            Result<Record2<Integer, String>> result = create.newResult(AUTHOR.ID, AUTHOR.LAST_NAME);
+            result.add(create
+                .newRecord(AUTHOR.ID, AUTHOR.LAST_NAME)
+                .values(1, "Orwell"));
             mock[0] = new MockResult(1, result);
         }
 

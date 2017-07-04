@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.impl.DSL.name;
@@ -183,7 +184,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             if (row > 0)
                 ctx.sql(", ");
 
-            ctx.sql('(');
+            ctx.start(FIELD_ROW)
+               .sql('(');
 
             if (indent)
                 ctx.formatIndentStart();
@@ -203,7 +205,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
-            ctx.sql(')');
+            ctx.sql(')')
+               .end(FIELD_ROW);
         }
     }
 

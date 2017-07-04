@@ -906,6 +906,18 @@ final class Tools {
         return result;
     }
 
+    static final String[] fieldNameStrings(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        String[] result = new String[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getName();
+
+        return result;
+    }
+
     static final Field<?>[] fields(int length) {
         Field<?>[] result = new Field[length];
         Name[] names = fieldNames(length);

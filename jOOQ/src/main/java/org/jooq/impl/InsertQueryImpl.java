@@ -45,6 +45,7 @@ import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -64,6 +65,7 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
+import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
@@ -556,21 +558,32 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private final Merge<R> toMerge(Configuration configuration) {
         if (table.getPrimaryKey() != null) {
-            MergeOnConditionStep<R> on =
-            create(configuration).mergeInto(table)
-                                 .usingDual()
-                                 .on(matchByPrimaryKey(insertMaps.lastMap()));
+
+            // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
+            Table<?> t = select == null
+                ? dual()
+                : table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+
+            MergeOnConditionStep<R> on = select == null
+                ? create(configuration).mergeInto(table)
+                                       .usingDual()
+                                       .on(matchByPrimaryKey(insertMaps.lastMap()))
+                : create(configuration).mergeInto(table)
+                                       .using(t)
+                                       .on(matchByPrimaryKey(t));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
-            // not with ON DUPLICATE KEY IGNORE
+            //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
-            if (onDuplicateKeyUpdate) {
+            if (onDuplicateKeyUpdate)
                 notMatched = on.whenMatchedThenUpdate()
                                .set(updateMap);
-            }
 
-            return notMatched.whenNotMatchedThenInsert(insertMaps.fields())
-                             .values(insertMaps.lastMap().values());
+            return select == null
+                ? notMatched.whenNotMatchedThenInsert(insertMaps.fields())
+                            .values(insertMaps.lastMap().values())
+                : notMatched.whenNotMatchedThenInsert(insertMaps.fields())
+                            .values(t.fields());
         }
         else {
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
@@ -589,7 +602,26 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = (Field<Object>) map.get(field);
 
-            Condition other = field.equal(value);
+            Condition other = field.eq(value);
+            result = (result == null) ? other : result.and(other);
+        }
+
+        return result;
+    }
+
+    /**
+     * Produce a {@link Condition} that matches existing rows by the inserted or
+     * updated primary key values.
+     */
+    @SuppressWarnings("unchecked")
+    private final Condition matchByPrimaryKey(Table<?> s) {
+        Condition result = null;
+
+        for (Field<?> f : table.getPrimaryKey().getFields()) {
+            Field<Object> field = (Field<Object>) f;
+            Field<Object> value = s.field(field);
+
+            Condition other = field.eq(value);
             result = (result == null) ? other : result.and(other);
         }
 

@@ -53,6 +53,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.Constants;
 import org.jooq.DDLQuery;
+import org.jooq.DSLContext;
 import org.jooq.Delete;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
@@ -544,6 +545,11 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final DSLContext dsl() {
+        return configuration.dsl();
     }
 
     @Override

@@ -133,7 +133,7 @@ final class AlterIndexImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean renameIndex = asList().contains(ctx.family());
+        boolean renameIndex = asList(DERBY).contains(ctx.family());
 
         ctx.start(ALTER_INDEX_INDEX)
            .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);

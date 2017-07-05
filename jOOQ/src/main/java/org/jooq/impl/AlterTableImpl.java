@@ -509,8 +509,10 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void accept1(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
-        boolean omitAlterTable = family == HSQLDB && renameConstraint != null;
-        boolean renameTable = asList().contains(family) && renameTo != null;
+        boolean omitAlterTable =
+               (family == HSQLDB && renameConstraint != null)
+            || (family == DERBY && renameColumn != null);
+        boolean renameTable = asList(DERBY).contains(family) && renameTo != null;
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
@@ -537,31 +539,42 @@ final class AlterTableImpl extends AbstractQuery implements
         }
         else if (renameColumn != null) {
             boolean qualify = ctx.qualify();
-
-            ctx.start(ALTER_TABLE_RENAME_COLUMN)
-               .qualify(false);
+            ctx.start(ALTER_TABLE_RENAME_COLUMN);
 
             switch (ctx.family()) {
-                case H2:
-                case HSQLDB:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ')
-                       .visit(renameColumn)
-                       .formatSeparator()
-                       .visit(K_RENAME_TO).sql(' ')
-                       .visit(renameColumnTo);
-                    break;
-
-                default:
+                case DERBY:
                     ctx.visit(K_RENAME_COLUMN).sql(' ')
                        .visit(renameColumn)
                        .formatSeparator()
                        .visit(K_TO).sql(' ')
-                       .visit(renameColumnTo);
+                       .qualify(false)
+                       .visit(renameColumnTo)
+                       .qualify(qualify);
+                    break;
+
+                case H2:
+                case HSQLDB:
+                    ctx.qualify(false)
+                       .visit(K_ALTER_COLUMN).sql(' ')
+                       .visit(renameColumn)
+                       .formatSeparator()
+                       .visit(K_RENAME_TO).sql(' ')
+                       .visit(renameColumnTo)
+                       .qualify(qualify);
+                    break;
+
+                default:
+                    ctx.qualify(false)
+                       .visit(K_RENAME_COLUMN).sql(' ')
+                       .visit(renameColumn)
+                       .formatSeparator()
+                       .visit(K_TO).sql(' ')
+                       .visit(renameColumnTo)
+                       .qualify(qualify);
                     break;
             }
 
-            ctx.qualify(qualify)
-               .end(ALTER_TABLE_RENAME_COLUMN);
+            ctx.end(ALTER_TABLE_RENAME_COLUMN);
         }
         else if (renameIndex != null) {
             boolean qualify = ctx.qualify();

@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
@@ -84,6 +85,11 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final DSLContext dsl() {
+        return configuration.dsl();
     }
 
     @Override

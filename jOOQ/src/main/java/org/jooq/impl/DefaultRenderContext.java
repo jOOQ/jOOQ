@@ -67,6 +67,7 @@ import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -154,7 +155,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render() {
-        return sql.toString();
+        String prepend = (String) data(DataKey.DATA_PREPEND_SQL);
+        String result = sql.toString();
+        return prepend == null ? result : prepend + result;
     }
 
     @Override

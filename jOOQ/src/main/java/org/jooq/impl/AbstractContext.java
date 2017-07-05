@@ -53,6 +53,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DSLContext;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -286,6 +287,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         @Override
         public final Configuration configuration() {
             return AbstractContext.this.configuration();
+        }
+
+        @Override
+        public final DSLContext dsl() {
+            return AbstractContext.this.dsl();
         }
 
         @Override

@@ -8,7 +8,6 @@ install:
   - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && gradle build'
 script:
   - sh -c 'mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn test'

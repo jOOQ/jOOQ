@@ -97,6 +97,13 @@ public interface Scope {
     Configuration configuration();
 
     /**
+     * Wrap the {@link #configuration()} in a {@link DSLContext}, providing
+     * access to the configuration-contextual DSL to construct executable
+     * queries.
+     */
+    DSLContext dsl();
+
+    /**
      * The settings wrapped by this context.
      * <p>
      * This method is a convenient way of accessing

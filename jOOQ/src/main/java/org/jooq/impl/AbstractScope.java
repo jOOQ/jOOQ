@@ -37,6 +37,7 @@ package org.jooq.impl;
 import java.util.Map;
 
 import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.conf.Settings;
@@ -57,13 +58,11 @@ abstract class AbstractScope implements Scope {
 
         // The Configuration can be null when unattached objects are
         // executed or when unattached Records are stored...
-        if (configuration == null) {
+        if (configuration == null)
             configuration = new DefaultConfiguration();
-        }
 
-        if (data == null) {
+        if (data == null)
             data = new DataMap();
-        }
 
         this.configuration = configuration;
         this.data = data;
@@ -76,6 +75,11 @@ abstract class AbstractScope implements Scope {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final DSLContext dsl() {
+        return configuration().dsl();
     }
 
     @Override

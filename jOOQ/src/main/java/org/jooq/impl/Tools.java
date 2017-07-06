@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -433,6 +434,25 @@ final class Tools {
          * list's parentheses).
          */
         DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -3073,8 +3093,41 @@ final class Tools {
      * [#5666] Handle the complexity of each dialect's understanding of
      * correctly calling {@link Statement#execute()}.
      */
-    static final void executeStatementAndGetFirstResultSet(ExecuteContext ctx) throws SQLException {
+    static final void executeStatementAndGetFirstResultSet(ExecuteContext ctx, int skipUpdateCounts) throws SQLException {
         PreparedStatement stmt = ctx.statement();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3830,5 +3883,12 @@ final class Tools {
             return ((TableAlias<?>) table).alias;
         else
             return null;
+    }
+
+    static final void increment(Map<Object, Object> data, DataKey key) {
+        Integer updateCounts = (Integer) data.get(key);
+        if (updateCounts == null)
+            updateCounts = 0;
+        data.put(key, updateCounts + 1);
     }
 }

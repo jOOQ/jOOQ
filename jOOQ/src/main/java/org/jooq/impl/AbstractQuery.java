@@ -449,14 +449,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     static class Rendered {
         String                  sql;
         QueryPartList<Param<?>> bindValues;
+        int                     skipUpdateCounts;
 
-        Rendered(String sql) {
-            this(sql, null);
-        }
-
-        Rendered(String sql, QueryPartList<Param<?>> bindValues) {
+        Rendered(String sql, QueryPartList<Param<?>> bindValues, int skipUpdateCounts) {
             this.sql = sql;
             this.bindValues = bindValues;
+            this.skipUpdateCounts = skipUpdateCounts;
         }
 
         @Override
@@ -471,22 +469,24 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
         if (ctx.type() == DDL) {
             ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-            result = new Rendered(getSQL(INLINED));
+            DefaultRenderContext render = new DefaultRenderContext(configuration);
+            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
         }
         else if (executePreparedStatements(configuration().settings())) {
             try {
                 DefaultRenderContext render = new DefaultRenderContext(configuration);
                 render.data(DATA_COUNT_BIND_VALUES, true);
-                render.visit(this);
-                result = new Rendered(render.render(), render.bindValues());
+                result = new Rendered(render.visit(this).render(), render.bindValues(), render.peekSkipUpdateCounts());
             }
             catch (DefaultRenderContext.ForceInlineSignal e) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                result = new Rendered(getSQL(INLINED));
+                DefaultRenderContext render = new DefaultRenderContext(configuration);
+                result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
             }
         }
         else {
-            result = new Rendered(getSQL(INLINED));
+            DefaultRenderContext render = new DefaultRenderContext(configuration);
+            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
         }
 
 

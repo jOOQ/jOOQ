@@ -502,7 +502,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         try {
             listener.executeStart(ctx);
-            executeStatementAndGetFirstResultSet(ctx);
+            executeStatementAndGetFirstResultSet(ctx, 0);
             listener.executeEnd(ctx);
         }
 

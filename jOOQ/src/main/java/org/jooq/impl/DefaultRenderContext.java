@@ -91,6 +91,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                           printMargin        = 80;
     private boolean                       separator;
     private boolean                       newline;
+    private int                           skipUpdateCounts;
 
     // [#1632] Cached values from Settings
     RenderKeywordStyle                    cachedRenderKeywordStyle;
@@ -142,6 +143,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
     // RenderContext API
     // ------------------------------------------------------------------------
+
+    final int peekSkipUpdateCounts() {
+        return skipUpdateCounts;
+    }
+
+    final void incrementSkipUpdateCounts() {
+        skipUpdateCounts++;
+    }
 
     @Override
     public final String peekAlias() {

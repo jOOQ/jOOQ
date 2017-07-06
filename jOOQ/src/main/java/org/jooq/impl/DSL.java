@@ -9109,7 +9109,7 @@ public class DSL {
      * <p>
      * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
      * contain user-defined plain SQL, because sometimes it is easier to express
-     * things directly in SQL. There must be as many binding variables contained
+     * things directly in SQL. There must be as many bind variables contained
      * in the SQL, as passed in the bindings parameter
      * <p>
      * This overload takes a set of bind value arguments which are replaced our
@@ -9192,7 +9192,7 @@ public class DSL {
      * <p>
      * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
      * contain user-defined plain SQL, because sometimes it is easier to express
-     * things directly in SQL. There must be as many binding variables contained
+     * things directly in SQL. There must be as many bind variables contained
      * in the SQL, as passed in the bindings parameter
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -9328,7 +9328,7 @@ public class DSL {
     /**
      * Create a new query holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL
+     * There must not be any bind variables contained in the SQL
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
@@ -9376,7 +9376,7 @@ public class DSL {
     /**
      * Create a new query holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL
+     * There must not be any bind variables contained in the SQL
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
@@ -9568,7 +9568,7 @@ public class DSL {
      * A plain SQL table is a table that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex, but static subqueries or tables from different schemas.
-     * There must be as many binding variables contained in the SQL, as passed
+     * There must be as many bind variables contained in the SQL, as passed
      * in the bindings parameter
      * <p>
      * Example
@@ -10144,7 +10144,7 @@ public class DSL {
     /**
      * Create a new condition holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL.
+     * There must not be any bind variables contained in the SQL.
      * <p>
      * Example:
      * <p>
@@ -10169,7 +10169,7 @@ public class DSL {
     /**
      * Create a new condition holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL.
+     * There must not be any bind variables contained in the SQL.
      * <p>
      * Example:
      * <p>
@@ -10194,7 +10194,7 @@ public class DSL {
     /**
      * Create a new condition holding plain SQL.
      * <p>
-     * There must be as many binding variables contained in the SQL, as passed
+     * There must be as many bind variables contained in the SQL, as passed
      * in the bindings parameter
      * <p>
      * Example:

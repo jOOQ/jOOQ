@@ -86,7 +86,7 @@ import org.jooq.tools.StopWatchListener;
  * <h3>Types composing its state:</h3>
  * <ul>
  * <li>{@link #dialect()}: The {@link SQLDialect} that defines the underlying
- * database's behaviour when generating SQL syntax, or binding variables, or
+ * database's behaviour when generating SQL syntax, or bind variables, or
  * when executing the query</li>
  * <li>{@link #settings()}: The {@link Settings} that define general jOOQ
  * behaviour</li>

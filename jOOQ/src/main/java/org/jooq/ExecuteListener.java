@@ -425,7 +425,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void prepareEnd(ExecuteContext ctx);
 
     /**
-     * Called before binding variables to the <code>PreparedStatement</code>
+     * Called before bind variables to the <code>PreparedStatement</code>
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -468,7 +468,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void bindStart(ExecuteContext ctx);
 
     /**
-     * Called after binding variables to the <code>PreparedStatement</code>
+     * Called after bind variables to the <code>PreparedStatement</code>
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>

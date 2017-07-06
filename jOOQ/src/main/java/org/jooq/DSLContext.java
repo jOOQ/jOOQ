@@ -2254,7 +2254,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new query holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL
+     * There must not be any bind variables contained in the SQL
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
@@ -2300,7 +2300,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new query holding plain SQL.
      * <p>
-     * There must not be any binding variables contained in the SQL
+     * There must not be any bind variables contained in the SQL
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:

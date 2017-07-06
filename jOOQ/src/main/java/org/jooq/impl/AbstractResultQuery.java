@@ -256,7 +256,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
-        executeStatementAndGetFirstResultSet(ctx);
+        executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);
         listener.executeEnd(ctx);
 
         // Fetch a single result set

@@ -79,12 +79,15 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
     /**
      * Set values in the <code>INSERT</code> statement.
      * <p>
+     * Keys can either be of type {@link String}, {@link Name}, or
+     * {@link Field}.
+     * <p>
      * Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
     @Support
-    InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+    InsertSetMoreStep<R> set(Map<?, ?> map);
 
     /**
      * Set values in the <code>INSERT</code> statement.

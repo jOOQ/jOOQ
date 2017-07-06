@@ -76,12 +76,15 @@ public interface StoreQuery<R extends Record> extends Query {
     /**
      * Add multiple values to the store statement.
      * <p>
+     * Keys can either be of type {@link String}, {@link Name}, or
+     * {@link Field}.
+     * <p>
      * Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
     @Support
-    void addValues(Map<? extends Field<?>, ?> map);
+    void addValues(Map<?, ?> map);
 
     /**
      * Configure the <code>INSERT</code> or <code>UPDATE</code> statement to return all fields in

@@ -45,6 +45,7 @@ import java.util.Map;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -56,9 +57,11 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
      */
     private static final long serialVersionUID = -6139709404698673799L;
 
+    private final Table<?>    table;
     private final Clause      assignmentClause;
 
-    FieldMapForUpdate(Clause assignmentClause) {
+    FieldMapForUpdate(Table<?> table, Clause assignmentClause) {
+        this.table = table;
         this.assignmentClause = assignmentClause;
     }
 
@@ -104,12 +107,12 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         return null;
     }
 
-    final void set(Map<? extends Field<?>, ?> map) {
-        for (Entry<? extends Field<?>, ?> entry : map.entrySet()) {
-            Field<?> field = entry.getKey();
+    final void set(Map<?, ?> map) {
+        for (Entry<?, ?> entry : map.entrySet()) {
+            Field<?> field = Tools.tableField(table, entry.getKey());
             Object value = entry.getValue();
 
-            put(entry.getKey(), Tools.field(value, field));
+            put(field, Tools.field(value, field));
         }
     }
 }

@@ -155,7 +155,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
-    public final UpdateImpl<R> set(Map<? extends Field<?>, ?> map) {
+    public final UpdateImpl<R> set(Map<?, ?> map) {
         getDelegate().addValues(map);
         return this;
     }

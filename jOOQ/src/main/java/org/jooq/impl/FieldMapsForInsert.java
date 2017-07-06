@@ -60,6 +60,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Select;
+import org.jooq.Table;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 
 /**
@@ -72,13 +73,15 @@ final class FieldMapsForInsert extends AbstractQueryPart {
      */
     private static final long           serialVersionUID = -6227074228534414225L;
 
+    final Table<?>                      table;
     final List<Field<?>>                empty;
     final Map<Field<?>, List<Field<?>>> values;
     int                                 rows;
 
-    FieldMapsForInsert() {
-        values = new LinkedHashMap<Field<?>, List<Field<?>>>();
-        empty = new ArrayList<Field<?>>();
+    FieldMapsForInsert(Table<?> table) {
+        this.table = table;
+        this.values = new LinkedHashMap<Field<?>, List<Field<?>>>();
+        this.empty = new ArrayList<Field<?>>();
     }
 
     // -------------------------------------------------------------------------
@@ -219,16 +222,17 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     // The FieldMapsForInsert API
     // -------------------------------------------------------------------------
 
-    final void addFields(Collection<? extends Field<?>> fields) {
+    final void addFields(Collection<?> fields) {
         if (rows == 0)
             newRecord();
 
-        for (Field<?> field : fields) {
-            Field<?> e = DSL.val(null, field);
+        for (Object field : fields) {
+            Field<?> f = Tools.tableField(table, field);
+            Field<?> e = DSL.val(null, f);
             empty.add(e);
 
-            if (!values.containsKey(field)) {
-                values.put(field, rows > 0
+            if (!values.containsKey(f)) {
+                values.put(f, rows > 0
                     ? new ArrayList<Field<?>>(Collections.nCopies(rows, e))
                     : new ArrayList<Field<?>>()
                 );
@@ -253,11 +257,13 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         return (Field<T>) values.get(field).set(rows - 1, value);
     }
 
-    final void set(Map<? extends Field<?>, ?> map) {
+    final void set(Map<?, ?> map) {
         addFields(map.keySet());
-        for (Entry<? extends Field<?>, ?> entry : map.entrySet())
-            values.get(entry.getKey())
-                  .set(rows - 1, Tools.field(entry.getValue(), entry.getKey()));
+        for (Entry<?, ?> entry : map.entrySet()) {
+            Field<?> field = Tools.tableField(table, entry.getKey());
+            values.get(field)
+                  .set(rows - 1, Tools.field(entry.getValue(), field));
+        }
     }
 
     final void newRecord() {

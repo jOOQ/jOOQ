@@ -90,12 +90,15 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
      * statement's <code>ON DUPLICATE KEY UPDATE</code> clause.
      * <p>
+     * Keys can either be of type {@link String}, {@link Name}, or
+     * {@link Field}.
+     * <p>
      * Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
-    InsertOnDuplicateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+    InsertOnDuplicateSetMoreStep<R> set(Map<?, ?> map);
 
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>

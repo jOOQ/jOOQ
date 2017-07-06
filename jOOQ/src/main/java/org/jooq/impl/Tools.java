@@ -3891,4 +3891,15 @@ final class Tools {
             updateCounts = 0;
         data.put(key, updateCounts + 1);
     }
+
+    static Field<?> tableField(Table<?> table, Object field) {
+        if (field instanceof Field<?>)
+            return (Field<?>) field;
+        else if (field instanceof Name)
+            return table.field((Name) field);
+        else if (field instanceof String)
+            return table.field((String) field);
+        else
+            throw new IllegalArgumentException("Field type not supported: " + field);
+    }
 }

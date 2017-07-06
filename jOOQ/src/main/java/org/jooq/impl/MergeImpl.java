@@ -920,7 +920,7 @@ implements
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
         matchedClause = true;
-        matchedUpdate = new FieldMapForUpdate(MERGE_SET_ASSIGNMENT);
+        matchedUpdate = new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT);
 
         notMatchedClause = false;
         return this;
@@ -955,7 +955,7 @@ implements
     }
 
     @Override
-    public final MergeImpl set(Map<? extends Field<?>, ?> map) {
+    public final MergeImpl set(Map<?, ?> map) {
         if (matchedClause) {
             matchedUpdate.set(map);
         }
@@ -1124,7 +1124,7 @@ implements
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
-        notMatchedInsert = new FieldMapsForInsert();
+        notMatchedInsert = new FieldMapsForInsert(table);
         notMatchedInsert.addFields(fields);
 
         matchedClause = false;

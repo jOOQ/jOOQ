@@ -112,8 +112,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
 
-        this.updateMap = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
-        this.insertMaps = new FieldMapsForInsert();
+        this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+        this.insertMaps = new FieldMapsForInsert(into);
         this.condition = new ConditionProviderImpl();
     }
 
@@ -166,7 +166,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    public final void addValuesForUpdate(Map<? extends Field<?>, ?> map) {
+    public final void addValuesForUpdate(Map<?, ?> map) {
         updateMap.set(map);
     }
 
@@ -202,7 +202,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    public final void addValues(Map<? extends Field<?>, ?> map) {
+    public final void addValues(Map<?, ?> map) {
         insertMaps.set(map);
     }
 
@@ -339,7 +339,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 // CUBRID can emulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
-                    FieldMapForUpdate update = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+                    FieldMapForUpdate update = new FieldMapForUpdate(table, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
                     Field<?> field = table.field(0);
                     update.put(field, field);
 

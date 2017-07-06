@@ -74,12 +74,15 @@ public interface UpdateSetStep<R extends Record> {
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      * <p>
+     * Keys can either be of type {@link String}, {@link Name}, or
+     * {@link Field}.
+     * <p>
      * Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
     @Support
-    UpdateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+    UpdateSetMoreStep<R> set(Map<?, ?> map);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.

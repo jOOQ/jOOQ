@@ -214,7 +214,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
-    void addValuesForUpdate(Map<? extends Field<?>, ?> map);
+    void addValuesForUpdate(Map<?, ?> map);
 
     /**
      * Adds new conditions to the query, connecting them to existing conditions

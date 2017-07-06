@@ -62,7 +62,6 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -134,7 +133,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
 
-        this.updateMap = new FieldMapForUpdate(UPDATE_SET_ASSIGNMENT);
+        this.updateMap = new FieldMapForUpdate(table, UPDATE_SET_ASSIGNMENT);
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
     }
@@ -435,7 +434,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    public final void addValues(Map<? extends Field<?>, ?> map) {
+    public final void addValues(Map<?, ?> map) {
         updateMap.set(map);
     }
 

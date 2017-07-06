@@ -90,12 +90,15 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED</code> clause.
      * <p>
+     * Keys can either be of type {@link String}, {@link Name}, or
+     * {@link Field}.
+     * <p>
      * Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
     @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
-    MergeNotMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+    MergeNotMatchedSetMoreStep<R> set(Map<?, ?> map);
 
     /**
      * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>

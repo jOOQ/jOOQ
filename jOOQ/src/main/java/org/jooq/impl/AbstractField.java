@@ -110,9 +110,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private static final long     serialVersionUID = 2884811923648354905L;
     private static final Clause[] CLAUSES          = { FIELD };
 
-    final Name                    name;
-    final String                  comment;
-    final DataType<T>             dataType;
+    private final Name            name;
+    private final String          comment;
+    private final DataType<T>     dataType;
 
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null, type.getBinding());

@@ -90,7 +90,7 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
             ctx.sql('.');
         }
 
-        ctx.visit(name.unqualifiedName());
+        ctx.visit(getUnqualifiedName());
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, null);
     }
 

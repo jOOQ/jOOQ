@@ -3038,8 +3038,8 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     /**
-     * [#3011] [#3054] Consume additional exceptions if there are any and append
-     * them to the <code>previous</code> exception's
+     * [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+     * and append them to the <code>previous</code> exception's
      * {@link SQLException#getNextException()} list.
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
@@ -3193,31 +3193,39 @@ final class Tools {
         int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
-            if (ctx.resultSet() != null) {
-                anyResults = true;
+            try {
+                if (ctx.resultSet() != null) {
+                    anyResults = true;
 
-                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-                results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
-            }
-            else {
-                if (rows != -1)
-                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
-                else
-                    break;
+                    Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
+                }
+                else {
+                    if (rows != -1)
+                        results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                    else
+                        break;
+                }
+
+                if (ctx.statement().getMoreResults()) {
+                    ctx.resultSet(ctx.statement().getResultSet());
+                }
+                else {
+                    rows = ctx.statement().getUpdateCount();
+                    ctx.rows(rows);
+
+                    if (rows != -1)
+                        ctx.resultSet(null);
+                    else
+                        break;
+                }
             }
 
-            if (ctx.statement().getMoreResults()) {
-                ctx.resultSet(ctx.statement().getResultSet());
-            }
-            else {
-                rows = ctx.statement().getUpdateCount();
-                ctx.rows(rows);
-
-                if (rows != -1)
-                    ctx.resultSet(null);
-                else
-                    break;
+            // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+            catch (SQLException e) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
             }
         }
 

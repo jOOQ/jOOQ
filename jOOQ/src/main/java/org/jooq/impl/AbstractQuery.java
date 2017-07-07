@@ -430,7 +430,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             return result;
         }
 
-        // [#3011] [#3054] Consume additional exceptions if there are any
+        // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), stmt, e);
             throw e;

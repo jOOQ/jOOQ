@@ -506,7 +506,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             listener.executeEnd(ctx);
         }
 
-        // [#3011] [#3054] Consume additional exceptions if there are any
+        // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), ctx.statement(), e);
             throw e;

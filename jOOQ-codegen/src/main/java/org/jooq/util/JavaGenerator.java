@@ -4412,7 +4412,9 @@ public class JavaGenerator extends AbstractGenerator {
             DataTypeDefinition type = column.getType();
 
             // [#5128] defaulted columns are nullable in Java
-            if (!column.getType().isNullable() && !column.getType().isDefaulted())
+            if (!column.getType().isNullable() &&
+                !column.getType().isDefaulted() &&
+                !column.getType().isIdentity())
                 out.tab(1).println("@%s", out.ref("javax.validation.constraints.NotNull"));
 
             if ("java.lang.String".equals(getJavaType(type))) {

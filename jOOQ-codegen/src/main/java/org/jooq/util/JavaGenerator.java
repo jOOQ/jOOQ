@@ -629,6 +629,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRelations(SchemaDefinition schema) {
         log.info("Generating Keys");
 
+        boolean empty = true;
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Keys.java"));
         printPackage(out, schema);
         printClassJavadoc(out,
@@ -652,6 +653,8 @@ public class JavaGenerator extends AbstractGenerator {
                 IdentityDefinition identity = table.getIdentity();
 
                 if (identity != null) {
+                    empty = false;
+
                     final String identityType = out.ref(getStrategy().getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD));
                     final String columnType = out.ref(getJavaType(identity.getColumn().getType()));
                     final String identityId = getStrategy().getJavaIdentifier(identity.getColumn().getContainer());
@@ -681,6 +684,8 @@ public class JavaGenerator extends AbstractGenerator {
                 List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
 
                 for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                    empty = false;
+
                     final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
                     final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
                     final int block = allUniqueKeys.size() / INITIALISER_SIZE;
@@ -707,6 +712,8 @@ public class JavaGenerator extends AbstractGenerator {
                 List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
                 for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                    empty = false;
+
                     final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
                     final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
                     final String keyId = getStrategy().getJavaIdentifier(foreignKey);
@@ -770,13 +777,23 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        closeJavaWriter(out);
 
-        watch.splitInfo("Keys generated");
+        if (empty) {
+            log.info("Skipping empty keys");
+        }
+        else {
+            closeJavaWriter(out);
+            watch.splitInfo("Keys generated");
+        }
     }
 
     protected void generateIndexes(SchemaDefinition schema) {
         log.info("Generating Indexes");
+
+        if (database.getIndexes(schema).isEmpty()) {
+            log.info("Skipping empty indexes");
+            return;
+        }
 
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Indexes.java"));
         printPackage(out, schema);

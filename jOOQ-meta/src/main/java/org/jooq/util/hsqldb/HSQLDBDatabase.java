@@ -45,12 +45,15 @@ import static org.jooq.util.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRA
 import static org.jooq.util.hsqldb.information_schema.Tables.ROUTINES;
 import static org.jooq.util.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.util.hsqldb.information_schema.Tables.SEQUENCES;
+import static org.jooq.util.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
 import static org.jooq.util.hsqldb.information_schema.Tables.TABLES;
 import static org.jooq.util.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -58,19 +61,24 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
+import org.jooq.util.IndexColumnDefinition;
+import org.jooq.util.IndexDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
@@ -90,6 +98,76 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.HSQLDB);
+    }
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+
+        // Same implementation as in H2Database and MySQLDatabase
+        Map<Record, Result<Record>> indexes = create()
+            .select(
+                SYSTEM_INDEXINFO.TABLE_SCHEM,
+                SYSTEM_INDEXINFO.TABLE_NAME,
+                SYSTEM_INDEXINFO.INDEX_NAME,
+                SYSTEM_INDEXINFO.NON_UNIQUE,
+                SYSTEM_INDEXINFO.COLUMN_NAME,
+                SYSTEM_INDEXINFO.ORDINAL_POSITION,
+                SYSTEM_INDEXINFO.ASC_OR_DESC)
+            .from(SYSTEM_INDEXINFO)
+            .where(SYSTEM_INDEXINFO.TABLE_SCHEM.in(getInputSchemata()))
+            .orderBy(
+                SYSTEM_INDEXINFO.TABLE_SCHEM,
+                SYSTEM_INDEXINFO.TABLE_NAME,
+                SYSTEM_INDEXINFO.INDEX_NAME,
+                SYSTEM_INDEXINFO.ORDINAL_POSITION)
+            .fetchGroups(
+                new Field[] {
+                    SYSTEM_INDEXINFO.TABLE_SCHEM,
+                    SYSTEM_INDEXINFO.TABLE_NAME,
+                    SYSTEM_INDEXINFO.INDEX_NAME,
+                    SYSTEM_INDEXINFO.NON_UNIQUE
+                },
+                new Field[] {
+                    SYSTEM_INDEXINFO.COLUMN_NAME,
+                    SYSTEM_INDEXINFO.ORDINAL_POSITION,
+                    SYSTEM_INDEXINFO.ASC_OR_DESC
+                });
+
+        for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
+            final Record index = entry.getKey();
+            final Result<Record> cols = entry.getValue();
+
+            final SchemaDefinition tableSchema = getSchema(index.get(SYSTEM_INDEXINFO.TABLE_SCHEM));
+            final String indexName = index.get(SYSTEM_INDEXINFO.INDEX_NAME);
+            final String tableName = index.get(SYSTEM_INDEXINFO.TABLE_NAME);
+            final TableDefinition table = getTable(tableSchema, tableName);
+            final boolean unique = !index.get(SYSTEM_INDEXINFO.NON_UNIQUE, boolean.class);
+
+            if (table != null) {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+
+                    {
+                        for (Record column : cols) {
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)),
+                                "D".equals(column.get(SYSTEM_INDEXINFO.ASC_OR_DESC)) ? SortOrder.DESC : SortOrder.ASC,
+                                column.get(SYSTEM_INDEXINFO.ORDINAL_POSITION, int.class)
+                            ));
+                        }
+                    }
+
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+        }
+
+        return result;
     }
 
     @Override

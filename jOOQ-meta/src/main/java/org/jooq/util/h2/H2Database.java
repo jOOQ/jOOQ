@@ -105,7 +105,7 @@ public class H2Database extends AbstractDatabase {
     protected List<IndexDefinition> getIndexes0() throws SQLException {
         List<IndexDefinition> result = new ArrayList<IndexDefinition>();
 
-        // Same implementation as in MySQLDatabase
+        // Same implementation as in HSQLDBDatabase and MySQLDatabase
         Map<Record, Result<Record>> indexes = create()
             .select(
                 Indexes.TABLE_SCHEMA,

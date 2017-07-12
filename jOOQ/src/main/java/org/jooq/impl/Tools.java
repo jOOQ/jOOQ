@@ -939,11 +939,16 @@ final class Tools {
     }
 
     static final Field<?>[] fields(int length) {
-        Field<?>[] result = new Field[length];
+        return fields(length, SQLDataType.OTHER);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] fields(int length, DataType<T> type) {
+        Field<T>[] result = new Field[length];
         Name[] names = fieldNames(length);
 
         for (int i = 0; i < length; i++)
-            result[i] = DSL.field(name(names[i]));
+            result[i] = DSL.field(name(names[i]), type);
 
         return result;
     }

@@ -2412,21 +2412,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     @SuppressWarnings("unchecked")
     static final Record pgNewRecord(Class<?> type, Field<?>[] fields, final Object object) {
-        if (object == null) {
+        if (object == null)
             return null;
-        }
+
+        final List<String> values = PostgresUtils.toPGObject(object.toString());
+
+        // [#6404] In the event of an unknown record type, derive the record length from actual values.
+        //         Unfortunately, few column types can be derived from this information. Some possibilities
+        //         for future jOOQ versions include:
+        //         - Integers
+        //         - Numbers
+        //         - Binary data (starts with \x)
+        //         - Temporal data
+        //         - Everything else: VARCHAR
+        if (fields == null && type == Record.class)
+            fields = Tools.fields(values.size(), SQLDataType.VARCHAR);
 
         return Tools.newRecord(true, (Class<Record>) type, fields)
                     .operate(new RecordOperation<Record, RuntimeException>() {
 
                 @Override
                 public Record operate(Record record) {
-                    List<String> values = PostgresUtils.toPGObject(object.toString());
-
                     Row row = record.fieldsRow();
-                    for (int i = 0; i < row.size(); i++) {
+
+                    for (int i = 0; i < row.size(); i++)
                         pgSetValue(record, row.field(i), values.get(i));
-                    }
 
                     return record;
                 }

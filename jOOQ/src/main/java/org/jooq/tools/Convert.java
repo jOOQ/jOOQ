@@ -968,15 +968,28 @@ public final class Convert {
                 }
 
 
-                // [#1448] [#6255] To Enum conversion
+                // [#1448] [#6255] [#5720] To Enum conversion
                 else if (java.lang.Enum.class.isAssignableFrom(toClass) && (fromClass == String.class || from instanceof Enum || from instanceof EnumType)) {
                     try {
-                        if (fromClass == String.class)
-                            return (U) java.lang.Enum.valueOf((Class) toClass, (String) from);
-                        else if (from instanceof EnumType)
-                            return (U) java.lang.Enum.valueOf((Class) toClass, ((EnumType) from).getLiteral());
-                        else
-                            return (U) java.lang.Enum.valueOf((Class) toClass, ((Enum) from).name());
+                        String fromString =
+                            (fromClass == String.class) ? (String) from
+                          : (from instanceof EnumType)  ? ((EnumType) from).getLiteral()
+                          : ((Enum) from).name();
+
+                        if (fromString == null)
+                            return null;
+
+                        if (EnumType.class.isAssignableFrom(toClass)) {
+                            for (Object value : toClass.getEnumConstants())
+                                if (fromString.equals(((EnumType) value).getLiteral()))
+                                    return (U) value;
+
+                            return null;
+                        }
+                        else {
+                            return (U) java.lang.Enum.valueOf((Class) toClass, fromString);
+                        }
+
                     }
                     catch (IllegalArgumentException e) {
                         return null;

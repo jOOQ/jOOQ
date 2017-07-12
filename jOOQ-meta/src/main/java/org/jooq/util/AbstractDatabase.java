@@ -379,14 +379,18 @@ public abstract class AbstractDatabase implements Database {
                 log.error("Could not load catalogs", e);
             }
 
-//            Iterator<CatalogDefinition> it = catalogs.iterator();
-//            while (it.hasNext()) {
-//                CatalogDefinition catalog = it.next();
-//
-//                // [#4794] Add support for schema mapping
-//                // if (!getInputSchemata().contains(catalog.getName()))
-//                //    it.remove();
-//            }
+            Iterator<CatalogDefinition> it = catalogs.iterator();
+            while (it.hasNext()) {
+                CatalogDefinition catalog = it.next();
+
+                if (!getInputCatalogs().contains(catalog.getName()))
+                    it.remove();
+            }
+
+            if (catalogs.isEmpty())
+                log.warn(
+                    "No catalogs were loaded",
+                    "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputCatalog/> elements.");
         }
 
         return catalogs;
@@ -532,14 +536,22 @@ public abstract class AbstractDatabase implements Database {
                         }
 
                         inputSchemata.add(inputSchema);
-                        List<String> list = inputSchemataPerCatalog.get(catalog.getInputCatalog());
 
-                        if (list == null) {
-                            list = new ArrayList<String>();
-                            inputSchemataPerCatalog.put(catalog.getInputCatalog(), list);
+                        // [#6064] If no input catalogs were configured, we need to register the input schema for each catalog
+                        for (String inputCatalog :
+                                (configuredCatalogs.size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getInputCatalog()))
+                              ? getInputCatalogs()
+                              : Collections.singletonList(catalog.getInputCatalog())
+                        ) {
+                            List<String> list = inputSchemataPerCatalog.get(inputCatalog);
+
+                            if (list == null) {
+                                list = new ArrayList<String>();
+                                inputSchemataPerCatalog.put(inputCatalog, list);
+                            }
+
+                            list.add(inputSchema);
                         }
-
-                        list.add(inputSchema);
                     }
                 }
             }

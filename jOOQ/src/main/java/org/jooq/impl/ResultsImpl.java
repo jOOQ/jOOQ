@@ -105,10 +105,12 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         String separator = "";
 
         for (ResultOrRows result : resultsOrRows) {
-            if (result.result() == null)
-                sb.append(separator).append("Update count: ").append(result.rows());
-            else
+            if (result.result() != null)
                 sb.append(separator).append("Result set:\n").append(result.result());
+            else if (result.exception() != null)
+                sb.append(separator).append("Exception: ").append(result.exception().getMessage());
+            else
+                sb.append(separator).append("Update count: ").append(result.rows());
 
             separator = "\n";
         }

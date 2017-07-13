@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
+import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -70,7 +71,6 @@ import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
-import static org.jooq.impl.Tools.consumeExceptions;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 
@@ -118,6 +118,7 @@ import org.jooq.UDTRecord;
 import org.jooq.XMLFormat;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
@@ -461,7 +462,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             registerOutParameters(ctx);
             listener.bindEnd(ctx);
 
-            execute0(ctx, listener);
+            SQLException e = execute0(ctx, listener);
 
 
 
@@ -471,7 +472,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
             //         http://tracker.firebirdsql.org/browse/JDBC-350
             if (ctx.family() != FIREBIRD)
-                Tools.consumeResultSets(ctx, listener, results, null);
+                Tools.consumeResultSets(ctx, listener, results, null, e);
 
             listener.outStart(ctx);
             fetchOutParameters(ctx);
@@ -499,18 +500,15 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        try {
-            listener.executeStart(ctx);
-            executeStatementAndGetFirstResultSet(ctx, 0);
-            listener.executeEnd(ctx);
-        }
+    private final SQLException execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        listener.executeStart(ctx);
+        SQLException e = executeStatementAndGetFirstResultSet(ctx, 0);
+        listener.executeEnd(ctx);
 
-        // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
-        catch (SQLException e) {
-            consumeExceptions(ctx.configuration(), ctx.statement(), e);
-            throw e;
-        }
+        if (e != null)
+            results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e)));
+
+        return e;
     }
 
     @Override
@@ -1092,7 +1090,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
         for (Parameter<?> parameter : getParameters())
             if (resultParameter(parameter))
-                fetchOutParameter(ctx, parameter);
+                try {
+                    fetchOutParameter(ctx, parameter);
+                }
+                catch (SQLException e) {
+
+                    // [#6413] There may be prior exceptions that weren't propagated, in case of which
+                    //         we should ignore any exceptions arising from fetching OUT parameters
+                    if (ctx.settings().getThrowExceptions() != THROW_NONE)
+                        throw e;
+                }
     }
 
     private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {

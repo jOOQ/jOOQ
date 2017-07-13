@@ -44,6 +44,7 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
+import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.blocking;
@@ -430,10 +431,14 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             return result;
         }
 
-        // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+        // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), stmt, e);
-            throw e;
+
+            if (ctx.settings().getThrowExceptions() != THROW_NONE)
+                throw e;
+            else
+                return stmt.getUpdateCount();
         }
     }
 

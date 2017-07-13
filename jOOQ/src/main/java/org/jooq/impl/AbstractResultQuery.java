@@ -256,11 +256,17 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
-        executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);
+        SQLException e = executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);
         listener.executeEnd(ctx);
 
         // Fetch a single result set
+        notManyIf:
         if (!many) {
+
+            // [#6413] If the first execution yielded an exception, rather than an update count or result set
+            //         and that exception is not thrown because of Settings.throwExceptions == THROW_NONE, we can stop
+            if (e != null)
+                break notManyIf;
 
             // [#5617] This may happen when using plain SQL API or a MockConnection and expecting a result set where
             //         there is none. The cursor / result is patched into the ctx only for single result sets, where
@@ -287,7 +293,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         // Fetch several result sets
         else {
             results = new ResultsImpl(ctx.configuration());
-            consumeResultSets(ctx, listener, results, intern);
+            consumeResultSets(ctx, listener, results, intern, e);
         }
 
         return result != null ? result.size() : 0;

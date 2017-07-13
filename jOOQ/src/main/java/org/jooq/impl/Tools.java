@@ -197,6 +197,7 @@ import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Result;
+import org.jooq.ResultOrRows;
 import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.RowN;
@@ -3108,9 +3109,10 @@ final class Tools {
      * [#5666] Handle the complexity of each dialect's understanding of
      * correctly calling {@link Statement#execute()}.
      */
-    static final void executeStatementAndGetFirstResultSet(ExecuteContext ctx, int skipUpdateCounts) throws SQLException {
+    static final SQLException executeStatementAndGetFirstResultSet(ExecuteContext ctx, int skipUpdateCounts) throws SQLException {
         PreparedStatement stmt = ctx.statement();
 
+        try {
 
 
 
@@ -3189,24 +3191,38 @@ final class Tools {
 
 
 
-                         if (stmt.execute()) {
-            ctx.resultSet(stmt.getResultSet());
+
+                             if (stmt.execute()) {
+                ctx.resultSet(stmt.getResultSet());
+            }
+
+            else {
+                ctx.resultSet(null);
+                ctx.rows(stmt.getUpdateCount());
+            }
+
+            return null;
         }
 
-        else {
-            ctx.resultSet(null);
-            ctx.rows(stmt.getUpdateCount());
+        // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
+        catch (SQLException e) {
+            if (ctx.settings().getThrowExceptions() != THROW_NONE) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
+            }
+            else {
+                return e;
+            }
         }
     }
 
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
-    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
+    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern, SQLException prev) throws SQLException {
         boolean anyResults = false;
         int i = 0;
         int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
-        SQLException x = null;
 
         for (i = 0; i < maxConsumedResults; i++) {
             try {
@@ -3217,7 +3233,7 @@ final class Tools {
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
                     results.resultsOrRows().add(new ResultOrRowsImpl(c.fetch()));
                 }
-                else if (x == null) {
+                else if (prev == null) {
                     if (rows != -1)
                         results.resultsOrRows().add(new ResultOrRowsImpl(rows));
                     else
@@ -3237,12 +3253,12 @@ final class Tools {
                         break;
                 }
 
-                x = null;
+                prev = null;
             }
 
             // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
             catch (SQLException e) {
-                x = e;
+                prev = e;
 
                 if (ctx.settings().getThrowExceptions() == THROW_NONE) {
                     ctx.sqlException(e);
@@ -3262,6 +3278,25 @@ final class Tools {
         // Otherwise, this call is not supported by ojdbc or CUBRID [#4440]
         if (anyResults && ctx.family() != CUBRID)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+
+        // [#6413] For consistency reasons, any exceptions that have been placed in ResultOrRow elements must
+        //         be linked, just as if they were collected using ThrowExceptions == THROW_ALL
+        if (ctx.settings().getThrowExceptions() == THROW_NONE) {
+            SQLException s1 = null;
+
+            for (ResultOrRows r : results.resultsOrRows()) {
+                DataAccessException d = r.exception();
+
+                if (d != null && d.getCause() instanceof SQLException) {
+                    SQLException s2 = (SQLException) d.getCause();
+
+                    if (s1 != null)
+                        s1.setNextException(s2);
+
+                    s1 = s2;
+                }
+            }
+        }
     }
 
     private static final Pattern NEW_LINES = Pattern.compile("[\\r\\n]+");

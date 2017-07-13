@@ -56,6 +56,8 @@ import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
+import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
@@ -211,9 +213,11 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
+import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.impl.Tools.Cache.CachedOperation;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -3043,11 +3047,17 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     /**
-     * [#3011] [#3054] [#6390] Consume additional exceptions if there are any
-     * and append them to the <code>previous</code> exception's
+     * [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there
+     * are any and append them to the <code>previous</code> exception's
      * {@link SQLException#getNextException()} list.
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
+
+        // [#6413] Don't consume any additional exceptions if we're throwing only the first.
+        ThrowExceptions exceptions = configuration.settings().getThrowExceptions();
+        if (exceptions == THROW_FIRST)
+            return;
+
 
 
 
@@ -3196,6 +3206,7 @@ final class Tools {
         boolean anyResults = false;
         int i = 0;
         int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
+        SQLException x = null;
 
         for (i = 0; i < maxConsumedResults; i++) {
             try {
@@ -3204,11 +3215,11 @@ final class Tools {
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
+                    results.resultsOrRows().add(new ResultOrRowsImpl(c.fetch()));
                 }
-                else {
+                else if (x == null) {
                     if (rows != -1)
-                        results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                        results.resultsOrRows().add(new ResultOrRowsImpl(rows));
                     else
                         break;
                 }
@@ -3225,12 +3236,22 @@ final class Tools {
                     else
                         break;
                 }
+
+                x = null;
             }
 
-            // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+            // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
             catch (SQLException e) {
-                consumeExceptions(ctx.configuration(), ctx.statement(), e);
-                throw e;
+                x = e;
+
+                if (ctx.settings().getThrowExceptions() == THROW_NONE) {
+                    ctx.sqlException(e);
+                    results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e)));
+                }
+                else {
+                    consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                    throw e;
+                }
             }
         }
 

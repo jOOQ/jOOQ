@@ -202,6 +202,10 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
             this(null, rows, null);
         }
 
+        ResultOrRowsImpl(DataAccessException exception) {
+            this(null, 0, exception);
+        }
+
         private ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) {
             this.result = result;
             this.rows = rows;

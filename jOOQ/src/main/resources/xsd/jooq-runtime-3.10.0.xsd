@@ -111,6 +111,10 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether reflection information should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="throwExceptions" type="jooq-runtime:ThrowExceptions" minOccurs="0" maxOccurs="1" default="THROW_ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A strategy defining how exceptions from the database / JDBC driver should be propagated]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fetchWarnings" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether warnings should be fetched after each query execution.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -359,6 +363,20 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Never escape backslashes. -->
       <enumeration value="OFF"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ThrowExceptions">
+    <restriction base="string">
+
+      <!-- Collect all exceptions from a batch and throw them all together -->
+      <enumeration value="THROW_ALL"/>
+
+      <!-- Throw only the first exception from a batch -->
+      <enumeration value="THROW_FIRST"/>
+
+      <!-- Throw no exceptions, but collect them in ResultOrRows -->
+      <enumeration value="THROW_NONE"/>
     </restriction>
   </simpleType>
 </schema>

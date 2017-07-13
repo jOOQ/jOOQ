@@ -74,6 +74,9 @@ public class Settings
     protected Boolean updatablePrimaryKeys = false;
     @XmlElement(defaultValue = "true")
     protected Boolean reflectionCaching = true;
+    @XmlElement(defaultValue = "THROW_ALL")
+    @XmlSchemaType(name = "string")
+    protected ThrowExceptions throwExceptions = ThrowExceptions.THROW_ALL;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchWarnings = true;
     @XmlElement(defaultValue = "false")
@@ -535,6 +538,30 @@ public class Settings
     }
 
     /**
+     * A strategy defining how exceptions from the database / JDBC driver should be propagated
+     *
+     * @return
+     *     possible object is
+     *     {@link ThrowExceptions }
+     *
+     */
+    public ThrowExceptions getThrowExceptions() {
+        return throwExceptions;
+    }
+
+    /**
+     * Sets the value of the throwExceptions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ThrowExceptions }
+     *
+     */
+    public void setThrowExceptions(ThrowExceptions value) {
+        this.throwExceptions = value;
+    }
+
+    /**
      * Whether warnings should be fetched after each query execution.
      *
      * @return
@@ -864,6 +891,11 @@ public class Settings
 
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
+        return this;
+    }
+
+    public Settings withThrowExceptions(ThrowExceptions value) {
+        setThrowExceptions(value);
         return this;
     }
 

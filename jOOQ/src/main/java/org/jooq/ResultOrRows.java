@@ -36,8 +36,13 @@ package org.jooq;
 
 import java.sql.Statement;
 
+import org.jooq.conf.Settings;
+import org.jooq.conf.ThrowExceptions;
+import org.jooq.exception.DataAccessException;
+
 /**
- * A type that contains either a {@link Result} or an update count.
+ * A type that contains either a {@link Result}, an update count, or an
+ * exception.
  *
  * @author Lukas Eder
  */
@@ -57,4 +62,15 @@ public interface ResultOrRows {
      * @see Statement#getUpdateCount()
      */
     int rows();
+
+    /**
+     * The exception if applicable or <code>null</code> if there was no
+     * exception.
+     * <p>
+     * Exceptions are made available through this API only if
+     * {@link Settings#getThrowExceptions()} is set to
+     * {@link ThrowExceptions#THROW_NONE}. In all other cases, a batch execution
+     * is aborted and exceptions are thrown as ordinary Java exceptions.
+     */
+    DataAccessException exception();
 }

@@ -34,7 +34,11 @@
  */
 package org.jooq;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import org.jooq.conf.Settings;
+import org.jooq.conf.ThrowExceptions;
 
 /**
  * A list of {@link Result} and update counts that can be returned by
@@ -42,9 +46,42 @@ import java.util.List;
  * cursors and update counts.
  * <p>
  * For backwards-compatibility (e.g. with {@link ResultQuery#fetchMany()}), this
- * type extends {@link List} containing only the {@link Result}, not the rows /
- * update counts of interleaved updates. In order to get both, call
- * {@link #resultsOrRows()}.
+ * type extends {@link List} containing only the {@link Result}, not the rows,
+ * update counts, exceptions of interleaved updates. In order to get them all,
+ * call {@link #resultsOrRows()} upon the results.
+ * <p>
+ * <h3>Exceptions</h3>
+ * <p>
+ * Some databases support raising several errors or exceptions per statement
+ * batch (e.g. {@link SQLDialect#SQLSERVER}):
+ * <p>
+ * <code><pre>
+ * INSERT INTO t VALUES (1),(2),(3);
+ * RAISERROR('message 1', 16, 2, 3);
+ * RAISERROR('message 2', 16, 2, 3);
+ * SELECT * FROM t;
+ * RAISERROR('message 3', 16, 2, 3);
+ * </pre></code>
+ * <p>
+ * The above batch will produce:
+ * <ul>
+ * <li>An update count (3)</li>
+ * <li>2 exceptions</li>
+ * <li>A result set</li>
+ * <li>1 exception</li>
+ * </ul>
+ * <p>
+ * By default (or when explicitly specifying {@link ThrowExceptions#THROW_ALL}
+ * in {@link Settings#getThrowExceptions()}), this particular batch will produce
+ * a single exception corresponding to <code>"message 1"</code>, with additional
+ * exceptions for <code>"message 2"</code> and <code>"message 3"</code> attached
+ * to {@link SQLException#getNextException()}, recursively.
+ * <p>
+ * When specifying {@link ThrowExceptions#THROW_FIRST}, only
+ * <code>"message 1"</code> is propagated. When specifying
+ * {@link ThrowExceptions#THROW_NONE}, then all exceptions are collected as
+ * results and are made available through {@link #resultsOrRows()} in
+ * {@link ResultOrRows#exception()}.
  *
  * @author Lukas Eder
  */

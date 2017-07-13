@@ -43,6 +43,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultOrRows;
 import org.jooq.Results;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -189,20 +190,22 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
 
     static final class ResultOrRowsImpl implements ResultOrRows {
 
-        private final Result<Record> result;
-        private final int            rows;
+        private final Result<Record>      result;
+        private final int                 rows;
+        private final DataAccessException exception;
 
         ResultOrRowsImpl(Result<Record> result) {
-            this(result, result != null ? result.size() : 0);
+            this(result, result != null ? result.size() : 0, null);
         }
 
         ResultOrRowsImpl(int rows) {
-            this(null, rows);
+            this(null, rows, null);
         }
 
-        private ResultOrRowsImpl(Result<Record> result, int rows) {
+        private ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) {
             this.result = result;
             this.rows = rows;
+            this.exception = exception;
         }
 
         @Override
@@ -216,10 +219,16 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         }
 
         @Override
+        public final DataAccessException exception() {
+            return exception;
+        }
+
+        @Override
         public int hashCode() {
             final int prime = 31;
             int r = 1;
-            r = prime * r + ((this.result == null) ? 0 : this.result.hashCode());
+            r = prime * r + ((exception == null) ? 0 : exception.hashCode());
+            r = prime * r + ((result == null) ? 0 : result.hashCode());
             r = prime * r + rows;
             return r;
         }
@@ -233,6 +242,12 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
             if (getClass() != obj.getClass())
                 return false;
             ResultOrRowsImpl other = (ResultOrRowsImpl) obj;
+            if (exception == null) {
+                if (other.exception != null)
+                    return false;
+            }
+            else if (!exception.equals(other.exception))
+                return false;
             if (result == null) {
                 if (other.result != null)
                     return false;
@@ -242,6 +257,16 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
             if (rows != other.rows)
                 return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            if (exception != null)
+                return exception.toString();
+            else if (result != null)
+                return result.toString();
+            else
+                return "" + rows;
         }
     }
 }

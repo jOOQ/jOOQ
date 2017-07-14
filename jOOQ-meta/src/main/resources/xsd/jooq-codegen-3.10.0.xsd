@@ -833,6 +833,12 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecated code for backwards compatibility]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="deprecationOnUnknownTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecation annotations on references to unknown data types.
+This helps identifying columns, attributes, and parameters, which may not be usable through
+jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="instanceFields" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

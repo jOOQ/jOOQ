@@ -70,6 +70,16 @@ public interface Generator {
     void setGenerateDeprecated(boolean generateDeprecated);
 
     /**
+     * Whether deprecation should be generated on unknown types.
+     */
+    boolean generateDeprecationOnUnknownTypes();
+
+    /**
+     * Whether deprecation should be generated on unknown types.
+     */
+    void setGenerateDeprecationOnUnknownTypes(boolean generateDeprecationOnUnknownTypes);
+
+    /**
      * Whether indexes should be generated.
      */
     boolean generateIndexes();

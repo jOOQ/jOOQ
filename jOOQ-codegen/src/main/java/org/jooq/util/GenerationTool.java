@@ -524,6 +524,8 @@ public class GenerationTool {
                 generator.setGenerateRelations(g.getGenerate().isRelations());
             if (g.getGenerate().isDeprecated() != null)
                 generator.setGenerateDeprecated(g.getGenerate().isDeprecated());
+            if (g.getGenerate().isDeprecationOnUnknownTypes())
+                generator.setGenerateDeprecationOnUnknownTypes(g.getGenerate().isDeprecationOnUnknownTypes());
             if (g.getGenerate().isInstanceFields() != null)
                 generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
             if (g.getGenerate().isGeneratedAnnotation() != null)

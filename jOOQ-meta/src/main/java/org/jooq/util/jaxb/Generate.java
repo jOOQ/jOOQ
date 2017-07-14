@@ -41,6 +41,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean deprecationOnUnknownTypes = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean instanceFields = true;
     @XmlElement(defaultValue = "true")
     protected Boolean generatedAnnotation = true;
@@ -183,6 +185,32 @@ public class Generate implements Serializable
      */
     public void setDeprecated(Boolean value) {
         this.deprecated = value;
+    }
+
+    /**
+     * Generate deprecation annotations on references to unknown data types.
+     * This helps identifying columns, attributes, and parameters, which may not be usable through
+     * jOOQ API, without adding custom data type bindings to them.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isDeprecationOnUnknownTypes() {
+        return deprecationOnUnknownTypes;
+    }
+
+    /**
+     * Sets the value of the deprecationOnUnknownTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setDeprecationOnUnknownTypes(Boolean value) {
+        this.deprecationOnUnknownTypes = value;
     }
 
     /**
@@ -1064,6 +1092,11 @@ public class Generate implements Serializable
 
     public Generate withDeprecated(Boolean value) {
         setDeprecated(value);
+        return this;
+    }
+
+    public Generate withDeprecationOnUnknownTypes(Boolean value) {
+        setDeprecationOnUnknownTypes(value);
         return this;
     }
 

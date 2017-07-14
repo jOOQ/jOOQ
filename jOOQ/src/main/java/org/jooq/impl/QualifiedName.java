@@ -174,6 +174,26 @@ final class QualifiedName extends AbstractName {
     }
 
     @Override
+    public final Name quotedName() {
+        Name[] result = new Name[qualifiedName.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = qualifiedName[i].quotedName();
+
+        return new QualifiedName(result);
+    }
+
+    @Override
+    public final Name unquotedName() {
+        Name[] result = new Name[qualifiedName.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = qualifiedName[i].unquotedName();
+
+        return new QualifiedName(result);
+    }
+
+    @Override
     public final String[] getName() {
         String[] result = new String[qualifiedName.length];
 

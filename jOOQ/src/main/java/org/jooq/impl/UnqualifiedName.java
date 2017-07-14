@@ -100,6 +100,16 @@ final class UnqualifiedName extends AbstractName {
     }
 
     @Override
+    public final Name quotedName() {
+        return new UnqualifiedName(name, true);
+    }
+
+    @Override
+    public final Name unquotedName() {
+        return new UnqualifiedName(name, false);
+    }
+
+    @Override
     public final String[] getName() {
         return new String[] { name };
     }

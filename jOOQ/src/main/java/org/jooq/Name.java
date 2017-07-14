@@ -93,6 +93,16 @@ public interface Name extends QueryPart {
     Name unqualifiedName();
 
     /**
+     * This name, quoted.
+     */
+    Name quotedName();
+
+    /**
+     * This name, unquoted.
+     */
+    Name unquotedName();
+
+    /**
      * Get the individual, unqualified name parts of this name.
      */
     Name[] parts();

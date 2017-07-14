@@ -1315,7 +1315,7 @@ public abstract class AbstractDatabase implements Database {
                      //         as USER-DEFINED (in PostgreSQL)
                      && ( StringUtils.isBlank(definedType.getUserType())
                      ||   !p.matcher(definedType.getUserType()).matches()
-                     &&   !p.matcher(definedType.getQualifiedUserType().toString().replace("\"", "")).matches() )
+                     &&   !p.matcher(definedType.getQualifiedUserType().unquotedName().toString()).matches() )
                 ) {
                     continue forcedTypeLoop;
                 }

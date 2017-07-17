@@ -10,6 +10,29 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.9.4 - July 17, 2017
+================================================================================
+
+This is a patch release with some useful fixes for the 3.9 branch
+
+Bug Fixes
+---------
+
+#6305 - Oracle flashback query for aliased table results in invalid sql
+#6318 - ALTER TABLE .. ADD COLUMN ignores column type's DEFAULT clause
+#6337 - DataType.hasLength(), hasPrecision(), hasScale(), and others should depend on Binding's <T> type
+#6338 - Exception thrown when creating table with converted VARCHAR type
+#6340 - Recognise H2 SYSTEM_SEQUENCE in INFORMATION_SCHEMA.COLUMNS.COLUMN_DEFAULT as an Identity column
+#6341 - JPADatabase with GeneratedValue does not account for dialect
+#6369 - Oracle LocalDate bind variables aren't cast to DATE
+#6384 - Derby requires RESTRICT on DROP SCHEMA statement
+#6392 - SQL Server multiple errors are not propagated if an update count precedes them
+#6396 - Definition.getQualifiedName() is wrong when <outputSchemaToDefault/> is set to true
+#6405 - NullPointerException when fetching unnamed nested records in plain SQL with PostgreSQL
+#6407 - NullPointerException when trying to get mvn help on goal generate
+#6409 - SQL Server doesn't generate any code when top-level inputSchema is specified, but not inputCatalog
+#6417 - <types/> cannot match user-defined types (e.g. PostGIS GEOMETRY)
+
 Version 3.9.3 - May 30, 2017
 ================================================================================
 

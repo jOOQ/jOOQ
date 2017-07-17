@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
@@ -50,8 +49,6 @@ import static org.jooq.Clause.ALTER_TABLE_RENAME;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_CONSTRAINT;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -61,6 +58,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import org.jooq.AlterTableAlterStep;
@@ -508,17 +506,7 @@ final class AlterTableImpl extends AbstractQuery implements
                .visit(addColumn).sql(' ')
                .qualify(qualify);
 
-            toSQLDDLTypeDeclaration(ctx, addColumnType);
-
-            if (!addColumnType.nullable()) {
-                ctx.sql(' ').keyword("not null");
-            }
-
-            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
-            // [#3400] [#4321] ... but not in Derby, Firebird
-            else if (!asList(DERBY, FIREBIRD).contains(family)) {
-                ctx.sql(' ').keyword("null");
-            }
+            toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
 
 
 

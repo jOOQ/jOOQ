@@ -190,6 +190,7 @@ import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Keyword;
 // ...
+import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
 import org.jooq.MergeKeyStep11;
@@ -5382,7 +5383,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(String schema) {
         return using(new DefaultConfiguration()).createSchema(schema);
     }
@@ -5392,7 +5393,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Name table) {
         return using(new DefaultConfiguration()).createSchema(table);
     }
@@ -5402,7 +5403,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Schema)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Schema schema) {
         return using(new DefaultConfiguration()).createSchema(schema);
     }
@@ -6131,7 +6132,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static DropSchemaStep dropSchema(String schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }
@@ -6141,7 +6142,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static DropSchemaStep dropSchema(Name schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }
@@ -6151,7 +6152,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Schema)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static DropSchemaStep dropSchema(Schema schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }

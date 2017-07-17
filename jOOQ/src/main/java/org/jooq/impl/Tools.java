@@ -45,8 +45,12 @@ import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
@@ -824,11 +828,16 @@ final class Tools {
     }
 
     static final Field<?>[] fields(int length) {
-        Field<?>[] result = new Field[length];
+        return fields(length, SQLDataType.OTHER);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] fields(int length, DataType<T> type) {
+        Field<T>[] result = new Field[length];
         String[] names = fieldNames(length);
 
         for (int i = 0; i < length; i++)
-            result[i] = DSL.field(name(names[i]));
+            result[i] = DSL.field(name(names[i]), type);
 
         return result;
     }
@@ -2860,8 +2869,8 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     /**
-     * [#3011] [#3054] Consume additional exceptions if there are any and append
-     * them to the <code>previous</code> exception's
+     * [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+     * and append them to the <code>previous</code> exception's
      * {@link SQLException#getNextException()} list.
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
@@ -2920,26 +2929,34 @@ final class Tools {
         int rows = (ctx.resultSet() == null) ? ctx.statement().getUpdateCount() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
-            if (ctx.resultSet() != null) {
-                anyResults = true;
+            try {
+                if (ctx.resultSet() != null) {
+                    anyResults = true;
 
-                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-                results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
-            }
-            else {
-                if (rows != -1)
-                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                    Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
+                }
+                else {
+                    if (rows != -1)
+                        results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                    else
+                        break;
+                }
+
+                if (ctx.statement().getMoreResults())
+                    ctx.resultSet(ctx.statement().getResultSet());
+                else if ((rows = ctx.statement().getUpdateCount()) != -1)
+                    ctx.resultSet(null);
                 else
                     break;
             }
 
-            if (ctx.statement().getMoreResults())
-                ctx.resultSet(ctx.statement().getResultSet());
-            else if ((rows = ctx.statement().getUpdateCount()) != -1)
-                ctx.resultSet(null);
-            else
-                break;
+            // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+            catch (SQLException e) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
+            }
         }
 
         if (i == maxConsumedResults)
@@ -3224,6 +3241,47 @@ final class Tools {
         }
     }
 
+    static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {
+        toSQLDDLTypeDeclaration(ctx, type);
+
+        // [#5356] Some dialects require the DEFAULT clause prior to the
+        //         NULL constraints clause
+        if (asList(HSQLDB).contains(ctx.family()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+
+        if (!type.nullable())
+            ctx.sql(' ').keyword("not null");
+
+            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
+            // [#3400] [#4321] ... but not in Derby, Firebird
+        else if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
+            ctx.sql(' ').keyword("null");
+
+        if (type.identity()) {
+
+            // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
+            switch (ctx.family()) {
+
+
+
+
+
+                case H2:
+                case MARIADB:
+                case MYSQL:  ctx.sql(' ').keyword("auto_increment"); break;
+            }
+        }
+
+        if (!asList(HSQLDB).contains(ctx.family()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+    }
+
+    private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
+        if (type.defaulted())
+            ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
+    }
+
+
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         String typeName = type.getTypeName(ctx.configuration());
 
@@ -3407,5 +3465,23 @@ final class Tools {
      */
     static final boolean isDate(Class<?> t) {
         return t == Date.class  || t == LocalDate.class ;
+    }
+
+    static final <R extends Record> Table<R> aliased(Table<R> table) {
+        if (table instanceof TableImpl)
+            return ((TableImpl<R>) table).getAliasedTable();
+        else if (table instanceof TableAlias)
+            return ((TableAlias<R>) table).getAliasedTable();
+        else
+            return null;
+    }
+
+    static final Alias<?> alias(Table<?> table) {
+        if (table instanceof TableImpl)
+            return ((TableImpl<?>) table).alias;
+        else if (table instanceof TableAlias)
+            return ((TableAlias<?>) table).alias;
+        else
+            return null;
     }
 }

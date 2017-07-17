@@ -7257,7 +7257,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSchemaFinalStep createSchema(String schema);
 
     /**
@@ -7265,7 +7265,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSchemaFinalStep createSchema(Name schema);
 
     /**
@@ -7273,7 +7273,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Schema)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSchemaFinalStep createSchema(Schema schema);
 
     /**
@@ -7933,7 +7933,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(String schema);
 
     /**
@@ -7941,7 +7941,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(Name schema);
 
     /**
@@ -7949,7 +7949,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Schema)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(Schema schema);
 
     /**

@@ -143,11 +143,6 @@ public abstract class AbstractDefinition implements Definition {
 
             String separator = "";
             for (Definition part : getDefinitionPath()) {
-                if (part instanceof CatalogDefinition && ((CatalogDefinition) part).isDefaultCatalog())
-                    continue;
-                else if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema())
-                    continue;
-
                 sb.append(separator);
                 sb.append(part.getInputName());
 
@@ -194,14 +189,8 @@ public abstract class AbstractDefinition implements Definition {
         if (qualifiedInputNamePart == null) {
             List<String> list = new ArrayList<String>();
 
-            for (Definition part : getDefinitionPath()) {
-                if (part instanceof CatalogDefinition && ((CatalogDefinition) part).isDefaultCatalog())
-                    continue;
-                else if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema())
-                    continue;
-
+            for (Definition part : getDefinitionPath())
                 list.add(part.getInputName());
-            }
 
             qualifiedInputNamePart = name(list);
         }

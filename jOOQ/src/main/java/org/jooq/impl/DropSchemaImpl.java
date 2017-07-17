@@ -136,10 +136,8 @@ final class DropSchemaImpl extends AbstractQuery implements
 
         if (cascade)
             ctx.sql(' ').keyword("cascade");
-
-
-
-
+        else if (asList(DERBY).contains(ctx.family()))
+            ctx.sql(' ').keyword("restrict");
 
         ctx.end(DROP_SCHEMA_SCHEMA);
     }

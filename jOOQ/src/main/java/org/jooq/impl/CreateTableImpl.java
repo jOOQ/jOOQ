@@ -251,40 +251,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
                 ctx.visit(columnFields.get(i))
                    .sql(' ');
-                Tools.toSQLDDLTypeDeclaration(ctx, type);
-
-                // [#5356] Some dialects require the DEFAULT clause prior to the
-                //         NULL constraints clause
-                if (asList(HSQLDB).contains(ctx.family()))
-                    acceptDefault(ctx, type);
-
-                if (type.nullable()) {
-
-                    // [#4321] Not all dialects support explicit NULL type declarations
-                    if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
-                        ctx.sql(' ').keyword("null");
-                }
-                else {
-                    ctx.sql(' ').keyword("not null");
-                }
-
-                if (type.identity()) {
-
-                    // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
-                    switch (ctx.family()) {
-
-
-
-
-
-                        case H2:
-                        case MARIADB:
-                        case MYSQL:  ctx.sql(' ').keyword("auto_increment"); break;
-                    }
-                }
-
-                if (!asList(HSQLDB).contains(ctx.family()))
-                    acceptDefault(ctx, type);
+                Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
 
                 if (i < columnFields.size() - 1)
                     ctx.sql(',').formatSeparator();
@@ -308,11 +275,6 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             toSQLOnCommit(ctx);
             ctx.end(CREATE_TABLE);
         }
-    }
-
-    private void acceptDefault(Context<?> ctx, DataType<?> type) {
-        if (type.defaulted())
-            ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {

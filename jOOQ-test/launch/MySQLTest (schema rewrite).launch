@@ -24,5 +24,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.MySQLTestSchemaRewrite"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_Torg.jooq.test.MySQLTestSchemaMappingOQMySQLTestSchemaMapping" value=""/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/mysql/library-schema-rewrite.xml"/>
 </launchConfiguration>

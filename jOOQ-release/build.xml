@@ -16,7 +16,7 @@
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"/>
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"/>
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-scala"/>
-		
+
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
@@ -28,7 +28,7 @@
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
-		
+
         <copy todir="${dir.release}/${version}/jOOQ-pom"                    file="${dir.workspace}/pom.xml"/>
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"               file="${dir.workspace}/jooq/pom.xml"/>
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"          file="${dir.workspace}/jooq-meta/pom.xml"/>
@@ -62,29 +62,6 @@
                 <include name="**/*"/>
             </fileset>
         </copy>
-
-        <mkdir dir="${dir.release}/${version}/third-party/lib" />
-        <mkdir dir="${dir.release}/${version}/third-party/src" />
-
-        <copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1-sources.jar"/>
-
-        <copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16-sources.jar"/>
-
-        <copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0-sources.jar"/>
-
-        <copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1-sources.jar"/>
-
-        <mkdir dir="${dir.release}/${version}/sql2jooq" />
-        <copy todir="${dir.release}/${version}/sql2jooq/lib" file="${dir.workspace}/../sql2jooq/sql2jooq/target/sql2jooq-${version}.jar" />
-        <copy todir="${dir.release}/${version}/sql2jooq/lib" file="${dir.workspace}/../sql2jooq/sql2jooq/lib/gsp.jar" />
-        <copy todir="${dir.release}/${version}/sql2jooq">
-            <fileset dir="${dir.workspace}/../sql2jooq/sql2jooq" includes="LICENSE**.txt"/>
-            <fileset dir="${dir.workspace}/../sql2jooq/sql2jooq" includes="README.md"/>
-    	</copy>
 
         <zip destfile="${dir.release}/versions/jOOQ-${version}.zip">
             <fileset dir="${dir.release}/${version}"/>

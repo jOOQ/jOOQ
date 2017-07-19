@@ -66,8 +66,11 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.Field;
 import org.jooq.Result;
+import org.jooq.tools.Convert;
 
 /**
  * A mock result set.
@@ -83,7 +86,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private static final long serialVersionUID = -2292216936424437750L;
 
     private final int         maxRows;
-    Result<?>         result;
+    Result<?>                 result;
     private transient int     index;
     private transient boolean wasNull;
 
@@ -115,38 +118,40 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     // -------------------------------------------------------------------------
 
     private int size() {
-        if (maxRows == 0) {
+        if (maxRows == 0)
             return result.size();
-        }
-        else {
+        else
             return Math.min(maxRows, result.size());
-        }
     }
 
     void checkNotClosed() throws SQLException {
-        if (result == null) {
+        if (result == null)
             throw new SQLException("ResultSet is already closed");
-        }
     }
 
     private void checkInRange() throws SQLException {
         checkNotClosed();
 
-        if (index <= 0 || index > result.size()) {
+        if (index <= 0 || index > result.size())
             throw new SQLException("ResultSet index is at an illegal position : " + index);
-        }
     }
 
-    private void checkField(String columnLabel) throws SQLException {
-        if (result.field(columnLabel) == null) {
+    private Field<?> field(String columnLabel) throws SQLException {
+        Field<?> field = result.field(columnLabel);
+
+        if (field == null)
             throw new SQLException("Unknown column label : " + columnLabel);
-        }
+
+        return field;
     }
 
-    private void checkField(int columnIndex) throws SQLException {
-        if (result.field(columnIndex - 1) == null) {
+    private Field<?> field(int columnIndex) throws SQLException {
+        Field<?> field = result.field(columnIndex - 1);
+
+        if (field == null)
             throw new SQLException("Unknown column index : " + columnIndex);
-        }
+
+        return field;
     }
 
     @Override
@@ -239,28 +244,24 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     @Override
     public boolean isFirst() throws SQLException {
         checkNotClosed();
-
         return (size() > 0 && index == 1);
     }
 
     @Override
     public boolean isBeforeFirst() throws SQLException {
         checkNotClosed();
-
         return (size() > 0 && index == 0);
     }
 
     @Override
     public boolean isLast() throws SQLException {
         checkNotClosed();
-
         return (size() > 0 && index == size());
     }
 
     @Override
     public boolean isAfterLast() throws SQLException {
         checkNotClosed();
-
         return (size() > 0 && index > size());
     }
 
@@ -298,9 +299,8 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         checkNotClosed();
 
         Field<?> field = result.field(columnLabel);
-        if (field == null) {
+        if (field == null)
             throw new SQLException("No such column : " + columnLabel);
-        }
 
         return result.fieldsRow().indexOf(field) + 1;
     }
@@ -309,9 +309,8 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     public void setFetchDirection(int direction) throws SQLException {
 
         // Fetch direction is not supported
-        if (direction != ResultSet.FETCH_FORWARD) {
+        if (direction != ResultSet.FETCH_FORWARD)
             throw new SQLException("Fetch direction can only be FETCH_FORWARD");
-        }
     }
 
     @Override
@@ -369,18 +368,18 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     private <T> T get(String columnLabel, Class<T> type) throws SQLException {
         checkInRange();
-        checkField(columnLabel);
 
-        T value = result.get(index - 1).get(columnLabel, type);
+        Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
+        T value = Convert.convert(result.get(index - 1).get(columnLabel, converter), type);
         wasNull = (value == null);
         return value;
     }
 
     private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
-        checkField(columnIndex);
 
-        T value = result.get(index - 1).get(columnIndex - 1, type);
+        Converter<?, ?> converter = Converters.inverse(field(columnIndex).getConverter());
+        T value = Convert.convert(result.get(index - 1).get(columnIndex - 1, converter), type);
         wasNull = (value == null);
         return value;
     }

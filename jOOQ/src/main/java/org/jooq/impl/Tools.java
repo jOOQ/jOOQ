@@ -2114,12 +2114,18 @@ final class Tools {
 
 
 
+    private static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
-    static final int hash(Object object) {
-        return 0x7FFFFFF & object.hashCode();
+    static final int hash(QueryPart part) {
+
+        // [#6025] Prevent unstable alias generation for derived tables due to
+        //         inlined bind variables in hashCode() calculation
+        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
+        return 0x7FFFFFF & CTX.render(part).hashCode();
     }
 
     /**
@@ -2790,8 +2796,8 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     /**
-     * [#3011] [#3054] Consume additional exceptions if there are any and append
-     * them to the <code>previous</code> exception's
+     * [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+     * and append them to the <code>previous</code> exception's
      * {@link SQLException#getNextException()} list.
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
@@ -2850,26 +2856,34 @@ final class Tools {
         int rows = (ctx.resultSet() == null) ? ctx.statement().getUpdateCount() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
-            if (ctx.resultSet() != null) {
-                anyResults = true;
+            try {
+                if (ctx.resultSet() != null) {
+                    anyResults = true;
 
-                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-                results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
-            }
-            else {
-                if (rows != -1)
-                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                    Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
+                }
+                else {
+                    if (rows != -1)
+                        results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                    else
+                        break;
+                }
+
+                if (ctx.statement().getMoreResults())
+                    ctx.resultSet(ctx.statement().getResultSet());
+                else if ((rows = ctx.statement().getUpdateCount()) != -1)
+                    ctx.resultSet(null);
                 else
                     break;
             }
 
-            if (ctx.statement().getMoreResults())
-                ctx.resultSet(ctx.statement().getResultSet());
-            else if ((rows = ctx.statement().getUpdateCount()) != -1)
-                ctx.resultSet(null);
-            else
-                break;
+            // [#3011] [#3054] [#6390] Consume additional exceptions if there are any
+            catch (SQLException e) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
+            }
         }
 
         if (i == maxConsumedResults)
@@ -3146,6 +3160,29 @@ final class Tools {
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         String typeName = type.getTypeName(ctx.configuration());
+
+        // [#5299] MySQL enum types
+        if (EnumType.class.isAssignableFrom(type.getType())) {
+            switch (ctx.family()) {
+                case MARIADB:
+                case MYSQL: {
+                    ctx.keyword("enum").sql('(');
+
+                    Object[] enums = type.getType().getEnumConstants();
+                    if (enums == null)
+                        throw new IllegalStateException("EnumType must be a Java enum");
+
+                    String separator = "";
+                    for (Object e : enums) {
+                        ctx.sql(separator).visit(DSL.inline(((EnumType) e).getLiteral()));
+                        separator = ", ";
+                    }
+
+                    ctx.sql(')');
+                    return;
+                }
+            }
+        }
 
         if (type.hasLength()) {
             if (type.length() > 0) {

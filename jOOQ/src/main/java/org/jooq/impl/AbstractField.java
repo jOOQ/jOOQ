@@ -768,9 +768,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return likeRegex(pattern).not();
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition contains(T value) {
-        return new Contains<T>(this, value);
+        if (value instanceof Field)
+            return contains((Field) value);
+        else
+            return new Contains<T>(this, value);
     }
 
     @Override
@@ -778,8 +782,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return new Contains<T>(this, value);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition startsWith(T value) {
+        if (value instanceof Field)
+            return startsWith((Field) value);
+
         Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
         return like(concat, Tools.ESCAPE);
     }
@@ -790,8 +798,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return like(concat, Tools.ESCAPE);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition endsWith(T value) {
+        if (value instanceof Field)
+            return endsWith((Field) value);
+
         Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
         return like(concat, Tools.ESCAPE);
     }

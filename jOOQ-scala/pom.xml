@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.8.7</version>
+        <version>3.8.8</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -16,7 +16,7 @@
 
     <properties>
         <scala.version>2.10.6</scala.version>
-        <org.h2.version>1.4.181</org.h2.version>
+        <org.h2.version>1.4.196</org.h2.version>
     </properties>
 
     <build>

@@ -430,6 +430,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
+
+
                     case SQLITE:
                         checkForceInline(999);
                         break;

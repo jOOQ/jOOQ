@@ -1493,7 +1493,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
                 final String attrComment = StringUtils.defaultString(attribute.getComment());
 
-                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
+                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(attrComment), ""));
                 out.tab(1).println("val %s = %s.%s", attrId, udtId, attrId);
             }
 
@@ -2287,7 +2287,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String id = getStrategy().getJavaIdentifier(table);
             final String fullId = getStrategy().getFullJavaIdentifier(table);
             final String comment = !StringUtils.isBlank(table.getComment())
-                ? table.getComment()
+                ? escapeEntities(table.getComment())
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
             // [#4883] Scala doesn't have separate namespaces for val and def
@@ -2923,10 +2923,10 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 if (getJavaType(column.getType()).endsWith("[]")) {
-                    out.tab(2).println("result = prime * result + (if (%s == null) 0 else %s.hashCode(%s))", columnMember, Arrays.class, columnMember);
+                    out.tab(2).println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
                 }
                 else {
-                    out.tab(2).println("result = prime * result + (if (%s == null) 0 else %s.hashCode())", columnMember, columnMember);
+                    out.tab(2).println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode())", columnMember, columnMember);
                 }
             }
 
@@ -2943,10 +2943,10 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 if (getJavaType(column.getType()).endsWith("[]")) {
-                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode(%s));", columnMember, Arrays.class, columnMember);
+                    out.tab(2).println("result = prime * result + ((this.%s == null) ? 0 : %s.hashCode(this.%s));", columnMember, Arrays.class, columnMember);
                 }
                 else {
-                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());", columnMember, columnMember);
+                    out.tab(2).println("result = prime * result + ((this.%s == null) ? 0 : this.%s.hashCode());", columnMember, columnMember);
                 }
             }
 
@@ -3125,7 +3125,7 @@ public class JavaGenerator extends AbstractGenerator {
                 column.getType().getBinding()
             ));
 
-            out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + columnComment, ""));
+            out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(columnComment), ""));
 
             if (scala) {
                 out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"[[before=, ][new %s()]])",
@@ -3477,6 +3477,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String escapeString(String comment) {
 
+        if (comment == null)
+            return null;
+
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
         return comment.replace("\\", "\\\\")
                       .replace("\"", "\\\"")
@@ -3575,7 +3578,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String schemaId = getStrategy().getJavaIdentifier(schema);
                 final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
                 final String schemaComment = !StringUtils.isBlank(schema.getComment())
-                    ? schema.getComment()
+                    ? escapeEntities(schema.getComment())
                     : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
 
                 out.tab(1).javadoc(schemaComment);
@@ -3658,7 +3661,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String tableId = getStrategy().getJavaIdentifier(table);
                     final String tableFullId = getStrategy().getFullJavaIdentifier(table);
                     final String tableComment = !StringUtils.isBlank(table.getComment())
-                        ? table.getComment()
+                        ? escapeEntities(table.getComment())
                         : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
                     out.tab(1).javadoc(tableComment);
@@ -3981,7 +3984,7 @@ public class JavaGenerator extends AbstractGenerator {
                         parameter.getType().getBinding()
                 ));
 
-                out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
+                out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(paramComment), ""));
 
                 out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s[[before=, ][new %s]])",
                         paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
@@ -4687,8 +4690,20 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, identifier, className);
     }
 
+    protected final String escapeEntities(String comment) {
+
+        if (comment == null)
+            return null;
+
+        // [#5704] Do not allow certain HTML entities
+        return comment
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;");
+    }
+
     protected void printClassJavadoc(JavaWriter out, Definition definition) {
-        printClassJavadoc(out, definition.getComment());
+        printClassJavadoc(out, escapeEntities(definition.getComment()));
     }
 
     protected void printClassJavadoc(JavaWriter out, String comment) {
@@ -4713,18 +4728,27 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s(", out.ref("javax.annotation.Generated"));
 
             if (useSchemaVersionProvider() || useCatalogVersionProvider()) {
+                boolean hasCatalogVersion = !StringUtils.isBlank(catalogVersions.get(catalog));
+                boolean hasSchemaVersion = !StringUtils.isBlank(schemaVersions.get(schema));
+
             	if (scala)
                     out.tab(1).println("value = %s(", out.ref("scala.Array"));
             	else
             	    out.tab(1).println("value = {");
 
                 out.tab(2).println("\"http://www.jooq.org\",");
-                out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
 
-                if (!StringUtils.isBlank(catalogVersions.get(catalog)))
-                    out.tab(2).println("\"catalog version:%s\",", catalogVersions.get(catalog).replace("\"", "\\\""));
-                if (!StringUtils.isBlank(schemaVersions.get(schema)))
-                    out.tab(2).println("\"schema version:%s\",", schemaVersions.get(schema).replace("\"", "\\\""));
+                if (hasCatalogVersion || hasSchemaVersion) {
+                    out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
+
+                    if (hasCatalogVersion)
+                        out.tab(2).println("\"catalog version:%s\"", catalogVersions.get(catalog).replace("\"", "\\\""));
+                    if (hasSchemaVersion)
+                        out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
+                }
+                else {
+                    out.tab(2).println("\"jOOQ version:%s\"", Constants.VERSION);
+                }
 
                 if (scala)
                     out.tab(1).println("),");

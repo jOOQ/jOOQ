@@ -10,6 +10,45 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.8 - July 17, 2017
+================================================================================
+
+This is a patch release with an urgent fix for the 3.8 branch
+
+Features and Improvements
+-------------------------
+
+#5660 - Add clarification to OFFSET[DATE]TIME Javadoc that the behaviour is defined by the JDBC driver/database
+#6421 - Stop distributing third party dependencies through zip distribution
+
+Bug Fixes
+---------
+
+#5636 - Incorrect deserialisation of deeply nested PostgreSQL ARRAYs / UDTs
+#5650 - DSL.currentDate() produces field name current_user
+#5651 - Trailing comma from ScalaGenerator when using schemaVersionProvider
+#5705 - Escape HTML characters in generated JavaDoc
+#5711 - Function delegates window RANGE calls to ROWS
+#5718 - CREATE SEQUENCE doesn't work in Derby, SQL Server, when names aren't quoted
+#5774 - MockResultSet should call Converter to transform MockResult's <U> back to <T>
+#5843 - Shouldn't DEBUG log OUT parameters on procedures that don't have any
+#5857 - Outdated link to jooq-export.xsd in Result.formatXML() Javadoc
+#5951 - Compilation error in generated code when applying converter to Oracle NUMBER procedure parameter
+#5977 - Support JTDS limit of 2000 bind variables also for SQL Server
+#6041 - Possible leaking JDBC Arrays in DefaultExecuteContext.ARRAYS
+#6060 - StackOverflowError when DefaultBinding.pgFromString() encounters unknown type
+#6062 - NullPointerException thrown when calling Oracle Function with BOOLEAN parameter
+#6177 - Unstable alias generation for derived tables
+#6179 - DefaultTransactionProvider should not roll back to savepoint in top transaction
+#6181 - ClassNotFoundException occures when generate codes form JPA entity by maven plugin
+#6185 - IF EXISTS emulation using THROW doesn't work for SQL Server 2008
+#6193 - Compilation error in generated code when column is called RESULT or PRIME
+#6225 - Field.contains(T) doesn't delegate to Field.contains(Field<T>) when using plain SQL
+#6229 - MySQL enum type doesn't generate correct DDL via DSLContext.ddl()
+#6393 - SQL Server multiple errors are not propagated if an update count precedes them
+#6397 - Definition.getQualifiedName() is wrong when <outputSchemaToDefault/> is set to true
+#6408 - NullPointerException when trying to get mvn help on goal generate
+
 Version 3.8.7 - March 7, 2017
 ================================================================================
 

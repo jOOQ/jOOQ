@@ -763,61 +763,61 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final WindowFinalStep<T> rangeUnboundedPreceding() {
-        windowSpecification.rowsUnboundedPreceding();
+        windowSpecification.rangeUnboundedPreceding();
         return this;
     }
 
     @Override
     public final WindowFinalStep<T> rangePreceding(int number) {
-        windowSpecification.rowsPreceding(number);
+        windowSpecification.rangePreceding(number);
         return this;
     }
 
     @Override
     public final WindowFinalStep<T> rangeCurrentRow() {
-        windowSpecification.rowsCurrentRow();
+        windowSpecification.rangeCurrentRow();
         return this;
     }
 
     @Override
     public final WindowFinalStep<T> rangeUnboundedFollowing() {
-        windowSpecification.rowsUnboundedFollowing();
+        windowSpecification.rangeUnboundedFollowing();
         return this;
     }
 
     @Override
     public final WindowFinalStep<T> rangeFollowing(int number) {
-        windowSpecification.rowsFollowing(number);
+        windowSpecification.rangeFollowing(number);
         return this;
     }
 
     @Override
     public final WindowRowsAndStep<T> rangeBetweenUnboundedPreceding() {
-        windowSpecification.rowsBetweenUnboundedPreceding();
+        windowSpecification.rangeBetweenUnboundedPreceding();
         return this;
     }
 
     @Override
     public final WindowRowsAndStep<T> rangeBetweenPreceding(int number) {
-        windowSpecification.rowsBetweenPreceding(number);
+        windowSpecification.rangeBetweenPreceding(number);
         return this;
     }
 
     @Override
     public final WindowRowsAndStep<T> rangeBetweenCurrentRow() {
-        windowSpecification.rowsBetweenCurrentRow();
+        windowSpecification.rangeBetweenCurrentRow();
         return this;
     }
 
     @Override
     public final WindowRowsAndStep<T> rangeBetweenUnboundedFollowing() {
-        windowSpecification.rowsBetweenUnboundedFollowing();
+        windowSpecification.rangeBetweenUnboundedFollowing();
         return this;
     }
 
     @Override
     public final WindowRowsAndStep<T> rangeBetweenFollowing(int number) {
-        windowSpecification.rowsBetweenFollowing(number);
+        windowSpecification.rangeBetweenFollowing(number);
         return this;
     }
 

@@ -18,8 +18,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.8.7</org.jooq.version>
-		<h2.version>1.4.181</h2.version>
+        <org.jooq.version>3.8.8</org.jooq.version>
+		<h2.version>1.4.196</h2.version>
     </properties>
 
     <dependencies>

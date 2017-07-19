@@ -47,6 +47,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
+import java.util.Collection;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -70,6 +72,12 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      */
     @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
+
+    /**
+     * Add a <code>PARTITION BY</code> clause to the window functions.
+     */
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    WindowOrderByStep<T> partitionBy(Collection<? extends Field<?>> fields);
 
     /**
      * Add a <code>PARTITION BY 1</code> clause to the window functions, where

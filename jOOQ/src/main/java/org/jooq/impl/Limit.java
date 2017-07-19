@@ -270,6 +270,8 @@ final class Limit extends AbstractQueryPart {
             // [#4785] OFFSET cannot be without LIMIT
             case H2:
             case MARIADB:
+            case MYSQL_5_7:
+            case MYSQL_8_0:
             case MYSQL:
             case SQLITE: {
                 context.castMode(NEVER)

@@ -104,6 +104,8 @@ public class Databases {
             case H2:            result = H2Database.class;        break;
             case HSQLDB:        result = HSQLDBDatabase.class;    break;
             case MARIADB:       result = MariaDBDatabase.class;   break;
+            case MYSQL_5_7:
+            case MYSQL_8_0:
             case MYSQL:         result = MySQLDatabase.class;     break;
             case POSTGRES_9_3:
             case POSTGRES_9_4:

@@ -102,7 +102,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         if (nullsFirst || nullsLast) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
 
 

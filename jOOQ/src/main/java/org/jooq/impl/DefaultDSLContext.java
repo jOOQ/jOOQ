@@ -3372,7 +3372,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger lastID() {
-        switch (configuration().dialect().family()) {
+        switch (configuration().family()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
                 return select(field).fetchOne(field);

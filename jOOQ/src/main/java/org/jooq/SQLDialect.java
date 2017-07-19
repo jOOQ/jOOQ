@@ -121,6 +121,16 @@ public enum SQLDialect {
     MYSQL("MySQL", false),
 
     /**
+     * The MySQL 5.7 dialect.
+     */
+    MYSQL_5_7("MySQL", false, MYSQL, null),
+
+    /**
+     * The MySQL 8.0 dialect.
+     */
+    MYSQL_8_0("MySQL", false, MYSQL, MYSQL_5_7),
+
+    /**
      * The PostgreSQL dialect family.
      * <p>
      * While this family (and its dialects) have been observed to work to some

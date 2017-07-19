@@ -306,6 +306,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 // MySQL has a nice, native syntax for this
                 case MARIADB:
+                case MYSQL_5_7:
+                case MYSQL_8_0:
                 case MYSQL:
                 case SQLITE: {
                     toSQLInsert(ctx);

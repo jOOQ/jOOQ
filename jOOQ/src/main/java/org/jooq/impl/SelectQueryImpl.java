@@ -674,7 +674,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 }
             }
             else if (forShare) {
-                switch (dialect) {
+                switch (family) {
 
                     // MySQL has a non-standard implementation for the "FOR SHARE" clause
                     case MARIADB:

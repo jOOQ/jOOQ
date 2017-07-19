@@ -106,7 +106,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) {
+        if (asList(MARIADB, MYSQL).contains(ctx.family())) {
 
             // [#2579] [#6304] TableAlias discovery
             if (Tools.alias(table) != null)

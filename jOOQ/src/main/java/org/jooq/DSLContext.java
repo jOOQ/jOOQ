@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
@@ -3463,7 +3464,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias);
 
     /**
@@ -3479,7 +3480,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
 
@@ -3499,7 +3500,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -3518,7 +3519,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
@@ -4295,7 +4296,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithStep with(CommonTableExpression<?>... tables);
 
     /**
@@ -4314,7 +4315,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias);
 
     /**
@@ -4333,7 +4334,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
 
@@ -4357,7 +4358,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -4380,7 +4381,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
@@ -5292,7 +5293,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**

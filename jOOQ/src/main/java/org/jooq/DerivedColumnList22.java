@@ -34,6 +34,17 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL_8_0;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+
 import javax.annotation.Generated;
 
 /**
@@ -52,6 +63,7 @@ public interface DerivedColumnList22 extends QueryPart {
      * Specify a subselect to refer to by the <code>DerivedColumnList</code> to
      * form a common table expression.
      */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     <R extends Record22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> as(Select<R> select);
 
 }

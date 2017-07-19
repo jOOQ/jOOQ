@@ -36,7 +36,7 @@
         <db.cubrid.version>9.2.0.0155</db.cubrid.version>
         <db.derby.version>10.10.2.0</db.derby.version>
         <db.firebird.version>2.2.5</db.firebird.version>
-        <db.h2.version>1.4.177</db.h2.version>
+        <db.h2.version>1.4.195</db.h2.version>
         <db.hsqldb.version>2.3.2</db.hsqldb.version>
         <db.mariadb.version>1.1.7</db.mariadb.version>
         <db.mysql.version>5.1.30</db.mysql.version>

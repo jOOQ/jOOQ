@@ -47,7 +47,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.177</version>
+            <version>1.4.195</version>
         </dependency>
     </dependencies>
 </project>

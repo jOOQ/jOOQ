@@ -36,6 +36,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -62,35 +63,35 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep andFollowing(int number);
 
 }

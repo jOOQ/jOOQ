@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -123,7 +124,7 @@ public interface Name extends QueryPart {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     WindowDefinition as(WindowSpecification window);
 
     /**

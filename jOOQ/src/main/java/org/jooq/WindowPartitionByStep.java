@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -67,7 +68,7 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
 
     /**
@@ -77,7 +78,7 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * This clause is not supported as such in the CUBRID and Sybase dialects.
      * If you use it, jOOQ will simply ignore it.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     WindowOrderByStep<T> partitionByOne();
 
 }

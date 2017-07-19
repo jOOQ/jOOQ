@@ -37,6 +37,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_AND;
@@ -100,7 +101,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
             // 1 literal onto the column index (CUBRID, Sybase), or do not support
             // constant expressions in the PARTITION BY clause (HANA)
-            if (partitionByOne && asList(CUBRID).contains(ctx.configuration().dialect())) {
+            if (partitionByOne && asList(CUBRID, MYSQL).contains(ctx.family())) {
             }
             else {
                 ctx.sql(glue)

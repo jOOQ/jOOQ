@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
@@ -309,7 +310,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -317,7 +318,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**

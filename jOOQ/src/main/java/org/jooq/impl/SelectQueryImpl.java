@@ -1322,7 +1322,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty() && asList(POSTGRES).contains(family)) {
+        if (!getWindow().isEmpty() && asList(MYSQL, POSTGRES).contains(family)) {
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .sql(' ')

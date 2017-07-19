@@ -36,6 +36,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -62,139 +63,139 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenPreceding(int number);
 
     /**
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenCurrentRow();
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenFollowing(int number);
 
     /**
      * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rangeUnboundedPreceding();
 
     /**
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rangeCurrentRow();
 
     /**
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rangeUnboundedFollowing();
 
     /**
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep rangeFollowing(int number);
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding();
 
     /**
      * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenPreceding(int number);
 
     /**
      * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenCurrentRow();
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing();
 
     /**
      * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenFollowing(int number);
 }

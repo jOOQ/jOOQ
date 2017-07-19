@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -50,8 +47,27 @@ class InsertDSL extends Generators {
     
     def static void main(String[] args) {
         val insert = new InsertDSL();
+        insert.generateInsertSetStep();
         insert.generateInsertValuesStep();
         insert.generateInsertImpl();
+    }
+    
+    def generateInsertSetStep() {
+        val out = new StringBuilder();
+
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Set the columns for insert.
+                 */
+                «generatedAnnotation»
+                @Support
+                <«TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> columns(«Field_TN_fieldn(degree)»);
+            ''');
+        }
+
+        insert("org.jooq.InsertSetStep", out, "columns");
     }
     
     def generateInsertValuesStep() {
@@ -84,13 +100,13 @@ class InsertDSL extends Generators {
              */
             «generatedAnnotation»
             public interface InsertValuesStep«degree»<R extends Record, «TN(degree)»> extends InsertOnDuplicateStep<R> {
-            
+
                 /**
                  * Add values to the insert statement.
                  */
                 @Support
                 InsertValuesStep«degree»<R, «TN(degree)»> values(«TN_XXXn(degree, "value")»);
-            
+
                 /**
                  * Add values to the insert statement.
                  */
@@ -113,7 +129,7 @@ class InsertDSL extends Generators {
                  * {@link DSLContext#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
                  */
                 @Support
-                Insert<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
+                InsertOnDuplicateStep<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
             }
             ''');
              
@@ -128,18 +144,25 @@ class InsertDSL extends Generators {
         «classHeader»
         package org.jooq.impl;
         
+        import static org.jooq.impl.DSL.condition;
+        import static org.jooq.impl.DSL.exists;
+        import static org.jooq.impl.DSL.not;
+        import static org.jooq.impl.DSL.notExists;
+        import static org.jooq.impl.Tools.EMPTY_FIELD;
+        
         import java.util.Arrays;
         import java.util.Collection;
-        import java.util.List;
         import java.util.Map;
+        import java.util.Optional;
         
         import javax.annotation.Generated;
         
-        import org.jooq.AttachableInternal;
+        import org.jooq.Condition;
         import org.jooq.Configuration;
         import org.jooq.Field;
         import org.jooq.FieldLike;
-        import org.jooq.Insert;
+        import org.jooq.InsertOnConflictConditionStep;
+        import org.jooq.InsertOnConflictDoUpdateStep;
         import org.jooq.InsertOnDuplicateSetMoreStep;
         import org.jooq.InsertQuery;
         import org.jooq.InsertResultStep;
@@ -149,9 +172,12 @@ class InsertDSL extends Generators {
         import org.jooq.InsertValuesStep«degree»;
         «ENDFOR»
         import org.jooq.InsertValuesStepN;
+        import org.jooq.Operator;
+        import org.jooq.QueryPart;
         import org.jooq.Record;
         import org.jooq.Record1;
         import org.jooq.Result;
+        import org.jooq.SQL;
         import org.jooq.Select;
         import org.jooq.Table;
 
@@ -172,6 +198,8 @@ class InsertDSL extends Generators {
             InsertSetStep<R>,
             InsertSetMoreStep<R>,
             InsertOnDuplicateSetMoreStep<R>,
+            InsertOnConflictDoUpdateStep<R>,
+            InsertOnConflictConditionStep<R>,
             InsertResultStep<R> {
         
             /**
@@ -179,17 +207,19 @@ class InsertDSL extends Generators {
              */
             private static final long serialVersionUID = 4222898879771679107L;
         
-            private final Field<?>[]  fields;
             private final Table<R>    into;
+            private Field<?>[]        fields;
             private boolean           onDuplicateKeyUpdate;
         
-            InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
-                super(new InsertQueryImpl<R>(configuration, into));
+            InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
+                super(new InsertQueryImpl<R>(configuration, with, into));
         
                 this.into = into;
-                this.fields = (fields == null || fields.size() == 0)
-                    ? into.fields()
-                    : fields.toArray(new Field[fields.size()]);
+            }
+        
+            InsertImpl(Configuration configuration, WithImpl with, Table<R> into, Collection<? extends Field<?>> fields) {
+                this(configuration, with, into);
+                columns(fields);
             }
         
             // -------------------------------------------------------------------------
@@ -197,12 +227,12 @@ class InsertDSL extends Generators {
             // -------------------------------------------------------------------------
         
             @Override
-            public final Insert<R> select(Select select) {
-                Configuration configuration = ((AttachableInternal) getDelegate()).configuration();
-                return new InsertSelectQueryImpl<R>(configuration, into, fields, select);
+            public final InsertImpl select(Select select) {
+                getDelegate().setSelect(fields, select);
+                return this;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-            
+
             @Override
             public final InsertImpl values(«TN_XXXn(degree, "value")») {
                 return values(new Object[] { «XXXn(degree, "value")» });
@@ -211,14 +241,18 @@ class InsertDSL extends Generators {
         
             @Override
             public final InsertImpl values(Object... values) {
-                if (fields.length != values.length) {
+        
+                // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+                if (fields.length > 0 && fields.length != values.length)
                     throw new IllegalArgumentException("The number of values must match the number of fields");
-                }
         
                 getDelegate().newRecord();
-                for (int i = 0; i < fields.length; i++) {
-                    addValue(getDelegate(), fields[i], values[i]);
-                }
+                if (fields.length == 0)
+                    for (Object value : values)
+                        addValue(getDelegate(), null, value);
+                else
+                    for (int i = 0; i < fields.length; i++)
+                        addValue(getDelegate(), fields.length > 0 ? fields[i] : null, values[i]);
         
                 return this;
             }
@@ -231,18 +265,19 @@ class InsertDSL extends Generators {
             private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
         
                 // [#1343] Only convert non-jOOQ objects
-                if (object instanceof Field) {
+                if (object instanceof Field)
                     delegate.addValue(field, (Field<T>) object);
-                }
-                else if (object instanceof FieldLike) {
+                else if (object instanceof FieldLike)
                     delegate.addValue(field, ((FieldLike) object).<T>asField());
-                }
-                else {
+                else if (field != null)
                     delegate.addValue(field, field.getDataType().convert(object));
-                }
+        
+                // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+                else
+                    delegate.addValue(field, (T) object);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-            
+
             @Override
             public final InsertImpl values(«Field_TN_XXXn(degree, "value")») {
                 return values(new Field[] { «XXXn(degree, "value")» });
@@ -251,18 +286,41 @@ class InsertDSL extends Generators {
         
             @Override
             public final InsertImpl values(Field<?>... values) {
-                List<Field<?>> values1 = Arrays.asList(values);
-                if (fields.length != values1.size()) {
+        
+                // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+                if (fields.length > 0 && fields.length != values.length)
                     throw new IllegalArgumentException("The number of values must match the number of fields");
-                }
         
                 getDelegate().newRecord();
-                for (int i = 0; i < fields.length; i++) {
-                    // javac has trouble when inferring Object for T. Use Void instead
-                    getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values1.get(i));
-                }
+        
+                // javac has trouble when inferring Object for T. Use Void instead
+                if (fields.length == 0)
+                    for (Field<?> value : values)
+                        getDelegate().addValue((Field<Void>) null, (Field<Void>) value);
+                else
+                    for (int i = 0; i < fields.length; i++)
+                        getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values[i]);
         
                 return this;
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            @SuppressWarnings("hiding")
+            public final <«TN(degree)»> InsertImpl columns(«Field_TN_fieldn(degree)») {
+                return columns(new Field[] { «fieldn(degree)» });
+            }
+            «ENDFOR»
+        
+            @Override
+            public final InsertImpl columns(Field<?>... f) {
+                this.fields = (f == null || f.length == 0) ? into.fields() : f;
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl columns(Collection<? extends Field<?>> f) {
+                return columns(f.toArray(EMPTY_FIELD));
             }
 
             /**
@@ -271,6 +329,33 @@ class InsertDSL extends Generators {
             @Override
             public final InsertImpl defaultValues() {
                 getDelegate().setDefaultValues();
+                return this;
+            }
+
+            @Override
+            public final InsertImpl doUpdate() {
+                return onDuplicateKeyUpdate();
+            }
+
+            @Override
+            public final InsertImpl doNothing() {
+                return onDuplicateKeyIgnore();
+            }
+
+            @Override
+            public final InsertImpl onConflict(Field<?>... keys) {
+                return onConflict(Arrays.asList(keys));
+            }
+
+            @Override
+            public final InsertImpl onConflict(Collection<? extends Field<?>> keys) {
+                getDelegate().onConflict(keys);
+                return this;
+            }
+
+            @Override
+            public final InsertImpl onConflictDoNothing() {
+                onConflict().doNothing();
                 return this;
             }
 
@@ -330,7 +415,156 @@ class InsertDSL extends Generators {
 
             @Override
             public final InsertImpl set(Record record) {
-                return set(Utils.map(record));
+                return set(Tools.mapOfChangedValues(record));
+            }
+
+            @Override
+            public final InsertImpl and(Condition condition) {
+                getDelegate().addConditions(condition);
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl and(Field<Boolean> condition) {
+                return and(condition(condition));
+            }
+        
+            @Override
+            public final InsertImpl and(SQL sql) {
+                return and(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl and(String sql) {
+                return and(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl and(String sql, Object... bindings) {
+                return and(condition(sql, bindings));
+            }
+        
+            @Override
+            public final InsertImpl and(String sql, QueryPart... parts) {
+                return and(condition(sql, parts));
+            }
+        
+            @Override
+            public final InsertImpl andNot(Condition condition) {
+                return and(not(condition));
+            }
+        
+            @Override
+            public final InsertImpl andNot(Field<Boolean> condition) {
+                return and(not(condition(condition)));
+            }
+        
+            @Override
+            public final InsertImpl andExists(Select<?> select) {
+                return and(exists(select));
+            }
+        
+            @Override
+            public final InsertImpl andNotExists(Select<?> select) {
+                return and(notExists(select));
+            }
+        
+            @Override
+            public final InsertImpl or(Condition condition) {
+                getDelegate().addConditions(Operator.OR, condition);
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl or(Field<Boolean> condition) {
+                return or(condition(condition));
+            }
+        
+            @Override
+            public final InsertImpl or(SQL sql) {
+                return or(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl or(String sql) {
+                return or(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl or(String sql, Object... bindings) {
+                return or(condition(sql, bindings));
+            }
+        
+            @Override
+            public final InsertImpl or(String sql, QueryPart... parts) {
+                return or(condition(sql, parts));
+            }
+        
+            @Override
+            public final InsertImpl orNot(Condition condition) {
+                return or(not(condition));
+            }
+        
+            @Override
+            public final InsertImpl orNot(Field<Boolean> condition) {
+                return or(not(condition(condition)));
+            }
+        
+            @Override
+            public final InsertImpl orExists(Select<?> select) {
+                return or(exists(select));
+            }
+        
+            @Override
+            public final InsertImpl orNotExists(Select<?> select) {
+                return or(notExists(select));
+            }
+        
+            @Override
+            public final InsertImpl where(Condition... conditions) {
+                getDelegate().addConditions(conditions);
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl where(Collection<? extends Condition> conditions) {
+                getDelegate().addConditions(conditions);
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl where(Field<Boolean> field) {
+                return where(condition(field));
+            }
+        
+            @Override
+            public final InsertImpl where(SQL sql) {
+                return where(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl where(String sql) {
+                return where(condition(sql));
+            }
+        
+            @Override
+            public final InsertImpl where(String sql, Object... bindings) {
+                return where(condition(sql, bindings));
+            }
+        
+            @Override
+            public final InsertImpl where(String sql, QueryPart... parts) {
+                return where(condition(sql, parts));
+            }
+        
+            @Override
+            public final InsertImpl whereExists(Select<?> select) {
+                return where(exists(select));
+            }
+        
+            @Override
+            public final InsertImpl whereNotExists(Select<?> select) {
+                return where(notExists(select));
             }
 
             @Override
@@ -368,6 +602,13 @@ class InsertDSL extends Generators {
                 getDelegate().execute();
                 return getDelegate().getReturnedRecord();
             }
+
+            /* [java-8] */
+            @Override
+            public final Optional<R> fetchOptional() {
+                return Optional.ofNullable(fetchOne());
+            }
+            /* [/java-8] */
         }
         ''');
         

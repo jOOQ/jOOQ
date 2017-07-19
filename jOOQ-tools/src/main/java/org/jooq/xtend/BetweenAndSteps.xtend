@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -123,13 +120,17 @@ class BetweenAndSteps extends Generators {
         import static org.jooq.SQLDialect.DERBY;
         import static org.jooq.SQLDialect.FIREBIRD;
         import static org.jooq.SQLDialect.H2;
+        import static org.jooq.SQLDialect.HANA;
+        import static org.jooq.SQLDialect.INFORMIX;
         import static org.jooq.SQLDialect.INGRES;
         import static org.jooq.SQLDialect.MARIADB;
         import static org.jooq.SQLDialect.MYSQL;
         import static org.jooq.SQLDialect.ORACLE;
+        import static org.jooq.SQLDialect.REDSHIFT;
         import static org.jooq.SQLDialect.SQLITE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
+        import static org.jooq.SQLDialect.VERTICA;
         import static org.jooq.impl.DSL.row;
 
         import javax.annotation.Generated;
@@ -251,7 +252,7 @@ class BetweenAndSteps extends Generators {
 
             @Override
             public final Condition and(Record record) {
-                RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
+                RowN r = new RowImpl(Tools.fields(record.intoArray(), record.fields()));
                 return and(r);
             }
 
@@ -260,20 +261,15 @@ class BetweenAndSteps extends Generators {
             // ------------------------------------------------------------------------
 
             @Override
-            public final void bind(BindContext context) {
-                delegate(context.configuration()).bind(context);
-            }
-        
-            @Override
-            public final void toSQL(RenderContext context) {
-                delegate(context.configuration()).toSQL(context);
+            public final void accept(Context<?> ctx) {
+                ctx.visit(delegate(ctx.configuration()));
             }
         
             @Override
             public final Clause[] clauses(Context<?> ctx) {
-                return delegate(ctx.configuration()).clauses(ctx);
+                return null;
             }
-        
+            
             private final QueryPartInternal delegate(Configuration configuration) {
                 // These casts are safe for RowImpl
                 RowN r = (RowN) row;
@@ -281,18 +277,15 @@ class BetweenAndSteps extends Generators {
                 RowN max = (RowN) maxValue;
         
                 // These dialects don't support the SYMMETRIC keyword at all
-                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
-                    if (not) {
-                        return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
-                    }
-                    else {
-                        return (QueryPartInternal) r.between(min, max).or(r.between(max, min));
-                    }
+                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA).contains(configuration.family())) {
+                    return not
+                        ? (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min))
+                        : (QueryPartInternal) r.between(min, max).or(r.between(max, min));
                 }
         
                 // These dialects either don't support row value expressions, or they
                 // Can't handle row value expressions with the BETWEEN predicate
-                else if (row.size() > 1 && asList(ACCESS, CUBRID, DERBY, FIREBIRD, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+                else if (row.size() > 1 && asList(ACCESS, CUBRID, DERBY, FIREBIRD, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.family())) {
                     Condition result = r.ge(min).and(r.le(max));
         
                     if (not) {
@@ -314,7 +307,7 @@ class BetweenAndSteps extends Generators {
                 private static final long serialVersionUID = 2915703568738921575L;
         
                 @Override
-                public final void toSQL(RenderContext context) {
+                public final void accept(Context<?> context) {
                                    context.visit(row);
                     if (not)       context.sql(" ").keyword("not");
                                    context.sql(" ").keyword("between");
@@ -323,12 +316,7 @@ class BetweenAndSteps extends Generators {
                                    context.sql(" ").keyword("and");
                                    context.sql(" ").visit(maxValue);
                 }
-        
-                @Override
-                public final void bind(BindContext context) {
-                    context.visit(row).visit(minValue).visit(maxValue);
-                }
-        
+
                 @Override
                 public final Clause[] clauses(Context<?> ctx) {
                     return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC

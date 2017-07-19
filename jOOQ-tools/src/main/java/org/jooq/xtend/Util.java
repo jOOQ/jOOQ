@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
+/*
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -38,24 +35,12 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.xtend
+package org.jooq.xtend;
 
-/**
- * @author Lukas Eder
- */
-class GenerateAll {
-    def static void main(String[] args) {
-    	BetweenAndSteps::main(args);
-    	ScalaConversions::main(args);
-    	XtendConversions::main(args);
-    	DSLContext::main(args);
-    	DSL::main(args);
-    	InsertDSL::main(args);
-    	MergeDSL::main(args);
-    	Records::main(args);
-    	Rows::main(args);
-    	SelectSeekStep::main(args);
-    	UpdateDSL::main(args);
-    	With::main(args);
+public class Util {
+
+    public static byte[] newByteArray(long length) {
+        // Xtend seems incapable of doing this:
+        return new byte[(int) length];
     }
 }

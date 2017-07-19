@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -44,6 +41,7 @@ package org.jooq.xtend
 /**
  * @author Lukas Eder
  */
+
 import org.jooq.Constants
 
 class DSLContext extends Generators {
@@ -52,6 +50,7 @@ class DSLContext extends Generators {
         val ctx = new DSLContext();
         ctx.generateNewRecord();
         ctx.generateNewResult();
+        ctx.generateWith();
         ctx.generateSelect();
         ctx.generateSelectDistinct();
         ctx.generateInsert();
@@ -138,6 +137,134 @@ class DSLContext extends Generators {
         insert("org.jooq.impl.DefaultDSLContext", outImpl, "newResult");
     }
     
+    def generateWith() {
+        val outDSL = new StringBuilder();
+        val outDSLRecursive = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outImplRecursive = new StringBuilder();
+        val outAPI = new StringBuilder();
+        val outAPIRecursive = new StringBuilder();
+        
+        for (type : #[ "String", "Name" ]) {
+            for (degree : (1 .. Constants::MAX_ROW_DEGREE)) {
+                outAPI.append('''
+                
+                    /**
+                     * Create a <code>WITH</code> clause to supply subsequent
+                     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                     * <code>DELETE</code>, and <code>MERGE</code> statements with
+                     * {@link CommonTableExpression}s.
+                     * <p>
+                     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                     * databases, in case of which it will not be rendered. For optimal database
+                     * interoperability and readability, however, it is suggested that you use
+                     * {@link #with(String, String...)} for strictly non-recursive CTE
+                     * and {@link #withRecursive(String, String...)} for strictly
+                     * recursive CTE.
+                     */
+                    «generatedMethod»
+                    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
+                    WithAsStep«degree» with(«type» alias, «XXXn(degree, type + " fieldAlias")»);
+                ''');
+                
+                outAPIRecursive.append('''
+                
+                    /**
+                     * Create a <code>WITH</code> clause to supply subsequent
+                     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                     * <code>DELETE</code>, and <code>MERGE</code> statements with
+                     * {@link CommonTableExpression}s.
+                     * <p>
+                     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                     * databases, in case of which it will not be rendered. For optimal database
+                     * interoperability and readability, however, it is suggested that you use
+                     * {@link #with(String, String...)} for strictly non-recursive CTE
+                     * and {@link #withRecursive(String, String...)} for strictly
+                     * recursive CTE.
+                     * <p>
+                     * Note that the {@link SQLDialect#H2} database only supports single-table,
+                     * <code>RECURSIVE</code> common table expression lists.
+                     */
+                    «generatedMethod»
+                    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                    WithAsStep«degree» withRecursive(«type» alias, «XXXn(degree, type + " fieldAlias")»);
+                ''');
+                
+                outDSL.append('''
+                
+                    /**
+                     * Create a <code>WITH</code> clause to supply subsequent
+                     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                     * <code>DELETE</code>, and <code>MERGE</code> statements with
+                     * {@link CommonTableExpression}s.
+                     * <p>
+                     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                     * databases, in case of which it will not be rendered. For optimal database
+                     * interoperability and readability, however, it is suggested that you use
+                     * {@link #with(String, String...)} for strictly non-recursive CTE
+                     * and {@link #withRecursive(String, String...)} for strictly
+                     * recursive CTE.
+                     */
+                    «generatedMethod»
+                    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
+                    public static WithAsStep«degree» with(«type» alias, «XXXn(degree, type + " fieldAlias")») {
+                        return new WithImpl(null, false).with(alias, «XXXn(degree, "fieldAlias")»);
+                    }
+                ''');
+                
+                outDSLRecursive.append('''
+                
+                    /**
+                     * Create a <code>WITH</code> clause to supply subsequent
+                     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                     * <code>DELETE</code>, and <code>MERGE</code> statements with
+                     * {@link CommonTableExpression}s.
+                     * <p>
+                     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                     * databases, in case of which it will not be rendered. For optimal database
+                     * interoperability and readability, however, it is suggested that you use
+                     * {@link #with(String, String...)} for strictly non-recursive CTE
+                     * and {@link #withRecursive(String, String...)} for strictly
+                     * recursive CTE.
+                     * <p>
+                     * Note that the {@link SQLDialect#H2} database only supports single-table,
+                     * <code>RECURSIVE</code> common table expression lists.
+                     */
+                    «generatedMethod»
+                    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                    public static WithAsStep«degree» withRecursive(«type» alias, «XXXn(degree, type + " fieldAlias")») {
+                        return new WithImpl(null, true).with(alias, «XXXn(degree, "fieldAlias")»);
+                    }
+                ''');
+                
+                outImpl.append('''
+                
+                    «generatedMethod»
+                    @Override
+                    public WithAsStep«degree» with(«type» alias, «XXXn(degree, type + " fieldAlias")») {
+                        return new WithImpl(configuration(), false).with(alias, «XXXn(degree, "fieldAlias")»);
+                    }
+                ''');
+                
+                outImplRecursive.append('''
+                
+                    «generatedMethod»
+                    @Override
+                    public WithAsStep«degree» withRecursive(«type» alias, «XXXn(degree, type + " fieldAlias")») {
+                        return new WithImpl(configuration(), true).with(alias, «XXXn(degree, "fieldAlias")»);
+                    }
+                ''');
+            }
+        }
+
+        insert("org.jooq.DSLContext", outAPI, "with");
+        insert("org.jooq.DSLContext", outAPIRecursive, "with-recursive");
+        insert("org.jooq.impl.DefaultDSLContext", outImpl, "with");
+        insert("org.jooq.impl.DefaultDSLContext", outImplRecursive, "with-recursive");
+        insert("org.jooq.impl.DSL", outDSL, "with");
+        insert("org.jooq.impl.DSL", outDSLRecursive, "with-recursive");
+    }
+    
     def generateSelect() {
         val outDSL = new StringBuilder();
         val outImpl = new StringBuilder();
@@ -155,7 +282,7 @@ class DSLContext extends Generators {
                 /**
                  * Create a new DSL select statement.
                  * <p>
-                 * This is the same as {@link #select(Field...)}, except that it
+                 * This is the same as {@link #select(SelectField...)}, except that it
                  * declares additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -164,7 +291,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -175,16 +302,12 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT",
-                    args = "Field+"
-                )
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outDSL.append('''
@@ -192,7 +315,7 @@ class DSLContext extends Generators {
                 /**
                  * Create a new DSL subselect statement.
                  * <p>
-                 * This is the same as {@link #select(Field...)}, except that it declares
+                 * This is the same as {@link #select(SelectField...)}, except that it declares
                  * additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -218,17 +341,13 @@ class DSLContext extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSLContext#select(Field...)
-                 * @see #select(Field...)
+                 * @see DSLContext#select(SelectField...)
+                 * @see #select(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT",
-                    args = "Field+"
-                )
-                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
             
@@ -236,8 +355,8 @@ class DSLContext extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -264,7 +383,7 @@ class DSLContext extends Generators {
                 /**
                  * Create a new DSL select statement.
                  * <p>
-                 * This is the same as {@link #selectDistinct(Field...)}, except that it
+                 * This is the same as {@link #selectDistinct(SelectField...)}, except that it
                  * declares additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -273,7 +392,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -284,16 +403,12 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT DISTINCT",
-                    args = "Field+"
-                )
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outDSL.append('''
@@ -301,7 +416,7 @@ class DSLContext extends Generators {
                 /**
                  * Create a new DSL subselect statement.
                  * <p>
-                 * This is the same as {@link #selectDistinct(Field...)}, except that it
+                 * This is the same as {@link #selectDistinct(SelectField...)}, except that it
                  * declares additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -327,17 +442,13 @@ class DSLContext extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSLContext#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSLContext#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT DISTINCT",
-                    args = "Field+"
-                )
-                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
             
@@ -345,8 +456,8 @@ class DSLContext extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -419,7 +530,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(configuration, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                    return new InsertImpl(configuration(), null, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
                 }
             ''');
         }
@@ -438,62 +549,28 @@ class DSLContext extends Generators {
             outAPI.append('''
             
                 /**
-                 * Create a new DSL merge statement (H2-specific syntax).
-                 * <p>
-                 * This statement is available from DSL syntax only. It is known to be
-                 * supported in some way by any of these dialects:
-                 * <table border="1">
-                 * <tr>
-                 * <td>H2</td>
-                 * <td>H2 natively supports this special syntax</td>
-                 * <td><a href= "www.h2database.com/html/grammar.html#merge"
-                 * >www.h2database.com/html/grammar.html#merge</a></td>
-                 * </tr>
-                 * <tr>
-                 * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-                 * <td>These databases can simulate the H2-specific MERGE statement using a
-                 * standard SQL MERGE statement, without restrictions</td>
-                 * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-                 * </tr>
-                 * </table>
+                 * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+                 * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
+                 *
+                 * @see #mergeInto(Table, Field...)
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
             ''');
             
             outDSL.append('''
             
                 /**
-                 * Create a new DSL merge statement (H2-specific syntax).
-                 * <p>
-                 * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-                 * creates an unattached, and thus not directly renderable or executable
-                 * <code>MERGE</code> statement.
-                 * <p>
-                 * This statement is available from DSL syntax only. It is known to be
-                 * supported in some way by any of these dialects:
-                 * <table border="1">
-                 * <tr>
-                 * <td>H2</td>
-                 * <td>H2 natively supports this special syntax</td>
-                 * <td><a href= "www.h2database.com/html/grammar.html#merge"
-                 * >www.h2database.com/html/grammar.html#merge</a></td>
-                 * </tr>
-                 * <tr>
-                 * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-                 * <td>These databases can simulate the H2-specific MERGE statement using a
-                 * standard SQL MERGE statement, without restrictions</td>
-                 * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-                 * </tr>
-                 * </table>
+                 * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+                 * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
                  *
-                 * @see DSLContext#mergeInto(Table, «(1..degree).map[e | "Field"].join(", ")»)
+                 * @see DSLContext#mergeInto(Table, Field...)
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 public static <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                	return using(new DefaultConfiguration()).mergeInto(table, «fieldn(degree)»);
+                    return using(new DefaultConfiguration()).mergeInto(table, «fieldn(degree)»);
                 }
             ''');
             
@@ -502,7 +579,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(configuration, table, Arrays.asList(«fieldn(degree)»));
+                    return new MergeImpl(configuration(), null, table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }

@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -72,7 +69,7 @@ class With extends Generators {
                 /**
                  * Create a new DSL select statement.
                  * <p>
-                 * This is the same as {@link #select(Field...)}, except that it
+                 * This is the same as {@link #select(SelectField...)}, except that it
                  * declares additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -81,7 +78,7 @@ class With extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -93,24 +90,20 @@ class With extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
-                @Support
-                @Transition(
-                    name = "SELECT",
-                    args = "Field+"
-                )
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
+                @Support({ DB2, FIREBIRD, HSQLDB, MYSQL_8_0, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outWithImpl.append('''
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -135,7 +128,7 @@ class With extends Generators {
                 /**
                  * Create a new DSL select statement.
                  * <p>
-                 * This is the same as {@link #selectDistinct(Field...)}, except that it
+                 * This is the same as {@link #selectDistinct(SelectField...)}, except that it
                  * declares additional record-level typesafety, which is needed by
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
@@ -144,7 +137,7 @@ class With extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -156,24 +149,20 @@ class With extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
-                @Support
-                @Transition(
-                    name = "SELECT DISTINCT",
-                    args = "Field+"
-                )
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
+                @Support({ DB2, FIREBIRD, HSQLDB, MYSQL_8_0, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outWithImpl.append('''
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -205,7 +194,7 @@ class With extends Generators {
                  * </pre></code>
                  */
                 «generatedMethod»
-                @Support
+                @Support({ POSTGRES, SQLSERVER })
                 <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -213,8 +202,8 @@ class With extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(configuration, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                public final <R extends Record, «TN(degree)»> InsertImpl insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
+                    return insertInto(into, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }
@@ -244,14 +233,14 @@ class With extends Generators {
                  * </tr>
                  * <tr>
                  * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-                 * <td>These databases can simulate the H2-specific MERGE statement using a
+                 * <td>These databases can emulate the H2-specific MERGE statement using a
                  * standard SQL MERGE statement, without restrictions</td>
                  * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
                  * </tr>
                  * </table>
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ SQLSERVER })
                 <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -259,8 +248,8 @@ class With extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(configuration, table, Arrays.asList(«fieldn(degree)»));
+                public final <R extends Record, «TN(degree)»> MergeImpl mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
+                    return mergeInto(table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }

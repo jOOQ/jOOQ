@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -55,20 +52,20 @@ import java.sql.Date
 import java.sql.Timestamp
 
 class Functions {
-    static Field<Byte> numberB = DSL::fieldByName(typeof(Byte), "number");
-    static Field<Integer> number = DSL::fieldByName(typeof(Integer), "number");
-    static Field<Integer> start = DSL::fieldByName(typeof(Integer), "start");
-    static Field<Integer> length = DSL::fieldByName(typeof(Integer), "length");
-    static Field<String> string = DSL::fieldByName(typeof(String), "string");
-    static Field<String> search = DSL::fieldByName(typeof(String), "search");
-    static Field<String> replace = DSL::fieldByName(typeof(String), "replace");
-    static Field<Date> date = DSL::fieldByName(typeof(Date), "date");
-    static Field<Timestamp> timestamp = DSL::fieldByName(typeof(Timestamp), "timestamp");
-    static Field<String> expression = DSL::fieldByName(typeof(String), "expression");
-    static Field<String> e1 = DSL::fieldByName(typeof(String), "expr1");
-    static Field<String> e2 = DSL::fieldByName(typeof(String), "expr2");
-    static Field<String> e3 = DSL::fieldByName(typeof(String), "expr3");
-    static Field<String> e4 = DSL::fieldByName(typeof(String), "expr4");
+    static Field<Byte> numberB = DSL::field(DSL::name("number"), typeof(Byte));
+    static Field<Integer> number = DSL::field(DSL::name("number"), typeof(Integer));
+    static Field<Integer> start = DSL::field(DSL::name("start"), typeof(Integer));
+    static Field<Integer> length = DSL::field(DSL::name("length"), typeof(Integer));
+    static Field<String> string = DSL::field(DSL::name("string"), typeof(String));
+    static Field<String> search = DSL::field(DSL::name("search"), typeof(String));
+    static Field<String> replace = DSL::field(DSL::name("replace"), typeof(String));
+    static Field<Date> date = DSL::field(DSL::name("date"), typeof(Date));
+    static Field<Timestamp> timestamp = DSL::field(DSL::name("timestamp"), typeof(Timestamp));
+    static Field<String> expression = DSL::field(DSL::name("expression"), typeof(String));
+    static Field<String> e1 = DSL::field(DSL::name("expr1"), typeof(String));
+    static Field<String> e2 = DSL::field(DSL::name("expr2"), typeof(String));
+    static Field<String> e3 = DSL::field(DSL::name("expr3"), typeof(String));
+    static Field<String> e4 = DSL::field(DSL::name("expr4"), typeof(String));
     
     
     
@@ -83,7 +80,7 @@ class Functions {
         val result = EnumSet::noneOf(typeof(SQLDialect));
         
         for (SQLDialect d : dialects) {
-            if (d != SQLDialect.SQL99) 
+            if (d != SQLDialect.SQL99 && d != SQLDialect.DEFAULT) 
                 result.add(d.family());
         }
         

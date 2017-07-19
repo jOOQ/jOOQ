@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -51,12 +48,10 @@ class SelectSeekStep extends Generators {
         val steps = new SelectSeekStep();
         
         steps.generateSelectImplImplementsSelectSeekStep();
-        steps.generateSelectImplOrderByFieldArray();
-        steps.generateSelectImplOrderBySortFieldArray();
+        steps.generateSelectImplOrderByOrderFieldArray();
         steps.generateSelectImplSeek();
         
-        steps.generateOrderByFieldArray();
-        steps.generateOrderBySortFieldArray();
+        steps.generateOrderByOrderFieldArray();
         steps.generateSelectSeekSteps();
     }
     
@@ -71,7 +66,7 @@ class SelectSeekStep extends Generators {
         insert("org.jooq.impl.SelectImpl", out, "implements-select-seek-step");
     }
     
-    def generateSelectImplOrderByFieldArray() {
+    def generateSelectImplOrderByOrderFieldArray() {
         val out = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
@@ -79,30 +74,13 @@ class SelectSeekStep extends Generators {
             
                 @Override
                 «generatedMethod»
-                public final SelectSeekStep«degree» orderBy(«Field_tn(degree)») {
-                    return orderBy(new Field[] { «tn(degree)» });
+                public final SelectSeekStep«degree» orderBy(«OrderField_tn(degree)») {
+                    return orderBy(new OrderField[] { «tn(degree)» });
                 }
             ''');
         }
 
-        insert("org.jooq.impl.SelectImpl", out, "order-by-field-array");
-    }
-     
-    def generateSelectImplOrderBySortFieldArray() {
-        val out = new StringBuilder();
-        
-        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
-            out.append('''
-            
-                @Override
-                «generatedMethod»
-                public final SelectSeekStep«degree» orderBy(«SortField_tn(degree)») {
-                    return orderBy(new SortField[] { «tn(degree)» });
-                }
-            ''');
-        }
-
-        insert("org.jooq.impl.SelectImpl", out, "order-by-sortfield-array");
+        insert("org.jooq.impl.SelectImpl", out, "order-by-orderfield-array");
     }
          
     def generateSelectImplSeek() {
@@ -157,7 +135,7 @@ class SelectSeekStep extends Generators {
         insert("org.jooq.impl.SelectImpl", out, "seek");
     }
        
-    def generateOrderByFieldArray() {
+    def generateOrderByOrderFieldArray() {
         val out = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
@@ -168,29 +146,11 @@ class SelectSeekStep extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                <«TN(degree)»> SelectSeekStep«degree»<R, «TN(degree)»> orderBy(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSeekStep«degree»<R, «TN(degree)»> orderBy(«OrderField_TN_fieldn(degree)»);
             ''');
         }
 
-        insert("org.jooq.SelectOrderByStep", out, "order-by-field-array");
-    }
-   
-    def generateOrderBySortFieldArray() {
-        val out = new StringBuilder();
-        
-        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
-            out.append('''
-            
-                /**
-                 * Add an <code>ORDER BY</code> clause to the query.
-                 */
-                «generatedMethod»
-                @Support
-                <«TN(degree)»> SelectSeekStep«degree»<R, «TN(degree)»> orderBy(«SortField_TN_fieldn(degree)»);
-            ''');
-        }
-
-        insert("org.jooq.SelectOrderByStep", out, "order-by-sortfield-array");
+        insert("org.jooq.SelectOrderByStep", out, "order-by-orderfield-array");
     }
     
     def generateSelectSeekSteps() {
@@ -480,7 +440,7 @@ class SelectSeekStep extends Generators {
                  * <p>
                  * <code><pre>
                  * SELECT * FROM table
-                 * WHERE (id, code) < (3, 'abc')
+                 * WHERE (id, code) &lt; (3, 'abc')
                  * ORDER BY id ASC, code ASC
                  * </pre></code>
                  * <p>
@@ -488,7 +448,7 @@ class SelectSeekStep extends Generators {
                  * equivalent predicate:
                  * <p>
                  * <code><pre>
-                 * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+                 * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
                  * </pre></code>
                  * <p>
                  * The <code>SEEK BEFORE</code> method currently does not support seeking
@@ -530,7 +490,7 @@ class SelectSeekStep extends Generators {
                  * <p>
                  * <code><pre>
                  * SELECT * FROM table
-                 * WHERE (id, code) < (3, 'abc')
+                 * WHERE (id, code) &lt; (3, 'abc')
                  * ORDER BY id ASC, code ASC
                  * </pre></code>
                  * <p>
@@ -538,7 +498,7 @@ class SelectSeekStep extends Generators {
                  * equivalent predicate:
                  * <p>
                  * <code><pre>
-                 * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+                 * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
                  * </pre></code>
                  * <p>
                  * The <code>SEEK BEFORE</code> method currently does not support seeking

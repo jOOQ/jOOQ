@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -44,6 +41,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.RandomAccessFile
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * @author Lukas Eder
@@ -56,6 +54,9 @@ abstract class Generators {
         }
         else if (className.contains("scala")) {
             return new File("./../jOOQ-scala/src/main/scala/" + className.replace(".", "/") + ".scala");
+        }
+        else if (className.contains("lambda")) {
+            return new File("./../../jOOL/src/main/java/" + className.replace(".", "/") + ".java");
         }
 		else {
 			return new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
@@ -112,7 +113,9 @@ abstract class Generators {
         file.getParentFile().mkdirs();
     
         try {
-            System::out.println("Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
+            val i = totalWrites.incrementAndGet;
+            if (System.getProperty("verbose") != null)
+                System.out.println(i + ": Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
             val fw = new FileWriter(file);
             // It's hard to enforce unix line separators in Xtend
             fw.append(contents.toString().replace("\r\n", "\n"));
@@ -123,6 +126,8 @@ abstract class Generators {
             e.printStackTrace();
         }
     }
+    
+    static AtomicInteger totalWrites = new AtomicInteger(0);
 
     def first(int degree) {
         switch degree {
@@ -157,10 +162,7 @@ abstract class Generators {
     
     def classHeader() {
         '''
-        /**
-         * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
-         * All rights reserved.
-         *
+        /*
          * This work is dual-licensed
          * - under the Apache Software License 2.0 (the "ASL")
          * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -218,11 +220,20 @@ abstract class Generators {
      * <code>T1, T2, .., T[N]</code>
      */
     def TN(int degree) {
-    	return
-    	if (degree == 0)
-    		"Object..."
-		else
-	        (1..degree).join(", ", [e | "T" + e])
+        return
+        if (degree == 0)
+            "Object..."
+        else
+            TN(1, degree)
+    }    
+    
+    /**
+     * A comma-separated list of types
+     * <p>
+     * <code>T[from], .., T[to]</code>
+     */
+    def TN(int from, int to) {
+        XXXn(from, to, "T")
     }
     
     /**
@@ -236,6 +247,28 @@ abstract class Generators {
             "values"
         else
             (1..degree).join(", ", [e | "t" + e])
+    }
+    
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>v1, v2, .., v[N]</code>
+     */
+    def vn(int degree) {
+        return
+        if (degree == 0)
+            "values"
+        else
+            vn(1, degree)
+    }
+    
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>v[from], .., v[to]</code>
+     */
+    def vn(int from, int to) {
+        XXXn(from, to, "v")
     }
     
     /**
@@ -283,11 +316,20 @@ abstract class Generators {
      * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
      */
     def TN_XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		"Object... " + XXX + "s"
-		else
-	        (1..degree).join(", ", [e | "T" + e + " " + XXX + e])
+        TN_XXXn(1, degree, XXX)
+    }
+    
+    /** 
+     * A comma-separated list of identifier declarations
+     * <p>
+     * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
+     */
+    def TN_XXXn(int from, int to, String XXX) {
+        return
+        if (to == 0)
+            "Object... " + XXX + "s"
+        else
+            (from..to).join(", ", [e | "T" + e + " " + XXX + e])
     }
     
     /**
@@ -319,14 +361,14 @@ abstract class Generators {
     /**
      * A comma-separated list of sort field declarations
      * <p>
-     * <code>SortField t1, SortField t2, .., SortField t[N]</code>
+     * <code>OrderField t1, OrderField t2, .., OrderField t[N]</code>
      */
-    def SortField_tn(int degree) {
+    def OrderField_tn(int degree) {
         return
         if (degree == 0)
-            "SortField<?>... values"
+            "OrderField<?>... values"
         else
-            (1..degree).join(", ", [e | "SortField t" + e])
+            (1..degree).join(", ", [e | "OrderField t" + e])
     }
     
     /**
@@ -335,11 +377,11 @@ abstract class Generators {
      * <code>Field&lt;T1> t1, Field&lt;T2> t2, .., Field&ltT[N]> t[N]</code>
      */
     def Field_TN_XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		"Field<?>... " + XXX + "s"
-		else
-	        (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
+        return
+        if (degree == 0)
+            "Field<?>... " + XXX + "s"
+        else
+            (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
     }
     
     /**
@@ -352,20 +394,33 @@ abstract class Generators {
         if (degree == 0)
             "Field<?>... fields"
         else
-            (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
+            Field_TN_XXXn(degree, "field")
+    }
+         
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>SelectField&lt;T1> field1, SelectField&lt;T2> field2, .., SelectField&ltT[N]> field[N]</code>
+     */
+    def SelectField_TN_fieldn(int degree) {
+        return
+        if (degree == 0)
+            "SelectField<?>... fields"
+        else
+            (1..degree).join(", ", [e | "SelectField<T" + e + "> field" + e])
     }
      
     /**
      * A comma-separated list of field declarations
      * <p>
-     * <code>SortField&lt;T1> field1, SortField&lt;T2> field2, .., SortField&ltT[N]> field[N]</code>
+     * <code>OrderField&lt;T1> field1, OrderField&lt;T2> field2, .., OrderField&ltT[N]> field[N]</code>
      */
-    def SortField_TN_fieldn(int degree) {
+    def OrderField_TN_fieldn(int degree) {
         return
         if (degree == 0)
-            "SortField<?>... fields"
+            "OrderField<?>... fields"
         else
-            (1..degree).join(", ", [e | "SortField<T" + e + "> field" + e])
+            (1..degree).join(", ", [e | "OrderField<T" + e + "> field" + e])
     }
     
     /**
@@ -380,14 +435,26 @@ abstract class Generators {
     /**
      * A comma-separated list of field references
      * <p>
-     * <code>field1, field2, .., field[N]</code>
+     * <code>XXX1, XXX2, .., XXX[N]</code>
      */
     def XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		XXX + "s"
-		else
-	        (1..degree).join(", ", [e | XXX + e])
+        return
+        if (degree == 0)
+            XXX + "s"
+        else
+            XXXn(1, degree, XXX)
+    }
+    
+    /**
+     * A comma-separated list of field references
+     * <p>
+     * <code>XXX1, XXX2, .., XXX[N]</code>
+     */
+    def XXXn(int from, int to, String XXX) {
+        if (from <= to)
+            (from..to).join(", ", [e | XXX + e])
+        else
+            ""
     }
     
     /**
@@ -424,8 +491,8 @@ abstract class Generators {
      * <p>
      * <code>val(t1), val(t2), .., val(t[N])</code>
      */
-    def Utils_field_tn(int degree) {
-        (1..degree).join(", ", [e | "Utils.field(t" + e + ")"])
+    def Tools_field_tn(int degree) {
+        (1..degree).join(", ", [e | "Tools.field(t" + e + ")"])
     }
     
     /**

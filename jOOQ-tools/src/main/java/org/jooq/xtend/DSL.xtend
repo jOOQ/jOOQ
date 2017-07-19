@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -46,11 +43,31 @@ class DSL extends Generators {
     
     def static void main(String[] args) {
         val dsl = new DSL();
+        dsl.generateRecordType();
         dsl.generateRowValue();
+        dsl.generateRowExpression();
         dsl.generateRowField();
         dsl.generateValues();
     }
     
+    def generateRecordType() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a {@link RecordType} of degree <code>«degree»</code>.
+                 */
+                «generatedMethod»
+                public static <«TN(degree)»> RecordType<Record«degree»<«TN(degree)»>> recordType(«Field_TN_fieldn(degree)») {
+                    return new Fields(«fieldn(degree)»);
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.DSL", out, "record-type");
+    }
     def generateRowValue() {
         val out = new StringBuilder();
         
@@ -61,17 +78,13 @@ class DSL extends Generators {
                  * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
-                 * expression operations can be simulated on all databases. See relevant row
+                 * expression operations can be emulated on all databases. See relevant row
                  * value expression method Javadocs for details.
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "ROW",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«TN_tn(degree)») {
-                    return row(«Utils_field_tn(degree)»);
+                    return row(«Tools_field_tn(degree)»);
                 }
             ''');
         }
@@ -79,7 +92,7 @@ class DSL extends Generators {
         insert("org.jooq.impl.DSL", out, "row-value");
     }
     
-    def generateRowField() {
+    def generateRowExpression() {
         val out = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
@@ -89,19 +102,63 @@ class DSL extends Generators {
                  * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
-                 * expression operations can be simulated on all databases. See relevant row
+                 * expression operations can be emulated on all databases. See relevant row
                  * value expression method Javadocs for details.
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "ROW",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«Field_TN_tn(degree)») {
                     return new RowImpl(«tn(degree)»);
                 }
             ''');
+        }
+
+        insert("org.jooq.impl.DSL", out, "row-expression");
+    }
+    
+    def generateRowField() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Experimental method removed again.
+                 * <p>
+                 * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+                 * with any other single-parameter field() overload. This is why this method has now been
+                 * removed again from the public API.
+                 * <p>
+                 * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+                 * <p>
+                 * Use {@link #rowField(Row«degree»)} as a replacement.
+                 *
+                 * @see #rowField(Row«degree»)
+                 */
+                «generatedMethod»
+                @Support
+                private static <«TN(degree)»> Field<Record«recTypeSuffix(degree)»> field(Row«typeSuffix(degree)» row) {
+                    return new RowField<Row«typeSuffix(degree)», Record«recTypeSuffix(degree)»>(row);
+                }
+            ''');// (Field) field("{0}", SQLDataType.RECORD, row);
+        }
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * EXPERIMENTAL: Turn a row value expression of degree <code>«degree»</code> into a {@code Field}.
+                 * <p>
+                 * Note: Not all databases support row value expressions, but many row value
+                 * expression operations can be emulated on all databases. See relevant row
+                 * value expression method Javadocs for details.
+                 */
+                «generatedMethod»
+                @Support
+                public static <«TN(degree)»> Field<Record«recTypeSuffix(degree)»> rowField(Row«typeSuffix(degree)» row) {
+                    return new RowField<Row«typeSuffix(degree)», Record«recTypeSuffix(degree)»>(row);
+                }
+            ''');// (Field) field("{0}", SQLDataType.RECORD, row);
         }
 
         insert("org.jooq.impl.DSL", out, "row-field");
@@ -120,7 +177,7 @@ class DSL extends Generators {
                  * databases to allow for constructing tables from constant values.
                  * <p>
                  * If a database doesn't support the <code>VALUES()</code> constructor, it
-                 * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+                 * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
                  * expressions are equivalent:
                  * <p>
                  * <pre><code>
@@ -139,12 +196,11 @@ class DSL extends Generators {
                  * Use {@link Table#as(String, String...)} to rename the resulting table and
                  * its columns.
                  */
+                /* [java-8] */
+                @SafeVarargs
+                /* [/java-8] */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "VALUES",
-                    args = "Row+"
-                )
                 public static <«TN(degree)»> Table<Record«degree»<«TN(degree)»>> values(Row«degree»<«TN(degree)»>... rows) {
                     return new Values<Record«degree»<«TN(degree)»>>(rows).as("v", «FOR d : (1..degree) SEPARATOR ', '»"c«d»"«ENDFOR»);
                 }

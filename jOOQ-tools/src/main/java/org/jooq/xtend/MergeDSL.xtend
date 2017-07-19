@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
@@ -53,6 +50,7 @@ class MergeDSL extends Generators {
         merge.generateMergeImplImplements();
         merge.generateMergeImplValues();
         merge.generateMergeImplWhenNotMatchedThenInsert();
+        merge.generateMergeColumns();
     }
     
     def generateMergeNotMatchedStep() {
@@ -64,13 +62,11 @@ class MergeDSL extends Generators {
         
         import static org.jooq.SQLDialect.CUBRID;
         import static org.jooq.SQLDialect.DB2;
+        import static org.jooq.SQLDialect.FIREBIRD_3_0;
         import static org.jooq.SQLDialect.HSQLDB;
         import static org.jooq.SQLDialect.ORACLE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
-        
-        import org.jooq.api.annotation.State;
-        import org.jooq.api.annotation.Transition;
         
         import java.util.Collection;
         
@@ -96,7 +92,6 @@ class MergeDSL extends Generators {
          * @author Lukas Eder
          */
         «generatedAnnotation»
-        @State
         public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R> {
         
             /**
@@ -108,10 +103,7 @@ class MergeDSL extends Generators {
              * access to a MySQL-like API allowing for
              * <code>INSERT SET a = x, b = y</code> syntax.
              */
-            @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-            @Transition(
-                name = "WHEN NOT MATCHED THEN INSERT"
-            )
+            @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
             MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -119,7 +111,7 @@ class MergeDSL extends Generators {
              * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
              * <code>MERGE</code> statement
              */
-            @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+            @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
             <«TN(degree)»> MergeNotMatchedValuesStep«degree»<R, «TN(degree)»> whenNotMatchedThenInsert(«Field_TN_fieldn(degree)»);
             «ENDFOR»
         
@@ -127,22 +119,14 @@ class MergeDSL extends Generators {
              * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
              * <code>MERGE</code> statement
              */
-            @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-            @Transition(
-                name = "WHEN NOT MATCHED THEN INSERT",
-                args = "Field+"
-            )
+            @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
             MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Field<?>... fields);
         
             /**
              * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
              * <code>MERGE</code> statement
              */
-            @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-            @Transition(
-                name = "WHEN NOT MATCHED THEN INSERT",
-                args = "Field+"
-            )
+            @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
             MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
         }
         ''');
@@ -160,6 +144,7 @@ class MergeDSL extends Generators {
             
             import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
+            import static org.jooq.SQLDialect.FIREBIRD_3_0;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.ORACLE;
             import static org.jooq.SQLDialect.SQLSERVER;
@@ -195,21 +180,21 @@ class MergeDSL extends Generators {
                  * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
                  * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
                  */
-                @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 MergeNotMatchedWhereStep<R> values(«TN_XXXn(degree, "value")»);
             
                 /**
                  * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
                  * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
                  */
-                @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 MergeNotMatchedWhereStep<R> values(«Field_TN_XXXn(degree, "value")»);
             
                 /**
                  * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
                  * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
                  */
-                @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 MergeNotMatchedWhereStep<R> values(Collection<?> values);
             }
             ''');
@@ -228,9 +213,12 @@ class MergeDSL extends Generators {
             
             import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
+            import static org.jooq.SQLDialect.FIREBIRD_3_0;
             import static org.jooq.SQLDialect.H2;
+            import static org.jooq.SQLDialect.HANA;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.ORACLE;
+            import static org.jooq.SQLDialect.POSTGRES_9_5;
             import static org.jooq.SQLDialect.SQLSERVER;
             import static org.jooq.SQLDialect.SYBASE;
             
@@ -261,7 +249,7 @@ class MergeDSL extends Generators {
                  * Use this optional clause in order to override using the underlying
                  * <code>PRIMARY KEY</code>.
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 MergeValuesStep«degree»<R, «TN(degree)»> key(Field<?>... keys);
             
                 /**
@@ -270,7 +258,7 @@ class MergeDSL extends Generators {
                  * Use this optional clause in order to override using the underlying
                  * <code>PRIMARY KEY</code>.
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 MergeValuesStep«degree»<R, «TN(degree)»> key(Collection<? extends Field<?>> keys);
             }
             ''');
@@ -289,9 +277,14 @@ class MergeDSL extends Generators {
             
             import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
+            import static org.jooq.SQLDialect.FIREBIRD_3_0;
             import static org.jooq.SQLDialect.H2;
+            import static org.jooq.SQLDialect.HANA;
             import static org.jooq.SQLDialect.HSQLDB;
+            import static org.jooq.SQLDialect.MARIADB;
+            import static org.jooq.SQLDialect.MYSQL;
             import static org.jooq.SQLDialect.ORACLE;
+            import static org.jooq.SQLDialect.POSTGRES_9_5;
             import static org.jooq.SQLDialect.SQLSERVER;
             import static org.jooq.SQLDialect.SYBASE;
             
@@ -318,19 +311,19 @@ class MergeDSL extends Generators {
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 Merge<R> values(«TN_XXXn(degree, "value")»);
             
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 Merge<R> values(«Field_TN_XXXn(degree, "value")»);
             
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 Merge<R> values(Collection<?> values);
             
                 /**
@@ -342,7 +335,7 @@ class MergeDSL extends Generators {
                  * <code>INTO</code> clause:
                  * {@link DSLContext#mergeInto(Table, «(1..degree).join(', ', [e | 'Field'])»)}
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
             }
             ''');
@@ -413,5 +406,38 @@ class MergeDSL extends Generators {
         ''')
 
         insert("org.jooq.impl.MergeImpl", out, "whenNotMatchedThenInsert");
+    }
+    
+    def generateMergeColumns() {
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            outAPI.append('''
+            
+                /**
+                 * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+                 * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
+                 * 
+                 * @see DSLContext#mergeInto(Table, Field...)
+                 */
+                «generatedMethod»
+                @Support({ CUBRID, DB2, FIREBIRD_3_0, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
+                <«TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> columns(«Field_TN_fieldn(degree)»);
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
+                @SuppressWarnings("hiding")
+                public <«TN(degree)»> MergeImpl columns(«Field_TN_fieldn(degree)») {
+                    return columns(Arrays.asList(«fieldn(degree)»));
+                }
+            ''');
+        }
+
+        insert("org.jooq.MergeUsingStep", outAPI, "columns");
+        insert("org.jooq.impl.MergeImpl", outImpl, "columns");
     }
 }

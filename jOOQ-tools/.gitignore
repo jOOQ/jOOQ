@@ -1,2 +1,4 @@
-/xtend-gen
-/bin
+/**/*._trace
+/**/*.xtendbin
+/**/*.class
+/target

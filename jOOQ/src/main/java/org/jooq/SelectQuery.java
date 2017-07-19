@@ -767,7 +767,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
 
@@ -804,7 +804,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     void setForUpdateNoWait();
 
     /**
@@ -820,7 +820,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({POSTGRES_9_5})
+    @Support({ MYSQL_8_0, POSTGRES_9_5 })
     void setForUpdateSkipLocked();
 
     /**

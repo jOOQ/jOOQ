@@ -34,6 +34,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
@@ -101,7 +102,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      *
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
-    @Support({ POSTGRES })
+    @Support({ MYSQL_8_0, POSTGRES })
     SelectOptionStep<R> noWait();
 
     /**
@@ -111,6 +112,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ MYSQL_8_0, POSTGRES_9_5 })
     SelectOptionStep<R> skipLocked();
 }

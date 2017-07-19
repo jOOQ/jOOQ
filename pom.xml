@@ -365,8 +365,13 @@
             </build>
         </profile>
 
+
         <profile>
+            <!-- Keep this profile in sync with the above release-pro-java-6 profile -->
             <id>release-pro</id>
+            <properties>
+                <java.version>1.8</java.version>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -407,24 +412,75 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            <header>
-                            <![CDATA[
-                                <script type="text/javascript">
-                                  var _gaq = _gaq || [];
-                                  _gaq.push(['_setAccount', 'UA-30716479-1']);
-                                  _gaq.push(['_trackPageview']);
-
-                                  (function() {
-                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                                  })();
-                                </script>
-                            ]]>
-                            </header>
 
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Copy API docs to new directory first (replacer plugin seems to be unable to create dirs) -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-folder</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/apidocs-ga</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <filtering>false</filtering>
+                                            <directory>${project.build.directory}/apidocs</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Then, patch Google Analytics code inside. -->
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                        <version>1.5.2</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+
+                            <!-- There's an error when trying to find the top module's /target/apidocs-ga directory -->
+                            <ignoreErrors>true</ignoreErrors>
+                            <basedir>${project.build.directory}/apidocs-ga</basedir>
+                            <includes>
+                                <include>**/*.html</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token><![CDATA[<body>]]></token>
+                                    <value><![CDATA[<body>
+                                        <script type="text/javascript">
+                                          var _gaq = _gaq || [];
+                                          _gaq.push(['_setAccount', 'UA-30716479-1']);
+                                          _gaq.push(['_trackPageview']);
+
+                                          (function() {
+                                            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                          })();
+                                        </script>
+                                    ]]></value>
+                                </replacement>
+                            </replacements>
                         </configuration>
                     </plugin>
                 </plugins>

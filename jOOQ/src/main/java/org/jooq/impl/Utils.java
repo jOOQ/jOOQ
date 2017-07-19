@@ -310,6 +310,7 @@ final class Utils {
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
     private static int           maxConsumedExceptions                        = 256;
+    private static int           maxConsumedResults                           = 65536;
 
     /**
      * A pattern for the dash line syntax
@@ -2223,6 +2224,55 @@ final class Utils {
         if (ctx.sqlWarning() != null)
             listener.warning(ctx);
     }
+
+    /* [pro] */
+    /**
+     * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
+     */
+    static final void consumeResultSets(ExecuteContext ctx) throws SQLException {
+        int i = 0;
+        int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
+
+        for (i = 0; i < maxConsumedResults; i++) {
+            try {
+                if (ctx.resultSet() != null) {
+
+                    // [#6390] With [#3681] unavailable in jOOQ 3.4, we just ignore intermediate result sets.
+                    ctx.resultSet().close();
+                }
+                else {
+                    if (rows != -1)
+                        // [#6390] With [#3681] unavailable in jOOQ 3.4, we just ignore intermediate update counts.
+                        ;
+                    else
+                        break;
+                }
+
+                if (ctx.statement().getMoreResults()) {
+                    ctx.resultSet(ctx.statement().getResultSet());
+                }
+                else {
+                    rows = ctx.statement().getUpdateCount();
+                    ctx.rows(rows);
+
+                    if (rows != -1)
+                        ctx.resultSet(null);
+                    else
+                        break;
+                }
+            }
+
+            // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
+            catch (SQLException e) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
+            }
+        }
+
+        if (i == maxConsumedResults)
+            log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
+    }
+    /* [/pro] */
 
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {

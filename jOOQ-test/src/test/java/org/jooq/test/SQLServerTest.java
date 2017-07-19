@@ -863,8 +863,6 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Test
     public void testSQLServerRaiserror() throws Exception {
-
-        // [#3011] TODO Fix this for sqljdbc_4.0. It works with jTDS
         try {
             Routines.pRaise(create().configuration(), 0);
             fail();
@@ -883,6 +881,30 @@ public class SQLServerTest extends jOOQAbstractTest<
 
             assertEquals("message 1", cause.getMessage());
             assertEquals("message 2", cause.getNextException().getMessage());
+        }
+
+        try {
+            Routines.pRaise(create().configuration(), 2);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            assertEquals("message 1", cause.getMessage());
+            assertEquals("message 2", cause.getNextException().getMessage());
+        }
+
+        try {
+            Routines.pRaise(create().configuration(), 3);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            assertEquals("message 1", cause.getMessage());
+            assertEquals("message 2", cause.getNextException().getMessage());
+            assertEquals("message 3", cause.getNextException().getNextException().getMessage());
+            assertEquals("message 4", cause.getNextException().getNextException().getNextException().getMessage());
         }
     }
 

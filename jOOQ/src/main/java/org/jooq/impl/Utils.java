@@ -310,6 +310,7 @@ final class Utils {
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
     private static int           maxConsumedExceptions                        = 256;
+    private static int           maxConsumedResults                           = 65536;
 
     /**
      * A pattern for the dash line syntax
@@ -2223,6 +2224,55 @@ final class Utils {
         if (ctx.sqlWarning() != null)
             listener.warning(ctx);
     }
+
+    /* [pro] xx
+    xxx
+     x xxxxxxx xxxxxxx xxx xxxxxx xxxxxxxxxxx xxxx x xxxx xxxxxx xxxxxxxxxxx
+     xx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxx x
+        xxx x x xx
+        xxx xxxx x xxxxxxxxxxxxxxxx xx xxxxx x xxxxxxxxxx x xx
+
+        xxx xx x xx x x xxxxxxxxxxxxxxxxxxx xxxx x
+            xxx x
+                xx xxxxxxxxxxxxxxxx xx xxxxx x
+
+                    xx xxxxxxx xxxx xxxxxxx xxxxxxxxxxx xx xxxx xxxx xx xxxx xxxxxx xxxxxxxxxxxx xxxxxx xxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xxxx x
+                    xx xxxxx xx xxx
+                        xx xxxxxxx xxxx xxxxxxx xxxxxxxxxxx xx xxxx xxxx xx xxxx xxxxxx xxxxxxxxxxxx xxxxxx xxxxxxx
+                        x
+                    xxxx
+                        xxxxxx
+                x
+
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xxxx x
+                    xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxx
+
+                    xx xxxxx xx xxx
+                        xxxxxxxxxxxxxxxxxxxx
+                    xxxx
+                        xxxxxx
+                x
+            x
+
+            xx xxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxxxxx xxxxxxxxxx xx xxxxx xxx xxx
+            xxxxx xxxxxxxxxxxxx xx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxx
+                xxxxx xx
+            x
+        x
+
+        xx xx xx xxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxx x x xxxxxxxxxxxxxxxxxx x xx xxxx xx xxxxxxxx x xxxx xxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+    xx [/pro] */
 
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {

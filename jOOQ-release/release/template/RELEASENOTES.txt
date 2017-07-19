@@ -10,6 +10,14 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.4.5 - July 19, 2017
+================================================================================
+
+Bug fixes
+---------
+
+#6390 - SQL Server multiple errors are not propagated if an update count precedes them
+
 Version 3.4.5 - February 23, 2015
 ================================================================================
 

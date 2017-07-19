@@ -81,6 +81,7 @@ import org.jooq.Parameter;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Routine;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -306,6 +307,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             execute0(ctx, listener);
 
+            /* [pro] xx
+            xx xxxxxxx xxx xxxxx xx xxxxxxxxx xxxxxx xxxx xxx xxxx xxxxxxxxx
+            xx xxx xxxxxxxxxx xx xxxxxxxx xx xxx xxxxxx
+
+            xx xxxxxxx xxxxxxx xxxxxxxxx xxxxxxx xxxx xxxxxxxx xxx xxxxxxxxxx xxx xxxxxxxxx xxxxxxxxxx
+            xx         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx [/pro] */
+
             fetchOutParameters(ctx);
             return 0;
         }
@@ -332,7 +343,18 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         try {
             listener.executeStart(ctx);
-            ctx.statement().execute();
+
+            // [#1232] Avoid executeQuery() in order to handle queries that may
+            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
+            if (ctx.statement().execute()) {
+                ctx.resultSet(ctx.statement().getResultSet());
+            }
+
+            else {
+                ctx.resultSet(null);
+                ctx.rows(ctx.statement().getUpdateCount());
+            }
+
             listener.executeEnd(ctx);
         }
 

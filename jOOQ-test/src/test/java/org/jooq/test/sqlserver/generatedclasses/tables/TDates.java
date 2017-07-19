@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -804884431;
+	private static final long serialVersionUID = 1456239246;
 
 	/**
 	 * The singleton instance of <code>dbo.t_dates</code>
@@ -43,6 +43,11 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gene
 	 * The column <code>dbo.t_dates.ts</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+	/**
+	 * The column <code>dbo.t_dates.ts_tz</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.sql.Date> TS_TZ = createField("ts_tz", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>dbo.t_dates.d_int</code>.

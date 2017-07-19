@@ -12,6 +12,11 @@ package org.jooq.test.sqlserver.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table dbo.f_cross_multiply
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply F_CROSS_MULTIPLY = org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply.F_CROSS_MULTIPLY;
+
+	/**
 	 * The table dbo.f_tables1
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
@@ -35,6 +40,11 @@ public class Tables {
 	 * The table dbo.f_tables5
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
+	 * The table dbo.f5171
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.F5171 F5171 = org.jooq.test.sqlserver.generatedclasses.tables.F5171.F5171;
 
 	/**
 	 * The table dbo.t_3084
@@ -65,6 +75,21 @@ public class Tables {
 	 * The table dbo.t_3090_b
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3090B T_3090_B = org.jooq.test.sqlserver.generatedclasses.tables.T_3090B.T_3090_B;
+
+	/**
+	 * The table dbo.t_4795
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_4795 T_4795 = org.jooq.test.sqlserver.generatedclasses.tables.T_4795.T_4795;
+
+	/**
+	 * The table dbo.t_5538_a
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_5538A T_5538_A = org.jooq.test.sqlserver.generatedclasses.tables.T_5538A.T_5538_A;
+
+	/**
+	 * The table dbo.t_5538_b
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_5538B T_5538_B = org.jooq.test.sqlserver.generatedclasses.tables.T_5538B.T_5538_B;
 
 	/**
 	 * The table dbo.t_639_numbers_table
@@ -145,6 +170,11 @@ public class Tables {
 	 * The table dbo.t_unsigned
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
+	 * The table dbo.t_user
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.TUser T_USER = org.jooq.test.sqlserver.generatedclasses.tables.TUser.T_USER;
 
 	/**
 	 * The table dbo.v_author

@@ -9,9 +9,9 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_exotic_types", schema = "dbo")
-public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
+public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record4<java.lang.Integer, java.util.UUID, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = 1147845960;
+	private static final long serialVersionUID = 597323943;
 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.ID</code>.
@@ -44,6 +44,36 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 		return (java.util.UUID) getValue(1);
 	}
 
+	/**
+	 * Setter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_DOM</code>.
+	 */
+	public void setUntypedXmlAsDom(java.lang.Object value) {
+		setValue(2, value);
+	}
+
+	/**
+	 * Getter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_DOM</code>.
+	 */
+	@javax.persistence.Column(name = "UNTYPED_XML_AS_DOM")
+	public java.lang.Object getUntypedXmlAsDom() {
+		return (java.lang.Object) getValue(2);
+	}
+
+	/**
+	 * Setter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
+	 */
+	public void setUntypedXmlAsJaxb(java.lang.Object value) {
+		setValue(3, value);
+	}
+
+	/**
+	 * Getter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
+	 */
+	@javax.persistence.Column(name = "UNTYPED_XML_AS_JAXB")
+	public java.lang.Object getUntypedXmlAsJaxb() {
+		return (java.lang.Object) getValue(3);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -57,23 +87,23 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	// -------------------------------------------------------------------------
-	// Record2 type implementation
+	// Record4 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.util.UUID> fieldsRow() {
-		return (org.jooq.Row2) super.fieldsRow();
+	public org.jooq.Row4<java.lang.Integer, java.util.UUID, java.lang.Object, java.lang.Object> fieldsRow() {
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.util.UUID> valuesRow() {
-		return (org.jooq.Row2) super.valuesRow();
+	public org.jooq.Row4<java.lang.Integer, java.util.UUID, java.lang.Object, java.lang.Object> valuesRow() {
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**
@@ -96,6 +126,22 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<java.lang.Object> field3() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UNTYPED_XML_AS_DOM;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field4() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UNTYPED_XML_AS_JAXB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.Integer value1() {
 		return getId();
 	}
@@ -106,6 +152,22 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.util.UUID value2() {
 		return getUu();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value3() {
+		return getUntypedXmlAsDom();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value4() {
+		return getUntypedXmlAsJaxb();
 	}
 
 	/**
@@ -130,7 +192,25 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord values(java.lang.Integer value1, java.util.UUID value2) {
+	public TExoticTypesRecord value3(java.lang.Object value) {
+		setUntypedXmlAsDom(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord value4(java.lang.Object value) {
+		setUntypedXmlAsJaxb(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord values(java.lang.Integer value1, java.util.UUID value2, java.lang.Object value3, java.lang.Object value4) {
 		return this;
 	}
 
@@ -148,10 +228,12 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu) {
+	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu, java.lang.Object untypedXmlAsDom, java.lang.Object untypedXmlAsJaxb) {
 		super(org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
 
 		setValue(0, id);
 		setValue(1, uu);
+		setValue(2, untypedXmlAsDom);
+		setValue(3, untypedXmlAsJaxb);
 	}
 }

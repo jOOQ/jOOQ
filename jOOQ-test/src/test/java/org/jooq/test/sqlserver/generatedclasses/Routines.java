@@ -93,6 +93,46 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>dbo.f_unsigned</code>
+	 */
+	public static org.jooq.types.UByte fUnsigned(org.jooq.Configuration configuration, org.jooq.types.UByte t, java.lang.Short s, java.lang.Integer i, java.lang.Long b) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned f = new org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned();
+		f.setT(t);
+		f.setS(s);
+		f.setI(i);
+		f.setB(b);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>dbo.f_unsigned</code> as a field
+	 */
+	public static org.jooq.Field<org.jooq.types.UByte> fUnsigned(org.jooq.types.UByte t, java.lang.Short s, java.lang.Integer i, java.lang.Long b) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned f = new org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned();
+		f.setT(t);
+		f.setS(s);
+		f.setI(i);
+		f.setB(b);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>dbo.f_unsigned</code> as a field
+	 */
+	public static org.jooq.Field<org.jooq.types.UByte> fUnsigned(org.jooq.Field<org.jooq.types.UByte> t, org.jooq.Field<java.lang.Short> s, org.jooq.Field<java.lang.Integer> i, org.jooq.Field<java.lang.Long> b) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned f = new org.jooq.test.sqlserver.generatedclasses.routines.FUnsigned();
+		f.setT(t);
+		f.setS(s);
+		f.setI(i);
+		f.setB(b);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call <code>dbo.f317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
@@ -145,6 +185,16 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>dbo.p_books_and_authors</code>
+	 */
+	public static void pBooksAndAuthors(org.jooq.Configuration configuration, java.lang.String pAuthorSearch) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PBooksAndAuthors p = new org.jooq.test.sqlserver.generatedclasses.routines.PBooksAndAuthors();
+		p.setPAuthorSearch(pAuthorSearch);
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * Call <code>dbo.p_create_author</code>
 	 */
 	public static void pCreateAuthor(org.jooq.Configuration configuration) {
@@ -162,6 +212,21 @@ public class Routines {
 		p.setLastName(lastName);
 
 		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>dbo.p_dates</code>
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.routines.PDates pDates(org.jooq.Configuration configuration, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.sql.Time tTz, java.sql.Date tsTz) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PDates p = new org.jooq.test.sqlserver.generatedclasses.routines.PDates();
+		p.setD(d);
+		p.setT(t);
+		p.setTs(ts);
+		p.setTTz(tTz);
+		p.setTsTz(tsTz);
+
+		p.execute(configuration);
+		return p;
 	}
 
 	/**
@@ -186,6 +251,48 @@ public class Routines {
 	public static void pRaise(org.jooq.Configuration configuration, java.lang.Integer mode) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PRaise p = new org.jooq.test.sqlserver.generatedclasses.routines.PRaise();
 		p.setMode(mode);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>dbo.p_raise_3696</code>
+	 */
+	public static void pRaise_3696(org.jooq.Configuration configuration, java.lang.Integer number) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696 p = new org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696();
+		p.setNumber(number);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>dbo.p_results</code>
+	 */
+	public static void pResults(org.jooq.Configuration configuration, java.lang.Integer pResultSets) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PResults p = new org.jooq.test.sqlserver.generatedclasses.routines.PResults();
+		p.setPResultSets(pResultSets);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>dbo.p_results_and_out_parameters</code>
+	 */
+	public static java.lang.Integer pResultsAndOutParameters(org.jooq.Configuration configuration, java.lang.Integer pResultSets, java.lang.Integer pCount) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters p = new org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters();
+		p.setPResultSets(pResultSets);
+		p.setPCount(pCount);
+
+		p.execute(configuration);
+		return p.getPCount();
+	}
+
+	/**
+	 * Call <code>dbo.p_results_and_row_counts</code>
+	 */
+	public static void pResultsAndRowCounts(org.jooq.Configuration configuration, java.lang.Integer pResultSets) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndRowCounts p = new org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndRowCounts();
+		p.setPResultSets(pResultSets);
 
 		p.execute(configuration);
 	}
@@ -227,6 +334,46 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Call <code>dbo.p4106</code>
+	 */
+	public static java.lang.Integer p4106(org.jooq.Configuration configuration, java.lang.Integer param1, java.lang.Integer param2) {
+		org.jooq.test.sqlserver.generatedclasses.routines.P4106 p = new org.jooq.test.sqlserver.generatedclasses.routines.P4106();
+		p.setParam1(param1);
+		p.setParam2(param2);
+
+		p.execute(configuration);
+		return p.getParam2();
+	}
+
+	/**
+	 * Call <code>dbo.p5171</code>
+	 */
+	public static void p5171(org.jooq.Configuration configuration, java.lang.Object books, java.lang.Object strings, java.lang.Object numbers, java.lang.Object numbersLong, java.lang.Object dates) {
+		org.jooq.test.sqlserver.generatedclasses.routines.P5171 p = new org.jooq.test.sqlserver.generatedclasses.routines.P5171();
+		p.setBooks(books);
+		p.setStrings(strings);
+		p.setNumbers(numbers);
+		p.setNumbersLong(numbersLong);
+		p.setDates(dates);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Get <code>dbo.f_cross_multiply</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply fCrossMultiply(java.lang.Object numbers) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply.F_CROSS_MULTIPLY.call(numbers);
+	}
+
+	/**
+	 * Get <code>dbo.f_cross_multiply</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply fCrossMultiply(org.jooq.Field<java.lang.Object> numbers) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FCrossMultiply.F_CROSS_MULTIPLY.call(numbers);
 	}
 
 	/**
@@ -276,5 +423,19 @@ public class Routines {
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 fTables5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
 		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
+
+	/**
+	 * Get <code>dbo.f5171</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.F5171 f5171(java.lang.Object books, java.lang.Object strings, java.lang.Object numbers, java.lang.Object numbersLong, java.lang.Object dates) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.F5171.F5171.call(books, strings, numbers, numbersLong, dates);
+	}
+
+	/**
+	 * Get <code>dbo.f5171</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.F5171 f5171(org.jooq.Field<java.lang.Object> books, org.jooq.Field<java.lang.Object> strings, org.jooq.Field<java.lang.Object> numbers, org.jooq.Field<java.lang.Object> numbersLong, org.jooq.Field<java.lang.Object> dates) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.F5171.F5171.call(books, strings, numbers, numbersLong, dates);
 	}
 }

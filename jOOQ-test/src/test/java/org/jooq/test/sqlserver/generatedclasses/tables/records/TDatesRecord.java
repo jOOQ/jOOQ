@@ -9,9 +9,9 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_dates", schema = "dbo")
-public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record9<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> {
+public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record10<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.sql.Date, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> {
 
-	private static final long serialVersionUID = 692965945;
+	private static final long serialVersionUID = -7845761;
 
 	/**
 	 * Setter for <code>dbo.t_dates.id</code>.
@@ -75,10 +75,25 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
+	 * Setter for <code>dbo.t_dates.ts_tz</code>.
+	 */
+	public void setTsTz(java.sql.Date value) {
+		setValue(4, value);
+	}
+
+	/**
+	 * Getter for <code>dbo.t_dates.ts_tz</code>.
+	 */
+	@javax.persistence.Column(name = "ts_tz")
+	public java.sql.Date getTsTz() {
+		return (java.sql.Date) getValue(4);
+	}
+
+	/**
 	 * Setter for <code>dbo.t_dates.d_int</code>.
 	 */
 	public void setDInt(java.lang.Integer value) {
-		setValue(4, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -86,14 +101,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Column(name = "d_int", precision = 10)
 	public java.lang.Integer getDInt() {
-		return (java.lang.Integer) getValue(4);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_dates.ts_bigint</code>.
 	 */
 	public void setTsBigint(java.lang.Long value) {
-		setValue(5, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -101,14 +116,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Column(name = "ts_bigint", precision = 19)
 	public java.lang.Long getTsBigint() {
-		return (java.lang.Long) getValue(5);
+		return (java.lang.Long) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_dates.offset1</code>.
 	 */
 	public void setOffset1(java.lang.String value) {
-		setValue(6, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -116,14 +131,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Column(name = "offset1")
 	public java.lang.String getOffset1() {
-		return (java.lang.String) getValue(6);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_dates.offset2</code>.
 	 */
 	public void setOffset2(java.sql.Timestamp value) {
-		setValue(7, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -131,14 +146,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Column(name = "offset2")
 	public java.sql.Timestamp getOffset2() {
-		return (java.sql.Timestamp) getValue(7);
+		return (java.sql.Timestamp) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_dates.offset3</code>.
 	 */
 	public void setOffset3(java.sql.Date value) {
-		setValue(8, value);
+		setValue(9, value);
 	}
 
 	/**
@@ -146,7 +161,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Column(name = "offset3")
 	public java.sql.Date getOffset3() {
-		return (java.sql.Date) getValue(8);
+		return (java.sql.Date) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -162,23 +177,23 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	// -------------------------------------------------------------------------
-	// Record9 type implementation
+	// Record10 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> fieldsRow() {
-		return (org.jooq.Row9) super.fieldsRow();
+	public org.jooq.Row10<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.sql.Date, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> fieldsRow() {
+		return (org.jooq.Row10) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> valuesRow() {
-		return (org.jooq.Row9) super.valuesRow();
+	public org.jooq.Row10<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.sql.Date, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> valuesRow() {
+		return (org.jooq.Row10) super.valuesRow();
 	}
 
 	/**
@@ -217,7 +232,15 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field5() {
+	public org.jooq.Field<java.sql.Date> field5() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.TS_TZ;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field6() {
 		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.D_INT;
 	}
 
@@ -225,7 +248,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Long> field6() {
+	public org.jooq.Field<java.lang.Long> field7() {
 		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.TS_BIGINT;
 	}
 
@@ -233,7 +256,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field7() {
+	public org.jooq.Field<java.lang.String> field8() {
 		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.OFFSET1;
 	}
 
@@ -241,7 +264,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.sql.Timestamp> field8() {
+	public org.jooq.Field<java.sql.Timestamp> field9() {
 		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.OFFSET2;
 	}
 
@@ -249,7 +272,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.sql.Date> field9() {
+	public org.jooq.Field<java.sql.Date> field10() {
 		return org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES.OFFSET3;
 	}
 
@@ -289,7 +312,15 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value5() {
+	public java.sql.Date value5() {
+		return getTsTz();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value6() {
 		return getDInt();
 	}
 
@@ -297,7 +328,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Long value6() {
+	public java.lang.Long value7() {
 		return getTsBigint();
 	}
 
@@ -305,7 +336,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value7() {
+	public java.lang.String value8() {
 		return getOffset1();
 	}
 
@@ -313,7 +344,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.sql.Timestamp value8() {
+	public java.sql.Timestamp value9() {
 		return getOffset2();
 	}
 
@@ -321,7 +352,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.sql.Date value9() {
+	public java.sql.Date value10() {
 		return getOffset3();
 	}
 
@@ -365,7 +396,16 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value5(java.lang.Integer value) {
+	public TDatesRecord value5(java.sql.Date value) {
+		setTsTz(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value6(java.lang.Integer value) {
 		setDInt(value);
 		return this;
 	}
@@ -374,7 +414,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value6(java.lang.Long value) {
+	public TDatesRecord value7(java.lang.Long value) {
 		setTsBigint(value);
 		return this;
 	}
@@ -383,7 +423,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value7(java.lang.String value) {
+	public TDatesRecord value8(java.lang.String value) {
 		setOffset1(value);
 		return this;
 	}
@@ -392,7 +432,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value8(java.sql.Timestamp value) {
+	public TDatesRecord value9(java.sql.Timestamp value) {
 		setOffset2(value);
 		return this;
 	}
@@ -401,7 +441,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value9(java.sql.Date value) {
+	public TDatesRecord value10(java.sql.Date value) {
 		setOffset3(value);
 		return this;
 	}
@@ -410,7 +450,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord values(java.lang.Integer value1, java.sql.Date value2, java.sql.Time value3, java.sql.Timestamp value4, java.lang.Integer value5, java.lang.Long value6, java.lang.String value7, java.sql.Timestamp value8, java.sql.Date value9) {
+	public TDatesRecord values(java.lang.Integer value1, java.sql.Date value2, java.sql.Time value3, java.sql.Timestamp value4, java.sql.Date value5, java.lang.Integer value6, java.lang.Long value7, java.lang.String value8, java.sql.Timestamp value9, java.sql.Date value10) {
 		return this;
 	}
 
@@ -428,17 +468,18 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Create a detached, initialised TDatesRecord
 	 */
-	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.lang.Integer dInt, java.lang.Long tsBigint, java.lang.String offset1, java.sql.Timestamp offset2, java.sql.Date offset3) {
+	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.sql.Date tsTz, java.lang.Integer dInt, java.lang.Long tsBigint, java.lang.String offset1, java.sql.Timestamp offset2, java.sql.Date offset3) {
 		super(org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES);
 
 		setValue(0, id);
 		setValue(1, d);
 		setValue(2, t);
 		setValue(3, ts);
-		setValue(4, dInt);
-		setValue(5, tsBigint);
-		setValue(6, offset1);
-		setValue(7, offset2);
-		setValue(8, offset3);
+		setValue(4, tsTz);
+		setValue(5, dInt);
+		setValue(6, tsBigint);
+		setValue(7, offset1);
+		setValue(8, offset2);
+		setValue(9, offset3);
 	}
 }

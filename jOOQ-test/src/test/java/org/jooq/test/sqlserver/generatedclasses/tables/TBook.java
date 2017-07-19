@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 637242503;
+	private static final long serialVersionUID = 1965373698;
 
 	/**
 	 * The singleton instance of <code>dbo.t_book</code>
@@ -47,7 +47,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	/**
 	 * The column <code>dbo.t_book.TITLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>dbo.t_book.PUBLISHED_IN</code>.

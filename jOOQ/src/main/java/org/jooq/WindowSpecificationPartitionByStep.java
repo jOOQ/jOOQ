@@ -82,7 +82,12 @@ public interface WindowSpecificationPartitionByStep extends WindowSpecificationO
      * <p>
      * This clause is not supported as such in the CUBRID and Sybase dialects.
      * If you use it, jOOQ will simply ignore it.
+     *
+     * @deprecated - 3.10 - [#6427] - This synthetic clause is no longer
+     *             supported, use {@link #partitionBy(Field...)} instead, or
+     *             omit the clause entirely.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     WindowSpecificationOrderByStep partitionByOne();
 }

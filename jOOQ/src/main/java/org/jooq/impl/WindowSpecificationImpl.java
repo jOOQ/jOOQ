@@ -169,6 +169,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
+    @Deprecated
     public final WindowSpecificationOrderByStep partitionByOne() {
         partitionByOne = true;
         partitionBy.add(one());

@@ -622,6 +622,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
+    @Deprecated
     public final WindowOrderByStep<T> partitionByOne() {
         windowSpecification.partitionByOne();
         return this;

@@ -506,7 +506,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     static {
         cnt = new java.util.concurrent.atomic.AtomicLong();
-        exp = java.sql.Date.valueOf("2015-04-01").getTime();
+        exp = java.sql.Date.valueOf("2017-12-01").getTime();
     }
     /* [/trial] */ /* [/pro] */
 

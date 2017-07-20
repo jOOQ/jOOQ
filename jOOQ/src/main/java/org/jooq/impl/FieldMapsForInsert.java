@@ -136,8 +136,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
-                case FIREBIRD:
-                case SQLITE: {
+                case FIREBIRD: {
                     ctx.formatSeparator()
                        .start(INSERT_SELECT);
                     ctx.visit(insertSelect(ctx));

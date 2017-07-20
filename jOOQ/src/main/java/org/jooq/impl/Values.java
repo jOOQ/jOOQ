@@ -105,8 +105,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             case FIREBIRD:
             case MARIADB:
-            case MYSQL:
-            case SQLITE: {
+            case MYSQL: {
                 Select<Record> selects = null;
                 boolean subquery = ctx.subquery();
 
@@ -137,6 +136,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
             case H2:
             case HSQLDB:
             case POSTGRES:
+            case SQLITE:
 
 
 

@@ -47,10 +47,12 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.math.BigInteger;
@@ -236,18 +238,19 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     final Collection<Field<?>> setReturningIfNeeded(StoreQuery<R> query) {
         Collection<Field<?>> key = null;
 
-        if (configuration() != null) {
-            if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
+        if (configuration() != null)
+            if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE)))
 
                 // [#1859] Return also non-key columns
                 if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))
                     key = Arrays.asList(fields());
-                else
+
+                // [#5940] Getting the primary key mostly doesn't make sense on UPDATE statements
+                else if (query instanceof InsertQuery || updatablePrimaryKeys(settings(this)))
                     key = getReturning();
 
-                query.setReturning(key);
-            }
-        }
+        if (key != null)
+            query.setReturning(key);
 
         return key;
     }

@@ -5390,18 +5390,12 @@ public class JavaGenerator extends AbstractGenerator {
             	    out.tab(1).println("value = {");
 
                 out.tab(2).println("\"http://www.jooq.org\",");
+                out.tab(2).println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
 
-                if (hasCatalogVersion || hasSchemaVersion) {
-                    out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
-
-                    if (hasCatalogVersion)
-                        out.tab(2).println("\"catalog version:%s\"", catalogVersions.get(catalog).replace("\"", "\\\""));
-                    if (hasSchemaVersion)
-                        out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
-                }
-                else {
-                    out.tab(2).println("\"jOOQ version:%s\"", Constants.VERSION);
-                }
+                if (hasCatalogVersion)
+                    out.tab(2).println("\"catalog version:%s\"%s", catalogVersions.get(catalog).replace("\"", "\\\""), (hasSchemaVersion ? "," : ""));
+                if (hasSchemaVersion)
+                    out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
 
                 if (scala)
                     out.tab(1).println("),");

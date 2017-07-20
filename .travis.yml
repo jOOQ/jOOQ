@@ -2,7 +2,6 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk7
-  - openjdk6
 install: 
   - sh -c 'mvn install -DskipTests=true'
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"

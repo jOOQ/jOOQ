@@ -1286,6 +1286,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
+
+        // [#5885] Only the first matching <forcedType/> is applied to the data type definition.
         forcedTypeLoop:
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
             String expression = StringUtils.defaultIfNull(forcedType.getExpressions(), forcedType.getExpression());

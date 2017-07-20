@@ -15838,6 +15838,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -15873,6 +15874,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withName("BOOLEAN")
         .withExpression(".*\.IS_VALID")
@@ -15885,6 +15887,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           name = 'BOOLEAN'
@@ -15909,6 +15912,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -15934,6 +15938,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withUserType("java.time.Instant")
         .withConverter("com.example.LongToInstantConverter")
@@ -15947,6 +15952,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           userType = 'java.time.Instant'
@@ -15976,6 +15982,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -16001,6 +16008,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withUserType("java.time.Instant")
         .withConverter("com.example.LongToInstantBinding")
@@ -16014,6 +16022,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           userType = 'java.time.Instant'
@@ -17166,6 +17175,10 @@ public class Book implements java.io.Serializable
     </forcedType>
   </forcedTypes>
 </database>]]></xml><html>
+
+                            <p>
+
+                            </p>
 
                             <h3>Advanced configuration</h3>
 

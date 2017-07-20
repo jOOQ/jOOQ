@@ -15539,6 +15539,7 @@ configuration {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -15574,6 +15575,7 @@ configuration {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withName("BOOLEAN")
         .withExpression(".*\.IS_VALID")
@@ -15586,6 +15588,7 @@ configuration {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           name = 'BOOLEAN'
@@ -15610,6 +15613,7 @@ configuration {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -15635,6 +15639,7 @@ configuration {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withUserType("java.time.Instant")
         .withConverter("com.example.LongToInstantConverter")
@@ -15648,6 +15653,7 @@ configuration {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           userType = 'java.time.Instant'
@@ -15677,6 +15683,7 @@ configuration {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
       <forcedTypes>
         <forcedType>
 
@@ -15702,6 +15709,7 @@ configuration {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withUserType("java.time.Instant")
         .withConverter("com.example.LongToInstantBinding")
@@ -15715,6 +15723,7 @@ configuration {
 </html><java><![CDATA[configuration {
   generator {
     database {
+      // The first matching forcedType will be applied to the data type definition.
       forcedTypes {
         forcedType {
           userType = 'java.time.Instant'

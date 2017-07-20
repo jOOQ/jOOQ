@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1608616621;
+    private static final long serialVersionUID = -1288618201;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -67,7 +67,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>PUBLIC.FILM.TITLE</code>.
      */
-    public final TableField<FilmRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<FilmRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>PUBLIC.FILM.LANGUAGE_LANGUAGEID</code>.

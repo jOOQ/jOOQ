@@ -24,17 +24,17 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
     /**
-     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_70BE46BF_63D1_4F2A_B1C0_A31847E2D3F6</code>
+     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_4433876A_B02A_44B8_947E_9C2240443B3B</code>
      */
-    public static final Sequence<Long> SYSTEM_SEQUENCE_70BE46BF_63D1_4F2A_B1C0_A31847E2D3F6 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_70BE46BF_63D1_4F2A_B1C0_A31847E2D3F6", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
+    public static final Sequence<Long> SYSTEM_SEQUENCE_4433876A_B02A_44B8_947E_9C2240443B3B = new SequenceImpl<Long>("SYSTEM_SEQUENCE_4433876A_B02A_44B8_947E_9C2240443B3B", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
     /**
-     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_7C66F721_38BD_4793_86A9_FB9269960DA2</code>
+     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_473BBBB1_4C40_47D6_B053_C4BE16B8A6FE</code>
      */
-    public static final Sequence<Long> SYSTEM_SEQUENCE_7C66F721_38BD_4793_86A9_FB9269960DA2 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_7C66F721_38BD_4793_86A9_FB9269960DA2", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
+    public static final Sequence<Long> SYSTEM_SEQUENCE_473BBBB1_4C40_47D6_B053_C4BE16B8A6FE = new SequenceImpl<Long>("SYSTEM_SEQUENCE_473BBBB1_4C40_47D6_B053_C4BE16B8A6FE", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
     /**
-     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_CB0D4218_064F_45BC_B7EB_ACA8D001DEC2</code>
+     * The sequence <code>PUBLIC.SYSTEM_SEQUENCE_EB7910E6_C36C_4254_83A3_810E0B29176D</code>
      */
-    public static final Sequence<Long> SYSTEM_SEQUENCE_CB0D4218_064F_45BC_B7EB_ACA8D001DEC2 = new SequenceImpl<Long>("SYSTEM_SEQUENCE_CB0D4218_064F_45BC_B7EB_ACA8D001DEC2", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
+    public static final Sequence<Long> SYSTEM_SEQUENCE_EB7910E6_C36C_4254_83A3_810E0B29176D = new SequenceImpl<Long>("SYSTEM_SEQUENCE_EB7910E6_C36C_4254_83A3_810E0B29176D", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 }

@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Record3<Integer, String, String> {
 
-    private static final long serialVersionUID = -333921387;
+    private static final long serialVersionUID = 1559459935;
 
     /**
      * Setter for <code>PUBLIC.ACTOR.ACTORID</code>.
@@ -125,6 +125,30 @@ public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Rec
     @Override
     public Field<String> field3() {
         return Actor.ACTOR.LASTNAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component1() {
+        return getActorid();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component2() {
+        return getFirstname();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component3() {
+        return getLastname();
     }
 
     /**

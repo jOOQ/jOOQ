@@ -158,6 +158,7 @@
                                 <database>
                                     <includes>.*</includes>
                                     <inputSchema>FLYWAY_TEST</inputSchema>
+                                    <catalogVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</catalogVersionProvider>
                                     <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
                                 </database>
                                 <target>

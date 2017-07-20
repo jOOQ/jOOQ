@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = -2102649953;
+    private static final long serialVersionUID = -1984471177;
 
     /**
      * Setter for <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
@@ -103,6 +103,22 @@ public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implemen
     @Override
     public Field<String> field2() {
         return Language.LANGUAGE.NAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component1() {
+        return getLanguageid();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component2() {
+        return getName();
     }
 
     /**

@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Record5<Integer, Integer, String, Integer, Integer> {
 
-    private static final long serialVersionUID = -1993637920;
+    private static final long serialVersionUID = -1848665934;
 
     /**
      * Setter for <code>PUBLIC.FILM.FILMID</code>.
@@ -169,6 +169,46 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     @Override
     public Field<Integer> field5() {
         return Film.FILM.ORIGINALLANGUAGE_LANGUAGEID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component1() {
+        return getFilmid();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component2() {
+        return getLength();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component3() {
+        return getTitle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component4() {
+        return getLanguageLanguageid();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component5() {
+        return getOriginallanguageLanguageid();
     }
 
     /**

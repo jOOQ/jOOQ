@@ -29,7 +29,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-    private static final long serialVersionUID = -1771073159;
+    private static final long serialVersionUID = 999666825;
 
     /**
      * Setter for <code>PUBLIC.AUTHOR.ID</code>.
@@ -193,6 +193,54 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements R
     @Override
     public Field<String> field6() {
         return Author.AUTHOR.ADDRESS;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component1() {
+        return getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component2() {
+        return getFirstName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component3() {
+        return getLastName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date component4() {
+        return getDateOfBirth();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component5() {
+        return getYearOfBirth();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component6() {
+        return getAddress();
     }
 
     /**

@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -350867238;
+    private static final long serialVersionUID = -973522990;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -78,7 +78,7 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.TITLE</code>.
      */
-    public final TableField<BookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
+    public final TableField<BookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.PUBLISHED_IN</code>.

@@ -29,7 +29,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp> {
 
-    private static final long serialVersionUID = 446314461;
+    private static final long serialVersionUID = 2119061160;
 
     /**
      * Setter for <code>PUBLIC.BOOK.ID</code>.
@@ -303,6 +303,94 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Recor
     @Override
     public Field<Timestamp> field11() {
         return Book.BOOK.REC_TIMESTAMP;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component1() {
+        return getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component2() {
+        return getAuthorId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component3() {
+        return getCoAuthorId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component4() {
+        return getDetailsId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component5() {
+        return getTitle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component6() {
+        return getPublishedIn();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component7() {
+        return getLanguageId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component8() {
+        return getContentText();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public byte[] component9() {
+        return getContentPdf();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component10() {
+        return getRecVersion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Timestamp component11() {
+        return getRecTimestamp();
     }
 
     /**

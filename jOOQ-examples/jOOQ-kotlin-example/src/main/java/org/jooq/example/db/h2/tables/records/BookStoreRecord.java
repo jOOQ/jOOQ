@@ -26,7 +26,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implements Record1<String> {
 
-    private static final long serialVersionUID = -722240116;
+    private static final long serialVersionUID = 1235477825;
 
     /**
      * Setter for <code>PUBLIC.BOOK_STORE.NAME</code>.
@@ -80,6 +80,14 @@ public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implem
     @Override
     public Field<String> field1() {
         return BookStore.BOOK_STORE.NAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component1() {
+        return getName();
     }
 
     /**

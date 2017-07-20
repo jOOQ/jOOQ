@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -259612025;
+    private static final long serialVersionUID = -228141913;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -62,12 +62,12 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>PUBLIC.AUTHOR.FIRST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<AuthorRecord, String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.LAST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<AuthorRecord, String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.DATE_OF_BIRTH</code>.
@@ -82,7 +82,7 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>PUBLIC.AUTHOR.ADDRESS</code>.
      */
-    public final TableField<AuthorRecord, String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<AuthorRecord, String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
      * Create a <code>PUBLIC.AUTHOR</code> table reference

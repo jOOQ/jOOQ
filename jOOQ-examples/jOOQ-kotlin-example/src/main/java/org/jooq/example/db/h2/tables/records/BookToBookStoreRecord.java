@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-    private static final long serialVersionUID = -214741574;
+    private static final long serialVersionUID = 1742096196;
 
     /**
      * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
@@ -125,6 +125,30 @@ public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRe
     @Override
     public Field<Integer> field3() {
         return BookToBookStore.BOOK_TO_BOOK_STORE.STOCK;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String component1() {
+        return getBookStoreName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component2() {
+        return getBookId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer component3() {
+        return getStock();
     }
 
     /**

@@ -38,6 +38,7 @@ package org.jooq.util;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.util.AbstractTypedElementDefinition.customType;
 
+import java.beans.Introspector;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -57,6 +58,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -986,9 +996,189 @@ public abstract class AbstractDatabase implements Database {
         return null;
     }
 
-    private final String toString(ForcedType type) {
+    @SuppressWarnings({ "unchecked" })
+    static final String toString(ForcedType type) {
         StringWriter writer = new StringWriter();
-        JAXB.marshal(type, writer);
+
+        try {
+            XMLStreamWriter stream = new XMLStreamWriter() {
+                XMLStreamWriter delegate = XMLOutputFactory.newInstance().createXMLStreamWriter(writer);
+
+                @Override
+                public void writeStartElement(String localName) throws XMLStreamException {
+                    delegate.writeStartElement(localName);
+                }
+
+                @Override
+                public void writeStartElement(String namespaceURI, String localName) throws XMLStreamException {
+                    delegate.writeStartElement("", localName);
+                }
+
+                @Override
+                public void writeStartElement(String prefix, String localName, String namespaceURI) throws XMLStreamException {
+                    delegate.writeStartElement("", localName, "");
+                }
+
+                @Override
+                public void writeEmptyElement(String namespaceURI, String localName) throws XMLStreamException {
+                    delegate.writeEmptyElement("", localName);
+                }
+
+                @Override
+                public void writeEmptyElement(String prefix, String localName, String namespaceURI) throws XMLStreamException {
+                    delegate.writeEmptyElement("", localName, "");
+                }
+
+                @Override
+                public void writeEmptyElement(String localName) throws XMLStreamException {
+                    delegate.writeEmptyElement(localName);
+                }
+
+                @Override
+                public void writeEndElement() throws XMLStreamException {
+                    delegate.writeEndElement();
+                }
+
+                @Override
+                public void writeEndDocument() throws XMLStreamException {
+                    delegate.writeEndDocument();
+                }
+
+                @Override
+                public void close() throws XMLStreamException {
+                    delegate.close();
+                }
+
+                @Override
+                public void flush() throws XMLStreamException {
+                    delegate.flush();
+                }
+
+                @Override
+                public void writeAttribute(String localName, String value) throws XMLStreamException {
+                    delegate.writeAttribute(localName, value);
+                }
+
+                @Override
+                public void writeAttribute(String prefix, String namespaceURI, String localName, String value) throws XMLStreamException {
+                    delegate.writeAttribute("", "", localName, value);
+                }
+
+                @Override
+                public void writeAttribute(String namespaceURI, String localName, String value) throws XMLStreamException {
+                    delegate.writeAttribute("", localName, value);
+                }
+
+                @Override
+                public void writeNamespace(String prefix, String namespaceURI) throws XMLStreamException {
+                    // No namespaces
+                }
+
+                @Override
+                public void writeDefaultNamespace(String namespaceURI) throws XMLStreamException {
+                    // No namespaces
+                }
+
+                @Override
+                public void writeComment(String data) throws XMLStreamException {
+                    delegate.writeComment(data);
+                }
+
+                @Override
+                public void writeProcessingInstruction(String target) throws XMLStreamException {
+                    delegate.writeProcessingInstruction(target);
+                }
+
+                @Override
+                public void writeProcessingInstruction(String target, String data) throws XMLStreamException {
+                    delegate.writeProcessingInstruction(target, data);
+                }
+
+                @Override
+                public void writeCData(String data) throws XMLStreamException {
+                    delegate.writeCData(data);
+                }
+
+                @Override
+                public void writeDTD(String dtd) throws XMLStreamException {
+                    delegate.writeDTD(dtd);
+                }
+
+                @Override
+                public void writeEntityRef(String name) throws XMLStreamException {
+                    delegate.writeEntityRef(name);
+                }
+
+                @Override
+                public void writeStartDocument() throws XMLStreamException {
+                    delegate.writeStartDocument();
+                }
+
+                @Override
+                public void writeStartDocument(String version) throws XMLStreamException {
+                    delegate.writeStartDocument(version);
+                }
+
+                @Override
+                public void writeStartDocument(String encoding, String version) throws XMLStreamException {
+                    delegate.writeStartDocument(encoding, version);
+                }
+
+                @Override
+                public void writeCharacters(String text) throws XMLStreamException {
+                    delegate.writeCharacters(text);
+                }
+
+                @Override
+                public void writeCharacters(char[] text, int start, int len) throws XMLStreamException {
+                    delegate.writeCharacters(text, start, len);
+                }
+
+                @Override
+                public String getPrefix(String uri) throws XMLStreamException {
+                    return delegate.getPrefix(uri);
+                }
+
+                @Override
+                public void setPrefix(String prefix, String uri) throws XMLStreamException {
+                    delegate.setPrefix(prefix, uri);
+                }
+
+                @Override
+                public void setDefaultNamespace(String uri) throws XMLStreamException {
+                    delegate.setDefaultNamespace(uri);
+                }
+
+                @Override
+                public void setNamespaceContext(NamespaceContext context) throws XMLStreamException {
+                    delegate.setNamespaceContext(context);
+                }
+
+                @Override
+                public NamespaceContext getNamespaceContext() {
+                    return delegate.getNamespaceContext();
+                }
+
+                @Override
+                public Object getProperty(String name) throws IllegalArgumentException {
+                    return delegate.getProperty(name);
+                }
+            };
+
+            JAXBContext ctx = JAXBContext.newInstance(ForcedType.class);
+            Class<ForcedType> clazz = (Class<ForcedType>) type.getClass();
+            XmlRootElement r = clazz.getAnnotation(XmlRootElement.class);
+            Object o = r != null ? type : new JAXBElement<ForcedType>(new QName(Introspector.decapitalize(clazz.getSimpleName())), clazz, type);
+
+            Marshaller m = ctx.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            m.setProperty(Marshaller.JAXB_FRAGMENT, true);
+            m.marshal(o, stream);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return writer.toString();
     }
 

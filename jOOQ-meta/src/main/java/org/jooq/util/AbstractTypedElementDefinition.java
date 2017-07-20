@@ -118,6 +118,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         return definedType;
     }
 
+    @SuppressWarnings("deprecation")
     static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
@@ -170,11 +171,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             }
 
             if (uType != null) {
-                log.info("Forcing type", child
-                    + " with type " + definedType.getType()
-                    + " into " + uType
-                    + (converter != null ? " using converter " + converter : "")
-                    + (binding != null ? " using binding " + binding : ""));
+                log.info("Forcing type", child + " to " + AbstractDatabase.toString(forcedType));
 
                 DataType<?> forcedDataType = null;
 
@@ -230,6 +227,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         return result;
     }
 
+    @SuppressWarnings("deprecation")
     static CustomType customType(Database db, ForcedType forcedType) {
         String name = forcedType.getName();
 

@@ -996,8 +996,8 @@ public abstract class AbstractDatabase implements Database {
         return null;
     }
 
-    @SuppressWarnings({ "unchecked" })
-    static final String toString(ForcedType type) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final String toString(Object object) {
         StringWriter writer = new StringWriter();
 
         try {
@@ -1165,10 +1165,10 @@ public abstract class AbstractDatabase implements Database {
                 }
             };
 
-            JAXBContext ctx = JAXBContext.newInstance(ForcedType.class);
-            Class<ForcedType> clazz = (Class<ForcedType>) type.getClass();
+            Class<?> clazz = object.getClass();
+            JAXBContext ctx = JAXBContext.newInstance(clazz);
             XmlRootElement r = clazz.getAnnotation(XmlRootElement.class);
-            Object o = r != null ? type : new JAXBElement<ForcedType>(new QName(Introspector.decapitalize(clazz.getSimpleName())), clazz, type);
+            Object o = r != null ? object : new JAXBElement(new QName(Introspector.decapitalize(clazz.getSimpleName())), clazz, object);
 
             Marshaller m = ctx.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

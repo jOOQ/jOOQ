@@ -200,6 +200,11 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
                 // [#677] SQLDataType matches are actual type-rewrites
                 if (forcedDataType != null) {
+
+                    // [#3704] When <forcedType/> matches a custom type AND a data type rewrite, the rewrite was usually accidental.
+                    if (customType != null)
+                        log.warn("Custom type conflict", child + " has custom type " + AbstractDatabase.toString(customType) + " forced by " + AbstractDatabase.toString(forcedType) + " but a data type rewrite applies");
+
                     result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, d, (Name) null, converter, binding);
                 }
 

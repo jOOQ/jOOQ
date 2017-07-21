@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Optional;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.TooManyRowsException;
 
 /**
  * This type is used for the {@link Delete}'s DSL API.
@@ -93,10 +94,11 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      *         case jOOQ could not retrieve any generated keys from the JDBC
      *         driver.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
      * @see DeleteQuery#getReturnedRecord()
      */
     @Support({ FIREBIRD, POSTGRES })
-    R fetchOne() throws DataAccessException;
+    R fetchOne() throws DataAccessException, TooManyRowsException;
 
 
     /**
@@ -106,9 +108,10 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @return The returned value as specified by the
      *         {@link DeleteReturningStep}
      * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
      * @see DeleteQuery#getReturnedRecord()
      */
     @Support({ FIREBIRD, POSTGRES })
-    Optional<R> fetchOptional() throws DataAccessException;
+    Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
 }

@@ -1602,12 +1602,10 @@ final class Tools {
     static final <R extends Record> R filterOne(List<R> list) throws TooManyRowsException {
         int size = list.size();
 
-        if (size == 1) {
+        if (size == 1)
             return list.get(0);
-        }
-        else if (size > 1) {
+        else if (size > 1)
             throw new TooManyRowsException("Too many rows selected : " + size);
-        }
 
         return null;
     }

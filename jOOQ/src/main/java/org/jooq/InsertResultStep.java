@@ -37,6 +37,7 @@ package org.jooq;
 import java.util.Optional;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.TooManyRowsException;
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
@@ -99,10 +100,11 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      *         case jOOQ could not retrieve any generated keys from the JDBC
      *         driver.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
      * @see InsertQuery#getReturnedRecord()
      */
     @Support
-    R fetchOne() throws DataAccessException;
+    R fetchOne() throws DataAccessException, TooManyRowsException;
 
 
     /**
@@ -112,9 +114,10 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * @return The returned value as specified by the
      *         {@link InsertReturningStep}
      * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
      * @see InsertQuery#getReturnedRecord()
      */
     @Support
-    Optional<R> fetchOptional() throws DataAccessException;
+    Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
 }

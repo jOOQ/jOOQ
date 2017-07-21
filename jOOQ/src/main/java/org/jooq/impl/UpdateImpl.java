@@ -38,6 +38,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.filterOne;
 
 import java.util.Collection;
 import java.util.Map;
@@ -740,7 +741,7 @@ final class UpdateImpl<R extends Record>
     @Override
     public final R fetchOne() {
         getDelegate().execute();
-        return getDelegate().getReturnedRecord();
+        return filterOne(getDelegate().getReturnedRecords());
     }
 
 

@@ -42,18 +42,20 @@ import org.jooq.UpdatableRecord;
 /**
  * An unexpected result was encountered after executing a {@link Query}. This
  * exception indicates wrong usage of jOOQ's various fetch methods, or an
- * integrity problem in your data.
+ * integrity problem in your data <em>after</em> query execution, meaning that
+ * the execution of the query in the database is not affected.
  * <p>
  * This is typically the case in the following situations:
  * <ul>
  * <li>When you call methods such as {@link ResultQuery#fetchOne()} and the
- * database returns more than one record.</li>
+ * database returns more than one record (you'll get a
+ * {@link TooManyRowsException}).</li>
  * <li>When you call methods such as
  * {@link ResultQuery#fetchMap(org.jooq.Field)} and the database returns several
  * records per key.</li>
  * <li>When you refresh a {@link TableRecord} using
  * {@link UpdatableRecord#refresh()}, and the record does not exist anymore in
- * the database.</li>
+ * the database (you'll get a {@link NoDataFoundException}).</li>
  * </ul>
  *
  * @author Lukas Eder

@@ -313,7 +313,12 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             if (timestamp != null) {
 
                 // Use Timestamp locally, to provide maximum precision
-                result = new Timestamp(System.currentTimeMillis());
+
+
+
+
+                result = new Timestamp(configuration().clock().millis());
+
                 addValue(store, timestamp, result);
             }
         }

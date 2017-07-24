@@ -43,6 +43,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.sql.Connection;
+import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -96,6 +97,9 @@ public class DefaultConfiguration implements Configuration {
     private SQLDialect                              dialect;
     private Settings                                settings;
     private ConcurrentHashMap<Object, Object>       data;
+
+    private Clock                                   clock;
+
 
     // Non-serializable Configuration objects
     private transient ConnectionProvider            connectionProvider;
@@ -450,6 +454,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            null,
+
             dialect,
             settings,
             data
@@ -475,6 +482,9 @@ public class DefaultConfiguration implements Configuration {
         VisitListenerProvider[] visitListenerProviders,
         TransactionListenerProvider[] transactionListenerProviders,
         ConverterProvider converterProvider,
+
+        Clock clock,
+
         SQLDialect dialect,
         Settings settings,
         Map<Object, Object> data)
@@ -489,6 +499,9 @@ public class DefaultConfiguration implements Configuration {
         set(visitListenerProviders);
         set(transactionListenerProviders);
         set(converterProvider);
+
+        set(clock);
+
         set(dialect);
         set(settings);
 
@@ -538,6 +551,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -562,6 +578,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -581,6 +600,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -605,6 +627,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -629,6 +654,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -653,6 +681,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -677,6 +708,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -701,6 +735,9 @@ public class DefaultConfiguration implements Configuration {
             newVisitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -725,6 +762,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             newTransactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
@@ -744,11 +784,36 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             newConverterProvider,
+
+            clock,
+
             dialect,
             settings,
             data
         );
     }
+
+
+    @Override
+    public final Configuration derive(Clock newClock) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            converterProvider,
+            newClock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
 
     @Override
     public final Configuration derive(SQLDialect newDialect) {
@@ -763,6 +828,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             newDialect,
             settings,
             data
@@ -782,6 +850,9 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             converterProvider,
+
+            clock,
+
             dialect,
             newSettings,
             data
@@ -932,6 +1003,16 @@ public class DefaultConfiguration implements Configuration {
 
         return this;
     }
+
+
+    @Override
+    public final Configuration set(Clock newClock) {
+
+        // [#6447] Defaulting to UTC system time
+        this.clock = newClock == null ? Clock.systemUTC() : newClock;
+        return this;
+    }
+
 
     @Override
     public final Configuration set(SQLDialect newDialect) {
@@ -1126,6 +1207,13 @@ public class DefaultConfiguration implements Configuration {
     public final ConverterProvider converterProvider() {
         return converterProvider;
     }
+
+
+    @Override
+    public final Clock clock() {
+        return clock;
+    }
+
 
     @Override
     public final SQLDialect dialect() {

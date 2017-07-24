@@ -37,6 +37,7 @@ package org.jooq;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Savepoint;
+import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
@@ -236,6 +237,14 @@ public interface Configuration extends Serializable {
     // Getters
     // -------------------------------------------------------------------------
 
+
+    /**
+     * Get this configuration's {@link Clock}, which is used for optimistic
+     * locking, transaction time, and other time-depending features.
+     */
+    Clock clock();
+
+
     /**
      * Get this configuration's underlying connection provider.
      */
@@ -385,6 +394,20 @@ public interface Configuration extends Serializable {
     // -------------------------------------------------------------------------
     // Setters
     // -------------------------------------------------------------------------
+
+
+    /**
+     * Change this configuration to hold a new {@link Clock}.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newClock The new clock to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Clock newClock);
+
 
     /**
      * Change this configuration to hold a new connection provider.
@@ -674,6 +697,17 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive();
+
+
+    /**
+     * Create a derived configuration from this one, with a new {@link Clock}.
+     *
+     * @param newClock The new clock to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Clock newClock);
+
 
     /**
      * Create a derived configuration from this one, with a new connection

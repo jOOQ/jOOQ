@@ -302,6 +302,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
     abstract void accept0(Context<?> ctx);
 
     final void toSQLReturning(Context<?> ctx) {

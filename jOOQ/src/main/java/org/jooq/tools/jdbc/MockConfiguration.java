@@ -35,6 +35,7 @@
 package org.jooq.tools.jdbc;
 
 import java.sql.Connection;
+import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
@@ -106,6 +107,13 @@ public class MockConfiguration implements Configuration {
         return delegate.data(key, value);
     }
 
+
+    @Override
+    public Clock clock() {
+        return delegate.clock();
+    }
+
+
     @Override
     public ConnectionProvider connectionProvider() {
         return new MockConnectionProvider(delegate.connectionProvider(), provider);
@@ -175,6 +183,13 @@ public class MockConfiguration implements Configuration {
     public Settings settings() {
         return delegate.settings();
     }
+
+
+    @Override
+    public Configuration set(Clock newClock) {
+        return delegate.set(newClock);
+    }
+
 
     @Override
     public Configuration set(ConnectionProvider newConnectionProvider) {
@@ -285,6 +300,13 @@ public class MockConfiguration implements Configuration {
     public Configuration derive() {
         return delegate.derive();
     }
+
+
+    @Override
+    public Configuration derive(Clock newClock) {
+        return delegate.derive(newClock);
+    }
+
 
     @Override
     public Configuration derive(Connection newConnection) {

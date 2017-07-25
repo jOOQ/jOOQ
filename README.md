@@ -24,6 +24,6 @@ jOOQ is different
 =================
 SQL was never meant to be abstracted. To be confined in the narrow boundaries of heavy mappers, hiding the beauty and simplicity of relational data. SQL was never meant to be object-oriented. SQL was never meant to be anything other than... SQL!
 
-For more details please visit [jooq.org](http://www.jooq.org).
+For more details please visit [jooq.org](https://www.jooq.org).
 
-Follow jOOQ on [Twitter](http://twitter.com/#!/JavaOOQ) and on [Wordpress](http://lukaseder.wordpress.com).
+Follow jOOQ on [Twitter](https://twitter.com/JavaOOQ) and [the jOOQ blog](https://blog.jooq.org).

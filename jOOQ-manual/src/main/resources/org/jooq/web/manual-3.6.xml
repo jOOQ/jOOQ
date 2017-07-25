@@ -12744,6 +12744,71 @@ Finishing                : Total: 4.814ms, +3.375ms
 					    </content>
 
 					    <sections>
+                            <section id="using-jooq-with-jdbctemplate">
+                                <title>Using jOOQ with Spring's JdbcTemplate</title>
+                                <content><html>
+                                    <p>
+                                        A lot of people are using Spring's useful <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html">org.springframework.jdbc.core.JdbcTemplate</a> in their projects to simplify common JDBC interaction patterns, such as:
+                                    </p>
+
+                                    <ul>
+                                        <li>Variable binding</li>
+                                        <li>Result mapping</li>
+                                        <li>Exception handling</li>
+                                    </ul>
+
+                                    <p>
+                                        When adding jOOQ to a project that is using JdbcTemplate extensively, a pragmatic first step is to use jOOQ as a SQL builder and pass the query string and bind variables to <code>JdbcTemplate</code> for execution. For instance, you may have the following class to store authors and their number of books in our stores:
+                                    </p>
+
+</html><java><![CDATA[public class AuthorAndBooks {
+    public final String firstName;
+    public final String lastName;
+    public final int books;
+
+    public AuthorAndBooks(String firstName, String lastName, int books) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.books = books;
+    }
+}]]></java><html>
+
+                                    <p>
+                                        You can then write the following code
+                                    </p>
+
+</html><java><![CDATA[// The jOOQ part stays the same as always:
+Book b = BOOK.as("b");
+Author a = AUTHOR.as("a");
+BookStore s = BOOK_STORE.as("s");
+BookToBookStore t = BOOK_TO_BOOK_STORE.as("t");
+
+ResultQuery<Record3<String, String, Integer>> query =
+create.select(a.FIRST_NAME, a.LAST_NAME, countDistinct(s.NAME))
+      .from(a)
+      .join(b).on(b.AUTHOR_ID.equal(a.ID))
+      .join(t).on(t.BOOK_ID.equal(b.ID))
+      .join(s).on(t.BOOK_STORE_NAME.equal(s.NAME))
+      .groupBy(a.FIRST_NAME, a.LAST_NAME)
+      .orderBy(countDistinct(s.NAME).desc());
+
+// But instead of executing the above query, we'll send the SQL string and the bind values to JdbcTemplate:
+JdbcTemplate template = new JdbcTemplate(dataSource);
+List<AuthorAndBooks> result = template.query(
+    query.getSQL(),
+    query.getBindValues().toArray(),
+    (r, i) -> new AuthorAndBooks(
+        r.getString(1),
+        r.getString(2),
+        r.getInt(3)
+    ));
+]]></java><html>
+                                    <p>
+                                        This approach helps you gradually migrate from using JdbcTemplate to a jOOQ-only execution model.
+                                    </p>
+                                </html></content>
+                            </section>
+
 					        <section id="using-jooq-with-jpa">
 					            <title>Using jOOQ with JPA</title>
 					            <content>

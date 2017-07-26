@@ -39,7 +39,6 @@ import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.StringWriter;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -134,7 +133,9 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             } catch (SQLDialectNotSupportedException ignore) {}
 
             if (dataType != null) {
-                if (dataType.getSQLType() == Types.DATE) {
+
+                // [#5239] [#5762] [#6453] Don't rely on getSQLType()
+                if (SQLDataType.DATE.equals(dataType.getSQLDataType())) {
                     DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
                     result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.getDefaultValue(), (Name) null, null, DateAsTimestampBinding.class.getName());
                 }

@@ -51,6 +51,13 @@ public class NoDataFoundException extends InvalidResultException {
 
     /**
      * Constructor for NoDataFoundException.
+     */
+    public NoDataFoundException() {
+        super(null);
+    }
+
+    /**
+     * Constructor for NoDataFoundException.
      *
      * @param message the detail message
      */

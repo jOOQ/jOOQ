@@ -60,6 +60,13 @@ public class TooManyRowsException extends InvalidResultException {
 
     /**
      * Constructor for TooManyRowsException.
+     */
+    public TooManyRowsException() {
+        super(null);
+    }
+
+    /**
+     * Constructor for TooManyRowsException.
      *
      * @param message the detail message
      */

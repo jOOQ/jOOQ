@@ -10,6 +10,21 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.9.5 - July 28, 2017
+================================================================================
+
+This is a patch release with some useful fixes for the 3.9 branch
+
+Features and Improvements
+-------------------------
+#6448 - Improve TableLike.field(Field) Javadoc
+
+Bug Fixes
+---------
+#6437 - Do not return ID on Record.update() when updatablePrimaryKeys is set to false
+#6455 - Code generation regression for <dateAsTimestamp>
+
+
 Version 3.9.4 - July 17, 2017
 ================================================================================
 

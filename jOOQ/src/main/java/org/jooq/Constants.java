@@ -66,7 +66,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.9.5-SNAPSHOT";
+    public static final String FULL_VERSION   = "3.9.5";
 
     /**
      * The current jooq-runtime XSD file name.

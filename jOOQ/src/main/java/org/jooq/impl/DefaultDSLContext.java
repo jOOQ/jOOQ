@@ -886,6 +886,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchOne();
     }
 
+    @Override
+    public Record fetchSingle(SQL sql) {
+        return resultQuery(sql).fetchSingle();
+    }
+
+    @Override
+    public Record fetchSingle(String sql) {
+        return resultQuery(sql).fetchSingle();
+    }
+
+    @Override
+    public Record fetchSingle(String sql, Object... bindings) {
+        return resultQuery(sql, bindings).fetchSingle();
+    }
+
+    @Override
+    public Record fetchSingle(String sql, QueryPart... parts) {
+        return resultQuery(sql, parts).fetchSingle();
+    }
+
 
     @Override
     public Optional<Record> fetchOptional(SQL sql) {
@@ -1052,6 +1072,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Record fetchOne(ResultSet rs, Class<?>... types) {
         return Tools.fetchOne(fetchLazy(rs, types));
+    }
+
+    @Override
+    public Record fetchSingle(ResultSet rs) {
+        return Tools.fetchSingle(fetchLazy(rs));
+    }
+
+    @Override
+    public Record fetchSingle(ResultSet rs, Field<?>... fields) {
+        return Tools.fetchSingle(fetchLazy(rs, fields));
+    }
+
+    @Override
+    public Record fetchSingle(ResultSet rs, DataType<?>... types) {
+        return Tools.fetchSingle(fetchLazy(rs, types));
+    }
+
+    @Override
+    public Record fetchSingle(ResultSet rs, Class<?>... types) {
+        return Tools.fetchSingle(fetchLazy(rs, types));
     }
 
 
@@ -3874,6 +3914,19 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
+    @Override
+    public <R extends Record> R fetchSingle(ResultQuery<R> query) {
+        final Configuration previous = Tools.getConfiguration(query);
+
+        try {
+            query.attach(configuration());
+            return query.fetchSingle();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
 
     @Override
     public <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) {
@@ -4003,6 +4056,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
         return Tools.fetchOne(fetchLazy(table, condition));
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table) {
+        return Tools.fetchSingle(fetchLazy(table));
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition condition) {
+        return Tools.fetchSingle(fetchLazy(table, condition));
     }
 
 

@@ -810,7 +810,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         Cursor<R> c = fetchLazy();
 
         try {
-            return c.fetchOne();
+            return c.fetchNext();
         }
         finally {
             c.close();

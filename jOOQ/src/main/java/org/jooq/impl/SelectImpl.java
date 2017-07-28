@@ -124,7 +124,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
-import org.jooq.exception.MappingException;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -2789,6 +2788,96 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().fetchOneInto(table);
     }
 
+    @Override
+    public final <T> T fetchSingle(Field<T> field) {
+        return getDelegate().fetchSingle(field);
+    }
+
+    @Override
+    public final <T> T fetchSingle(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchSingle(field, type);
+    }
+
+    @Override
+    public final <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) {
+        return getDelegate().fetchSingle(field, converter);
+    }
+
+    @Override
+    public final Object fetchSingle(int fieldIndex) {
+        return getDelegate().fetchSingle(fieldIndex);
+    }
+
+    @Override
+    public final <T> T fetchSingle(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchSingle(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) {
+        return getDelegate().fetchSingle(fieldIndex, converter);
+    }
+
+    @Override
+    public final Object fetchSingle(String fieldName) {
+        return getDelegate().fetchSingle(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchSingle(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchSingle(fieldName, type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) {
+        return getDelegate().fetchSingle(fieldName, converter);
+    }
+
+    @Override
+    public final Object fetchSingle(Name fieldName) {
+        return getDelegate().fetchSingle(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchSingle(Name fieldName, Class<? extends T> type) {
+        return getDelegate().fetchSingle(fieldName, type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) {
+        return getDelegate().fetchSingle(fieldName, converter);
+    }
+
+    @Override
+    public final R fetchSingle() {
+        return getDelegate().fetchSingle();
+    }
+
+    @Override
+    public final <E> E fetchSingle(RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchSingle(mapper);
+    }
+
+    @Override
+    public final Map<String, Object> fetchSingleMap() {
+        return getDelegate().fetchSingleMap();
+    }
+
+    @Override
+    public final Object[] fetchSingleArray() {
+        return getDelegate().fetchSingleArray();
+    }
+
+    @Override
+    public final <E> E fetchSingleInto(Class<? extends E> type) {
+        return getDelegate().fetchSingleInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchSingleInto(Table<Z> table) {
+        return getDelegate().fetchSingleInto(table);
+    }
+
 
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
@@ -3362,7 +3451,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) throws MappingException {
+    public final <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) {
         return getDelegate().fetchGroups(keyMapper);
     }
 

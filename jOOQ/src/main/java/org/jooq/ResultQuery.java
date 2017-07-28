@@ -58,6 +58,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
 
@@ -723,6 +724,276 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws TooManyRowsException if the query returned more than one record
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a field from
+     * the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Field)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchSingle(Field<T> field) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Field, Class)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchSingle(Field<?> field, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Field, Converter)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(int)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Object fetchSingle(int fieldIndex) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(int, Class)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchSingle(int fieldIndex, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(int, Converter)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(String)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Object fetchSingle(String fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(String, Class)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchSingle(String fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(String, Converter)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Name)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Object fetchSingle(Name fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Name, Class)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchSingle(Name fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchSingle()} and then
+     * {@link Record#get(Name, Converter)}
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting record.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    R fetchSingle() throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting value into a
+     * custom mapper callback.
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <E> E fetchSingle(RecordMapper<? super R, E> mapper) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting record as a name/value
+     * map.
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
+     */
+    Map<String, Object> fetchSingleMap() throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute the query and return exactly one resulting record as an array
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchSingleArray()[fieldIndex]</pre></code>
+     *
+     * @return The resulting value. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Object[] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code><pre>
+     * E result = null;
+     * Record r = q.fetchSingle();
+     *
+     * if (r != null)
+     *     result = r.into(type);
+     * </pre></code>. See {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @return The resulting value. This is never <code>null</code>.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see DefaultRecordMapper
+     */
+    <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Z result = null;
+     * Record r = q.fetchSingle();
+     *
+     * if (r != null)
+     *     result = r.into(table);
+     * </pre></code>. See {@link Record#into(Table)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The resulting value. This is never <code>null</code>.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     * @thorws NoDataFoundException if the query returned no records
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
 
     /**

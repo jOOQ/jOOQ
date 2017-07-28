@@ -217,6 +217,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
+import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.impl.Tools.Cache.CachedOperation;
@@ -1624,11 +1625,38 @@ final class Tools {
      */
     static final <R extends Record> R fetchOne(Cursor<R> cursor) throws TooManyRowsException {
         try {
-            R record = cursor.fetchOne();
+            R record = cursor.fetchNext();
 
-            if (cursor.hasNext()) {
+            if (cursor.hasNext())
                 throw new TooManyRowsException("Cursor returned more than one result");
-            }
+
+            return record;
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
+    /**
+     * Get the only element from a cursor, or throw an exception.
+     * <p>
+     * [#2373] This method will always close the argument cursor, as it is
+     * supposed to be completely consumed by this method.
+     *
+     * @param cursor The cursor
+     * @return The only element from the cursor
+     * @throws NoDataFoundException Thrown if the cursor did not return any rows
+     * @throws TooManyRowsException Thrown if the cursor returns more than one
+     *             element
+     */
+    static final <R extends Record> R fetchSingle(Cursor<R> cursor) throws NoDataFoundException, TooManyRowsException {
+        try {
+            R record = cursor.fetchNext();
+
+            if (record == null)
+                throw new NoDataFoundException("Cursor returned no rows");
+            if (cursor.hasNext())
+                throw new TooManyRowsException("Cursor returned more than one result");
 
             return record;
         }

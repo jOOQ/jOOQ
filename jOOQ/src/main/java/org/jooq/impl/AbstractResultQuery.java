@@ -559,6 +559,96 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return record == null ? null : record.into(table);
     }
 
+    @Override
+    public final <T> T fetchSingle(Field<T> field) {
+        return fetchSingle().get(field);
+    }
+
+    @Override
+    public final <T> T fetchSingle(Field<?> field, Class<? extends T> type) {
+        return Convert.convert(fetchSingle(field), type);
+    }
+
+    @Override
+    public final <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) {
+        return Convert.convert(fetchSingle(field), converter);
+    }
+
+    @Override
+    public final Object fetchSingle(int fieldIndex) {
+        return fetchSingle().get(fieldIndex);
+    }
+
+    @Override
+    public final <T> T fetchSingle(int fieldIndex, Class<? extends T> type) {
+        return Convert.convert(fetchSingle(fieldIndex), type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) {
+        return Convert.convert(fetchSingle(fieldIndex), converter);
+    }
+
+    @Override
+    public final Object fetchSingle(String fieldName) {
+        return fetchSingle().get(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchSingle(String fieldName, Class<? extends T> type) {
+        return Convert.convert(fetchSingle(fieldName), type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) {
+        return Convert.convert(fetchSingle(fieldName), converter);
+    }
+
+    @Override
+    public final Object fetchSingle(Name fieldName) {
+        return fetchSingle().get(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchSingle(Name fieldName, Class<? extends T> type) {
+        return Convert.convert(fetchSingle(fieldName), type);
+    }
+
+    @Override
+    public final <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) {
+        return Convert.convert(fetchSingle(fieldName), converter);
+    }
+
+    @Override
+    public final R fetchSingle() {
+        return Tools.fetchSingle(fetchLazy());
+    }
+
+    @Override
+    public final <E> E fetchSingle(RecordMapper<? super R, E> mapper) {
+        return mapper.map(fetchSingle());
+    }
+
+    @Override
+    public final Map<String, Object> fetchSingleMap() {
+        return fetchSingle().intoMap();
+    }
+
+    @Override
+    public final Object[] fetchSingleArray() {
+        return fetchSingle().intoArray();
+    }
+
+    @Override
+    public final <E> E fetchSingleInto(Class<? extends E> type) {
+        return fetchSingle().into(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchSingleInto(Table<Z> table) {
+        return fetchSingle().into(table);
+    }
+
 
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {

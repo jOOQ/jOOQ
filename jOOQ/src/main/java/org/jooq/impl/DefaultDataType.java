@@ -763,19 +763,17 @@ public class DefaultDataType<T> implements DataType<T> {
                 result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                if (result == null && dialect.family() == SQLDialect.POSTGRES && normalised.charAt(0) == '_') {
+                if (result == null && dialect.family() == SQLDialect.POSTGRES && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
-                    // [#6466] HSQLDB reports array types as XYZARRAY
-                    if (result == null && dialect.family() == SQLDialect.HSQLDB && upper.endsWith(" ARRAY")) {
-                        result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
+                // [#6466] HSQLDB reports array types as XYZARRAY
+                if (result == null && dialect.family() == SQLDialect.HSQLDB && upper.endsWith(" ARRAY"))
+                    result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
 
-                        // [#366] Don't log a warning here. The warning is logged when
-                        // catching the exception in jOOQ-codegen
-                        if (result == null)
-                            throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
-                    }
-                }
+                // [#366] Don't log a warning here. The warning is logged when
+                // catching the exception in jOOQ-codegen
+                if (result == null)
+                    throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
             }
         }
 

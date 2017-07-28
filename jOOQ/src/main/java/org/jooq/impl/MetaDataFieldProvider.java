@@ -77,7 +77,7 @@ final class MetaDataFieldProvider implements Serializable {
         this.fields = init(configuration, meta);
     }
 
-    private Fields<Record> init(Configuration configuration, ResultSetMetaData meta) {
+    private static Fields<Record> init(Configuration configuration, ResultSetMetaData meta) {
         Field<?>[] fields;
         int columnCount = 0;
 
@@ -125,17 +125,14 @@ final class MetaDataFieldProvider implements Serializable {
                 try {
                     dataType = DefaultDataType.getDataType(configuration.family(), type, precision, scale);
 
-                    if (dataType.hasPrecision()) {
+                    if (dataType.hasPrecision())
                         dataType = dataType.precision(precision);
-                    }
-                    if (dataType.hasScale()) {
+                    if (dataType.hasScale())
                         dataType = dataType.scale(scale);
-                    }
-                    if (dataType.hasLength()) {
 
-                        // JDBC doesn't distinguish between precision and length
+                    // JDBC doesn't distinguish between precision and length
+                    if (dataType.hasLength())
                         dataType = dataType.length(precision);
-                    }
                 }
 
                 // [#650, #667] All types should be known at this point, but in plain

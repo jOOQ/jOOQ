@@ -750,26 +750,34 @@ public class DefaultDataType<T> implements DataType<T> {
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
         int ordinal = dialect.ordinal();
-        DataType<?> result = TYPES_BY_NAME[ordinal].get(typeName.toUpperCase());
+        String upper = typeName.toUpperCase();
+        String normalised = typeName;
+        DataType<?> result = TYPES_BY_NAME[ordinal].get(upper);
 
         // [#3225] Normalise only if necessary
         if (result == null) {
-            typeName = DefaultDataType.normalise(typeName);
-            result = TYPES_BY_NAME[ordinal].get(typeName);
+            result = TYPES_BY_NAME[ordinal].get(normalised = DefaultDataType.normalise(typeName));
+
+            // UDT data types and others are registered using DEFAULT
+            if (result == null) {
+                result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
+
+                // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
+                if (result == null && dialect.family() == SQLDialect.POSTGRES && normalised.charAt(0) == '_') {
+                    result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
+
+                    // [#6466] HSQLDB reports array types as XYZARRAY
+                    if (result == null && dialect.family() == SQLDialect.HSQLDB && upper.endsWith(" ARRAY")) {
+                        result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
+
+                        // [#366] Don't log a warning here. The warning is logged when
+                        // catching the exception in jOOQ-codegen
+                        if (result == null)
+                            throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
+                    }
+                }
+            }
         }
-
-        // UDT data types and others are registered using DEFAULT
-        if (result == null)
-            result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(typeName);
-
-        // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-        if (result == null && dialect.family() == SQLDialect.POSTGRES && typeName.charAt(0) == '_')
-            result = getDataType(dialect, typeName.substring(1)).getArrayDataType();
-
-        // [#366] Don't log a warning here. The warning is logged when
-        // catching the exception in jOOQ-codegen
-        if (result == null)
-            throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
 
         return result;
     }

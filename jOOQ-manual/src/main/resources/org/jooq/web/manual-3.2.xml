@@ -11107,9 +11107,9 @@ public class Book implements java.io.Serializable
 								<li><strong>unsignedTypes</strong>: This influences all relevant getters and setters</li>
 							</ul>
 
-							<h3>Flags controlling POJO generation</h3>
+							<h3>Flags controlling interface generation</h3>
 							<p>
-								POJO generation can be activated using the <strong>interfaces</strong> flag
+								Interface generation can be activated using the <strong>interfaces</strong> flag
 							</p>
 						</html></content>
 					</section>

@@ -16514,7 +16514,7 @@ create.insertInto(com.example.generated.Tables.MY_TABLE)
 
 							<h3>Flags controlling table generation</h3>
 							<p>
-								Table generation cannot be deactivated
+								Routine generation can be deactivated using the <strong>tables</strong> flag
 							</p>
 						</html></content>
 					</section>
@@ -16679,10 +16679,10 @@ public class Book implements java.io.Serializable
 								<li><strong>unsignedTypes</strong>: This influences all relevant getters and setters</li>
 							</ul>
 
-							<h3>Flags controlling POJO generation</h3>
-							<p>
-								POJO generation can be activated using the <strong>interfaces</strong> flag
-							</p>
+                            <h3>Flags controlling interface generation</h3>
+                            <p>
+                                Interface generation can be activated using the <strong>interfaces</strong> flag
+                            </p>
 						</html></content>
 					</section>
 
@@ -16743,7 +16743,7 @@ public class Book implements java.io.Serializable
 
 							<h3>Flags controlling sequence generation</h3>
 							<p>
-								Sequence generation cannot be deactivated
+								Routine generation can be deactivated using the <strong>sequences</strong> flag
 							</p>
 						</html></content>
 					</section>
@@ -16789,7 +16789,7 @@ public class Book implements java.io.Serializable
 
 							<h3>Flags controlling routine generation</h3>
 							<p>
-								Routine generation cannot be deactivated
+								Routine generation can be deactivated using the <strong>routines</strong> flag
 							</p>
 						</html></content>
 					</section>
@@ -16837,7 +16837,7 @@ public class Book implements java.io.Serializable
 
 							<h3>Flags controlling UDT generation</h3>
 							<p>
-								UDT generation cannot be deactivated
+								Routine generation can be deactivated using the <strong>udts</strong> flag
 							</p>
 						</html></content>
 					</section>

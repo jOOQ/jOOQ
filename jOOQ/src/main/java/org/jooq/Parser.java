@@ -46,41 +46,153 @@ public interface Parser {
 
     /**
      * Parse a SQL string to a set of queries.
+     *
+     * @param sql The SQL string
      */
+    @Support
+    @PlainSQL
     Queries parse(String sql);
 
     /**
-     * Parse a SQL string to a query.
+     * Parse a SQL string with bind variables to a set of queries.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Queries parse(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a query.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Query parseQuery(String sql);
 
     /**
-     * Parse a SQL string to a result query.
+     * Parse a SQL string with bind variables to a query.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Query parseQuery(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a result query.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     ResultQuery<?> parseResultQuery(String sql);
 
     /**
-     * Parse a SQL string to a table.
+     * Parse a SQL string with bind variables to a result query.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    ResultQuery<?> parseResultQuery(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a table.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Table<?> parseTable(String sql);
 
     /**
-     * Parse a SQL string to a field.
+     * Parse a SQL string with bind variables to a table.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Table<?> parseTable(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a field.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Field<?> parseField(String sql);
 
     /**
-     * Parse a SQL string to a row.
+     * Parse a SQL string with bind variables to a field.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Field<?> parseField(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a row.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Row parseRow(String sql);
 
     /**
-     * Parse a SQL string to a condition.
+     * Parse a SQL string with bind variables to a row.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Row parseRow(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a condition.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Condition parseCondition(String sql);
 
     /**
-     * Parse a SQL string to a name.
+     * Parse a SQL string with bind variables to a condition.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
      */
+    @Support
+    @PlainSQL
+    Condition parseCondition(String sql, Object... bindings);
+
+    /**
+     * Parse a SQL string to a name.
+     *
+     * @param sql The SQL string
+     */
+    @Support
+    @PlainSQL
     Name parseName(String sql);
+
+    /**
+     * Parse a SQL string with bind variables to a name.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
+     */
+    @Support
+    @PlainSQL
+    Name parseName(String sql, Object... bindings);
 }

@@ -334,7 +334,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Queries parse(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parse(sql, new Object[0]);
+    }
+
+    @Override
+    public final Queries parse(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         List<Query> result = new ArrayList<Query>();
         do {
             Query query = parseQuery(ctx, false);
@@ -351,7 +356,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Query parseQuery(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseQuery(sql, new Object[0]);
+    }
+
+    @Override
+    public final Query parseQuery(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Query result = parseQuery(ctx, false);
 
         if (!ctx.done())
@@ -362,7 +372,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final ResultQuery<?> parseResultQuery(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseResultQuery(sql, new Object[0]);
+    }
+
+    @Override
+    public final ResultQuery<?> parseResultQuery(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
 
         if (!ctx.done())
@@ -373,7 +388,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Table<?> parseTable(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseTable(sql, new Object[0]);
+    }
+
+    @Override
+    public final Table<?> parseTable(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Table<?> result = parseTable(ctx);
 
         if (!ctx.done())
@@ -384,7 +404,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Field<?> parseField(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseField(sql, new Object[0]);
+    }
+
+    @Override
+    public final Field<?> parseField(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Field<?> result = parseField(ctx);
 
         if (!ctx.done())
@@ -395,7 +420,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Row parseRow(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseRow(sql, new Object[0]);
+    }
+
+    @Override
+    public final Row parseRow(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         RowN result = parseRow(ctx);
 
         if (!ctx.done())
@@ -406,7 +436,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Condition parseCondition(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseCondition(sql, new Object[0]);
+    }
+
+    @Override
+    public final Condition parseCondition(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Condition result = parseCondition(ctx);
 
         if (!ctx.done())
@@ -417,7 +452,12 @@ class ParserImpl implements Parser {
 
     @Override
     public final Name parseName(String sql) {
-        ParserContext ctx = new ParserContext(dsl, sql);
+        return parseName(sql, new Object[0]);
+    }
+
+    @Override
+    public final Name parseName(String sql, Object... bindings) {
+        ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Name result = parseName(ctx);
 
         if (!ctx.done())
@@ -5055,11 +5095,11 @@ class ParserImpl implements Parser {
         switch (ctx.character()) {
             case '?':
                 parse(ctx, '?');
-                return DSL.val(null, Object.class);
+                return DSL.val(ctx.nextBinding(), Object.class);
 
             case ':':
                 parse(ctx, ':');
-                return DSL.param(parseIdentifier(ctx).last());
+                return DSL.param(parseIdentifier(ctx).last(), ctx.nextBinding());
 
             default:
                 throw ctx.exception("Illegal bind variable character");
@@ -5692,12 +5732,15 @@ class ParserImpl implements Parser {
         private final char[]       sql;
         private final List<String> expectedTokens;
         private int                position = 0;
+        private final Object[]     bindings;
+        private int                bindIndex = 0;
 
-        ParserContext(DSLContext dsl, String sqlString) {
+        ParserContext(DSLContext dsl, String sqlString, Object[] bindings) {
             this.dsl = dsl;
             this.sqlString = sqlString;
             this.sql = sqlString.toCharArray();
             this.expectedTokens = new ArrayList<String>();
+            this.bindings = bindings;
         }
 
         ParserException internalError() {
@@ -5718,6 +5761,13 @@ class ParserImpl implements Parser {
 
         ParserException unexpectedToken() {
             return new ParserException(mark(), "Expected tokens: " + new TreeSet<String>(expectedTokens));
+        }
+
+        Object nextBinding() {
+            if (bindIndex < bindings.length)
+                return bindings[bindIndex++];
+            else
+                return null;
         }
 
         char character() {

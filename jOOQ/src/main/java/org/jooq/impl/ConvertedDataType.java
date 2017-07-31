@@ -68,7 +68,7 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
             delegate.precision(),
             delegate.scale(),
             delegate.length(),
-            delegate.nullable(),
+            delegate.nullability(),
             (Field<U>) delegate.defaultValue()
         );
 

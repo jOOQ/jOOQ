@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
+import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCLOB;
@@ -62,6 +63,7 @@ import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Nullability;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -204,7 +206,7 @@ public class DefaultDataType<T> implements DataType<T> {
      */
     private final String                                 typeName;
 
-    private final boolean                                nullable;
+    private final Nullability                            nullability;
     private final boolean                                identity;
     private final Field<T>                               defaultValue;
     private final int                                    precision;
@@ -232,38 +234,38 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullable(), sqlDataType.defaultValue());
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullability(), sqlDataType.defaultValue());
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullable(), sqlDataType.defaultValue());
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullability(), sqlDataType.defaultValue());
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, typeName, typeName, 0, 0, 0, true, null);
+        this(dialect, null, type, typeName, typeName, 0, 0, 0, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, typeName, castTypeName, 0, 0, 0, true, null);
+        this(dialect, null, type, typeName, castTypeName, 0, 0, 0, Nullability.DEFAULT, null);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
-        this(dialect, null, type, typeName, castTypeName, precision, scale, length, nullable, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
-        this(dialect, null, type, binding, typeName, castTypeName, precision, scale, length, nullable, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, binding, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, null, typeName, castTypeName, precision, scale, length, nullable, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, null, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullable, false, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullability, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, boolean identity, Field<T> defaultValue) {
 
         // Initialise final instance members
         // ---------------------------------
@@ -278,7 +280,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
-        this.nullable = nullable;
+        this.nullability = nullability;
         this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(type, precision);
@@ -324,7 +326,7 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * [#3225] Performant constructor for creating derived types.
      */
-    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, boolean identity, Field<T> defaultValue) {
+    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, Nullability nullability, boolean identity, Field<T> defaultValue) {
         this.dialect = t.dialect;
         this.sqlDataType = t.sqlDataType;
         this.uType = t.uType;
@@ -334,7 +336,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeBase = t.castTypeBase;
         this.arrayType = t.arrayType;
 
-        this.nullable = nullable;
+        this.nullability = nullability;
         this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(uType, precision);
@@ -364,18 +366,28 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final DataType<T> nullability(Nullability n) {
+        return new DefaultDataType<T>(this, precision, scale, length, n, n.nullable() ? false : identity, defaultValue);
+    }
+
+    @Override
+    public final Nullability nullability() {
+        return nullability;
+    }
+
+    @Override
     public final DataType<T> nullable(boolean n) {
-        return new DefaultDataType<T>(this, precision, scale, length, n, n ? false : identity, defaultValue);
+        return nullability(Nullability.of(n));
     }
 
     @Override
     public final boolean nullable() {
-        return nullable;
+        return nullability.nullable();
     }
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return new DefaultDataType<T>(this, precision, scale, length, i ? false : nullable, i, i ? null : defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, i ? NOT_NULL : nullability, i, i ? null : defaultValue);
     }
 
     @Override
@@ -390,7 +402,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaultValue(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullable, d != null ? false : identity, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullability, d != null ? false : identity, d);
     }
 
     @Override
@@ -423,7 +435,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, p, s, length, nullable, identity, defaultValue);
+            return new DefaultDataType<T>(this, p, s, length, nullability, identity, defaultValue);
     }
 
     @Override
@@ -445,7 +457,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, s, length, nullable, identity, defaultValue);
+            return new DefaultDataType<T>(this, precision, s, length, nullability, identity, defaultValue);
     }
 
     @Override
@@ -467,7 +479,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, scale, l, nullable, identity, defaultValue);
+            return new DefaultDataType<T>(this, precision, scale, l, nullability, identity, defaultValue);
     }
 
     @Override

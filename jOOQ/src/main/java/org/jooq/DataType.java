@@ -194,6 +194,27 @@ public interface DataType<T> extends Serializable {
      * <p>
      * [#5709] A <code>nullable</code> column cannot have an {@link #identity()}.
      *
+     * @param nullability The new nullability
+     * @return The new data type
+     */
+    DataType<T> nullability(Nullability nullability);
+
+    /**
+     * Get the nullability of this data type.
+     *
+     * @return The nullability
+     */
+    Nullability nullability();
+
+    /**
+     * Return a new data type like this, with a new nullability.
+     * <p>
+     * This is the same as calling {@link #nullability(Nullability)} with any of
+     * {@link Nullability#NULL} or {@link Nullability#NOT_NULL} as an argument.
+     * <p>
+     * [#5709] A <code>nullable</code> column cannot have an
+     * {@link #identity()}.
+     *
      * @param nullable The new nullability
      * @return The new data type
      */
@@ -201,6 +222,9 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Get the nullability of this data type.
+     * <p>
+     * This returns <code>true</code> by default, i.e. if {@link #nullability()}
+     * is {@link Nullability#DEFAULT}.
      *
      * @return The nullability
      */

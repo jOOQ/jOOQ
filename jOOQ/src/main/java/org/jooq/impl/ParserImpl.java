@@ -1758,7 +1758,11 @@ class ParserImpl implements Parser {
     private static final DDLQuery parseAlterTableAlterColumn(ParserContext ctx, AlterTableStep s1) {
         TableField<?, ?> field = parseFieldName(ctx);
 
-        if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
+        if (parseKeywordIf(ctx, "DROP NOT NULL"))
+            return s1.alter(field).dropNotNull();
+        else if (parseKeywordIf(ctx, "SET NOT NULL"))
+            return s1.alter(field).setNotNull();
+        else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
             ;
 
         DataType<?> type = parseDataType(ctx);

@@ -1068,6 +1068,17 @@ public enum Clause {
     ALTER_TABLE_ALTER_DEFAULT,
 
     /**
+     * A <code>SET NULL</code> or <code>DROP NULL</code> clause within an
+     * {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the nullability clause being altered</li>
+     * </ul>
+     */
+    ALTER_TABLE_ALTER_NULL,
+
+    /**
      * A <code>DROP</code> clause within an {@link #ALTER_TABLE} statement.
      * <p>
      * This clause surrounds

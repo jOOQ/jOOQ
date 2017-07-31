@@ -100,6 +100,7 @@ final class Keywords {
     static final Keyword K_DROP_COLUMN                      = keyword("drop column");
     static final Keyword K_DROP_CONSTRAINT                  = keyword("drop constraint");
     static final Keyword K_DROP_INDEX                       = keyword("drop index");
+    static final Keyword K_DROP_NOT_NULL                    = keyword("drop not null");
     static final Keyword K_DROP_SCHEMA                      = keyword("drop schema");
     static final Keyword K_DROP_TABLE                       = keyword("drop table");
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
@@ -228,6 +229,7 @@ final class Keywords {
     static final Keyword K_SET                              = keyword("set");
     static final Keyword K_SET_DATA_TYPE                    = keyword("set data type");
     static final Keyword K_SET_DEFAULT                      = keyword("set default");
+    static final Keyword K_SET_NOT_NULL                     = keyword("set not null");
     static final Keyword K_SIBLINGS                         = keyword("siblings");
     static final Keyword K_SKIP                             = keyword("skip");
     static final Keyword K_SQL                              = keyword("sql");

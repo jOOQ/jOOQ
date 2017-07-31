@@ -80,4 +80,16 @@ public interface AlterTableAlterStep<T> {
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep set(DataType<?> type);
+
+    /**
+     * Make the column <code>NOT NULL</code>.
+     */
+    @Support({ POSTGRES })
+    AlterTableFinalStep setNotNull();
+
+    /**
+     * Make the column nullable.
+     */
+    @Support({ POSTGRES })
+    AlterTableFinalStep dropNotNull();
 }

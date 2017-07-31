@@ -39,12 +39,15 @@ import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
+import static org.jooq.Clause.ALTER_TABLE_ALTER_NULL;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_RENAME;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_CONSTRAINT;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_INDEX;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+import static org.jooq.Nullability.NOT_NULL;
+import static org.jooq.Nullability.NULL;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -73,6 +76,7 @@ import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
 import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_DROP_NOT_NULL;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
@@ -93,6 +97,7 @@ import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
+import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TYPE;
@@ -163,6 +168,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
     private Field<?>              alterColumn;
+    private Nullability           alterColumnNullability;
     private DataType<?>           alterColumnType;
     private Field<?>              alterColumnDefault;
     private Field<?>              dropColumn;
@@ -386,6 +392,18 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl set(DataType type) {
         alterColumnType = type;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl setNotNull() {
+        alterColumnNullability = NOT_NULL;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropNotNull() {
+        alterColumnNullability = NULL;
         return this;
     }
 
@@ -780,6 +798,11 @@ final class AlterTableImpl extends AbstractQuery implements
 
                 ctx.sql(' ').visit(alterColumnDefault)
                    .end(ALTER_TABLE_ALTER_DEFAULT);
+            }
+            else if (alterColumnNullability != null) {
+                ctx.start(ALTER_TABLE_ALTER_NULL)
+                   .sql(' ').visit(alterColumnNullability.nullable() ? K_DROP_NOT_NULL : K_SET_NOT_NULL)
+                   .end(ALTER_TABLE_ALTER_NULL);
             }
 
             ctx.end(ALTER_TABLE_ALTER);

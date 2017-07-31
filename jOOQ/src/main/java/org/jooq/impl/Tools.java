@@ -123,6 +123,7 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.io.Serializable;
@@ -459,6 +460,11 @@ final class Tools {
 
 
 
+
+        /**
+         * The level of anonymous block nesting, in case we're generating a block.
+         */
+        DATA_BLOCK_NESTING,
     }
 
     /**
@@ -3446,6 +3452,67 @@ final class Tools {
     }
 
     /**
+     * Generate the <code>BEGIN</code> part of an anonymous procedural block.
+     */
+    static final void begin(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            case FIREBIRD: {
+                ctx.visit(K_EXECUTE_BLOCK).formatSeparator()
+                   .visit(K_AS).formatSeparator()
+                   .visit(K_BEGIN).formatIndentStart().formatSeparator();
+                break;
+            }
+
+            case POSTGRES: {
+                if (increment(ctx.data(), DATA_BLOCK_NESTING))
+                    ctx.visit(K_DO).sql(" $$").formatSeparator();
+
+                ctx.visit(K_BEGIN).formatIndentStart().formatSeparator();
+            }
+        }
+    }
+
+    /**
+     * Generate the <code>END</code> part of an anonymous procedural block.
+     */
+    static final void end(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            case FIREBIRD: {
+                ctx.formatIndentEnd().formatSeparator()
+                   .visit(K_END);
+                break;
+            }
+            case POSTGRES: {
+                ctx.formatIndentEnd().formatSeparator()
+                   .visit(K_END);
+
+                if (decrement(ctx.data(), DATA_BLOCK_NESTING))
+                    ctx.sql(" $$");
+
+                break;
+            }
+        }
+    }
+
+    /**
      * Wrap a <code>DROP .. IF EXISTS</code> statement with
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
@@ -3500,14 +3567,8 @@ final class Tools {
 
 
 
-
-
             case FIREBIRD: {
-                ctx.visit(K_EXECUTE_BLOCK).formatSeparator()
-                   .visit(K_AS).formatSeparator()
-                   .visit(K_BEGIN).formatIndentStart().formatSeparator()
-                   .visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
-
+                ctx.visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
                 break;
             }
 
@@ -3597,14 +3658,11 @@ final class Tools {
 
 
 
-
-
             case FIREBIRD: {
                 ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
                    .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
-                   .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd().formatIndentEnd().formatSeparator()
-                   .visit(K_END);
-
+                   .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
+                end(ctx);
                 break;
             }
 
@@ -3705,7 +3763,6 @@ final class Tools {
 
     static final void executeImmediateIfExistsEnd(Context<?> ctx, DDLStatementType type, QueryPart object) {
         switch (ctx.family()) {
-
 
 
 
@@ -3980,11 +4037,38 @@ final class Tools {
             return null;
     }
 
-    static final void increment(Map<Object, Object> data, DataKey key) {
+    /**
+     * Increment a counter and return true if the counter was zero prior to
+     * incrementing.
+     */
+    static final boolean increment(Map<Object, Object> data, DataKey key) {
+        boolean result = true;
         Integer updateCounts = (Integer) data.get(key);
+
         if (updateCounts == null)
             updateCounts = 0;
+        else
+            result = false;
+
         data.put(key, updateCounts + 1);
+        return result;
+    }
+
+    /**
+     * Decrement a counter and return true if the counter is zero after
+     * decrementing.
+     */
+    static final boolean decrement(Map<Object, Object> data, DataKey key) {
+        boolean result = false;
+        Integer updateCounts = (Integer) data.get(key);
+
+        if (updateCounts == null || updateCounts == 0)
+            throw new IllegalStateException("Unmatching increment / decrement on key: " + key);
+        else if (updateCounts == 1)
+            result = true;
+
+        data.put(key, updateCounts - 1);
+        return result;
     }
 
     static Field<?> tableField(Table<?> table, Object field) {

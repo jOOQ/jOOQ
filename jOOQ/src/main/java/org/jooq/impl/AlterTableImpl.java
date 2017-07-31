@@ -67,20 +67,24 @@ import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
-import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
 import static org.jooq.impl.Keywords.K_DEFAULT;
-import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
 import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
-import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END_IF;
+import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
+import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
@@ -89,9 +93,13 @@ import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
+import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
+import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Tools.begin;
+import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
@@ -114,6 +122,7 @@ import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Nullability;
+import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -904,18 +913,57 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
         boolean qualify = ctx.qualify();
 
-        ctx.visit(K_DO).sql(" $$").formatSeparator()
-           .visit(K_BEGIN).formatIndentStart().formatSeparator();
+        begin(ctx);
+
+
+
+
+
 
         accept1(ctx);
 
-        ctx.sql(';').formatSeparator()
-           .visit(K_ALTER_TABLE).sql(' ').visit(table).formatIndentStart().formatSeparator()
-           .visit(K_ALTER).sql(' ').qualify(false).visit(alterColumn).qualify(qualify).sql(' ')
-           .visit(alterColumnType.nullable() ? K_DROP : K_SET).sql(' ').visit(K_NOT_NULL).sql(';')
-           .formatIndentEnd()
-           .formatIndentEnd().formatSeparator()
-           .visit(K_END).sql(" $$");
+
+
+
+
+
+
+        ctx.sql(';').formatSeparator();
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case POSTGRES: {
+
+                // TODO [#6472] use jOOQ API here, once this is available
+                ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).formatIndentStart().formatSeparator()
+                   .visit(K_ALTER).sql(' ').qualify(false).visit(alterColumn).qualify(qualify).sql(' ')
+                   .visit(alterColumnType.nullable() ? K_DROP : K_SET).sql(' ').visit(K_NOT_NULL).sql(';')
+                   .formatIndentEnd();
+                break;
+            }
+        }
+        end(ctx);
     }
 
     @Override

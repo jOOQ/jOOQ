@@ -348,9 +348,7 @@ class ParserImpl implements Parser {
         }
         while (parseIf(ctx, ";"));
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of queries input");
-
+        ctx.done("Unexpected content after end of queries input");
         return dsl.queries(result);
     }
 
@@ -364,9 +362,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Query result = parseQuery(ctx, false);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of query input");
-
+        ctx.done("Unexpected content after end of query input");
         return result;
     }
 
@@ -380,9 +376,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of query input");
-
+        ctx.done("Unexpected content after end of query input");
         return result;
     }
 
@@ -396,9 +390,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Table<?> result = parseTable(ctx);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of table input");
-
+        ctx.done("Unexpected content after end of table input");
         return result;
     }
 
@@ -412,9 +404,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Field<?> result = parseField(ctx);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of field input");
-
+        ctx.done("Unexpected content after end of field input");
         return result;
     }
 
@@ -428,9 +418,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         RowN result = parseRow(ctx);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of row input");
-
+        ctx.done("Unexpected content after end of row input");
         return result;
     }
 
@@ -444,9 +432,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Condition result = parseCondition(ctx);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of condition input");
-
+        ctx.done("Unexpected content after end of condition input");
         return result;
     }
 
@@ -460,9 +446,7 @@ class ParserImpl implements Parser {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         Name result = parseName(ctx);
 
-        if (!ctx.done())
-            throw ctx.exception("Unexpected content after end of name input");
-
+        ctx.done("Unexpected content after end of name input");
         return result;
     }
 
@@ -5766,8 +5750,10 @@ class ParserImpl implements Parser {
         Object nextBinding() {
             if (bindIndex < bindings.length)
                 return bindings[bindIndex++];
-            else
+            else if (bindings.length == 0)
                 return null;
+            else
+                throw exception("No binding provided for bind index " + (bindIndex + 1));
         }
 
         char character() {
@@ -5795,7 +5781,15 @@ class ParserImpl implements Parser {
         }
 
         boolean done() {
-            return position >= sql.length;
+            return position >= sql.length && (bindings.length == 0 || bindings.length == bindIndex);
+        }
+
+        boolean done(String message) {
+            if (done())
+                return true;
+            else
+                throw exception(message);
+
         }
 
         String mark() {

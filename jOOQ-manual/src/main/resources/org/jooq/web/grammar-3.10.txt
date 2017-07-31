@@ -44,6 +44,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
     | 'DEFAULT' concat
     )
   }
+| ( 'ALTER' | 'MODIFY' ) [ 'COLUMN' ] identifier dataType [ [ 'NOT' ] 'NULL' ]
 | 'DROP COLUMN' identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
 | 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] 'TO' identifier

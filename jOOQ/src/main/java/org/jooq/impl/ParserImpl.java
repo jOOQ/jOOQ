@@ -1677,6 +1677,10 @@ class ParserImpl implements Parser {
                         return s1.add(field(fieldName, type), type);
                     }
                 }
+                else if (parseKeywordIf(ctx, "ALTER")) {
+                    parseKeywordIf(ctx, "COLUMN");
+                    return parseAlterTableAlterColumn(ctx, s1);
+                }
 
                 break;
 
@@ -1704,6 +1708,14 @@ class ParserImpl implements Parser {
                     }
                 }
 
+                break;
+
+            case 'm':
+            case 'M':
+                if (parseKeywordIf(ctx, "MODIFY")) {
+                    parseKeywordIf(ctx, "COLUMN");
+                    return parseAlterTableAlterColumn(ctx, s1);
+                }
                 break;
 
             case 'r':
@@ -1741,6 +1753,22 @@ class ParserImpl implements Parser {
         }
 
         throw ctx.unexpectedToken();
+    }
+
+    private static final DDLQuery parseAlterTableAlterColumn(ParserContext ctx, AlterTableStep s1) {
+        TableField<?, ?> field = parseFieldName(ctx);
+
+        if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
+            ;
+
+        DataType<?> type = parseDataType(ctx);
+
+        if (parseKeywordIf(ctx, "NULL"))
+            type = type.nullable(true);
+        else if (parseKeywordIf(ctx, "NOT NULL"))
+            type = type.nullable(false);
+
+        return s1.alter(field).set(type);
     }
 
     private static final DDLQuery parseRename(ParserContext ctx) {

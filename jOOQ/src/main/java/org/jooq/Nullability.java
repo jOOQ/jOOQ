@@ -61,7 +61,9 @@ public enum Nullability {
      * explicitly, if the underlying database does not support implicit
      * nullability or defaults to implicit non-nullability).</li>
      * <li><code>ALTER TABLE .. ALTER COLUMN .. SET TYPE</code>: The data type's
-     * nullability will not be modified.</li>
+     * nullability will not be modified by jOOQ (but it may well be modified by
+     * the database, e.g. {@link SQLDialect#MYSQL} or
+     * {@link SQLDialect#SQLSERVER}).</li>
      * </ul>
      */
     DEFAULT;
@@ -74,7 +76,8 @@ public enum Nullability {
     }
 
     /**
-     * Whether this nullability encodes an explicitly or implicitly nullable type.
+     * Whether this nullability encodes an explicitly or implicitly nullable
+     * type.
      */
     public boolean nullable() {
         return this != NOT_NULL;

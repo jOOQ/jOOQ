@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -66,21 +67,26 @@ import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
 import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
 import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
+import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_TO;
@@ -107,6 +113,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Nullability;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -503,6 +510,19 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
 
+        // [#3805] Compound statements to alter data type and change nullability in a single statement if needed.
+        if (alterColumnType != null && alterColumnType.nullability() != Nullability.DEFAULT) {
+            switch (family) {
+
+
+
+
+                case POSTGRES:
+                    alterColumnTypeAndNullabilityInBlock(ctx);
+                    return;
+            }
+        }
+
         accept1(ctx);
     }
 
@@ -721,8 +741,18 @@ final class AlterTableImpl extends AbstractQuery implements
                 ctx.sql(' ');
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
-                if (!alterColumnType.nullable())
-                    ctx.sql(' ').visit(K_NOT_NULL);
+                // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
+                if (family != POSTGRES)
+                    switch (alterColumnType.nullability()) {
+                        case NULL:
+                            ctx.sql(' ').visit(K_NULL);
+                            break;
+                        case NOT_NULL:
+                            ctx.sql(' ').visit(K_NOT_NULL);
+                            break;
+                        case DEFAULT:
+                            break;
+                    }
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
@@ -870,6 +900,23 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+    private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
+        boolean qualify = ctx.qualify();
+
+        ctx.visit(K_DO).sql(" $$").formatSeparator()
+           .visit(K_BEGIN).formatIndentStart().formatSeparator();
+
+        accept1(ctx);
+
+        ctx.sql(';').formatSeparator()
+           .visit(K_ALTER_TABLE).sql(' ').visit(table).formatIndentStart().formatSeparator()
+           .visit(K_ALTER).sql(' ').qualify(false).visit(alterColumn).qualify(qualify).sql(' ')
+           .visit(alterColumnType.nullable() ? K_DROP : K_SET).sql(' ').visit(K_NOT_NULL).sql(';')
+           .formatIndentEnd()
+           .formatIndentEnd().formatSeparator()
+           .visit(K_END).sql(" $$");
+    }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

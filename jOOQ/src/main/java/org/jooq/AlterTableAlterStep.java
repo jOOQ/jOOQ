@@ -74,6 +74,9 @@ public interface AlterTableAlterStep<T> {
 
     /**
      * Specify a new column data type.
+     * <p>
+     * This adds or removes <code>NOT NULL</code> constraints on the column if
+     * {@link DataType#nullable()} is specified explicitly.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep set(DataType<?> type);

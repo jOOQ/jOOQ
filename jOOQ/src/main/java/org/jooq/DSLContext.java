@@ -10411,18 +10411,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT COUNT(*) FROM table</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return The number of records in the table
      * @throws DataAccessException if something went wrong executing the query
      */
     int fetchCount(Table<?> table) throws DataAccessException;
 
     /**
-     * Count the number of records in a table.
+     * Count the number of records in a table that satisfy a condition.
      * <p>
      * This executes <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
@@ -10454,7 +10454,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT EXISTS(SELECT * FROM table)</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return Whether the table contains any records
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean fetchExists(Table<?> table) throws DataAccessException;
@@ -10465,7 +10465,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return Whether the table contains any records that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;

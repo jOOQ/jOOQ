@@ -16451,9 +16451,25 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
 							<section id="data-types-lobs">
 								<title>BLOBs and CLOBs</title>
 								<content><html>
-									<p>
-										jOOQ currently doesn't explicitly support JDBC BLOB and CLOB data types. If you use any of these data types in your database, jOOQ will map them to byte[] and String instead. In simple cases (small data), this simplification is sufficient. In more sophisticated cases, you may have to bypass jOOQ, in order to deal with these data types and their respective resources. True support for LOBs is on the roadmap, though.
-									</p>
+                                    <p>
+                                        jOOQ aims for hiding all JDBC details from jOOQ client API. Specifically, <reference class="java.sql.Clob"/> and <reference class="java.sql.Blob"/> are quite "harsh" APIs with a few caveats that may even depend on JDBC driver specifics.
+                                    </p>
+
+                                    <p>
+                                        <code>Clob</code> and <code>Blob</code> are resources (but not <reference class="java.lang.AutoCloseable"/>!) with open connections to the database. This makes no sense in an ordinary jOOQ context, when eagerly fetching all the results through <code>fetch()</code> methods. <code>fetchLazy()</code> and <code>fetchStream()</code> might be candidates where <code>Clob</code> and <code>Blob</code> types could make sense as the underlying <reference class="java.sql.ResultSet"/> and <reference class="java.sql.PreparedStatement"/> are still open while consuming these resources.
+                                    </p>
+
+                                    <p>
+                                        <code>ByteArrayInputStream</code> and <code>ByteArrayOutputStream</code> on the other hand are two different types which cannot be represented as a single <code>Field&lt;T&gt;</code> type. If either would be chosen as the <code>&lt;T&gt;</code> type, we'd get read-only or write-only fields. So for full lazy streaming support, we'd need another 2-way wrapper type, similar to <code>Clob</code> and <code>Blob</code>.
+                                    </p>
+
+                                    <p>
+                                        In many cases, streaming binary data isn't really necessary as the<code>byte[]</code> can be easily kept in memory (and it is done so for further processing anyway, e.g. when working with images), so the extra work might not really be needed. This is particularly true in Oracle, where BLOBs are the only binary types in the absences of a formal (VAR)BINARY type, and CLOBs start at 4000 bytes.
+                                    </p>
+
+                                    <p>
+                                        Hence, jOOQ currently doesn't explicitly support JDBC BLOB and CLOB data types. If you use any of these data types in your database, jOOQ will map them to byte[] and String instead. In simple cases (small data), this simplification is sufficient. In more sophisticated cases, you may have to bypass jOOQ, in order to deal with these data types and their respective resources.
+                                    </p>
 								</html></content>
 							</section>
 

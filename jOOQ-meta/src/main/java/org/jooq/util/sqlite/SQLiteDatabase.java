@@ -101,12 +101,12 @@ public class SQLiteDatabase extends AbstractDatabase {
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
-        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+        final List<IndexDefinition> result = new ArrayList<IndexDefinition>();
 
-        Field<String> fIndexName = field("il.name", String.class).as("index_name");
-        Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as("unique");
-        Field<Integer> fSeqno = field("ii.seqno", int.class).add(one()).as("seqno");
-        Field<String> fColumnName = field("ii.name", String.class).as("column_name");
+        final Field<String> fIndexName = field("il.name", String.class).as("index_name");
+        final Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as("unique");
+        final Field<Integer> fSeqno = field("ii.seqno", int.class).add(one()).as("seqno");
+        final Field<String> fColumnName = field("ii.name", String.class).as("column_name");
 
         Map<Record, Result<Record>> indexes = create()
             .select(

@@ -998,7 +998,7 @@ public abstract class AbstractDatabase implements Database {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final String toString(final Object object) {
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
 
         try {
             XMLStreamWriter stream = new XMLStreamWriter() {

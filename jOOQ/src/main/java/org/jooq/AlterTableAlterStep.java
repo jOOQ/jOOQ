@@ -84,12 +84,12 @@ public interface AlterTableAlterStep<T> {
     /**
      * Make the column <code>NOT NULL</code>.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep setNotNull();
 
     /**
      * Make the column nullable.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep dropNotNull();
 }

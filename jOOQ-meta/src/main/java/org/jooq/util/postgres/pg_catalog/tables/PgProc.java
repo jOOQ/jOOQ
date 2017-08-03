@@ -30,7 +30,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgProc extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 474802814;
+    private static final long serialVersionUID = -1662913134;
 
     /**
      * The reference instance of <code>pg_catalog.pg_proc</code>
@@ -156,8 +156,9 @@ public class PgProc extends TableImpl<Record> {
     public final TableField<Record, String[]> PROARGNAMES = createField("proargnames", org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_proc.proargdefaults</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public final TableField<Record, Object> PROARGDEFAULTS = createField("proargdefaults", org.jooq.impl.DefaultDataType.getDefaultDataType("pg_node_tree"), this, "");
 
     /**

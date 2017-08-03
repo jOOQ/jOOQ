@@ -30,7 +30,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgIndex extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1505268966;
+    private static final long serialVersionUID = 1625837647;
 
     /**
      * The reference instance of <code>pg_catalog.pg_index</code>
@@ -131,13 +131,15 @@ public class PgIndex extends TableImpl<Record> {
     public final TableField<Record, Object[]> INDOPTION = createField("indoption", org.jooq.impl.DefaultDataType.getDefaultDataType("int2vector").getArrayDataType(), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_index.indexprs</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public final TableField<Record, Object> INDEXPRS = createField("indexprs", org.jooq.impl.DefaultDataType.getDefaultDataType("pg_node_tree"), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_index.indpred</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public final TableField<Record, Object> INDPRED = createField("indpred", org.jooq.impl.DefaultDataType.getDefaultDataType("pg_node_tree"), this, "");
 
     /**

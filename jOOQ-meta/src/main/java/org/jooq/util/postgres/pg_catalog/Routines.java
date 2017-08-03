@@ -9,13 +9,9 @@ import javax.annotation.Generated;
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.impl.DSL;
 import org.jooq.util.postgres.pg_catalog.routines.Count1;
 import org.jooq.util.postgres.pg_catalog.routines.Count2;
 import org.jooq.util.postgres.pg_catalog.routines.FormatType;
-import org.jooq.util.postgres.pg_catalog.tables.PgCursor;
 
 
 /**
@@ -92,19 +88,5 @@ public class Routines {
         f.set__2(__2);
 
         return f.asField();
-    }
-
-    /**
-     * Call <code>pg_catalog.pg_cursor</code>.
-     */
-    public static Result<Record> pgCursor(Configuration configuration) {
-        return DSL.using(configuration).selectFrom(org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call()).fetch();
-    }
-
-    /**
-     * Get <code>pg_catalog.pg_cursor</code> as a table.
-     */
-    public static PgCursor pgCursor() {
-        return org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call();
     }
 }

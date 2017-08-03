@@ -25,7 +25,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Count1 extends AbstractRoutine<Long> {
 
-    private static final long serialVersionUID = -914112895;
+    private static final long serialVersionUID = 1943491154;
 
     /**
      * The parameter <code>pg_catalog.count.RETURN_VALUE</code>.
@@ -33,8 +33,9 @@ public class Count1 extends AbstractRoutine<Long> {
     public static final Parameter<Long> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT, false, false);
 
     /**
-     * The parameter <code>pg_catalog.count._1</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public static final Parameter<Object> _1 = createParameter("_1", org.jooq.impl.SQLDataType.OTHER, false, true);
 
     /**

@@ -6,16 +6,11 @@ package org.jooq.util.postgres.pg_catalog;
 
 import javax.annotation.Generated;
 
-import org.jooq.Configuration;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.impl.DSL;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttrdef;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
 import org.jooq.util.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
-import org.jooq.util.postgres.pg_catalog.tables.PgCursor;
 import org.jooq.util.postgres.pg_catalog.tables.PgDescription;
 import org.jooq.util.postgres.pg_catalog.tables.PgEnum;
 import org.jooq.util.postgres.pg_catalog.tables.PgIndex;
@@ -62,25 +57,6 @@ public class Tables {
      * The table <code>pg_catalog.pg_constraint</code>.
      */
     public static final PgConstraint PG_CONSTRAINT = org.jooq.util.postgres.pg_catalog.tables.PgConstraint.PG_CONSTRAINT;
-
-    /**
-     * The table <code>pg_catalog.pg_cursor</code>.
-     */
-    public static final PgCursor PG_CURSOR = org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR;
-
-    /**
-     * Call <code>pg_catalog.pg_cursor</code>.
-     */
-    public static Result<Record> PG_CURSOR(Configuration configuration) {
-        return DSL.using(configuration).selectFrom(org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call()).fetch();
-    }
-
-    /**
-     * Get <code>pg_catalog.pg_cursor</code> as a table.
-     */
-    public static PgCursor PG_CURSOR() {
-        return org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call();
-    }
 
     /**
      * The table <code>pg_catalog.pg_description</code>.

@@ -30,7 +30,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgType extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1742765319;
+    private static final long serialVersionUID = 1358881027;
 
     /**
      * The reference instance of <code>pg_catalog.pg_type</code>
@@ -181,8 +181,9 @@ public class PgType extends TableImpl<Record> {
     public final TableField<Record, Long> TYPCOLLATION = createField("typcollation", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_type.typdefaultbin</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public final TableField<Record, Object> TYPDEFAULTBIN = createField("typdefaultbin", org.jooq.impl.DefaultDataType.getDefaultDataType("pg_node_tree"), this, "");
 
     /**

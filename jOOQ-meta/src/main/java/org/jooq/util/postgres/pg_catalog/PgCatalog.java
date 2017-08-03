@@ -11,18 +11,13 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Catalog;
-import org.jooq.Configuration;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Table;
-import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttrdef;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
 import org.jooq.util.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
-import org.jooq.util.postgres.pg_catalog.tables.PgCursor;
 import org.jooq.util.postgres.pg_catalog.tables.PgDescription;
 import org.jooq.util.postgres.pg_catalog.tables.PgEnum;
 import org.jooq.util.postgres.pg_catalog.tables.PgIndex;
@@ -45,7 +40,7 @@ import org.jooq.util.postgres.pg_catalog.tables.PgType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCatalog extends SchemaImpl {
 
-    private static final long serialVersionUID = 883582768;
+    private static final long serialVersionUID = -1875511495;
 
     /**
      * The reference instance of <code>pg_catalog</code>
@@ -76,25 +71,6 @@ public class PgCatalog extends SchemaImpl {
      * The table <code>pg_catalog.pg_constraint</code>.
      */
     public final PgConstraint PG_CONSTRAINT = org.jooq.util.postgres.pg_catalog.tables.PgConstraint.PG_CONSTRAINT;
-
-    /**
-     * The table <code>pg_catalog.pg_cursor</code>.
-     */
-    public final PgCursor PG_CURSOR = org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR;
-
-    /**
-     * Call <code>pg_catalog.pg_cursor</code>.
-     */
-    public static Result<Record> PG_CURSOR(Configuration configuration) {
-        return DSL.using(configuration).selectFrom(org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call()).fetch();
-    }
-
-    /**
-     * Get <code>pg_catalog.pg_cursor</code> as a table.
-     */
-    public static PgCursor PG_CURSOR() {
-        return org.jooq.util.postgres.pg_catalog.tables.PgCursor.PG_CURSOR.call();
-    }
 
     /**
      * The table <code>pg_catalog.pg_description</code>.
@@ -161,7 +137,6 @@ public class PgCatalog extends SchemaImpl {
             PgClass.PG_CLASS,
             PgCollation.PG_COLLATION,
             PgConstraint.PG_CONSTRAINT,
-            PgCursor.PG_CURSOR,
             PgDescription.PG_DESCRIPTION,
             PgEnum.PG_ENUM,
             PgIndex.PG_INDEX,

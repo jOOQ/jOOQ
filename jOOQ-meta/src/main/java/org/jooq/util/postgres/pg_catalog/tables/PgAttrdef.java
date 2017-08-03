@@ -30,7 +30,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgAttrdef extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1871215253;
+    private static final long serialVersionUID = -2089865182;
 
     /**
      * The reference instance of <code>pg_catalog.pg_attrdef</code>
@@ -56,8 +56,9 @@ public class PgAttrdef extends TableImpl<Record> {
     public final TableField<Record, Short> ADNUM = createField("adnum", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_attrdef.adbin</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled.
      */
+    @java.lang.Deprecated
     public final TableField<Record, Object> ADBIN = createField("adbin", org.jooq.impl.DefaultDataType.getDefaultDataType("pg_node_tree"), this, "");
 
     /**

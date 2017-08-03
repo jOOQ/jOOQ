@@ -292,7 +292,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         };
     }
 
-    final Map<Field<?>, Field<?>> map(int index) {
+    final Map<Field<?>, Field<?>> map(final int index) {
         return new AbstractMap<Field<?>, Field<?>>() {
             transient Set<Entry<Field<?>, Field<?>>> entrySet;
 

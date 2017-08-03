@@ -57,10 +57,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_END;
-import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_DELETE_ROWS;
@@ -70,6 +67,10 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TEMPORARY;
 import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
+import static org.jooq.impl.Tools.begin;
+import static org.jooq.impl.Tools.beginExecuteImmediate;
+import static org.jooq.impl.Tools.end;
+import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
@@ -221,9 +222,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_TABLE);
+            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_TABLE);
             accept0(ctx);
-            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_TABLE);
+            Tools.endTryCatch(ctx, DDLStatementType.CREATE_TABLE);
         }
         else {
             accept0(ctx);
@@ -321,6 +322,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
         ctx.end(CREATE_TABLE);
     }
+
 
 
 

@@ -141,9 +141,9 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
             accept0(ctx);
-            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
         }
         else {
             accept0(ctx);

@@ -96,9 +96,9 @@ final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_SCHEMA);
+            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
             accept0(ctx);
-            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_SCHEMA);
+            Tools.endTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
         }
         else {
             accept0(ctx);

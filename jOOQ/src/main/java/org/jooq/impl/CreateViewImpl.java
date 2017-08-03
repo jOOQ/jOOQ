@@ -146,9 +146,9 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_VIEW);
+            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_VIEW);
             accept0(ctx);
-            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_VIEW);
+            Tools.endTryCatch(ctx, DDLStatementType.CREATE_VIEW);
         }
         else {
             accept0(ctx);

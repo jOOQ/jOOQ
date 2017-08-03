@@ -126,9 +126,9 @@ final class AlterViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_VIEW, view);
+            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_VIEW, view);
             accept0(ctx);
-            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_VIEW, view);
+            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_VIEW, view);
         }
         else {
             accept0(ctx);

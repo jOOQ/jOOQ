@@ -3513,11 +3513,38 @@ final class Tools {
     }
 
     /**
+     * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
+     */
+    static final void beginExecuteImmediate(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+            case FIREBIRD: {
+                ctx.visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
+     */
+    static final void endExecuteImmediate(Context<?> ctx) {
+        ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';");
+    }
+
+    /**
      * Wrap a <code>DROP .. IF EXISTS</code> statement with
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static final void executeImmediateBegin(Context<?> ctx, DDLStatementType type) {
+    static final void beginTryCatch(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
 
 
@@ -3566,9 +3593,8 @@ final class Tools {
 
 
 
-
             case FIREBIRD: {
-                ctx.visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
+                beginExecuteImmediate(ctx);
                 break;
             }
 
@@ -3582,8 +3608,9 @@ final class Tools {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static final void executeImmediateEnd(Context<?> ctx, DDLStatementType type) {
+    static final void endTryCatch(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
+
 
 
 
@@ -3659,7 +3686,8 @@ final class Tools {
 
 
             case FIREBIRD: {
-                ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
+                endExecuteImmediate(ctx);
+                ctx.formatSeparator()
                    .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
                    .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
                 end(ctx);
@@ -3671,7 +3699,7 @@ final class Tools {
         }
     }
 
-    static final void executeImmediateIfExistsBegin(Context<?> ctx, DDLStatementType type, QueryPart object) {
+    static final void beginTryCatchIfExists(Context<?> ctx, DDLStatementType type, QueryPart object) {
         switch (ctx.family()) {
 
 
@@ -3756,12 +3784,12 @@ final class Tools {
 
 
             default:
-                executeImmediateBegin(ctx, type);
+                beginTryCatch(ctx, type);
                 break;
         }
     }
 
-    static final void executeImmediateIfExistsEnd(Context<?> ctx, DDLStatementType type, QueryPart object) {
+    static final void endTryCatchIfExists(Context<?> ctx, DDLStatementType type, QueryPart object) {
         switch (ctx.family()) {
 
 
@@ -3774,7 +3802,7 @@ final class Tools {
 
 
             default:
-                executeImmediateEnd(ctx, type);
+                endTryCatch(ctx, type);
                 break;
         }
     }

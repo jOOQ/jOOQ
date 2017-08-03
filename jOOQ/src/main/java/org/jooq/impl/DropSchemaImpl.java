@@ -114,9 +114,9 @@ final class DropSchemaImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_SCHEMA);
+            Tools.beginTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
             accept0(ctx);
-            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_SCHEMA);
+            Tools.endTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
         }
         else {
             accept0(ctx);

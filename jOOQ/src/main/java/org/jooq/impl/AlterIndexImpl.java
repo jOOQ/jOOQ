@@ -123,9 +123,9 @@ final class AlterIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_INDEX, index);
+            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_INDEX, index);
             accept0(ctx);
-            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_INDEX, index);
+            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_INDEX, index);
         }
         else {
             accept0(ctx);

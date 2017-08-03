@@ -81,7 +81,6 @@ import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
-import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_LIKE;
@@ -94,7 +93,6 @@ import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
@@ -104,7 +102,9 @@ import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Tools.begin;
+import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.end;
+import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
@@ -488,9 +488,9 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_TABLE, table);
+            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_TABLE, table);
             accept0(ctx);
-            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_TABLE, table);
+            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_TABLE, table);
         }
         else {
             accept0(ctx);
@@ -540,6 +540,7 @@ final class AlterTableImpl extends AbstractQuery implements
         // [#3805] Compound statements to alter data type and change nullability in a single statement if needed.
         if (alterColumnType != null && alterColumnType.nullability() != Nullability.DEFAULT) {
             switch (family) {
+
 
 
 
@@ -769,7 +770,7 @@ final class AlterTableImpl extends AbstractQuery implements
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
                 // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
-                if (family != POSTGRES)
+                if (!asList(POSTGRES).contains(family))
                     switch (alterColumnType.nullability()) {
                         case NULL:
                             ctx.sql(' ').visit(K_NULL);
@@ -934,8 +935,6 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
-        boolean qualify = ctx.qualify();
-
         begin(ctx);
 
 
@@ -976,16 +975,24 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-            case POSTGRES: {
 
-                // TODO [#6472] use jOOQ API here, once this is available
-                ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).formatIndentStart().formatSeparator()
-                   .visit(K_ALTER).sql(' ').qualify(false).visit(alterColumn).qualify(qualify).sql(' ')
-                   .visit(alterColumnType.nullable() ? K_DROP : K_SET).sql(' ').visit(K_NOT_NULL).sql(';')
-                   .formatIndentEnd();
+
+
+
+
+
+
+
+
+
+
+            case POSTGRES: {
+                AlterTableAlterStep<?> step = ctx.dsl().alterTable(table).alterColumn(alterColumn);
+                ctx.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull());
                 break;
             }
         }
+
         end(ctx);
     }
 

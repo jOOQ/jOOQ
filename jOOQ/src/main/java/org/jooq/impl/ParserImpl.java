@@ -3098,6 +3098,14 @@ class ParserImpl implements Parser {
 
                 break;
 
+            case 'w':
+            case 'W':
+                if (N.is(type))
+                    if ((field = parseFieldWidthBucketIf(ctx)) != null)
+                        return field;
+
+                break;
+
             case 'x':
             case 'X':
                 if (X.is(type))
@@ -3306,6 +3314,23 @@ class ParserImpl implements Parser {
             Field<?> f2 = parseField(ctx, N);
             parse(ctx, ')');
             return f1.mod((Field) f2);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldWidthBucketIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "WIDTH_BUCKET")) {
+            parse(ctx, '(');
+            Field<?> f1 = parseField(ctx, N);
+            parse(ctx, ',');
+            Field<?> f2 = parseField(ctx, N);
+            parse(ctx, ',');
+            Field<?> f3 = parseField(ctx, N);
+            parse(ctx, ',');
+            Field<?> f4 = parseField(ctx, N);
+            parse(ctx, ')');
+            return DSL.widthBucket((Field) f1, (Field) f2, (Field) f3, (Field) f4);
         }
 
         return null;

@@ -20289,6 +20289,20 @@ public class DSL {
         return new CurrentSchema();
     }
 
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
+        return widthBucket(field, Tools.field(low, field.getDataType()), Tools.field(high, field.getDataType()), Tools.field(buckets));
+    }
+
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
+        return new WidthBucket<T>(field, low, high, buckets);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX utility API
+    // -------------------------------------------------------------------------
+
     /**
      * Get the default data type for the {@link DSLContext}'s underlying
      * {@link SQLDialect} and a given Java type.

@@ -2881,6 +2881,10 @@ class ParserImpl implements Parser {
             case 'G':
                 if ((field = parseFieldGreatestIf(ctx)) != null)
                     return field;
+
+
+
+
                 else if (N.is(type) && (field = parseFieldGroupingIdIf(ctx)) != null)
                     return field;
                 else if (N.is(type) && (field = parseFieldGroupingIf(ctx)) != null)
@@ -3342,6 +3346,19 @@ class ParserImpl implements Parser {
 
         return null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final Field<?> parseFieldGroupingIdIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "GROUPING_ID")) {

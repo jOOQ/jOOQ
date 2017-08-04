@@ -14362,6 +14362,22 @@ public class DSL {
         return new org.jooq.impl.Function<Object>("grouping sets", SQLDataType.OTHER, array);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a GROUPING(field) aggregation field to be used along with
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>

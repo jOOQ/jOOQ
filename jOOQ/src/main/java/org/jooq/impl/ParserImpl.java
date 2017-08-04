@@ -5171,13 +5171,15 @@ class ParserImpl implements Parser {
         char end;
 
         switch (start) {
-            case '!': end = '!'; ctx.position = ctx.position + 1; break;
-            case '[': end = ']'; ctx.position = ctx.position + 1; break;
-            case '{': end = '}'; ctx.position = ctx.position + 1; break;
-            case '(': end = ')'; ctx.position = ctx.position + 1; break;
-            case '<': end = '>'; ctx.position = ctx.position + 1; break;
-            default:
-                throw ctx.exception("Illegal quote string character");
+            case '[' : end = ']'; ctx.position = ctx.position + 1; break;
+            case '{' : end = '}'; ctx.position = ctx.position + 1; break;
+            case '(' : end = ')'; ctx.position = ctx.position + 1; break;
+            case '<' : end = '>'; ctx.position = ctx.position + 1; break;
+            case ' ' :
+            case '\t':
+            case '\r':
+            case '\n': throw ctx.exception("Illegal quote string character");
+            default  : end = start; ctx.position = ctx.position + 1; break;
         }
 
         StringBuilder sb = new StringBuilder();

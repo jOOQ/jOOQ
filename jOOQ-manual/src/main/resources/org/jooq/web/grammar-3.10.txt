@@ -486,6 +486,7 @@ term =
 | 'FIRST_VALUE' '(' field ')' over
 | 'GREATEST' '(' fields ')'
 | 'GROUP_CONCAT' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] [ 'SEPARATOR' stringLiteral ] ')'
+| 'GROUP_ID' '(' ')'
 | 'GROUPING_ID' '(' fields ')'
 | 'GROUPING' '(' fields ')'
 | 'HOUR' '(' field ')'
@@ -705,11 +706,11 @@ name = identifier { '.' identifier }
 stringLiteral =
 (
   "'" character* "'"
-| "q'!" characters* "!'"
 | "q'[" characters* "]'"
 | "q'{" characters* "}'"
 | "q'(" characters* ")'"
 | "q'<" characters* ">'"
+| "q'" nonSpaceCharacter characters* nonSpaceCharacter "'"
 )
 ;
 

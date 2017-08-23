@@ -12557,38 +12557,38 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
 				</html></content>
 
 				<sections>
-					<section id="supported-rdbms">
-						<title>Supported RDBMS</title>
-						<content><html>
-							<h3>A list of supported databases</h3>
-							<p>
-						   		Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, some 70 unit tests are run for syntax and variable binding verification, as well as some 180 integration tests with an overall of around 1200 queries for any of these databases:
-					   		</p>
+                    <section id="supported-rdbms">
+                        <title>Supported RDBMS</title>
+                        <content><html>
+                            <h3>A list of supported databases</h3>
+                            <p>
+                                Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, some 70 unit tests are run for syntax and variable binding verification, as well as some 400 integration tests with an overall of around 4000 queries for any of these databases:
+                            </p>
                             <ul>
-                                <li>CUBRID 8.4</li>
-                                <li>DB2 9.7</li>
-                                <li>Derby 10.10</li>
-                                <li>Firebird 2.5</li>
-                                <li>H2 1.3</li>
-                                <li>HSQLDB 2.2</li>
-                                <li>Ingres 10.1</li>
-                                <li>MariaDB 5.2</li>
-                                <li>Microsoft Access 2013</li>
-                                <li>MySQL 5.5</li>
-                                <li>Oracle 10g</li>
-                                <li>PostgreSQL 9.0</li>
-                                <li>SQLite with Xerial JDBC driver</li>
+                                <li>CUBRID</li>
+                                <li>DB2</li>
+                                <li>Derby</li>
+                                <li>Firebird</li>
+                                <li>H2</li>
+                                <li>HSQLDB</li>
+                                <li>Ingres</li>
+                                <li>MariaDB</li>
+                                <li>Microsoft Access</li>
+                                <li>MySQL</li>
+                                <li>Oracle</li>
+                                <li>PostgreSQL</li>
+                                <li>SQLite</li>
                                 <li>SQL Azure</li>
-                                <li>SQL Server 2008 R8</li>
-                                <li>Sybase Adaptive Server Enterprise 15.5</li>
-                                <li>Sybase SQL Anywhere 12</li>
+                                <li>SQL Server</li>
+                                <li>Sybase Adaptive Server Enterprise</li>
+                                <li>Sybase SQL Anywhere</li>
                             </ul>
 
                             <p>
-                                For an up-to-date list of currently supported RDBMS, please refer to <a href="http://www.jooq.org/legal/licensing/#databases">http://www.jooq.org/legal/licensing/#databases</a>.
+                                For an up-to-date list of currently supported RDBMS and minimal versions, please refer to <a href="http://www.jooq.org/legal/licensing/#databases">http://www.jooq.org/legal/licensing/#databases</a>.
                             </p>
-						</html></content>
-					</section>
+                        </html></content>
+                    </section>
 
 					<section id="reference-data-types">
 						<title>Data types</title>

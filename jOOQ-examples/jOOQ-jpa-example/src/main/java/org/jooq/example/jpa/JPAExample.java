@@ -39,10 +39,13 @@ import static org.jooq.example.jpa.jooq.Tables.FILM;
 import static org.jooq.example.jpa.jooq.Tables.FILM_ACTOR;
 import static org.jooq.example.jpa.jooq.Tables.LANGUAGE;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.min;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.EnumSet;
 
@@ -52,6 +55,7 @@ import javax.persistence.EntityManagerFactory;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.SQLDialect;
+import org.jooq.example.jpa.embeddables.Title;
 import org.jooq.example.jpa.entity.Actor;
 import org.jooq.example.jpa.entity.Film;
 import org.jooq.example.jpa.entity.Language;
@@ -88,8 +92,18 @@ class JPAExample {
         Actor michaelAngarano = new Actor("Michael", "Angarano");
         Actor reeceThompson = new Actor("Reece", "Thompson");
 
-        Film killBill = new Film("Kill Bill", english, 111);
-        Film meerjungfrauen = new Film("Meerjungfrauen ticken anders", german, 89);
+        Film killBill = new Film(
+            Title.of("Kill Bill"),
+            english,
+            111,
+            Year.of(2015)
+        );
+        Film meerjungfrauen = new Film(
+            Title.of("Meerjungfrauen ticken anders"),
+            german,
+            89,
+            Year.of(2017)
+        );
 
         killBill.actors.addAll(Arrays.asList(umaThurman, davidCarradine, darylHannah));
         meerjungfrauen.actors.addAll(Arrays.asList(umaThurman, michaelAngarano, reeceThompson));
@@ -116,7 +130,9 @@ class JPAExample {
                     ACTOR.LASTNAME,
                     count().as("Total"),
                     count().filterWhere(LANGUAGE.NAME.eq("English")).as("English"),
-                    count().filterWhere(LANGUAGE.NAME.eq("German")).as("German"))
+                    count().filterWhere(LANGUAGE.NAME.eq("German")).as("German"),
+                    min(FILM.RELEASE_YEAR),
+                    max(FILM.RELEASE_YEAR))
                .from(ACTOR)
                .join(FILM_ACTOR).on(ACTOR.ACTORID.eq(FILM_ACTOR.ACTORS_ACTORID))
                .join(FILM).on(FILM.FILMID.eq(FILM_ACTOR.FILMS_FILMID))

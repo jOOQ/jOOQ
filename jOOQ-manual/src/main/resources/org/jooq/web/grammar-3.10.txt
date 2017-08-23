@@ -572,7 +572,7 @@ term =
 | ( 'UPPER' | 'UCASE' ) '(' field ')'
 | 'VAR_POP' '(' field ')' [ over ]
 | 'VAR_SAMP' '(' field ')' [ over ]
-| 'WIDTH_BUCKET' '(' field, field, field, field ')'
+| 'WIDTH_BUCKET' '(' field ',' field ',' field ',' field ')'
 | binaryLiteral
 | 'YEAR' '(' field ')'
 | unsignedNumericLiteral

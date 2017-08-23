@@ -17797,9 +17797,6 @@ org.jooq.util.GenerationTool.generate(
     javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
 )
 ]]></java><html>
-                            <p>
-                                This example is frequently updated on GitHub: <a href="https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/jOOQ-codegen-gradle">https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/jOOQ-codegen-gradle</a>
-                            </p>
                         </html></content>
                     </section>
 				</sections>

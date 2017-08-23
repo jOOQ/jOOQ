@@ -201,7 +201,9 @@ public class XMLDatabase extends AbstractDatabase {
         }
         catch (Exception ignore) {}
 
-        return DSL.using(dialect);
+        // [#6493] Data types are better discovered from the family, not the dialect. This affects the XMLDatabase,
+        //         for instance. Other databases are currently not affected by the family / dialect distinction
+        return DSL.using(dialect.family());
     }
 
     @Override

@@ -733,14 +733,15 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
         {
             context.sql(" }");
         }
     }
 
     private final void toSQLDeclare(RenderContext context) {
-
-
 
 
 
@@ -1007,6 +1008,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
         {
             context.sql("? = ");
         }
@@ -1038,11 +1041,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
         context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, int index, Field<?> value) {
-
 
 
 

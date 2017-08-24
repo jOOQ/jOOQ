@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1113845742;
+    private static final long serialVersionUID = 1030256935;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -68,7 +68,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>PUBLIC.FILM.RELEASE_YEAR</code>.
      */
-    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField("RELEASE_YEAR", org.jooq.impl.SQLDataType.INTEGER, this, "", org.jooq.Converter.of(Integer.class, Year.class, new org.jooq.example.jpa.converters.YearConverter()::convertToEntityAttribute, new org.jooq.example.jpa.converters.YearConverter()::convertToDatabaseColumn));
+    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField("RELEASE_YEAR", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
 
     /**
      * The column <code>PUBLIC.FILM.TITLE</code>.

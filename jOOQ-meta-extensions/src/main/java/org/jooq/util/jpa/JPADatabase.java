@@ -37,22 +37,30 @@ package org.jooq.util.jpa;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
+import javax.persistence.AttributeConverter;
 import javax.persistence.Entity;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
+import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.JPAConverter;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
+import org.jooq.util.jaxb.ForcedType;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -84,11 +92,11 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  */
 public class JPADatabase extends H2Database {
 
-    private static final JooqLogger log = JooqLogger.getLogger(JPADatabase.class);
+    static final String     HIBERNATE_DIALECT = SQLDialect.H2.thirdParty().hibernateDialect();
+    static final JooqLogger log               = JooqLogger.getLogger(JPADatabase.class);
 
-    private Connection              connection;
+    private Connection      connection;
 
-    @SuppressWarnings("serial")
     @Override
     protected DSLContext create0() {
         if (connection == null) {
@@ -99,38 +107,19 @@ public class JPADatabase extends H2Database {
                 log.warn("No packages defined", "It is highly recommended that you provide explicit packages to scan");
             }
 
+            boolean useAttributeConverters = Boolean.valueOf(getProperties().getProperty("use-attribute-converters", "true"));
+
             try {
                 connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
 
                 MetadataSources metadata = new MetadataSources(
                     new StandardServiceRegistryBuilder()
-                        .applySetting("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
+                        .applySetting("hibernate.dialect", HIBERNATE_DIALECT)
                         .applySetting("javax.persistence.schema-generation-connection", connection)
                         .applySetting("javax.persistence.create-database-schemas", true)
 
                         // [#5607] JPADatabase causes warnings - This prevents them
-                        .applySetting(AvailableSettings.CONNECTION_PROVIDER, new ConnectionProvider() {
-                            @SuppressWarnings("rawtypes")
-                            @Override
-                            public boolean isUnwrappableAs(Class unwrapType) {
-                                return false;
-                            }
-                            @Override
-                            public <T> T unwrap(Class<T> unwrapType) {
-                                return null;
-                            }
-                            @Override
-                            public Connection getConnection() {
-                                return connection;
-                            }
-                            @Override
-                            public void closeConnection(Connection conn) throws SQLException {}
-
-                            @Override
-                            public boolean supportsAggressiveRelease() {
-                                return true;
-                            }
-                        })
+                        .applySetting(AvailableSettings.CONNECTION_PROVIDER, connectionProvider())
                         .build()
                 );
 
@@ -154,6 +143,9 @@ public class JPADatabase extends H2Database {
                 // Hibernate 5.2 broke 5.0 API again. Here's how to do this now:
                 SchemaExport export = new SchemaExport();
                 export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
+
+                if (useAttributeConverters)
+                    loadAttributeConverters(metadata.getAnnotatedClasses());
             }
             catch (Exception e) {
                 throw new DataAccessException("Error while exporting schema", e);
@@ -161,6 +153,71 @@ public class JPADatabase extends H2Database {
         }
 
         return DSL.using(connection);
+    }
+
+    @SuppressWarnings("serial")
+    ConnectionProvider connectionProvider() {
+        return new ConnectionProvider() {
+            @SuppressWarnings("rawtypes")
+            @Override
+            public boolean isUnwrappableAs(Class unwrapType) {
+                return false;
+            }
+            @Override
+            public <T> T unwrap(Class<T> unwrapType) {
+                return null;
+            }
+            @Override
+            public Connection getConnection() {
+                return connection;
+            }
+            @Override
+            public void closeConnection(Connection conn) {}
+
+            @Override
+            public boolean supportsAggressiveRelease() {
+                return true;
+            }
+        };
+    }
+
+    private final void loadAttributeConverters(Collection<? extends Class<?>> classes) {
+        try {
+            AttributeConverterExtractor extractor = new AttributeConverterExtractor(this, classes);
+
+            attributesLoop:
+            for (Entry<Name, AttributeConverter<?, ?>> entry : extractor.extract().entrySet()) {
+                Class<?> convertToEntityAttribute = null;
+
+                for (Method method : entry.getValue().getClass().getMethods())
+                    if ("convertToEntityAttribute".equals(method.getName()))
+                        convertToEntityAttribute = method.getReturnType();
+
+                if (convertToEntityAttribute == null) {
+                    log.info("AttributeConverter", "Cannot use AttributeConverter: " + entry.getValue().getClass().getName());
+                    continue attributesLoop;
+                }
+
+                // Tables can be fully or partially or not at all qualified. Let's just accept any prefix
+                // to the available qualification
+                String regex = "(.*?\\.)?" + entry.getKey().unquotedName().toString().replace(".", "\\.");
+                ForcedType forcedType = new ForcedType()
+                    .withExpression("(?i:" + regex + ")")
+                    .withUserType(convertToEntityAttribute.getName())
+                    .withConverter(String.format("new %s(%s.class)",
+                        JPAConverter.class.getName(),
+                        entry.getValue().getClass().getName()
+                    ));
+
+                log.info("AttributeConverter", "Configuring JPA AttributeConverter: " + toString(forcedType));
+                getConfiguredForcedTypes().add(forcedType);
+            }
+        }
+
+        // AttributeConverter is part of JPA 2.1. Older JPA providers may not have this type, yet
+        catch (NoClassDefFoundError e) {
+            log.info("AttributeConverter", "Cannot load AttributeConverters: " + e.getMessage());
+        }
     }
 
     @Override

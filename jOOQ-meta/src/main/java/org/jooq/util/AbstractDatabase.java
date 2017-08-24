@@ -997,7 +997,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final String toString(final Object object) {
+    protected static final String toString(final Object object) {
         final StringWriter writer = new StringWriter();
 
         try {

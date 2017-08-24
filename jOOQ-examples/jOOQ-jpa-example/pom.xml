@@ -138,13 +138,6 @@
                                         </property>
                                     </properties>
                                     <includes>.*</includes>
-                                    <forcedTypes>
-                                        <forcedType>
-                                            <userType>java.time.Year</userType>
-                                            <converter>org.jooq.Converter.of(Integer.class, Year.class, new org.jooq.example.jpa.converters.YearConverter()::convertToEntityAttribute, new org.jooq.example.jpa.converters.YearConverter()::convertToDatabaseColumn)</converter>
-                                            <expression>RELEASE_YEAR</expression>
-                                        </forcedType>
-                                    </forcedTypes>
                                 </database>
                                 <generate>
                                 </generate>

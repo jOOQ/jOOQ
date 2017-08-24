@@ -344,6 +344,7 @@ public class H2Database extends AbstractDatabase {
                     Sequences.SEQUENCE_NAME)
                 .from(SEQUENCES)
                 .where(Sequences.SEQUENCE_SCHEMA.in(getInputSchemata()))
+                .and(Sequences.SEQUENCE_NAME.upper().notLike("SYSTEM!_SEQUENCE!_%", '!'))
                 .orderBy(
                     Sequences.SEQUENCE_SCHEMA,
                     Sequences.SEQUENCE_NAME)

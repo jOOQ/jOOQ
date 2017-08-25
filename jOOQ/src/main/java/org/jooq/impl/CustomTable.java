@@ -39,6 +39,7 @@ import java.util.List;
 import org.jooq.Cursor;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -77,10 +78,26 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
      */
     private static final long serialVersionUID = 4300737872863697213L;
 
+    protected CustomTable(Name name) {
+        super(name);
+    }
+
+    protected CustomTable(Name name, Schema schema) {
+        super(name, schema);
+    }
+
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #CustomTable(Name)} instead.
+     */
+    @Deprecated
     protected CustomTable(String name) {
         super(name);
     }
 
+    /**
+     * @deprecated - 3.10 - [#5996] - Use {@link #CustomTable(Name, Schema)} instead.
+     */
+    @Deprecated
     protected CustomTable(String name, Schema schema) {
         super(name, schema);
     }

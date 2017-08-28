@@ -82,19 +82,19 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep<R> {
+public interface SelectConnectByAfterStartWithStep<R extends Record> {
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectBy(Condition condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectBy(Field<Boolean> condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(Field<Boolean> condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -108,7 +108,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Deprecated
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectBy(Boolean condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(Boolean condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -123,7 +123,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectBy(SQL sql);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(SQL sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -138,7 +138,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectBy(String sql);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(String sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -154,7 +154,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectBy(String sql, Object... bindings);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -170,21 +170,21 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectBy(String sql, QueryPart... parts);
+    SelectConnectByAfterStartWithConditionStep<R> connectBy(String sql, QueryPart... parts);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
      */
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectByNoCycle(Condition condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
      */
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectByNoCycle(Field<Boolean> condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(Field<Boolean> condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -199,7 +199,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Deprecated
     @Support({ CUBRID })
-    SelectConnectByConditionStep<R> connectByNoCycle(Boolean condition);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(Boolean condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -215,7 +215,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectByNoCycle(SQL sql);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(SQL sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -231,7 +231,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectByNoCycle(String sql);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(String sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -248,7 +248,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectByNoCycle(String sql, Object... bindings);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -265,101 +265,6 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      */
     @Support({ CUBRID })
     @PlainSQL
-    SelectConnectByConditionStep<R> connectByNoCycle(String sql, QueryPart... parts);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     */
-    @Support({ CUBRID })
-    SelectConnectByAfterStartWithStep<R> startWith(Condition condition);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     */
-    @Support({ CUBRID })
-    SelectConnectByAfterStartWithStep<R> startWith(Field<Boolean> condition);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #startWith(Condition)} or
-     *             {@link #startWith(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
-     */
-    @Deprecated
-    @Support({ CUBRID })
-    SelectConnectByAfterStartWithStep<R> startWith(Boolean condition);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(SQL)
-     * @see SQL
-     */
-    @Support({ CUBRID })
-    @PlainSQL
-    SelectConnectByAfterStartWithStep<R> startWith(SQL sql);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(String)
-     * @see SQL
-     */
-    @Support({ CUBRID })
-    @PlainSQL
-    SelectConnectByAfterStartWithStep<R> startWith(String sql);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(String, Object...)
-     * @see DSL#sql(String, Object...)
-     * @see SQL
-     */
-    @Support({ CUBRID })
-    @PlainSQL
-    SelectConnectByAfterStartWithStep<R> startWith(String sql, Object... bindings);
-
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses! *
-     *
-     * @see DSL#condition(String, QueryPart...)
-     * @see DSL#sql(String, QueryPart...)
-     * @see SQL
-     */
-    @Support({ CUBRID })
-    @PlainSQL
-    SelectConnectByAfterStartWithStep<R> startWith(String sql, QueryPart... parts);
+    SelectConnectByAfterStartWithConditionStep<R> connectByNoCycle(String sql, QueryPart... parts);
 
 }

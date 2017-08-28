@@ -178,4 +178,15 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
      * Whether this data type can be used from SQL statements.
      */
     boolean isSQLUsable();
+
+    /**
+     * Whether this data type is a synthetic, structural UDT type.
+     * <p>
+     * This is <code>true</code> for example:
+     * <ul>
+     * <li>For Oracle <code>TAB%ROWTYPE</code> references, which are synthetic
+     * PL/SQL RECORD types in PL/SQL.</li>
+     * </ul>
+     */
+    boolean isSynthetic();
 }

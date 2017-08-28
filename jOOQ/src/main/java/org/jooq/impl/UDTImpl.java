@@ -67,6 +67,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     private final String          name;
     private final Fields<R>       fields;
     private final Package         pkg;
+    private final boolean         synthetic;
     private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
@@ -74,10 +75,15 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     public UDTImpl(String name, Schema schema, Package pkg) {
+        this(name, schema, pkg, false);
+    }
+
+    public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
         this.fields = new Fields<R>();
         this.name = name;
         this.schema = schema;
         this.pkg = pkg;
+        this.synthetic = synthetic;
     }
 
     @Override
@@ -174,6 +180,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     @Override
     public final boolean isSQLUsable() {
         return pkg == null;
+    }
+
+    @Override
+    public final boolean isSynthetic() {
+        return synthetic;
     }
 
     @Override

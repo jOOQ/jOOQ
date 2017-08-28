@@ -72,4 +72,9 @@ public interface UDTDefinition extends PackageDefinition {
      */
     @Override
     List<RoutineDefinition> getRoutines();
+
+    /**
+     * Whether this UDT is a synthetic type.
+     */
+    boolean isSynthetic();
 }

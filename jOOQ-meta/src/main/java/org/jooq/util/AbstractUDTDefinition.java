@@ -49,13 +49,20 @@ implements
     UDTDefinition {
 
     private List<RoutineDefinition> routines;
+    private final boolean           synthetic;
 
     public AbstractUDTDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, null, name, comment);
+        this(schema, null, name, false, comment);
     }
 
     public AbstractUDTDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment) {
+        this(schema, pkg, name, false, comment);
+    }
+
+    public AbstractUDTDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, boolean synthetic, String comment) {
         super(schema, pkg, name, comment);
+
+        this.synthetic = synthetic;
     }
 
     @Override
@@ -87,5 +94,10 @@ implements
     @Override
     public List<AttributeDefinition> getConstants() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isSynthetic() {
+        return synthetic;
     }
 }

@@ -203,7 +203,10 @@ public final class SettingsTools {
      */
     public static final Settings clone(Settings settings) {
         Settings result = (Settings) settings.clone();
-        result.renderFormatting = (RenderFormatting) result.renderFormatting.clone();
+
+        if (result.renderFormatting != null)
+            result.renderFormatting = (RenderFormatting) result.renderFormatting.clone();
+
         return result;
     }
 

@@ -148,6 +148,7 @@ final class Keywords {
     static final Keyword K_INSERT                           = keyword("insert");
     static final Keyword K_INT                              = keyword("int");
     static final Keyword K_INTO                             = keyword("into");
+    static final Keyword K_IS                               = keyword("is");
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
     static final Keyword K_IS_NULL                          = keyword("is null");
     static final Keyword K_KEEP                             = keyword("keep");
@@ -199,6 +200,7 @@ final class Keywords {
     static final Keyword K_PRIOR                            = keyword("prior");
     static final Keyword K_RAISE                            = keyword("raise");
     static final Keyword K_RAISERROR                        = keyword("raiserror");
+    static final Keyword K_RECORD                           = keyword("record");
     static final Keyword K_RECURSIVE                        = keyword("recursive");
     static final Keyword K_REFERENCES                       = keyword("references");
     static final Keyword K_REGEXP                           = keyword("regexp");

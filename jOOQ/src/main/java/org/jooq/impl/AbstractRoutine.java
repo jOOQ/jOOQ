@@ -61,12 +61,15 @@ import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_PASSING;
+import static org.jooq.impl.Keywords.K_RECORD;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -786,6 +789,39 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private final void toSQLBegin(RenderContext context) {
@@ -818,22 +854,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             context.sql("{ ");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1282,6 +1302,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
     }
+
+
+
+
 
 
 

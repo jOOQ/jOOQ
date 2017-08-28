@@ -48,6 +48,10 @@ This is set to "QUOTED" by default for backwards-compatibility]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered SQL should be pretty-printed.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderFormatting" type="jooq-runtime:RenderFormatting" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether stored function calls should be wrapped in scalar subqueries.
 <p>
@@ -344,6 +348,24 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <enumeration value="UPPER"/>
     </restriction>
   </simpleType>
+
+  <complexType name="RenderFormatting">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+
+    <all>
+      <element name="newline" type="string" minOccurs="0" maxOccurs="1" default="&#10;">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The character to be used for line breaks.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="indentation" type="string" minOccurs="0" maxOccurs="1" default="  ">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The characters to be used for indentation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="printMargin" type="int" minOccurs="0" maxOccurs="1" default="80">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The print margin after which (some) formatted elements will break lines.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
 
   <simpleType name="BackslashEscaping">
     <restriction base="string">

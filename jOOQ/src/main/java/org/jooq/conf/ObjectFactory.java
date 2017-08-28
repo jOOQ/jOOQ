@@ -73,6 +73,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RenderFormatting }
+     *
+     */
+    public RenderFormatting createRenderFormatting() {
+        return new RenderFormatting();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Settings }{@code >}}
      *
      */

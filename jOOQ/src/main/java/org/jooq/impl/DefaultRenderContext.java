@@ -62,6 +62,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
@@ -88,7 +89,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                           alias;
     private int                           indent;
     private Deque<Integer>                indentLock;
-    private int                           printMargin        = 80;
     private boolean                       separator;
     private boolean                       newline;
     private int                           skipUpdateCounts;
@@ -97,6 +97,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     RenderKeywordStyle                    cachedRenderKeywordStyle;
     RenderNameStyle                       cachedRenderNameStyle;
     boolean                               cachedRenderFormatted;
+
+    // [#6525] Cached values from Settings.renderFormatting
+    String                                cachedIndentation;
+    int                                   cachedIndentWidth;
+    String                                cachedNewline;
+    int                                   cachedPrintMargin;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration, null);
@@ -108,6 +114,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
         this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
         this.cachedRenderNameStyle = settings.getRenderNameStyle();
+
+        RenderFormatting formatting = settings.getRenderFormatting();
+        if (formatting == null)
+            formatting = new RenderFormatting();
+
+        this.cachedNewline = formatting.getNewline() == null ? "\n" : formatting.getNewline();
+        this.cachedIndentation = formatting.getIndentation() == null ? "  " : formatting.getIndentation();
+        this.cachedIndentWidth = cachedIndentation.length();
+        this.cachedPrintMargin = formatting.getPrintMargin() == null ? 80 : formatting.getPrintMargin();
     }
 
     DefaultRenderContext(RenderContext context) {
@@ -222,7 +237,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext formatNewLine() {
         if (cachedRenderFormatted) {
-            sql("\n", true);
+            sql(cachedNewline, true);
             sql(indentation(), true);
 
             newline = true;
@@ -233,15 +248,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatNewLineAfterPrintMargin() {
-        if (cachedRenderFormatted && printMargin > 0)
-            if (sql.length() - sql.lastIndexOf("\n") > printMargin)
+        if (cachedRenderFormatted && cachedPrintMargin > 0)
+            if (sql.length() - sql.lastIndexOf(cachedNewline) > cachedPrintMargin)
                 formatNewLine();
 
         return this;
     }
 
     private final String indentation() {
-        return StringUtils.leftPad("", indent, " ");
+        return StringUtils.leftPad("", indent, cachedIndentation);
     }
 
     @Override
@@ -271,12 +286,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart() {
-        return formatIndentStart(2);
+        return formatIndentStart(cachedIndentWidth);
     }
 
     @Override
     public final RenderContext formatIndentEnd() {
-        return formatIndentEnd(2);
+        return formatIndentEnd(cachedIndentWidth);
     }
 
     @Override
@@ -302,13 +317,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return indentLock;
     }
 
-    private static final Pattern NEW_LINE = Pattern.compile("[\\n\\r]");
-
     @Override
     public final RenderContext formatIndentLockStart() {
         if (cachedRenderFormatted) {
             indentLock().push(indent);
-            String[] lines = NEW_LINE.split(sql);
+            String[] lines = NEWLINE.split(sql);
             indent = lines[lines.length - 1].length();
         }
 
@@ -325,7 +338,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatPrintMargin(int margin) {
-        printMargin = margin;
+        cachedPrintMargin = margin;
         return this;
     }
 

@@ -48,6 +48,7 @@ public class Settings
     protected RenderKeywordStyle renderKeywordStyle = RenderKeywordStyle.AS_IS;
     @XmlElement(defaultValue = "false")
     protected Boolean renderFormatted = false;
+    protected RenderFormatting renderFormatting;
     @XmlElement(defaultValue = "false")
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
     @XmlElement(defaultValue = "DEFAULT")
@@ -252,6 +253,30 @@ public class Settings
      */
     public void setRenderFormatted(Boolean value) {
         this.renderFormatted = value;
+    }
+
+    /**
+     * All sorts of formatting flags / settings.
+     *
+     * @return
+     *     possible object is
+     *     {@link RenderFormatting }
+     *
+     */
+    public RenderFormatting getRenderFormatting() {
+        return renderFormatting;
+    }
+
+    /**
+     * Sets the value of the renderFormatting property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderFormatting }
+     *
+     */
+    public void setRenderFormatting(RenderFormatting value) {
+        this.renderFormatting = value;
     }
 
     /**
@@ -836,6 +861,11 @@ public class Settings
 
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
+        return this;
+    }
+
+    public Settings withRenderFormatting(RenderFormatting value) {
+        setRenderFormatting(value);
         return this;
     }
 

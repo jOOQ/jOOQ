@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -104,6 +105,7 @@ import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Param;
 import org.jooq.Parameter;
@@ -739,6 +741,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
         {
             context.sql(" }");
         }
@@ -815,14 +821,24 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
-
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLBegin(RenderContext context) {
 
@@ -854,7 +870,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             context.sql("{ ");
         }
     }
-
 
 
 

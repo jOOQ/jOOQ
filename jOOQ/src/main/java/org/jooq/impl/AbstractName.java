@@ -63,6 +63,21 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
     private static final long serialVersionUID = 8562325639223483938L;
 
     @Override
+    public final Name append(String name) {
+        return append(new UnqualifiedName(name));
+    }
+
+    @Override
+    public final Name append(Name name) {
+        Name[] p1 = parts();
+        Name[] p2 = name.parts();
+        Name[] array = new Name[p1.length + p2.length];
+        System.arraycopy(p1, 0, array, 0, p1.length);
+        System.arraycopy(p2, 0, array, p1.length, p2.length);
+        return new QualifiedName(array);
+    }
+
+    @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

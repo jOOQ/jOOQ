@@ -109,6 +109,16 @@ public interface Name extends QueryPart {
     Name[] parts();
 
     /**
+     * Appends <code>name</code> to this name.
+     */
+    Name append(String name);
+
+    /**
+     * Appends <code>name</code> (all of its {@link #parts()}) to this name.
+     */
+    Name append(Name name);
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

@@ -185,36 +185,26 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.formatIndentLockStart()
-               .visit(K_CASE)
-               .formatIndentLockStart();
+            ctx.visit(K_CASE)
+               .formatIndentStart()
+               .formatSeparator();
 
             int size = conditions.size();
             for (int i = 0; i < size; i++) {
-                if (i > 0) {
-                    ctx.formatNewLine();
-                }
+                if (i > 0)
+                    ctx.formatSeparator();
 
-                ctx.sql(' ').visit(K_WHEN).sql(' ').visit(conditions.get(i))
-                   .sql(' ').visit(K_THEN).sql(' ').visit(results.get(i));
+                ctx.visit(K_WHEN).sql(' ').visit(conditions.get(i)).sql(' ')
+                   .visit(K_THEN).sql(' ').visit(results.get(i));
             }
 
-            if (otherwise != null) {
-                ctx.formatNewLine()
-                   .sql(' ').visit(K_ELSE).sql(' ').visit(otherwise);
-            }
+            if (otherwise != null)
+                ctx.formatSeparator()
+                   .visit(K_ELSE).sql(' ').visit(otherwise);
 
-            ctx.formatIndentLockEnd();
-
-            if (size > 1 || otherwise != null) {
-                ctx.formatSeparator();
-            }
-            else {
-                ctx.sql(' ');
-            }
-
-            ctx.visit(K_END)
-               .formatIndentLockEnd();
+            ctx.formatIndentEnd()
+               .formatSeparator()
+               .visit(K_END);
         }
     }
 }

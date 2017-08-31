@@ -844,7 +844,11 @@ final class ResultImpl<R extends Record> implements Result<R> {
             formatted += DatatypeConverter.printBase64Binary((byte[]) value);
         }
         else if (value.getClass().isArray()) {
-            formatted += Arrays.toString((Object[]) value);
+            // [#6545] Nested arrays
+            if (value.getClass().getComponentType().isArray())
+                formatted += Arrays.deepToString((Object[]) value);
+            else
+                formatted += Arrays.toString((Object[]) value);
         }
         else if (value instanceof EnumType) {
             formatted += ((EnumType) value).getLiteral();

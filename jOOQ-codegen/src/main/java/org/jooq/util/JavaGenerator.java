@@ -4552,6 +4552,14 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    private boolean printDeprecationIfUnknownTypes(JavaWriter out, Collection<? extends ParameterDefinition> params) {
+        for (ParameterDefinition param : params)
+            if (printDeprecationIfUnknownType(out, getJavaType(param.getType())))
+                return true;
+
+        return false;
+    }
+
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
         return printDeprecationIfUnknownType(out, type, 1);
     }
@@ -4843,7 +4851,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
-        if (!printDeprecationIfUnknownType(out, functionTypeFull))
+        if (!printDeprecationIfUnknownType(out, functionTypeFull) &&
+            !printDeprecationIfUnknownTypes(out, function.getInParameters()))
             out.tab(1).javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
@@ -4928,7 +4937,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
 
-        out.tab(1).javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
+        if (!printDeprecationIfUnknownTypes(out, function.getParameters()))
+            out.tab(1).javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
 
         if (scala)
             out.tab(1).print("def %s(", javaMethodName);
@@ -5030,7 +5040,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String configurationArgument = disambiguateJavaMemberName(function.getInParameters(), "configuration");
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
-        if (!printDeprecationIfUnknownType(out, functionTypeFull))
+        if (!printDeprecationIfUnknownType(out, functionTypeFull) &&
+            !printDeprecationIfUnknownTypes(out, function.getInParameters()))
             out.tab(1).javadoc("Call <code>%s</code>", functionName);
 
         if (scala)
@@ -5116,7 +5127,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String localVar = disambiguateJavaMemberName(procedure.getInParameters(), "p");
         final List<ParameterDefinition> outParams = list(procedure.getReturnValue(), procedure.getOutParameters());
 
-        out.tab(1).javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
+        if (!printDeprecationIfUnknownTypes(out, procedure.getAllParameters()))
+            out.tab(1).javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
 
         if (scala) {
         	out.tab(1).print("def ");
@@ -5267,7 +5279,8 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3456] Local variables should not collide with actual function arguments
         final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
 
-        out.tab(1).javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
+        if (!printDeprecationIfUnknownTypes(out, function.getParameters()))
+            out.tab(1).javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
 
         if (scala)
             out.tab(1).print("def %s(%s : %s", javaMethodName, configurationArgument, Configuration.class);

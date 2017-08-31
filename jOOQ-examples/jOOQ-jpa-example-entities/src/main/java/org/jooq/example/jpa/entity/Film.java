@@ -88,6 +88,8 @@ public class Film {
     @ManyToMany(fetch = LAZY, cascade = CascadeType.ALL)
     public Set<Actor> actors = new HashSet<>();
 
+    public Film() {}
+
     public Film(Title title, Language language, int length, Year releaseYear) {
         this.title = title;
         this.language = language;

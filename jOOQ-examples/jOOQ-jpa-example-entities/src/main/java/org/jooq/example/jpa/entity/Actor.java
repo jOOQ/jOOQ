@@ -64,6 +64,8 @@ public class Actor {
     @ManyToMany(fetch = LAZY, mappedBy = "actors", cascade = CascadeType.ALL)
     public Set<Film> films = new HashSet<>();
 
+    public Actor() {}
+
     public Actor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

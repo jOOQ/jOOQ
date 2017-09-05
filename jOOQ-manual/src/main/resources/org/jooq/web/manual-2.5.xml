@@ -6577,8 +6577,8 @@ Factory optimistic = new Factory(connection, SQLDialect.ORACLE,
   new Settings().withExecuteWithOptimisticLocking(true));
 
 // Fetch a book two times
-BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
-BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
+BookRecord book1 = optimistic.fetchOne(BOOK, BOOK.ID.eq(5));
+BookRecord book2 = optimistic.fetchOne(BOOK, BOOK.ID.eq(5));
 
 // Change the title and store this book. The underlying database record has not been modified, it can be safely updated.
 book1.setTitle("Animal Farm");
@@ -6610,8 +6610,8 @@ Factory optimistic = new Factory(connection, SQLDialect.ORACLE,
   new Settings().withExecuteWithOptimisticLocking(true));
 
 // Fetch a book two times
-BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
-BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.eq(5));
+BookRecord book1 = optimistic.fetchOne(BOOK, BOOK.ID.eq(5));
+BookRecord book2 = optimistic.fetchOne(BOOK, BOOK.ID.eq(5));
 
 // Change the title and store this book. The MODIFIED value has not been changed since the book was fetched.
 // It can be safely updated

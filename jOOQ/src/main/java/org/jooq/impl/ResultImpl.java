@@ -818,13 +818,31 @@ final class ResultImpl<R extends Record> implements Result<R> {
         }
     }
 
-    private static final Object formatJSON0(Object value) {
+    private static final void formatJSON0(Object value, Writer writer) throws java.io.IOException {
 
         // [#2741] TODO: This logic will be externalised in new SPI
-        if (value instanceof byte[])
-            return DatatypeConverter.printBase64Binary((byte[]) value);
+        if (value instanceof byte[]) {
+            JSONValue.writeJSONString(DatatypeConverter.printBase64Binary((byte[]) value), writer);
+        }
 
-        return value;
+        // [#6563] Arrays can be serialised natively in JSON
+        else if (value instanceof Object[]) {
+            Object[] array = (Object[]) value;
+            writer.append('[');
+
+            for (int i = 0; i < array.length; i++) {
+                if (i > 0)
+                    writer.append(',');
+
+                formatJSON0(array[i], writer);
+            }
+
+            writer.append(']');
+        }
+
+        else {
+            JSONValue.writeJSONString(value, writer);
+        }
     }
 
     /**
@@ -1062,7 +1080,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
             if (format.format())
                 writer.append(' ');
 
-            JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
+            formatJSON0(record.get(index), writer);
             separator = ",";
         }
 
@@ -1086,7 +1104,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
             if (format.format())
                 writer.append(format.newline()).append(format.indentString(recordLevel + 1));
 
-            JSONValue.writeJSONString(formatJSON0(record.get(index)), writer);
+            formatJSON0(record.get(index), writer);
             separator = ",";
         }
 

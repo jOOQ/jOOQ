@@ -155,7 +155,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     ? customType.getType()
                     : customType.getName();
 
-                if (Boolean.TRUE.equals(customType.isEnumConverter())) {
+                // [#5877] [#6567] EnumConverters profit from simplified configuration
+                if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
+                    EnumConverter.class.getName().equals(customType.getConverter())) {
+
                     String tType = DefaultDataType
                         .getDataType(db.getDialect(), definedType.getType(), definedType.getPrecision(), definedType.getScale())
                         .getType()

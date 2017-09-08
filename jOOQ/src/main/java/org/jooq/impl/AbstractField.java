@@ -382,7 +382,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
                 result.when(entry.getKey(), inline(entry.getValue()));
 
         if (result == null)
-            return (SortField) DSL.NULL().sortDefault();
+            return new SortFieldImpl<Z>(new ConstantSortField<Z>((Field) this), SortOrder.DEFAULT);
         else
             return result.asc();
     }

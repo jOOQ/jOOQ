@@ -40,6 +40,7 @@ import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -426,6 +427,16 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 result = stmt.getUpdateCount();
                 ctx.rows(result);
             }
+
+
+
+
+
+
+
+
+
+
 
             listener.executeEnd(ctx);
             return result;

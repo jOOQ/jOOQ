@@ -1123,7 +1123,8 @@ public class JavaGenerator extends AbstractGenerator {
         String rowTypeRecord = null;
 
         // [#3130] Invalid UDTs may have a degree of 0
-        if (degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+        // [#6072] Generate these super types only if configured to do so
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             rowType = refRowType(out, columns);
 
             if (scala)
@@ -1208,7 +1209,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#3130] Invalid UDTs may have a degree of 0
-        if (degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             out.tab(1).header("Record%s type implementation", degree);
 
             // fieldsRow()

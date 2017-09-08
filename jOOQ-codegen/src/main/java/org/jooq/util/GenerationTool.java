@@ -540,6 +540,8 @@ public class GenerationTool {
                 generator.setGenerateTables(g.getGenerate().isTables());
             if (g.getGenerate().isRecords() != null)
                 generator.setGenerateRecords(g.getGenerate().isRecords());
+            if (g.getGenerate().isRecordsImplementingRecordN() != null)
+                generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
             if (g.getGenerate().isImmutablePojos() != null)

@@ -66,6 +66,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateUDTs                       = true;
     boolean                            generateTables                     = true;
     boolean                            generateRecords                    = true;
+    boolean                            generateRecordsImplementingRecordN = true;
     boolean                            generatePojos                      = false;
     boolean                            generatePojosEqualsAndHashCode     = false;
     boolean                            generatePojosToString              = true;
@@ -313,6 +314,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRecords(boolean generateRecords) {
         this.generateRecords = generateRecords;
+    }
+
+    @Override
+    public boolean generateRecordsImplementingRecordN() {
+        return generateRecords() && generateRecordsImplementingRecordN;
+    }
+
+    @Override
+    public void setGenerateRecordsImplementingRecordN(boolean generateRecordsImplementingRecordN) {
+        this.generateRecordsImplementingRecordN = generateRecordsImplementingRecordN;
     }
 
     @Override

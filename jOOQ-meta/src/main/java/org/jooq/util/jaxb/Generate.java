@@ -60,6 +60,8 @@ public class Generate implements Serializable
     protected Boolean tables = true;
     @XmlElement(defaultValue = "true")
     protected Boolean records = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean recordsImplementingRecordN = true;
     @XmlElement(defaultValue = "false")
     protected Boolean pojos = false;
     @XmlElement(defaultValue = "false")
@@ -428,6 +430,30 @@ public class Generate implements Serializable
      */
     public void setRecords(Boolean value) {
         this.records = value;
+    }
+
+    /**
+     * Generate TableRecord classes that implement Record[N] super types
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRecordsImplementingRecordN() {
+        return recordsImplementingRecordN;
+    }
+
+    /**
+     * Sets the value of the recordsImplementingRecordN property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRecordsImplementingRecordN(Boolean value) {
+        this.recordsImplementingRecordN = value;
     }
 
     /**
@@ -1142,6 +1168,11 @@ public class Generate implements Serializable
 
     public Generate withRecords(Boolean value) {
         setRecords(value);
+        return this;
+    }
+
+    public Generate withRecordsImplementingRecordN(Boolean value) {
+        setRecordsImplementingRecordN(value);
         return this;
     }
 

@@ -185,6 +185,16 @@ public interface Generator {
     void setGenerateRecords(boolean generateRecords);
 
     /**
+     * Whether TableRecords should be generated in addition to tables, which implement Record[N] types
+     */
+    boolean generateRecordsImplementingRecordN();
+
+    /**
+     * Whether TableRecords should be generated in addition to tables, which implement Record[N] types
+     */
+    void setGenerateRecordsImplementingRecordN(boolean generateRecordsImplementingRecordN);
+
+    /**
      * Whether POJO's should be generated in addition to records
      */
     boolean generatePojos();

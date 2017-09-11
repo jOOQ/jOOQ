@@ -10,7 +10,15 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.4.5 - July 19, 2017
+Version 3.4.7 - July 19, 2017
+================================================================================
+
+Bug fixes
+---------
+
+#6571 - Trigger generated errors are not fetched through jOOQ's plain SQL API
+
+Version 3.4.6 - July 19, 2017
 ================================================================================
 
 Bug fixes

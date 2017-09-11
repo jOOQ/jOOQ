@@ -46,6 +46,7 @@ import static org.jooq.ExecuteType.DDL;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -412,6 +413,16 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 result = stmt.getUpdateCount();
                 ctx.rows(result);
             }
+
+            /* [pro] */
+            // [#6571] In SQL Server, there are cases where an update statement (above) may
+            // report its success despite the fact that a trigger might have caused an exception.
+            // This loop will skip all result sets and update counts that might precede an exception.
+            // In case there are multiple exceptions, they will all be consumed further down.
+            if (ctx.configuration().dialect().family() == SQLSERVER)
+                while (stmt.getMoreResults() || stmt.getUpdateCount() != -1)
+                    ;
+            /* [/pro] */
 
             listener.executeEnd(ctx);
             return result;

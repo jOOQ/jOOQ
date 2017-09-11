@@ -59,6 +59,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -1010,6 +1011,51 @@ public abstract class BaseTest<
     protected static void assertSame(Collection<?> expected, Collection<?> actual) {
         if (!new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
             Assert.fail("Collections aren't the same : " + expected + " and " + actual);
+        }
+    }
+
+    /**
+     * This is needed to allow for throwing Throwables from lambda expressions
+     */
+    @FunctionalInterface
+    public interface ThrowableRunnable {
+        void run() throws Throwable;
+    }
+
+    /**
+     * Assert a Throwable type
+     */
+    public static <T extends Throwable> void assertThrows(Class<? extends T> throwable, ThrowableRunnable runnable) {
+        assertThrows(throwable, runnable, t -> {});
+    }
+
+    /**
+     * Assert a Throwable type and implement more assertions in a consumer
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends Throwable> void assertThrows(Class<? extends T> throwable, ThrowableRunnable runnable, Consumer<? super T> exceptionConsumer) {
+        boolean fail = false;
+        try {
+            runnable.run();
+            fail = true;
+        }
+        catch (Throwable t) {
+            if (!throwable.isInstance(t))
+                throw new AssertionError("Bad exception type", t);
+
+            exceptionConsumer.accept((T) t);
+        }
+
+        if (fail)
+            Assert.fail("No exception was thrown. Expected: " + throwable.getName());
+    }
+
+    public static void ignoreThrows(ThrowableRunnable runnable) {
+        try {
+            runnable.run();
+        }
+        catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 }

@@ -45,6 +45,7 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.BaseTest.ignoreThrows;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables4;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables5;
@@ -1369,6 +1370,37 @@ public class SQLServerTest extends jOOQAbstractTest<
         create().execute("insert into t_3085 values (null, null)");
         T_3085Record record = create().resultQuery("select * from t_3085").fetchAnyInto(T_3085);
         assertEquals(asList(null, null), asList(record.intoArray()));
+    }
+
+    @Test
+    public void testSQLServerTriggerErrors() throws Exception {
+        try {
+            for (String t : new String[] { "a", "b", "c" })
+                create().execute("create table " + t + " (v1 int not null, v2 varchar(20) null, v3 varchar(20) null)");
+
+            create().execute("create trigger a_del on a for delete as update b set v2 = 'x' where v1 = 1; delete from b where v1 = 1;");
+            create().execute("create trigger b_del on b for delete as insert into c (v1, v2, v3) select deleted.v1, deleted.v2, deleted.v3 from deleted");
+
+            create().execute("insert into a (v1, v2, v3) values (1, 'a', 'a')");
+            create().execute("insert into b (v1, v2, v3) values (1, 'b', 'b')");
+
+            create().execute("alter table c drop column v3");
+
+            try {
+                create().execute("delete from a where v1 = 1");
+                fail();
+            }
+            catch (DataAccessException expected) {
+                assertEquals("Invalid column name 'v3'.", expected.getCause().getMessage());
+            }
+        }
+        finally {
+            ignoreThrows(create().query("drop trigger a_del")::execute);
+            ignoreThrows(create().query("drop trigger b_del")::execute);
+            ignoreThrows(create().query("drop table a")::execute);
+            ignoreThrows(create().query("drop table b")::execute);
+            ignoreThrows(create().query("drop table c")::execute);
+        }
     }
 }
 

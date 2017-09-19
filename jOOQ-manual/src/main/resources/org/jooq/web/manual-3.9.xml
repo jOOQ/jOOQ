@@ -9400,6 +9400,33 @@ Field<String> c = val("c");
 condition("my_column IN ({0}, {1}, {2})", a, b, c); // Using distinct template arguments
 condition("my_column IN ({0})", list(a, b, c));    // Using a single template argument]]></java><html>
 
+                            <h3>Parsing rules</h3>
+
+                            <p>
+                                When processing these plain SQL templates, a mini parser is run that handles things like
+                            </p>
+
+                            <ul>
+                                <li>String literals</li>
+                                <li>Quoted names</li>
+                                <li>Comments</li>
+                                <li>JDBC escape sequences</li>
+                            </ul>
+
+                            <p>
+                                The above are recognised by the templating engine and contents inside of them are ignored when replacing numbered placeholders and/or bind variables. For instance:
+                            </p>
+
+</html><java><![CDATA[query(
+  "SELECT /* In a comment, this is not a placeholder: {0}. And this is not a bind variable: ? */ title AS `title {1} ?` " +
+  "-- Another comment without placeholders: {2} nor bind variables: ?
+  "FROM book " +
+  "WHERE title = 'In a string literal, this is not a placeholder: {3}. And this is not a bind variable: ?'
+);]]></java><html>
+
+                            <p>
+                                The above query does not contain any numbered placeholders nor bind variables, because the tokens that would otherwise be searched for are contained inside of comments, string literals, or quoted names.
+                            </p>
                         </html></content>
                     </section>
 

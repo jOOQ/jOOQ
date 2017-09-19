@@ -9419,9 +9419,9 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
 
 </html><java><![CDATA[query(
   "SELECT /* In a comment, this is not a placeholder: {0}. And this is not a bind variable: ? */ title AS `title {1} ?` " +
-  "-- Another comment without placeholders: {2} nor bind variables: ?
+  "-- Another comment without placeholders: {2} nor bind variables: ?" +
   "FROM book " +
-  "WHERE title = 'In a string literal, this is not a placeholder: {3}. And this is not a bind variable: ?'
+  "WHERE title = 'In a string literal, this is not a placeholder: {3}. And this is not a bind variable: ?'"
 );]]></java><html>
 
                             <p>

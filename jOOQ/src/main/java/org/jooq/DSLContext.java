@@ -8131,6 +8131,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This mode may be better for large and complex batch store operations, as
      * the order of records is preserved entirely, and jOOQ can guarantee that
      * only a single batch statement is serialised to the database.
+     * <p>
+     * <h5>A note on MERGE / UPSERT semantics</h5>
+     * <p>
+     * This method (just like {@link UpdatableRecord#store()}) does not
+     * implement the semantics of an actual <code>UPSERT</code> or
+     * <code>MERGE</code> statement, which delegates the decision of whether to
+     * <code>INSERT</code> or <code>UPDATE</code> a record to the database. The
+     * decision is made by the client (jOOQ) depending on whether each
+     * individual record has been fetched from the database prior to storing it.
      *
      * @see UpdatableRecord#store()
      * @see Statement#executeBatch()

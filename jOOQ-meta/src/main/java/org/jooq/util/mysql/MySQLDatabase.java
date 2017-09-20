@@ -40,11 +40,11 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.util.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.mysql.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
+import static org.jooq.util.mysql.information_schema.Tables.ROUTINES;
 import static org.jooq.util.mysql.information_schema.Tables.SCHEMATA;
 import static org.jooq.util.mysql.information_schema.Tables.STATISTICS;
 import static org.jooq.util.mysql.information_schema.Tables.TABLES;
-import static org.jooq.util.mysql.mysql.tables.Proc.DB;
-import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
+import static org.jooq.util.mysql.mysql.Tables.PROC;
 
 import java.io.StringReader;
 import java.sql.SQLException;
@@ -87,6 +87,7 @@ import org.jooq.util.UDTDefinition;
 import org.jooq.util.mysql.information_schema.tables.Columns;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.mysql.information_schema.tables.ReferentialConstraints;
+import org.jooq.util.mysql.information_schema.tables.Routines;
 import org.jooq.util.mysql.information_schema.tables.Schemata;
 import org.jooq.util.mysql.information_schema.tables.Statistics;
 import org.jooq.util.mysql.information_schema.tables.Tables;
@@ -99,6 +100,7 @@ import org.jooq.util.mysql.mysql.tables.Proc;
 public class MySQLDatabase extends AbstractDatabase {
 
     private static final JooqLogger log = JooqLogger.getLogger(MySQLDatabase.class);
+    private static Boolean          is8;
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
@@ -210,6 +212,22 @@ public class MySQLDatabase extends AbstractDatabase {
         return "KEY_" + tableName + "_" + keyName;
     }
 
+    private boolean is8() {
+        if (is8 == null) {
+
+            // [#6602] The mysql.proc table got removed in MySQL 8.0
+            try {
+                create(true).fetchExists(PROC);
+                is8 = false;
+            }
+            catch (DataAccessException ignore) {
+                is8 = true;
+            }
+        }
+
+        return is8;
+    }
+
     private Result<Record4<String, String, String, String>> fetchKeys(boolean primary) {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
@@ -227,7 +245,7 @@ public class MySQLDatabase extends AbstractDatabase {
                            : falseCondition()))
                        .and(primary
                            ? Statistics.INDEX_NAME.eq(inline("PRIMARY"))
-                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline(0L))))
+                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline("0"))))
                        .orderBy(
                            Statistics.TABLE_SCHEMA,
                            Statistics.TABLE_NAME,
@@ -433,31 +451,34 @@ public class MySQLDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        try {
-            create(true).fetchCount(PROC);
-        }
-        catch (DataAccessException e) {
-            log.warn("Table unavailable", "The `mysql`.`proc` table is unavailable. Stored procedures cannot be loaded. Check if you have sufficient grants");
-            return result;
-        }
+        Result<Record6<String, String, String, byte[], byte[], ProcType>> records = is8()
 
-        Result<Record6<String, String, String, byte[], byte[], ProcType>> records =
-        create().select(
-                    Proc.DB,
-                    Proc.NAME,
-                    Proc.COMMENT,
+            ? create().select(
+                    Routines.ROUTINE_SCHEMA,
+                    Routines.ROUTINE_NAME,
+                    Routines.ROUTINE_COMMENT,
+                    inline(new byte[0]).as(Proc.PARAM_LIST),
+                    inline(new byte[0]).as(Proc.RETURNS),
+                    Routines.ROUTINE_TYPE.coerce(Proc.TYPE).as(Routines.ROUTINE_TYPE))
+                .from(ROUTINES)
+                .where(Routines.ROUTINE_SCHEMA.in(getInputSchemata()))
+                .orderBy(1, 2, 6)
+                .fetch()
+
+            : create().select(
+                    Proc.DB.as(Routines.ROUTINE_SCHEMA),
+                    Proc.NAME.as(Routines.ROUTINE_NAME),
+                    Proc.COMMENT.as(Routines.ROUTINE_COMMENT),
                     Proc.PARAM_LIST,
                     Proc.RETURNS,
-                    Proc.TYPE)
+                    Proc.TYPE.as(Routines.ROUTINE_TYPE))
                 .from(PROC)
-                .where(DB.in(getInputSchemata()))
-                .orderBy(
-                    DB,
-                    Proc.NAME)
+                .where(Proc.DB.in(getInputSchemata()))
+                .orderBy(1, 2, 6)
                 .fetch();
 
         Map<Record, Result<Record6<String, String, String, byte[], byte[], ProcType>>> groups =
-            records.intoGroups(new Field[] { Proc.DB, Proc.NAME });
+            records.intoGroups(new Field[] { Routines.ROUTINE_SCHEMA, Routines.ROUTINE_NAME });
 
         // [#1908] This indirection is necessary as MySQL allows for overloading
         // procedures and functions with the same signature.
@@ -467,19 +488,17 @@ public class MySQLDatabase extends AbstractDatabase {
             for (int i = 0; i < overloads.size(); i++) {
                 Record record = overloads.get(i);
 
-                SchemaDefinition schema = getSchema(record.get(DB));
-                String name = record.get(Proc.NAME);
-                String comment = record.get(Proc.COMMENT);
-                String params = new String(record.get(Proc.PARAM_LIST));
-                String returns = new String(record.get(Proc.RETURNS));
-                ProcType type = record.get(Proc.TYPE);
+                SchemaDefinition schema = getSchema(record.get(Routines.ROUTINE_SCHEMA));
+                String name = record.get(Routines.ROUTINE_NAME);
+                String comment = record.get(Routines.ROUTINE_COMMENT);
+                String params = is8() ? "" : new String(record.get(Proc.PARAM_LIST));
+                String returns = is8() ? "" : new String(record.get(Proc.RETURNS));
+                ProcType type = record.get(Routines.ROUTINE_TYPE.coerce(Proc.TYPE).as(Routines.ROUTINE_TYPE));
 
-                if (overloads.size() > 1) {
+                if (overloads.size() > 1)
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, "_" + type.name()));
-                }
-                else {
+                else
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, null));
-                }
             }
         }
 

@@ -57,10 +57,10 @@ import org.jooq.util.mysql.mysql.enums.ProcType;
  */
 public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
-    private Boolean is55;
+    private static Boolean is55;
 
-    private final String params;
-    private final String returns;
+    private final String   params;
+    private final String   returns;
     private final ProcType procType;
 
     /**
@@ -81,12 +81,10 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() {
-        if (is55()) {
+        if (is55())
             init55();
-        }
-        else {
+        else
             init54();
-        }
     }
 
     private void init55() {

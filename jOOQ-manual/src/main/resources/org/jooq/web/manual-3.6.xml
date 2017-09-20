@@ -12547,21 +12547,18 @@ class SpringTransaction implements Transaction {
 </html><java><![CDATA[package com.example;
 
 // Extending DefaultExecuteListener, which provides empty implementations for all methods...
-public class StatisticsListener extends DefaultExecuteListener {
-    public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
+public class TestStatisticsListener extends DefaultExecuteListener {
 
-    // Count "start" events for every type of query executed by jOOQ
+    /**
+     * Generated UID
+     */
+    private static final long                     serialVersionUID = 7399239846062763212L;
+
+    public static final Map<ExecuteType, Integer> STATISTICS       = new ConcurrentHashMap<>();
+
     @Override
     public void start(ExecuteContext ctx) {
-        synchronized (STATISTICS) {
-            Integer count = STATISTICS.get(ctx.type());
-
-            if (count == null) {
-                count = 0;
-            }
-
-            STATISTICS.put(ctx.type(), count + 1);
-        }
+        STATISTICS.compute(ctx.type(), (k, v) -> v == null ? 1 : v + 1);
     }
 }]]></java><html>
 

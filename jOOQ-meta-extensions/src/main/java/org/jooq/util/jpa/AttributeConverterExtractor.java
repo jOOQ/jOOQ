@@ -139,10 +139,19 @@ final class AttributeConverterExtractor implements Integrator {
     private final EntityManagerFactory initEntityManagerFactory() {
         PersistenceUnitInfo persistenceUnitInfo = persistenceUnitInfo(getClass().getSimpleName());
         Map<String, Object> configuration = new HashMap<String, Object>();
-        configuration.put("hibernate.integrator_provider", (IntegratorProvider) () -> Collections.singletonList(this));
+        configuration.put("hibernate.integrator_provider", integratorProvider());
         configuration.put(AvailableSettings.CONNECTION_PROVIDER, database.connectionProvider());
         PersistenceUnitInfoDescriptor descriptor = new PersistenceUnitInfoDescriptor(persistenceUnitInfo);
         return new EntityManagerFactoryBuilderImpl(descriptor, configuration).build();
+    }
+
+    private IntegratorProvider integratorProvider() {
+        return new IntegratorProvider() {
+            @Override
+            public List<Integrator> getIntegrators() {
+                return Collections.<Integrator>singletonList(AttributeConverterExtractor.this);
+            }
+        };
     }
 
     private final PersistenceUnitInfoImpl persistenceUnitInfo(String name) {

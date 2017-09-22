@@ -749,15 +749,13 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <choice>
-        <element name="converter" type="string" minOccurs="0" maxOccurs="1">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
-        </element>
+      <element name="converter" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
-        </element>
-      </choice>
+      <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="binding" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -786,15 +784,13 @@ If provided, {@link #getName()} will be ignored, and either {@link #getConverter
 or {@link #getBinding()} is required]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <choice>
-        <element name="converter" type="string" minOccurs="0" maxOccurs="1">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A converter implementation for the {@link #getUserType()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-        </element>
+      <element name="converter" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A converter implementation for the {@link #getUserType()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-        <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.impl.EnumConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-        </element>
-      </choice>
+      <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.impl.EnumConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="binding" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Binding} implementation for the custom type.]]></jxb:javadoc></jxb:property></appinfo></annotation>

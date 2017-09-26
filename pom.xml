@@ -79,9 +79,21 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-scala</artifactId>
+                <artifactId>jooq-scala_2.12</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-scala_2.11</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+
+
+
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -138,7 +150,9 @@
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
-        <module>jOOQ-scala</module>
+        <module>jOOQ-scala_2.12</module>
+        <module>jOOQ-scala_2.11</module>
+
 
 
 

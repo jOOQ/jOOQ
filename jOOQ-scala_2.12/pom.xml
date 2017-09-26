@@ -11,11 +11,11 @@
     </parent>
 
     <groupId>org.jooq</groupId>
-    <artifactId>jooq-scala</artifactId>
-    <name>jOOQ Scala</name>
+    <artifactId>jooq-scala_2.12</artifactId>
+    <name>jOOQ Scala 2.12</name>
 
     <properties>
-        <scala.version>2.10.6</scala.version>
+        <scala.version>2.12.3</scala.version>
         <org.h2.version>1.4.195</org.h2.version>
     </properties>
 

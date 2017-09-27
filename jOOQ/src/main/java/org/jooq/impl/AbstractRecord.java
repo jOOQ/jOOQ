@@ -379,8 +379,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         safeIndex(fieldIndex);
 
         if (field(fieldIndex).getType() == String.class) {
-            values[fieldIndex] = ((String) values[fieldIndex]).intern();
-            originals[fieldIndex] = ((String) originals[fieldIndex]).intern();
+            values[fieldIndex] = intern((String) values[fieldIndex]);
+            originals[fieldIndex] = intern((String) originals[fieldIndex]);
         }
     }
 
@@ -389,6 +389,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             return index;
 
         throw new IllegalArgumentException("No field at index " + index + " in Record type " + fieldsRow());
+    }
+
+    final String intern(String string) {
+        return string == null ? null : string.intern();
     }
 
     /**

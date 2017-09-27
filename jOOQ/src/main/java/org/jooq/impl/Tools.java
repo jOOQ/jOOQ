@@ -79,6 +79,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.io.Serializable;
@@ -3315,6 +3316,17 @@ final class Tools {
                     }
 
                     ctx.sql(')');
+                    return;
+                }
+            }
+        }
+
+        // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
+        if (type.getType() == UUID.class) {
+            switch (ctx.family()) {
+                case MARIADB:
+                case MYSQL: {
+                    toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
                     return;
                 }
             }

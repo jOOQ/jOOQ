@@ -7040,6 +7040,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This mode may be better for large and complex batch store operations, as
      * the order of records is preserved entirely, and jOOQ can guarantee that
      * only a single batch statement is serialised to the database.
+     * <p>
+     * <h5>A note on MERGE / UPSERT semantics</h5>
+     * <p>
+     * This method (just like {@link UpdatableRecord#store()}) does not
+     * implement the semantics of an actual <code>UPSERT</code> or
+     * <code>MERGE</code> statement, which delegates the decision of whether to
+     * <code>INSERT</code> or <code>UPDATE</code> a record to the database. The
+     * decision is made by the client (jOOQ) depending on whether each
+     * individual record has been fetched from the database prior to storing it.
      *
      * @see UpdatableRecord#store()
      * @see Statement#executeBatch()
@@ -9212,18 +9221,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT COUNT(*) FROM table</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return The number of records in the table
      * @throws DataAccessException if something went wrong executing the query
      */
     int fetchCount(Table<?> table) throws DataAccessException;
 
     /**
-     * Count the number of records in a table.
+     * Count the number of records in a table that satisfy a condition.
      * <p>
      * This executes <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
@@ -9255,7 +9264,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT EXISTS(SELECT * FROM table)</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return Whether the table contains any records
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean fetchExists(Table<?> table) throws DataAccessException;
@@ -9266,7 +9275,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
      *
      * @param table The table whose records to count
-     * @return The number or records in the table
+     * @return Whether the table contains any records that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;

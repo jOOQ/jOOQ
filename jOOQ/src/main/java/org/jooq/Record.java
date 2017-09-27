@@ -1400,7 +1400,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li><code>X = Y</code> means <code>X.compareTo(Y) == 0</code></li>
      * <li><code>X &lt; Y</code> means <code>X.compareTo(Y) &lt; 0</code></li>
      * <li><code>X[i] = Y[i]</code> means
-     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) &lt; 0</code>
+     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) == 0</code>
      * </li>
      * <li><code>X[i] &lt; Y[i]</code> means
      * <code>Y[i] == null || X[i].compareTo(Y[i]) &lt; 0</code>. This

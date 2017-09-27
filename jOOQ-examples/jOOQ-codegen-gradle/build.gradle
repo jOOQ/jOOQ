@@ -49,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jooq:jooq:3.9.5'
+    compile 'org.jooq:jooq:3.9.6'
 
     runtime 'com.h2database:h2:1.4.177'
     testCompile 'junit:junit:4.11'
@@ -62,7 +62,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.jooq:jooq-codegen:3.9.5'
+        classpath 'org.jooq:jooq-codegen:3.9.6'
         classpath 'com.h2database:h2:1.4.177'
     }
 }

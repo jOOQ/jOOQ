@@ -15780,7 +15780,7 @@ configuration {
           <userType>java.time.Instant</userType>
 
           <!-- Associate that custom type with your converter. -->
-          <converter>com.example.LongToInstantBinding</converter>
+          <binding>com.example.LongToInstantBinding</binding>
 
           <!-- These are the same as for type rewriting -->
           <expression>.*\.DATE_OF_.*</expression>
@@ -15801,7 +15801,7 @@ configuration {
       // The first matching forcedType will be applied to the data type definition.
       .withForcedTypes(new ForcedType()
         .withUserType("java.time.Instant")
-        .withConverter("com.example.LongToInstantBinding")
+        .withBinding("com.example.LongToInstantBinding")
         .withExpression(".*\.DATE_OF_.*")
         .withTypes(".*")))));]]></java><html>
 

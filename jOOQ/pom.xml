@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <!-- add the generated manifest to the jar -->

@@ -32,7 +32,7 @@
         <wildfly-password>admin</wildfly-password>
 
         <!-- other plugin versions -->
-        <version.compiler.plugin>3.3</version.compiler.plugin>
+        <version.compiler.plugin>3.7.0</version.compiler.plugin>
         <version.surefire.plugin>2.10</version.surefire.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
 

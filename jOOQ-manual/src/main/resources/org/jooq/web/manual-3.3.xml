@@ -7121,7 +7121,7 @@ create.select(select)
                                 Dynamic construction is particularly useful in the case of the <reference id="where-clause" title="WHERE clause"/>, for dynamic predicate building. For instance:
                             </p>
 
-</html><java><![CDATA[public Condition where(HttpServletRequest request) {
+</html><java><![CDATA[public Condition condition(HttpServletRequest request) {
     Condition result = trueCondition();
 
     if (request.getParameter("title") != null)

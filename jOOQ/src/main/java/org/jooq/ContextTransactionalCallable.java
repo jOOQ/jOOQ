@@ -63,11 +63,11 @@ public interface ContextTransactionalCallable<T> {
      * <code>ContextTransactionalCallable</code>.
      *
      * @return The outcome of the transaction.
-     * @throws Exception Any exception that will cause a rollback of the code
+     * @throws Throwable Any exception that will cause a rollback of the code
      *             contained in this transaction. If this is a nested
      *             transaction, the rollback may be performed only to the state
      *             before executing this
      *             <code>ContextTransactionalCallable</code>.
      */
-    T run() throws Exception;
+    T run() throws Throwable;
 }

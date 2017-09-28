@@ -425,7 +425,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
         return transactionResult0(new TransactionalCallable<T>() {
             @Override
-            public T run(Configuration c) throws Exception {
+            public T run(Configuration c) throws Throwable {
                 return transactional.run();
             }
         }, ((ThreadLocalTransactionProvider) tp).configuration(configuration()), true);
@@ -473,8 +473,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                     listeners.commitEnd(ctx);
                 }
             }
-            catch (Exception cause) {
-                ctx.cause(cause);
+
+            // [#6608] Propagating errors directly
+            catch (Error error) {
+                throw error;
+            }
+            catch (Throwable cause) {
+                if (cause instanceof Exception)
+                    ctx.cause((Exception) cause);
+                else
+                    ctx.causeThrowable(cause);
 
                 listeners.rollbackStart(ctx);
                 try {
@@ -508,7 +516,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public void transaction(final ContextTransactionalRunnable transactional) {
         transactionResult(new ContextTransactionalCallable<Void>() {
             @Override
-            public Void run() throws Exception {
+            public Void run() throws Throwable {
                 transactional.run();
                 return null;
             }
@@ -519,7 +527,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public void transaction(final TransactionalRunnable transactional) {
         transactionResult(new TransactionalCallable<Void>() {
             @Override
-            public Void run(Configuration c) throws Exception {
+            public Void run(Configuration c) throws Throwable {
                 transactional.run(c);
                 return null;
             }

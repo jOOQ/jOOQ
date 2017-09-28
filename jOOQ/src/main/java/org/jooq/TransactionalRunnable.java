@@ -61,10 +61,10 @@ public interface TransactionalRunnable {
      *
      * @param configuration The <code>Configuration</code> in whose context the
      *            transaction is run.
-     * @throws Exception Any exception that will cause a rollback of the code
+     * @throws Throwable Any exception that will cause a rollback of the code
      *             contained in this transaction. If this is a nested
      *             transaction, the rollback may be performed only to the state
      *             before executing this <code>TransactionalRunnable</code>.
      */
-    void run(Configuration configuration) throws Exception;
+    void run(Configuration configuration) throws Throwable;
 }

@@ -62,10 +62,10 @@ public interface TransactionalCallable<T> {
      * @param configuration The <code>Configuration</code> in whose context the
      *            transaction is run.
      * @return The outcome of the transaction.
-     * @throws Exception Any exception that will cause a rollback of the code
+     * @throws Throwable Any exception that will cause a rollback of the code
      *             contained in this transaction. If this is a nested
      *             transaction, the rollback may be performed only to the state
      *             before executing this <code>TransactionalCallable</code>.
      */
-    T run(Configuration configuration) throws Exception;
+    T run(Configuration configuration) throws Throwable;
 }

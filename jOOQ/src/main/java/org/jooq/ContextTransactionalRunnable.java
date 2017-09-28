@@ -62,11 +62,11 @@ public interface ContextTransactionalRunnable {
      * exception, then the transaction is rolled back to the beginning of this
      * <code>ContextTransactionalRunnable</code>.
      *
-     * @throws Exception Any exception that will cause a rollback of the code
+     * @throws Throwable Any exception that will cause a rollback of the code
      *             contained in this transaction. If this is a nested
      *             transaction, the rollback may be performed only to the state
      *             before executing this
      *             <code>ContextTransactionalRunnable</code>.
      */
-    void run() throws Exception;
+    void run() throws Throwable;
 }

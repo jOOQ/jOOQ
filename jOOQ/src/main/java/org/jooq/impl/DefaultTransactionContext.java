@@ -44,7 +44,7 @@ import org.jooq.TransactionContext;
 class DefaultTransactionContext extends AbstractScope implements TransactionContext {
 
     Transaction                 transaction;
-    Exception                   cause;
+    Throwable                   cause;
 
     DefaultTransactionContext(Configuration configuration) {
         super(configuration);
@@ -63,11 +63,22 @@ class DefaultTransactionContext extends AbstractScope implements TransactionCont
 
     @Override
     public final Exception cause() {
-        return cause;
+        return cause instanceof Exception ? (Exception) cause : null;
     }
 
     @Override
     public final TransactionContext cause(Exception c) {
+        cause = c;
+        return this;
+    }
+
+    @Override
+    public final Throwable causeThrowable() {
+        return cause;
+    }
+
+    @Override
+    public final TransactionContext causeThrowable(Throwable c) {
         cause = c;
         return this;
     }

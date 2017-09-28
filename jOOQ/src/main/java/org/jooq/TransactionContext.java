@@ -60,13 +60,28 @@ public interface TransactionContext extends Scope {
     /**
      * The exception that has caused the rollback.
      *
-     * @return The exception. May be <code>null</code>.
+     * @return The exception. May be <code>null</code>, in particular if the
+     *         cause is a {@link Throwable}, in case of which
+     *         {@link #causeThrowable()} should be called.
      */
     Exception cause();
+
+    /**
+     * The throwable that has caused the rollback.
+     *
+     * @return The throwable. May be <code>null</code>.
+     */
+    Throwable causeThrowable();
 
     /**
      * Set the exception that has caused the rollback to the current transaction
      * context.
      */
     TransactionContext cause(Exception cause);
+
+    /**
+     * Set the throwable that has caused the rollback to the current transaction
+     * context.
+     */
+    TransactionContext causeThrowable(Throwable cause);
 }

@@ -39,7 +39,6 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +46,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Entity;
@@ -110,7 +110,10 @@ public class JPADatabase extends H2Database {
             boolean useAttributeConverters = Boolean.valueOf(getProperties().getProperty("use-attribute-converters", "true"));
 
             try {
-                connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
+                Properties info = new Properties();
+                info.put("user", "sa");
+                info.put("password", "");
+                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions", info);
 
                 MetadataSources metadata = new MetadataSources(
                     new StandardServiceRegistryBuilder()

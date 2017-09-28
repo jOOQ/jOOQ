@@ -40,11 +40,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.jooq.DSLContext;
@@ -86,7 +86,10 @@ public class DDLDatabase extends H2Database {
             }
 
             try {
-                connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
+                Properties info = new Properties();
+                info.put("user", "sa");
+                info.put("password", "");
+                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions", info);
 
                 InputStream in = null;
                 try {

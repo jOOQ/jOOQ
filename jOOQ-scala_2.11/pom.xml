@@ -16,7 +16,6 @@
 
     <properties>
         <scala.version>2.11.11</scala.version>
-        <org.h2.version>1.4.195</org.h2.version>
     </properties>
 
     <build>
@@ -127,14 +126,12 @@
 
 
 
-
             <!-- [/trial] -->
 
             <!-- The Scala compiler plugin -->
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -149,7 +146,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
                 <executions>
                     <execution>
                         <id>empty-javadoc-jar</id>
@@ -160,6 +156,11 @@
                         <configuration>
                             <classifier>javadoc</classifier>
                             <classesDirectory>${basedir}/javadoc</classesDirectory>
+                            <archive>
+                                <manifestEntries>
+                                    <Automatic-Module-Name>org.jooq.scala_2_11</Automatic-Module-Name>
+                                </manifestEntries>
+                            </archive>
                         </configuration>
                     </execution>
                 </executions>
@@ -179,12 +180,6 @@
             <version>${scala.version}</version>
             <scope>provided</scope>
         </dependency>
-
-
-
-
-
-
 
 
 

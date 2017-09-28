@@ -83,7 +83,7 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void sql(BindingSQLContext<String> ctx) throws SQLException {
-        ctx.render().sql("?");
+        ctx.render().visit(DSL.val(ctx.value(), SQLDataType.CLOB));
     }
 
     @Override

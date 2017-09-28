@@ -83,7 +83,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void sql(BindingSQLContext<byte[]> ctx) throws SQLException {
-        ctx.render().sql("?");
+        ctx.render().visit(DSL.val(ctx.value(), SQLDataType.BLOB));
     }
 
     @Override

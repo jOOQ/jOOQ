@@ -10,6 +10,28 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.9 - September 28, 2017
+================================================================================
+
+This is a patch release with an urgent fix for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#6449 - Improve TableLike.field(Field) Javadoc
+#6590 - Improve DSLContext.batchStore() Javadoc, indicating that it does not execute MERGE / UPSERT semantics
+
+Bug Fixes
+---------
+#6425 - Compilation error in generated code when both SchemaVersionProvider and CatalogVersionProvider are applied
+#6481 - Typo in DSLContext.fetchCount() and error in DSLContext.fetchExists() Javadoc
+#6508 - XMLDatabase doesn't work when dialect is not a SQLDialect.family()
+#6515 - ClobBinding and BlobBinding don't correctly inline their bind values
+#6539 - NullPointerException in AbstractRecord.intern0()
+#6559 - Error in Record.compareTo(...) Javadoc
+#6573 - Trigger generated errors are not fetched through jOOQ's plain SQL API
+#6597 - "Invalid column index" on Oracle stored procedure call when return type is converted to boolean and argument type is defaulted
+#6601 - Exception thrown when creating table with SQLDataType.UUID in MySQL
+
 Version 3.8.8 - July 17, 2017
 ================================================================================
 

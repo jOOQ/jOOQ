@@ -114,8 +114,19 @@ public interface Record extends Attachable, Comparable<Record> {
     /**
      * Get a specific field from this Record.
      * <p>
-     * Usually, this will return the field itself. However, if this is a row
-     * from an aliased table, the field will be aliased accordingly.
+     * This will return:
+     * <ul>
+     * <li>A field that is the same as the argument field (by identity
+     * comparison).</li>
+     * <li>A field that is equal to the argument field (exact matching fully
+     * qualified name).</li>
+     * <li>A field that is equal to the argument field (partially matching
+     * qualified name).</li>
+     * <li>A field whose name is equal to the name of the argument field.</li>
+     * <li><code>null</code> otherwise.
+     * </ul>
+     * If several fields have the same name, the first one is returned and a
+     * warning is logged.
      *
      * @see Row#field(Field)
      */
@@ -1357,7 +1368,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li><code>X = Y</code> means <code>X.compareTo(Y) == 0</code></li>
      * <li><code>X &lt; Y</code> means <code>X.compareTo(Y) &lt; 0</code></li>
      * <li><code>X[i] = Y[i]</code> means
-     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) &lt; 0</code>
+     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) == 0</code>
      * </li>
      * <li><code>X[i] &lt; Y[i]</code> means
      * <code>Y[i] == null || X[i].compareTo(Y[i]) &lt; 0</code>. This

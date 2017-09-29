@@ -152,6 +152,7 @@ public class PostgresDatabase extends AbstractDatabase {
         PgClass irel = PG_CLASS.as("irel");
         PgNamespace tnsp = PG_NAMESPACE.as("tnsp");
 
+        indexLoop:
         for (Record6<String, String, String, Boolean, String[], Integer[]> record : create()
                 .select(
                     tnsp.NSPNAME,
@@ -180,12 +181,18 @@ public class PostgresDatabase extends AbstractDatabase {
             final boolean unique = record.get(i.INDISUNIQUE);
 
             if (table != null) {
+
+                // [#6310] [#6620] Function-based indexes are not yet supported
+                for (String column : columns)
+                    if (table.getColumn(column) == null)
+                        continue indexLoop;
+
                 result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
                     List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 
                     {
                         for (int ordinal = 0; ordinal < columns.length; ordinal++) {
-                            String column = columns[ordinal];
+                            ColumnDefinition column = table.getColumn(columns[ordinal]);
 
                             // [#6307] Some background info on this bitwise operation here:
                             // https://stackoverflow.com/a/18128104/521799
@@ -193,7 +200,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
                             indexColumns.add(new DefaultIndexColumnDefinition(
                                 this,
-                                table.getColumn(column),
+                                column,
                                 order,
                                 ordinal + 1
                             ));

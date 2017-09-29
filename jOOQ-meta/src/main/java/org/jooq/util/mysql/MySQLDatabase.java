@@ -138,6 +138,7 @@ public class MySQLDatabase extends AbstractDatabase {
                     Statistics.SEQ_IN_INDEX
                 });
 
+        indexLoop:
         for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
             final Record index = entry.getKey();
             final Result<Record> columns = entry.getValue();
@@ -149,6 +150,12 @@ public class MySQLDatabase extends AbstractDatabase {
             final boolean unique = !index.get(Statistics.NON_UNIQUE, boolean.class);
 
             if (table != null) {
+
+                // [#6310] [#6620] Function-based indexes are not yet supported
+                for (Record column : columns)
+                    if (table.getColumn(column.get(Statistics.COLUMN_NAME)) == null)
+                        continue indexLoop;
+
                 result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
                     List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 

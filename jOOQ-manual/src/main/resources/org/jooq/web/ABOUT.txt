@@ -1,0 +1,56 @@
+Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
+------------------------------------------------------------------------
+- Aaron Digulla
+- Andreas Franzén
+- Arnaud Roger
+- Art O Cathain
+- Artur Dryomov
+- Ben Manes
+- Brent Douglas
+- Brett Meyer
+- Christopher Deckers
+- Ed Schaller
+- Eric Peters
+- Espen Stromsnes
+- Eugeny Karpov
+- Fabrice Le Roy
+- Gonzalo Ortiz Jaureguizar
+- Gregory Hlavac
+- Henrik Sjöstrand
+- Ivan Dugic
+- Javier Durante
+- Johannes Bühler
+- Joseph B Phillips
+- Joseph Pachod
+- Laurent Pireyn
+- Luc Marchaud
+- Lukas Eder
+- Matti Tahvonen
+- Michael Doberenz
+- Michael Simons
+- Michał Kołodziejski
+- Miguel Gonzalez Sanchez
+- Nathaniel Fischer
+- Oliver Flege
+- Peter Ertl
+- Richard Bradley
+- Robin Stocker
+- Samy Deghou
+- Sander Plas
+- Sean Wellington
+- Sergey Epik
+- Stanislas Nanchen
+- Stephan Schroevers
+- Sugiharto Lim
+- Sven Jacobs
+- Szymon Jachim
+- Terence Zhang
+- Thomas Darimont
+- Tsukasa Kitachi
+- Vladimir Kulev
+- Vladimir Vinogradov
+- Wang Gaoyuan
+- Zoltan Tamasi
+
+See the following website for details about contributing to jOOQ:
+https://github.com/jOOQ/jOOQ/blob/master/CONTRIBUTING.md

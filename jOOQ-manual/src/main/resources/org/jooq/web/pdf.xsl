@@ -46,6 +46,7 @@
 	<xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
     <xsl:param name="minorVersion"/>
+    <xsl:param name="currentYear"/>
 
 	<xsl:variable name="apos">&apos;</xsl:variable>
 	<xsl:variable name="page-width">210</xsl:variable>
@@ -241,8 +242,12 @@
 							    	<fo:table-cell padding-left="{$page-margin}mm">
 							      		<fo:block xsl:use-attribute-sets="static">
 							      			<xsl:text>
-							      			    © 2009 - 2016 by Data Geekery™ GmbH. All rights reserved.
+							      			    © 2009 -
 							      			</xsl:text>
+                                            <xsl:value-of select="$currentYear"/>
+                                            <xsl:text>
+                                                by Data Geekery™ GmbH.
+                                            </xsl:text>
 							      		</fo:block>
 							    	</fo:table-cell>
 							    	<fo:table-cell padding-right="{$page-margin}mm" text-align="right">

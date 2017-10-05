@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DefaultBinding.binding;
+import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
 import static org.jooq.impl.Tools.DataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
@@ -63,11 +65,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, (DataType) SQLDataType.RECORD, "", new DefaultBinding<Object, REC>(new Converter<Object, REC>() {
+        super(as, (DataType) SQLDataType.RECORD, "", binding(new Converter<Object, REC>() {
             @Override
             public REC from(final Object t) {
                 // So far, this is only supported for PostgreSQL
-                return (REC) (t == null ? null : DefaultBinding.pgNewRecord(Record.class, row.fields(), t));
+                return (REC) (t == null ? null : pgNewRecord(Record.class, row.fields(), t));
             }
 
             @Override

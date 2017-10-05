@@ -69,14 +69,14 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7730882831126647188L;
+    private static final long                     serialVersionUID = -7730882831126647188L;
 
     private final Converter<Timestamp, Timestamp> converter;
-    private final DefaultBinding<Timestamp, Timestamp> delegate;
+    private final Binding<Timestamp, Timestamp>   delegate;
 
     public DateAsTimestampBinding() {
         this.converter = Converters.identity(Timestamp.class);
-        this.delegate = new DefaultBinding<Timestamp, Timestamp>(converter);
+        this.delegate = DefaultBinding.binding(converter);
     }
 
     @Override

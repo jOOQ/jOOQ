@@ -556,6 +556,12 @@ final class Tools {
         "&"
     };
 
+    /**
+     * All hexadecimal digits accessible through array index, e.g.
+     * <code>HEX_DIGITS[15] == 'f'</code>.
+     */
+    private static final char[]   HEX_DIGITS                                   = "0123456789abcdef".toCharArray();
+
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
@@ -4114,5 +4120,33 @@ final class Tools {
             return table.field((String) field);
         else
             throw new IllegalArgumentException("Field type not supported: " + field);
+    }
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @param len the number of bytes to encode
+     * @return the hex encoded string
+     */
+    static final String convertBytesToHex(byte[] value, int len) {
+        char[] buff = new char[len + len];
+        char[] hex = HEX_DIGITS;
+        for (int i = 0; i < len; i++) {
+            int c = value[i] & 0xff;
+            buff[i + i] = hex[c >> 4];
+            buff[i + i + 1] = hex[c & 0xf];
+        }
+        return new String(buff);
+    }
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @return the hex encoded string
+     */
+    static final String convertBytesToHex(byte[] value) {
+        return convertBytesToHex(value, value.length);
     }
 }

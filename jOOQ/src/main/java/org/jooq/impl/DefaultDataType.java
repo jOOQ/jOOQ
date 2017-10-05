@@ -36,6 +36,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 import static org.jooq.Nullability.NOT_NULL;
+import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCLOB;
@@ -59,7 +60,6 @@ import java.util.regex.Pattern;
 import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
-import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -317,9 +317,7 @@ public class DefaultDataType<T> implements DataType<T> {
             }
         }
 
-        this.binding = binding != null
-            ? binding
-            : new DefaultBinding<T, T>(Converters.identity(type), this.isLob());
+        this.binding = binding != null ? binding : binding(type, isLob());
         this.tType = this.binding.converter().fromType();
     }
 
@@ -717,7 +715,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return (DataType<U>) this;
 
         if (newBinding == null)
-            newBinding = (Binding<? super T, U>) new DefaultBinding<T, T>(Converters.identity(getType()), isLob());
+            newBinding = (Binding<? super T, U>) DefaultBinding.binding(getType(), isLob());
 
         return new ConvertedDataType<T, U>(this, newBinding);
     }

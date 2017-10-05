@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
@@ -709,8 +710,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void register(BindingRegisterContext<U> ctx) throws SQLException {
-            if (log.isTraceEnabled())
-                log.trace("Registering variable " + ctx.index(), "" + type);
+            if (!FALSE.equals(ctx.settings().isExecuteLogging()))
+                if (log.isTraceEnabled())
+                    log.trace("Registering variable " + ctx.index(), "" + type);
 
             register0(ctx);
         }
@@ -719,11 +721,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         public final void set(BindingSetStatementContext<U> ctx) throws SQLException {
             T value = converter().to(ctx.value());
 
-            if (log.isTraceEnabled())
-                if (value != null && value.getClass().isArray() && value.getClass() != byte[].class)
-                    log.trace("Binding variable " + ctx.index(), Arrays.asList((Object[]) value) + " (" + type + ")");
-                else
-                    log.trace("Binding variable " + ctx.index(), value + " (" + type + ")");
+            if (!FALSE.equals(ctx.settings().isExecuteLogging()))
+                if (log.isTraceEnabled())
+                    if (value != null && value.getClass().isArray() && value.getClass() != byte[].class)
+                        log.trace("Binding variable " + ctx.index(), Arrays.asList((Object[]) value) + " (" + type + ")");
+                    else
+                        log.trace("Binding variable " + ctx.index(), value + " (" + type + ")");
 
             if (value == null)
                 setNull0(ctx);

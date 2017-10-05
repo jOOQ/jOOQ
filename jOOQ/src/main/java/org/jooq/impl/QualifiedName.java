@@ -115,7 +115,7 @@ final class QualifiedName extends AbstractName {
                     result[i - nulls] = qualifiedName[i];
         }
         else {
-            result = qualifiedName.clone();
+            result = qualifiedName;
         }
 
         return result;

@@ -5,5 +5,6 @@
 ### Versions:
 
 - jOOQ:
+- Java:
 - Database (include vendor):
 - JDBC Driver (include name if inofficial driver):

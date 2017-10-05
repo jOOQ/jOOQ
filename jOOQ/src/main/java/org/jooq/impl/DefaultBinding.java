@@ -264,8 +264,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray())
             return new DefaultArrayBinding(converter, isLob);
-        else if (ArrayRecord.class.isAssignableFrom(type))
-            return new DefaultArrayRecordBinding(converter, isLob);
+
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type))
             return new DefaultEnumTypeBinding(converter, isLob);
         else if (Record.class.isAssignableFrom(type))
@@ -1174,90 +1178,88 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-                default:
-                    return Types.ARRAY;
-            }
-        }
 
-        @SuppressWarnings("unchecked")
-        static final <T> ArrayRecord<T> set(Configuration configuration, ArrayRecord<T> target, Array source) throws SQLException {
-            if (source == null) {
-                target.clear();
-            }
-            else {
-                // [#1179 #1376 #1377] This is needed to load TABLE OF OBJECT
-                // [#884] TODO: This name is used in inlined SQL. It should be
-                // correctly escaped and schema mapped!
-                Object[] array = (Object[]) source.getArray(typeMap(target.getClass(), configuration));
-                T[] converted = (T[]) new Object[array.length];
 
-                for (int i = 0; i < array.length; i++)
 
-                    // [#5404] Recurse for nested arrays
-                    if (array[i] instanceof Array)
-                        converted[i] = (T) set(configuration, (ArrayRecord) on(target.getDataType().getType()).create().get(), (Array) array[i]);
-                    else
-                        converted[i] = target.getDataType().convert(array[i]);
 
-                target.addAll(Arrays.asList(converted));
-            }
 
-            // [#4372] Attach records if possible / required
-            if (attachRecords(configuration))
-                target.attach(configuration);
 
-            return target;
-        }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
-            if (array == null) {
-                return null;
-            }
-            else {
-                // TODO: [#523] Use array record meta data instead
-                // ... Generic type inference in Java 8 has changed, resorting to
-                // raw type for now
-                return set(configuration, (ArrayRecord) Tools.newArrayRecord(type), array);
-            }
-        }
 
-        private static final Array createOracleARRAY(Configuration configuration, ArrayRecord<?> array) {
 
-            // [#1544] We can safely assume that localConfiguration has been
-            // set on DefaultBindContext, prior to serialising arrays to SQLOutput
-            Array result = on(localTargetConnection()).call("createARRAY", Tools.getMappedArrayNameString(configuration, array), unnest(array)).<Array>get();
-            DefaultExecuteContext.register(result);
-            return result;
-        }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        private static final ResultSet createSQLServerTable(Configuration configuration, ArrayRecord<?> array) {
-            UDTRecord<?> udt = Tools.newRecord(false, (Class<UDTRecord<?>>) array.getDataType().getType()).<RuntimeException>operate(null);
-            Result<Record> r = DSL.using(configuration).newResult(udt.getUDT().fields());
-            r.addAll((List) array);
-            return new MockResultSet(r);
-        }
 
-        @SuppressWarnings("unchecked")
-        private static final Object[] unnest(ArrayRecord<?> array) {
-            if (array == null)
-                return null;
 
-            Object[] result = array.toArray();
 
-            // [#5404] Recurse for nested arrays
-            if (result != null)
-                for (int i = 0; i < result.length; i++)
-                    if (result[i] instanceof ArrayRecord)
-                        result[i] = unnest((ArrayRecord<?>) result[i]);
-                    else
-                        result[i] = ((DataType<Object>) array.getDataType()).getConverter().to(result[i]);
 
-            return result;
-        }
-    }
-    /* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
 

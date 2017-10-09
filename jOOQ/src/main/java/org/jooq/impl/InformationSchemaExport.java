@@ -43,6 +43,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -71,11 +72,18 @@ final class InformationSchemaExport {
     static final InformationSchema exportTables(Configuration configuration, List<Table<?>> tables) {
         InformationSchema result = new InformationSchema();
 
+        Set<Catalog> includedCatalogs = new LinkedHashSet<Catalog>();
         Set<Schema> includedSchemas = new LinkedHashSet<Schema>();
         Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>(tables);
 
         for (Table<?> t : tables)
             includedSchemas.add(t.getSchema());
+
+        for (Schema s : includedSchemas)
+            includedCatalogs.add(s.getCatalog());
+
+        for (Catalog c : includedCatalogs)
+            exportCatalog0(result, c);
 
         for (Schema s : includedSchemas)
             exportSchema0(result, s);
@@ -89,10 +97,18 @@ final class InformationSchemaExport {
     static final InformationSchema exportSchemas(Configuration configuration, List<Schema> schemas) {
         InformationSchema result = new InformationSchema();
 
+        Set<Catalog> includedCatalogs = new LinkedHashSet<Catalog>();
         Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>();
-        for (Schema s : schemas)
+
+        for (Schema s : schemas) {
+            includedCatalogs.add(s.getCatalog());
+
             for (Table<?> t : s.getTables())
                 includedTables.add(t);
+        }
+
+        for (Catalog c : includedCatalogs)
+            exportCatalog0(result, c);
 
         for (Schema s : schemas) {
             exportSchema0(result, s);
@@ -102,6 +118,33 @@ final class InformationSchemaExport {
 
             for (Sequence<?> q : s.getSequences())
                 exportSequences0(configuration, result, q);
+        }
+
+        return result;
+    }
+
+    static final InformationSchema exportCatalogs(Configuration configuration, List<Catalog> catalogs) {
+        InformationSchema result = new InformationSchema();
+
+        Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>();
+
+        for (Catalog c : catalogs)
+            for (Schema s : c.getSchemas())
+                for (Table<?> t : s.getTables())
+                    includedTables.add(t);
+
+        for (Catalog c : catalogs) {
+            exportCatalog0(result, c);
+
+            for (Schema s : c.getSchemas()) {
+                exportSchema0(result, s);
+
+                for (Table<?> t : s.getTables())
+                    exportTable0(configuration, result, t, includedTables);
+
+                for (Sequence<?> q : s.getSequences())
+                    exportSequences0(configuration, result, q);
+            }
         }
 
         return result;
@@ -129,6 +172,15 @@ final class InformationSchemaExport {
             iq.setNumericScale(q.getDataType().scale());
 
         result.getSequences().add(iq);
+    }
+
+    private static final void exportCatalog0(InformationSchema result, Catalog c) {
+        org.jooq.util.xml.jaxb.Catalog ic = new org.jooq.util.xml.jaxb.Catalog();
+
+        if (!StringUtils.isBlank(c.getName())) {
+            ic.setCatalogName(c.getName());
+            result.getCatalogs().add(ic);
+        }
     }
 
     private static final void exportSchema0(InformationSchema result, Schema s) {

@@ -379,17 +379,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public InformationSchema informationSchema(Catalog catalog) {
-        return InformationSchemaExport.exportSchemas(configuration(), catalog.getSchemas());
+        return InformationSchemaExport.exportCatalogs(configuration(), Arrays.asList(catalog));
     }
 
     @Override
     public InformationSchema informationSchema(Catalog... catalogs) {
-        List<Schema> schemas = new ArrayList<Schema>();
-
-        for (Catalog catalog : catalogs)
-            schemas.addAll(catalog.getSchemas());
-
-        return InformationSchemaExport.exportSchemas(configuration(), schemas);
+        return InformationSchemaExport.exportCatalogs(configuration(), Arrays.asList(catalogs));
     }
 
     @Override

@@ -72,16 +72,28 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         super(container.getDatabase(),
               container.getSchema(),
-              protectName(container.getName(), name, position),
+              protectName(container, name, position),
               comment);
 
         this.container = container;
         this.definedType = definedType;
     }
 
-    private static String protectName(String table, String name, int position) {
+    private static String protectName(Definition container, String name, int position) {
         if (name == null) {
-            log.info("Missing name", "Object " + table + " holds a column without a name at position " + position);
+
+            // [#6654] Specific error messages per type
+            if (container instanceof TableDefinition)
+                log.info("Missing name", "Table " + container + " holds a column without a name at position " + position);
+            else if (container instanceof UDTDefinition)
+                log.info("Missing name", "UDT " + container + " holds an attribute without a name at position " + position);
+            else if (container instanceof IndexDefinition)
+                log.info("Missing name", "Index " + container + " holds a column without a name at position " + position);
+            else if (container instanceof RoutineDefinition)
+                log.info("Missing name", "Routine " + container + " holds a parameter without a name at position " + position);
+            else
+                log.info("Missing name", "Object " + container + " holds an element without a name at position " + position);
+
             return "_" + position;
         }
 

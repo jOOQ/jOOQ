@@ -52,7 +52,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Sequence implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "sequence_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String sequenceCatalog;

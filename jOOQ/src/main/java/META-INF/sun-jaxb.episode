@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
 
-  <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd" if-exists="true" scd="x-schema::tns">
+  <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd" if-exists="true" scd="x-schema::tns">
     <schemaBindings map="false">
       <package name="org.jooq.util.xml.jaxb"/>
     </schemaBindings>
     <bindings if-exists="true" scd="tns:information_schema">
       <class ref="org.jooq.util.xml.jaxb.InformationSchema"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Catalogs">
+      <class ref="org.jooq.util.xml.jaxb.Catalogs"/>
     </bindings>
     <bindings if-exists="true" scd="~tns:Schemata">
       <class ref="org.jooq.util.xml.jaxb.Schemata"/>
@@ -40,6 +43,9 @@
     </bindings>
     <bindings if-exists="true" scd="~tns:Parameters">
       <class ref="org.jooq.util.xml.jaxb.Parameters"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:Catalog">
+      <class ref="org.jooq.util.xml.jaxb.Catalog"/>
     </bindings>
     <bindings if-exists="true" scd="~tns:Schema">
       <class ref="org.jooq.util.xml.jaxb.Schema"/>

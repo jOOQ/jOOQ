@@ -30,17 +30,18 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Schemata" minOccurs="0"/&gt;
- *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Sequences" minOccurs="0"/&gt;
- *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Tables" minOccurs="0"/&gt;
- *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Columns" minOccurs="0"/&gt;
- *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}TableConstraints" minOccurs="0"/&gt;
- *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
- *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Indexes" minOccurs="0"/&gt;
- *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Routines" minOccurs="0"/&gt;
- *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}Parameters" minOccurs="0"/&gt;
+ *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Catalogs" minOccurs="0"/&gt;
+ *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Schemata" minOccurs="0"/&gt;
+ *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Sequences" minOccurs="0"/&gt;
+ *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Tables" minOccurs="0"/&gt;
+ *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Columns" minOccurs="0"/&gt;
+ *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}TableConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Indexes" minOccurs="0"/&gt;
+ *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Routines" minOccurs="0"/&gt;
+ *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Parameters" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -60,7 +61,10 @@ import javax.xml.bind.annotation.XmlType;
 public class InformationSchema implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
+    @XmlElementWrapper(name = "catalogs")
+    @XmlElement(name = "catalog")
+    protected List<Catalog> catalogs;
     @XmlElementWrapper(name = "schemata")
     @XmlElement(name = "schema")
     protected List<Schema> schemata;
@@ -94,6 +98,17 @@ public class InformationSchema implements Serializable
     @XmlElementWrapper(name = "parameters")
     @XmlElement(name = "parameter")
     protected List<Parameter> parameters;
+
+    public List<Catalog> getCatalogs() {
+        if (catalogs == null) {
+            catalogs = new ArrayList<Catalog>();
+        }
+        return catalogs;
+    }
+
+    public void setCatalogs(List<Catalog> catalogs) {
+        this.catalogs = catalogs;
+    }
 
     public List<Schema> getSchemata() {
         if (schemata == null) {
@@ -214,6 +229,27 @@ public class InformationSchema implements Serializable
 
     public void setParameters(List<Parameter> parameters) {
         this.parameters = parameters;
+    }
+
+    public InformationSchema withCatalogs(Catalog... values) {
+        if (values!= null) {
+            for (Catalog value: values) {
+                getCatalogs().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withCatalogs(Collection<Catalog> values) {
+        if (values!= null) {
+            getCatalogs().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withCatalogs(List<Catalog> catalogs) {
+        setCatalogs(catalogs);
+        return this;
     }
 
     public InformationSchema withSchemata(Schema... values) {

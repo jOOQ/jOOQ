@@ -57,7 +57,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Column implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;

@@ -45,6 +45,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Catalog }
+     *
+     */
+    public Catalog createCatalog() {
+        return new Catalog();
+    }
+
+    /**
      * Create an instance of {@link Schema }
      *
      */

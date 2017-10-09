@@ -51,7 +51,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class ReferentialConstraint implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "constraint_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String constraintCatalog;

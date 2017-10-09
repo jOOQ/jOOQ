@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="specific_package" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="specific_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="ordinal_position" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
- *         &lt;element name="parameter_mode" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}ParameterMode"/&gt;
+ *         &lt;element name="parameter_mode" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}ParameterMode"/&gt;
  *         &lt;element name="parameter_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
@@ -58,7 +58,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Parameter implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "specific_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String specificCatalog;

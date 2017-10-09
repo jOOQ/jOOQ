@@ -53,7 +53,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class KeyColumnUsage implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "column_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String columnName;

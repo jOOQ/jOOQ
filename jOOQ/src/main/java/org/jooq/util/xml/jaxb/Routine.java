@@ -36,7 +36,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="routine_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="routine_package" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="routine_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="routine_type" type="{http://www.jooq.org/xsd/jooq-meta-3.10.0.xsd}RoutineType"/&gt;
+ *         &lt;element name="routine_type" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}RoutineType"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
@@ -59,7 +59,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Routine implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(name = "specific_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String specificCatalog;

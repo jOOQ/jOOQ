@@ -202,8 +202,30 @@ public class SQLiteDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
+    protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : create().fetch(
+            "SELECT "
+          + "  m.tbl_name AS table_name, "
+          + "  il.name AS key_name, "
+          + "  ii.name AS column_name "
+          + "FROM "
+          + "  sqlite_master AS m, "
+          + "  pragma_index_list(m.name) AS il, "
+          + "  pragma_index_info(il.name) AS ii "
+          + "WHERE "
+          + "  m.type = 'table' AND "
+          + "  il.origin = 'u' "
+          + "ORDER BY table_name, key_name, ii.seqno"
+        )) {
+            String tableName = record.get("table_name", String.class);
+            String keyName = record.get("key_name", String.class);
+            String columnName = record.get("column_name", String.class);
 
+            TableDefinition table = getTable(getSchemata().get(0), tableName);
+            if (table != null) {
+                relations.addUniqueKey(keyName, table.getColumn(columnName));
+            }
+        }
     }
 
     @Override

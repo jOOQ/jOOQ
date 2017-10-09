@@ -80,6 +80,7 @@ final class InformationSchemaMetaImpl implements Meta {
     private final InformationSchema                         source;
 
     private final List<Catalog>                             catalogs;
+    private final Map<Name, Catalog>                        catalogsByName;
     private final List<Schema>                              schemas;
     private final Map<Name, Schema>                         schemasByName;
     private final Map<Catalog, List<Schema>>                schemasPerCatalog;
@@ -97,6 +98,7 @@ final class InformationSchemaMetaImpl implements Meta {
         this.configuration = configuration;
         this.source = source;
         this.catalogs = new ArrayList<Catalog>();
+        this.catalogsByName = new HashMap<Name, Catalog>();
         this.schemas = new ArrayList<Schema>();
         this.schemasByName = new HashMap<Name, Schema>();
         this.schemasPerCatalog = new HashMap<Catalog, List<Schema>>();
@@ -116,13 +118,38 @@ final class InformationSchemaMetaImpl implements Meta {
     private final void init(InformationSchema meta) {
         List<String> errors = new ArrayList<String>();
 
-        // Catalogs / Schemas
+        // Catalogs
         // -------------------------------------------------------------------------------------------------------------
-        for (org.jooq.util.xml.jaxb.Schema xs : meta.getSchemata()) {
-            InformationSchemaCatalog catalog = new InformationSchemaCatalog(xs.getCatalogName());
+        boolean hasCatalogs = false;
+        for (org.jooq.util.xml.jaxb.Catalog xc : meta.getCatalogs()) {
+            InformationSchemaCatalog ic = new InformationSchemaCatalog(xc.getCatalogName());
+            catalogs.add(ic);
+            catalogsByName.put(name(xc.getCatalogName()), ic);
+            hasCatalogs = true;
+        }
 
-            if (!catalogs.contains(catalog))
-                catalogs.add(catalog);
+        // Schemas
+        // -------------------------------------------------------------------------------------------------------------
+        schemaLoop:
+        for (org.jooq.util.xml.jaxb.Schema xs : meta.getSchemata()) {
+
+            // [#6662] This is kept for backwards compatibility reasons
+            if (!hasCatalogs) {
+                InformationSchemaCatalog ic = new InformationSchemaCatalog(xs.getCatalogName());
+
+                if (!catalogs.contains(ic)) {
+                    catalogs.add(ic);
+                    catalogsByName.put(name(xs.getCatalogName()), ic);
+                }
+            }
+
+            Name catalogName = name(xs.getCatalogName());
+            Catalog catalog = catalogsByName.get(catalogName);
+
+            if (catalog == null) {
+                errors.add(String.format("Catalog " + catalogName + " not defined for schema " + xs.getSchemaName()));
+                continue schemaLoop;
+            }
 
             InformationSchemaSchema is = new InformationSchemaSchema(xs.getSchemaName(), catalog);
             schemas.add(is);

@@ -47,6 +47,8 @@ import javax.xml.bind.JAXB;
 
 import org.jooq.SortOrder;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
+import org.jooq.util.xml.jaxb.Catalog;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -89,8 +91,19 @@ public class XMLGenerator extends AbstractGenerator {
 
         InformationSchema is = new InformationSchema();
 
+        boolean hasNonDefaultCatalogs = false;
+        for (CatalogDefinition c : db.getCatalogs()) {
+            if (!StringUtils.isBlank(c.getName())) {
+                hasNonDefaultCatalogs = true;
+                break;
+            }
+        }
+
         for (CatalogDefinition c : db.getCatalogs()) {
             String catalogName = c.getOutputName();
+
+            if (hasNonDefaultCatalogs)
+                is.getCatalogs().add(new Catalog().withCatalogName(catalogName));
 
             for (SchemaDefinition s : c.getSchemata()) {
                 String schemaName = s.getOutputName();

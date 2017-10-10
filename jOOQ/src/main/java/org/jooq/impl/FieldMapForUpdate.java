@@ -34,17 +34,18 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 
+import java.util.EnumSet;
 import java.util.Map;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -52,13 +53,15 @@ import org.jooq.Table;
  */
 final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
+
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6139709404698673799L;
+    private static final long                serialVersionUID   = -6139709404698673799L;
+    private static final EnumSet<SQLDialect> NO_SUPPORT_QUALIFY = EnumSet.of(POSTGRES, SQLITE);
 
-    private final Table<?>    table;
-    private final Clause      assignmentClause;
+    private final Table<?>                   table;
+    private final Clause                     assignmentClause;
 
     FieldMapForUpdate(Table<?> table, Clause assignmentClause) {
         this.table = table;
@@ -77,7 +80,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
             boolean restoreQualify = ctx.qualify();
-            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(ctx.family()) ? false : restoreQualify;
+            boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.family()) ? false : restoreQualify;
 
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
                 ctx.sql(separator);

@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
@@ -71,6 +70,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLU
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Map;
 
 import org.jooq.Clause;
@@ -97,17 +97,18 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long           serialVersionUID = 4466005417945353842L;
-    private static final Clause[]       CLAUSES          = { INSERT };
+    private static final long                serialVersionUID      = 4466005417945353842L;
+    private static final Clause[]            CLAUSES               = { INSERT };
+    private static final EnumSet<SQLDialect> SUPPORT_INSERT_IGNORE = EnumSet.of(MARIADB, MYSQL);
 
-    private final FieldMapForUpdate     updateMap;
-    private final FieldMapsForInsert    insertMaps;
-    private Select<?>                   select;
-    private boolean                     defaultValues;
-    private boolean                     onDuplicateKeyUpdate;
-    private boolean                     onDuplicateKeyIgnore;
-    private QueryPartList<Field<?>>     onConflict;
-    private final ConditionProviderImpl condition;
+    private final FieldMapForUpdate          updateMap;
+    private final FieldMapsForInsert         insertMaps;
+    private Select<?>                        select;
+    private boolean                          defaultValues;
+    private boolean                          onDuplicateKeyUpdate;
+    private boolean                          onDuplicateKeyIgnore;
+    private QueryPartList<Field<?>>          onConflict;
+    private final ConditionProviderImpl      condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
@@ -417,7 +418,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         // [#1295] [#4376] MySQL and SQLite have native syntaxes for
         //                 INSERT [ OR ] IGNORE
         if (onDuplicateKeyIgnore)
-            if (asList(MARIADB, MYSQL).contains(ctx.family()))
+            if (SUPPORT_INSERT_IGNORE.contains(ctx.family()))
                 ctx.visit(K_IGNORE).sql(' ');
             else if (SQLDialect.SQLITE == ctx.family())
                 ctx.visit(K_OR).sql(' ').visit(K_IGNORE).sql(' ');

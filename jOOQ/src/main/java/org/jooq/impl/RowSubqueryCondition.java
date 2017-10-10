@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.EQUALS;
@@ -58,6 +57,7 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -83,13 +83,17 @@ final class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long         serialVersionUID = -1806139685201770706L;
-    private static final Clause[]     CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    private static final long                serialVersionUID         = -1806139685201770706L;
+    private static final Clause[]            CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
+    private static final EnumSet<SQLDialect> SUPPORT_NATIVE           = EnumSet.of(H2, HSQLDB, MARIADB, MYSQL, POSTGRES);
 
-    private final Row                 left;
-    private final Select<?>           right;
-    private final QuantifiedSelect<?> rightQuantified;
-    private final Comparator          comparator;
+
+
+
+    private final Row                        left;
+    private final Select<?>                  right;
+    private final QuantifiedSelect<?>        rightQuantified;
+    private final Comparator                 comparator;
 
     RowSubqueryCondition(Row left, Select<?> right, Comparator comparator) {
         this.left = left;
@@ -128,18 +132,9 @@ final class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        else if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family)) {
+        else if (SUPPORT_NATIVE.contains(family)) {
             return new Native();
         }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -155,14 +150,12 @@ final class RowSubqueryCondition extends AbstractCondition {
             String table = render == null ? "t" : render.nextAlias();
 
             List<String> names = new ArrayList<String>();
-            for (int i = 0; i < left.size(); i++) {
+            for (int i = 0; i < left.size(); i++)
                 names.add(table + "_" + i);
-            }
 
             Field<?>[] fields = new Field[names.size()];
-            for (int i = 0; i < fields.length; i++) {
+            for (int i = 0; i < fields.length; i++)
                 fields[i] = field(name(table, names.get(i)));
-            }
 
             Condition condition;
             switch (comparator) {
@@ -225,7 +218,11 @@ final class RowSubqueryCondition extends AbstractCondition {
             if (rightQuantified == null) {
 
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList().contains(ctx.family());
+                boolean extraParentheses = false
+
+
+
+                    ;
 
                 ctx.sql(extraParentheses ? "((" : "(");
                 ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);

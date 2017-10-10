@@ -35,7 +35,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
@@ -53,6 +52,7 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.LinkedHashSet;
 
 import org.jooq.Converter;
@@ -63,6 +63,7 @@ import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -83,9 +84,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 3216746611562261641L;
-    private static final JooqLogger log              = JooqLogger.getLogger(TableRecordImpl.class);
-    private final Table<R>          table;
+    private static final long                serialVersionUID       = 3216746611562261641L;
+    private static final JooqLogger          log                    = JooqLogger.getLogger(TableRecordImpl.class);
+    private static final EnumSet<SQLDialect> REFRESH_GENERATED_KEYS = EnumSet.of(DERBY, H2, MARIADB, MYSQL);
+
+    private final Table<R>                   table;
 
     public TableRecordImpl(Table<R> table) {
         super(table.fields());
@@ -224,7 +227,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             }
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
-            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord)
+            if (REFRESH_GENERATED_KEYS.contains(configuration().family()) && this instanceof UpdatableRecord)
                 ((UpdatableRecord<?>) this).refresh(key.toArray(EMPTY_FIELD));
         }
     }

@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_FROM;
 import static org.jooq.Clause.UPDATE_RETURNING;
@@ -54,6 +53,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -110,6 +110,7 @@ import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowN;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -120,15 +121,18 @@ import org.jooq.UpdateQuery;
  */
 final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
-    private static final long           serialVersionUID = -660460731970074719L;
-    private static final Clause[]       CLAUSES          = { UPDATE };
+    private static final long                serialVersionUID       = -660460731970074719L;
+    private static final Clause[]            CLAUSES                = { UPDATE };
 
-    private final FieldMapForUpdate     updateMap;
-    private final TableList             from;
-    private final ConditionProviderImpl condition;
-    private Row                         multiRow;
-    private Row                         multiValue;
-    private Select<?>                   multiSelect;
+
+
+
+    private final FieldMapForUpdate          updateMap;
+    private final TableList                  from;
+    private final ConditionProviderImpl      condition;
+    private Row                              multiRow;
+    private Row                              multiValue;
+    private Select<?>                        multiSelect;
 
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -488,11 +492,15 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
            // [#4314] Not all SQL dialects support declaring aliased tables in
            // UPDATE statements
-           .declareTables(!asList().contains(ctx.family()))
+           .declareTables(
+               true
+
+
+
+           )
            .visit(table)
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
-
 
 
 
@@ -527,7 +535,11 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList().contains(ctx.family())) {
+            if (multiValue != null
+
+
+
+            ) {
                 ctx.visit(multiValue);
             }
 
@@ -535,9 +547,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             else {
                 Select<?> select = multiSelect;
 
-                if (multiValue != null) {
+                if (multiValue != null)
                     select = select(multiValue.fields());
-                }
 
                 ctx.sql('(')
                    .formatIndentStart()

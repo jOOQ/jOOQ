@@ -36,7 +36,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Character.isJavaIdentifierPart;
-import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -561,6 +560,11 @@ final class Tools {
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
     private static final char[]   HEX_DIGITS                                   = "0123456789abcdef".toCharArray();
+
+    private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -1730,7 +1734,7 @@ final class Tools {
 
         SQLDialect dialect = render.configuration().dialect();
         SQLDialect family = dialect.family();
-        boolean mysql = asList(MARIADB, MYSQL).contains(family);
+        boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(family);
         String[][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
@@ -1976,7 +1980,7 @@ final class Tools {
      */
     static final boolean needsBackslashEscaping(Configuration configuration) {
         BackslashEscaping escaping = getBackslashEscaping(configuration.settings());
-        return escaping == ON || (escaping == DEFAULT && EnumSet.of(MARIADB, MYSQL).contains(configuration.family()));
+        return escaping == ON || (escaping == DEFAULT && REQUIRES_BACKSLASH_ESCAPING.contains(configuration.family()));
     }
 
     /**
@@ -3813,7 +3817,7 @@ final class Tools {
 
         // [#5356] Some dialects require the DEFAULT clause prior to the
         //         NULL constraints clause
-        if (asList(HSQLDB).contains(ctx.family()))
+        if (DEFAULT_BEFORE_NULL.contains(ctx.family()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
         if (!type.nullable())
@@ -3821,7 +3825,7 @@ final class Tools {
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
             // [#3400] [#4321] ... but not in Derby, Firebird
-        else if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
+        else if (!NO_SUPPORT_NULL.contains(ctx.family()))
             ctx.sql(' ').visit(K_NULL);
 
         if (type.identity()) {
@@ -3839,7 +3843,7 @@ final class Tools {
             }
         }
 
-        if (!asList(HSQLDB).contains(ctx.family()))
+        if (!DEFAULT_BEFORE_NULL.contains(ctx.family()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
     }
 
@@ -3901,7 +3905,7 @@ final class Tools {
         if (type.hasLength()) {
 
             // [#6289] Some databases don't support lengths on binary types
-            if (type.isBinary() && asList(POSTGRES).contains(ctx.family()))
+            if (type.isBinary() && ctx.family() == POSTGRES)
                 ctx.sql(typeName);
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');

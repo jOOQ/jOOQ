@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
@@ -55,6 +54,7 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE_VIEW;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -65,6 +65,7 @@ import org.jooq.CreateViewAsStep;
 import org.jooq.CreateViewFinalStep;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.ParamType;
@@ -84,6 +85,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
      */
     private static final long                                                       serialVersionUID = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES          = { CREATE_VIEW };
+    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
 
     private final boolean                                                           ifNotExists;
     private final Table<?>                                                          view;
@@ -140,7 +142,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
     }
 
     @Override

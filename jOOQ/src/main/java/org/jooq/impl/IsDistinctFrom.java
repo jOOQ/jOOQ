@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Comparator.IS_DISTINCT_FROM;
 import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 // ...
@@ -54,12 +53,11 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
-import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.zero;
+
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -74,19 +72,22 @@ import org.jooq.SQLDialect;
  */
 final class IsDistinctFrom<T> extends AbstractCondition {
 
+
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 4568269684824736461L;
+    private static final long                serialVersionUID            = 4568269684824736461L;
+    private static final EnumSet<SQLDialect> EMULATE_DISTINCT_PREDICATE  = EnumSet.of(CUBRID, DERBY);
+    private static final EnumSet<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = EnumSet.of(MARIADB, MYSQL);
 
-    private final Field<T>              lhs;
-    private final Field<T>              rhs;
-    private final Comparator            comparator;
+    private final Field<T>                   lhs;
+    private final Field<T>                   rhs;
+    private final Comparator                 comparator;
 
-    private transient QueryPartInternal mySQLCondition;
-    private transient QueryPartInternal sqliteCondition;
-    private transient QueryPartInternal compareCondition;
-    private transient QueryPartInternal caseExpression;
+    private transient QueryPartInternal      mySQLCondition;
+    private transient QueryPartInternal      sqliteCondition;
+    private transient QueryPartInternal      compareCondition;
+    private transient QueryPartInternal      caseExpression;
 
     IsDistinctFrom(Field<T> lhs, Field<T> rhs, Comparator comparator) {
         this.lhs = lhs;
@@ -112,40 +113,14 @@ final class IsDistinctFrom<T> extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // [#3511] These dialects need to emulate the IS DISTINCT FROM predicate, optimally using INTERSECT...
-        if (asList(CUBRID, DERBY).contains(configuration.family())) {
+        if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
             return (comparator == IS_DISTINCT_FROM)
                 ? (QueryPartInternal) notExists(select(lhs).intersect(select(rhs)))
                 : (QueryPartInternal) exists(select(lhs).intersect(select(rhs)));
         }
 
-        // ... or using a more verbose CASE expression
-        else if (asList().contains(configuration.family())) {
-            if (caseExpression == null) {
-                if (comparator == Comparator.IS_DISTINCT_FROM) {
-                    caseExpression = (QueryPartInternal) decode()
-                        .when(lhs.isNull().and(rhs.isNull()), zero())
-                        .when(lhs.isNull().and(rhs.isNotNull()), one())
-                        .when(lhs.isNotNull().and(rhs.isNull()), one())
-                        .when(lhs.equal(rhs), zero())
-                        .otherwise(one())
-                        .equal(one());
-                }
-                else {
-                    caseExpression = (QueryPartInternal) decode()
-                        .when(lhs.isNull().and(rhs.isNull()), one())
-                        .when(lhs.isNull().and(rhs.isNotNull()), zero())
-                        .when(lhs.isNotNull().and(rhs.isNull()), zero())
-                        .when(lhs.equal(rhs), one())
-                        .otherwise(zero())
-                        .equal(one());
-                }
-            }
-
-            return caseExpression;
-        }
-
         // MySQL knows the <=> operator
-        else if (asList(MARIADB, MYSQL).contains(configuration.family())) {
+        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(configuration.family())) {
             if (mySQLCondition == null)
                 mySQLCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
                     ? condition("{not}({0} <=> {1})", lhs, rhs)

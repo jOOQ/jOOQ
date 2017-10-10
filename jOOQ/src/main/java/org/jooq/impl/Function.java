@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -73,6 +72,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Map;
 
 import org.jooq.AggregateFilterStep;
@@ -119,27 +119,32 @@ class Function<T> extends AbstractField<T> implements
     WindowRowsAndStep<T>
     {
 
-    private static final long              serialVersionUID = 347252741712134044L;
 
-    static final Field<Integer>            ASTERISK         = DSL.field("*", Integer.class);
+    private static final long                serialVersionUID      = 347252741712134044L;
+    private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG     = EnumSet.of(HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT  = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG    = EnumSet.of(POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_WINDOW_CLAUSE = EnumSet.of(MYSQL, POSTGRES);
+
+    static final Field<Integer>              ASTERISK              = DSL.field("*", Integer.class);
 
     // Mutually exclusive attributes: super.getName(), this.name, this.term
-    private final Name                     name;
-    private final Term                     term;
+    private final Name                       name;
+    private final Term                       term;
 
     // Other attributes
-    private final QueryPartList<QueryPart> arguments;
-    private final boolean                  distinct;
-    private final SortFieldList            withinGroupOrderBy;
-    private final SortFieldList            keepDenseRankOrderBy;
-    private Condition                      filter;
-    private WindowSpecificationImpl        windowSpecification;
-    private WindowDefinitionImpl           windowDefinition;
-    private Name                           windowName;
+    private final QueryPartList<QueryPart>   arguments;
+    private final boolean                    distinct;
+    private final SortFieldList              withinGroupOrderBy;
+    private final SortFieldList              keepDenseRankOrderBy;
+    private Condition                        filter;
+    private WindowSpecificationImpl          windowSpecification;
+    private WindowDefinitionImpl             windowDefinition;
+    private Name                             windowName;
 
-    private boolean                        first;
-    private boolean                        ignoreNulls;
-    private boolean                        respectNulls;
+    private boolean                          first;
+    private boolean                          ignoreNulls;
+    private boolean                          respectNulls;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -196,15 +201,15 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == ARRAY_AGG && asList(HSQLDB, POSTGRES).contains(ctx.family())) {
+        if (term == ARRAY_AGG && SUPPORT_ARRAY_AGG.contains(ctx.family())) {
             toSQLGroupConcat(ctx);
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
-        else if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.family())) {
+        else if (term == LIST_AGG && SUPPORT_GROUP_CONCAT.contains(ctx.family())) {
             toSQLGroupConcat(ctx);
         }
-        else if (term == LIST_AGG && asList(POSTGRES).contains(ctx.family())) {
+        else if (term == LIST_AGG && SUPPORT_STRING_AGG  .contains(ctx.family())) {
             toSQLStringAgg(ctx);
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
@@ -214,7 +219,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-        else if (term == MEDIAN && asList(POSTGRES).contains(ctx.family())) {
+        else if (term == MEDIAN && ctx.family() == POSTGRES) {
             Field<?>[] fields = new Field[arguments.size()];
             for (int i = 0; i < fields.length; i++)
                 fields[i] = DSL.field("{0}", arguments.get(i));
@@ -363,18 +368,16 @@ class Function<T> extends AbstractField<T> implements
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
-            if (asList(POSTGRES).contains(ctx.family()))
+            if (SUPPORT_WINDOW_CLAUSE.contains(ctx.family()))
                 return windowName;
 
             Map<Object, Object> map = (Map<Object, Object>) ctx.data(DATA_LOCALLY_SCOPED_DATA_MAP);
             QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) map.get(DATA_WINDOW_DEFINITIONS);
 
             if (windows != null) {
-                for (WindowDefinition window : windows) {
-                    if (((WindowDefinitionImpl) window).getName().equals(windowName)) {
+                for (WindowDefinition window : windows)
+                    if (((WindowDefinitionImpl) window).getName().equals(windowName))
                         return DSL.sql("({0})", window);
-                    }
-                }
             }
 
             // [#3162] If a window specification is missing from the query's WINDOW clause,

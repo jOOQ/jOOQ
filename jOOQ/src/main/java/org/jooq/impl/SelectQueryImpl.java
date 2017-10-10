@@ -35,7 +35,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_EXCEPT;
@@ -186,8 +185,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * Generated UID
      */
-    private static final long                    serialVersionUID = 1646393178384872967L;
-    private static final Clause[]                CLAUSES          = { SELECT };
+    private static final long                    serialVersionUID                = 1646393178384872967L;
+    private static final Clause[]                CLAUSES                         = { SELECT };
+    private static final EnumSet<SQLDialect>     EMULATE_SELECT_INTO_AS_CTAS     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE           = EnumSet.of(CUBRID);
+    private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE_QUALIFIED = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO             = EnumSet.of(HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect>     SUPPORT_WINDOW_CLAUSE           = EnumSet.of(MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+
+
+
+
+
+
+
+
 
     private final WithImpl                       with;
     private final SelectFieldList                select;
@@ -454,7 +468,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (into != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+                    && EMULATE_SELECT_INTO_AS_CTAS.contains(family)) {
 
                 context.data(DATA_OMIT_INTO_CLAUSE, true);
                 context.visit(DSL.createTable(into).as(this));
@@ -613,7 +627,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
-            if (forUpdate && !asList(CUBRID).contains(family)) {
+            if (forUpdate && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
                 context.formatSeparator()
                        .visit(K_FOR_UPDATE);
 
@@ -621,7 +635,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     // [#4151] [#6117] Some databases don't allow for qualifying column
                     // names here. Copy also to TableList
-                    boolean unqualified = asList(DERBY, FIREBIRD, H2, HSQLDB).contains(context.family());
+                    boolean unqualified = NO_SUPPORT_FOR_UPDATE_QUALIFIED.contains(context.family());
                     boolean qualify = context.qualify();
 
                     if (unqualified)
@@ -1142,7 +1156,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ------------
         // [#4910] This clause (and the Clause.SELECT_INTO signal) must be emitted
         //         only in top level SELECTs
-        if (!context.subquery() && !asList().contains(family)) {
+        if (!context.subquery()
+
+
+
+        ) {
             context.start(SELECT_INTO);
 
             Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
@@ -1151,7 +1169,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (actualInto != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && asList(HSQLDB, POSTGRES).contains(family)) {
+                    && SUPPORT_SELECT_INTO.contains(family)) {
 
                 context.formatSeparator()
                        .visit(K_INTO)
@@ -1174,7 +1192,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-            || asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL).contains(family)
+            || REQUIRES_FROM_CLAUSE.contains(family)
         ;
 
         List<Condition> semiAntiJoinPredicates = null;
@@ -1271,38 +1289,33 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .sql(' ');
 
             // [#1665] Empty GROUP BY () clauses need parentheses
-            if (getGroupBy().isEmpty()) {
-
-                // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList().contains(family)) {
-                    context.sql("empty_grouping_dummy_table.dual");
-                }
+            if (getGroupBy().isEmpty())
 
                 // [#4292] Some dialects accept constant expressions in GROUP BY
                 // Note that dialects may consider constants as indexed field
                 // references, as in the ORDER BY clause!
-                else if (asList(DERBY).contains(family)) {
+                if (family == DERBY)
                     context.sql('0');
-                }
 
                 // [#4447] CUBRID can't handle subqueries in GROUP BY
-                else if (family == CUBRID) {
+                else if (family == CUBRID)
                     context.sql("1 + 0");
-                }
+
+
+
+
+
+
 
                 // [#4292] Some dialects don't support empty GROUP BY () clauses
-                else if (asList(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+                else if (EMULATE_EMPTY_GROUP_BY_OTHER.contains(family))
                     context.sql('(').visit(DSL.select(one())).sql(')');
-                }
 
                 // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
-                else {
+                else
                     context.sql("()");
-                }
-            }
-            else {
+            else
                 context.visit(getGroupBy());
-            }
         }
 
         context.end(SELECT_GROUP_BY);
@@ -1324,7 +1337,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty() && asList(MYSQL, POSTGRES).contains(family)) {
+        if (!getWindow().isEmpty() && SUPPORT_WINDOW_CLAUSE.contains(family)) {
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .sql(' ')

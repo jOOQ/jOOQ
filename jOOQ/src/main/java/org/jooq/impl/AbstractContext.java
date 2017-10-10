@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -47,6 +46,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.Map;
 
 import org.jooq.BindContext;
@@ -76,32 +76,36 @@ import org.jooq.conf.StatementType;
 @SuppressWarnings("unchecked")
 abstract class AbstractContext<C extends Context<C>> extends AbstractScope implements Context<C> {
 
-    final PreparedStatement           stmt;
 
-    boolean                           declareFields;
-    boolean                           declareTables;
-    boolean                           declareAliases;
-    boolean                           declareWindows;
-    boolean                           declareCTE;
-    boolean                           subquery;
-    int                               stringLiteral;
-    String                            stringLiteralEscapedApos = "'";
-    int                               index;
+
+
+
+    final PreparedStatement                  stmt;
+
+    boolean                                  declareFields;
+    boolean                                  declareTables;
+    boolean                                  declareAliases;
+    boolean                                  declareWindows;
+    boolean                                  declareCTE;
+    boolean                                  subquery;
+    int                                      stringLiteral;
+    String                                   stringLiteralEscapedApos    = "'";
+    int                                      index;
 
     // [#2665] VisitListener API
-    final VisitListener[]             visitListeners;
-    private final Deque<Clause>       visitClauses;
-    private final DefaultVisitContext visitContext;
-    private final Deque<QueryPart>    visitParts;
+    final VisitListener[]                    visitListeners;
+    private final Deque<Clause>              visitClauses;
+    private final DefaultVisitContext        visitContext;
+    private final Deque<QueryPart>           visitParts;
 
     // [#2694] Unified RenderContext and BindContext traversal
-    final ParamType                   forcedParamType;
-    final boolean                     castModeOverride;
-    CastMode                          castMode;
-    ParamType                         paramType                = ParamType.INDEXED;
-    boolean                           quote                    = true;
-    boolean                           qualifySchema            = true;
-    boolean                           qualifyCatalog           = true;
+    final ParamType                          forcedParamType;
+    final boolean                            castModeOverride;
+    CastMode                                 castMode;
+    ParamType                                paramType                   = ParamType.INDEXED;
+    boolean                                  quote                       = true;
+    boolean                                  qualifySchema               = true;
+    boolean                                  qualifyCatalog              = true;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);

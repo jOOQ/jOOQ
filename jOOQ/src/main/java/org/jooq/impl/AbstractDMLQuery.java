@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -73,6 +72,7 @@ import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Binding;
@@ -102,12 +102,15 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -7438014075226919192L;
+    private static final long                serialVersionUID         = -7438014075226919192L;
 
-    final WithImpl                with;
-    final Table<R>                table;
-    final QueryPartList<Field<?>> returning;
-    Result<R>                     returned;
+
+
+
+    final WithImpl                           with;
+    final Table<R>                           table;
+    final QueryPartList<Field<?>>            returning;
+    Result<R>                                returned;
 
     AbstractDMLQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration);

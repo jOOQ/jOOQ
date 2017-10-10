@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
 // ...
@@ -68,6 +67,7 @@ import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.sql.Timestamp;
+import java.util.EnumSet;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -87,11 +87,16 @@ final class Expression<T> extends AbstractFunction<T> {
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -5522799070693019771L;
+    private static final long                serialVersionUID    = -5522799070693019771L;
+    private static final EnumSet<SQLDialect> SUPPORT_BIT_AND     = EnumSet.of(H2, HSQLDB);
+    private static final EnumSet<SQLDialect> SUPPORT_BIT_OR_XOR  = EnumSet.of(H2, HSQLDB);
+    private static final EnumSet<SQLDialect> EMULATE_BIT_XOR     = EnumSet.of(SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_SHR_SHL     = EnumSet.of(H2, HSQLDB);
+    private static final EnumSet<SQLDialect> HASH_OP_FOR_BIT_XOR = EnumSet.of(POSTGRES);
 
-    private final Field<T>                lhs;
-    private final QueryPartList<Field<?>> rhs;
-    private final ExpressionOperator      operator;
+    private final Field<T>                   lhs;
+    private final QueryPartList<Field<?>>    rhs;
+    private final ExpressionOperator         operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
         super(operator.toSQL(), lhs.getDataType(), Tools.combine(lhs, rhs));
@@ -131,25 +136,18 @@ final class Expression<T> extends AbstractFunction<T> {
         // ---------------------------------------------------------------------
 
         // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && asList(H2, HSQLDB).contains(family)) {
+        if (BIT_AND == operator && SUPPORT_BIT_AND.contains(family))
             return function("bitand", getDataType(), getArguments());
-        }
-        else if (BIT_AND == operator && FIREBIRD == family) {
+        else if (BIT_AND == operator && FIREBIRD == family)
             return function("bin_and", getDataType(), getArguments());
-        }
-        else if (BIT_XOR == operator && asList(H2, HSQLDB).contains(family)) {
+        else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(family))
             return function("bitxor", getDataType(), getArguments());
-        }
-        else if (BIT_XOR == operator && FIREBIRD == family) {
+        else if (BIT_XOR == operator && FIREBIRD == family)
             return function("bin_xor", getDataType(), getArguments());
-        }
-        else if (BIT_OR == operator && asList(H2, HSQLDB).contains(family)) {
+        else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(family))
             return function("bitor", getDataType(), getArguments());
-        }
-        else if (BIT_OR == operator && FIREBIRD == family) {
+        else if (BIT_OR == operator && FIREBIRD == family)
             return function("bin_or", getDataType(), getArguments());
-        }
-
 
 
 
@@ -158,20 +156,19 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
         // ~(a & b) & (a | b)
-        else if (BIT_XOR == operator && asList(SQLITE).contains(family)) {
+        else if (BIT_XOR == operator && EMULATE_BIT_XOR.contains(family))
             return (Field<T>) DSL.bitAnd(
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber()));
-        }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(H2, HSQLDB).contains(family)) {
+        else if (SHL == operator && EMULATE_SHR_SHL.contains(family)) {
             return lhs.mul((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
         }
 
         // [#3962] This emulation is expensive. If this is emulated, BitCount should
         // use division instead of SHR directly
-        else if (SHR == operator && asList(H2, HSQLDB).contains(family)) {
+        else if (SHR == operator && EMULATE_SHR_SHL.contains(family)) {
             return lhs.div((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
         }
 
@@ -199,7 +196,7 @@ final class Expression<T> extends AbstractFunction<T> {
         // ---------------------------------------------------------------------
 
         // [#585] Date time arithmetic for numeric or interval RHS
-        else if (asList(ADD, SUBTRACT).contains(operator) &&
+        else if ((ADD == operator || SUBTRACT == operator) &&
              lhs.getDataType().isDateTime() &&
             (rhs.get(0).getDataType().isNumeric() ||
              rhs.get(0).getDataType().isInterval())) {
@@ -636,7 +633,7 @@ final class Expression<T> extends AbstractFunction<T> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -5105004317793995419L;
+        private static final long                serialVersionUID    = -5105004317793995419L;
 
         private DefaultExpression() {
             super(operator.toName(), lhs.getDataType());
@@ -646,9 +643,8 @@ final class Expression<T> extends AbstractFunction<T> {
         public final void accept(Context<?> ctx) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && asList(POSTGRES).contains(ctx.family())) {
+            if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.family()))
                 op = "#";
-            }
 
             ctx.sql('(');
             ctx.visit(lhs);

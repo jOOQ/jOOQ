@@ -68,7 +68,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -85,6 +84,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -125,19 +125,21 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 final class MetaImpl implements Meta, Serializable {
 
+
     /**
      * Generated UID
      */
-    private static final long                   serialVersionUID = 3582980783173033809L;
+    private static final long                serialVersionUID       = 3582980783173033809L;
+    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG = EnumSet.of(MYSQL, MARIADB);
 
-    private final DSLContext                    ctx;
-    private final Configuration                 configuration;
-    private final boolean                       inverseSchemaCatalog;
+    private final DSLContext                 ctx;
+    private final Configuration              configuration;
+    private final boolean                    inverseSchemaCatalog;
 
     MetaImpl(Configuration configuration) {
         this.ctx = DSL.using(configuration);
         this.configuration = configuration;
-        this.inverseSchemaCatalog = asList(MYSQL, MARIADB).contains(configuration.family());
+        this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(configuration.family());
     }
 
     private interface MetaFunction {

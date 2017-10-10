@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.LIKE;
@@ -55,6 +54,8 @@ import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -69,13 +70,14 @@ import org.jooq.conf.ParamType;
  */
 final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
 
-    private static final long     serialVersionUID = -747240442279619486L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    private static final long                serialVersionUID      = -747240442279619486L;
+    private static final Clause[]            CLAUSES               = { CONDITION, CONDITION_COMPARISON };
+    private static final EnumSet<SQLDialect> REQUIRES_CAST_ON_LIKE = EnumSet.of(DERBY, POSTGRES);
 
-    private final Field<?>        field1;
-    private final Field<?>        field2;
-    private final Comparator      comparator;
-    private Character             escape;
+    private final Field<?>                   field1;
+    private final Field<?>                   field2;
+    private final Comparator                 comparator;
+    private Character                        escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
         this.field1 = field1;
@@ -101,7 +103,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         // [#293] TODO: This could apply to other operators, too
         if ((op == LIKE || op == NOT_LIKE)
                 && field1.getType() != String.class
-                && asList(DERBY, POSTGRES).contains(family)) {
+                && REQUIRES_CAST_ON_LIKE.contains(family)) {
 
             lhs = lhs.cast(String.class);
         }

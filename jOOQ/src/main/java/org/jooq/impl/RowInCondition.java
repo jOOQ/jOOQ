@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
@@ -55,6 +54,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -64,6 +64,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -76,6 +77,7 @@ final class RowInCondition extends AbstractCondition {
     private static final long                  serialVersionUID = -1806139685201770706L;
     private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
     private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
+    private static final EnumSet<SQLDialect>   EMULATE_IN       = EnumSet.of(DERBY, FIREBIRD, SQLITE);
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;
@@ -98,18 +100,16 @@ final class RowInCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(DERBY, FIREBIRD, SQLITE).contains(configuration.family())) {
+        if (EMULATE_IN.contains(configuration.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
-            for (Row row : right) {
+            for (Row row : right)
                 conditions.add(new RowCondition(left, row, EQUALS));
-            }
 
             Condition result = DSL.or(conditions);
 
-            if (comparator == NOT_IN) {
+            if (comparator == NOT_IN)
                 result = result.not();
-            }
 
             return (QueryPartInternal) result;
         }

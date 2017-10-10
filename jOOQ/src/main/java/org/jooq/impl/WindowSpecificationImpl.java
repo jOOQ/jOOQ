@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -54,12 +53,14 @@ import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.OrderField;
+import org.jooq.SQLDialect;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
@@ -75,17 +76,19 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     WindowSpecificationRowsAndStep
     {
 
+
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 2996016924769376361L;
+    private static final long                serialVersionUID      = 2996016924769376361L;
+    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE = EnumSet.of(CUBRID, MYSQL);
 
-    private final QueryPartList<Field<?>> partitionBy;
-    private final SortFieldList           orderBy;
-    private Integer                       frameStart;
-    private Integer                       frameEnd;
-    private FrameUnits                    frameUnits;
-    private boolean                       partitionByOne;
+    private final QueryPartList<Field<?>>    partitionBy;
+    private final SortFieldList              orderBy;
+    private Integer                          frameStart;
+    private Integer                          frameEnd;
+    private FrameUnits                       frameUnits;
+    private boolean                          partitionByOne;
 
     WindowSpecificationImpl() {
         this.partitionBy = new QueryPartList<Field<?>>();
@@ -101,7 +104,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
             // 1 literal onto the column index (CUBRID, Sybase), or do not support
             // constant expressions in the PARTITION BY clause (HANA)
-            if (partitionByOne && asList(CUBRID, MYSQL).contains(ctx.family())) {
+            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.family())) {
             }
             else {
                 ctx.sql(glue)

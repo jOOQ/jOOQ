@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_VIEW;
 import static org.jooq.Clause.ALTER_VIEW_RENAME;
 import static org.jooq.Clause.ALTER_VIEW_VIEW;
@@ -57,12 +56,15 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_VIEW;
 
+import java.util.EnumSet;
+
 import org.jooq.AlterViewFinalStep;
 import org.jooq.AlterViewStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -77,12 +79,13 @@ final class AlterViewImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_VIEW };
+    private static final long                serialVersionUID  = 8904572826501186329L;
+    private static final Clause[]            CLAUSES           = { ALTER_VIEW };
+    private static final EnumSet<SQLDialect> SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
 
-    private final Table<?>        view;
-    private final boolean         ifExists;
-    private Table<?>              renameTo;
+    private final Table<?>                   view;
+    private final boolean                    ifExists;
+    private Table<?>                         renameTo;
 
     AlterViewImpl(Configuration configuration, Table<?> view) {
         this(configuration, view, false);
@@ -119,8 +122,9 @@ final class AlterViewImpl extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+//    private static final EnumSet<SQLDialect> SUPPORT_IF_EXISTS =
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override

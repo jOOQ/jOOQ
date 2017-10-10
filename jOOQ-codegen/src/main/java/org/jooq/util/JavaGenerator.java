@@ -35,7 +35,6 @@
 package org.jooq.util;
 
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SortOrder.DESC;
@@ -5840,7 +5839,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (dataType.defaulted()) {
                     sb.append(".defaultValue(");
 
-                    if (asList(MYSQL).contains(db.getDialect().family()))
+                    if (MYSQL == db.getDialect().family())
                         sb.append("org.jooq.impl.DSL.inline(\"")
                           .append(escapeString(d))
                           .append("\"");

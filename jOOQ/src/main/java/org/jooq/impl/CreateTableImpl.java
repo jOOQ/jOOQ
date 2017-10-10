@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_TABLE;
 import static org.jooq.Clause.CREATE_TABLE_AS;
 import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
@@ -76,6 +75,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -91,6 +91,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -106,17 +107,22 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 8904572826501186329L;
+    private static final long                serialVersionUID               = 8904572826501186329L;
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
 
-    private final Table<?>          table;
-    private Select<?>               select;
-    private final List<Field<?>>    columnFields;
-    private final List<DataType<?>> columnTypes;
-    private final List<Constraint>  constraints;
-    private final boolean           temporary;
-    private final boolean           ifNotExists;
-    private OnCommit                onCommit;
 
+
+
+    private final Table<?>                   table;
+    private Select<?>                        select;
+    private final List<Field<?>>             columnFields;
+    private final List<DataType<?>>          columnTypes;
+    private final List<Constraint>           constraints;
+    private final boolean                    temporary;
+    private final boolean                    ifNotExists;
+    private OnCommit                         onCommit;
 
     CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
         super(configuration);
@@ -216,7 +222,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -242,11 +248,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
 
 
-
-
-            {
-                acceptCreateTableAsSelect(ctx);
-            }
+            acceptCreateTableAsSelect(ctx);
         }
         else {
             ctx.start(CREATE_TABLE);
@@ -297,20 +299,18 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         ctx.formatSeparator()
            .visit(K_AS);
 
-        if (asList(HSQLDB).contains(ctx.family())) {
+        if (WRAP_SELECT_IN_PARENS.contains(ctx.family()))
             ctx.sql(" (")
                .formatIndentStart()
                .formatNewLine();
-        }
-        else {
+        else
             ctx.formatSeparator();
-        }
 
         ctx.start(CREATE_TABLE_AS)
            .visit(select)
            .end(CREATE_TABLE_AS);
 
-        if (asList(HSQLDB).contains(ctx.family())) {
+        if (WRAP_SELECT_IN_PARENS.contains(ctx.family())) {
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
@@ -366,7 +366,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .sql(' ');
 
         if (temporary)
-            if (asList(MARIADB, MYSQL, POSTGRES).contains(ctx.family()))
+            if (SUPPORT_TEMPORARY.contains(ctx.family()))
                 ctx.visit(K_TEMPORARY).sql(' ');
             else
                 ctx.visit(K_GLOBAL_TEMPORARY).sql(' ');

@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -180,12 +179,11 @@ final class Cast<T> extends AbstractFunction<T> {
 
             // Avoid casting bind values inside an explicit cast...
             CastMode castMode = ctx.castMode();
+            DataType<T> type = getSQLDataType();
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
-            if (field.getDataType().isNumeric() &&
-                VARCHAR.equals(getSQLDataType())) {
-
+            if (field.getDataType().isNumeric() && VARCHAR.equals(type)) {
                 ctx.visit(K_TRIM).sql('(')
                        .visit(K_CAST).sql('(')
                            .visit(K_CAST).sql('(')
@@ -202,7 +200,7 @@ final class Cast<T> extends AbstractFunction<T> {
 
             // [#888] ... neither does casting character types to FLOAT (and similar)
             else if (field.getDataType().isString() &&
-                     asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
+                     (FLOAT.equals(type) || DOUBLE.equals(type) || REAL.equals(type))) {
 
                 ctx.visit(K_CAST).sql('(')
                        .visit(K_CAST).sql('(')
@@ -220,17 +218,13 @@ final class Cast<T> extends AbstractFunction<T> {
             }
 
             // [#859] ... neither does casting numeric types to BOOLEAN
-            else if (field.getDataType().isNumeric() &&
-                     BOOLEAN.equals(getSQLDataType())) {
-
+            else if (field.getDataType().isNumeric() && BOOLEAN.equals(type)) {
                 ctx.visit(asDecodeNumberToBoolean());
                 return;
             }
 
             // [#859] ... neither does casting character types to BOOLEAN
-            else if (field.getDataType().isString() &&
-                     BOOLEAN.equals(getSQLDataType())) {
-
+            else if (field.getDataType().isString() && BOOLEAN.equals(type)) {
                 ctx.visit(asDecodeVarcharToBoolean());
                 return;
             }

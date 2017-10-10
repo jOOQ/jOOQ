@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_INDEX;
 // ...
 // ...
@@ -52,6 +51,8 @@ import static org.jooq.impl.Keywords.K_DROP_INDEX;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -59,6 +60,7 @@ import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -72,12 +74,14 @@ final class DropIndexImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { DROP_INDEX };
+    private static final long                serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]            CLAUSES              = { DROP_INDEX };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> REQUIRES_ON          = EnumSet.of(MARIADB, MYSQL);
 
-    private final Index   index;
-    private final boolean ifExists;
-    private Table<?>      on;
+    private final Index                      index;
+    private final boolean                    ifExists;
+    private Table<?>                         on;
 
     DropIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);
@@ -116,7 +120,7 @@ final class DropIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -140,7 +144,7 @@ final class DropIndexImpl extends AbstractQuery implements
         ctx.visit(index);
 
         if (on != null)
-            if (asList(MARIADB, MYSQL).contains(ctx.family()))
+            if (REQUIRES_ON.contains(ctx.family()))
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
     }
 

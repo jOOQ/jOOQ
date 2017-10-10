@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
@@ -58,6 +57,7 @@ import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -67,6 +67,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -76,12 +77,13 @@ final class RowIsNull extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -1806139685201770706L;
-    private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
-    private static final Clause[] CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
+    private static final long                serialVersionUID = -1806139685201770706L;
+    private static final Clause[]            CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
+    private static final Clause[]            CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
+    private static final EnumSet<SQLDialect> EMULATE_NULL     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
-    private final Row             row;
-    private final boolean         isNull;
+    private final Row                        row;
+    private final boolean                    isNull;
 
     RowIsNull(Row row, boolean isNull) {
         this.row = row;
@@ -102,12 +104,11 @@ final class RowIsNull extends AbstractCondition {
 
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
         // Informix doesn't implement the RVE IS NULL predicate.
-        if (asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
+        if (EMULATE_NULL.contains(configuration.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
-            for (Field<?> field : row.fields()) {
+            for (Field<?> field : row.fields())
                 conditions.add(isNull ? field.isNull() : field.isNotNull());
-            }
 
             Condition result = DSL.and(conditions);
             return (QueryPartInternal) result;

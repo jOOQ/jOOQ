@@ -35,7 +35,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -1269,7 +1268,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final boolean pgArgNeedsCasting(Parameter<?> parameter) {
         // [#5264] Overloaded methods always need casting for overload resolution
         //         Some data types also need casting because expressions are automatically promoted to a "higher" type
-        return isOverloaded() || asList(Byte.class, Short.class).contains(parameter.getType());
+        return isOverloaded() || parameter.getType() == Byte.class || parameter.getType() == Short.class;
     }
 
 

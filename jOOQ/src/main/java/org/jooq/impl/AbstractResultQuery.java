@@ -36,7 +36,6 @@ package org.jooq.impl;
 
 import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
-import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -52,6 +51,7 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +80,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.Convert;
@@ -96,22 +97,23 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -5588344253566055707L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
+    private static final long                serialVersionUID      = -5588344253566055707L;
+    private static final JooqLogger          log                   = JooqLogger.getLogger(AbstractResultQuery.class);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_FOR_UPDATE = EnumSet.of(CUBRID);
 
-    private int                     maxRows;
-    private int                     fetchSize;
-    private int                     resultSetConcurrency;
-    private int                     resultSetType;
-    private int                     resultSetHoldability;
-    private transient boolean       lazy;
-    private transient boolean       many;
-    private transient Cursor<R>     cursor;
-    private Result<R>               result;
-    private ResultsImpl             results;
+    private int                              maxRows;
+    private int                              fetchSize;
+    private int                              resultSetConcurrency;
+    private int                              resultSetType;
+    private int                              resultSetHoldability;
+    private transient boolean                lazy;
+    private transient boolean                many;
+    private transient Cursor<R>              cursor;
+    private Result<R>                        result;
+    private ResultsImpl                      results;
 
     // Some temp variables for String interning
-    private final Intern            intern = new Intern();
+    private final Intern                     intern                = new Intern();
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -220,7 +222,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        else if (isForUpdate() && asList(CUBRID).contains(ctx.configuration().dialect().family())) {
+        else if (isForUpdate() && NO_SUPPORT_FOR_UPDATE.contains(ctx.family())) {
             ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }

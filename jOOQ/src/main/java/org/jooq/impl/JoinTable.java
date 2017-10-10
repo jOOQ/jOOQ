@@ -92,6 +92,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -106,6 +107,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -131,19 +133,22 @@ implements
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 8377996833996498178L;
-    private static final Clause[]         CLAUSES          = { TABLE, TABLE_JOIN };
+    private static final long                serialVersionUID           = 8377996833996498178L;
+    private static final Clause[]            CLAUSES                    = { TABLE, TABLE_JOIN };
+    private static final EnumSet<SQLDialect> EMULATE_NATURAL_JOIN       = EnumSet.of(CUBRID);
+    private static final EnumSet<SQLDialect> EMULATE_NATURAL_OUTER_JOIN = EnumSet.of(CUBRID, H2);
+    private static final EnumSet<SQLDialect> EMULATE_JOIN_USING         = EnumSet.of(CUBRID, H2);
 
-    private final Table<?>                lhs;
-    private final Table<?>                rhs;
+    private final Table<?>                   lhs;
+    private final Table<?>                   rhs;
 
 
 
 
 
-    private final JoinType                type;
-    private final ConditionProviderImpl   condition;
-    private final QueryPartList<Field<?>> using;
+    private final JoinType                   type;
+    private final ConditionProviderImpl      condition;
+    private final QueryPartList<Field<?>>    using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
 
@@ -289,22 +294,23 @@ implements
         // [#671] Some databases formally require nested JOINS on the right hand
         // side of the join expression to be wrapped in parentheses (e.g. MySQL).
         // In other databases, it's a good idea to wrap them all
-        boolean wrap = table instanceof JoinTable &&
-            (table == rhs || asList().contains(ctx.configuration().dialect().family()));
+        boolean wrap = table instanceof JoinTable && (table == rhs
 
-        if (wrap) {
+
+
+            );
+
+        if (wrap)
             ctx.sql('(')
                .formatIndentStart()
                .formatNewLine();
-        }
 
         ctx.visit(table);
 
-        if (wrap) {
+        if (wrap)
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
-        }
     }
 
     /**
@@ -333,37 +339,36 @@ implements
      * Translate the join type for SQL rendering
      */
     final JoinType translateType(Context<?> context) {
-        if (emulateCrossJoin(context)) {
+        if (emulateCrossJoin(context))
             return JOIN;
-        }
-        else if (emulateNaturalJoin(context)) {
+        else if (emulateNaturalJoin(context))
             return JOIN;
-        }
-        else if (emulateNaturalLeftOuterJoin(context)) {
+        else if (emulateNaturalLeftOuterJoin(context))
             return LEFT_OUTER_JOIN;
-        }
-        else if (emulateNaturalRightOuterJoin(context)) {
+        else if (emulateNaturalRightOuterJoin(context))
             return RIGHT_OUTER_JOIN;
-        }
-        else {
+        else
             return type;
-        }
     }
 
     private final boolean emulateCrossJoin(Context<?> context) {
-        return type == CROSS_JOIN && asList().contains(context.configuration().dialect().family());
+        return false
+
+
+
+            ;
     }
 
     private final boolean emulateNaturalJoin(Context<?> context) {
-        return type == NATURAL_JOIN && asList(CUBRID).contains(context.configuration().dialect().family());
+        return type == NATURAL_JOIN && EMULATE_NATURAL_JOIN.contains(context.family());
     }
 
     private final boolean emulateNaturalLeftOuterJoin(Context<?> context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(CUBRID, H2).contains(context.family());
+        return type == NATURAL_LEFT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
     }
 
     private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(CUBRID, H2).contains(context.family());
+        return type == NATURAL_RIGHT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
     }
 
     private final void toSQLJoinCondition(Context<?> context) {
@@ -371,7 +376,7 @@ implements
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be emulated with JOIN .. ON
-            if (asList(CUBRID, H2).contains(context.family())) {
+            if (EMULATE_JOIN_USING.contains(context.family())) {
                 boolean first = true;
                 for (Field<?> field : using) {
                     context.formatSeparator();

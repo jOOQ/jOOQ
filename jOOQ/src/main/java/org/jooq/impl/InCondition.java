@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
@@ -53,26 +52,29 @@ import static org.jooq.impl.Keywords.K_OR;
 
 import java.util.AbstractList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long       serialVersionUID = -1653924248576930761L;
-    private static final int        IN_LIMIT         = 1000;
-    private static final Clause[]   CLAUSES_IN       = { CONDITION, CONDITION_IN };
-    private static final Clause[]   CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
+    private static final long                serialVersionUID  = -1653924248576930761L;
+    private static final int                 IN_LIMIT          = 1000;
+    private static final Clause[]            CLAUSES_IN        = { CONDITION, CONDITION_IN };
+    private static final Clause[]            CLAUSES_IN_NOT    = { CONDITION, CONDITION_NOT_IN };
+    private static final EnumSet<SQLDialect> REQUIRES_IN_LIMIT = EnumSet.of(FIREBIRD);
 
-    private final Field<T>          field;
-    private final Field<?>[]        values;
-    private final Comparator        comparator;
+    private final Field<T>                   field;
+    private final Field<?>[]                 values;
+    private final Comparator                 comparator;
 
     InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
         this.field = field;
@@ -149,7 +151,7 @@ final class InCondition<T> extends AbstractCondition {
 
     private static List<Field<?>> padded(Context<?> ctx, List<Field<?>> list) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
-            ? new PaddedList<Field<?>>(list, asList(FIREBIRD).contains(ctx.family())
+            ? new PaddedList<Field<?>>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
                 ? IN_LIMIT
                 : Integer.MAX_VALUE)
             : list;

@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
@@ -65,6 +64,8 @@ import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
 
+import java.util.EnumSet;
+
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -72,23 +73,25 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
 final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
 
-    private static final long     serialVersionUID              = -4666251100802237878L;
-    private static final Clause[] CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
-    private static final Clause[] CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
-    private static final Clause[] CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
-    private static final Clause[] CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
+    private static final long                serialVersionUID              = -4666251100802237878L;
+    private static final Clause[]            CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
+    private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
+    private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
+    private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
+    private static final EnumSet<SQLDialect> SUPPORTS_SYMMETRIC            = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
 
-    private final boolean         symmetric;
-    private final boolean         not;
-    private final Field<T>        field;
-    private final Field<T>        minValue;
-    private Field<T>              maxValue;
+    private final boolean                    symmetric;
+    private final boolean                    not;
+    private final Field<T>                   field;
+    private final Field<T>                   minValue;
+    private Field<T>                         maxValue;
 
     BetweenCondition(Field<T> field, Field<T> minValue, boolean not, boolean symmetric) {
         this.field = field;
@@ -125,7 +128,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (symmetric && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
+        if (symmetric && SUPPORTS_SYMMETRIC.contains(configuration.family())) {
             return not
                 ? (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
                 : (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));

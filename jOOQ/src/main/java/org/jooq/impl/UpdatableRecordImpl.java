@@ -35,7 +35,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
@@ -50,6 +49,7 @@ import static org.jooq.impl.Tools.settings;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -58,6 +58,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -82,8 +83,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -1012420583600561579L;
-    private static final JooqLogger log              = JooqLogger.getLogger(UpdatableRecordImpl.class);
+    private static final long                serialVersionUID      = -1012420583600561579L;
+    private static final JooqLogger          log                   = JooqLogger.getLogger(UpdatableRecordImpl.class);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_FOR_UPDATE = EnumSet.of(SQLITE);
 
     public UpdatableRecordImpl(Table<R> table) {
         super(table);
@@ -414,23 +416,20 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#1547] MS Access and SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can emulate it, though!
-        if (!asList(SQLITE).contains(create().configuration().dialect().family())) {
+        if (!NO_SUPPORT_FOR_UPDATE.contains(create().configuration().dialect().family()))
             select.setForUpdate(true);
-        }
 
         R record = select.fetchOne();
 
-        if (record == null) {
+        if (record == null)
             throw new DataChangedException("Database record no longer exists");
-        }
 
         for (Field<?> field : fields.fields.fields) {
             Object thisObject = original(field);
             Object thatObject = record.original(field);
 
-            if (!StringUtils.equals(thisObject, thatObject)) {
+            if (!StringUtils.equals(thisObject, thatObject))
                 throw new DataChangedException("Database record has been changed");
-            }
         }
     }
 

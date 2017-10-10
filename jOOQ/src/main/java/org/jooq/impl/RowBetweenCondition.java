@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
@@ -63,6 +62,8 @@ import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
+
+import java.util.EnumSet;
 
 import javax.annotation.Generated;
 
@@ -142,6 +143,7 @@ import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowN;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -177,17 +179,19 @@ implements
     BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
     BetweenAndStepN {
 
-    private static final long     serialVersionUID              = -4666251100802237878L;
-    private static final Clause[] CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
-    private static final Clause[] CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
-    private static final Clause[] CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
-    private static final Clause[] CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
+    private static final long                serialVersionUID              = -4666251100802237878L;
+    private static final Clause[]            CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
+    private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
+    private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
+    private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_SYMMETRIC          = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_BETWEEN               = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
 
-    private final boolean         symmetric;
-    private final boolean         not;
-    private final Row             row;
-    private final Row             minValue;
-    private Row                   maxValue;
+    private final boolean                    symmetric;
+    private final boolean                    not;
+    private final Row                        row;
+    private final Row                        minValue;
+    private Row                              maxValue;
 
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
         this.row = row;
@@ -710,7 +714,7 @@ implements
         RowN max = (RowN) maxValue;
 
         // These dialects don't support the SYMMETRIC keyword at all
-        if (symmetric && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
+        if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family())) {
             return not
                 ? (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min))
                 : (QueryPartInternal) r.between(min, max).or(r.between(max, min));
@@ -718,7 +722,7 @@ implements
 
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
-        else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
+        else if (row.size() > 1 && EMULATE_BETWEEN.contains(configuration.family())) {
             Condition result = r.ge(min).and(r.le(max));
 
             if (not) {

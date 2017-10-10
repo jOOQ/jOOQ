@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
 // ...
@@ -52,10 +51,13 @@ import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_START_WITH;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateSequenceFinalStep;
+import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
 /**
@@ -69,11 +71,13 @@ final class CreateSequenceImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { CREATE_SEQUENCE };
+    private static final long                serialVersionUID         = 8904572826501186329L;
+    private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> REQUIRES_START_WITH      = EnumSet.of(DERBY);
 
-    private final Sequence<?>     sequence;
-    private final boolean         ifNotExists;
+    private final Sequence<?>                sequence;
+    private final boolean                    ifNotExists;
 
     CreateSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifNotExists) {
         super(configuration);
@@ -87,7 +91,7 @@ final class CreateSequenceImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -116,7 +120,7 @@ final class CreateSequenceImpl extends AbstractQuery implements
         ctx.visit(sequence);
 
         // Some databases default to sequences starting with MIN_VALUE
-        if (asList(DERBY).contains(ctx.family()))
+        if (REQUIRES_START_WITH.contains(ctx.family()))
             ctx.sql(' ').visit(K_START_WITH).sql(" 1");
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);

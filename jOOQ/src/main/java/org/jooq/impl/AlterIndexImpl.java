@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_INDEX;
 import static org.jooq.Clause.ALTER_INDEX_INDEX;
 import static org.jooq.Clause.ALTER_INDEX_RENAME;
@@ -54,6 +53,8 @@ import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_TO;
 
+import java.util.EnumSet;
+
 import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.Clause;
@@ -61,6 +62,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -74,12 +76,14 @@ final class AlterIndexImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_INDEX };
+    private static final long                serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]            CLAUSES              = { ALTER_INDEX };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> SUPPORT_RENAME_INDEX = EnumSet.of(DERBY);
 
-    private final Index           index;
-    private final boolean         ifExists;
-    private Index                 renameTo;
+    private final Index                      index;
+    private final boolean                    ifExists;
+    private Index                            renameTo;
 
     AlterIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);
@@ -117,7 +121,7 @@ final class AlterIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -133,7 +137,7 @@ final class AlterIndexImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean renameIndex = asList(DERBY).contains(ctx.family());
+        boolean renameIndex = SUPPORT_RENAME_INDEX.contains(ctx.family());
 
         ctx.start(ALTER_INDEX_INDEX)
            .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_INDEX;
 // ...
 // ...
@@ -58,6 +57,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
 import java.util.Collection;
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -71,6 +71,7 @@ import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
+import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.Table;
 
@@ -86,16 +87,17 @@ final class CreateIndexImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { CREATE_INDEX };
+    private static final long                serialVersionUID         = 8904572826501186329L;
+    private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
 
-    private final Index           index;
-    private final boolean         unique;
-    private final boolean         ifNotExists;
-    private Table<?>              table;
-    private Field<?>[]            fields;
-    private SortField<?>[]        sortFields;
-    private Condition             where;
+    private final Index                      index;
+    private final boolean                    unique;
+    private final boolean                    ifNotExists;
+    private Table<?>                         table;
+    private Field<?>[]                       fields;
+    private SortField<?>[]                   sortFields;
+    private Condition                        where;
 
     CreateIndexImpl(Configuration configuration, Index index, boolean unique, boolean ifNotExists) {
         super(configuration);
@@ -172,7 +174,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
     }
 
     @Override

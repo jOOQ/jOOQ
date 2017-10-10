@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
@@ -81,10 +80,15 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
     @Override
     public final void accept(Context<?> ctx) {
         Object data = ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
-        boolean extraParentheses = data != null && asList().contains(ctx.family());
+        boolean extraParentheses = data != null && (false
+
+
+
+            )
+            ;
 
         // If this is already a subquery, proceed
-        if (ctx.subquery()) {
+        if (ctx.subquery())
             ctx.visit(quantifier.toKeyword())
                .sql(extraParentheses ? " ((" : " (")
                .formatIndentStart()
@@ -93,8 +97,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                .formatIndentEnd()
                .formatNewLine()
                .sql(extraParentheses ? "))" : ")");
-        }
-        else {
+        else
             ctx.visit(quantifier.toKeyword())
                .sql(extraParentheses ? " ((" : " (")
                .subquery(true)
@@ -105,7 +108,6 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                .formatNewLine()
                .subquery(false)
                .sql(extraParentheses ? "))" : ")");
-        }
     }
 
     @Override
@@ -141,12 +143,11 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                         Object[] values = ((Param<? extends Object[]>) array).getValue();
 
                         Select<Record1<Object>> select = null;
-                        for (Object value : values) {
+                        for (Object value : values)
                             if (select == null)
                                 select = select(val(value));
                             else
                                 select = select.unionAll(select(val(value)));
-                        }
 
                         return (QueryPartInternal) select;
                     }

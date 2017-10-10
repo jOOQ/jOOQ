@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -43,10 +42,12 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -54,7 +55,8 @@ import org.jooq.Table;
  */
 final class TableList extends QueryPartList<Table<?>> {
 
-    private static final long serialVersionUID = -8545559185481762229L;
+    private static final long                serialVersionUID = -8545559185481762229L;
+    private static final EnumSet<SQLDialect> UNQUALIFY_FIELDS = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
 
     TableList() {
         super();
@@ -83,7 +85,7 @@ final class TableList extends QueryPartList<Table<?>> {
 
         // [#4151] [#6117] Some databases don't allow for qualifying column
         // names here. Copy also to SelectQueryImpl
-        boolean unqualified = asList(DERBY, FIREBIRD, H2, HSQLDB).contains(ctx.family());
+        boolean unqualified = UNQUALIFY_FIELDS.contains(ctx.family());
         boolean qualify = ctx.qualify();
 
         if (unqualified)

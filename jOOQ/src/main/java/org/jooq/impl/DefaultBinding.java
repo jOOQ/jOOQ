@@ -36,7 +36,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -111,6 +110,7 @@ import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -485,14 +485,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -7965247586545864991L;
+        private static final long                serialVersionUID                    = -7965247586545864991L;
+        private static final EnumSet<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB);
 
-        final Class<T>              type;
-        final Converter<T, U>       converter;
+
+
+
+        final Class<T>                           type;
+        final Converter<T, U>                    converter;
 
         // TODO: This type boolean should not be passed standalone to the
         // constructor. Find a better design
-        final boolean               isLob;
+        final boolean                            isLob;
 
         AbstractBinding(Converter<T, U> converter, boolean isLob) {
             this.type = converter.fromType();
@@ -569,7 +573,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             SQLDialect family = ctx.family();
 
             // [#822] Some RDBMS need precision / scale information on BigDecimals
-            if (converted != null && type == BigDecimal.class && asList(CUBRID, DERBY, FIREBIRD, HSQLDB).contains(family)) {
+            if (converted != null && type == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(family)) {
 
                 // Add precision / scale on BigDecimals
                 int scale = ((BigDecimal) converted).scale();
@@ -583,41 +587,36 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
-            else if (SQLDataType.OTHER == sqlDataType) {
+            else if (SQLDataType.OTHER == sqlDataType)
 
                 // If the bind value is set, it can be used to derive the cast type
-                if (converted != null) {
+                if (converted != null)
                     sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.getClass()), 0, 0, 0);
-                }
 
-                // [#632] [#722] Current integration tests show that Ingres and
-                // Sybase can do without casting in most cases.
-                else if (asList().contains(family)) {
-                    ctx.render().sql(ctx.variable());
-                }
+
+
+
+
+
+
 
                 // Derby and DB2 must have a type associated with NULL. Use VARCHAR
                 // as a workaround. That's probably not correct in all cases, though
-                else {
+                else
                     sqlCast(ctx, converted, DefaultDataType.getDataType(family, String.class), 0, 0, 0);
-                }
-            }
 
             // [#1029] Postgres generally doesn't need the casting. Only in the
             // above case where the type is OTHER
             // [#1125] Also with temporal data types, casting is needed some times
             // [#4338] ... specifically when using JSR-310 types
             // [#1130] TODO type can be null for ARRAY types, etc.
-            else if (asList(POSTGRES).contains(family) && (sqlDataType == null || !sqlDataType.isTemporal())) {
+            else if (POSTGRES == family && (sqlDataType == null || !sqlDataType.isTemporal()))
                 sql(ctx, converted);
-            }
 
             // [#1727] VARCHAR types should be cast to their actual lengths in some
             // dialects
-            else if ((sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR) && asList(FIREBIRD).contains(family)) {
+            else if ((sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR) && FIREBIRD == family)
                 sqlCast(ctx, converted, dataType, getValueLength((String) converted), 0, 0);
-            }
-
 
 
 
@@ -1269,7 +1268,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -8912971184035434281L;
+        private static final long                serialVersionUID = -8912971184035434281L;
+        private static final EnumSet<SQLDialect> BIND_AS_STRING   = EnumSet.of(SQLITE);
 
         DefaultBigDecimalBinding(Converter<BigDecimal, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1282,7 +1282,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, BigDecimal value) throws SQLException {
-            if (asList(SQLITE).contains(ctx.family()))
+            if (BIND_AS_STRING.contains(ctx.family()))
                 ctx.statement().setString(ctx.index(), value.toString());
             else
                 ctx.statement().setBigDecimal(ctx.index(), value);
@@ -1324,7 +1324,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -3857031689661809421L;
+        private static final long                serialVersionUID = -3857031689661809421L;
+        private static final EnumSet<SQLDialect> BIND_AS_STRING   = EnumSet.of(SQLITE);
 
         DefaultBigIntegerBinding(Converter<BigInteger, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1337,7 +1338,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, BigInteger value) throws SQLException {
-            if (asList(SQLITE).contains(ctx.family()))
+            if (BIND_AS_STRING.contains(ctx.family()))
                 ctx.statement().setString(ctx.index(), value.toString());
             else
                 ctx.statement().setBigDecimal(ctx.index(), new BigDecimal(value));
@@ -1439,7 +1440,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -533762957890251203L;
+        private static final long                serialVersionUID   = -533762957890251203L;
+        private static final EnumSet<SQLDialect> BIND_AS_1_0        = EnumSet.of(FIREBIRD, SQLITE);
+
+
+
 
         DefaultBooleanBinding(Converter<Boolean, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1449,17 +1454,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, Boolean value) {
 
             // [#1153] Some dialects don't support boolean literals TRUE and FALSE
-            if (asList(FIREBIRD, SQLITE).contains(ctx.family())) {
+            if (BIND_AS_1_0.contains(ctx.family()))
                 ctx.render().sql(value ? "1" : "0");
-            }
 
 
 
 
-
-            else {
+            else
                 ctx.render().visit(value ? K_TRUE : K_FALSE);
-            }
         }
 
         @Override
@@ -1583,7 +1585,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -727202499908007757L;
+        private static final long                serialVersionUID = -727202499908007757L;
+        private static final EnumSet<SQLDialect> INLINE_AS_X_APOS = EnumSet.of(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+
+
+
 
         DefaultBytesBinding(Converter<byte[], U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1605,7 +1611,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            if (asList(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(ctx.family()))
+            if (INLINE_AS_X_APOS.contains(ctx.family()))
                 ctx.render()
                    .sql("X'")
                    .sql(convertBytesToHex(value))
@@ -1765,7 +1771,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -4797649501187223237L;
+        private static final long                serialVersionUID         = -4797649501187223237L;
+        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
 
         DefaultDateBinding(Converter<Date, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1777,7 +1784,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement date literals
-            if (asList(SQLITE).contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
 
 
@@ -1867,7 +1874,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             SQLDialect family = ctx.family();
 
             // SQLite's type affinity needs special care...
-            if (family == SQLDialect.SQLITE) {
+            if (family == SQLITE) {
                 String date = ctx.resultSet().getString(ctx.index());
                 return date == null ? null : new Date(parse(Date.class, date));
             }
@@ -3039,7 +3046,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -2563220967846617288L;
+        private static final long                serialVersionUID         = -2563220967846617288L;
+        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
 
         DefaultTimeBinding(Converter<Time, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3050,7 +3058,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement time literals
-            if (asList(SQLITE).contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
                 ctx.render().sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(value)).sql('\'');
 
 
@@ -3132,7 +3140,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 289387167549159015L;
+        private static final long                serialVersionUID         = 289387167549159015L;
+        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
 
         DefaultTimestampBinding(Converter<Timestamp, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3143,7 +3152,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement timestamp literals
-            if (asList(SQLITE).contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
 
 

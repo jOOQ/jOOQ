@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;
 import static org.jooq.Clause.FIELD_REFERENCE;
@@ -66,6 +65,8 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -81,16 +82,19 @@ import org.jooq.Table;
  */
 final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
-    private static final long     serialVersionUID        = -2456848365524191614L;
-    private static final Clause[] CLAUSES_TABLE_REFERENCE = { TABLE, TABLE_REFERENCE };
-    private static final Clause[] CLAUSES_TABLE_ALIAS     = { TABLE, TABLE_ALIAS };
-    private static final Clause[] CLAUSES_FIELD_REFERENCE = { FIELD, FIELD_REFERENCE };
-    private static final Clause[] CLAUSES_FIELD_ALIAS     = { FIELD, FIELD_ALIAS };
+    private static final long                serialVersionUID                      = -2456848365524191614L;
+    private static final Clause[]            CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
+    private static final Clause[]            CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
+    private static final Clause[]            CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
+    private static final Clause[]            CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
+    private static final EnumSet<SQLDialect> SUPPORT_AS_REQUIRED                   = EnumSet.of(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = EnumSet.of(CUBRID, FIREBIRD);
+    private static final EnumSet<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
 
-    final Q                       wrapped;
-    final Name                    alias;
-    final Name[]                  fieldAliases;
-    final boolean                 wrapInParentheses;
+    final Q                                  wrapped;
+    final Name                               alias;
+    final Name[]                             fieldAliases;
+    final boolean                            wrapInParentheses;
 
     Alias(Q wrapped, Name alias) {
         this(wrapped, alias, null, false);
@@ -129,7 +133,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && asList(CUBRID, FIREBIRD).contains(family)
+                    && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(family)
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 Select<Record> select =
@@ -143,7 +147,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases do not support "derived column names".
             // They can be emulated by concatenating a dummy SELECT with no
             // results using UNION ALL
-            else if (fieldAliases != null && asList(H2, MARIADB, MYSQL, SQLITE).contains(family)) {
+            else if (fieldAliases != null && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(family)) {
                 emulatedDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();
@@ -246,7 +250,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     static void toSQLAs(Context<?> context) {
-        if (asList(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.family())) {
+        if (SUPPORT_AS_REQUIRED.contains(context.family())) {
             context.sql(' ').visit(K_AS);
         }
     }

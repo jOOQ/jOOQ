@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_SEQUENCE;
 import static org.jooq.Clause.ALTER_SEQUENCE_RENAME;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
@@ -60,12 +59,15 @@ import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_TO;
 
+import java.util.EnumSet;
+
 import org.jooq.AlterSequenceFinalStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
 /**
@@ -80,13 +82,17 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_SEQUENCE };
+    private static final long                serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]            CLAUSES              = { ALTER_SEQUENCE };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
 
-    private final Sequence<T>     sequence;
-    private final boolean         ifExists;
-    private T                     restartWith;
-    private Sequence<?>           renameTo;
+
+
+
+    private final Sequence<T>                sequence;
+    private final boolean                    ifExists;
+    private T                                restartWith;
+    private Sequence<?>                      renameTo;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
         this(configuration, sequence, false);
@@ -135,7 +141,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override

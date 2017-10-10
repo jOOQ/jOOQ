@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
@@ -109,6 +108,8 @@ import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
+import java.util.EnumSet;
+
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
@@ -149,31 +150,37 @@ final class AlterTableImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_TABLE };
-
-    private final Table<?>        table;
-    private final boolean         ifExists;
-    private Table<?>              renameTo;
-    private Field<?>              renameColumn;
-    private Field<?>              renameColumnTo;
-    private Index                 renameIndex;
-    private Index                 renameIndexTo;
-    private Constraint            renameConstraint;
-    private Constraint            renameConstraintTo;
-    private Field<?>              addColumn;
-    private DataType<?>           addColumnType;
-    private Constraint            addConstraint;
+    private static final long                serialVersionUID               = 8904572826501186329L;
+    private static final Clause[]            CLAUSES                        = { ALTER_TABLE };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS           = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE           = EnumSet.of(DERBY);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL = EnumSet.of(POSTGRES);
 
 
 
-    private Field<?>              alterColumn;
-    private Nullability           alterColumnNullability;
-    private DataType<?>           alterColumnType;
-    private Field<?>              alterColumnDefault;
-    private Field<?>              dropColumn;
-    private boolean               dropColumnCascade;
-    private Constraint            dropConstraint;
+
+    private final Table<?>                   table;
+    private final boolean                    ifExists;
+    private Table<?>                         renameTo;
+    private Field<?>                         renameColumn;
+    private Field<?>                         renameColumnTo;
+    private Index                            renameIndex;
+    private Index                            renameIndexTo;
+    private Constraint                       renameConstraint;
+    private Constraint                       renameConstraintTo;
+    private Field<?>                         addColumn;
+    private DataType<?>                      addColumnType;
+    private Constraint                       addConstraint;
+
+
+
+    private Field<?>                         alterColumn;
+    private Nullability                      alterColumnNullability;
+    private DataType<?>                      alterColumnType;
+    private Field<?>                         alterColumnDefault;
+    private Field<?>                         dropColumn;
+    private boolean                          dropColumnCascade;
+    private Constraint                       dropConstraint;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -482,7 +489,7 @@ final class AlterTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -560,7 +567,7 @@ final class AlterTableImpl extends AbstractQuery implements
         boolean omitAlterTable =
                (family == HSQLDB && renameConstraint != null)
             || (family == DERBY && renameColumn != null);
-        boolean renameTable = asList(DERBY).contains(family) && renameTo != null;
+        boolean renameTable = SUPPORT_RENAME_TABLE.contains(family) && renameTo != null;
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
@@ -770,7 +777,7 @@ final class AlterTableImpl extends AbstractQuery implements
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
                 // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
-                if (!asList(POSTGRES).contains(family))
+                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(family))
                     switch (alterColumnType.nullability()) {
                         case NULL:
                             ctx.sql(' ').visit(K_NULL);

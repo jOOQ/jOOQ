@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_AS;
 
@@ -70,25 +69,22 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     public final void accept(Context<?> ctx) {
 
         // In the WINDOW clause, always declare window definitions
-        if (ctx.declareWindows()) {
+        if (ctx.declareWindows())
             ctx.visit(name)
                .sql(' ')
                .visit(K_AS)
                .sql(" (")
                .visit(window)
                .sql(')');
-        }
 
         // Outside the WINDOW clause, only few dialects actually support
         // referencing WINDOW definitions
-        else if (asList(ctx.family()).contains(POSTGRES)) {
+        else if (ctx.family() == POSTGRES)
             ctx.visit(name);
-        }
 
         // When emulating, just repeat the window specification
-        else {
+        else
             ctx.visit(window);
-        }
     }
 
     @Override

@@ -35,7 +35,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_RETURNING;
@@ -47,6 +46,7 @@ import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Collection;
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -55,6 +55,7 @@ import org.jooq.Context;
 import org.jooq.DeleteQuery;
 import org.jooq.Operator;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -62,8 +63,9 @@ import org.jooq.Table;
  */
 final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
-    private static final long           serialVersionUID = -1943687511774150929L;
-    private static final Clause[]       CLAUSES          = { DELETE };
+    private static final long                serialVersionUID         = -1943687511774150929L;
+    private static final Clause[]            CLAUSES                  = { DELETE };
+    private static final EnumSet<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = EnumSet.of(MARIADB, MYSQL);
 
     private final ConditionProviderImpl condition;
 
@@ -106,7 +108,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (asList(MARIADB, MYSQL).contains(ctx.family())) {
+        if (SPECIAL_DELETE_AS_SYNTAX.contains(ctx.family())) {
 
             // [#2579] [#6304] TableAlias discovery
             if (Tools.alias(table) != null)

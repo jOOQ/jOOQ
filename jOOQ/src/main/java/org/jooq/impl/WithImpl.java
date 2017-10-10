@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.WITH;
 // ...
 // ...
@@ -48,6 +47,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -84,6 +84,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectSelectStep;
@@ -157,8 +158,11 @@ implements
     /**
      * Generated UID
      */
-    private static final long                                               serialVersionUID = -1813359431778402705L;
-    private static final Clause[]                                           CLAUSES          = { WITH };
+    private static final long                                               serialVersionUID     = -1813359431778402705L;
+    private static final Clause[]                                           CLAUSES              = { WITH };
+
+
+
 
     private final CommonTableExpressionList                                 cte;
     private final boolean                                                   recursive;
@@ -187,7 +191,11 @@ implements
         ctx.visit(K_WITH)
            .sql(' ');
 
-        if (recursive && !asList().contains(ctx.configuration().dialect().family()))
+        if (recursive
+
+
+
+        )
             ctx.visit(K_RECURSIVE)
                .sql(' ');
 

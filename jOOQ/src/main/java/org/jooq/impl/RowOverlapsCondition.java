@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_OVERLAPS;
 // ...
@@ -55,6 +54,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.Keywords.K_OVERLAPS;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -62,6 +63,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row2;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -71,11 +73,13 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 85887551884667824L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_OVERLAPS };
+    private static final long                serialVersionUID              = 85887551884667824L;
+    private static final Clause[]            CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
+    private static final EnumSet<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = EnumSet.of(HSQLDB);
 
-    private final Row2<T1, T2>    left;
-    private final Row2<T1, T2>    right;
+    private final Row2<T1, T2>               left;
+    private final Row2<T1, T2>               right;
 
     RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
         this.left = left;
@@ -108,7 +112,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
         // The non-standard OVERLAPS predicate is always emulated
-        if (!standardOverlaps || asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
+        if (!standardOverlaps || EMULATE_NON_STANDARD_OVERLAPS.contains(configuration.family())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps) {
@@ -126,7 +130,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && asList(HSQLDB).contains(configuration.dialect())) {
+        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS    .contains(configuration.dialect())) {
                 return (QueryPartInternal)
                         right1.le(left1.add(left2)).and(
                         left1.le(right1.add(right2)));

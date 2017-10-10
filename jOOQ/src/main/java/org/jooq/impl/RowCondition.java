@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.EQUALS;
@@ -60,6 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Keywords.K_NOT;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -81,12 +81,14 @@ final class RowCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -1806139685201770706L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    private static final long                serialVersionUID  = -1806139685201770706L;
+    private static final Clause[]            CLAUSES           = { CONDITION, CONDITION_COMPARISON };
+    private static final EnumSet<SQLDialect> EMULATE_EQ_AND_NE = EnumSet.of(DERBY, FIREBIRD, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_RANGES    = EnumSet.of(DERBY, CUBRID, FIREBIRD, SQLITE);
 
-    private final Row             left;
-    private final Row             right;
-    private final Comparator      comparator;
+    private final Row                        left;
+    private final Row                        right;
+    private final Comparator                 comparator;
 
     RowCondition(Row left, Row right, Comparator comparator) {
         this.left = left;
@@ -108,29 +110,27 @@ final class RowCondition extends AbstractCondition {
         SQLDialect dialect = configuration.dialect();
 
         // Regular comparison predicate emulation
-        if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
-            asList(DERBY, FIREBIRD, SQLITE).contains(dialect.family())) {
+        if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
+            EMULATE_EQ_AND_NE.contains(dialect.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
 
-            for (int i = 0; i < leftFields.length; i++) {
+            for (int i = 0; i < leftFields.length; i++)
                 conditions.add(leftFields[i].equal((Field) rightFields[i]));
-            }
 
             Condition result = DSL.and(conditions);
 
-            if (comparator == NOT_EQUALS) {
+            if (comparator == NOT_EQUALS)
                 result = result.not();
-            }
 
             return (QueryPartInternal) result;
         }
 
         // Ordering comparison predicate emulation
-        else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
-                 asList(DERBY, CUBRID, FIREBIRD, SQLITE).contains(dialect.family())) {
+        else if ((comparator == GREATER || comparator == GREATER_OR_EQUAL || comparator == LESS || comparator == LESS_OR_EQUAL) &&
+                 EMULATE_RANGES.contains(dialect.family())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order
@@ -164,17 +164,15 @@ final class RowCondition extends AbstractCondition {
             for (int i = 0; i < leftFields.length; i++) {
                 List<Condition> inner = new ArrayList<Condition>();
 
-                for (int j = 0; j < i; j++) {
+                for (int j = 0; j < i; j++)
                     inner.add(leftFields[j].equal((Field) rightFields[j]));
-                }
 
                 inner.add(leftFields[i].compare(order, (Field) rightFields[i]));
                 outer.add(DSL.and(inner));
             }
 
-            if (equal) {
+            if (equal)
                 outer.add(new RowCondition(left, right, Comparator.EQUALS));
-            }
 
             Condition result = DSL.or(outer);
 
@@ -184,9 +182,8 @@ final class RowCondition extends AbstractCondition {
             // OR-connected:
             // (A, B, C) > (X, Y, Z)
             // (A >= X) AND ((A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z))
-            if (leftFields.length > 1) {
+            if (leftFields.length > 1)
                 result = leftFields[0].compare(factoredOrder, (Field) rightFields[0]).and(result);
-            }
 
             return (QueryPartInternal) result;
         }
@@ -206,14 +203,21 @@ final class RowCondition extends AbstractCondition {
         public final void accept(Context<?> ctx) {
 
             // Some dialects do not support != comparison with rows
-            if (comparator == NOT_EQUALS && asList().contains(ctx.configuration().dialect().family())) {
-                ctx.visit(K_NOT).sql('(')
-                   .visit(left).sql(" = ").visit(right)
-                   .sql(')');
-            }
-            else {
+
+
+
+
+
+
+
+
+            {
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList().contains(ctx.configuration().dialect().family());
+                boolean extraParentheses = false
+
+
+
+                    ;
 
                 ctx.visit(left)
                    .sql(' ')

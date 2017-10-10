@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
 // ...
@@ -48,10 +47,13 @@ import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_DROP_TABLE;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropTableStep;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 
@@ -66,12 +68,13 @@ final class DropTableImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { DROP_TABLE };
+    private static final long                serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]            CLAUSES              = { DROP_TABLE };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
 
-    private final Table<?>        table;
-    private final boolean         ifExists;
-    private boolean               cascade;
+    private final Table<?>                   table;
+    private final boolean                    ifExists;
+    private boolean                          cascade;
 
     DropTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -105,7 +108,7 @@ final class DropTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override

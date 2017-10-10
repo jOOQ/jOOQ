@@ -34,7 +34,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_SCHEMA;
 import static org.jooq.Clause.DROP_SCHEMA_SCHEMA;
 // ...
@@ -50,11 +49,14 @@ import static org.jooq.impl.Keywords.K_DROP_SCHEMA;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RESTRICT;
 
+import java.util.EnumSet;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropSchemaFinalStep;
 import org.jooq.DropSchemaStep;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 
 
@@ -69,12 +71,14 @@ final class DropSchemaImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { DROP_SCHEMA };
+    private static final long                serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]            CLAUSES              = { DROP_SCHEMA };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> REQUIRES_RESTRICT    = EnumSet.of(DERBY);
 
-    private final Schema          schema;
-    private final boolean         ifExists;
-    private boolean               cascade;
+    private final Schema                     schema;
+    private final boolean                    ifExists;
+    private boolean                          cascade;
 
     DropSchemaImpl(Configuration configuration, Schema schema) {
         this(configuration, schema, false);
@@ -108,7 +112,7 @@ final class DropSchemaImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -134,7 +138,7 @@ final class DropSchemaImpl extends AbstractQuery implements
 
         if (cascade)
             ctx.sql(' ').visit(K_CASCADE);
-        else if (asList(DERBY).contains(ctx.family()))
+        else if (REQUIRES_RESTRICT.contains(ctx.family()))
             ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(DROP_SCHEMA_SCHEMA);

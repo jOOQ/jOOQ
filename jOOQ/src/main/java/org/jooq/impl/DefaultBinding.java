@@ -149,6 +149,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
@@ -702,9 +703,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String result = val.toString();
 
             if (needsBackslashEscaping(context.configuration()))
-                result = result.replace("\\", "\\\\");
+                result = StringUtils.replace(result, "\\", "\\\\");
 
-            return result.replace("'", "''");
+            return StringUtils.replace(result, "'", "''");
         }
 
         @Override

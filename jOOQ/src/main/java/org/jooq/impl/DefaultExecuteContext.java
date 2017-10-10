@@ -190,28 +190,56 @@ class DefaultExecuteContext implements ExecuteContext {
      * Register a blob for later cleanup with {@link #clean()}
      */
     static final void register(Blob blob) {
-        BLOBS.get().add(blob);
+        List<Blob> list = BLOBS.get();
+
+        if (list == null) {
+            list = new ArrayList<Blob>();
+            BLOBS.set(list);
+        }
+
+        list.add(blob);
     }
 
     /**
      * Register a clob for later cleanup with {@link #clean()}
      */
     static final void register(Clob clob) {
-        CLOBS.get().add(clob);
+        List<Clob> list = CLOBS.get();
+
+        if (list == null) {
+            list = new ArrayList<Clob>();
+            CLOBS.set(list);
+        }
+
+        list.add(clob);
     }
 
     /**
      * Register an xml for later cleanup with {@link #clean()}
      */
     static final void register(SQLXML xml) {
-        SQLXMLS.get().add(xml);
+        List<SQLXML> list = SQLXMLS.get();
+
+        if (list == null) {
+            list = new ArrayList<SQLXML>();
+            SQLXMLS.set(list);
+        }
+
+        list.add(xml);
     }
 
     /**
      * Register an array for later cleanup with {@link #clean()}
      */
     static final void register(Array array) {
-        ARRAYS.get().add(array);
+        List<Array> list = ARRAYS.get();
+
+        if (list == null) {
+            list = new ArrayList<Array>();
+            ARRAYS.set(list);
+        }
+
+        list.add(array);
     }
 
     // ------------------------------------------------------------------------
@@ -395,10 +423,6 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         clean();
-        BLOBS.set(new ArrayList<Blob>());
-        CLOBS.set(new ArrayList<Clob>());
-        SQLXMLS.set(new ArrayList<SQLXML>());
-        ARRAYS.set(new ArrayList<Array>());
         LOCAL_CONFIGURATION.set(configuration);
         LOCAL_DATA.set(this.data);
     }

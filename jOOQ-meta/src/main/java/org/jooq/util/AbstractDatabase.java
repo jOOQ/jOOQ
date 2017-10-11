@@ -279,8 +279,9 @@ public abstract class AbstractDatabase implements Database {
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than 5 seconds)"
                           + "\n\n"
-                          + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
-                          + formatted(ctx.query()),
+                          + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                          + formatted(ctx.query())
+                          + "```\n",
                             new SQLPerformanceWarning());
                     }
                 }
@@ -296,8 +297,9 @@ public abstract class AbstractDatabase implements Database {
                       ? ctx.exception().getMessage()
                       : "No exception available")
                       + "\n\n"
-                      + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
-                      + formatted(ctx.query()));
+                      + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                      + formatted(ctx.query())
+                      + "```\n");
                 }
 
                 private String formatted(Query query) {
@@ -389,18 +391,28 @@ public abstract class AbstractDatabase implements Database {
                 log.error("Could not load catalogs", e);
             }
 
+            boolean onlyDefaultCatalog = true;
+
             Iterator<CatalogDefinition> it = catalogs.iterator();
             while (it.hasNext()) {
                 CatalogDefinition catalog = it.next();
+
+                if (!StringUtils.isBlank(catalog.getName()))
+                    onlyDefaultCatalog = false;
 
                 if (!getInputCatalogs().contains(catalog.getName()))
                     it.remove();
             }
 
             if (catalogs.isEmpty())
-                log.warn(
-                    "No catalogs were loaded",
-                    "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputCatalog/> elements.");
+                if (onlyDefaultCatalog)
+                    log.warn(
+                        "No catalogs were loaded",
+                        "Your database reported only a default catalog, which was filtered by your <inputCatalog/> configurations. jOOQ does not support catalogs for all databases, in case of which <inputCatalog/> configurations will not work.");
+                else
+                    log.warn(
+                        "No catalogs were loaded",
+                        "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputCatalog/> elements.");
         }
 
         return catalogs;

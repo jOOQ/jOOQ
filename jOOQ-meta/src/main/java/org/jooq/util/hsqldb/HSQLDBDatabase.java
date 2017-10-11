@@ -134,6 +134,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     SYSTEM_INDEXINFO.ASC_OR_DESC
                 });
 
+        indexLoop:
         for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
             final Record index = entry.getKey();
             final Result<Record> cols = entry.getValue();
@@ -145,6 +146,12 @@ public class HSQLDBDatabase extends AbstractDatabase {
             final boolean unique = !index.get(SYSTEM_INDEXINFO.NON_UNIQUE, boolean.class);
 
             if (table != null) {
+
+                // [#6310] [#6620] Function-based indexes are not yet supported
+                for (Record column : cols)
+                    if (table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)) == null)
+                        continue indexLoop;
+
                 result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
                     List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 

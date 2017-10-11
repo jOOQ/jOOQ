@@ -73,9 +73,10 @@ final class Limit extends AbstractQueryPart {
     private static final long           serialVersionUID  = 2053741242981425602L;
     private static final Field<Integer> ZERO              = zero();
     private static final Field<Integer> ONE               = one();
+    private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);
 
     private Field<Integer>              numberOfRows;
-    private Field<Integer>              numberOfRowsOrMax = DSL.inline(Integer.MAX_VALUE);
+    private Field<Integer>              numberOfRowsOrMax = MAX;
     private Field<Integer>              offset;
     private Field<Integer>              offsetOrZero      = ZERO;
     private Field<Integer>              offsetPlusOne     = ONE;

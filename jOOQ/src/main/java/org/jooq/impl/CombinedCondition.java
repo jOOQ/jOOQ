@@ -69,11 +69,6 @@ final class CombinedCondition extends AbstractCondition {
     CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
         if (operator == null)
             throw new IllegalArgumentException("The argument 'operator' must not be null");
-        if (conditions == null)
-            throw new IllegalArgumentException("The argument 'conditions' must not be null");
-        for (Condition condition : conditions)
-            if (condition == null)
-                throw new IllegalArgumentException("The argument 'conditions' must not contain null");
 
         this.operator = operator;
         this.conditions = new ArrayList<Condition>(conditions.size());
@@ -91,9 +86,10 @@ final class CombinedCondition extends AbstractCondition {
                 else
                     this.conditions.add(condition);
             }
-            else {
+            else if (condition == null)
+                throw new IllegalArgumentException("The argument 'conditions' must not contain null");
+            else
                 this.conditions.add(condition);
-            }
         }
     }
 

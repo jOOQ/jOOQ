@@ -2677,7 +2677,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        return new SelectImpl(new DefaultConfiguration(), null).from(table);
+        return using(new DefaultConfiguration()).selectFrom(table);
     }
 
     /**
@@ -2717,7 +2717,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
-        return new SelectImpl(new DefaultConfiguration(), null).select(fields);
+        return using(new DefaultConfiguration()).select(fields);
     }
 
     /**
@@ -2757,7 +2757,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(SelectField<?>... fields) {
-        return new SelectImpl(new DefaultConfiguration(), null).select(fields);
+        return using(new DefaultConfiguration()).select(fields);
     }
 
 // [jooq-tools] START [select]
@@ -3637,7 +3637,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
-        return new SelectImpl(new DefaultConfiguration(), null, true).select(fields);
+        return using(new DefaultConfiguration()).selectDistinct(fields);
     }
 
     /**
@@ -3677,7 +3677,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
-        return new SelectImpl(new DefaultConfiguration(), null, true).select(fields);
+        return using(new DefaultConfiguration()).selectDistinct(fields);
     }
 
 // [jooq-tools] START [selectDistinct]
@@ -4550,7 +4550,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(zero().as("zero"));
+        return using(new DefaultConfiguration()).selectZero();
     }
 
     /**
@@ -4583,7 +4583,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(one().as("one"));
+        return using(new DefaultConfiguration()).selectOne();
     }
 
     /**
@@ -4615,7 +4615,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(count());
+        return using(new DefaultConfiguration()).selectCount();
     }
 
     /**

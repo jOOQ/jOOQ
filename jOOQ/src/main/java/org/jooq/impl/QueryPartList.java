@@ -70,6 +70,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             addAll(wrappedList);
     }
 
+    @SafeVarargs
     QueryPartList(T... wrappedList) {
         this(asList(wrappedList));
     }

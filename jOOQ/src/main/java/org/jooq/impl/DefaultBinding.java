@@ -1053,10 +1053,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // Try fetching the array as a JDBC ResultSet
                     try {
                         arrayRs = array.getResultSet();
+                        Binding<T, T> binding = binding((Class<T>) type.getComponentType(), false);
+                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2);
 
                         while (arrayRs.next()) {
-                            binding((Class<T>) type.getComponentType(), false).get(new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2));
-                            result.add(new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2).value());
+                            binding.get(out);
+                            result.add(out.value());
                         }
                     }
 

@@ -135,15 +135,17 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
 
 
-        this.intern = new boolean[fields.length];
         this.maxRows = maxRows;
         this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
 
         if (internIndexes != null) {
-            for (int i : internIndexes) {
+            this.intern = new boolean[fields.length];
+
+            for (int i : internIndexes)
                 intern[i] = true;
-            }
         }
+        else
+            this.intern = null;
     }
 
 
@@ -1673,9 +1675,10 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 for (int i = 0; i < initialiserFields.length; i++)
                     setValue(record, initialiserFields[i], i);
 
-                for (int i = 0; i < initialiserFields.length; i++)
-                    if (intern[i])
-                        record.intern0(i);
+                if (intern != null)
+                    for (int i = 0; i < intern.length; i++)
+                        if (intern[i])
+                            record.intern0(i);
 
                 ctx.record(record);
                 listener.recordEnd(ctx);

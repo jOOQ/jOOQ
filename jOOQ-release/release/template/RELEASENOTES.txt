@@ -10,6 +10,30 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.10.0 - October 11, 2017
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#6651 - Improve "no catalogs were loaded" error message
+#6655 - Improve code generator's INFO message when objects have no name
+
+Bug Fixes
+---------
+#6622 - Constants.MINOR_VERSION points to 3.9 instead of 3.10
+#6624 - NPE "Error while fetching indexes" while generating code for function based indexes
+#6636 - Limit.numberOfRowsOrMax should be initalised from static value
+#6641 - QualifiedName.nonEmpty() shouldn't clone argument
+#6649 - Error while generating classes from Record Types and Oracle Types in Oracle 11g
+#6658 - Error in maven-install.bat and .sh scripts when installing cross released Scala deliverables
+#6667 - Costly null check in CombinedCondition constructor
+#6670 - Lazy initialise thread local ArrayLists in DefaultExecuteContext
+#6673 - DefaultBinding.escape() uses String.replace() rather than StringUtils.replace()
+#6677 - Add markdown to error message about slow SQL
+
+
 Version 3.10.0 - September 29, 2017
 ================================================================================
 

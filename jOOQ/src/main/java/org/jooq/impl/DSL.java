@@ -10338,7 +10338,7 @@ public class DSL {
      */
     @Support
     public static True trueCondition() {
-        return new TrueCondition();
+        return TrueCondition.INSTANCE;
     }
 
     /**
@@ -10346,7 +10346,7 @@ public class DSL {
      */
     @Support
     public static False falseCondition() {
-        return new FalseCondition();
+        return FalseCondition.INSTANCE;
     }
 
     /**

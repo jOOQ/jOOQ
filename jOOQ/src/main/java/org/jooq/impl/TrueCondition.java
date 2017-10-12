@@ -49,6 +49,7 @@ final class TrueCondition extends AbstractCondition implements True {
 
     private static final long     serialVersionUID = 775364624704563687L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    static final TrueCondition    INSTANCE         = new TrueCondition();
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -60,5 +61,5 @@ final class TrueCondition extends AbstractCondition implements True {
         return CLAUSES;
     }
 
-    TrueCondition() {}
+    private TrueCondition() {}
 }

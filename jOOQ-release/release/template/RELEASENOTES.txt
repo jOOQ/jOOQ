@@ -10,7 +10,7 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.10.0 - October 11, 2017
+Version 3.10.1 - October 11, 2017
 ================================================================================
 
 This is a 3.10 patch release with bug fixes

@@ -167,6 +167,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
+import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
@@ -2009,6 +2010,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final void addConditions(Condition conditions) {
+        condition.addConditions(conditions);
+    }
+
+    @Override
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
     }
@@ -2016,6 +2022,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
+    }
+
+    @Override
+    public final void addConditions(Operator operator, Condition conditions) {
+        condition.addConditions(operator, conditions);
     }
 
     @Override
@@ -2094,13 +2105,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final void addHaving(Condition conditions) {
+        getHaving().addConditions(conditions);
+    }
+
+    @Override
     public final void addHaving(Condition... conditions) {
-        addHaving(Arrays.asList(conditions));
+        getHaving().addConditions(conditions);
     }
 
     @Override
     public final void addHaving(Collection<? extends Condition> conditions) {
         getHaving().addConditions(conditions);
+    }
+
+    @Override
+    public final void addHaving(Operator operator, Condition conditions) {
+        getHaving().addConditions(operator, conditions);
     }
 
     @Override
@@ -2168,8 +2189,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final void addJoin(TableLike<?> table, Condition conditions) {
+        addJoin(table, JoinType.JOIN, conditions);
+    }
+
+    @Override
     public final void addJoin(TableLike<?> table, Condition... conditions) {
         addJoin(table, JoinType.JOIN, conditions);
+    }
+
+    @Override
+    public final void addJoin(TableLike<?> table, JoinType type, Condition conditions) {
+        addJoin0(table, type, conditions, null);
     }
 
     @Override
@@ -2184,7 +2215,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final void addJoin0(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy) {
+
+
+
+
+
+    private final void addJoin0(TableLike<?> table, JoinType type, Object conditions, Field<?>[] partitionBy) {
 
         // TODO: This and similar methods should be refactored, patterns extracted...
         int index = getFrom().size() - 1;
@@ -2196,7 +2232,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
             case FULL_OUTER_JOIN: {
-                joined = getFrom().get(index).join(table, type).on(conditions);
+                TableOptionalOnStep<Record> o = getFrom().get(index).join(table, type);
+
+                if (conditions instanceof Condition)
+                    joined = o.on((Condition) conditions);
+                else
+                    joined = o.on((Condition[]) conditions);
+
                 break;
             }
 
@@ -2208,7 +2250,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-                joined = o.on(conditions);
+                if (conditions instanceof Condition)
+                    joined = o.on((Condition) conditions);
+                else
+                    joined = o.on((Condition[]) conditions);
+
                 break;
             }
 

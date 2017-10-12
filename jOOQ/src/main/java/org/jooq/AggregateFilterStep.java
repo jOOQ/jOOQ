@@ -51,6 +51,13 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * conditions with each other with {@link Operator#AND}.
      */
     @Support
+    WindowBeforeOverStep<T> filterWhere(Condition condition);
+
+    /**
+     * Add a <code>FILTER clause</code> to the aggregate function, connecting
+     * conditions with each other with {@link Operator#AND}.
+     */
+    @Support
     WindowBeforeOverStep<T> filterWhere(Condition... conditions);
 
     /**
@@ -69,7 +76,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
     /**
      * Add a <code>FILTER clause</code> to the aggregate function.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #filterWhere(Condition...)} or
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #filterWhere(Condition)} or
      *             {@link #filterWhere(Field)} instead. Due to ambiguity between
      *             calling this method using {@link Field#equals(Object)}
      *             argument, vs. calling the other method via a

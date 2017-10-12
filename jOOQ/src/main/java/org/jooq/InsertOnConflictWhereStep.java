@@ -64,6 +64,13 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * other with {@link Operator#AND}.
      */
     @Support({ POSTGRES_9_5 })
+    InsertReturningStep<R> where(Condition condition);
+
+    /**
+     * Add a <code>WHERE</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
+     */
+    @Support({ POSTGRES_9_5 })
     InsertReturningStep<R> where(Condition... conditions);
 
     /**

@@ -755,6 +755,12 @@ implements
     }
 
     @Override
+    public final MergeImpl on(Condition conditions) {
+        on.addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final MergeImpl on(Condition... conditions) {
         on.addConditions(conditions);
         return this;

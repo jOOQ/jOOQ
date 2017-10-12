@@ -341,6 +341,13 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final SelectImpl where(Condition conditions) {
+        conditionStep = ConditionStep.WHERE;
+        getQuery().addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final SelectImpl where(Condition... conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
@@ -1874,6 +1881,13 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final SelectImpl having(Condition conditions) {
+        conditionStep = ConditionStep.HAVING;
+        getQuery().addHaving(conditions);
+        return this;
+    }
+
+    @Override
     public final SelectImpl having(Condition... conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
@@ -1927,6 +1941,25 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final SelectImpl window(Collection<? extends WindowDefinition> definitions) {
         getQuery().addWindow(definitions);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl on(Condition conditions) {
+        conditionStep = ConditionStep.ON;
+        joinConditions = new ConditionProviderImpl();
+        joinConditions.addConditions(conditions);
+
+
+
+
+
+
+            getQuery().addJoin(joinTable, joinType, joinConditions);
+
+        joinTable = null;
+        joinPartitionBy = null;
+        joinType = null;
         return this;
     }
 

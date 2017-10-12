@@ -149,6 +149,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
+    public final DivideByOnConditionStep on(Condition conditions) {
+        condition.addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final DivideByOnConditionStep on(Condition... conditions) {
         condition.addConditions(conditions);
         return this;

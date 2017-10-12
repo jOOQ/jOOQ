@@ -64,16 +64,17 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     final Condition getWhere() {
-        if (condition == null) {
-            return trueCondition();
-        }
-
-        return condition;
+        return condition == null ? trueCondition() : condition;
     }
 
     // -------------------------------------------------------------------------
     // ConditionProvider API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final void addConditions(Condition conditions) {
+        addConditions(Operator.AND, conditions);
+    }
 
     @Override
     public final void addConditions(Condition... conditions) {
@@ -86,6 +87,14 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     @Override
+    public final void addConditions(Operator operator, Condition conditions) {
+        if (getWhere() instanceof TrueCondition)
+            condition = conditions;
+        else
+            condition = DSL.condition(operator, getWhere(), conditions);
+    }
+
+    @Override
     public final void addConditions(Operator operator, Condition... conditions) {
         addConditions(operator, Arrays.asList(conditions));
     }
@@ -95,19 +104,12 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
         if (!conditions.isEmpty()) {
             Condition c;
 
-            if (conditions.size() == 1) {
+            if (conditions.size() == 1)
                 c = conditions.iterator().next();
-            }
-            else {
+            else
                 c = DSL.condition(operator, conditions);
-            }
 
-            if (getWhere() instanceof TrueCondition) {
-                condition = c;
-            }
-            else {
-                condition = DSL.condition(operator, getWhere(), c);
-            }
+            addConditions(operator, c);
         }
     }
 

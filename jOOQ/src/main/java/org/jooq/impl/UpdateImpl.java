@@ -536,6 +536,12 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateImpl<R> where(Condition conditions) {
+        getDelegate().addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final UpdateImpl<R> where(Condition... conditions) {
         getDelegate().addConditions(conditions);
         return this;

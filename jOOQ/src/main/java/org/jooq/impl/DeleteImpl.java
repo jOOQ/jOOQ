@@ -78,6 +78,12 @@ final class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> where(Condition conditions) {
+        getDelegate().addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final DeleteImpl<R> where(Condition... conditions) {
         getDelegate().addConditions(conditions);
         return this;

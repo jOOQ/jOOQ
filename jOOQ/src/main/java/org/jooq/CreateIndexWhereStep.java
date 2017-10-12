@@ -53,6 +53,13 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * them with each other with {@link Operator#AND}.
      */
     @Support({ POSTGRES })
+    CreateIndexFinalStep where(Condition condition);
+
+    /**
+     * Add a <code>WHERE</code> clause to create a partial index, connecting
+     * them with each other with {@link Operator#AND}.
+     */
+    @Support({ POSTGRES })
     CreateIndexFinalStep where(Condition... conditions);
 
     /**

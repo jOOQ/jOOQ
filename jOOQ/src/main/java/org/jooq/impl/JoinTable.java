@@ -516,6 +516,12 @@ implements
 
 
     @Override
+    public final JoinTable on(Condition conditions) {
+        condition.addConditions(conditions);
+        return this;
+    }
+
+    @Override
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);
         return this;

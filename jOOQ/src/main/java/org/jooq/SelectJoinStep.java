@@ -107,7 +107,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <code>FROM</code> clause using {@link Table#join(TableLike, JoinType)}
      * <p>
      * Depending on the <code>JoinType</code>, a subsequent
-     * {@link SelectOnStep#on(Condition...)} or
+     * {@link SelectOnStep#on(Condition)} or
      * {@link SelectOnStep#using(Field...)} clause is required. If it is
      * required but omitted, the JOIN clause will be ignored
      */

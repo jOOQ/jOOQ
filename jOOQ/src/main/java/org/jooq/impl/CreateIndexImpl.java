@@ -133,6 +133,12 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
+    public final CreateIndexImpl where(Condition condition) {
+        where = condition;
+        return this;
+    }
+
+    @Override
     public final CreateIndexImpl where(Condition... conditions) {
         where = DSL.and(conditions);
         return this;

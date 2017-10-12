@@ -465,8 +465,18 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
+    public final void addConditions(Condition conditions) {
+        condition.addConditions(conditions);
+    }
+
+    @Override
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
+    }
+
+    @Override
+    public final void addConditions(Operator operator, Condition conditions) {
+        condition.addConditions(operator, conditions);
     }
 
     @Override

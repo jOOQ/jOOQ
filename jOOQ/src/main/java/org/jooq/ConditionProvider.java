@@ -49,6 +49,15 @@ import java.util.Collection;
 public interface ConditionProvider {
 
     /**
+     * Adds a new condition to the query, connecting them to existing
+     * conditions with {@link Operator#AND}
+     *
+     * @param condition The condition
+     */
+    @Support
+    void addConditions(Condition condition);
+
+    /**
      * Adds new conditions to the query, connecting them to existing
      * conditions with {@link Operator#AND}
      *
@@ -65,6 +74,15 @@ public interface ConditionProvider {
      */
     @Support
     void addConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds a new condition to the query, connecting them to existing
+     * conditions with the provided operator
+     *
+     * @param condition The condition
+     */
+    @Support
+    void addConditions(Operator operator, Condition condition);
 
     /**
      * Adds new conditions to the query, connecting them to existing

@@ -217,6 +217,18 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void addValuesForUpdate(Map<?, ?> map);
 
     /**
+     * Adds a new condition to the query, connecting it to existing conditions
+     * with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Condition condition);
+
+    /**
      * Adds new conditions to the query, connecting them to existing conditions
      * with {@link Operator#AND}.
      * <p>
@@ -239,6 +251,18 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Support({ POSTGRES_9_5 })
     void addConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds a new condition to the query, connecting it to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Operator operator, Condition condition);
 
     /**
      * Adds new conditions to the query, connecting them to existing

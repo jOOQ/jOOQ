@@ -58,6 +58,13 @@ public interface DeleteWhereStep<R extends Record> extends DeleteReturningStep<R
      * {@link Operator#AND}.
      */
     @Support
+    DeleteConditionStep<R> where(Condition condition);
+
+    /**
+     * Add conditions to the query, connecting them with each other with
+     * {@link Operator#AND}.
+     */
+    @Support
     DeleteConditionStep<R> where(Condition... conditions);
 
     /**
@@ -76,7 +83,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteReturningStep<R
     /**
      * Add conditions to the query.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition...)} or
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} or
      *             {@link #where(Field)} instead. Due to ambiguity between
      *             calling this method using {@link Field#equals(Object)}
      *             argument, vs. calling the other method via a

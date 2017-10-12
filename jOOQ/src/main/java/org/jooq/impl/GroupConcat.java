@@ -121,6 +121,11 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
 
 
     @Override
+    public final AggregateFilterStep<String> filterWhere(Condition condition) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
     public final AggregateFilterStep<String> filterWhere(Condition... conditions) {
         throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
     }

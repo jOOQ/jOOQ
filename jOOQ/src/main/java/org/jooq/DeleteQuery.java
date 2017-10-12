@@ -60,6 +60,13 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      */
     @Override
     @Support
+    void addConditions(Condition condition);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
     void addConditions(Condition... conditions);
 
     /**
@@ -68,6 +75,13 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
     @Override
     @Support
     void addConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Condition condition);
 
     /**
      * {@inheritDoc}

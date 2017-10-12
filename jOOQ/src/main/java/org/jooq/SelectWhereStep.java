@@ -87,6 +87,13 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * other with {@link Operator#AND}.
      */
     @Support
+    SelectConditionStep<R> where(Condition condition);
+
+    /**
+     * Add a <code>WHERE</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
+     */
+    @Support
     SelectConditionStep<R> where(Condition... conditions);
 
     /**
@@ -105,7 +112,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     /**
      * Add a <code>WHERE</code> clause to the query.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition...)} or
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} or
      *             {@link #where(Field)} instead. Due to ambiguity between
      *             calling this method using {@link Field#equals(Object)}
      *             argument, vs. calling the other method via a

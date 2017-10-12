@@ -146,6 +146,16 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * connecting them with each other with {@link Operator#AND}.
      *
      * @param table The joined table
+     * @param condition The joining condition
+     */
+    @Support
+    void addJoin(TableLike<?> table, Condition condition);
+
+    /**
+     * Joins the existing table product to a new table using a condition,
+     * connecting them with each other with {@link Operator#AND}.
+     *
+     * @param table The joined table
      * @param conditions The joining conditions
      */
     @Support
@@ -157,10 +167,37 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param table The joined table
      * @param type The type of join
+     * @param condition The joining condition
+     */
+    @Support
+    void addJoin(TableLike<?> table, JoinType type, Condition condition);
+
+    /**
+     * Joins the existing table product to a new table using a condition,
+     * connecting them with each other with {@link Operator#AND}.
+     *
+     * @param table The joined table
+     * @param type The type of join
      * @param conditions The joining conditions
      */
     @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -266,6 +303,15 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addGroupBy(Collection<? extends GroupField> fields);
 
     /**
+     * Adds a new condition to the having clause of the query, connecting it
+     * with each other with {@link Operator#AND}.
+     *
+     * @param condition The condition
+     */
+    @Support
+    void addHaving(Condition condition);
+
+    /**
      * Adds new conditions to the having clause of the query, connecting them
      * with each other with {@link Operator#AND}.
      *
@@ -282,6 +328,17 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addHaving(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds a new condition to the having clause of query, connecting it with
+     * each other with {@link Operator#AND}.
+     *
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
+     * @param condition The condition
+     */
+    @Support
+    void addHaving(Operator operator, Condition condition);
 
     /**
      * Adds new conditions to the having clause of query, connecting them with
@@ -413,6 +470,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Override
     @Support
+    void addConditions(Condition condition);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
     void addConditions(Condition... conditions);
 
     /**
@@ -421,6 +485,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Override
     @Support
     void addConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Condition condition);
 
     /**
      * {@inheritDoc}

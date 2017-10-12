@@ -584,7 +584,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * Join a table to this table using a {@link JoinType}
      * <p>
      * Depending on the <code>JoinType</code>, a subsequent
-     * {@link TableOnStep#on(Condition...)} or
+     * {@link TableOnStep#on(Condition)} or
      * {@link TableOnStep#using(Field...)} clause is required. If it is required
      * but omitted, a {@link DSL#trueCondition()}, i.e. <code>1 = 1</code>
      * condition will be rendered

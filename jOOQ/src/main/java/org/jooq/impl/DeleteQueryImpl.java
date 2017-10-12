@@ -85,8 +85,18 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     }
 
     @Override
+    public final void addConditions(Condition conditions) {
+        condition.addConditions(conditions);
+    }
+
+    @Override
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
+    }
+
+    @Override
+    public final void addConditions(Operator operator, Condition conditions) {
+        condition.addConditions(operator, conditions);
     }
 
     @Override

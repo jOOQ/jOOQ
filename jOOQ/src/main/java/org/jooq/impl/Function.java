@@ -547,6 +547,12 @@ class Function<T> extends AbstractField<T> implements
 
 
     @Override
+    public final WindowBeforeOverStep<T> filterWhere(Condition c) {
+        filter = c;
+        return this;
+    }
+
+    @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
         return filterWhere(Arrays.asList(conditions));
     }
@@ -555,8 +561,7 @@ class Function<T> extends AbstractField<T> implements
     public final WindowBeforeOverStep<T> filterWhere(Collection<? extends Condition> conditions) {
         ConditionProviderImpl c = new ConditionProviderImpl();
         c.addConditions(conditions);
-        filter = c;
-        return this;
+        return filterWhere(c);
     }
 
     @Override

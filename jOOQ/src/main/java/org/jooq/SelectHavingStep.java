@@ -87,6 +87,13 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * other with {@link Operator#AND}.
      */
     @Support
+    SelectHavingConditionStep<R> having(Condition condition);
+
+    /**
+     * Add a <code>HAVING</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
+     */
+    @Support
     SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
@@ -105,7 +112,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
     /**
      * Add a <code>HAVING</code> clause to the query.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #having(Condition...)} or
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #having(Condition)} or
      *             {@link #having(Field)} instead. Due to ambiguity between
      *             calling this method using {@link Field#equals(Object)}
      *             argument, vs. calling the other method via a

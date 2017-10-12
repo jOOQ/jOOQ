@@ -70,6 +70,13 @@ public interface MergeOnStep<R extends Record> {
      * with each other with {@link Operator#AND}.
      */
     @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
+    MergeOnConditionStep<R> on(Condition condition);
+
+    /**
+     * Provide join conditions and proceed to the next step, connecting them
+     * with each other with {@link Operator#AND}.
+     */
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
@@ -81,7 +88,7 @@ public interface MergeOnStep<R extends Record> {
     /**
      * Provide join conditions and proceed to the next step
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #on(Condition...)} or
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #on(Condition)} or
      *             {@link #on(Field)} instead. Due to ambiguity between
      *             calling this method using {@link Field#equals(Object)}
      *             argument, vs. calling the other method via a

@@ -1022,7 +1022,7 @@ final class Tools {
 
         Field<?>[] result = new Field[fieldNames.length];
 
-        if (tableName == null)
+        if (StringUtils.isEmpty(tableName))
             for (int i = 0; i < fieldNames.length; i++)
                 result[i] = DSL.field(name(fieldNames[i]));
         else

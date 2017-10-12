@@ -34,6 +34,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_INT;
+import static org.jooq.impl.Tools.EMPTY_QUERY;
+import static org.jooq.impl.Tools.EMPTY_STRING;
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -397,9 +401,9 @@ class DefaultExecuteContext implements ExecuteContext {
 
         if (routine != null) {
             this.batch = false;
-            this.batchQueries = new Query[0];
-            this.batchRows = new int[] { -1 };
-            this.batchSQL = new String[1];
+            this.batchQueries = null;
+            this.batchRows = null;
+            this.batchSQL = null;
         }
         else if (batchQueries != null) {
             this.batch = true;
@@ -411,15 +415,15 @@ class DefaultExecuteContext implements ExecuteContext {
         }
         else if (query == null) {
             this.batch = false;
-            this.batchQueries = new Query[0];
-            this.batchRows = new int[0];
-            this.batchSQL = new String[0];
+            this.batchQueries = null;
+            this.batchRows = null;
+            this.batchSQL = null;
         }
         else {
             this.batch = false;
-            this.batchQueries = new Query[] { query };
-            this.batchRows = new int[] { -1 };
-            this.batchSQL = new String[1];
+            this.batchQueries = null;
+            this.batchRows = null;
+            this.batchSQL = null;
         }
 
         clean();
@@ -519,7 +523,9 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Query[] batchQueries() {
-        return batchQueries;
+        return batch         ? batchQueries
+             : query != null ? new Query[] { query }
+             :                 EMPTY_QUERY;
     }
 
     @Override
@@ -532,7 +538,7 @@ class DefaultExecuteContext implements ExecuteContext {
         this.sql = s;
 
         // If this isn't a BatchMultiple query
-        if (batchSQL.length == 1)
+        if (batchSQL != null && batchSQL.length == 1)
             batchSQL[0] = s;
     }
 
@@ -543,7 +549,9 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final String[] batchSQL() {
-        return batchSQL;
+        return batch                            ? batchSQL
+             : routine != null || query != null ? new String[] { sql }
+             :                                    EMPTY_STRING;
     }
 
     @Override
@@ -645,13 +653,15 @@ class DefaultExecuteContext implements ExecuteContext {
         this.rows = r;
 
         // If this isn't a BatchMultiple query
-        if (batchRows.length == 1)
+        if (batchRows != null && batchRows.length == 1)
             batchRows[0] = r;
     }
 
     @Override
     public final int[] batchRows() {
-        return batchRows;
+        return batch                            ? batchRows
+             : routine != null || query != null ? new int[] { rows }
+             :                                    EMPTY_INT;
     }
 
     @Override

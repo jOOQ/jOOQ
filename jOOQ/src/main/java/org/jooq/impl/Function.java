@@ -66,14 +66,12 @@ import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.ROW_NUMBER;
-import static org.jooq.impl.Tools.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.Map;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -371,8 +369,7 @@ class Function<T> extends AbstractField<T> implements
             if (SUPPORT_WINDOW_CLAUSE.contains(ctx.family()))
                 return windowName;
 
-            Map<Object, Object> map = (Map<Object, Object>) ctx.data(DATA_LOCALLY_SCOPED_DATA_MAP);
-            QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) map.get(DATA_WINDOW_DEFINITIONS);
+            QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) ctx.data(DATA_WINDOW_DEFINITIONS);
 
             if (windows != null) {
                 for (WindowDefinition window : windows)

@@ -336,16 +336,6 @@ final class Tools {
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
 
         /**
-         * [#2790] A locally scoped data map.
-         * <p>
-         * Sometimes, it is useful to have some information only available while
-         * visiting QueryParts in the same context of the current subquery, e.g.
-         * when communicating between SELECT and WINDOW clauses, as is required to
-         * emulate #531.
-         */
-        DATA_LOCALLY_SCOPED_DATA_MAP,
-
-        /**
          * [#531] The local window definitions.
          * <p>
          * The window definitions declared in the <code>WINDOW</code> clause are

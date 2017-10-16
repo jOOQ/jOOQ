@@ -1588,7 +1588,11 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
-            out.tab(2).println("return (%s) get(%s);", type, index);
+            if ("java.lang.Object".equals(typeFull)) {
+                out.tab(2).println("return get(%s);", index);
+            } else {
+                out.tab(2).println("return (%s) get(%s);", type, index);
+            }
             out.tab(1).println("}");
         }
     }

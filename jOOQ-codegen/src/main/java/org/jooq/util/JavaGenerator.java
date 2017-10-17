@@ -1588,11 +1588,13 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
-            if ("java.lang.Object".equals(typeFull)) {
+
+            // [#6705] Avoid generating code with a redundant (Object) cast
+            if ("java.lang.Object".equals(typeFull))
                 out.tab(2).println("return get(%s);", index);
-            } else {
+            else
                 out.tab(2).println("return (%s) get(%s);", type, index);
-            }
+
             out.tab(1).println("}");
         }
     }

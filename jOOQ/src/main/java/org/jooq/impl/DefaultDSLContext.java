@@ -3669,6 +3669,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new ResultImpl<Record>(configuration(), fields);
     }
 
+    @Override
+    public Result<Record> newResult(Collection<? extends Field<?>> fields) {
+        return new ResultImpl<Record>(configuration(), fields);
+    }
+
 // [jooq-tools] START [newResult]
 
     @Generated("This method was generated using jOOQ-tools")

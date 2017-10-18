@@ -109,7 +109,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
     final WithImpl                           with;
     final Table<R>                           table;
-    final QueryPartList<Field<?>>            returning;
+    final SelectFieldList                    returning;
     Result<R>                                returned;
 
     AbstractDMLQuery(Configuration configuration, WithImpl with, Table<R> table) {
@@ -117,7 +117,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
         this.with = with;
         this.table = table;
-        this.returning = new QueryPartList<Field<?>>();
+        this.returning = new SelectFieldList();
     }
 
     // @Override
@@ -165,6 +165,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     public final void accept(Context<?> ctx) {
         if (with != null)
             ctx.visit(with).formatSeparator();
+
+        boolean previousDeclareFields = ctx.declareFields();
+
+
+
+
 
 
 
@@ -312,12 +318,18 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         if (!returning.isEmpty()) {
             switch (ctx.family()) {
                 case FIREBIRD:
-                case POSTGRES:
+                case POSTGRES: {
+                    boolean previous = ctx.declareFields();
+
                     ctx.formatSeparator()
                        .visit(K_RETURNING)
                        .sql(' ')
-                       .visit(returning);
+                       .declareFields(true)
+                       .visit(returning)
+                       .declareFields(previous);
+
                     break;
+                }
 
                 default:
                     // Other dialects don't render a RETURNING clause, but

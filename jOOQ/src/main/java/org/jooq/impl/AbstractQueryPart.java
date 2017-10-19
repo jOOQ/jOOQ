@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 
+import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -140,8 +141,10 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         // This is a working default implementation. It should be overridden by
         // concrete subclasses, to improve performance
         if (that instanceof QueryPart) {
-            String sql1 = create().renderInlined(this);
-            String sql2 = create().renderInlined((QueryPart) that);
+            DSLContext dsl = configuration().dsl();
+
+            String sql1 = dsl.renderInlined(this);
+            String sql2 = dsl.renderInlined((QueryPart) that);
 
             return sql1.equals(sql2);
         }
@@ -173,21 +176,33 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     /**
      * Internal convenience method
+     *
+     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
+     *             and {@link Configuration#dsl()} instead.
      */
+    @Deprecated
     protected final DSLContext create() {
         return create(configuration());
     }
 
     /**
      * Internal convenience method
+     *
+     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
+     *             and {@link Configuration#dsl()} instead.
      */
+    @Deprecated
     protected final DSLContext create(Configuration configuration) {
         return DSL.using(configuration);
     }
 
     /**
      * Internal convenience method
+     *
+     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
+     *             and {@link Configuration#dsl()} instead.
      */
+    @Deprecated
     protected final DSLContext create(Context<?> ctx) {
         return DSL.using(ctx.configuration());
     }

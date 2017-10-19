@@ -5305,16 +5305,14 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println(") : %s[%s] = {", Result.class, recordClassName);
-            out.tab(2).print("%s.using(%s).selectFrom(%s.call(",
-                DSL.class,
+            out.tab(2).print("%s.dsl().selectFrom(%s.call(",
                 configurationArgument,
                 // [#5765] To prevent name clashes, this identifier is not imported
                 getStrategy().getFullJavaIdentifier(function));
         }
         else {
             out.println(") {");
-            out.tab(2).print("return %s.using(%s).selectFrom(%s.call(",
-                DSL.class,
+            out.tab(2).print("return %s.dsl().selectFrom(%s.call(",
                 configurationArgument,
                 // [#5765] To prevent name clashes, this identifier is not imported
                 getStrategy().getFullJavaIdentifier(function));

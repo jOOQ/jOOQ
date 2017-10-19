@@ -94,7 +94,7 @@ public class SakilaReportService {
                 public void executeEnd(ExecuteContext ctx) {
                     Configuration config = ctx.configuration().derive();
                     config.settings().setRenderFormatted(true);
-                    log.info("\n" + DSL.using(config).renderInlined(ctx.query()));
+                    log.info("\n" + config.dsl().renderInlined(ctx.query()));
                 }
 
                 @Override

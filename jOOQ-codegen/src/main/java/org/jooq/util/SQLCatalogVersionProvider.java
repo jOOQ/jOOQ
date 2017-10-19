@@ -40,7 +40,6 @@ import static org.jooq.impl.DSL.param;
 import java.sql.Connection;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 
 /**
@@ -59,13 +58,13 @@ class SQLCatalogVersionProvider implements CatalogVersionProvider {
     @Override
     public String version(CatalogDefinition catalog) {
         return "" +
-            DSL.using(
-                new DefaultConfiguration()
-                    .set(connection)
-                    .set(new Settings().withStatementType(STATIC_STATEMENT))
-            ).fetchValue(
-                // [#2906] TODO Plain SQL statements do not yet support named parameters
-                sql.replace(":catalog_name", "?"), param("catalog_name", catalog.getInputName())
-            );
+            new DefaultConfiguration()
+                .set(connection)
+                .set(new Settings().withStatementType(STATIC_STATEMENT))
+                .dsl()
+                .fetchValue(
+                    // [#2906] TODO Plain SQL statements do not yet support named parameters
+                    sql.replace(":catalog_name", "?"), param("catalog_name", catalog.getInputName())
+                );
     }
 }

@@ -40,7 +40,6 @@ import static org.jooq.impl.DSL.param;
 import java.sql.Connection;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 
 /**
@@ -59,13 +58,13 @@ class SQLSchemaVersionProvider implements SchemaVersionProvider {
     @Override
     public String version(SchemaDefinition schema) {
         return "" +
-            DSL.using(
-                new DefaultConfiguration()
-                    .set(connection)
-                    .set(new Settings().withStatementType(STATIC_STATEMENT))
-            ).fetchValue(
-                // [#2906] TODO Plain SQL statements do not yet support named parameters
-                sql.replace(":schema_name", "?"), param("schema_name", schema.getInputName())
-            );
+            new DefaultConfiguration()
+                .set(connection)
+                .set(new Settings().withStatementType(STATIC_STATEMENT))
+                .dsl()
+                .fetchValue(
+                    // [#2906] TODO Plain SQL statements do not yet support named parameters
+                    sql.replace(":schema_name", "?"), param("schema_name", schema.getInputName())
+                );
     }
 }

@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
@@ -87,10 +88,13 @@ import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableFinalStep;
 import org.jooq.CreateTableOnCommitStep;
+import org.jooq.CreateTableStorageStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -102,7 +106,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableAsStep<R>,
-    CreateTableColumnStep {
+    CreateTableColumnStep,
+    CreateTableStorageStep {
 
     /**
      * Generated UID
@@ -123,6 +128,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final boolean                    temporary;
     private final boolean                    ifNotExists;
     private OnCommit                         onCommit;
+    private SQL                              storage;
 
     CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
         super(configuration);
@@ -200,21 +206,42 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final CreateTableFinalStep onCommitDeleteRows() {
+    public final CreateTableStorageStep onCommitDeleteRows() {
         onCommit = OnCommit.DELETE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableFinalStep onCommitPreserveRows() {
+    public final CreateTableStorageStep onCommitPreserveRows() {
         onCommit = OnCommit.PRESERVE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableFinalStep onCommitDrop() {
+    public final CreateTableStorageStep onCommitDrop() {
         onCommit = OnCommit.DROP;
         return this;
+    }
+
+    @Override
+    public final CreateTableFinalStep storage(SQL sql) {
+        storage = sql;
+        return this;
+    }
+
+    @Override
+    public final CreateTableFinalStep storage(String sql) {
+        return storage(sql(sql));
+    }
+
+    @Override
+    public final CreateTableFinalStep storage(String sql, Object... bindings) {
+        return storage(sql(sql, bindings));
+    }
+
+    @Override
+    public final CreateTableFinalStep storage(String sql, QueryPart... parts) {
+        return storage(sql(sql, parts));
     }
 
     // ------------------------------------------------------------------------
@@ -239,6 +266,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
 
     private final void accept0(Context<?> ctx) {
+        ctx.start(CREATE_TABLE);
+
         if (select != null) {
 
 
@@ -251,7 +280,6 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             acceptCreateTableAsSelect(ctx);
         }
         else {
-            ctx.start(CREATE_TABLE);
             toSQLCreateTableName(ctx);
             ctx.sql('(')
                .start(CREATE_TABLE_COLUMNS)
@@ -288,12 +316,16 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                .sql(')');
 
             toSQLOnCommit(ctx);
-            ctx.end(CREATE_TABLE);
         }
+
+        if (storage != null)
+            ctx.formatSeparator()
+               .visit(storage);
+
+        ctx.end(CREATE_TABLE);
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {
-        ctx.start(CREATE_TABLE);
         toSQLCreateTableName(ctx);
         toSQLOnCommit(ctx);
         ctx.formatSeparator()
@@ -319,8 +351,6 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 ctx.sql(' ')
                    .visit(K_WITH_DATA);
         }
-
-        ctx.end(CREATE_TABLE);
     }
 
 

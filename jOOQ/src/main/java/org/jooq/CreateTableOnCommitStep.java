@@ -44,7 +44,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface CreateTableOnCommitStep extends CreateTableFinalStep {
+public interface CreateTableOnCommitStep extends CreateTableStorageStep {
 
     /**
      * Add an <code>ON COMMIT DELETE ROWS</code> clause.
@@ -55,7 +55,7 @@ public interface CreateTableOnCommitStep extends CreateTableFinalStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableFinalStep onCommitDeleteRows();
+    CreateTableStorageStep onCommitDeleteRows();
 
     /**
      * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
@@ -66,7 +66,7 @@ public interface CreateTableOnCommitStep extends CreateTableFinalStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableFinalStep onCommitPreserveRows();
+    CreateTableStorageStep onCommitPreserveRows();
 
     /**
      * Add an <code>ON COMMIT DROP</code> clause.
@@ -77,5 +77,5 @@ public interface CreateTableOnCommitStep extends CreateTableFinalStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableFinalStep onCommitDrop();
+    CreateTableStorageStep onCommitDrop();
 }

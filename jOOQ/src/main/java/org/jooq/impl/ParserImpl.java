@@ -69,6 +69,7 @@ import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.date;
 import static org.jooq.impl.DSL.day;
+import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.every;
@@ -87,6 +88,7 @@ import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
 import static org.jooq.impl.DSL.lastValue;
 import static org.jooq.impl.DSL.lateral;
@@ -95,6 +97,7 @@ import static org.jooq.impl.DSL.least;
 import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.level;
+import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
@@ -117,6 +120,7 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.octetLength;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
@@ -174,6 +178,7 @@ import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
 import static org.jooq.impl.DSL.space;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
@@ -192,17 +197,20 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.year;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.ParserImpl.Type.A;
 import static org.jooq.impl.ParserImpl.Type.B;
 import static org.jooq.impl.ParserImpl.Type.D;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.ParserImpl.Type.X;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -245,7 +253,7 @@ import org.jooq.CreateIndexWhereStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableConstraintStep;
-import org.jooq.CreateTableFinalStep;
+import org.jooq.CreateTableStorageStep;
 import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -274,6 +282,7 @@ import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JoinType;
+import org.jooq.Keyword;
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
@@ -291,6 +300,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
+import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
@@ -1324,6 +1334,7 @@ class ParserImpl implements Parser {
     private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
         boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
         Table<?> tableName = parseTableName(ctx);
+        CreateTableStorageStep storageStep;
 
         // [#5309] TODO: Move this after the column specification
         if (parseKeywordIf(ctx, "AS")) {
@@ -1335,8 +1346,7 @@ class ParserImpl implements Parser {
                     ? ctx.dsl.createTemporaryTable(tableName)
                     : ctx.dsl.createTable(tableName);
 
-            CreateTableFinalStep s2 = s1.as(select);
-            return s2;
+            storageStep = s1.as(select);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -1514,7 +1524,7 @@ class ParserImpl implements Parser {
             CreateTableConstraintStep s3 = constraints.isEmpty()
                 ? s2
                 : s2.constraints(constraints);
-            CreateTableFinalStep s4 = s3;
+            CreateTableStorageStep s4 = s3;
 
             if (temporary && parseKeywordIf(ctx, "ON COMMIT")) {
                 if (parseKeywordIf(ctx, "DELETE ROWS"))
@@ -1527,8 +1537,139 @@ class ParserImpl implements Parser {
                     throw ctx.unexpectedToken();
             }
 
-            return s4;
+            storageStep = s4;
         }
+
+        List<SQL> storage = new ArrayList<SQL>();
+
+        storageLoop:
+        for (boolean first = true;; first = false) {
+            boolean optional = first || !parseIf(ctx, ',');
+            Keyword keyword = null;
+
+            // MySQL storage clauses (see: https://dev.mysql.com/doc/refman/5.7/en/create-table.html)
+            if ((keyword = parseAndGetKeywordIf(ctx, "AUTO_INCREMENT")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "AVG_ROW_LENGTH")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "CHARACTER SET")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "CHECKSUM")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseZeroOne(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "COLLATE")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT COLLATE")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "COMPRESSION")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "CONNECTION")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DATA DIRECTORY")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "INDEX DIRECTORY")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DELAY_KEY_WRITE")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseZeroOne(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "ENCRYPTION")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "ENGINE")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "INSERT_METHOD")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "NO", "FIRST", "LAST")));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "KEY_BLOCK_SIZE")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "MAX_ROWS")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "MIN_ROWS")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "PACK_KEYS")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "PASSWORD")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "ROW_FORMAT")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "DEFAULT", "DYNAMIC", "FIXED", "COMPRESSED", "REDUNDANT", "COMPACT")));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_AUTO_RECALC")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_PERSISTENT")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_SAMPLE_PAGES")) != null) {
+                parseIf(ctx, '=');
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "TABLESPACE")) != null) {
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
+
+                if ((keyword = parseAndGetKeywordIf(ctx, "STORAGE")) != null)
+                    storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "DISK", "MEMORY", "DEFAULT")));
+            }
+            else if ((keyword = parseAndGetKeywordIf(ctx, "UNION")) != null) {
+                parseIf(ctx, '=');
+                parse(ctx, '(');
+                storage.add(sql("{0} ({1})", keyword, list(parseIdentifiers(ctx))));
+                parse(ctx, ')');
+            }
+            else if (optional)
+                break storageLoop;
+            else
+                throw ctx.expected("storage clause after ','");
+        }
+
+        if (storage.size() > 0)
+            return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));
+        else
+            return storageStep;
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
@@ -5264,6 +5405,8 @@ class ParserImpl implements Parser {
     }
 
     private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
+        parseWhitespaceIf(ctx);
+
         StringBuilder sb = new StringBuilder();
         char c;
 
@@ -5314,6 +5457,26 @@ class ParserImpl implements Parser {
             ? new BigDecimal(sb.toString()).negate()
             : new BigDecimal(sb.toString());
         // TODO add floating point support
+    }
+
+    private static final Field<Integer> parseZeroOne(ParserContext ctx) {
+        if (parseIf(ctx, '0'))
+            return zero();
+        else if (parseIf(ctx, '1'))
+            return one();
+        else
+            throw ctx.expected("0 or 1");
+    }
+
+    private static final Field<Integer> parseZeroOneDefault(ParserContext ctx) {
+        if (parseIf(ctx, '0'))
+            return zero();
+        else if (parseIf(ctx, '1'))
+            return one();
+        else if (parseKeywordIf(ctx, "DEFAULT"))
+            return defaultValue(INTEGER);
+        else
+            throw ctx.expected("0 or 1");
     }
 
     private static final Long parseSignedInteger(ParserContext ctx) {
@@ -5581,20 +5744,53 @@ class ParserImpl implements Parser {
         return peekKeyword(ctx, string, true, false, true);
     }
 
-    private static final void parseKeyword(ParserContext ctx, String string) {
-        if (!parseKeywordIf(ctx, string))
+    private static final void parseKeyword(ParserContext ctx, String keyword) {
+        if (!parseKeywordIf(ctx, keyword))
             throw ctx.unexpectedToken();
     }
 
-    private static final boolean parseKeywordIf(ParserContext ctx, String string) {
-        ctx.expectedTokens.add(string);
+    private static final boolean parseKeywordIf(ParserContext ctx, String keyword) {
+        ctx.expectedTokens.add(keyword);
 
-        if (peekKeyword(ctx, string, true, false, false))
+        if (peekKeyword(ctx, keyword, true, false, false))
             ctx.expectedTokens.clear();
         else
             return false;
 
         return true;
+    }
+
+    private static final Keyword parseAndGetKeyword(ParserContext ctx, String... keywords) {
+        Keyword result = parseAndGetKeywordIf(ctx, keywords);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Keyword parseAndGetKeyword(ParserContext ctx, String keyword) {
+        Keyword result = parseAndGetKeywordIf(ctx, keyword);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Keyword parseAndGetKeywordIf(ParserContext ctx, String... keywords) {
+        for (String keyword : keywords)
+            if (parseKeywordIf(ctx, keyword))
+                return keyword(keyword.toLowerCase());
+
+        return null;
+    }
+
+    private static final Keyword parseAndGetKeywordIf(ParserContext ctx, String keyword) {
+        if (parseKeywordIf(ctx, keyword))
+            return keyword(keyword.toLowerCase());
+
+        return null;
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String... keywords) {

@@ -335,21 +335,25 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
 
     @Override
+    @Deprecated
     public Optional<R> fetchOptional() {
         return fetchNextOptional();
     }
 
     @Override
+    @Deprecated
     public <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
         return fetchNextOptional(mapper);
     }
 
     @Override
+    @Deprecated
     public <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
         return fetchNextOptionalInto(type);
     }
 
     @Override
+    @Deprecated
     public <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return fetchNextOptionalInto(table);
     }

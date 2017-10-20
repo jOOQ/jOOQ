@@ -271,7 +271,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
-     * @deprecated - 3.10 - [#6363] - Use {@link #fetchOne()} instead.
+     * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext()} instead.
      */
     @Deprecated
     R fetchOne() throws DataAccessException;

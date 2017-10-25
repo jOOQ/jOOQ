@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -67,6 +68,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
@@ -137,55 +139,83 @@ public class XMLDatabase extends AbstractDatabase {
             String xml = getProperties().getProperty(P_XML_FILE);
             String xsl = getProperties().getProperty(P_XSL_FILE);
 
-            InputStream xmlIs = null;
-            InputStream xslIs = null;
-
             log.info("Using XML file", xml);
 
             try {
-                xmlIs = XMLDatabase.class.getResourceAsStream(xml);
-                if (xmlIs == null)
-                    xmlIs = new FileInputStream(xml);
+                String content;
 
                 if (StringUtils.isBlank(xsl)) {
-                    info = JAXB.unmarshal(new File(xml), InformationSchema.class);
-                }
-                else {
-                    log.info("Using XSL file", xsl);
-
-                    xslIs = XMLDatabase.class.getResourceAsStream(xsl);
-                    if (xslIs == null)
-                        xslIs = new FileInputStream(xsl);
+                    RandomAccessFile f = null;
 
                     try {
+                        f = new RandomAccessFile(new File(xml), "r");
+                        byte[] bytes = new byte[(int) f.length()];
+                        f.readFully(bytes);
+                        content = new String(bytes);
+                    }
+                    finally {
+                        if (f != null) {
+                            try {
+                                f.close();
+                            }
+                            catch (Exception ignore) {}
+                        }
+                    }
+                }
+                else {
+                    InputStream xmlIs = null;
+                    InputStream xslIs = null;
+
+                    try {
+                        log.info("Using XSL file", xsl);
+
+                        xmlIs = XMLDatabase.class.getResourceAsStream(xml);
+                        if (xmlIs == null)
+                            xmlIs = new FileInputStream(xml);
+
+                        xslIs = XMLDatabase.class.getResourceAsStream(xsl);
+                        if (xslIs == null)
+                            xslIs = new FileInputStream(xsl);
+
                         StringWriter writer = new StringWriter();
                         TransformerFactory factory = TransformerFactory.newInstance();
                         Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
 
                         transformer.transform(new StreamSource(xmlIs), new StreamResult(writer));
-                        info = JAXB.unmarshal(new StringReader(writer.getBuffer().toString()), InformationSchema.class);
+                        content = writer.getBuffer().toString();
                     }
                     catch (TransformerException e) {
                         throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
                     }
+                    finally {
+                        if (xmlIs != null) {
+                            try {
+                                xmlIs.close();
+                            }
+                            catch (Exception ignore) {}
+                        }
+                        if (xslIs != null) {
+                            try {
+                                xslIs.close();
+                            }
+                            catch (Exception ignore) {}
+                        }
+                    }
                 }
+
+                // TODO [#1201] Add better error handling here
+                content = content.replaceAll(
+                    "<(\\w+:)?information_schema xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-meta-\\d+\\.\\d+\\.\\d+.xsd\">",
+                    "<$1information_schema xmlns$2=\"" + Constants.NS_META + "\">");
+
+                content = content.replace(
+                    "<information_schema>",
+                    "<information_schema xmlns=\"" + Constants.NS_META + "\">");
+
+                info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
             }
             catch (IOException e) {
                 throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);
-            }
-            finally {
-                if (xmlIs != null) {
-                    try {
-                        xmlIs.close();
-                    }
-                    catch (Exception ignore) {}
-                }
-                if (xslIs != null) {
-                    try {
-                        xslIs.close();
-                    }
-                    catch (Exception ignore) {}
-                }
             }
         }
 

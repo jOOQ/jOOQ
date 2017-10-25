@@ -133,8 +133,8 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private List<Catalog>                                                    configuredCatalogs;
-    private List<Schema>                                                     configuredSchemata;
+    private List<Catalog>                                                    configuredCatalogs       = new ArrayList<Catalog>();
+    private List<Schema>                                                     configuredSchemata       = new ArrayList<Schema>();
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;

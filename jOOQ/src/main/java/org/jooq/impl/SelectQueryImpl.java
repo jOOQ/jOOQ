@@ -2060,19 +2060,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addFrom(Collection<? extends TableLike<?>> f) {
-        for (TableLike<?> provider : f) {
+        for (TableLike<?> provider : f)
             getFrom().add(provider.asTable());
-        }
     }
 
     @Override
     public final void addFrom(TableLike<?> f) {
-        addFrom(Arrays.asList(f));
+        getFrom().add(f.asTable());
     }
 
     @Override
     public final void addFrom(TableLike<?>... f) {
-        addFrom(Arrays.asList(f));
+        for (TableLike<?> provider : f)
+            getFrom().add(provider.asTable());
     }
 
     @Override

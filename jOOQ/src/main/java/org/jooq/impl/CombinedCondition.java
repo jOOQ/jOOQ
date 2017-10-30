@@ -66,31 +66,41 @@ final class CombinedCondition extends AbstractCondition {
     private final Operator        operator;
     private final List<Condition> conditions;
 
-    CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
+    private CombinedCondition(Operator operator, int size) {
         if (operator == null)
             throw new IllegalArgumentException("The argument 'operator' must not be null");
 
         this.operator = operator;
-        this.conditions = new ArrayList<Condition>(conditions.size());
-
-        init(operator, conditions);
+        this.conditions = new ArrayList<Condition>(size);
     }
 
-    private final void init(Operator op, Collection<? extends Condition> cond) {
-        for (Condition condition : cond) {
-            if (condition instanceof CombinedCondition) {
-                CombinedCondition combinedCondition = (CombinedCondition) condition;
+    CombinedCondition(Operator operator, Condition left, Condition right) {
+        this(operator, 2);
 
-                if (combinedCondition.operator == op)
-                    this.conditions.addAll(combinedCondition.conditions);
-                else
-                    this.conditions.add(condition);
-            }
-            else if (condition == null)
-                throw new IllegalArgumentException("The argument 'conditions' must not contain null");
+        add(operator, left);
+        add(operator, right);
+    }
+
+    CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
+        this(operator, conditions.size());
+
+        for (Condition condition : conditions)
+            add(operator, condition);
+    }
+
+    private final void add(Operator op, Condition condition) {
+        if (condition instanceof CombinedCondition) {
+            CombinedCondition combinedCondition = (CombinedCondition) condition;
+
+            if (combinedCondition.operator == op)
+                this.conditions.addAll(combinedCondition.conditions);
             else
                 this.conditions.add(condition);
         }
+        else if (condition == null)
+            throw new IllegalArgumentException("The argument 'conditions' must not contain null");
+        else
+            this.conditions.add(condition);
     }
 
     @Override

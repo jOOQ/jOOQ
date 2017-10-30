@@ -10354,6 +10354,15 @@ public class DSL {
      * <code>conditions</code> with {@link Operator#AND}.
      */
     @Support
+    public static Condition and(Condition left, Condition right) {
+        return condition(AND, left, right);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#AND}.
+     */
+    @Support
     public static Condition and(Condition... conditions) {
         return condition(AND, conditions);
     }
@@ -10372,6 +10381,15 @@ public class DSL {
      * <code>conditions</code> with {@link Operator#OR}.
      */
     @Support
+    public static Condition or(Condition left, Condition right) {
+        return condition(OR, left, right);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#OR}.
+     */
+    @Support
     public static Condition or(Condition... conditions) {
         return condition(OR, conditions);
     }
@@ -10383,6 +10401,15 @@ public class DSL {
     @Support
     public static Condition or(Collection<? extends Condition> conditions) {
         return condition(OR, conditions);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with <code>Operator</code>.
+     */
+    @Support
+    public static Condition condition(Operator operator, Condition left, Condition right) {
+        return new CombinedCondition(operator, left, right);
     }
 
     /**

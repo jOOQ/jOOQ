@@ -1,7 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-  - oraclejdk9
 install:
   - sh -c 'mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true'

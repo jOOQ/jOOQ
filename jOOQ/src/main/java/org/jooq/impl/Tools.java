@@ -4143,4 +4143,12 @@ final class Tools {
     static final String convertBytesToHex(byte[] value) {
         return convertBytesToHex(value, value.length);
     }
+
+    static final boolean isNotEmpty(Collection<?> collection) {
+        return collection != null && !collection.isEmpty();
+    }
+
+    static final boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
 }

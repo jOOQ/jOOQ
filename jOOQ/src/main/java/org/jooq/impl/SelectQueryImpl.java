@@ -207,10 +207,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private String                               hint;
     private String                               option;
     private boolean                              distinct;
-    private final QueryPartList<SelectField<?>>  distinctOn;
+    private QueryPartList<SelectField<?>>        distinctOn;
     private boolean                              forUpdate;
-    private final QueryPartList<Field<?>>        forUpdateOf;
-    private final TableList                      forUpdateOfTables;
+    private QueryPartList<Field<?>>              forUpdateOf;
+    private TableList                            forUpdateOfTables;
     private ForUpdateMode                        forUpdateMode;
     private int                                  forUpdateWait;
     private boolean                              forShare;
@@ -224,9 +224,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private boolean                              connectByNoCycle;
     private final ConditionProviderImpl          connectByStartWith;
     private boolean                              grouping;
-    private final QueryPartList<GroupField>      groupBy;
+    private QueryPartList<GroupField>            groupBy;
     private final ConditionProviderImpl          having;
-    private final WindowList                     window;
+    private WindowList                           window;
     private final SortFieldList                  orderBy;
     private boolean                              orderBySiblings;
     private final QueryPartList<Field<?>>        seek;
@@ -257,15 +257,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         this.with = with;
         this.distinct = distinct;
-        this.distinctOn = new QueryPartList<SelectField<?>>();
         this.select = new SelectFieldList();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
-        this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
-        this.window = new WindowList();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
@@ -275,12 +272,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.unionSeek = new QueryPartList<Field<?>>();
         this.unionLimit = new Limit();
 
-        if (from != null) {
+        if (from != null)
             this.from.add(from.asTable());
-        }
-
-        this.forUpdateOf = new QueryPartList<Field<?>>();
-        this.forUpdateOfTables = new TableList();
     }
 
     @Override
@@ -632,7 +625,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.formatSeparator()
                        .visit(K_FOR_UPDATE);
 
-                if (!forUpdateOf.isEmpty()) {
+                if (Tools.isNotEmpty(forUpdateOf)) {
 
                     // [#4151] [#6117] Some databases don't allow for qualifying column
                     // names here. Copy also to TableList
@@ -648,7 +641,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (unqualified)
                         context.qualify(qualify);
                 }
-                else if (!forUpdateOfTables.isEmpty()) {
+                else if (Tools.isNotEmpty(forUpdateOfTables)) {
                     context.sql(' ').visit(K_OF).sql(' ');
 
                     switch (family) {
@@ -769,8 +762,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#531] [#2790] Make the WINDOW clause available to the SELECT clause
         // to be able to inline window definitions if the WINDOW clause is not
         // supported.
-        if (!getWindow().isEmpty())
-            context.data(DATA_WINDOW_DEFINITIONS, getWindow());
+        if (Tools.isNotEmpty(window))
+            context.data(DATA_WINDOW_DEFINITIONS, window);
     }
 
     /**
@@ -1102,12 +1095,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-        if (!distinctOn.isEmpty()) {
+        if (Tools.isNotEmpty(distinctOn))
             context.visit(K_DISTINCT_ON).sql(" (").visit(distinctOn).sql(") ");
-        }
-        else if (distinct) {
+        else if (distinct)
             context.visit(K_DISTINCT).sql(' ');
-        }
 
 
 
@@ -1288,7 +1279,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .sql(' ');
 
             // [#1665] Empty GROUP BY () clauses need parentheses
-            if (getGroupBy().isEmpty())
+            if (Tools.isEmpty(groupBy))
 
                 // [#4292] Some dialects accept constant expressions in GROUP BY
                 // Note that dialects may consider constants as indexed field
@@ -1314,7 +1305,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 else
                     context.sql("()");
             else
-                context.visit(getGroupBy());
+                context.visit(groupBy);
         }
 
         context.end(SELECT_GROUP_BY);
@@ -1336,12 +1327,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty() && SUPPORT_WINDOW_CLAUSE.contains(family)) {
+        if (Tools.isNotEmpty(window) && SUPPORT_WINDOW_CLAUSE.contains(family)) {
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .sql(' ')
                    .declareWindows(true)
-                   .visit(getWindow())
+                   .visit(window)
                    .declareWindows(false);
         }
 
@@ -1623,7 +1614,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addDistinctOn(Collection<? extends SelectField<?>> fields) {
-        this.distinctOn.addAll(fields);
+        if (distinctOn == null)
+            distinctOn = new QueryPartList<SelectField<?>>();
+
+        distinctOn.addAll(fields);
     }
 
     @Override
@@ -1694,17 +1688,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void setForUpdateOf(Collection<? extends Field<?>> fields) {
         setForUpdate(true);
-        forUpdateOf.clear();
-        forUpdateOfTables.clear();
-        forUpdateOf.addAll(fields);
+        forUpdateOf = new QueryPartList<Field<?>>(fields);
+        forUpdateOfTables = null;
     }
 
     @Override
     public final void setForUpdateOf(Table<?>... tables) {
         setForUpdate(true);
-        forUpdateOf.clear();
-        forUpdateOfTables.clear();
-        forUpdateOfTables.addAll(Arrays.asList(tables));
+        forUpdateOf = null;
+        forUpdateOfTables = new TableList(Arrays.asList(tables));
     }
 
 
@@ -1734,8 +1726,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void setForShare(boolean forShare) {
         this.forUpdate = false;
         this.forShare = forShare;
-        this.forUpdateOf.clear();
-        this.forUpdateOfTables.clear();
+        this.forUpdateOf = null;
+        this.forUpdateOfTables = null;
         this.forUpdateMode = null;
         this.forUpdateWait = 0;
     }
@@ -1827,10 +1819,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         grouping = true;
     }
 
-    final QueryPartList<GroupField> getGroupBy() {
-        return groupBy;
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final ConditionProviderImpl getWhere() {
         if (getOrderBy().isEmpty() || getSeek().isEmpty()) {
@@ -1894,10 +1882,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     final ConditionProviderImpl getHaving() {
         return having;
-    }
-
-    final QueryPartList<WindowDefinition> getWindow() {
-        return window;
     }
 
     final SortFieldList getOrderBy() {
@@ -2094,7 +2078,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addGroupBy(Collection<? extends GroupField> fields) {
         setGrouping();
-        getGroupBy().addAll(fields);
+
+        if (groupBy == null)
+            groupBy = new QueryPartList<GroupField>();
+
+        groupBy.addAll(fields);
     }
 
     @Override
@@ -2139,7 +2127,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addWindow(Collection<? extends WindowDefinition> definitions) {
-        getWindow().addAll(definitions);
+        if (window == null)
+            window = new WindowList();
+
+        window.addAll(definitions);
     }
 
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {

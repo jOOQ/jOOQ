@@ -44,6 +44,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.conf.Settings;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.LoggerListener;
 
 /**
@@ -57,8 +58,9 @@ final class ExecuteListeners implements ExecuteListener {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID = 7399239846062763212L;
-    private static final ExecuteListener EMPTY_LISTENER   = new DefaultExecuteListener();
+    private static final long            serialVersionUID       = 7399239846062763212L;
+    private static final ExecuteListener EMPTY_LISTENER         = new DefaultExecuteListener();
+    private static final JooqLogger      LOGGER_LISTENER_LOGGER = JooqLogger.getLogger(LoggerListener.class);
 
     private final ExecuteListener[]      listeners;
 
@@ -90,8 +92,13 @@ final class ExecuteListeners implements ExecuteListener {
                 (result = init(result)).add(provider.provide());
 
         // [#6051] The previously used StopWatchListener is no longer included by default
-        if (!FALSE.equals(ctx.settings().isExecuteLogging()))
-            (result = init(result)).add(new LoggerListener());
+        if (!FALSE.equals(ctx.settings().isExecuteLogging())) {
+
+            // [#6747] Avoid allocating the listener (and by consequence, the ExecuteListeners) if
+            //         we do not DEBUG log anyway.
+            if (LOGGER_LISTENER_LOGGER.isDebugEnabled())
+                (result = init(result)).add(new LoggerListener());
+        }
 
         return result == null ? null : result.toArray(EMPTY_EXECUTE_LISTENER);
     }

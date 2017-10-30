@@ -4151,4 +4151,12 @@ final class Tools {
     static final boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
+
+    static final boolean isNotEmpty(Object[] array) {
+        return array != null && array.length > 0;
+    }
+
+    static final boolean isEmpty(Object[] array) {
+        return array == null || array.length == 0;
+    }
 }

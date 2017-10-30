@@ -112,7 +112,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         this.stmt = stmt;
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
-        boolean userInternalVisitListener =
+        boolean useInternalVisitListener =
             false
 
 
@@ -121,17 +121,20 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             ;
 
-        this.visitListeners = new VisitListener[providers.length + (userInternalVisitListener ? 1 : 0)];
+        // [#6758] Avoid this allocation if unneeded
+        this.visitListeners = providers.length > 0 || useInternalVisitListener
+            ? new VisitListener[providers.length + (useInternalVisitListener ? 1 : 0)]
+            : null;
 
-        for (int i = 0; i < providers.length; i++)
-            this.visitListeners[i] = providers[i].provide();
+        if (this.visitListeners != null) {
+            for (int i = 0; i < providers.length; i++)
+                this.visitListeners[i] = providers[i].provide();
 
 
 
 
 
 
-        if (this.visitListeners.length > 0) {
             this.visitContext = new DefaultVisitContext();
             this.visitParts = new ArrayDeque<QueryPart>();
             this.visitClauses = new ArrayDeque<Clause>();
@@ -168,7 +171,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             // Issue start clause events
             // -----------------------------------------------------------------
-            Clause[] clauses = visitListeners.length > 0 ? clause(part) : null;
+            Clause[] clauses = Tools.isNotEmpty(visitListeners) ? clause(part) : null;
             if (clauses != null)
                 for (int i = 0; i < clauses.length; i++)
                     start(clauses[i]);

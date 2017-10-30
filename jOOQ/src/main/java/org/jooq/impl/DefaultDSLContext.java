@@ -1197,7 +1197,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) {
         ExecuteContext ctx = new DefaultExecuteContext(configuration());
-        ExecuteListener listener = new ExecuteListeners(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx);
 
         ctx.resultSet(rs);
         return new CursorImpl<Record>(ctx, listener, fields, null, false, true);

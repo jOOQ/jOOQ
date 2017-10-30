@@ -124,7 +124,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows) {
         this.ctx = ctx;
-        this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
+        this.listener = (listener != null ? listener : ExecuteListeners.get(ctx));
         this.cursorFields = fields;
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;

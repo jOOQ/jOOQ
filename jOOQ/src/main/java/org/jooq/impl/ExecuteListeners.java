@@ -57,39 +57,53 @@ final class ExecuteListeners implements ExecuteListener {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 7399239846062763212L;
+    private static final long            serialVersionUID = 7399239846062763212L;
+    private static final ExecuteListener EMPTY_LISTENER   = new DefaultExecuteListener();
 
-    private final ExecuteListener[] listeners;
+    private final ExecuteListener[]      listeners;
 
     // In some setups, these two events may get mixed up chronologically by the
     // Cursor. Postpone fetchEnd event until after resultEnd event, if there is
     // an open Result
-    private boolean                 resultStart;
-    private boolean                 fetchEnd;
+    private boolean                      resultStart;
+    private boolean                      fetchEnd;
 
-    ExecuteListeners(ExecuteContext ctx) {
-        listeners = listeners(ctx);
+    static ExecuteListener get(ExecuteContext ctx) {
+        ExecuteListener[] listeners = listeners(ctx);
 
-        start(ctx);
+        if (listeners == null)
+            return EMPTY_LISTENER;
+        else
+            return new ExecuteListeners(ctx, listeners);
     }
 
     /**
      * Provide delegate listeners from an <code>ExecuteContext</code>
      */
-    private static ExecuteListener[] listeners(ExecuteContext ctx) {
-        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
+    private static final ExecuteListener[] listeners(ExecuteContext ctx) {
+        List<ExecuteListener> result = null;
 
         for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())
 
             // Could be null after deserialisation
             if (provider != null)
-                result.add(provider.provide());
+                (result = init(result)).add(provider.provide());
 
         // [#6051] The previously used StopWatchListener is no longer included by default
-        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging()))
-            result.add(new LoggerListener());
+        if (!FALSE.equals(ctx.settings().isExecuteLogging()))
+            (result = init(result)).add(new LoggerListener());
 
-        return result.toArray(EMPTY_EXECUTE_LISTENER);
+        return result == null ? null : result.toArray(EMPTY_EXECUTE_LISTENER);
+    }
+
+    private static final List<ExecuteListener> init(List<ExecuteListener> result) {
+        return result == null ? new ArrayList<ExecuteListener>() : result;
+    }
+
+    private ExecuteListeners(ExecuteContext ctx, ExecuteListener[] listeners) {
+        this.listeners = listeners;
+
+        start(ctx);
     }
 
     @Override

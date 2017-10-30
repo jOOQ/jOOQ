@@ -55,7 +55,6 @@ import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -68,7 +67,6 @@ import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.SettingsTools;
@@ -84,9 +82,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
     private static final long                serialVersionUID               = -8046199737354507547L;
     private static final JooqLogger          log                            = JooqLogger.getLogger(AbstractQuery.class);
-
-
-
 
     private Configuration                    configuration;
     private int                              timeout;
@@ -287,7 +282,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             //         in case this Query / Configuration was previously
             //         deserialised
             DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
-            ExecuteListener listener = new ExecuteListeners(ctx);
+            ExecuteListener listener = ExecuteListeners.get(ctx);
 
             int result = 0;
             try {

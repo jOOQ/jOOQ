@@ -646,7 +646,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             }
 
             ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration());
-            ExecuteListener listener2 = new ExecuteListeners(ctx2);
+            ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);
             returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true).fetch();

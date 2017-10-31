@@ -44,9 +44,11 @@ import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -550,6 +552,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
             ) {
+
+                // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
+                //         single-degree rows. Let's just always render it, here.
+                if (POSTGRES_10.precedes(ctx.dialect()))
+                    ctx.visit(K_ROW).sql(" ");
+
                 ctx.visit(multiValue);
             }
 

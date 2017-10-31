@@ -167,6 +167,15 @@ public enum SQLDialect {
     POSTGRES_9_5("Postgres", false, POSTGRES, POSTGRES_9_4),
 
     /**
+     * The PostgreSQL 10 dialect.
+     * <p>
+     * While this family (and its dialects) have been observed to work to some
+     * extent on Amazon RedShift as well, we strongly suggest you use the
+     * official {@link #REDSHIFT} support, instead.
+     */
+    POSTGRES_10("Postgres", false, POSTGRES, POSTGRES_9_5),
+
+    /**
      * The SQLite dialect family.
      */
     SQLITE("SQLite", false),
@@ -615,6 +624,7 @@ public enum SQLDialect {
                 case POSTGRES_9_3:  return "org.hibernate.dialect.PostgreSQL92Dialect";
                 case POSTGRES_9_4:
                 case POSTGRES_9_5:
+                case POSTGRES_10:
                 case POSTGRES:      return "org.hibernate.dialect.PostgreSQL94Dialect";
                 case SQLITE:        return null;
 

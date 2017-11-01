@@ -179,6 +179,22 @@ public final class SettingsTools {
     }
 
     /**
+     * Lazy access to {@link Settings#getExecuteUpdateWithoutWhere()}.
+     */
+    public static final ExecuteWithoutWhere getExecuteUpdateWithoutWhere(Settings settings) {
+        ExecuteWithoutWhere result = settings.getExecuteUpdateWithoutWhere();
+        return result == null ? ExecuteWithoutWhere.LOG_DEBUG : result;
+    }
+
+    /**
+     * Lazy access to {@link Settings#getExecuteDeleteWithoutWhere()}.
+     */
+    public static final ExecuteWithoutWhere getExecuteDeleteWithoutWhere(Settings settings) {
+        ExecuteWithoutWhere result = settings.getExecuteDeleteWithoutWhere();
+        return result == null ? ExecuteWithoutWhere.LOG_DEBUG : result;
+    }
+
+    /**
      * Retrieve the configured default settings.
      * <p>
      * <ul>
@@ -214,7 +230,7 @@ public final class SettingsTools {
      * Return <code>timeout</code> if it is not <code>0</code>, or the specified
      * {@link Settings#getQueryTimeout()}.
      */
-    public static int getQueryTimeout(int timeout, Settings settings) {
+    public static final int getQueryTimeout(int timeout, Settings settings) {
         return timeout != 0
              ? timeout
              : settings.getQueryTimeout() != null
@@ -226,7 +242,7 @@ public final class SettingsTools {
      * Return <code>maxRows</code> if it is not <code>0</code>, or the specified
      * {@link Settings#getMaxRows()}.
      */
-    public static int getMaxRows(int maxRows, Settings settings) {
+    public static final int getMaxRows(int maxRows, Settings settings) {
         return maxRows != 0
              ? maxRows
              : settings.getMaxRows() != null
@@ -238,7 +254,7 @@ public final class SettingsTools {
      * Return <code>fetchSize</code> if it is not <code>0</code>, or the specified
      * {@link Settings#getFetchSize()}.
      */
-    public static int getFetchSize(int fetchSize, Settings settings) {
+    public static final int getFetchSize(int fetchSize, Settings settings) {
         return fetchSize != 0
              ? fetchSize
              : settings.getFetchSize() != null

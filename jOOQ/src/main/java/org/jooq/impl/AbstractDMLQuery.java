@@ -90,8 +90,11 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameStyle;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.DataKey;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
@@ -103,6 +106,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      * Generated UID
      */
     private static final long                serialVersionUID         = -7438014075226919192L;
+    private static final JooqLogger          log                      = JooqLogger.getLogger(AbstractQuery.class);
 
 
 
@@ -313,6 +317,29 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
     abstract void accept0(Context<?> ctx);
+
+    /**
+     * [#6771] Handle the case where a statement is executed without a WHERE clause.
+     */
+    void executeWithoutWhere(String message, ExecuteWithoutWhere executeWithoutWhere) {
+        switch (executeWithoutWhere) {
+            case IGNORE:
+                break;
+            case LOG_DEBUG:
+                if (log.isDebugEnabled())
+                    log.debug(message, "A statement is executed without WHERE clause");
+                break;
+            case LOG_INFO:
+                if (log.isInfoEnabled())
+                    log.info(message, "A statement is executed without WHERE clause");
+                break;
+            case LOG_WARN:
+                log.warn(message, "A statement is executed without WHERE clause");
+                break;
+            case THROW:
+                throw new DataAccessException("A statement is executed without WHERE clause");
+        }
+    }
 
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {

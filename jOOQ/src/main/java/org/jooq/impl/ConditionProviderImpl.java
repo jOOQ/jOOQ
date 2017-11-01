@@ -64,7 +64,11 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     final Condition getWhere() {
-        return condition == null ? trueCondition() : condition;
+        return hasWhere() ? condition : trueCondition();
+    }
+
+    final boolean hasWhere() {
+        return condition != null;
     }
 
     // -------------------------------------------------------------------------
@@ -88,10 +92,10 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
 
     @Override
     public final void addConditions(Operator operator, Condition conditions) {
-        if (getWhere() instanceof TrueCondition)
-            condition = conditions;
-        else
+        if (hasWhere())
             condition = DSL.condition(operator, getWhere(), conditions);
+        else
+            condition = conditions;
     }
 
     @Override

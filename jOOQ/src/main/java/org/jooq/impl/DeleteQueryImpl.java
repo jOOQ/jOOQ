@@ -41,6 +41,7 @@ import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -77,6 +78,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     final Condition getWhere() {
         return condition.getWhere();
+    }
+
+    final boolean hasWhere() {
+        return condition.hasWhere();
     }
 
     @Override
@@ -133,11 +138,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
            .end(DELETE_DELETE)
            .start(DELETE_WHERE);
 
-        if (!(getWhere() instanceof TrueCondition)) {
+        if (hasWhere())
             ctx.formatSeparator()
                .visit(K_WHERE).sql(' ')
                .visit(getWhere());
-        }
 
         ctx.end(DELETE_WHERE)
            .start(DELETE_RETURNING);
@@ -150,5 +154,15 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    @Override
+    public final boolean isExecutable() {
+
+        // [#6771] Take action when DELETE query has no WHERE clause
+        if (!condition.hasWhere())
+            executeWithoutWhere("DELETE without WHERE", getExecuteDeleteWithoutWhere(configuration().settings()));
+
+        return super.isExecutable();
     }
 }

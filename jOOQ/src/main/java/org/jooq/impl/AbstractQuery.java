@@ -457,7 +457,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      * method.
      */
     @Override
-    public boolean isExecutable() {
+    public /* non-final */ boolean isExecutable() {
         return true;
     }
 

@@ -46,6 +46,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
+import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_ROW;
@@ -495,6 +496,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return condition.getWhere();
     }
 
+    final boolean hasWhere() {
+        return condition.hasWhere();
+    }
+
     @Override
     final void accept0(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
@@ -616,11 +621,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         ctx.start(UPDATE_WHERE);
 
-        if (!(getWhere() instanceof TrueCondition)) {
+        if (hasWhere())
             ctx.formatSeparator()
                .visit(K_WHERE).sql(' ')
                .visit(getWhere());
-        }
 
         ctx.end(UPDATE_WHERE)
            .start(UPDATE_RETURNING);
@@ -637,6 +641,11 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final boolean isExecutable() {
+
+        // [#6771] Take action when UPDATE query has no WHERE clause
+        if (!condition.hasWhere())
+            executeWithoutWhere("UPDATE without WHERE", getExecuteUpdateWithoutWhere(configuration().settings()));
+
         return updateMap.size() > 0 || multiRow != null;
     }
 }

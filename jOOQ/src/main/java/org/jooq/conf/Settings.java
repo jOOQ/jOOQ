@@ -34,7 +34,7 @@ public class Settings
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
@@ -98,6 +98,12 @@ public class Settings
     protected Boolean inListPadding = false;
     @XmlElement(defaultValue = ";")
     protected String delimiter = ";";
+    @XmlElement(defaultValue = "LOG_DEBUG")
+    @XmlSchemaType(name = "string")
+    protected ExecuteWithoutWhere executeUpdateWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
+    @XmlElement(defaultValue = "LOG_DEBUG")
+    @XmlSchemaType(name = "string")
+    protected ExecuteWithoutWhere executeDeleteWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -834,6 +840,54 @@ public class Settings
         this.delimiter = value;
     }
 
+    /**
+     * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
+     *
+     * @return
+     *     possible object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
+    public ExecuteWithoutWhere getExecuteUpdateWithoutWhere() {
+        return executeUpdateWithoutWhere;
+    }
+
+    /**
+     * Sets the value of the executeUpdateWithoutWhere property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
+    public void setExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
+        this.executeUpdateWithoutWhere = value;
+    }
+
+    /**
+     * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
+     *
+     * @return
+     *     possible object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
+    public ExecuteWithoutWhere getExecuteDeleteWithoutWhere() {
+        return executeDeleteWithoutWhere;
+    }
+
+    /**
+     * Sets the value of the executeDeleteWithoutWhere property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
+    public void setExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
+        this.executeDeleteWithoutWhere = value;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -976,6 +1030,16 @@ public class Settings
 
     public Settings withDelimiter(String value) {
         setDelimiter(value);
+        return this;
+    }
+
+    public Settings withExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
+        setExecuteUpdateWithoutWhere(value);
+        return this;
+    }
+
+    public Settings withExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
+        setExecuteDeleteWithoutWhere(value);
         return this;
     }
 

@@ -276,7 +276,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(updateMap)
                        .formatIndentLockEnd();
 
-                    if (!(condition.getWhere() instanceof TrueCondition))
+                    if (condition.hasWhere())
                         ctx.formatSeparator()
                            .visit(K_WHERE)
                            .sql(' ')

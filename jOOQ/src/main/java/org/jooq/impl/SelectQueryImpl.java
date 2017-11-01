@@ -1220,7 +1220,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ------------
         context.start(SELECT_WHERE);
 
-        if (getWhere().getWhere() instanceof TrueCondition && semiAntiJoinPredicates == null)
+        if (!getWhere().hasWhere() && semiAntiJoinPredicates == null)
             ;
         else {
             ConditionProviderImpl where = new ConditionProviderImpl();
@@ -1228,7 +1228,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (semiAntiJoinPredicates != null)
                 where.addConditions(semiAntiJoinPredicates);
 
-            if (!(getWhere().getWhere() instanceof TrueCondition))
+            if (getWhere().hasWhere())
                 where.addConditions(getWhere());
 
             context.formatSeparator()
@@ -1247,23 +1247,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // syntax
         context.start(SELECT_START_WITH);
 
-        if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
+        if (getConnectByStartWith().hasWhere())
             context.formatSeparator()
                    .visit(K_START_WITH)
                    .sql(' ')
                    .visit(getConnectByStartWith());
-        }
 
         context.end(SELECT_START_WITH);
         context.start(SELECT_CONNECT_BY);
 
-        if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
+        if (getConnectBy().hasWhere()) {
             context.formatSeparator()
                    .visit(K_CONNECT_BY);
 
-            if (connectByNoCycle) {
+            if (connectByNoCycle)
                 context.sql(' ').visit(K_NOCYCLE);
-            }
 
             context.sql(' ').visit(getConnectBy());
         }
@@ -1315,12 +1313,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_HAVING);
 
-        if (!(getHaving().getWhere() instanceof TrueCondition)) {
+        if (getHaving().hasWhere())
             context.formatSeparator()
                    .visit(K_HAVING)
                    .sql(' ')
                    .visit(getHaving());
-        }
 
         context.end(SELECT_HAVING);
 

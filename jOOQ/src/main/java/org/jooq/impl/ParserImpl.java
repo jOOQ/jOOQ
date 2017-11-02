@@ -2999,6 +2999,12 @@ class ParserImpl implements Parser {
 
             case 'e':
             case 'E':
+
+                // [#6704] PostgreSQL E'...' escaped string literals
+                if (S.is(type))
+                    if (ctx.character(ctx.position + 1) == '\'')
+                        return inline(parseStringLiteral(ctx));
+
                 if (N.is(type))
                     if ((field = parseFieldExtractIf(ctx)) != null)
                         return field;
@@ -5278,8 +5284,10 @@ class ParserImpl implements Parser {
 
         if (parseIf(ctx, 'q') || parseIf(ctx, 'Q'))
             return parseOracleQuotedStringLiteral(ctx);
+        else if (parseIf(ctx, 'e') || parseIf(ctx, 'E'))
+            return parseUnquotedStringLiteral(ctx, true);
         else
-            return parseUnquotedStringLiteral(ctx);
+            return parseUnquotedStringLiteral(ctx, false);
     }
 
     private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {
@@ -5367,24 +5375,117 @@ class ParserImpl implements Parser {
         throw ctx.exception("Quoted string literal not terminated");
     }
 
-    private static final String parseUnquotedStringLiteral(ParserContext ctx) {
+    private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping) {
         parse(ctx, '\'');
 
         StringBuilder sb = new StringBuilder();
         for (int i = ctx.position; i < ctx.sql.length; i++) {
-            char c = ctx.character(i);
+            char c1 = ctx.character(i);
 
             // TODO MySQL string escaping...
-            if (c == '\'')
-                if (ctx.character(i + 1) == '\'') {
-                    i++;
-                }
-                else {
-                    ctx.position = i + 1;
-                    return sb.toString();
-                }
+            switch (c1) {
+                case '\\': {
+                    if (!postgresEscaping)
+                        break;
 
-            sb.append(c);
+                    i++;
+                    char c2 = ctx.character(i);
+                    switch (c2) {
+
+                        // Escaped whitespace characters
+                        case 'b':
+                            c1 = '\b';
+                            break;
+                        case 'n':
+                            c1 = '\n';
+                            break;
+                        case 't':
+                            c1 = '\t';
+                            break;
+                        case 'r':
+                            c1 = '\r';
+                            break;
+                        case 'f':
+                            c1 = '\f';
+                            break;
+
+                        // Hexadecimal byte value
+                        case 'x': {
+                            char c3 = ctx.character(i + 1);
+                            char c4 = ctx.character(i + 2);
+
+                            int d3;
+                            if ((d3 = Character.digit(c3, 16)) != -1) {
+                                i++;
+
+                                int d4;
+                                if ((d4 = Character.digit(c4, 16)) != -1) {
+                                    c1 = (char) (0x10 * d3 + d4);
+                                    i++;
+                                }
+                                else
+                                    c1 = (char) d3;
+                            }
+                            else
+                                throw ctx.exception("Illegal hexadecimal byte value");
+
+                            break;
+                        }
+
+                        // Unicode character value
+                        case 'u':
+                        case 'U':
+
+                            // 16-bit (TODO 32-bit)
+                            c1 = (char) Integer.parseInt(new String(ctx.sql, i + 1, 4), 16);
+                            i += 4;
+                            break;
+
+                        default:
+
+                            // Octal byte value
+                            if (Character.digit(c2, 8) != -1) {
+                                char c3 = ctx.character(i + 1);
+
+                                if (Character.digit(c3, 8) != -1) {
+                                    i++;
+                                    char c4 = ctx.character(i + 1);
+
+                                    if (Character.digit(c4, 8) != -1) {
+                                        i++;
+                                        c1 = (char) Integer.parseInt("" + c2 + c3 + c4, 8);
+                                    }
+                                    else {
+                                        c1 = (char) Integer.parseInt("" + c2 + c3, 8);
+                                    }
+                                }
+                                else {
+                                    c1 = (char) Integer.parseInt("" + c2, 8);
+                                }
+                            }
+
+                            // All other characters
+                            else {
+                                c1 = c2;
+                            }
+
+                            break;
+                    }
+
+                    break;
+                }
+                case '\'': {
+                    if (ctx.character(i + 1) != '\'') {
+                        ctx.position = i + 1;
+                        return sb.toString();
+                    }
+
+                    i++;
+                    break;
+                }
+            }
+
+            sb.append(c1);
         }
 
         throw ctx.exception("String literal not terminated");

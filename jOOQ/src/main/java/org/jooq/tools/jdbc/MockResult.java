@@ -83,9 +83,34 @@ public class MockResult {
     /**
      * Create a new <code>MockResult</code>.
      * <p>
+     * This is a convenience constructor calling
+     * <code>MockResult(-1, null)</code>.
+     *
+     * @see MockDataProvider <code>MockDataProvider</code> for details
+     */
+    public MockResult() {
+        this(-1, null);
+    }
+
+    /**
+     * Create a new <code>MockResult</code>.
+     * <p>
+     * This is a convenience constructor calling
+     * <code>MockResult(rows, null)</code>.
+     *
+     * @see MockDataProvider <code>MockDataProvider</code> for details
+     */
+    public MockResult(int rows) {
+        this(rows, null);
+    }
+
+    /**
+     * Create a new <code>MockResult</code>.
+     * <p>
      * This is a convenience constructor creating a <code>MockResult</code> with exactly one record.
      *
      * @param data The single record in this result.
+     * @see MockDataProvider <code>MockDataProvider</code> for details
      */
     public MockResult(Record data) {
         this(1, Mock.result(data));
@@ -96,6 +121,7 @@ public class MockResult {
      *
      * @param rows The number of affected rows
      * @param data The result data
+     * @see MockDataProvider <code>MockDataProvider</code> for details
      */
     public MockResult(int rows, Result<?> data) {
         this.rows = rows;

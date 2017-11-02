@@ -5276,7 +5276,7 @@ class ParserImpl implements Parser {
     private static final String parseStringLiteral(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseIf(ctx, 'q'))
+        if (parseIf(ctx, 'q') || parseIf(ctx, 'Q'))
             return parseOracleQuotedStringLiteral(ctx);
         else
             return parseUnquotedStringLiteral(ctx);

@@ -12898,7 +12898,14 @@ public class DSL {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the current_date() function.
+     * Get the current_date() function returning a SQL standard
+     * {@link SQLDataType#DATE} type.
+     * <p>
+     * Note, while there is a <code>CURRENT_DATE</code> function in
+     * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
+     * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
+     * agnosticity perspective. This function thus produces an expression that
+     * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
      */
@@ -12908,7 +12915,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_time() function.
+     * Get the current_time() function returning a SQL standard
+     * {@link SQLDataType#TIME} type.
      * <p>
      * This translates into any dialect
      */
@@ -12918,7 +12926,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_timestamp() function.
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type.
      * <p>
      * This translates into any dialect
      */
@@ -12929,7 +12938,14 @@ public class DSL {
 
 
     /**
-     * Get the current_date() function.
+     * Get the current_date() function returning a SQL standard
+     * {@link SQLDataType#DATE} type.
+     * <p>
+     * Note, while there is a <code>CURRENT_DATE</code> function in
+     * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
+     * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
+     * agnosticity perspective. This function thus produces an expression that
+     * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
      */
@@ -12939,7 +12955,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_time() function.
+     * Get the current_time() function returning a SQL standard
+     * {@link SQLDataType#TIME} type.
      * <p>
      * This translates into any dialect
      */
@@ -12949,7 +12966,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_timestamp() function.
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type.
      * <p>
      * This translates into any dialect
      */

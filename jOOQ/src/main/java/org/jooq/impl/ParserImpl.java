@@ -5379,6 +5379,8 @@ class ParserImpl implements Parser {
         parse(ctx, '\'');
 
         StringBuilder sb = new StringBuilder();
+
+        characterLoop:
         for (int i = ctx.position; i < ctx.sql.length; i++) {
             char c1 = ctx.character(i);
 
@@ -5432,14 +5434,17 @@ class ParserImpl implements Parser {
                             break;
                         }
 
-                        // Unicode character value
+                        // Unicode character value UTF-16
                         case 'u':
-                        case 'U':
-
-                            // 16-bit (TODO 32-bit)
                             c1 = (char) Integer.parseInt(new String(ctx.sql, i + 1, 4), 16);
                             i += 4;
                             break;
+
+                        // Unicode character value UTF-32
+                        case 'U':
+                            sb.appendCodePoint(Integer.parseInt(new String(ctx.sql, i + 1, 8), 16));
+                            i += 8;
+                            continue characterLoop;
 
                         default:
 

@@ -1777,19 +1777,49 @@ final class Tools {
                 for (;;) {
 
                     // [#3000] [#3630] Consume backslash-escaped characters if needed
-                    if (sqlChars[i] == '\\' && needsBackslashEscaping) {
+                    if (sqlChars[i] == '\\' && needsBackslashEscaping)
                         render.sql(sqlChars[i++]);
-                    }
 
                     // Consume an escaped apostrophe
-                    else if (peek(sqlChars, i, "''")) {
+                    else if (peek(sqlChars, i, "''"))
                         render.sql(sqlChars[i++]);
-                    }
 
                     // Break on the terminal string literal delimiter
-                    else if (peek(sqlChars, i, "'")) {
+                    else if (peek(sqlChars, i, "'"))
                         break;
-                    }
+
+                    // Consume string literal content
+                    render.sql(sqlChars[i++]);
+                }
+
+                // Consume the terminal string literal delimiter
+                render.sql(sqlChars[i]);
+            }
+
+            // [#6704] PostgreSQL supports additional quoted string literals, which we must skip: E'...'
+            else if ((sqlChars[i] == 'e' || sqlChars[i] == 'E')
+                        && ctx.family() == POSTGRES
+                        && i + 1 < sqlChars.length
+                        && sqlChars[i + 1] == '\'') {
+
+                // Consume the initial string literal delimiters
+                render.sql(sqlChars[i++]);
+                render.sql(sqlChars[i++]);
+
+                // Consume the whole string literal
+                for (;;) {
+
+                    // [#3000] [#3630] Consume backslash-escaped characters if needed
+                    if (sqlChars[i] == '\\')
+                        render.sql(sqlChars[i++]);
+
+                    // Consume an escaped apostrophe
+                    else if (peek(sqlChars, i, "''"))
+                        render.sql(sqlChars[i++]);
+
+                    // Break on the terminal string literal delimiter
+                    else if (peek(sqlChars, i, "'"))
+                        break;
 
                     // Consume string literal content
                     render.sql(sqlChars[i++]);
@@ -1861,15 +1891,13 @@ final class Tools {
                 for (;;) {
 
                     // Consume an escaped quote
-                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
+                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter]))
                         for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length(); d++)
                             render.sql(sqlChars[i++]);
-                    }
 
                     // Break on the terminal identifier delimiter
-                    else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER][delimiter])) {
+                    else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER][delimiter]))
                         break;
-                    }
 
                     // Consume identifier content
                     render.sql(sqlChars[i++]);
@@ -1923,9 +1951,8 @@ final class Tools {
                           .castMode(previous);
                 }
 
-                if (bind != null) {
+                if (bind != null)
                     bind.visit(substitute);
-                }
             }
 
             // [#1432] Inline substitues for {numbered placeholders} outside of string literals

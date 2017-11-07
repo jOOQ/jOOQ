@@ -66,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -315,7 +316,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1340] Allow for using non-public default constructors
         try {
-            delegate = new MutablePOJOMapper(type.getDeclaredConstructor(), instance);
+            delegate = new MutablePOJOMapper(new ConstructorCall<E>(accessible(type.getDeclaredConstructor())), instance);
             return;
         }
         catch (NoSuchMethodException ignore) {}
@@ -428,11 +429,21 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ProxyMapper implements RecordMapper<R, E> {
 
-        Constructor<Lookup> constructor;
+        private Constructor<Lookup>     constructor;
+        private final MutablePOJOMapper pojomapper;
+
+        ProxyMapper() {
+            this.pojomapper = new MutablePOJOMapper(new Callable<E>() {
+                @Override
+                public E call() throws Exception {
+                    return proxy();
+                }
+            }, null);
+        }
 
         @Override
         public final E map(R record) {
-            return new MutablePOJOMapper(null, proxy()).map(record);
+            return pojomapper.map(record);
         }
 
         private E proxy() {
@@ -533,6 +544,19 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
+    private static final class ConstructorCall<E> implements Callable<E> {
+        private final Constructor<? extends E> constructor;
+
+        ConstructorCall(Constructor<? extends E> constructor) {
+            this.constructor = constructor;
+        }
+
+        @Override
+        public E call() throws Exception {
+            return constructor.newInstance();
+        }
+    }
+
     /**
      * Convert a record into a mutable POJO type
      * <p>
@@ -541,15 +565,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class MutablePOJOMapper implements RecordMapper<R, E> {
 
-        private final Constructor<? extends E>                   constructor;
+        private final Callable<E>                                constructor;
         private final boolean                                    useAnnotations;
         private final List<java.lang.reflect.Field>[]            members;
         private final List<java.lang.reflect.Method>[]           methods;
         private final Map<String, List<RecordMapper<R, Object>>> nested;
         private final E                                          instance;
 
-        MutablePOJOMapper(Constructor<? extends E> constructor, E instance) {
-            this.constructor = accessible(constructor);
+        MutablePOJOMapper(Callable<E> constructor, E instance) {
+            this.constructor = constructor;
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
             this.methods = new List[fields.length];
@@ -629,7 +653,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final E map(R record) {
             try {
-                E result = instance != null ? instance : constructor.newInstance();
+                E result = instance != null ? instance : constructor.call();
 
                 for (int i = 0; i < fields.length; i++) {
                     for (java.lang.reflect.Field member : members[i]) {

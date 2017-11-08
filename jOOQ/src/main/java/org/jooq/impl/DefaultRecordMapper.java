@@ -55,6 +55,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
@@ -67,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -332,7 +334,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
 
             if (properties != null) {
-                delegate = new ImmutablePOJOMapperWithConstructorProperties(constructor, properties);
+                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, Arrays.asList(properties.value()));
                 return;
             }
         }
@@ -344,7 +346,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             // Match the first constructor by parameter length
             if (parameterTypes.length == fields.length) {
-                delegate = new ImmutablePOJOMapper(constructor, parameterTypes);
+                // [#4627] use parameter names from byte code if available
+                Parameter[] parameters = constructor.getParameters();
+                delegate = parameters == null || parameters.length == 0
+                        ? new ImmutablePOJOMapper(constructor, parameterTypes)
+                        : new ImmutablePOJOMapperWithParameterNames(constructor,
+                                Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList()));
                 return;
             }
         }
@@ -820,7 +827,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * Create an immutable POJO given a constructor and its associated JavaBeans
      * {@link ConstructorProperties}
      */
-    private class ImmutablePOJOMapperWithConstructorProperties implements RecordMapper<R, E> {
+    private class ImmutablePOJOMapperWithParameterNames implements RecordMapper<R, E> {
 
         private final Constructor<E>                  constructor;
         private final Class<?>[]                      parameterTypes;
@@ -831,9 +838,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final java.lang.reflect.Method[]      methods;
         private final Integer[]                       propertyIndexes;
 
-        ImmutablePOJOMapperWithConstructorProperties(Constructor<E> constructor, ConstructorProperties properties) {
+        ImmutablePOJOMapperWithParameterNames(Constructor<E> constructor, List<String> propertyNames) {
             this.constructor = constructor;
-            this.propertyNames = Arrays.asList(properties.value());
+            this.propertyNames = propertyNames;
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.parameterTypes = constructor.getParameterTypes();
             this.parameterValues = new Object[parameterTypes.length];

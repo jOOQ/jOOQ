@@ -11,6 +11,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Christopher Deckers
 - Ed Schaller
 - Eric Peters
+- Ernest Mishkin
 - Espen Stromsnes
 - Eugeny Karpov
 - Fabrice Le Roy

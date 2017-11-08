@@ -39,6 +39,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 
 import java.sql.SQLWarning;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.jooq.Clause;
@@ -397,5 +398,22 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         result[fields.length] = f;
 
         fields = result;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Fields)
+            return Arrays.equals(fields, ((Fields<?>) that).fields);
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(fields);
     }
 }

@@ -140,6 +140,10 @@ IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other valu
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="mapConstructorParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="queryTimeout" type="int" minOccurs="0" maxOccurs="1" default="0">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC queryTimeout property that should be applied to all
 jOOQ queries, for which no specific queryTimeout was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>

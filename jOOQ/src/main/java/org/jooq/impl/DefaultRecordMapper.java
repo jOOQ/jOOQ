@@ -349,15 +349,19 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
 
                 // [#4627] use parameter names from byte code if available
-                Parameter[] parameters = constructor.getParameters();
-                if (parameters != null && parameters.length > 0)
-                    delegate = new ImmutablePOJOMapperWithParameterNames(
-                        constructor,
-                        Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList())
-                    );
-                else
+                if (Boolean.TRUE.equals(configuration.settings().isMapConstructorParameterNames())) {
+                    Parameter[] parameters = constructor.getParameters();
 
-                delegate = new ImmutablePOJOMapper(constructor, parameterTypes);
+                    if (parameters != null && parameters.length > 0)
+                        delegate = new ImmutablePOJOMapperWithParameterNames(
+                            constructor,
+                            Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList())
+                        );
+                }
+
+
+                if (delegate == null)
+                    delegate = new ImmutablePOJOMapper(constructor, parameterTypes);
 
                 return;
             }

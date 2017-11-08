@@ -86,6 +86,8 @@ public class Settings
     protected Boolean returnRecordToPojo = true;
     @XmlElement(defaultValue = "true")
     protected Boolean mapJPAAnnotations = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean mapConstructorParameterNames = false;
     @XmlElement(defaultValue = "0")
     protected Integer queryTimeout = 0;
     @XmlElement(defaultValue = "0")
@@ -694,6 +696,30 @@ public class Settings
     }
 
     /**
+     * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isMapConstructorParameterNames() {
+        return mapConstructorParameterNames;
+    }
+
+    /**
+     * Sets the value of the mapConstructorParameterNames property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setMapConstructorParameterNames(Boolean value) {
+        this.mapConstructorParameterNames = value;
+    }
+
+    /**
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
      *
@@ -1000,6 +1026,11 @@ public class Settings
 
     public Settings withMapJPAAnnotations(Boolean value) {
         setMapJPAAnnotations(value);
+        return this;
+    }
+
+    public Settings withMapConstructorParameterNames(Boolean value) {
+        setMapConstructorParameterNames(value);
         return this;
     }
 

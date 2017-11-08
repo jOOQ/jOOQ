@@ -75,6 +75,8 @@ public class Settings
     protected Boolean updatablePrimaryKeys = false;
     @XmlElement(defaultValue = "true")
     protected Boolean reflectionCaching = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean cacheRecordMappers = true;
     @XmlElement(defaultValue = "THROW_ALL")
     @XmlSchemaType(name = "string")
     protected ThrowExceptions throwExceptions = ThrowExceptions.THROW_ALL;
@@ -571,6 +573,30 @@ public class Settings
     }
 
     /**
+     * Whether record mappers should be cached in the configuration.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCacheRecordMappers() {
+        return cacheRecordMappers;
+    }
+
+    /**
+     * Sets the value of the cacheRecordMappers property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCacheRecordMappers(Boolean value) {
+        this.cacheRecordMappers = value;
+    }
+
+    /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
      *
      * @return
@@ -1001,6 +1027,11 @@ public class Settings
 
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
+        return this;
+    }
+
+    public Settings withCacheRecordMappers(Boolean value) {
+        setCacheRecordMappers(value);
         return this;
     }
 

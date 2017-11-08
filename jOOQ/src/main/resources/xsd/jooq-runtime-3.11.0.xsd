@@ -115,6 +115,10 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether reflection information should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="cacheRecordMappers" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether record mappers should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="throwExceptions" type="jooq-runtime:ThrowExceptions" minOccurs="0" maxOccurs="1" default="THROW_ALL">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A strategy defining how exceptions from the database / JDBC driver should be propagated]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

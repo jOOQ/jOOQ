@@ -406,6 +406,9 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
     @Override
     public boolean equals(Object that) {
+        if (this == that)
+            return true;
+
         if (that instanceof Fields)
             return Arrays.equals(fields, ((Fields<?>) that).fields);
 

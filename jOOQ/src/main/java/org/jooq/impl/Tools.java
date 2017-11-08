@@ -471,6 +471,7 @@ final class Tools {
     static final String          DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS   = new String("org.jooq.configuration.reflection-cache.get-matching-members");
     static final String          DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS   = new String("org.jooq.configuration.reflection-cache.get-matching-setters");
     static final String          DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS = new String("org.jooq.configuration.reflection-cache.has-column-annotations");
+    static final String          DATA_CACHE_RECORD_MAPPERS                    = new String("org.jooq.configuration.cache.record-mappers");
 
     // ------------------------------------------------------------------------
     // Other constants
@@ -2685,7 +2686,7 @@ final class Tools {
         /**
          * Create a single-value or multi-value key for caching.
          */
-        static final Object key(Serializable key1, Serializable key2) {
+        static final Object key(Object key1, Object key2) {
             return new Key2(key1, key2);
         }
 
@@ -2697,11 +2698,11 @@ final class Tools {
             /**
              * Generated UID.
              */
-            private static final long  serialVersionUID = 5822370287443922993L;
-            private final Serializable key1;
-            private final Serializable key2;
+            private static final long serialVersionUID = 5822370287443922993L;
+            private final Object      key1;
+            private final Object      key2;
 
-            Key2(Serializable key1, Serializable key2) {
+            Key2(Object key1, Object key2) {
                 this.key1 = key1;
                 this.key2 = key2;
             }

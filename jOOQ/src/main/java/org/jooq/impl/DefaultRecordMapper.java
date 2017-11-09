@@ -367,7 +367,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        throw new MappingException("No matching constructor found on type " + type + " for record " + this);
+        throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
     }
 
     @Override

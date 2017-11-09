@@ -1,3 +1,17 @@
+-- Copyright Data Geekery GmbH
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
 -- This version displays relative execution times (fastest execution = 1)
 -- According to our understanding of SQL Server licensing, such benchmark results may be published
 -- as they cannot be compared to other databases and do not provide absolute time values
@@ -74,4 +88,10 @@ BEGIN
 END;
 
 SELECT 'Run ' + CAST(run AS VARCHAR) + ', Statement ' + CAST(stmt AS VARCHAR) + ': ' + CAST(CAST(elapsed / MIN(elapsed) OVER() AS DECIMAL(10, 5)) AS VARCHAR)
-FROM @results;
+FROM @results
+UNION ALL
+SELECT ''
+UNION ALL
+SELECT 'Copyright Data Geekery GmbH'
+UNION ALL
+SELECT 'https://www.jooq.org/benchmark';

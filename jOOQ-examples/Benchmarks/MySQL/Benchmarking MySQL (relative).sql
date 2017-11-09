@@ -1,3 +1,17 @@
+-- Copyright Data Geekery GmbH
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
 CREATE TABLE IF NOT EXISTS print_relative (run INT, stmt INT, elapsed BIGINT);
 
 delimiter //
@@ -68,8 +82,16 @@ CALL benchmark();
 SELECT
   run,
   stmt,
-  CAST(elapsed / MIN(elapsed) OVER() AS DECIMAL(20, 4)) ratio
-FROM print_relative;
+  CAST(elapsed / MIN(elapsed) OVER() AS DECIMAL(20, 4)) ratio,
+  '                                            ' `Copyright Data Geekery GmbH`
+FROM print_relative
+UNION ALL
+SELECT null, null, null, null
+UNION ALL
+SELECT null, null, null, 'Copyright Data Geekery GmbH'
+UNION ALL
+SELECT null, null, null, 'https://www.jooq.org/benchmark';
+
 
 DROP PROCEDURE benchmark;
 

@@ -1,3 +1,17 @@
+-- Copyright Data Geekery GmbH
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
 DO $$
 DECLARE
   v_ts TIMESTAMP;
@@ -56,4 +70,8 @@ BEGIN
   FOR i IN 1..array_length(run, 1) LOOP
     RAISE INFO 'RUN %, Statement %: %', run[i], stmt[i], CAST(elapsed[i] / min_elapsed AS DECIMAL(10, 5));
   END LOOP;
+
+  RAISE INFO '';
+  RAISE INFO 'Copyright Data Geekery GmbH';
+  RAISE INFO 'https://www.jooq.org/benchmark';
 END$$;

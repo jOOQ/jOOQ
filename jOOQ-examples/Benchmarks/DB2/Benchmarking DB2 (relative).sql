@@ -1,3 +1,17 @@
+-- Copyright Data Geekery GmbH
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
 -- This version displays actual execution times.
 -- According to our understanding of DB2 licensing, such benchmark results may be published
 -- as they cannot be compared to other databases and do not provide absolute time values
@@ -64,10 +78,23 @@ BEGIN
   END REPEAT;
 END
 
-SELECT
-  run,
-  stmt,
-  CAST(elapsed / MIN(elapsed) OVER() AS DECIMAL(20, 4)) ratio
-FROM print_relative;
+
+SELECT run, stmt, ratio, copyright
+FROM (
+  SELECT
+    run,
+    stmt,
+    CAST(elapsed / MIN(elapsed) OVER() AS DECIMAL(20, 4)) AS ratio,
+    CAST(NULL AS VARCHAR(100)) AS copyright,
+    1 AS x
+  FROM print_relative
+  UNION ALL
+  SELECT null, null, null, null, 2 AS x FROM sysibm.dual
+  UNION ALL
+  SELECT null, null, null, 'Copyright Data Geekery GmbH', 3 AS x FROM sysibm.dual
+  UNION ALL
+  SELECT null, null, null, 'https://www.jooq.org/benchmark', 4 AS x FROM sysibm.dual
+) t
+ORDER BY x, run, stmt;
 
 DROP TABLE print_relative;

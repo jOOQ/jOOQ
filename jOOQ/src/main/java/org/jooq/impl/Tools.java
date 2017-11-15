@@ -3805,7 +3805,73 @@ final class Tools {
         }
     }
 
+    static final void beginTryCatchIfExistsColumn(Context<?> ctx, DDLStatementType type, QueryPart object) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                beginTryCatch(ctx, type);
+                break;
+        }
+    }
+
     static final void endTryCatchIfExists(Context<?> ctx, DDLStatementType type, QueryPart object) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                endTryCatch(ctx, type);
+                break;
+        }
+    }
+
+    static final void endTryCatchIfExistsColumn(Context<?> ctx, DDLStatementType type, QueryPart object) {
         switch (ctx.family()) {
 
 

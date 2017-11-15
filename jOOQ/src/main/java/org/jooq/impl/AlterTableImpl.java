@@ -161,6 +161,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
     private final Table<?>                   table;
     private final boolean                    ifExists;
+    private boolean                          ifExistsColumn;
     private Table<?>                         renameTo;
     private Field<?>                         renameColumn;
     private Field<?>                         renameColumnTo;
@@ -441,6 +442,21 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl dropIfExists(Field<?> field) {
+        return dropColumnIfExists(field);
+    }
+
+    @Override
+    public final AlterTableImpl dropIfExists(Name field) {
+        return dropColumnIfExists(field);
+    }
+
+    @Override
+    public final AlterTableImpl dropIfExists(String field) {
+        return dropColumnIfExists(field);
+    }
+
+    @Override
     public final AlterTableImpl dropColumn(Name field) {
         return dropColumn(field(field));
     }
@@ -454,6 +470,22 @@ final class AlterTableImpl extends AbstractQuery implements
     public final AlterTableImpl dropColumn(Field<?> field) {
         dropColumn = field;
         return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropColumnIfExists(Name field) {
+        return dropColumnIfExists(field(field));
+    }
+
+    @Override
+    public final AlterTableImpl dropColumnIfExists(String field) {
+        return dropColumnIfExists(name(field));
+    }
+
+    @Override
+    public final AlterTableImpl dropColumnIfExists(Field<?> field) {
+        ifExistsColumn = true;
+        return dropColumn(field);
     }
 
     @Override
@@ -505,6 +537,19 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+        if (ifExistsColumn && !supportsIfExists(ctx)) {
+            Field<?> field = field(table.getQualifiedName().append(dropColumn.getUnqualifiedName()));
+
+            Tools.beginTryCatchIfExistsColumn(ctx, DDLStatementType.ALTER_TABLE, field);
+            accept1(ctx);
+            Tools.endTryCatchIfExistsColumn(ctx, DDLStatementType.ALTER_TABLE, field);
+        }
+        else {
+            accept1(ctx);
+        }
+    }
+
+    private final void accept1(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
 
@@ -558,10 +603,10 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
 
-        accept1(ctx);
+        accept2(ctx);
     }
 
-    private final void accept1(Context<?> ctx) {
+    private final void accept2(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
         boolean omitAlterTable =
@@ -835,6 +880,21 @@ final class AlterTableImpl extends AbstractQuery implements
                     break;
             }
 
+            if (ifExistsColumn) {
+                switch (family) {
+
+
+
+
+
+                    case H2:
+                    case POSTGRES:
+                    default:
+                        ctx.sql(' ').visit(K_IF_EXISTS);
+                        break;
+                }
+            }
+
             ctx.sql(' ')
                .qualify(false)
                .visit(dropColumn)
@@ -949,7 +1009,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-        accept1(ctx);
+        accept2(ctx);
 
 
 

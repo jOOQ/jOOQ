@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
 // ...
 // ...
@@ -57,6 +58,8 @@ import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.DDLStatementType.ALTER_INDEX;
+import static org.jooq.impl.DDLStatementType.ALTER_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
@@ -75,7 +78,6 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.Identifiers.QUOTES;
@@ -92,10 +94,10 @@ import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_ELSIF;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_END_CATCH;
 import static org.jooq.impl.Keywords.K_END_IF;
-import static org.jooq.impl.Keywords.K_END_LOOP;
 import static org.jooq.impl.Keywords.K_END_TRY;
 import static org.jooq.impl.Keywords.K_ENUM;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
@@ -103,14 +105,11 @@ import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
-import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
-import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_LIKE;
-import static org.jooq.impl.Keywords.K_LOOP;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
@@ -186,7 +185,6 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -206,7 +204,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
-import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -3560,6 +3557,10 @@ final class Tools {
      * <code>IF EXISTS</code> is not supported.
      */
     static final void beginTryCatch(Context<?> ctx, DDLStatementType type) {
+        beginTryCatch(ctx, type, null, null);
+    }
+
+    static final void beginTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
 
 
@@ -3625,7 +3626,42 @@ final class Tools {
      * <code>IF EXISTS</code> is not supported.
      */
     static final void endTryCatch(Context<?> ctx, DDLStatementType type) {
+        endTryCatch(ctx, type, null, null);
+    }
+
+    static final void endTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3711,180 +3747,6 @@ final class Tools {
             }
 
             default:
-                break;
-        }
-    }
-
-    static final void beginTryCatchIfExists(Context<?> ctx, DDLStatementType type, QueryPart object) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
-                beginTryCatch(ctx, type);
-                break;
-        }
-    }
-
-    static final void beginTryCatchIfExistsColumn(Context<?> ctx, DDLStatementType type, QueryPart object) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
-                beginTryCatch(ctx, type);
-                break;
-        }
-    }
-
-    static final void endTryCatchIfExists(Context<?> ctx, DDLStatementType type, QueryPart object) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-            default:
-                endTryCatch(ctx, type);
-                break;
-        }
-    }
-
-    static final void endTryCatchIfExistsColumn(Context<?> ctx, DDLStatementType type, QueryPart object) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-            default:
-                endTryCatch(ctx, type);
                 break;
         }
     }

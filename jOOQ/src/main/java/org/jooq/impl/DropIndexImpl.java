@@ -50,6 +50,8 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DROP_INDEX;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Tools.beginTryCatch;
+import static org.jooq.impl.Tools.endTryCatch;
 
 import java.util.EnumSet;
 
@@ -126,9 +128,9 @@ final class DropIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatchIfExists(ctx, DDLStatementType.DROP_INDEX, index);
+            beginTryCatch(ctx, DDLStatementType.DROP_INDEX);
             accept0(ctx);
-            Tools.endTryCatchIfExists(ctx, DDLStatementType.DROP_INDEX, index);
+            endTryCatch(ctx, DDLStatementType.DROP_INDEX);
         }
         else {
             accept0(ctx);

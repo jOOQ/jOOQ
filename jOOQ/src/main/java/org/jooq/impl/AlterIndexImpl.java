@@ -52,6 +52,8 @@ import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Tools.beginTryCatch;
+import static org.jooq.impl.Tools.endTryCatch;
 
 import java.util.EnumSet;
 
@@ -127,9 +129,9 @@ final class AlterIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_INDEX, index);
+            beginTryCatch(ctx, DDLStatementType.ALTER_INDEX);
             accept0(ctx);
-            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_INDEX, index);
+            endTryCatch(ctx, DDLStatementType.ALTER_INDEX);
         }
         else {
             accept0(ctx);

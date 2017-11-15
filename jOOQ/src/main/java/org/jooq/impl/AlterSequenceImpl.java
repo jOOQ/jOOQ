@@ -58,6 +58,8 @@ import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Tools.beginTryCatch;
+import static org.jooq.impl.Tools.endTryCatch;
 
 import java.util.EnumSet;
 
@@ -147,9 +149,9 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+            beginTryCatch(ctx, DDLStatementType.ALTER_SEQUENCE);
             accept0(ctx);
-            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+            endTryCatch(ctx, DDLStatementType.ALTER_SEQUENCE);
         }
         else {
             accept0(ctx);

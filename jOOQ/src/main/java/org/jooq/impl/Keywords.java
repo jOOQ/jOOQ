@@ -105,6 +105,7 @@ final class Keywords {
     static final Keyword K_DROP_TABLE                       = keyword("drop table");
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
     static final Keyword K_ELSE                             = keyword("else");
+    static final Keyword K_ELSIF                            = keyword("elsif");
     static final Keyword K_END                              = keyword("end");
     static final Keyword K_END_CATCH                        = keyword("end catch");
     static final Keyword K_END_IF                           = keyword("end if");

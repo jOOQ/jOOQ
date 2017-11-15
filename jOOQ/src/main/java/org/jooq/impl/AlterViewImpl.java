@@ -55,6 +55,8 @@ import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_VIEW;
+import static org.jooq.impl.Tools.beginTryCatch;
+import static org.jooq.impl.Tools.endTryCatch;
 
 import java.util.EnumSet;
 
@@ -130,9 +132,9 @@ final class AlterViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_VIEW, view);
+            beginTryCatch(ctx, DDLStatementType.ALTER_VIEW);
             accept0(ctx);
-            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_VIEW, view);
+            endTryCatch(ctx, DDLStatementType.ALTER_VIEW);
         }
         else {
             accept0(ctx);

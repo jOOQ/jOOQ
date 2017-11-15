@@ -225,6 +225,33 @@ public interface AlterTableStep {
     AlterTableFinalStep add(String field, DataType<?> type);
 
     /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
+     */
+    @Support({ H2, POSTGRES })
+    <T> AlterTableFinalStep addIfNotExists(Field<T> field, DataType<T> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addIfNotExists(Name field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addIfNotExists(String field, DataType<?> type);
+
+    /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
@@ -244,6 +271,27 @@ public interface AlterTableStep {
      */
     @Support
     AlterTableFinalStep addColumn(String field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, POSTGRES })
+    <T> AlterTableFinalStep addColumnIfNotExists(Field<T> field, DataType<T> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addColumnIfNotExists(Name field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addColumnIfNotExists(String field, DataType<?> type);
 
     /**
      * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>

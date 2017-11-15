@@ -34,6 +34,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
@@ -82,6 +84,7 @@ import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
@@ -102,8 +105,10 @@ import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
+import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
+import static org.jooq.impl.Tools.endTryCatch;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
@@ -162,6 +167,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private final Table<?>                   table;
     private final boolean                    ifExists;
     private boolean                          ifExistsColumn;
+    private boolean                          ifNotExistsColumn;
     private Table<?>                         renameTo;
     private Field<?>                         renameColumn;
     private Field<?>                         renameColumnTo;
@@ -326,6 +332,21 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final <T> AlterTableImpl addIfNotExists(Field<T> field, DataType<T> type) {
+        return addColumnIfNotExists(field, type);
+    }
+
+    @Override
+    public final AlterTableImpl addIfNotExists(Name field, DataType<?> type) {
+        return addColumnIfNotExists(field, type);
+    }
+
+    @Override
+    public final AlterTableImpl addIfNotExists(String field, DataType<?> type) {
+        return addColumnIfNotExists(field, type);
+    }
+
+    @Override
     public final AlterTableImpl addColumn(String field, DataType<?> type) {
         return addColumn(name(field), type);
     }
@@ -340,6 +361,22 @@ final class AlterTableImpl extends AbstractQuery implements
         addColumn = field;
         addColumnType = type;
         return this;
+    }
+
+    @Override
+    public final AlterTableImpl addColumnIfNotExists(String field, DataType<?> type) {
+        return addColumnIfNotExists(name(field), type);
+    }
+
+    @Override
+    public final AlterTableImpl addColumnIfNotExists(Name field, DataType<?> type) {
+        return addColumnIfNotExists((Field) field(field, type), type);
+    }
+
+    @Override
+    public final <T> AlterTableImpl addColumnIfNotExists(Field<T> field, DataType<T> type) {
+        ifNotExistsColumn = true;
+        return addColumn(field, type);
     }
 
     @Override
@@ -526,10 +563,10 @@ final class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatchIfExists(ctx, DDLStatementType.ALTER_TABLE, table);
+        if ((ifExists || ifExistsColumn || ifNotExistsColumn) && !supportsIfExists(ctx)) {
+            beginTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
             accept0(ctx);
-            Tools.endTryCatchIfExists(ctx, DDLStatementType.ALTER_TABLE, table);
+            endTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
         }
         else {
             accept0(ctx);
@@ -537,19 +574,6 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        if (ifExistsColumn && !supportsIfExists(ctx)) {
-            Field<?> field = field(table.getQualifiedName().append(dropColumn.getUnqualifiedName()));
-
-            Tools.beginTryCatchIfExistsColumn(ctx, DDLStatementType.ALTER_TABLE, field);
-            accept1(ctx);
-            Tools.endTryCatchIfExistsColumn(ctx, DDLStatementType.ALTER_TABLE, field);
-        }
-        else {
-            accept1(ctx);
-        }
-    }
-
-    private final void accept1(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
 
@@ -603,10 +627,10 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
 
-        accept2(ctx);
+        accept1(ctx);
     }
 
-    private final void accept2(Context<?> ctx) {
+    private final void accept1(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
         boolean omitAlterTable =
@@ -722,6 +746,22 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD).sql(' ');
+
+            if (ifNotExistsColumn) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+                    case H2:
+                    case POSTGRES:
+                    default:
+                        ctx.visit(K_IF_NOT_EXISTS).sql(' ');
+                        break;
+                }
+            }
 
 
 
@@ -1009,7 +1049,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-        accept2(ctx);
+        accept1(ctx);
 
 
 

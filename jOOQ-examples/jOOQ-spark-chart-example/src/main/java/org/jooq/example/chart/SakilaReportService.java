@@ -194,7 +194,7 @@ public class SakilaReportService {
      */
     private static Condition storeIdCondition(Request req) {
         return storeIdAll(req)
-            ? trueCondition()
+            ? noCondition()
             : STORE.STORE_ID.eq(val(req.queryParams("storeId"), int.class));
     }
 
@@ -210,7 +210,7 @@ public class SakilaReportService {
      */
     private static Condition countryIdCondition(Request req) {
         return countryIdAll(req)
-            ? trueCondition()
+            ? noCondition()
             : COUNTRY.COUNTRY_ID.eq(val(req.queryParams("countryId"), int.class));
     }
 
@@ -219,7 +219,7 @@ public class SakilaReportService {
      */
     private static Condition countryIdSemiJoinCondition(Request req) {
         return countryIdAll(req)
-            ? trueCondition()
+            ? noCondition()
             : RENTAL.CUSTOMER_ID.in(
                 select(CUSTOMER.CUSTOMER_ID)
                 .from(CUSTOMER)

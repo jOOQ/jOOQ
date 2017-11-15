@@ -44,13 +44,13 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
@@ -764,7 +764,7 @@ public class PostgresDatabase extends AbstractDatabase {
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
-                    : trueCondition())
+                    : noCondition())
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
                 r1.ROUTINE_NAME.asc(),

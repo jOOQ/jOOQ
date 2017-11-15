@@ -40,6 +40,7 @@ import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
@@ -66,6 +67,41 @@ final class CombinedCondition extends AbstractCondition {
     private final Operator        operator;
     private final List<Condition> conditions;
 
+    static Condition of(Operator operator, Condition left, Condition right) {
+        if (left instanceof NoCondition)
+            return right;
+        else if (right instanceof NoCondition)
+            return left;
+        else
+            return new CombinedCondition(operator, left, right);
+    }
+
+    static Condition of(Operator operator, Collection<? extends Condition> conditions) {
+        if (conditions.isEmpty())
+            return noCondition();
+
+        CombinedCondition result = null;
+        Condition first = null;
+
+        for (Condition condition : conditions)
+            if (!(condition instanceof NoCondition))
+                if (first == null)
+                    first = condition;
+                else if (result == null)
+                    (result = new CombinedCondition(operator, conditions.size()))
+                        .add(operator, first)
+                        .add(operator, condition);
+                else
+                    result.add(operator, condition);
+
+        if (result != null)
+            return result;
+        else if (first != null)
+            return first;
+        else
+            return noCondition();
+    }
+
     private CombinedCondition(Operator operator, int size) {
         if (operator == null)
             throw new IllegalArgumentException("The argument 'operator' must not be null");
@@ -74,21 +110,14 @@ final class CombinedCondition extends AbstractCondition {
         this.conditions = new ArrayList<Condition>(size);
     }
 
-    CombinedCondition(Operator operator, Condition left, Condition right) {
+    private CombinedCondition(Operator operator, Condition left, Condition right) {
         this(operator, 2);
 
         add(operator, left);
         add(operator, right);
     }
 
-    CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
-        this(operator, conditions.size());
-
-        for (Condition condition : conditions)
-            add(operator, condition);
-    }
-
-    private final void add(Operator op, Condition condition) {
+    private final CombinedCondition add(Operator op, Condition condition) {
         if (condition instanceof CombinedCondition) {
             CombinedCondition combinedCondition = (CombinedCondition) condition;
 
@@ -101,6 +130,8 @@ final class CombinedCondition extends AbstractCondition {
             throw new IllegalArgumentException("The argument 'conditions' must not contain null");
         else
             this.conditions.add(condition);
+
+        return this;
     }
 
     @Override

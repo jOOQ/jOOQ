@@ -35,7 +35,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.noCondition;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -64,11 +64,11 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     final Condition getWhere() {
-        return hasWhere() ? condition : trueCondition();
+        return hasWhere() ? condition : noCondition();
     }
 
     final boolean hasWhere() {
-        return condition != null;
+        return condition != null && !(condition instanceof NoCondition);
     }
 
     // -------------------------------------------------------------------------

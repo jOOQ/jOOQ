@@ -10334,6 +10334,37 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Return a <code>Condition</code> that behaves like no condition being
+     * present.
+     * <p>
+     * This is useful as an "identity" condition for reduction operations, for
+     * both <code>AND</code> and <code>OR</code> reductions, e.g.
+     * <p>
+     * <code><pre>
+     * Condition combined =
+     * Stream.of(cond1, cond2, cond3)
+     *       .reduce(noCondition(), Condition::and);
+     * </pre></code>
+     * <p>
+     * When this condition is passed to SQL clauses, such as the
+     * <code>WHERE</code> clause, the entire clause is omitted:
+     * <p>
+     * <code><pre>
+     * selectFrom(T).where(noCondition())
+     * </pre></code>
+     * <p>
+     * ... will produce
+     * <p>
+     * <code><pre>
+     * SELECT * FROM t
+     * </pre></code>
+     */
+    @Support
+    public static Condition noCondition() {
+        return NoCondition.INSTANCE;
+    }
+
+    /**
      * Return a <code>Condition</code> that will always evaluate to true.
      */
     @Support
@@ -10409,7 +10440,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(Operator operator, Condition left, Condition right) {
-        return new CombinedCondition(operator, left, right);
+        return CombinedCondition.of(operator, left, right);
     }
 
     /**
@@ -10427,7 +10458,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(Operator operator, Collection<? extends Condition> conditions) {
-        return new CombinedCondition(operator, conditions);
+        return CombinedCondition.of(operator, conditions);
     }
 
     /**

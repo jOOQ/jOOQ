@@ -47,7 +47,6 @@ import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
@@ -3993,7 +3992,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int fetchCount(Table<?> table) {
-        return fetchCount(table, trueCondition());
+        return selectCount().from(table).fetchOne(0, int.class);
     }
 
     @Override
@@ -4008,7 +4007,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public boolean fetchExists(Table<?> table) throws DataAccessException {
-        return fetchExists(table, trueCondition());
+        return fetchExists(selectOne().from(table));
     }
 
     @Override
@@ -4035,7 +4034,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> fetch(Table<R> table) {
-        return fetch(table, trueCondition());
+        return selectFrom(table).fetch();
     }
 
     @Override
@@ -4087,7 +4086,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table) {
-        return fetchLazy(table, trueCondition());
+        return selectFrom(table).fetchLazy();
     }
 
     @Override
@@ -4119,7 +4118,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
-        return fetchStream(table, trueCondition());
+        return selectFrom(table).stream();
     }
 
     @Override

@@ -35,7 +35,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_IN;
@@ -177,11 +177,10 @@ implements
             List<Field<?>> aggregationSelects = new ArrayList<Field<?>>();
             for (Field<?> inField : in) {
                 for (Field<?> aggregateFunction : aggregateFunctions) {
-                    Condition join = trueCondition();
+                    Condition join = noCondition();
 
-                    for (Field<?> field : groupingFields) {
+                    for (Field<?> field : groupingFields)
                         join = join.and(condition(pivot, field));
-                    }
 
                     @SuppressWarnings("unchecked")
                     Select<?> aggregateSelect = using(configuration)

@@ -37,6 +37,8 @@ package org.jooq.tools.jdbc;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -49,16 +51,23 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-// ...
 import static org.jooq.SQLDialect.MYSQL_5_7;
 import static org.jooq.SQLDialect.MYSQL_8_0;
-import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 // ...
 // ...
 // ...
@@ -112,10 +121,21 @@ public class JDBCUtils {
 
 
 
-
                 String url = m.getURL();
-                int majorVersion = m.getDatabaseMajorVersion();
-                int minorVersion = m.getDatabaseMinorVersion();
+                int majorVersion = 0;
+                int minorVersion = 0;
+
+                // [#6814] Better play safe with JDBC API
+                try {
+                    majorVersion = m.getDatabaseMajorVersion();
+                }
+                catch (SQLException ignore) {}
+
+                try {
+                    minorVersion = m.getDatabaseMinorVersion();
+                }
+                catch (SQLException ignore) {}
+
                 result = dialect(url, majorVersion, minorVersion);
             }
             catch (SQLException ignore) {}
@@ -129,62 +149,104 @@ public class JDBCUtils {
         return result;
     }
 
-    public static final SQLDialect dialect(String url, int majorVersion, int minorVersion) {
-        SQLDialect dialect = dialect( url );
+    private static final SQLDialect dialect(String url, int majorVersion, int minorVersion) {
+        SQLDialect dialect = dialect(url);
 
-        switch ( dialect ) {
+        // [#6814] If the driver can't report the version, fall back to the dialect family
+        if (majorVersion == 0)
+            return dialect;
+
+        switch (dialect) {
+
+
+
+
+
+
+
+
             case POSTGRES:
-                return getPostgreSqlDialect( majorVersion, minorVersion );
+                return postgresDialect(majorVersion, minorVersion);
             case MYSQL:
-                return getMySqlDialect( majorVersion, minorVersion );
+                return mysqlDialect(majorVersion);
             case FIREBIRD:
-                return getFirebirdDialect( majorVersion, minorVersion );
+                return firebirdDialect(majorVersion);
         }
 
         return dialect;
     }
 
-    public static final SQLDialect getPostgreSqlDialect(int majorVersion, int minorVersion) {
-        switch ( majorVersion ) {
-            case 10:
-                return POSTGRES_10;
-            case 9:
-                if ( minorVersion >= 5 ) {
-                    return POSTGRES_9_5;
-                }
-                else if ( minorVersion == 4 ) {
-                    return POSTGRES_9_4;
-                }
-                else if ( minorVersion == 3 ) {
-                    return POSTGRES_9_3;
-                }
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static final SQLDialect postgresDialect(int majorVersion, int minorVersion) {
+        if (majorVersion < 9)
+            return POSTGRES_9_3;
+
+        if (majorVersion == 9)
+            if (minorVersion <= 3)
+                return POSTGRES_9_3;
+            else if (minorVersion == 4)
+                return POSTGRES_9_4;
+            else if (minorVersion >= 5)
+                return POSTGRES_9_5;
+
+        if (majorVersion >= 10)
+            return POSTGRES_10;
 
         return POSTGRES;
     }
 
-    public static final SQLDialect getMySqlDialect(int majorVersion, int minorVersion) {
-        switch ( majorVersion ) {
-            case 8:
-                return MYSQL_8_0;
-            case 5:
-                if ( minorVersion >= 7 ) {
-                    return MYSQL_5_7;
-                }
-        }
+    private static final SQLDialect mysqlDialect(int majorVersion) {
+        if (majorVersion <= 5)
+            return MYSQL_5_7;
+
+        if (majorVersion >= 8)
+            return MYSQL_8_0;
 
         return MYSQL;
     }
 
-    public static final SQLDialect getFirebirdDialect(int majorVersion, int minorVersion) {
-        switch ( majorVersion ) {
-            case 3:
-                return FIREBIRD_3_0;
-            case 2:
-                if ( minorVersion >= 5 ) {
-                    return FIREBIRD_2_5;
-                }
-        }
+    private static final SQLDialect firebirdDialect(int majorVersion) {
+        if (majorVersion <= 2)
+            return FIREBIRD_2_5;
+
+        if (majorVersion >= 3)
+            return FIREBIRD_3_0;
 
         return FIREBIRD;
     }

@@ -13597,7 +13597,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
-        return extract(Tools.field(value), datePart);
+        return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart);
     }
 
 

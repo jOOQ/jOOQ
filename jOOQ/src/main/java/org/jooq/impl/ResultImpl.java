@@ -116,6 +116,7 @@ import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
+import org.jooq.TXTFormat;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -392,8 +393,18 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final String format() {
+        return format(new TXTFormat());
+    }
+
+    @Override
+    public final String format(int maxRecords) {
+        return format(new TXTFormat().maxRows(maxRecords));
+    }
+
+    @Override
+    public final String format(TXTFormat format) {
         StringWriter writer = new StringWriter();
-        format(writer);
+        format(writer, format);
         return writer.toString();
     }
 
@@ -403,33 +414,34 @@ final class ResultImpl<R extends Record> implements Result<R> {
     }
 
     @Override
-    public final void format(Writer writer) {
-        format(writer, 50);
-    }
-
-    @Override
-    public final String format(int maxRecords) {
-        StringWriter writer = new StringWriter();
-        format(writer, maxRecords);
-        return writer.toString();
-    }
-
-    @Override
     public final void format(OutputStream stream, int maxRecords) {
         format(new OutputStreamWriter(stream), maxRecords);
     }
 
     @Override
+    public final void format(OutputStream stream, TXTFormat format) {
+        format(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
+    public final void format(Writer writer) {
+        format(writer, new TXTFormat());
+    }
+
+    @Override
     public final void format(Writer writer, int maxRecords) {
+        format(writer, new TXTFormat().maxRows(maxRecords));
+    }
+
+    @Override
+    public final void format(Writer writer, TXTFormat format) {
         try {
-            final int COL_MIN_WIDTH = 4;
-            final int COL_MAX_WIDTH = 50;
 
             // Numeric columns have greater max width because values are aligned
-            final int NUM_COL_MAX_WIDTH = 100;
+            final int NUM_COL_MAX_WIDTH = format.maxColWidth() == Integer.MAX_VALUE ? Integer.MAX_VALUE : 2 * format.maxColWidth();
 
             // The max number of records that will be considered for formatting purposes
-            final int MAX_RECORDS = min(50, maxRecords);
+            final int MAX_RECORDS = min(50, format.maxRows());
 
             // Get max decimal places for numeric type columns
             final int[] decimalPlaces = new int[fields.fields.length];
@@ -461,13 +473,13 @@ final class ResultImpl<R extends Record> implements Result<R> {
                 // Is number column?
                 boolean isNumCol = Number.class.isAssignableFrom(fields.fields[index].getType());
 
-                colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : COL_MAX_WIDTH;
+                colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : format.maxColWidth();
 
                 // Collect all widths for the column
                 List<Integer> widthList = new ArrayList<Integer>();
 
                 // Add column name width first
-                widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, fields.fields[index].getName().length())));
+                widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.fields[index].getName().length())));
 
                 // Add column values width
                 String value;
@@ -519,7 +531,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
             }
 
             // Write columns
-            for (int i = 0; i < min(maxRecords, size()); i++) {
+            for (int i = 0; i < min(format.maxRows(), size()); i++) {
                 writer.append("\n|");
 
                 for (int index = 0; index < fields.fields.length; index++) {
@@ -557,9 +569,9 @@ final class ResultImpl<R extends Record> implements Result<R> {
             }
 
             // Write truncation message, if applicable
-            if (maxRecords < size()) {
+            if (format.maxRows() < size()) {
                 writer.append("\n|...");
-                writer.append("" + (size() - maxRecords));
+                writer.append("" + (size() - format.maxRows()));
                 writer.append(" record(s) truncated...");
             }
 
@@ -2909,7 +2921,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public String toString() {
-        return format();
+        return format(new TXTFormat().maxRows(50).maxColWidth(50));
     }
 
     @Override

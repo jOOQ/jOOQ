@@ -148,7 +148,7 @@ final class ExplainQuery {
             }
         }
 
-        return new ExplainImpl(rows, cost, result.format(Integer.MAX_VALUE));
+        return new ExplainImpl(rows, cost, result.format());
     }
 
     private static final class ExplainImpl implements Explain {

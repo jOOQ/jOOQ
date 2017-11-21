@@ -55,6 +55,7 @@ import org.jooq.Parameter;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Routine;
+import org.jooq.TXTFormat;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
@@ -140,9 +141,9 @@ public class LoggerListener extends DefaultExecuteListener {
     public void resultEnd(ExecuteContext ctx) {
         if (ctx.result() != null)
             if (log.isTraceEnabled())
-                logMultiline("Fetched result", ctx.result().format(500), Level.FINE);
+                logMultiline("Fetched result", ctx.result().format(new TXTFormat().maxRows(500).maxColWidth(500)), Level.FINE);
             else if (log.isDebugEnabled())
-                logMultiline("Fetched result", ctx.result().format(5), Level.FINE);
+                logMultiline("Fetched result", ctx.result().format(new TXTFormat().maxRows(5).maxColWidth(50)), Level.FINE);
     }
 
     @Override

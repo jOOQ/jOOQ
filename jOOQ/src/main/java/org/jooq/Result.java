@@ -481,7 +481,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * Get a simple formatted representation of this result.
      * <p>
      * This is the same as calling {@link #format(int)} with
-     * <code>maxRows = 50</code>
+     * <code>maxRows = Integer.MAX_VALUE</code>
      *
      * @return The formatted result
      */
@@ -495,6 +495,14 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The formatted result
      */
     String format(int maxRecords);
+
+    /**
+     * Get a simple formatted representation of this result.
+     *
+     * @param format The formatting information
+     * @return The formatted result
+     */
+    String format(TXTFormat format);
 
     /**
      * Get a simple formatted representation of this result as HTML.
@@ -679,6 +687,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void format(OutputStream stream, int maxRecords) throws IOException;
 
     /**
+     * Like {@link #format(TXTFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(OutputStream stream, TXTFormat format) throws IOException;
+
+    /**
      * Like {@link #formatHTML()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -803,6 +818,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void format(Writer writer, int maxRecords) throws IOException;
+
+    /**
+     * Like {@link #format(TXTFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(Writer writer, TXTFormat format) throws IOException;
 
     /**
      * Like {@link #formatHTML()}, but the data is output onto a {@link Writer}.

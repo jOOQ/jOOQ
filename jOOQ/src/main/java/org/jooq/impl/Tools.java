@@ -500,6 +500,11 @@ final class Tools {
     private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");
 
     /**
+     * A pattern for the pipe line syntax
+     */
+    private static final Pattern PIPE_PATTERN                                 = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
+
+    /**
      * A pattern for the dash line syntax
      */
     private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");
@@ -3348,12 +3353,15 @@ final class Tools {
     static final List<String[]> parseTXT(String string, String nullLiteral) {
         String[] strings = NEW_LINES.split(string);
 
-        if (strings.length < 2) {
+        if (strings.length < 2)
             throw new DataAccessException("String must contain at least two lines");
-        }
 
-        // [#2235] Distinguish between jOOQ's Result.format() and H2's format
-        boolean formatted = (string.charAt(0) == '+');
+
+        // [#2235] Distinguish between jOOQ's Result.format() and others
+        boolean formattedJOOQ = (string.charAt(0) == '+');
+
+        // [#6832] Distinguish between Oracle's format and others
+        boolean formattedOracle = (string.charAt(0) == '-');
 
         // In jOOQ's Result.format(), that's line number one:
         // 1: +----+------+----+
@@ -3364,9 +3372,20 @@ final class Tools {
         //    012345678901234567
         // resulting in
         // [{1,5} {6,12} {13,17}]
-        if (formatted) {
+        if (formattedJOOQ)
             return parseTXTLines(nullLiteral, strings, PLUS_PATTERN, 0, 1, 3, strings.length - 1);
-        }
+
+        // In Oracle's format (e.g. when coming out of DBMS_XPLAN), that's line number one:
+        // 1: ------------------
+        // 2: |ABC |XYZ   |HEHE|
+        // 3: ------------------
+        // 4: |Data|{null}|1234|
+        // 5: ------------------
+        //    012345678901234567
+        // resulting in
+        // [{1,5} {6,12} {13,17}]
+        else if (formattedOracle)
+            return parseTXTLines(nullLiteral, strings, PIPE_PATTERN, 1, 1, 3, strings.length - 1);
 
         // In H2 format, that's line number two:
         // 1: ABC    XYZ     HEHE
@@ -3375,9 +3394,8 @@ final class Tools {
         //    0123456789012345678
         // resulting in
         // [{0,5} {7,14} {15,19}]
-        else {
+        else
             return parseTXTLines(nullLiteral, strings, DASH_PATTERN, 1, 0, 2, strings.length);
-        }
     }
 
     private static final List<String[]> parseTXTLines(

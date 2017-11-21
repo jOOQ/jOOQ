@@ -281,6 +281,17 @@ public interface DSLContext extends Scope , AutoCloseable  {
     InformationSchema informationSchema(Table<?>... table);
 
     // -------------------------------------------------------------------------
+    // XXX APIs related to query optimisation
+    // -------------------------------------------------------------------------
+
+    /**
+     * Run an <code>EXPLAIN</code> statement in the database to estimate the
+     * cardinality of the query.
+     */
+    @Support({ H2, MYSQL, POSTGRES })
+    Explain explain(Query query);
+
+    // -------------------------------------------------------------------------
     // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------
 

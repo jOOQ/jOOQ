@@ -119,6 +119,7 @@ import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.Explain;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.InsertQuery;
@@ -407,6 +408,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public InformationSchema informationSchema(Table<?>... tables) {
         return InformationSchemaExport.exportTables(configuration(), Arrays.<Table<?>>asList(tables));
+    }
+    // -------------------------------------------------------------------------
+    // XXX APIs related to query optimisation
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Explain explain(Query query) {
+        return ExplainQuery.explain(this, query);
     }
 
     // -------------------------------------------------------------------------

@@ -16,6 +16,10 @@
 -- According to our understanding of Oracle licensing, such benchmark results may be published
 -- as they cannot be compared to other databases and do not provide absolute time values
 SET SERVEROUTPUT ON
+
+ALTER SYSTEM FLUSH SHARED_POOL;
+ALTER SYSTEM FLUSH BUFFER_CACHE;
+
 CREATE TABLE results (
   run     NUMBER(2),
   stmt    NUMBER(2),

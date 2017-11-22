@@ -15,6 +15,11 @@
 -- This version displays actual execution times.
 -- Beware that according to Oracle licensing, it is not allowed to publish benchmark results
 SET SERVEROUTPUT ON
+
+ALTER SYSTEM FLUSH SHARED_POOL;
+ALTER SYSTEM FLUSH BUFFER_CACHE;
+
+
 DECLARE
   v_ts TIMESTAMP WITH TIME ZONE;
   v_repeat CONSTANT NUMBER := 10000;

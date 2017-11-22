@@ -1169,4 +1169,8 @@ implements
             this.keyword = DSL.keyword(sql);
         }
     }
+
+    final boolean matchingPrimaryKey(Field<?> identity) {
+        return identity != null && primaryKey != null && primaryKey.length == 1 && primaryKey[0].getName().equals(identity.getName());
+    }
 }

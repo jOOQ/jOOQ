@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
@@ -106,8 +107,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableAsStep<R>,
-    CreateTableColumnStep,
-    CreateTableStorageStep {
+    CreateTableColumnStep {
 
     /**
      * Generated UID
@@ -286,11 +286,14 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                .formatIndentStart()
                .formatNewLine();
 
+            Field<?> identity = null;
             boolean qualify = ctx.qualify();
             ctx.qualify(false);
 
             for (int i = 0; i < columnFields.size(); i++) {
                 DataType<?> type = columnTypes.get(i);
+                if (identity == null && type.identity())
+                    identity = columnFields.get(i);
 
                 ctx.visit(columnFields.get(i))
                    .sql(' ');
@@ -306,9 +309,13 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             if (!constraints.isEmpty())
                 for (Constraint constraint : constraints)
-                    ctx.sql(',')
-                       .formatSeparator()
-                       .visit(constraint);
+
+                    // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
+                    //         when there is an identity. Thus, we must not repeat the primary key specification here.
+                    if (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity))
+                        ctx.sql(',')
+                           .formatSeparator()
+                           .visit(constraint);
 
             ctx.end(CREATE_TABLE_CONSTRAINTS)
                .formatIndentEnd()
@@ -323,6 +330,13 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                .visit(storage);
 
         ctx.end(CREATE_TABLE);
+    }
+
+    private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {
+        if (constraint instanceof ConstraintImpl)
+            return ((ConstraintImpl) constraint).matchingPrimaryKey(identity);
+
+        return false;
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {

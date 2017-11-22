@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
@@ -113,6 +114,7 @@ import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
+import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
@@ -3932,6 +3934,12 @@ final class Tools {
             else
                 ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
         }
+
+        // [#6841] SQLite usually recognises int/integer as both meaning the same thing, but not in the
+        //         context of an autoincrement column, in case of which explicit "integer" types are required.
+        else if (type.identity() && ctx.family() == SQLITE && type.isNumeric()) {
+            ctx.sql("integer");
+        }
         else {
             ctx.sql(typeName);
         }
@@ -3949,6 +3957,7 @@ final class Tools {
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
+                case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
             }
         }
     }

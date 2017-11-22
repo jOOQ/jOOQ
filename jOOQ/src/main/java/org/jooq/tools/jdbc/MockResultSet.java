@@ -58,6 +58,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 import org.jooq.Converter;
@@ -146,6 +147,67 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
             throw new SQLException("Unknown column index : " + columnIndex);
 
         return field;
+    }
+
+    private long getMillis(Calendar cal, int year, int month, int day, int hour, int minute, int second,
+        int millis) {
+        cal = (Calendar) cal.clone();
+        cal.clear();
+        cal.setLenient(true);
+
+        if (year <= 0) {
+            cal.set(Calendar.ERA, GregorianCalendar.BC);
+            cal.set(Calendar.YEAR, 1 - year);
+        }
+        else {
+            cal.set(Calendar.ERA, GregorianCalendar.AD);
+            cal.set(Calendar.YEAR, year);
+        }
+
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, second);
+        cal.set(Calendar.MILLISECOND, millis);
+
+        return cal.getTimeInMillis();
+    }
+
+    @SuppressWarnings("deprecation")
+    private Timestamp withTZ(Timestamp timestamp, Calendar cal) {
+        int year = timestamp.getYear() + 1900;
+        int month = timestamp.getMonth();
+        int day = timestamp.getDate();
+        int hour = timestamp.getHours();
+        int minute = timestamp.getMinutes();
+        int second = timestamp.getSeconds();
+        int nanos = timestamp.getNanos();
+        int millis = nanos / 1000000;
+        nanos = nanos - millis * 1000000;
+
+        Timestamp r = new Timestamp(getMillis(cal, year, month, day, hour, minute, second, millis));
+        r.setNanos(nanos + millis * 1000000);
+        return r;
+    }
+
+    @SuppressWarnings("deprecation")
+    private Time withTZ(Time time, Calendar cal) {
+        int hour = time.getHours();
+        int minute = time.getMinutes();
+        int second = time.getSeconds();
+        int millis = (int) (time.getTime() % 1000);
+
+        return new Time(getMillis(cal, 1970, 0, 1, hour, minute, second, millis));
+    }
+
+    @SuppressWarnings("deprecation")
+    private Date withTZ(Date date, Calendar cal) {
+        int year = date.getYear() + 1900;
+        int month = date.getMonth();
+        int day = date.getDate();
+
+        return new Date(getMillis(cal, year, month, day, 0, 0, 0, 0));
     }
 
     @Override
@@ -521,7 +583,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-        return get(columnIndex, Date.class);
+        return withTZ(get(columnIndex, Date.class), cal);
     }
 
     @Override
@@ -531,7 +593,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Date getDate(String columnLabel, Calendar cal) throws SQLException {
-        return get(columnLabel, Date.class);
+        return withTZ(get(columnLabel, Date.class), cal);
     }
 
     @Override
@@ -541,7 +603,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-        return get(columnIndex, Time.class);
+        return withTZ(get(columnIndex, Time.class), cal);
     }
 
     @Override
@@ -551,7 +613,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Time getTime(String columnLabel, Calendar cal) throws SQLException {
-        return get(columnLabel, Time.class);
+        return withTZ(get(columnLabel, Time.class), cal);
     }
 
     @Override
@@ -561,7 +623,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-        return get(columnIndex, Timestamp.class);
+        return withTZ(get(columnIndex, Timestamp.class), cal);
     }
 
     @Override
@@ -571,7 +633,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
-        return get(columnLabel, Timestamp.class);
+        return withTZ(get(columnLabel, Timestamp.class), cal);
     }
 
     @Override

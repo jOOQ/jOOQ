@@ -141,9 +141,9 @@ public class LoggerListener extends DefaultExecuteListener {
     public void resultEnd(ExecuteContext ctx) {
         if (ctx.result() != null)
             if (log.isTraceEnabled())
-                logMultiline("Fetched result", ctx.result().format(new TXTFormat().maxRows(500).maxColWidth(500)), Level.FINE);
+                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(500).maxColWidth(500)), Level.FINE);
             else if (log.isDebugEnabled())
-                logMultiline("Fetched result", ctx.result().format(new TXTFormat().maxRows(5).maxColWidth(50)), Level.FINE);
+                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(5).maxColWidth(50)), Level.FINE);
     }
 
     @Override

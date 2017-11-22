@@ -88,6 +88,7 @@ import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
+import org.jooq.TXTFormat;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.XMLFormat;
@@ -910,6 +911,42 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // -------------------------------------------------------------------------
     // Formatting methods
     // -------------------------------------------------------------------------
+
+    @Override
+    public final String format() {
+        StringWriter writer = new StringWriter();
+        format(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final String format(TXTFormat format) {
+        StringWriter writer = new StringWriter();
+        format(writer, format);
+        return writer.toString();
+    }
+
+    @Override
+    public final void format(OutputStream stream) {
+        format(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void format(OutputStream stream, TXTFormat format) {
+        format(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
+    public final void format(Writer writer) {
+        format(writer, TXTFormat.DEFAULT);
+    }
+
+    @Override
+    public final void format(Writer writer, TXTFormat format) {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        result.format(writer, format);
+    }
 
     @Override
     public final String formatJSON() {

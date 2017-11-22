@@ -1325,6 +1325,59 @@ public interface Record extends Attachable, Comparable<Record> {
     // -------------------------------------------------------------------------
 
     /**
+     * Get a simple formatted representation of this result as a text table.
+     * <p>
+     * The format is the following:<p>
+     * <code><pre>
+     * +------+------+------+
+     * | COL1 | COL2 | COL3 |
+     * +------+------+------+
+     * | VAL1 | VAL2 | VAL3 |
+     * +------+------+------+
+     * </pre></code>
+     *
+     * @return The formatted result
+     */
+    String format();
+
+    /**
+     * Get a simple formatted representation of this result as a text data
+     * structure, according to the format.
+     *
+     * @return The formatted result
+     * @see TXTFormat
+     */
+    String format(TXTFormat format);
+
+    /**
+     * Like {@link #format()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #format(TXTFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(OutputStream stream, TXTFormat format) throws IOException;
+
+    /**
+     * Like {@link #format()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #format(TXTFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(Writer writer, TXTFormat format) throws IOException;
+
+    /**
      * Get a simple formatted representation of this result as a JSON array.
      * <p>
      * The format is the following: <code><pre>

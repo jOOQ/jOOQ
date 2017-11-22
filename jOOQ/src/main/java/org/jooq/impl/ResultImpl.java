@@ -393,12 +393,12 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final String format() {
-        return format(new TXTFormat());
+        return format(TXTFormat.DEFAULT);
     }
 
     @Override
     public final String format(int maxRecords) {
-        return format(new TXTFormat().maxRows(maxRecords));
+        return format(TXTFormat.DEFAULT.maxRows(maxRecords));
     }
 
     @Override
@@ -425,12 +425,12 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final void format(Writer writer) {
-        format(writer, new TXTFormat());
+        format(writer, TXTFormat.DEFAULT);
     }
 
     @Override
     public final void format(Writer writer, int maxRecords) {
-        format(writer, new TXTFormat().maxRows(maxRecords));
+        format(writer, TXTFormat.DEFAULT.maxRows(maxRecords));
     }
 
     @Override
@@ -2967,7 +2967,7 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public String toString() {
-        return format(new TXTFormat().maxRows(50).maxColWidth(50));
+        return format(TXTFormat.DEFAULT.maxRows(50).maxColWidth(50));
     }
 
     @Override

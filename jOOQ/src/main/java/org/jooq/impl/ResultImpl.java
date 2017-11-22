@@ -501,40 +501,56 @@ final class ResultImpl<R extends Record> implements Result<R> {
             // ---------------------------------------------------------------------
 
             // Write top line
-            writer.append("+");
-            for (int index = 0; index < fields.fields.length; index++) {
-                writer.append(rightPad("", widths[index], "-"));
-                writer.append("+");
-            }
+            if (format.horizontalTableBorder())
+                formatHorizontalLine(writer, format, widths);
 
             // Write headers
-            writer.append("\n|");
+            if (format.verticalTableBorder())
+                writer.append('|');
+
             for (int index = 0; index < fields.fields.length; index++) {
+                if (index > 0)
+                    if (format.verticalCellBorder())
+                        writer.append('|');
+                    else
+                        writer.append(' ');
+
                 String padded;
 
-                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                if (Number.class.isAssignableFrom(fields.fields[index].getType()))
                     padded = leftPad(fields.fields[index].getName(), widths[index]);
-                }
-                else {
+                else
                     padded = rightPad(fields.fields[index].getName(), widths[index]);
-                }
 
                 writer.append(abbreviate(padded, widths[index]));
-                writer.append("|");
             }
 
+            if (format.verticalTableBorder())
+                writer.append('|');
+
+            writer.append('\n');
+
             // Write separator
-            writer.append("\n+");
-            for (int index = 0; index < fields.fields.length; index++) {
-                writer.append(rightPad("", widths[index], "-"));
-                writer.append("+");
-            }
+            if (format.horizontalHeaderBorder())
+                formatHorizontalLine(writer, format, widths);
 
             // Write columns
             for (int i = 0; i < min(format.maxRows(), size()); i++) {
-                writer.append("\n|");
+
+                // Write separator
+                if (i > 0 && format.horizontalCellBorder())
+                    formatHorizontalLine(writer, format, widths);
+
+                if (format.verticalTableBorder())
+                    writer.append('|');
 
                 for (int index = 0; index < fields.fields.length; index++) {
+                    if (index > 0)
+                        if (format.verticalCellBorder())
+                            writer.append('|');
+                        else
+                            writer.append(' ');
+
                     String value = format0(getValue(i, index), get(i).changed(index), true)
                         .replace("\n", "{lf}")
                         .replace("\r", "{cr}")
@@ -554,25 +570,26 @@ final class ResultImpl<R extends Record> implements Result<R> {
                     }
 
                     writer.append(abbreviate(padded, widths[index]));
-                    writer.append("|");
                 }
+
+                if (format.verticalTableBorder())
+                    writer.append('|');
+
+                writer.append('\n');
             }
 
             // Write bottom line
-            if (size() > 0) {
-                writer.append("\n+");
-
-                for (int index = 0; index < fields.fields.length; index++) {
-                    writer.append(rightPad("", widths[index], "-"));
-                    writer.append("+");
-                }
-            }
+            if (format.horizontalTableBorder() && size() > 0)
+                formatHorizontalLine(writer, format, widths);
 
             // Write truncation message, if applicable
             if (format.maxRows() < size()) {
-                writer.append("\n|...");
+                if (format.verticalTableBorder())
+                    writer.append('|');
+
+                writer.append("...");
                 writer.append("" + (size() - format.maxRows()));
-                writer.append(" record(s) truncated...");
+                writer.append(" record(s) truncated...\n");
             }
 
             writer.flush();
@@ -580,6 +597,35 @@ final class ResultImpl<R extends Record> implements Result<R> {
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing TEXT", e);
         }
+    }
+
+    private final void formatHorizontalLine(Writer writer, TXTFormat format, final int[] widths) throws java.io.IOException {
+        if (format.verticalTableBorder())
+            if (format.intersectLines())
+                writer.append('+');
+            else
+                writer.append('-');
+
+        for (int index = 0; index < fields.fields.length; index++) {
+            if (index > 0)
+                if (format.verticalCellBorder())
+                    if (format.intersectLines())
+                        writer.append('+');
+                    else
+                        writer.append('-');
+                else
+                    writer.append(' ');
+
+            writer.append(rightPad("", widths[index], "-"));
+        }
+
+        if (format.verticalTableBorder())
+            if (format.intersectLines())
+                writer.append('+');
+            else
+                writer.append('-');
+
+        writer.append('\n');
     }
 
     private static final String alignNumberValue(Integer columnDecimalPlaces, String value) {

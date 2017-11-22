@@ -41,26 +41,50 @@ package org.jooq;
  */
 public final class TXTFormat {
 
-    final int maxRows;
-    final int minColWidth;
-    final int maxColWidth;
+    final int     maxRows;
+    final int     minColWidth;
+    final int     maxColWidth;
+    final boolean horizontalTableBorder;
+    final boolean horizontalHeaderBorder;
+    final boolean horizontalCellBorder;
+    final boolean verticalTableBorder;
+    final boolean verticalCellBorder;
+    final boolean intersectLines;
 
     public TXTFormat() {
         this(
             Integer.MAX_VALUE,
             4,
-            Integer.MAX_VALUE
+            Integer.MAX_VALUE,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true
         );
     }
 
     private TXTFormat(
         int maxRows,
         int minColWidth,
-        int maxColWidth
+        int maxColWidth,
+        boolean horizontalTableBorder,
+        boolean horizontalHeaderBorder,
+        boolean horizontalCellBorder,
+        boolean verticalTableBorder,
+        boolean verticalCellBorder,
+        boolean intersectLines
     ) {
         this.maxRows = maxRows;
         this.minColWidth = minColWidth;
         this.maxColWidth = maxColWidth;
+        this.horizontalTableBorder = horizontalTableBorder;
+        this.horizontalHeaderBorder = horizontalHeaderBorder;
+        this.horizontalCellBorder = horizontalCellBorder;
+        this.verticalTableBorder = verticalTableBorder;
+        this.verticalCellBorder = verticalCellBorder;
+        this.intersectLines = intersectLines;
     }
 
     /**
@@ -70,7 +94,13 @@ public final class TXTFormat {
         return new TXTFormat(
             newMaxRows,
             minColWidth,
-            maxColWidth
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
         );
     }
 
@@ -88,7 +118,13 @@ public final class TXTFormat {
         return new TXTFormat(
             maxRows,
             newMinColWidth,
-            maxColWidth
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
         );
     }
 
@@ -107,7 +143,13 @@ public final class TXTFormat {
         return new TXTFormat(
             maxRows,
             minColWidth,
-            newMaxColWidth
+            newMaxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
         );
     }
 
@@ -116,5 +158,161 @@ public final class TXTFormat {
      */
     public int maxColWidth() {
         return maxColWidth;
+    }
+
+    /**
+     * Whether the horizontal table border (top and bottom line) should be
+     * displayed.
+     */
+    public TXTFormat horizontalTableBorder(boolean newHorizontalTableBorder) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            newHorizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
+        );
+    }
+
+    /**
+     * Whether the horizontal table border (top and bottom line) should be
+     * displayed.
+     */
+    public boolean horizontalTableBorder() {
+        return horizontalTableBorder;
+    }
+
+    /**
+     * Whether the horizontal header border (line between header and data cells)
+     * should be displayed.
+     */
+    public TXTFormat horizontalHeaderBorder(boolean newHorizontalHeaderBorder) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            horizontalTableBorder,
+            newHorizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
+        );
+    }
+
+    /**
+     * Whether the horizontal header border (line between header and data cells)
+     * should be displayed.
+     */
+    public boolean horizontalHeaderBorder() {
+        return horizontalHeaderBorder;
+    }
+
+    /**
+     * Whether the horizontal cell border (line between data cells) should be
+     * displayed.
+     */
+    public TXTFormat horizontalCellBorder(boolean newHorizontalCellBorder) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            newHorizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            intersectLines
+        );
+    }
+
+    /**
+     * Whether the horizontal cell border (line between data cells) should be
+     * displayed.
+     */
+    public boolean horizontalCellBorder() {
+        return horizontalCellBorder;
+    }
+
+    /**
+     * Whether the vertical table border (left and right most lines) should be
+     * displayed.
+     */
+    public TXTFormat verticalTableBorder(boolean newVerticalTableBorder) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            newVerticalTableBorder,
+            verticalCellBorder,
+            intersectLines
+        );
+    }
+
+    /**
+     * Whether the vertical table border (left and right most lines) should be
+     * displayed.
+     */
+    public boolean verticalTableBorder() {
+        return verticalTableBorder;
+    }
+
+    /**
+     * Whether the vertical cell borders (lines between data cells) should be
+     * displayed.
+     */
+    public TXTFormat verticalCellBorder(boolean newVerticalCellBorder) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            newVerticalCellBorder,
+            intersectLines
+        );
+    }
+
+    /**
+     * Whether the vertical cell borders (lines between data cells) should be
+     * displayed.
+     */
+    public boolean verticalCellBorder() {
+        return verticalCellBorder;
+    }
+
+    /**
+     * Whether horizontal and vertical lines should be intersected with a
+     * <code>'+'</code> symbol.
+     */
+    public TXTFormat intersectLines(boolean newIntersectLines) {
+        return new TXTFormat(
+            maxRows,
+            minColWidth,
+            maxColWidth,
+            horizontalTableBorder,
+            horizontalHeaderBorder,
+            horizontalCellBorder,
+            verticalTableBorder,
+            verticalCellBorder,
+            newIntersectLines
+        );
+    }
+
+    /**
+     * Whether horizontal and vertical lines should be intersected with a
+     * <code>'+'</code> symbol.
+     */
+    public boolean intersectLines() {
+        return intersectLines;
     }
 }

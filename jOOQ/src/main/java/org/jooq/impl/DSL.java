@@ -7857,10 +7857,18 @@ public class DSL {
     // XXX Access control
     // -------------------------------------------------------------------------
 
+    /**
+     * Create a new user reference.
+     *
+     * @see #user(Name)
+     */
     public static User user(String name) {
-        return new UserImpl(name(name));
+        return user(name(name));
     }
 
+    /**
+     * Create a new user reference.
+     */
     public static User user(Name name) {
         return new UserImpl(name);
     }

@@ -43,6 +43,12 @@ package org.jooq;
 public enum Clause {
 
     // -------------------------------------------------------------------------
+    // Clauses used in a any type of statement to model access control
+    // -------------------------------------------------------------------------
+
+    USER,
+
+    // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model constraint references
     // -------------------------------------------------------------------------
 

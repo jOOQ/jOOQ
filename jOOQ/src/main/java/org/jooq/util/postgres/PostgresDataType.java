@@ -139,7 +139,10 @@ public class PostgresDataType {
     public static final DataType<Integer>    SERIAL4                    = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "serial4");
     public static final DataType<Long>       BIGSERIAL                  = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "bigserial");
     public static final DataType<Long>       SERIAL8                    = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "serial8");
-    public static final DataType<BigDecimal> MONEY                      = new DefaultDataType<BigDecimal>(SQLDialect.POSTGRES, SQLDataType.DECIMAL, "money");
+
+//  [#6852] This type was never really supported and cannot be mapped to BigDecimal automatically by the JDBC driver
+//  public static final DataType<BigDecimal> MONEY                      = new DefaultDataType<BigDecimal>(SQLDialect.POSTGRES, SQLDataType.DECIMAL, "money");
+
     public static final DataType<String>     BITVARYING                 = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "bit varying");
     public static final DataType<String>     VARBIT                     = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "varbit");
     public static final DataType<String>     BIT                        = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CHAR, "bit");

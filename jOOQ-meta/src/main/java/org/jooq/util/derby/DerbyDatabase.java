@@ -36,6 +36,7 @@
 package org.jooq.util.derby;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.util.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
 import static org.jooq.util.derby.sys.tables.Sysconstraints.SYSCONSTRAINTS;
 import static org.jooq.util.derby.sys.tables.Syskeys.SYSKEYS;
@@ -84,7 +85,7 @@ import org.jooq.util.derby.sys.tables.Systables;
  */
 public class DerbyDatabase extends AbstractDatabase {
 
-	@Override
+    @Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
 	    for (Record record : fetchKeys("P")) {
 	        SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
@@ -137,8 +138,9 @@ public class DerbyDatabase extends AbstractDatabase {
     	        .on(Systables.TABLEID.equal(Sysconglomerates.TABLEID))
     	        .join(SYSSCHEMAS)
     	        .on(Sysschemas.SCHEMAID.equal(Systables.SCHEMAID))
-    	        .and(Sysschemas.SCHEMANAME.in(getInputSchemata()))
-    	        .where(Sysconstraints.TYPE.equal(constraintType))
+                // [#6797] The casts are necessary if a non-standard collation is used
+    	        .and(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+    	        .where(Sysconstraints.TYPE.cast(VARCHAR(32672)).equal(constraintType))
     	        .orderBy(
     	            Sysschemas.SCHEMANAME,
     	            Systables.TABLENAME,
@@ -169,7 +171,8 @@ public class DerbyDatabase extends AbstractDatabase {
 	        .join("sys.sysschemas       fs").on("ft.schemaid = fs.schemaid")
 	        .join("sys.sysconstraints   pc").on("pc.constraintid = f.keyconstraintid")
 	        .join("sys.sysschemas       ps").on("pc.schemaid = ps.schemaid")
-	        .where("fc.type = 'F'")
+            // [#6797] The cast is necessary if a non-standard collation is used
+	        .where("cast(fc.type as varchar(32672)) = 'F'")
 	        .fetch()) {
 
 	        SchemaDefinition foreignKeySchema = getSchema(record.get(fkSchema));
@@ -253,7 +256,8 @@ public class DerbyDatabase extends AbstractDatabase {
                 .from(SYSSEQUENCES)
                 .join(SYSSCHEMAS)
                 .on(Sysschemas.SCHEMAID.equal(Syssequences.SCHEMAID))
-                .where(Sysschemas.SCHEMANAME.in(getInputSchemata()))
+                // [#6797] The cast is necessary if a non-standard collation is used
+                .where(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
                     Sysschemas.SCHEMANAME,
                     Syssequences.SEQUENCENAME)
@@ -287,7 +291,8 @@ public class DerbyDatabase extends AbstractDatabase {
                 .from(SYSTABLES)
                 .join(SYSSCHEMAS)
                 .on(Systables.SCHEMAID.equal(Sysschemas.SCHEMAID))
-                .where(Sysschemas.SCHEMANAME.in(getInputSchemata()))
+                // [#6797] The cast is necessary if a non-standard collation is used
+                .where(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
                     Sysschemas.SCHEMANAME,
                     Systables.TABLENAME)

@@ -144,7 +144,6 @@
                         <!-- When compilers say false, they mean true ...
                              https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                         <useIncrementalCompilation>false</useIncrementalCompilation>
-                        <verbose>true</verbose>
                         <fork>true</fork>
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>

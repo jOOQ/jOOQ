@@ -290,6 +290,7 @@ import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
 import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
+import org.jooq.User;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowSpecification;
@@ -7850,6 +7851,18 @@ public class DSL {
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, array);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Access control
+    // -------------------------------------------------------------------------
+
+    public static User user(String name) {
+        return new UserImpl(name(name));
+    }
+
+    public static User user(Name name) {
+        return new UserImpl(name);
     }
 
     // -------------------------------------------------------------------------

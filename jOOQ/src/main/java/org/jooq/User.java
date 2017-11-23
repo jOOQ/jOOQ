@@ -9,5 +9,5 @@ public interface User {
     /**
      * The name of user
      */
-    public String getName();
+    public Name getName();
 }

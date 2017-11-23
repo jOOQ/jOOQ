@@ -7858,11 +7858,11 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     public static User user(String name) {
-        return new UserImpl(name);
+        return new UserImpl(name(name));
     }
 
     public static User user(Name name) {
-        return new UserImpl(name.toString());
+        return new UserImpl(name);
     }
 
     // -------------------------------------------------------------------------

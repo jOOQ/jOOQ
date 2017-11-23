@@ -1,5 +1,6 @@
 package org.jooq.impl;
 
+import org.jooq.Name;
 import org.jooq.User;
 
 /**
@@ -8,14 +9,14 @@ import org.jooq.User;
  * @author Timur Shaidullin
  */
 public class UserImpl implements User {
-    private String name;
+    private Name name;
 
-    public UserImpl(String name) {
+    public UserImpl(Name name) {
         this.name = name;
     }
 
     @Override
-    public String getName() {
+    public Name getName() {
         return name;
     }
 }

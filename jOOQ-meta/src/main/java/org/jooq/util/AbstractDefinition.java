@@ -44,6 +44,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.tools.StringUtils;
 
 /**
  * A base implementation for any type of definition.
@@ -137,10 +138,16 @@ public abstract class AbstractDefinition implements Definition {
 
             String separator = "";
             for (Definition part : getDefinitionPath()) {
-                sb.append(separator);
-                sb.append(part.getInputName());
 
-                separator = ".";
+                // [#6855] Some databases (e.g. SQLite) might not have a schema
+                String input = part.getInputName();
+
+                if (!StringUtils.isEmpty(input)) {
+                    sb.append(separator);
+                    sb.append(part.getInputName());
+
+                    separator = ".";
+                }
             }
 
             qualifiedInputName = sb.toString();

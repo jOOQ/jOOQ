@@ -251,6 +251,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Role;
 import org.jooq.Row1;
 import org.jooq.Row10;
 import org.jooq.Row11;
@@ -7871,6 +7872,22 @@ public class DSL {
      */
     public static User user(Name name) {
         return new UserImpl(name);
+    }
+
+    /**
+     * Create a new role reference
+     *
+     * @see #role(Name)
+     */
+    public static Role role(String name) {
+        return role(name(name));
+    }
+
+    /**
+     * Create a new role reference
+     */
+    public static Role role(Name name) {
+        return new RoleImpl(name);
     }
 
     // -------------------------------------------------------------------------

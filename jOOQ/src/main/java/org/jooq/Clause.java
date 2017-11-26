@@ -47,6 +47,7 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     USER,
+    ROLE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model constraint references

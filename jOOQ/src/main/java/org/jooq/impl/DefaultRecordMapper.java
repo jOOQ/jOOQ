@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -339,6 +340,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        boolean allowMappingConstructorParameterNames =
+                Boolean.TRUE.equals(configuration.settings().isMapConstructorParameterNames());
+
         // [#1837] Without ConstructorProperties, match constructors by matching
         // argument length
         for (Constructor<E> constructor : constructors) {
@@ -349,14 +353,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
 
                 // [#4627] use parameter names from byte code if available
-                if (Boolean.TRUE.equals(configuration.settings().isMapConstructorParameterNames())) {
+                if (allowMappingConstructorParameterNames) {
                     Parameter[] parameters = constructor.getParameters();
 
                     if (parameters != null && parameters.length > 0)
-                        delegate = new ImmutablePOJOMapperWithParameterNames(
-                            constructor,
-                            Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList())
-                        );
+                        delegate = new ImmutablePOJOMapperWithParameterNames(constructor,
+                                collectParameterNames(parameters));
                 }
 
 
@@ -367,7 +369,23 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        // [#4627] if there is no exact match in terms of the number of parameters,
+        // but using parameter annotations is allowed and those are in fact present,
+        // use the first available constructor (thus the choice is undeterministic)
+        if (allowMappingConstructorParameterNames) {
+            Constructor<E> constructor = constructors[0];
+            Parameter[] parameters = constructor.getParameters();
+            if (parameters != null && parameters.length > 0) {
+                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters));
+                return;
+            }
+        }
+
         throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
+    }
+
+    private List<String> collectParameterNames(Parameter[] parameters) {
+        return Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList());
     }
 
     @Override

@@ -39,14 +39,14 @@ import static org.jooq.Clause.ROLE;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.User;
+import org.jooq.Role;
 
 /**
  * A common implementation of the Role type.
  *
  * @author Timur Shaidullin
  */
-final class RoleImpl extends AbstractQueryPart implements User {
+final class RoleImpl extends AbstractQueryPart implements Role {
 
     /**
      * Generated UID

@@ -35,14 +35,14 @@
 package org.jooq;
 
 /**
- * The User to be used by GRANT statement
+ * The User to be used by GRANT statement.
  *
  * @author Timur Shaidullin
  */
 public interface User extends QueryPart {
 
     /**
-     * The name of user
+     * The name of the user.
      */
-    public String getName();
+    String getName();
 }

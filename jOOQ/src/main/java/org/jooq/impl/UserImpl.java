@@ -42,7 +42,7 @@ import org.jooq.Name;
 import org.jooq.User;
 
 /**
- * A common implementation of the User type
+ * A common implementation of the User type.
  *
  * @author Timur Shaidullin
  */

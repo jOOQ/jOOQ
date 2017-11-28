@@ -7875,7 +7875,7 @@ public class DSL {
     }
 
     /**
-     * Create a new role reference
+     * Create a new role reference.
      *
      * @see #role(Name)
      */
@@ -7884,7 +7884,7 @@ public class DSL {
     }
 
     /**
-     * Create a new role reference
+     * Create a new role reference.
      */
     public static Role role(Name name) {
         return new RoleImpl(name);

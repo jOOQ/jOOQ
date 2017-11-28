@@ -35,14 +35,14 @@
 package org.jooq;
 
 /**
- * The Role to be used by GRANT statement
+ * The Role to be used by GRANT statement.
  *
  * @author Timur Shaidullin
  */
 public interface Role extends QueryPart {
 
     /**
-     * The name of role
+     * The name of the role.
      */
-    public String getName();
+    String getName();
 }

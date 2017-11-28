@@ -158,6 +158,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.Grant;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
 import org.jooq.Index;
@@ -220,6 +221,7 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.PlainSQL;
+import org.jooq.Privilege;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -7857,6 +7859,22 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX Access control
     // -------------------------------------------------------------------------
+
+    //todo add javadoc
+    public static Grant<Record> grant(String privilege) {
+        return using(new DefaultConfiguration()).grant(new PrivilegeImpl(name(privilege)));
+    }
+
+    //todo add javadoc
+    public static Grant<Record> grant(List<String> privileges) {
+        List<Privilege> collection = new ArrayList<>(privileges.size());
+
+        for (String privilege : privileges) {
+            collection.add(new PrivilegeImpl(name(privilege)));
+        }
+
+        return using(new DefaultConfiguration()).grant(collection);
+    }
 
     /**
      * Create a new user reference.

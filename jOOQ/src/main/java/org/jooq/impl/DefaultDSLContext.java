@@ -175,6 +175,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Param;
+import org.jooq.Privilege;
 import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -4194,5 +4195,19 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public String toString() {
         return configuration().toString();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Access control
+    // -------------------------------------------------------------------------
+
+    @Override
+    public <R extends Record> GrantImpl<R> grant(Privilege privilege) {
+        return new GrantImpl<R>(configuration()).grant(privilege);
+    }
+
+    @Override
+    public <R extends Record> GrantImpl<R> grant(Collection<? extends Privilege> privileges) {
+        return new GrantImpl<R>(configuration()).grant(privileges);
     }
 }

@@ -10837,4 +10837,16 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException;
+
+    /**
+     * Grant privilege on a table.
+     */
+    @Support
+    <R extends Record> Grant<R> grant(Privilege privilege);
+
+    /**
+     * Grant privileges on a table.
+     */
+    @Support
+     <R extends Record> Grant<R> grant(Collection<? extends Privilege> privileges);
 }

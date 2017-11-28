@@ -54,7 +54,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 final class ExplainQuery {
 
-    static Explain explain(DSLContext ctx, Query query) {
+    static Explain explain(final DSLContext ctx, final Query query) {
         Result<Record> result = null;
 
         switch (ctx.family()) {

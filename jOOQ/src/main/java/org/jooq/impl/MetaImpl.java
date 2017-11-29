@@ -31,6 +31,9 @@
  *
  *
  *
+ *
+ *
+ *
  */
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,6 +55,9 @@
  * database integrations.
  *
  * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
  *
  *
  *

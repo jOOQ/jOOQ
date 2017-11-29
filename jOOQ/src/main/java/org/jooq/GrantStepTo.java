@@ -35,7 +35,13 @@
 package org.jooq;
 
 /**
+ * The preparation either a user or a role.
+ *
  * @author Timur Shaidullin
  */
-public interface Privilege extends QueryPart {
+public interface GrantStepTo extends Query {
+
+    Query to(User user);
+
+    Query to(Role role);
 }

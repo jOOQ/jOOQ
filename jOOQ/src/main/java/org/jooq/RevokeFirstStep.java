@@ -34,8 +34,16 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
+ * The preparation a privilege.
+ *
  * @author Timur Shaidullin
  */
-public interface Privilege extends QueryPart {
+public interface RevokeFirstStep extends RevokeStepOn {
+
+    RevokeStepOn revoke(Privilege privilege);
+
+    RevokeStepOn revoke(Collection<? extends Privilege> privileges);
 }

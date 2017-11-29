@@ -121,6 +121,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Explain;
 import org.jooq.Field;
+import org.jooq.GrantStepOn;
 import org.jooq.Index;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -207,6 +208,7 @@ import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
+import org.jooq.RevokeStepOn;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -4202,22 +4204,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public GrantImpl grant(Privilege privilege) {
+    public GrantStepOn grant(Privilege privilege) {
         return new GrantImpl(configuration()).grant(privilege);
     }
 
     @Override
-    public GrantImpl grant(Collection<? extends Privilege> privileges) {
+    public GrantStepOn grant(Collection<? extends Privilege> privileges) {
         return new GrantImpl(configuration()).grant(privileges);
     }
 
     @Override
-    public RevokeImpl revoke(Privilege privilege) {
+    public RevokeStepOn revoke(Privilege privilege) {
         return new RevokeImpl(configuration()).revoke(privilege);
     }
 
     @Override
-    public RevokeImpl revoke(Collection<? extends Privilege> privileges) {
+    public RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
         return new RevokeImpl(configuration()).revoke(privileges);
     }
 }

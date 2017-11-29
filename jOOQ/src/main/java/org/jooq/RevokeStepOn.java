@@ -35,7 +35,13 @@
 package org.jooq;
 
 /**
+ * The preparation a target of privilege.
+ *
  * @author Timur Shaidullin
  */
-public interface Privilege extends QueryPart {
+public interface RevokeStepOn extends RevokeStepFrom {
+
+    RevokeStepFrom on(Table<?> table);
+
+    RevokeStepFrom on(String table);
 }

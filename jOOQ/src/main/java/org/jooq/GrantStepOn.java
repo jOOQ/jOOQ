@@ -34,24 +34,14 @@
  */
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * Grant privilege or privileges to user or role.
+ * The preparation a target of privilege.
  *
  * @author Timur Shaidullin
  */
-public interface Grant extends Query {
+public interface GrantStepOn extends GrantStepTo {
 
-    Grant grant(Privilege privilege);
+    GrantStepTo on(Table<?> table);
 
-    Grant grant(Collection<? extends Privilege> privileges);
-
-    Grant on(Table<?> table);
-
-    Grant on(String table);
-
-    Grant to(User user);
-
-    Grant to(Role role);
+    GrantStepTo on(String table);
 }

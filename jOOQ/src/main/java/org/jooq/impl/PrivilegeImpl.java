@@ -36,7 +36,7 @@ package org.jooq.impl;
 
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.Name;
+import org.jooq.Keyword;
 import org.jooq.Privilege;
 
 import static org.jooq.Clause.PRIVILEGE;
@@ -51,10 +51,10 @@ final class PrivilegeImpl extends AbstractQueryPart implements Privilege {
      */
     private static final long     serialVersionUID = -3106268610481536038L;
     private static final Clause[] CLAUSES          = { PRIVILEGE };
-    private Name                  name;
+    private final Keyword         privilege;
 
-    PrivilegeImpl(Name name) {
-        this.name = name;
+    PrivilegeImpl(Keyword privilege) {
+        this.privilege = privilege;
     }
 
     // ------------------------------------------------------------------------
@@ -63,23 +63,11 @@ final class PrivilegeImpl extends AbstractQueryPart implements Privilege {
 
     @Override
     public void accept(Context<?> ctx) {
-        ctx
-            .quote(false)
-            .visit(name)
-            .quote(true);
+        ctx.visit(privilege);
     }
 
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Privilege API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public String getName() {
-        return name.last();
     }
 }

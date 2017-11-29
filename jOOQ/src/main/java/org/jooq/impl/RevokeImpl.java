@@ -38,7 +38,10 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Privilege;
-import org.jooq.Revoke;
+import org.jooq.Query;
+import org.jooq.RevokeFirstStep;
+import org.jooq.RevokeStepOn;
+import org.jooq.RevokeStepFrom;
 import org.jooq.Role;
 import org.jooq.Table;
 import org.jooq.User;
@@ -47,12 +50,19 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static org.jooq.Clause.REVOKE;
+import static org.jooq.Clause.REVOKE_PRIVILEGE;
 import static org.jooq.impl.Keywords.*;
 
 /**
+ * Revoke privilege or privileges on a table from user or role.
+ *
  * @author Timur Shaidullin
  */
-final class RevokeImpl extends AbstractQuery implements Revoke {
+final class RevokeImpl extends AbstractQuery implements
+    RevokeFirstStep,
+    RevokeStepOn,
+    RevokeStepFrom,
+    Query {
 
     /**
      * Generated UID
@@ -74,16 +84,16 @@ final class RevokeImpl extends AbstractQuery implements Revoke {
 
     @Override
     public void accept(Context<?> ctx) {
-        ctx.start(REVOKE)
+        ctx.start(REVOKE_PRIVILEGE)
             .visit(K_REVOKE).sql(' ');
 
-        Privilege[] arrayOfPrivileges = privileges.toArray(new Privilege[privileges.size()]);
+        Privilege[] arrayOfPrivileges = privileges.toArray(Tools.EMPTY_PRIVILEGE);
 
         for (int i = 0; i < arrayOfPrivileges.length; i++) {
             ctx.visit(arrayOfPrivileges[i]);
 
             if (i != arrayOfPrivileges.length - 1) {
-                ctx.sql(",");
+                ctx.sql(',');
             }
 
             ctx.sql(' ');
@@ -95,16 +105,11 @@ final class RevokeImpl extends AbstractQuery implements Revoke {
 
         if (user != null) {
             ctx.visit(user);
-        }
-
-        if (role != null) {
-            if (user != null) {
-                ctx.sql(", ");
-            }
-
+        } else if (role != null) {
             ctx.visit(role);
         }
-        ctx.end(REVOKE).sql(';');
+
+        ctx.end(REVOKE_PRIVILEGE).sql(';');
     }
 
     @Override
@@ -113,41 +118,41 @@ final class RevokeImpl extends AbstractQuery implements Revoke {
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Grant API
+    // XXX: RevokeImpl API
     // ------------------------------------------------------------------------
 
     @Override
-    public RevokeImpl revoke(Privilege privilege) {
+    public RevokeStepOn revoke(Privilege privilege) {
         this.privileges = Collections.singletonList(privilege);
         return this;
     }
 
     @Override
-    public RevokeImpl revoke(Collection<? extends Privilege> privileges) {
+    public RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
         this.privileges = privileges;
         return this;
     }
 
     @Override
-    public RevokeImpl on(Table<?> table) {
+    public RevokeStepFrom on(Table<?> table) {
         this.table = table;
         return this;
     }
 
     @Override
-    public RevokeImpl on(String table) {
+    public RevokeStepFrom on(String table) {
         this.table = DSL.table(table);
         return this;
     }
 
     @Override
-    public RevokeImpl from(User user) {
+    public Query from(User user) {
         this.user = user;
         return this;
     }
 
     @Override
-    public RevokeImpl from(Role role) {
+    public Query from(Role role) {
         this.role = role;
         return this;
     }

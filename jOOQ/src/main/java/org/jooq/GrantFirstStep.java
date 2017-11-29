@@ -34,8 +34,16 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
+ * The preparation a privilege.
+ *
  * @author Timur Shaidullin
  */
-public interface Privilege extends QueryPart {
+public interface GrantFirstStep extends GrantStepOn {
+
+    GrantStepOn grant(Privilege privilege);
+
+    GrantStepOn grant(Collection<? extends Privilege> privileges);
 }

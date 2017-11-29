@@ -4202,12 +4202,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public <R extends Record> GrantImpl<R> grant(Privilege privilege) {
-        return new GrantImpl<R>(configuration()).grant(privilege);
+    public GrantImpl grant(Privilege privilege) {
+        return new GrantImpl(configuration()).grant(privilege);
     }
 
     @Override
-    public <R extends Record> GrantImpl<R> grant(Collection<? extends Privilege> privileges) {
-        return new GrantImpl<R>(configuration()).grant(privileges);
+    public GrantImpl grant(Collection<? extends Privilege> privileges) {
+        return new GrantImpl(configuration()).grant(privileges);
+    }
+
+    @Override
+    public RevokeImpl revoke(Privilege privilege) {
+        return new RevokeImpl(configuration()).revoke(privilege);
+    }
+
+    @Override
+    public RevokeImpl revoke(Collection<? extends Privilege> privileges) {
+        return new RevokeImpl(configuration()).revoke(privileges);
     }
 }

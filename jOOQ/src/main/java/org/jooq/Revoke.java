@@ -34,12 +34,24 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
+ * Revoke privilege or privileges from user or role.
+ *
  * @author Timur Shaidullin
  */
-public interface Privilege extends QueryPart {
-    /**
-     * The privilege's name
-     */
-    String getName();
+public interface Revoke extends Query {
+
+    Revoke revoke(Privilege privilege);
+
+    Revoke revoke(Collection<? extends Privilege> privileges);
+
+    Revoke on(Table<?> table);
+
+    Revoke on(String table);
+
+    Revoke from(User user);
+
+    Revoke from(Role role);
 }

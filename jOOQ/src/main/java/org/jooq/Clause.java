@@ -50,6 +50,7 @@ public enum Clause {
     ROLE,
     PRIVILEGE,
     GRANT,
+    REVOKE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model constraint references

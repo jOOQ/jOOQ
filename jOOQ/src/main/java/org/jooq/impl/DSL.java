@@ -253,6 +253,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Revoke;
 import org.jooq.Role;
 import org.jooq.Row1;
 import org.jooq.Row10;
@@ -7860,13 +7861,49 @@ public class DSL {
     // XXX Access control
     // -------------------------------------------------------------------------
 
-    //todo add javadoc
-    public static Grant<Record> grant(String privilege) {
+    /**
+     * Grant a privilege on table to user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * grant(privileges)
+     *   .on(table)
+     *   .to(user)
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(role)
+     * </pre></code>
+     *
+     * 
+     * @see #grant(List)
+     */
+    public static Grant grant(String privilege) {
         return using(new DefaultConfiguration()).grant(new PrivilegeImpl(name(privilege)));
     }
 
-    //todo add javadoc
-    public static Grant<Record> grant(List<String> privileges) {
+    /**
+     * Grant a privilege on table to user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * grant(privileges)
+     *   .on(table)
+     *   .to(user)
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(role)
+     * </pre></code>
+     * <p>
+     *
+     * @see #grant(String)
+     */
+    public static Grant grant(List<String> privileges) {
         List<Privilege> collection = new ArrayList<>(privileges.size());
 
         for (String privilege : privileges) {
@@ -7874,6 +7911,75 @@ public class DSL {
         }
 
         return using(new DefaultConfiguration()).grant(collection);
+    }
+
+    /**
+     * Revoke a privilege on table from user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * revoke(privileges)
+     *   .on(table)
+     *   .from(user)
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(role)
+     *   .from(user)
+     * </pre></code>
+     * <p>
+     *
+     * @see #revoke(List)
+     */
+    public static Revoke revoke(String privilege) {
+        return using(new DefaultConfiguration()).revoke(privilege(name(privilege)));
+    }
+
+    /**
+     * Revoke a privilege on table from user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * revoke(privileges)
+     *   .on(table)
+     *   .from(user)
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(role)
+     * </pre></code>
+     * <p>
+     *
+     * @see #revoke(String)
+     */
+    public static Revoke revoke(List<String> privileges) {
+        List<Privilege> collection = new ArrayList<>(privileges.size());
+
+        for (String privilege : privileges) {
+            collection.add(privilege(name(privilege)));
+        }
+
+        return using(new DefaultConfiguration()).revoke(collection);
+    }
+
+    /**
+     * Create a new privilege reference.
+     *
+     * @see #privilege(Name)
+     */
+    public static Privilege privilege(String privilege) {
+        return privilege(name(privilege));
+    }
+
+    /**
+     * Create a new privilege reference.
+     */
+    public static Privilege privilege(Name name) {
+        return new PrivilegeImpl(name);
     }
 
     /**

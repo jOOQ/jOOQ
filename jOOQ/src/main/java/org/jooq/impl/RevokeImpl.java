@@ -37,8 +37,8 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.Grant;
 import org.jooq.Privilege;
+import org.jooq.Revoke;
 import org.jooq.Role;
 import org.jooq.Table;
 import org.jooq.User;
@@ -46,27 +46,25 @@ import org.jooq.User;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.jooq.Clause.GRANT;
-import static org.jooq.impl.Keywords.K_GRANT;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.Clause.REVOKE;
+import static org.jooq.impl.Keywords.*;
 
 /**
  * @author Timur Shaidullin
  */
-final class GrantImpl extends AbstractQuery implements Grant {
+final class RevokeImpl extends AbstractQuery implements Revoke {
 
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -6509384254822040545L;
-    private Clause[]                        CLAUSE           = { GRANT };
+    private static final long               serialVersionUID = -5777612075774539326L;
+    private Clause[]                        CLAUSE           = { REVOKE };
     private Collection<? extends Privilege> privileges;
     private Role                            role;
     private Table<?>                        table;
     private User                            user;
 
-    GrantImpl(Configuration configuration) {
+    RevokeImpl(Configuration configuration) {
         super(configuration);
     }
 
@@ -76,15 +74,15 @@ final class GrantImpl extends AbstractQuery implements Grant {
 
     @Override
     public void accept(Context<?> ctx) {
-        ctx.start(GRANT)
-            .visit(K_GRANT).sql(' ');
+        ctx.start(REVOKE)
+            .visit(K_REVOKE).sql(' ');
 
         Privilege[] arrayOfPrivileges = privileges.toArray(new Privilege[privileges.size()]);
 
         for (int i = 0; i < arrayOfPrivileges.length; i++) {
             ctx.visit(arrayOfPrivileges[i]);
 
-            if (i != (arrayOfPrivileges.length - 1)) {
+            if (i != arrayOfPrivileges.length - 1) {
                 ctx.sql(",");
             }
 
@@ -93,7 +91,7 @@ final class GrantImpl extends AbstractQuery implements Grant {
 
         ctx.visit(K_ON).sql(' ')
             .visit(table).sql(' ')
-            .visit(K_TO).sql(' ');
+            .visit(K_FROM).sql(' ');
 
         if (user != null) {
             ctx.visit(user);
@@ -106,7 +104,7 @@ final class GrantImpl extends AbstractQuery implements Grant {
 
             ctx.visit(role);
         }
-        ctx.end(GRANT).sql(';');
+        ctx.end(REVOKE).sql(';');
     }
 
     @Override
@@ -119,37 +117,37 @@ final class GrantImpl extends AbstractQuery implements Grant {
     // ------------------------------------------------------------------------
 
     @Override
-    public GrantImpl grant(Privilege privilege) {
+    public RevokeImpl revoke(Privilege privilege) {
         this.privileges = Collections.singletonList(privilege);
         return this;
     }
 
     @Override
-    public GrantImpl grant(Collection<? extends Privilege> privileges) {
+    public RevokeImpl revoke(Collection<? extends Privilege> privileges) {
         this.privileges = privileges;
         return this;
     }
 
     @Override
-    public GrantImpl on(Table<?> table) {
+    public RevokeImpl on(Table<?> table) {
         this.table = table;
         return this;
     }
 
     @Override
-    public Grant on(String table) {
+    public RevokeImpl on(String table) {
         this.table = DSL.table(table);
         return this;
     }
 
     @Override
-    public GrantImpl to(User user) {
+    public RevokeImpl from(User user) {
         this.user = user;
         return this;
     }
 
     @Override
-    public GrantImpl to(Role role) {
+    public RevokeImpl from(Role role) {
         this.role = role;
         return this;
     }

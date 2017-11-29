@@ -37,17 +37,21 @@ package org.jooq;
 import java.util.Collection;
 
 /**
+ * Grant privilege or privileges to user or role.
+ *
  * @author Timur Shaidullin
  */
-public interface Grant<R extends Record> extends QueryPart, Query {
+public interface Grant extends Query {
 
-    public Grant<R> grant(Privilege privilege);
+    Grant grant(Privilege privilege);
 
-    public Grant<R> grant(Collection<? extends Privilege> privileges);
+    Grant grant(Collection<? extends Privilege> privileges);
 
-    public Grant<R> on(Table<?> table);
+    Grant on(Table<?> table);
 
-    public Grant<R> to(User user);
+    Grant on(String table);
 
-    public Grant<R> to(Role role);
+    Grant to(User user);
+
+    Grant to(Role role);
 }

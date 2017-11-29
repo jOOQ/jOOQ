@@ -63,7 +63,10 @@ final class PrivilegeImpl extends AbstractQueryPart implements Privilege {
 
     @Override
     public void accept(Context<?> ctx) {
-        ctx.visit(name);
+        ctx
+            .quote(false)
+            .visit(name)
+            .quote(true);
     }
 
     @Override

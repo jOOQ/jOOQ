@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -52,6 +53,7 @@ import java.beans.ConstructorProperties;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Executable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -63,7 +65,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +83,7 @@ import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
+import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -199,9 +201,29 @@ import org.jooq.tools.reflect.Reflect;
  * <li>A "matching" constructor is one with exactly as many arguments as this
  * record holds fields</li>
  * <li>When several "matching" constructors are found, the first one is chosen
- * (as reported by {@link Class#getDeclaredConstructors()}</li>
+ * (as reported by {@link Class#getDeclaredConstructors()}). This choice is
+ * non-deterministic as neither the JVM nor the JDK guarantee any order of
+ * methods or constructors.</li>
+ * <li>When {@link Settings#isMapConstructorParameterNames()} is turned on, and
+ * parameter names are available through reflection on
+ * {@link Executable#getParameters()}, then values are mapped by name, otherwise
+ * by index. (see #4627)</li>
  * <li>When invoking the "matching" constructor, values are converted onto
  * constructor argument types</li>
+ * </ul>
+ * <p>
+ * <h5>If no default constructor is available, no "matching" constructor is
+ * available, but {@link Settings#isMapConstructorParameterNames()} is turned
+ * on, and parameter names are available through reflection on
+ * {@link Executable#getParameters()}, the first constructor is used</h5>
+ * <p>
+ * <ul>
+ * <li>The first constructor is chosen (as reported by
+ * {@link Class#getDeclaredConstructors()}). This choice is non-deterministic as
+ * neither the JVM nor the JDK guarantee any order of methods or
+ * constructors.</li>
+ * <li>When invoking that constructor, values are converted onto constructor
+ * argument types</li>
  * </ul>
  * <p>
  * <h5>If the supplied type is an interface or an abstract class</h5>
@@ -340,8 +362,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        boolean allowMappingConstructorParameterNames =
-                Boolean.TRUE.equals(configuration.settings().isMapConstructorParameterNames());
+
+        boolean mapConstructorParameterNames = TRUE.equals(configuration.settings().isMapConstructorParameterNames());
+
 
         // [#1837] Without ConstructorProperties, match constructors by matching
         // argument length
@@ -353,12 +376,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
 
                 // [#4627] use parameter names from byte code if available
-                if (allowMappingConstructorParameterNames) {
+                if (mapConstructorParameterNames) {
                     Parameter[] parameters = constructor.getParameters();
 
                     if (parameters != null && parameters.length > 0)
-                        delegate = new ImmutablePOJOMapperWithParameterNames(constructor,
-                                collectParameterNames(parameters));
+                        delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters));
                 }
 
 
@@ -369,17 +391,20 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+
         // [#4627] if there is no exact match in terms of the number of parameters,
         // but using parameter annotations is allowed and those are in fact present,
         // use the first available constructor (thus the choice is undeterministic)
-        if (allowMappingConstructorParameterNames) {
+        if (mapConstructorParameterNames) {
             Constructor<E> constructor = constructors[0];
             Parameter[] parameters = constructor.getParameters();
+
             if (parameters != null && parameters.length > 0) {
                 delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters));
                 return;
             }
         }
+
 
         throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
     }

@@ -34,7 +34,7 @@ public class Settings
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31002L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")

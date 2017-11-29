@@ -289,11 +289,12 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
     // ------------------------------------------------------------------------
 
     /**
-     * Specify the query timeout for the underlying JDBC {@link Statement}.
+     * Specify the query timeout in number of seconds for the underlying JDBC
+     * {@link Statement}.
      *
      * @see Statement#setQueryTimeout(int)
      */
-    Query queryTimeout(int timeout);
+    Query queryTimeout(int seconds);
 
     /**
      * Keep the query's underlying statement open after execution.

@@ -74,7 +74,7 @@ final class BatchMultiple implements Batch {
 
     static int[] execute(final Configuration configuration, final Query[] queries) {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, queries);
-        ExecuteListener listener = new ExecuteListeners(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 
         try {

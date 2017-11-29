@@ -124,7 +124,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows) {
         this.ctx = ctx;
-        this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
+        this.listener = (listener != null ? listener : ExecuteListeners.get(ctx));
         this.cursorFields = fields;
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
@@ -135,15 +135,17 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
 
 
-        this.intern = new boolean[fields.length];
         this.maxRows = maxRows;
         this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
 
         if (internIndexes != null) {
-            for (int i : internIndexes) {
+            this.intern = new boolean[fields.length];
+
+            for (int i : internIndexes)
                 intern[i] = true;
-            }
         }
+        else
+            this.intern = null;
     }
 
 
@@ -333,21 +335,25 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
 
     @Override
+    @Deprecated
     public Optional<R> fetchOptional() {
         return fetchNextOptional();
     }
 
     @Override
+    @Deprecated
     public <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
         return fetchNextOptional(mapper);
     }
 
     @Override
+    @Deprecated
     public <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
         return fetchNextOptionalInto(type);
     }
 
     @Override
+    @Deprecated
     public <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return fetchNextOptionalInto(table);
     }
@@ -1673,9 +1679,10 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 for (int i = 0; i < initialiserFields.length; i++)
                     setValue(record, initialiserFields[i], i);
 
-                for (int i = 0; i < initialiserFields.length; i++)
-                    if (intern[i])
-                        record.intern0(i);
+                if (intern != null)
+                    for (int i = 0; i < intern.length; i++)
+                        if (intern[i])
+                            record.intern0(i);
 
                 ctx.record(record);
                 listener.recordEnd(ctx);

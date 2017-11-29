@@ -10,7 +10,56 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.10.0 - October 11, 2017
+Version 3.10.2 - November 29, 2017
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#6782 - Clarify DSL.currentDate() Javadoc: It creates ANSI SQL DATE values, not Oracle DATE
+#6784 - Add explicit unit of time specification to Query.queryTimeout()
+#6810 - Provide maven-deploy script to install artifacts on remote repository
+
+Bug Fixes
+---------
+#6682 - Typo in ResultQuery Javadoc: thorws should be throws
+#6685 - Avoid creating a new DefaultConfiguration in DSLContext.select() and similar methods
+#6687 - Avoid allocation of CursorImpl.intern array
+#6692 - Prevent calling DSL.name() with empty arguments
+#6697 - Remove the DATA_LOCALLY_SCOPED_DATA_MAP in SelectQueryImpl
+#6700 - DSL.trueCondition() and DSL.falseCondition() should return constants
+#6710 - Parser.parse() fails on trailing whitespace
+#6711 - Avoid generating code with a redundant (Object) cast
+#6713 - Redundant Javadoc generated when deprecation for unknown types is generated
+#6716 - PostgreSQL RETURNING <col> AS <alias> is not rendered correctly
+#6731 - Typo in Cursor.fetchOne() Javadoc's deprecation hint
+#6738 - jooq-runtime-3.10.0 lists wrong version in namespace
+#6743 - Oracle OBJECT type declarations inside generated RECORD declarations are not bound correctly, if NULL
+#6748 - Avoid allocating a fresh "ExecuteListeners" instance in the absence of actual ExecuteListeners
+#6750 - Avoid adding the LoggerListener if the log level is more than DEBUG
+#6753 - Avoid various array allocations due to unnecessary varargs
+#6756 - Avoid unnecessary UnqualifiedName[] allocations in QualifiedField etc.
+#6759 - Avoid allocation of AbstractContext.visitListeners if unneeded
+#6775 - Improve MockDataProvider Javadoc about null or empty return values
+#6780 - Oracle's quoted string literals start with case-insensitive Q letter
+#6786 - Result.format() breaks when there is a tabulator in the content
+#6788 - Inefficient ProxyMapper allocates a new MutablePOJOMapper delegate every time
+#6791 - ConvertAll inefficiently unboxes and boxes primitive types
+#6801 - Optimise internal reflection cache by avoiding cache key arrays where possible
+#6805 - Override equals() and hashCode() in org.jooq.impl.Fields
+#6808 - Improve DefaultRecordMapper::init MappingException message
+#6828 - Error when passing java.util.Date to DSL.year(), month(), day(), hour(), minute(), second()
+#6830 - DayToSecond generates nanosecond precision for DAY_MICROSECOND interval
+#6842 - MockResultSet.getTimestamp(int, Calendar) ignores Calendar
+#6844 - SQLDataType.INTEGER.identity(true) not working for SQLLite
+#6846 - <deprecationOnUnknownTypes/> has no effect
+#6848 - Code generator doesn't work when Derby database uses non-standard collation
+#6858 - SQLiteTableDefinition.toString() prints "." after empty schema
+#6869 - Code generator doesn't work in Java 6 build, which calls java.lang.reflect.Method.getParameterCount()
+
+
+Version 3.10.1 - October 11, 2017
 ================================================================================
 
 This is a 3.10 patch release with bug fixes

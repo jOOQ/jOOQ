@@ -48,6 +48,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * A <code>FieldProvider</code> providing fields for a JDBC
@@ -104,7 +105,14 @@ final class MetaDataFieldProvider implements Serializable {
                     try {
                         String columnSchema = meta.getSchemaName(i);
                         String columnTable = meta.getTableName(i);
-                        name = name(columnSchema, columnTable, columnName);
+
+                        // [#6691] Prevent excessive String[] allocations if names are unqualified / partially qualified
+                        if (!StringUtils.isEmpty(columnSchema))
+                            name = name(columnSchema, columnTable, columnName);
+                        else if (!StringUtils.isEmpty(columnTable))
+                            name = name(columnTable, columnName);
+                        else
+                            name = name(columnName);
                     }
 
                     // [#4939] Some JDBC drivers such as Teradata and Cassandra don't implement

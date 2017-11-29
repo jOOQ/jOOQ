@@ -2677,7 +2677,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        return new SelectImpl(new DefaultConfiguration(), null).from(table);
+        return using(new DefaultConfiguration()).selectFrom(table);
     }
 
     /**
@@ -2717,7 +2717,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
-        return new SelectImpl(new DefaultConfiguration(), null).select(fields);
+        return using(new DefaultConfiguration()).select(fields);
     }
 
     /**
@@ -2757,7 +2757,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(SelectField<?>... fields) {
-        return new SelectImpl(new DefaultConfiguration(), null).select(fields);
+        return using(new DefaultConfiguration()).select(fields);
     }
 
 // [jooq-tools] START [select]
@@ -3637,7 +3637,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
-        return new SelectImpl(new DefaultConfiguration(), null, true).select(fields);
+        return using(new DefaultConfiguration()).selectDistinct(fields);
     }
 
     /**
@@ -3677,7 +3677,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
-        return new SelectImpl(new DefaultConfiguration(), null, true).select(fields);
+        return using(new DefaultConfiguration()).selectDistinct(fields);
     }
 
 // [jooq-tools] START [selectDistinct]
@@ -4550,7 +4550,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(zero().as("zero"));
+        return using(new DefaultConfiguration()).selectZero();
     }
 
     /**
@@ -4583,7 +4583,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(one().as("one"));
+        return using(new DefaultConfiguration()).selectOne();
     }
 
     /**
@@ -4615,7 +4615,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
-        return new SelectImpl(new DefaultConfiguration(), null).select(count());
+        return using(new DefaultConfiguration()).selectCount();
     }
 
     /**
@@ -10338,7 +10338,7 @@ public class DSL {
      */
     @Support
     public static True trueCondition() {
-        return new TrueCondition();
+        return TrueCondition.INSTANCE;
     }
 
     /**
@@ -10346,7 +10346,16 @@ public class DSL {
      */
     @Support
     public static False falseCondition() {
-        return new FalseCondition();
+        return FalseCondition.INSTANCE;
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#AND}.
+     */
+    @Support
+    public static Condition and(Condition left, Condition right) {
+        return condition(AND, left, right);
     }
 
     /**
@@ -10372,6 +10381,15 @@ public class DSL {
      * <code>conditions</code> with {@link Operator#OR}.
      */
     @Support
+    public static Condition or(Condition left, Condition right) {
+        return condition(OR, left, right);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#OR}.
+     */
+    @Support
     public static Condition or(Condition... conditions) {
         return condition(OR, conditions);
     }
@@ -10383,6 +10401,15 @@ public class DSL {
     @Support
     public static Condition or(Collection<? extends Condition> conditions) {
         return condition(OR, conditions);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with <code>Operator</code>.
+     */
+    @Support
+    public static Condition condition(Operator operator, Condition left, Condition right) {
+        return new CombinedCondition(operator, left, right);
     }
 
     /**
@@ -12871,7 +12898,14 @@ public class DSL {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the current_date() function.
+     * Get the current_date() function returning a SQL standard
+     * {@link SQLDataType#DATE} type.
+     * <p>
+     * Note, while there is a <code>CURRENT_DATE</code> function in
+     * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
+     * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
+     * agnosticity perspective. This function thus produces an expression that
+     * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
      */
@@ -12881,7 +12915,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_time() function.
+     * Get the current_time() function returning a SQL standard
+     * {@link SQLDataType#TIME} type.
      * <p>
      * This translates into any dialect
      */
@@ -12891,7 +12926,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_timestamp() function.
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type.
      * <p>
      * This translates into any dialect
      */
@@ -12902,7 +12938,14 @@ public class DSL {
 
 
     /**
-     * Get the current_date() function.
+     * Get the current_date() function returning a SQL standard
+     * {@link SQLDataType#DATE} type.
+     * <p>
+     * Note, while there is a <code>CURRENT_DATE</code> function in
+     * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
+     * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
+     * agnosticity perspective. This function thus produces an expression that
+     * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
      */
@@ -12912,7 +12955,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_time() function.
+     * Get the current_time() function returning a SQL standard
+     * {@link SQLDataType#TIME} type.
      * <p>
      * This translates into any dialect
      */
@@ -12922,7 +12966,8 @@ public class DSL {
     }
 
     /**
-     * Get the current_timestamp() function.
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type.
      * <p>
      * This translates into any dialect
      */
@@ -13521,7 +13566,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
-        return extract(Tools.field(value), datePart);
+        return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart);
     }
 
 

@@ -283,7 +283,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             //         in case this Query / Configuration was previously
             //         deserialised
             DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
-            ExecuteListener listener = new ExecuteListeners(ctx);
+            ExecuteListener listener = ExecuteListeners.get(ctx);
 
             int result = 0;
             try {

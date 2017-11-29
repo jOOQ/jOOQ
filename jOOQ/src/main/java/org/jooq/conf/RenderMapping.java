@@ -37,7 +37,7 @@ public class RenderMapping
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31002L;
     protected String defaultSchema;
     @XmlElementWrapper(name = "schemata")
     @XmlElement(name = "schema")

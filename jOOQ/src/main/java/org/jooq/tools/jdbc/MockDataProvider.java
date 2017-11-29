@@ -147,8 +147,10 @@ public interface MockDataProvider {
      * </ul>
      *
      * @param ctx The execution context.
-     * @return The execution results. This should be non-null and non-empty, as
-     *         every execution is expected to return at least one result.
+     * @return The execution results. If a <code>null</code> or an empty
+     *         <code>MockResult[]</code> is returned, this has the same effect
+     *         as returning
+     *         <code>new MockResult[] { new MockResult(-1, null) }</code>
      * @throws SQLException A <code>SQLException</code> that is passed through
      *             to jOOQ.
      */

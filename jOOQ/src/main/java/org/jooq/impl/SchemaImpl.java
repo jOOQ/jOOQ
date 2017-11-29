@@ -65,7 +65,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
 
     private final Name            name;
-    private final Catalog         catalog;
+    private Catalog               catalog;
 
     public SchemaImpl(String name) {
         this(name, null);
@@ -81,16 +81,16 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     public SchemaImpl(Name name, Catalog catalog) {
         this.name = name;
-        this.catalog =
-            catalog != null
-          ? catalog
-          : name.qualified()
-          ? DSL.catalog(name.qualifier())
-          : null;
+        this.catalog = catalog;
     }
 
     @Override
     public /* non-final */ Catalog getCatalog() {
+        if (catalog == null)
+            catalog = name.qualified()
+                    ? DSL.catalog(name.qualifier())
+                    : null;
+
         return catalog;
     }
 

@@ -447,7 +447,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final int executeCallableStatement() {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
-        ExecuteListener listener = new ExecuteListeners(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx);
 
         try {
             Connection connection = ctx.connection();
@@ -870,7 +870,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             context.sql("{ ");
         }
     }
-
 
 
 

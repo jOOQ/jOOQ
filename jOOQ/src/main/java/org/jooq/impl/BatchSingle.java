@@ -189,7 +189,7 @@ final class BatchSingle implements BatchBindStep {
 
     private final int[] executePrepared() {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
-        ExecuteListener listener = new ExecuteListeners(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 
         // [#1371] fetch bind variables to restore them again, later

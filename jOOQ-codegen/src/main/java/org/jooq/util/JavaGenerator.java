@@ -227,14 +227,14 @@ public class JavaGenerator extends AbstractGenerator {
             for (java.lang.reflect.Method m : SQLDataType.class.getMethods()) {
                 if (Modifier.isPublic(m.getModifiers()) &&
                     Modifier.isStatic(m.getModifiers()) &&
-                    m.getParameterCount() == 2)
+                    m.getParameterTypes().length == 2)
                     SQLDATATYPE_WITH_PRECISION.add(m.getName());
             }
 
             for (java.lang.reflect.Method m : SQLDataType.class.getMethods()) {
                 if (Modifier.isPublic(m.getModifiers()) &&
                     Modifier.isStatic(m.getModifiers()) &&
-                    m.getParameterCount() == 1 &&
+                    m.getParameterTypes().length == 1 &&
                     !SQLDATATYPE_WITH_PRECISION.contains(m.getName()))
                     SQLDATATYPE_WITH_LENGTH.add(m.getName());
             }
@@ -1474,9 +1474,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
-            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+            if (!printDeprecationIfUnknownType(out, typeFull))
+                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
-            printDeprecationIfUnknownType(out, typeFull);
             if (scala) {
                 out.tab(1).println("def %s(value : %s) : %s = {", setter, type, setterReturnType);
                 out.tab(2).println("set(%s, value)", index);
@@ -1500,10 +1500,11 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnType = out.ref(columnTypeFull);
             final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
 
-            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+            if (!printDeprecationIfUnknownType(out, columnTypeFull))
+                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+
             out.tab(1).override();
 
-            printDeprecationIfUnknownType(out, columnTypeFull);
             if (scala) {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
@@ -1574,12 +1575,13 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+        if (!printDeprecationIfUnknownType(out, typeFull))
+            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+
         if (column.getContainer() instanceof TableDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
         printValidationAnnotation(out, column);
 
-        printDeprecationIfUnknownType(out, typeFull);
         if (scala) {
             out.tab(1).println("def %s : %s = {", getter, type);
             out.tab(2).println("val r = get(%s)", index);
@@ -1589,7 +1591,13 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
-            out.tab(2).println("return (%s) get(%s);", type, index);
+
+            // [#6705] Avoid generating code with a redundant (Object) cast
+            if ("java.lang.Object".equals(typeFull))
+                out.tab(2).println("return get(%s);", index);
+            else
+                out.tab(2).println("return (%s) get(%s);", type, index);
+
             out.tab(1).println("}");
         }
     }
@@ -1756,9 +1764,9 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+        if (!printDeprecationIfUnknownType(out, typeFull))
+            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
-        printDeprecationIfUnknownType(out, typeFull);
         if (scala)
             out.tab(1).println("def %s(value : %s) : %s", setter, type, setterReturnType);
         else
@@ -1786,13 +1794,13 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+        if (!printDeprecationIfUnknownType(out, typeFull))
+            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
         printValidationAnnotation(out, column);
-        printDeprecationIfUnknownType(out, typeFull);
 
         if (scala)
             out.tab(1).println("def %s : %s", getter, type);
@@ -2137,6 +2145,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
+
 
 
 
@@ -2861,8 +2870,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             // fetchBy[Column]([T]...)
             // -----------------------
-            out.tab(1).javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
-            printDeprecationIfUnknownType(out, colTypeFull);
+            if (!printDeprecationIfUnknownType(out, colTypeFull))
+                out.tab(1).javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
 
             if (scala) {
                 out.tab(1).println("def fetchBy%s(values : %s*) : %s[%s] = {", colClass, colType, List.class, pType);
@@ -3170,11 +3179,12 @@ public class JavaGenerator extends AbstractGenerator {
         // Getter
         out.println();
 
+        printDeprecationIfUnknownType(out, columnTypeFull);
+
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
         printValidationAnnotation(out, column);
-        printDeprecationIfUnknownType(out, columnTypeFull);
 
         if (scala) {
             out.tab(1).println("def %s : %s = {", columnGetter, columnType);
@@ -4566,7 +4576,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type, int indentation) {
-        if ("java.lang.Object".equals(type)) {
+        if (generateDeprecationOnUnknownTypes() && "java.lang.Object".equals(type)) {
             out.tab(indentation).javadoc("@deprecated Unknown data type. "
                 + "Please define an explicit {@link org.jooq.Binding} to specify how this "
                 + "type should be handled.");
@@ -4640,9 +4650,10 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
         }
 
-        generateRoutineClassJavadoc(routine, out);
+        if (!printDeprecationIfUnknownType(out, returnTypeFull, 0))
+            generateRoutineClassJavadoc(routine, out);
+
         printClassAnnotations(out, schema);
-        printDeprecationIfUnknownType(out, returnTypeFull, 0);
 
         if (scala) {
             out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",

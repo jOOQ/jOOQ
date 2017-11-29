@@ -68,6 +68,7 @@ import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.sql.Timestamp;
+import java.util.regex.Pattern;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -263,6 +264,12 @@ final class Expression<T> extends AbstractFunction<T> {
         }
     }
 
+    // E.g. +2 00:00:00.000000000
+    private static final Pattern TRUNC_TO_MICROS = Pattern.compile("([^.]*\\.\\d{0,6})\\d{0,3}");
+
+    /**
+     * Return the expression to be rendered when the RHS is an interval type
+     */
     private class DateExpression extends AbstractFunction<T> {
 
         /**
@@ -276,17 +283,12 @@ final class Expression<T> extends AbstractFunction<T> {
 
         @Override
         final Field<T> getFunction0(Configuration configuration) {
-            if (rhs.get(0).getDataType().isInterval()) {
+            if (rhs.get(0).getDataType().isInterval())
                 return getIntervalExpression(configuration);
-            }
-            else {
+            else
                 return getNumberExpression(configuration);
-            }
         }
 
-        /**
-         * Return the expression to be rendered when the RHS is an interval type
-         */
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.dialect();
@@ -298,21 +300,21 @@ final class Expression<T> extends AbstractFunction<T> {
                 case MYSQL: {
                     Interval interval = rhsAsInterval();
 
-                    if (operator == SUBTRACT) {
+                    if (operator == SUBTRACT)
                         interval = interval.neg();
-                    }
 
-                    if (rhs.get(0).getType() == YearToMonth.class) {
+                    if (rhs.get(0).getType() == YearToMonth.class)
                         return DSL.field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, String.class));
-                    }
-                    else {
-                        if (dialect == CUBRID) {
-                            return DSL.field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, String.class));
-                        }
-                        else {
-                            return DSL.field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Tools.field(interval, String.class));
-                        }
-                    }
+                    else if (dialect == CUBRID)
+                        return DSL.field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, String.class));
+
+                    // [#6820] Workaround for bugs:
+                    //         https://bugs.mysql.com/bug.php?id=88573
+                    //         https://jira.mariadb.org/browse/MDEV-14452
+                    else
+                        return DSL.field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs,
+                            Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), String.class)
+                        );
                 }
 
                 case DERBY:

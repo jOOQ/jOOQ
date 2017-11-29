@@ -36,6 +36,7 @@
 package org.jooq.util.derby;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.util.derby.sys.tables.Syscolumns.SYSCOLUMNS;
 
 import java.sql.SQLException;
@@ -76,7 +77,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 Syscolumns.AUTOINCREMENTINC)
             .from(SYSCOLUMNS)
             // [#1241] Suddenly, bind values didn't work any longer, here...
-            .where(Syscolumns.REFERENCEID.equal(inline(tableid)))
+            // [#6797] The cast is necessary if a non-standard collation is used
+            .where(Syscolumns.REFERENCEID.cast(VARCHAR(32672)).equal(inline(tableid)))
             .orderBy(Syscolumns.COLUMNNUMBER)
             .fetch()) {
 

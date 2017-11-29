@@ -523,7 +523,10 @@ final class ResultImpl<R extends Record> implements Result<R> {
                 writer.append("\n|");
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    String value = format0(getValue(i, index), get(i).changed(index), true).replace("\n", "{lf}").replace("\r", "{cr}");
+                    String value = format0(getValue(i, index), get(i).changed(index), true)
+                        .replace("\n", "{lf}")
+                        .replace("\r", "{cr}")
+                        .replace("\t", "{tab}");
 
                     String padded;
                     if (Number.class.isAssignableFrom(fields.fields[index].getType())) {

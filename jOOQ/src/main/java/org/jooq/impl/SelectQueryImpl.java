@@ -122,7 +122,6 @@ import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
-import static org.jooq.impl.Tools.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
@@ -137,9 +136,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -446,11 +443,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
         // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-        Object localDataMap = context.data(DATA_LOCALLY_SCOPED_DATA_MAP);
+        Object localWindowDefinitions = context.data(DATA_WINDOW_DEFINITIONS);
         try {
             if (renderTrailingLimit != null)
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-            context.data(DATA_LOCALLY_SCOPED_DATA_MAP, new HashMap<Object, Object>());
+
+            // [#5127] Lazy initialise this map
+            if (localWindowDefinitions != null)
+                context.data(DATA_WINDOW_DEFINITIONS, null);
 
             if (into != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
@@ -744,20 +744,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         }
         finally {
-            context.data(DATA_LOCALLY_SCOPED_DATA_MAP, localDataMap);
+            context.data(DATA_WINDOW_DEFINITIONS, localWindowDefinitions);
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
         }
     }
 
-    @SuppressWarnings("unchecked")
     private final void pushWindow(Context<?> context) {
         // [#531] [#2790] Make the WINDOW clause available to the SELECT clause
         // to be able to inline window definitions if the WINDOW clause is not
         // supported.
-        if (!getWindow().isEmpty()) {
-            ((Map<Object, Object>) context.data(DATA_LOCALLY_SCOPED_DATA_MAP)).put(DATA_WINDOW_DEFINITIONS, getWindow());
-        }
+        if (!getWindow().isEmpty())
+            context.data(DATA_WINDOW_DEFINITIONS, getWindow());
     }
 
     /**
@@ -2038,19 +2036,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addFrom(Collection<? extends TableLike<?>> f) {
-        for (TableLike<?> provider : f) {
+        for (TableLike<?> provider : f)
             getFrom().add(provider.asTable());
-        }
     }
 
     @Override
     public final void addFrom(TableLike<?> f) {
-        addFrom(Arrays.asList(f));
+        getFrom().add(f.asTable());
     }
 
     @Override
     public final void addFrom(TableLike<?>... f) {
-        addFrom(Arrays.asList(f));
+        for (TableLike<?> provider : f)
+            getFrom().add(provider.asTable());
     }
 
     @Override

@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
@@ -115,6 +116,7 @@ import static org.jooq.impl.Keywords.K_LOOP;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
+import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
@@ -335,16 +337,6 @@ final class Tools {
          * divert {@link Clause} events.
          */
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
-
-        /**
-         * [#2790] A locally scoped data map.
-         * <p>
-         * Sometimes, it is useful to have some information only available while
-         * visiting QueryParts in the same context of the current subquery, e.g.
-         * when communicating between SELECT and WINDOW clauses, as is required to
-         * emulate #531.
-         */
-        DATA_LOCALLY_SCOPED_DATA_MAP,
 
         /**
          * [#531] The local window definitions.
@@ -1012,7 +1004,7 @@ final class Tools {
 
         Field<?>[] result = new Field[fieldNames.length];
 
-        if (tableName == null)
+        if (StringUtils.isEmpty(tableName))
             for (int i = 0; i < fieldNames.length; i++)
                 result[i] = DSL.field(name(fieldNames[i]));
         else
@@ -1837,6 +1829,9 @@ final class Tools {
 
 
 
+
+
+
             // [#3297] Skip ? inside of quoted identifiers, e.g.
             // update x set v = "Column Name with a ? (question mark)"
             else if (peekAny(sqlChars, i, quotes[QUOTE_START_DELIMITER])) {
@@ -2607,7 +2602,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Serializable... keys) {
+        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -2631,11 +2626,9 @@ final class Tools {
                 }
             }
 
-            Object key = key(keys);
             Object result = cache.get(key);
 
             if (result == null) {
-
                 synchronized (cache) {
                     result = cache.get(key);
 
@@ -2657,47 +2650,63 @@ final class Tools {
         /**
          * Create a single-value or multi-value key for caching.
          */
-        private static final Object key(final Serializable... key) {
-            if (key == null || key.length == 0)
-                return key;
-
-            if (key.length == 1)
-                return key[0];
-
-            return new Key(key);
+        static final Object key(Serializable key1, Serializable key2) {
+            return new Key2(key1, key2);
         }
 
         /**
-         * A multi-value key for caching.
+         * A 2-value key for caching.
          */
-        private static class Key implements Serializable {
+        private static class Key2 implements Serializable {
 
             /**
              * Generated UID.
              */
-            private static final long    serialVersionUID = 5822370287443922993L;
-            private final Serializable[] key;
+            private static final long  serialVersionUID = 5822370287443922993L;
+            private final Serializable key1;
+            private final Serializable key2;
 
-            Key(Serializable[] key) {
-                this.key = key;
+            Key2(Serializable key1, Serializable key2) {
+                this.key1 = key1;
+                this.key2 = key2;
             }
 
             @Override
             public int hashCode() {
-                return Arrays.hashCode(key);
+                final int prime = 31;
+                int result = 1;
+                result = prime * result + ((key1 == null) ? 0 : key1.hashCode());
+                result = prime * result + ((key2 == null) ? 0 : key2.hashCode());
+                return result;
             }
 
             @Override
             public boolean equals(Object obj) {
-                if (obj instanceof Key)
-                    return Arrays.equals(key, ((Key) obj).key);
-
-                return false;
+                if (this == obj)
+                    return true;
+                if (obj == null)
+                    return false;
+                if (getClass() != obj.getClass())
+                    return false;
+                Key2 other = (Key2) obj;
+                if (key1 == null) {
+                    if (other.key1 != null)
+                        return false;
+                }
+                else if (!key1.equals(other.key1))
+                    return false;
+                if (key2 == null) {
+                    if (other.key2 != null)
+                        return false;
+                }
+                else if (!key2.equals(other.key2))
+                    return false;
+                return true;
             }
 
             @Override
             public String toString() {
-                return Arrays.asList(key).toString();
+                return "[" + key1 + ", " + key2 + "]";
             }
         }
     }
@@ -2774,25 +2783,22 @@ final class Tools {
                     Column column = member.getAnnotation(Column.class);
 
                     if (column != null) {
-                        if (namesMatch(name, column.name())) {
+                        if (namesMatch(name, column.name()))
                             result.add(accessible(member));
-                        }
                     }
 
                     else {
                         Id id = member.getAnnotation(Id.class);
 
-                        if (id != null) {
-                            if (namesMatch(name, member.getName())) {
+                        if (id != null)
+                            if (namesMatch(name, member.getName()))
                                 result.add(accessible(member));
-                            }
-                        }
                     }
                 }
 
                 return result;
             }
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, type, name);
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, Cache.key(type, name));
     }
 
     private static final boolean namesMatch(String name, String annotation) {
@@ -2818,19 +2824,16 @@ final class Tools {
                 // accerates POJO mapping
                 String camelCaseLC = StringUtils.toCamelCaseLC(name);
 
-                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    if (name.equals(member.getName())) {
+                for (java.lang.reflect.Field member : getInstanceMembers(type))
+                    if (name.equals(member.getName()))
                         result.add(accessible(member));
-                    }
-                    else if (camelCaseLC.equals(member.getName())) {
+                    else if (camelCaseLC.equals(member.getName()))
                         result.add(accessible(member));
-                    }
-                }
 
                 return result;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS, type, name);
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS, Cache.key(type, name));
     }
 
     /**
@@ -2867,9 +2870,8 @@ final class Tools {
                                     Method setter = type.getMethod("set" + suffix, method.getReturnType());
 
                                     // Setter annotation is more relevant
-                                    if (setter.getAnnotation(Column.class) == null) {
+                                    if (setter.getAnnotation(Column.class) == null)
                                         result.add(accessible(setter));
-                                    }
                                 }
                                 catch (NoSuchMethodException ignore) {}
                             }
@@ -2880,7 +2882,7 @@ final class Tools {
                 return result;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, type, name);
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
     }
 
     /**
@@ -2910,9 +2912,8 @@ final class Tools {
                                     Method getter = type.getMethod("get" + m.substring(3));
 
                                     // Getter annotation is more relevant
-                                    if (getter.getAnnotation(Column.class) == null) {
+                                    if (getter.getAnnotation(Column.class) == null)
                                         return accessible(getter);
-                                    }
                                 }
                                 catch (NoSuchMethodException ignore) {}
 
@@ -2920,9 +2921,8 @@ final class Tools {
                                     Method getter = type.getMethod("is" + m.substring(3));
 
                                     // Getter annotation is more relevant
-                                    if (getter.getAnnotation(Column.class) == null) {
+                                    if (getter.getAnnotation(Column.class) == null)
                                         return accessible(getter);
-                                    }
                                 }
                                 catch (NoSuchMethodException ignore) {}
                             }
@@ -2933,7 +2933,7 @@ final class Tools {
                 return null;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, type, name);
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, Cache.key(type, name));
     }
 
     /**
@@ -2954,26 +2954,21 @@ final class Tools {
                 for (Method method : getInstanceMethods(type)) {
                     Class<?>[] parameterTypes = method.getParameterTypes();
 
-                    if (parameterTypes.length == 1) {
-                        if (name.equals(method.getName())) {
+                    if (parameterTypes.length == 1)
+                        if (name.equals(method.getName()))
                             result.add(accessible(method));
-                        }
-                        else if (camelCaseLC.equals(method.getName())) {
+                        else if (camelCaseLC.equals(method.getName()))
                             result.add(accessible(method));
-                        }
-                        else if (("set" + name).equals(method.getName())) {
+                        else if (("set" + name).equals(method.getName()))
                             result.add(accessible(method));
-                        }
-                        else if (("set" + camelCase).equals(method.getName())) {
+                        else if (("set" + camelCase).equals(method.getName()))
                             result.add(accessible(method));
-                        }
-                    }
                 }
 
                 return result;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, type, name);
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
     }
 
 
@@ -2990,43 +2985,33 @@ final class Tools {
                 String camelCase = StringUtils.toCamelCase(name);
                 String camelCaseLC = StringUtils.toLC(camelCase);
 
-                for (Method method : getInstanceMethods(type)) {
-                    if (method.getParameterTypes().length == 0) {
-                        if (name.equals(method.getName())) {
+                for (Method method : getInstanceMethods(type))
+                    if (method.getParameterTypes().length == 0)
+                        if (name.equals(method.getName()))
                             return accessible(method);
-                        }
-                        else if (camelCaseLC.equals(method.getName())) {
+                        else if (camelCaseLC.equals(method.getName()))
                             return accessible(method);
-                        }
-                        else if (("get" + name).equals(method.getName())) {
+                        else if (("get" + name).equals(method.getName()))
                             return accessible(method);
-                        }
-                        else if (("get" + camelCase).equals(method.getName())) {
+                        else if (("get" + camelCase).equals(method.getName()))
                             return accessible(method);
-                        }
-                        else if (("is" + name).equals(method.getName())) {
+                        else if (("is" + name).equals(method.getName()))
                             return accessible(method);
-                        }
-                        else if (("is" + camelCase).equals(method.getName())) {
+                        else if (("is" + camelCase).equals(method.getName()))
                             return accessible(method);
-                        }
-                    }
-                }
 
                 return null;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, type, name);
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
     }
 
     private static final List<Method> getInstanceMethods(Class<?> type) {
         List<Method> result = new ArrayList<Method>();
 
-        for (Method method : type.getMethods()) {
-            if ((method.getModifiers() & Modifier.STATIC) == 0) {
+        for (Method method : type.getMethods())
+            if ((method.getModifiers() & Modifier.STATIC) == 0)
                 result.add(method);
-            }
-        }
 
         return result;
     }
@@ -3916,6 +3901,12 @@ final class Tools {
             else
                 ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
         }
+
+        // [#6841] SQLite usually recognises int/integer as both meaning the same thing, but not in the
+        //         context of an autoincrement column, in case of which explicit "integer" types are required.
+        else if (type.identity() && ctx.family() == SQLITE && type.isNumeric()) {
+            ctx.sql("integer");
+        }
         else {
             ctx.sql(typeName);
         }
@@ -3933,6 +3924,7 @@ final class Tools {
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
+                case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
             }
         }
     }
@@ -4114,5 +4106,21 @@ final class Tools {
             return table.field((String) field);
         else
             throw new IllegalArgumentException("Field type not supported: " + field);
+    }
+
+    static final boolean isNotEmpty(Collection<?> collection) {
+        return collection != null && !collection.isEmpty();
+    }
+
+    static final boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    static final boolean isNotEmpty(Object[] array) {
+        return array != null && array.length > 0;
+    }
+
+    static final boolean isEmpty(Object[] array) {
+        return array == null || array.length == 0;
     }
 }

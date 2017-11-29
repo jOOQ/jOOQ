@@ -451,10 +451,10 @@ class ParserImpl implements Parser {
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
+        parseWhitespaceIf(ctx);
         if (ctx.done())
             return null;
 
-        parseWhitespaceIf(ctx);
         try {
             switch (ctx.character()) {
                 case 'a':
@@ -5135,7 +5135,7 @@ class ParserImpl implements Parser {
     private static final String parseStringLiteral(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseIf(ctx, 'q'))
+        if (parseIf(ctx, 'q') || parseIf(ctx, 'Q'))
             return parseOracleQuotedStringLiteral(ctx);
         else
             return parseUnquotedStringLiteral(ctx);

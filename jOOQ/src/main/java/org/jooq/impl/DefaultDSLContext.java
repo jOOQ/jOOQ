@@ -38,14 +38,17 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
@@ -1199,7 +1202,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) {
         ExecuteContext ctx = new DefaultExecuteContext(configuration());
-        ExecuteListener listener = new ExecuteListeners(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx);
 
         ctx.resultSet(rs);
         return new CursorImpl<Record>(ctx, listener, fields, null, false, true);
@@ -2029,23 +2032,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        SelectWhereStep<R> result = DSL.selectFrom(table);
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).from(table);
     }
 
     @Override
     public SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
-        SelectSelectStep<Record> result = DSL.select(fields);
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).select(fields);
     }
 
     @Override
     public SelectSelectStep<Record> select(SelectField<?>... fields) {
-        SelectSelectStep<Record> result = DSL.select(fields);
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).select(fields);
     }
 
 // [jooq-tools] START [select]
@@ -2186,16 +2183,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
-        SelectSelectStep<Record> result = DSL.selectDistinct(fields);
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null, true).select(fields);
     }
 
     @Override
     public SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
-        SelectSelectStep<Record> result = DSL.selectDistinct(fields);
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null, true).select(fields);
     }
 
 // [jooq-tools] START [selectDistinct]
@@ -2336,23 +2329,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectZero() {
-        SelectSelectStep<Record1<Integer>> result = DSL.selectZero();
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).select(zero().as("zero"));
     }
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectOne() {
-        SelectSelectStep<Record1<Integer>> result = DSL.selectOne();
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).select(one().as("one"));
     }
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectCount() {
-        SelectSelectStep<Record1<Integer>> result = DSL.selectCount();
-        result.attach(configuration());
-        return result;
+        return new SelectImpl(configuration(), null).select(count());
     }
 
     @Override

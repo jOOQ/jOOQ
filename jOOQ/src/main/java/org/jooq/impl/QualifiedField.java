@@ -54,18 +54,15 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 6937002867156868761L;
+    private static final long       serialVersionUID = 6937002867156868761L;
 
-    private final Name          name;
-    private final Table<Record> table;
+    private final Name              name;
+    private transient Table<Record> table;
 
     QualifiedField(Name name, DataType<T> type) {
         super(name, type);
 
         this.name = name;
-        this.table = name.qualified()
-            ? DSL.table(name.qualifier())
-            : null;
     }
 
     // ------------------------------------------------------------------------
@@ -79,6 +76,9 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
 
     @Override
     public final Table<Record> getTable() {
+        if (table == null)
+            table = name.qualified() ? DSL.table(name.qualifier()) : null;
+
         return table;
     }
 }

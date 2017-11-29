@@ -108,7 +108,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private static final long     serialVersionUID = 3155496238969274871L;
     private static final Clause[] CLAUSES          = { TABLE };
 
-    private final Schema          tableschema;
+    private Schema                tableschema;
     private final Name            tablename;
     private final String          tablecomment;
     private transient DataType<R> type;
@@ -146,13 +146,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     AbstractTable(Name name, Schema schema, String comment) {
-        this.tableschema =
-            schema != null
-          ? schema
-          : name.qualified()
-          ? DSL.schema(name.qualifier())
-          : null;
-
+        this.tableschema = schema;
         this.tablename = name;
         this.tablecomment = comment;
     }
@@ -384,6 +378,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public /* non-final */ Schema getSchema() {
+        if (tableschema == null)
+            tableschema = tablename.qualified()
+                        ? DSL.schema(tablename.qualifier())
+                        : null;
+
         return tableschema;
     }
 

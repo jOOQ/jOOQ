@@ -734,7 +734,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T> T fetchSingle(Field<T> field) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -748,7 +748,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T> T fetchSingle(Field<?> field, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -762,7 +762,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -776,7 +776,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     Object fetchSingle(int fieldIndex) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -790,7 +790,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T> T fetchSingle(int fieldIndex, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -804,7 +804,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -818,7 +818,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     Object fetchSingle(String fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -832,7 +832,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T> T fetchSingle(String fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -846,7 +846,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -860,7 +860,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     Object fetchSingle(Name fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -874,7 +874,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <T> T fetchSingle(Name fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -888,7 +888,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -902,7 +902,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     R fetchSingle() throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -913,7 +913,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <E> E fetchSingle(RecordMapper<? super R, E> mapper) throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -924,7 +924,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      * @see Result#intoMaps()
      * @see Record#intoMap()
@@ -939,7 +939,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     Object[] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
@@ -963,7 +963,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
@@ -990,7 +990,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
-     * @thorws NoDataFoundException if the query returned no records
+     * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
     <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;

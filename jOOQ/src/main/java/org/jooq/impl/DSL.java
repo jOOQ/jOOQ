@@ -13539,6 +13539,122 @@ public class DSL {
         return new DateAdd<LocalDate>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
+    /**
+     * Add an interval to a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Number)
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime timestamp, Number interval) {
+        return localDateTimeAdd(Tools.field(timestamp), Tools.field(interval));
+    }
+
+    /**
+     * Add an interval to a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Field)
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> timestamp, Field<? extends Number> interval) {
+        return nullSafe(timestamp).add(interval);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(Tools.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(nullSafe(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(nullSafe(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> localDateTimeDiff(LocalDateTime timestamp1, LocalDateTime timestamp2) {
+        return localDateTimeDiff(Tools.field(timestamp1), Tools.field(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, LocalDateTime timestamp2) {
+        return localDateTimeDiff(nullSafe(timestamp1), Tools.field(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> localDateTimeDiff(LocalDateTime timestamp1, Field<LocalDateTime> timestamp2) {
+        return localDateTimeDiff(Tools.field(timestamp1), nullSafe(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, Field<LocalDateTime> timestamp2) {
+        return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
+    }
+
 
 
     /**

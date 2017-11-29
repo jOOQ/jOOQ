@@ -40,8 +40,6 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
-import java.sql.Timestamp;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.types.DayToSecond;
@@ -56,10 +54,10 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
      */
     private static final long serialVersionUID = -4813228000332771961L;
 
-    private final Field<Timestamp> timestamp1;
-    private final Field<Timestamp> timestamp2;
+    private final Field<?>    timestamp1;
+    private final Field<?>    timestamp2;
 
-    TimestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
+    TimestampDiff(Field<?> timestamp1, Field<?> timestamp2) {
         super("timestampdiff", SQLDataType.INTERVALDAYTOSECOND, timestamp1, timestamp2);
 
         this.timestamp1 = timestamp1;

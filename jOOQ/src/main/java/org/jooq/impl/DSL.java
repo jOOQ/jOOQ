@@ -161,6 +161,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.GrantStepOn;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
 import org.jooq.Index;
@@ -223,6 +224,7 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.PlainSQL;
+import org.jooq.Privilege;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -254,6 +256,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.RevokeStepOn;
 import org.jooq.Role;
 import org.jooq.Row1;
 import org.jooq.Row10;
@@ -7860,6 +7863,118 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX Access control
     // -------------------------------------------------------------------------
+
+    /**
+     * Grant a privilege on table to user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(user)
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(role)
+     * </pre></code>
+     *
+     * 
+     * @see #grant(Collection)
+     */
+    @Support
+    public static GrantStepOn grant(String privilege) {
+        return using(new DefaultConfiguration()).grant(privilege(privilege));
+    }
+
+    /**
+     * Grant a privilege on table to user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * grant(privileges)
+     *   .on(table)
+     *   .to(user)
+     *
+     * grant(privileges)
+     *   .on(table)
+     *   .to(role)
+     * </pre></code>
+     * <p>
+     *
+     * @see #grant(String)
+     */
+    @Support
+    public static GrantStepOn grant(Collection<? extends Privilege> privileges) {
+        return using(new DefaultConfiguration()).grant(privileges);
+    }
+
+    /**
+     * Revoke a privilege on table from user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(user)
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(role)
+     * </pre></code>
+     * <p>
+     *
+     * @see #revoke(Collection)
+     */
+    @Support
+    public static RevokeStepOn revoke(String privilege) {
+        return using(new DefaultConfiguration()).revoke(privilege(privilege));
+    }
+
+    /**
+     * Revoke a privilege on table from user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * revoke(privileges)
+     *   .on(table)
+     *   .from(user)
+     *
+     * revoke(privileges)
+     *   .on(table)
+     *   .from(role)
+     * </pre></code>
+     * <p>
+     *
+     * @see #revoke(String)
+     */
+    @Support
+    public static RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
+        return using(new DefaultConfiguration()).revoke(privileges);
+    }
+
+    /**
+     * Create a new privilege reference.
+     *
+     * @see #privilege(Keyword)
+     */
+    public static Privilege privilege(String privilege) {
+        return privilege(keyword(privilege));
+    }
+
+    /**
+     * Create a new privilege reference.
+     */
+    public static Privilege privilege(Keyword privilege) {
+        return new PrivilegeImpl(privilege);
+    }
 
     /**
      * Create a new user reference.

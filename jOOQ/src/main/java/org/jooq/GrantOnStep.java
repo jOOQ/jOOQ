@@ -31,19 +31,42 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * The preparation a privilege.
+ * The step in the creation of a <code>GRANT</code> statement where the
+ * <code>ON</code> clause can be added.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface GrantFirstStep extends GrantStepOn {
+public interface GrantOnStep {
 
-    GrantStepOn grant(Privilege privilege);
+    /**
+     * Grant a privilege on a table.
+     */
+    @Support
+    GrantToStep on(Table<?> table);
 
-    GrantStepOn grant(Collection<? extends Privilege> privileges);
+    /**
+     * Grant a privilege on a table.
+     */
+    @Support
+    GrantToStep on(Name table);
+
+    /**
+     * Grant a privilege on a table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @PlainSQL
+    @Support
+    GrantToStep on(String table);
 }

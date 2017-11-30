@@ -161,7 +161,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
-import org.jooq.GrantStepOn;
+import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
 import org.jooq.Index;
@@ -256,7 +256,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.RevokeStepOn;
+import org.jooq.RevokeOnStep;
 import org.jooq.Role;
 import org.jooq.Row1;
 import org.jooq.Row10;
@@ -7874,22 +7874,50 @@ public class DSL {
      * grant(privilege)
      *   .on(table)
      *   .to(user)
+     *   .execute();
      *
      * grant(privilege)
      *   .on(table)
      *   .to(role)
+     *   .execute();
      * </pre></code>
      *
-     * 
+     *
      * @see #grant(Collection)
      */
     @Support
-    public static GrantStepOn grant(String privilege) {
-        return using(new DefaultConfiguration()).grant(privilege(privilege));
+    public static GrantOnStep grant(Privilege privilege) {
+        return using(new DefaultConfiguration()).grant(privilege);
     }
 
     /**
-     * Grant a privilege on table to user or role.
+     * Grant privileges on table to user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(user)
+     *   .execute();
+     *
+     * grant(privilege)
+     *   .on(table)
+     *   .to(role)
+     *   .execute();
+     * </pre></code>
+     *
+     *
+     * @see #grant(Collection)
+     */
+    @Support
+    public static GrantOnStep grant(Privilege... privileges) {
+        return using(new DefaultConfiguration()).grant(privileges);
+    }
+
+    /**
+     * Grant privileges on table to user or role.
      *
      * <p>
      * Example: <code><pre>
@@ -7898,17 +7926,19 @@ public class DSL {
      * grant(privileges)
      *   .on(table)
      *   .to(user)
+     *   .execute();
      *
      * grant(privileges)
      *   .on(table)
      *   .to(role)
+     *   .execute();
      * </pre></code>
      * <p>
      *
-     * @see #grant(String)
+     * @see #grant(Privilege...)
      */
     @Support
-    public static GrantStepOn grant(Collection<? extends Privilege> privileges) {
+    public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).grant(privileges);
     }
 
@@ -7922,22 +7952,50 @@ public class DSL {
      * revoke(privilege)
      *   .on(table)
      *   .from(user)
+     *   .execute();
      *
      * revoke(privilege)
      *   .on(table)
      *   .from(role)
+     *   .execute();
      * </pre></code>
      * <p>
      *
      * @see #revoke(Collection)
      */
     @Support
-    public static RevokeStepOn revoke(String privilege) {
-        return using(new DefaultConfiguration()).revoke(privilege(privilege));
+    public static RevokeOnStep revoke(Privilege privilege) {
+        return using(new DefaultConfiguration()).revoke(privilege);
     }
 
     /**
-     * Revoke a privilege on table from user or role.
+     * Revoke privileges on table from user or role.
+     *
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(user)
+     *   .execute();
+     *
+     * revoke(privilege)
+     *   .on(table)
+     *   .from(role)
+     *   .execute();
+     * </pre></code>
+     * <p>
+     *
+     * @see #revoke(Collection)
+     */
+    @Support
+    public static RevokeOnStep revoke(Privilege... privileges) {
+        return using(new DefaultConfiguration()).revoke(privileges);
+    }
+
+    /**
+     * Revoke privileges on table from user or role.
      *
      * <p>
      * Example: <code><pre>
@@ -7946,25 +8004,32 @@ public class DSL {
      * revoke(privileges)
      *   .on(table)
      *   .from(user)
+     *   .execute();
      *
      * revoke(privileges)
      *   .on(table)
      *   .from(role)
+     *   .execute();
      * </pre></code>
      * <p>
      *
-     * @see #revoke(String)
+     * @see #revoke(Privilege...)
      */
     @Support
-    public static RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
+    public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }
 
     /**
      * Create a new privilege reference.
-     *
-     * @see #privilege(Keyword)
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      */
+    @PlainSQL
+    @Support
     public static Privilege privilege(String privilege) {
         return privilege(keyword(privilege));
     }
@@ -7972,7 +8037,8 @@ public class DSL {
     /**
      * Create a new privilege reference.
      */
-    public static Privilege privilege(Keyword privilege) {
+    @Support
+    static Privilege privilege(Keyword privilege) {
         return new PrivilegeImpl(privilege);
     }
 
@@ -7981,6 +8047,7 @@ public class DSL {
      *
      * @see #user(Name)
      */
+    @Support
     public static User user(String name) {
         return user(name(name));
     }
@@ -7988,6 +8055,7 @@ public class DSL {
     /**
      * Create a new user reference.
      */
+    @Support
     public static User user(Name name) {
         return new UserImpl(name);
     }
@@ -7997,6 +8065,7 @@ public class DSL {
      *
      * @see #role(Name)
      */
+    @Support
     public static Role role(String name) {
         return role(name(name));
     }
@@ -8004,6 +8073,7 @@ public class DSL {
     /**
      * Create a new role reference.
      */
+    @Support
     public static Role role(Name name) {
         return new RoleImpl(name);
     }

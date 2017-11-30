@@ -53,12 +53,6 @@ public enum Clause {
     ROLE,
     PRIVILEGE,
 
-    GRANT,
-    GRANT_PRIVILEGE,
-
-    REVOKE,
-    REVOKE_PRIVILEGE,
-
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model constraint references
     // -------------------------------------------------------------------------
@@ -831,7 +825,7 @@ public enum Clause {
     TRUNCATE_TRUNCATE,
 
     // -------------------------------------------------------------------------
-    // Clauses that are used in an ALTER statement
+    // Clauses that are used in DDL statements
     // -------------------------------------------------------------------------
 
     /**
@@ -1255,6 +1249,20 @@ public enum Clause {
      * </ul>
      */
     DROP_SEQUENCE_SEQUENCE,
+
+    // -------------------------------------------------------------------------
+    // Clauses that are used in access control statements
+    // -------------------------------------------------------------------------
+
+    GRANT,
+    GRANT_PRIVILEGE,
+    GRANT_ON,
+    GRANT_TO,
+
+    REVOKE,
+    REVOKE_PRIVILEGE,
+    REVOKE_ON,
+    REVOKE_FROM,
 
     // -------------------------------------------------------------------------
     // Other clauses

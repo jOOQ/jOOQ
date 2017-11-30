@@ -31,17 +31,30 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
 /**
- * The preparation a target of privilege.
+ * The step in the creation of a <code>REVOKE</code> statement where the
+ * <code>FROM</code> clause can be added.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface RevokeStepOn extends RevokeStepFrom {
+public interface RevokeFromStep {
 
-    RevokeStepFrom on(Table<?> table);
+    /**
+     * Revoke a privilege from a user.
+     */
+    @Support
+    RevokeFinalStep from(User user);
 
-    RevokeStepFrom on(String table);
+    /**
+     * Revoke a privilege from a role.
+     */
+    @Support
+    RevokeFinalStep from(Role role);
 }

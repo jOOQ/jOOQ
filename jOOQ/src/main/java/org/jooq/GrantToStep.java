@@ -31,17 +31,30 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
 /**
- * The preparation either a user or a role.
+ * The step in the creation of a <code>GRANT</code> statement where the
+ * <code>TO</code> clause can be added.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface RevokeStepFrom extends Query {
+public interface GrantToStep {
 
-    Query from(User user);
+    /**
+     * Grant a privilege to a user.
+     */
+    @Support
+    GrantFinalStep to(User user);
 
-    Query from(Role role);
+    /**
+     * Grant a privilege to a role.
+     */
+    @Support
+    GrantFinalStep to(Role role);
 }

@@ -31,27 +31,34 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.impl;
+
+import static org.jooq.Clause.REVOKE;
+import static org.jooq.Clause.REVOKE_FROM;
+import static org.jooq.Clause.REVOKE_ON;
+import static org.jooq.Clause.REVOKE_PRIVILEGE;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_REVOKE;
+
+import java.util.Collection;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Privilege;
-import org.jooq.Query;
-import org.jooq.RevokeFirstStep;
-import org.jooq.RevokeStepOn;
-import org.jooq.RevokeStepFrom;
+import org.jooq.RevokeFinalStep;
+import org.jooq.RevokeFromStep;
+import org.jooq.RevokeOnStep;
 import org.jooq.Role;
 import org.jooq.Table;
 import org.jooq.User;
-
-import java.util.Collection;
-import java.util.Collections;
-
-import static org.jooq.Clause.REVOKE;
-import static org.jooq.Clause.REVOKE_PRIVILEGE;
-import static org.jooq.impl.Keywords.*;
 
 /**
  * Revoke privilege or privileges on a table from user or role.
@@ -59,23 +66,26 @@ import static org.jooq.impl.Keywords.*;
  * @author Timur Shaidullin
  */
 final class RevokeImpl extends AbstractQuery implements
-    RevokeFirstStep,
-    RevokeStepOn,
-    RevokeStepFrom,
-    Query {
+
+    // Cascading interface implementations for Select behaviour
+    RevokeOnStep,
+    RevokeFromStep,
+    RevokeFinalStep {
 
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -5777612075774539326L;
-    private Clause[]                        CLAUSE           = { REVOKE };
-    private Collection<? extends Privilege> privileges;
-    private Role                            role;
-    private Table<?>                        table;
-    private User                            user;
+    private static final long                     serialVersionUID = -5777612075774539326L;
+    private static final Clause[]                 CLAUSE           = { REVOKE };
+    private final Collection<? extends Privilege> privileges;
+    private Role                                  role;
+    private Table<?>                              table;
+    private User                                  user;
 
-    RevokeImpl(Configuration configuration) {
+    RevokeImpl(Configuration configuration, Collection<? extends Privilege> privileges) {
         super(configuration);
+
+        this.privileges = privileges;
     }
 
     // ------------------------------------------------------------------------
@@ -83,37 +93,36 @@ final class RevokeImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.start(REVOKE_PRIVILEGE)
-            .visit(K_REVOKE).sql(' ');
+           .visit(K_REVOKE).sql(' ');
 
-        Privilege[] arrayOfPrivileges = privileges.toArray(Tools.EMPTY_PRIVILEGE);
+        String separator = "";
+        for (Privilege privilege : privileges) {
+            ctx.sql(separator)
+               .visit(privilege);
 
-        for (int i = 0; i < arrayOfPrivileges.length; i++) {
-            ctx.visit(arrayOfPrivileges[i]);
-
-            if (i != arrayOfPrivileges.length - 1) {
-                ctx.sql(',');
-            }
-
-            ctx.sql(' ');
+            separator = ", ";
         }
 
-        ctx.visit(K_ON).sql(' ')
-            .visit(table).sql(' ')
-            .visit(K_FROM).sql(' ');
+        ctx.end(REVOKE_PRIVILEGE).sql(' ')
+           .start(REVOKE_ON)
+           .visit(K_ON).sql(' ')
+           .visit(table)
+           .end(REVOKE_ON).sql(' ')
+           .start(REVOKE_FROM)
+           .visit(K_FROM).sql(' ');
 
-        if (user != null) {
+        if (user != null)
             ctx.visit(user);
-        } else if (role != null) {
+        else if (role != null)
             ctx.visit(role);
-        }
 
-        ctx.end(REVOKE_PRIVILEGE).sql(';');
+        ctx.end(REVOKE_FROM);
     }
 
     @Override
-    public Clause[] clauses(Context<?> ctx) {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSE;
     }
 
@@ -122,38 +131,30 @@ final class RevokeImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public RevokeStepOn revoke(Privilege privilege) {
-        this.privileges = Collections.singletonList(privilege);
+    public final RevokeImpl on(Table<?> t) {
+        this.table = t;
         return this;
     }
 
     @Override
-    public RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
-        this.privileges = privileges;
+    public final RevokeImpl on(Name t) {
+        return on(table(t));
+    }
+
+    @Override
+    public final RevokeImpl on(String t) {
+        return on(table(t));
+    }
+
+    @Override
+    public final RevokeImpl from(User u) {
+        this.user = u;
         return this;
     }
 
     @Override
-    public RevokeStepFrom on(Table<?> table) {
-        this.table = table;
-        return this;
-    }
-
-    @Override
-    public RevokeStepFrom on(String table) {
-        this.table = DSL.table(table);
-        return this;
-    }
-
-    @Override
-    public Query from(User user) {
-        this.user = user;
-        return this;
-    }
-
-    @Override
-    public Query from(Role role) {
-        this.role = role;
+    public final RevokeImpl from(Role r) {
+        this.role = r;
         return this;
     }
 }

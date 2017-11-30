@@ -31,15 +31,18 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.impl;
+
+import static org.jooq.Clause.PRIVILEGE;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Privilege;
-
-import static org.jooq.Clause.PRIVILEGE;
 
 /**
  * @author Timur Shaidullin
@@ -62,12 +65,12 @@ final class PrivilegeImpl extends AbstractQueryPart implements Privilege {
     // ------------------------------------------------------------------------
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(privilege);
     }
 
     @Override
-    public Clause[] clauses(Context<?> ctx) {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 }

@@ -124,7 +124,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Explain;
 import org.jooq.Field;
-import org.jooq.GrantStepOn;
+import org.jooq.GrantOnStep;
 import org.jooq.Index;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -179,8 +179,8 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Param;
-import org.jooq.Privilege;
 import org.jooq.Parser;
+import org.jooq.Privilege;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -211,7 +211,7 @@ import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
-import org.jooq.RevokeStepOn;
+import org.jooq.RevokeOnStep;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -3411,6 +3411,40 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     // -------------------------------------------------------------------------
+    // XXX Access control
+    // -------------------------------------------------------------------------
+
+    @Override
+    public GrantOnStep grant(Privilege privilege) {
+        return grant(Arrays.asList(privilege));
+    }
+
+    @Override
+    public GrantOnStep grant(Privilege... privileges) {
+        return grant(Arrays.asList(privileges));
+    }
+
+    @Override
+    public GrantOnStep grant(Collection<? extends Privilege> privileges) {
+        return new GrantImpl(configuration(), privileges);
+    }
+
+    @Override
+    public RevokeOnStep revoke(Privilege privilege) {
+        return revoke(Arrays.asList(privilege));
+    }
+
+    @Override
+    public RevokeOnStep revoke(Privilege... privileges) {
+        return revoke(Arrays.asList(privileges));
+    }
+
+    @Override
+    public RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
+        return new RevokeImpl(configuration(), privileges);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------
 
@@ -4200,29 +4234,5 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public String toString() {
         return configuration().toString();
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX Access control
-    // -------------------------------------------------------------------------
-
-    @Override
-    public GrantStepOn grant(Privilege privilege) {
-        return new GrantImpl(configuration()).grant(privilege);
-    }
-
-    @Override
-    public GrantStepOn grant(Collection<? extends Privilege> privileges) {
-        return new GrantImpl(configuration()).grant(privileges);
-    }
-
-    @Override
-    public RevokeStepOn revoke(Privilege privilege) {
-        return new RevokeImpl(configuration()).revoke(privilege);
-    }
-
-    @Override
-    public RevokeStepOn revoke(Collection<? extends Privilege> privileges) {
-        return new RevokeImpl(configuration()).revoke(privileges);
     }
 }

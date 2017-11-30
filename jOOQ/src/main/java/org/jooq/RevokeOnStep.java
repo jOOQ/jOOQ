@@ -31,17 +31,42 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
 /**
- * The preparation a target of privilege.
+ * The step in the creation of a <code>REVOKE</code> statement where the
+ * <code>ON</code> clause can be added.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface GrantStepOn extends GrantStepTo {
+public interface RevokeOnStep {
 
-    GrantStepTo on(Table<?> table);
+    /**
+     * Revoke a privilege on a table.
+     */
+    @Support
+    RevokeFromStep on(Table<?> table);
 
-    GrantStepTo on(String table);
+    /**
+     * Revoke a privilege on a table.
+     */
+    @Support
+    RevokeFromStep on(Name table);
+
+    /**
+     * Revoke a privilege on a table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     */
+    @PlainSQL
+    @Support
+    RevokeFromStep on(String table);
 }

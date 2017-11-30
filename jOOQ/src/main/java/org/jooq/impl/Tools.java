@@ -193,7 +193,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
-import org.jooq.Privilege;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -257,7 +256,6 @@ final class Tools {
     static final int[]                      EMPTY_INT                     = {};
     static final Name[]                     EMPTY_NAME                    = {};
     static final Param<?>[]                 EMPTY_PARAM                   = {};
-    static final Privilege[]                EMPTY_PRIVILEGE               = {};
     static final Query[]                    EMPTY_QUERY                   = {};
     static final QueryPart[]                EMPTY_QUERYPART               = {};
     static final Record[]                   EMPTY_RECORD                  = {};

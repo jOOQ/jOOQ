@@ -31,19 +31,17 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * The preparation a privilege.
+ * The final step in the creation of a <code>REVOKE</code> statement.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface RevokeFirstStep extends RevokeStepOn {
-
-    RevokeStepOn revoke(Privilege privilege);
-
-    RevokeStepOn revoke(Collection<? extends Privilege> privileges);
+public interface GrantFinalStep extends Query {
 }

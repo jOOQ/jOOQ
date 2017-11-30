@@ -31,17 +31,17 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
 /**
- * The preparation either a user or a role.
+ * The final step in the creation of a <code>REVOKE</code> statement.
  *
  * @author Timur Shaidullin
+ * @author Lukas Eder
  */
-public interface GrantStepTo extends Query {
-
-    Query to(User user);
-
-    Query to(Role role);
+public interface RevokeFinalStep extends Query {
 }

@@ -9488,6 +9488,46 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
+    // XXX Access control
+    // -------------------------------------------------------------------------
+
+    /**
+     * Grant a privilege on a table to user or role.
+     */
+    @Support
+    GrantOnStep grant(Privilege privilege);
+
+    /**
+     * Grant privileges on a table to user or role.
+     */
+    @Support
+    GrantOnStep grant(Privilege... privileges);
+
+    /**
+     * Grant privileges on a table to user or role.
+     */
+    @Support
+    GrantOnStep grant(Collection<? extends Privilege> privileges);
+
+    /**
+     * Revoke a privilege on table from user or role.
+     */
+    @Support
+    RevokeOnStep revoke(Privilege privilege);
+
+    /**
+     * Revoke privileges on table from user or role.
+     */
+    @Support
+    RevokeOnStep revoke(Privilege... privileges);
+
+    /**
+     * Revoke privileges on table from user or role.
+     */
+    @Support
+    RevokeOnStep revoke(Collection<? extends Privilege> privileges);
+
+    // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------
 
@@ -10840,32 +10880,4 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException;
-
-    // -------------------------------------------------------------------------
-    // XXX Access control
-    // -------------------------------------------------------------------------
-
-    /**
-     * Grant privilege on a table to user or role.
-     */
-    @Support
-    GrantStepOn grant(Privilege privilege);
-
-    /**
-     * Grant privileges on a table to user or role.
-     */
-    @Support
-    GrantStepOn grant(Collection<? extends Privilege> privileges);
-
-    /**
-     * Revoke a privilege on table from user or role.
-     */
-    @Support
-    RevokeStepOn revoke(Privilege privilege);
-
-    /**
-     * Revoke privileges on table from user or role.
-     */
-    @Support
-    RevokeStepOn revoke(Collection<? extends Privilege> privileges);
 }

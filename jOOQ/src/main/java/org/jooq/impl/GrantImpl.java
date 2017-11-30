@@ -31,52 +31,60 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.impl;
+
+import static org.jooq.Clause.GRANT;
+import static org.jooq.Clause.GRANT_ON;
+import static org.jooq.Clause.GRANT_PRIVILEGE;
+import static org.jooq.Clause.GRANT_TO;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_GRANT;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_TO;
+
+import java.util.Collection;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.GrantFirstStep;
-import org.jooq.GrantStepOn;
-import org.jooq.GrantStepTo;
+import org.jooq.GrantFinalStep;
+import org.jooq.GrantOnStep;
+import org.jooq.GrantToStep;
+import org.jooq.Name;
 import org.jooq.Privilege;
-import org.jooq.Query;
 import org.jooq.Role;
 import org.jooq.Table;
 import org.jooq.User;
-
-import java.util.Collection;
-import java.util.Collections;
-
-import static org.jooq.Clause.GRANT;
-import static org.jooq.Clause.GRANT_PRIVILEGE;
-import static org.jooq.impl.Keywords.K_GRANT;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_TO;
 
 /**
  * Grant privilege or privileges on a table to user or role.
  * @author Timur Shaidullin
  */
 final class GrantImpl extends AbstractQuery implements
-    GrantFirstStep,
-    GrantStepOn,
-    GrantStepTo,
-    Query {
+
+    // Cascading interface implementations for Select behaviour
+    GrantOnStep,
+    GrantToStep,
+    GrantFinalStep {
 
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -6509384254822040545L;
-    private Clause[]                        CLAUSE           = { GRANT };
-    private Collection<? extends Privilege> privileges;
-    private Role                            role;
-    private Table<?>                        table;
-    private User                            user;
+    private static final long                     serialVersionUID = -6509384254822040545L;
+    private static final Clause[]                 CLAUSE           = { GRANT };
+    private final Collection<? extends Privilege> privileges;
+    private Role                                  role;
+    private Table<?>                              table;
+    private User                                  user;
 
-    GrantImpl(Configuration configuration) {
+    GrantImpl(Configuration configuration, Collection<? extends Privilege> privileges) {
         super(configuration);
+
+        this.privileges = privileges;
     }
 
     // ------------------------------------------------------------------------
@@ -84,37 +92,36 @@ final class GrantImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.start(GRANT_PRIVILEGE)
-            .visit(K_GRANT).sql(' ');
+           .visit(K_GRANT).sql(' ');
 
-        Privilege[] arrayOfPrivileges = privileges.toArray(Tools.EMPTY_PRIVILEGE);
+        String separator = "";
+        for (Privilege privilege : privileges) {
+            ctx.sql(separator)
+               .visit(privilege);
 
-        for (int i = 0; i < arrayOfPrivileges.length; i++) {
-            ctx.visit(arrayOfPrivileges[i]);
-
-            if (i != (arrayOfPrivileges.length - 1)) {
-                ctx.sql(',');
-            }
-
-            ctx.sql(' ');
+            separator = ", ";
         }
 
-        ctx.visit(K_ON).sql(' ')
-            .visit(table).sql(' ')
-            .visit(K_TO).sql(' ');
+        ctx.end(GRANT_PRIVILEGE).sql(' ')
+           .start(GRANT_ON)
+           .visit(K_ON).sql(' ')
+           .visit(table)
+           .end(GRANT_ON).sql(' ')
+           .start(GRANT_TO)
+           .visit(K_TO).sql(' ');
 
-        if (user != null) {
+        if (user != null)
             ctx.visit(user);
-        } else if (role != null) {
+        else if (role != null)
             ctx.visit(role);
-        }
 
-        ctx.end(GRANT_PRIVILEGE).sql(';');
+        ctx.end(GRANT_TO);
     }
 
     @Override
-    public Clause[] clauses(Context<?> ctx) {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSE;
     }
 
@@ -123,38 +130,30 @@ final class GrantImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public GrantStepOn grant(Privilege privilege) {
-        this.privileges = Collections.singletonList(privilege);
+    public final GrantImpl on(Table<?> t) {
+        this.table = t;
         return this;
     }
 
     @Override
-    public GrantStepOn grant(Collection<? extends Privilege> privileges) {
-        this.privileges = privileges;
+    public final GrantImpl on(Name t) {
+        return on(table(t));
+    }
+
+    @Override
+    public final GrantImpl on(String t) {
+        return on(table(t));
+    }
+
+    @Override
+    public final GrantImpl to(User u) {
+        this.user = u;
         return this;
     }
 
     @Override
-    public GrantStepTo on(Table<?> table) {
-        this.table = table;
-        return this;
-    }
-
-    @Override
-    public GrantStepTo on(String table) {
-        this.table = DSL.table(table);
-        return this;
-    }
-
-    @Override
-    public Query to(User user) {
-        this.user = user;
-        return this;
-    }
-
-    @Override
-    public Query to(Role role) {
-        this.role = role;
+    public final GrantImpl to(Role r) {
+        this.role = r;
         return this;
     }
 }

@@ -29,11 +29,12 @@ GOTO end
 SHIFT
 GOTO parse
 
+:usage
+ECHO Wrong usage. Run with -h or --help argument for details.
+GOTO end
 :endparse
-IF "%URL%"=="" (
-  ECHO Wrong usage. Run with -h or --help argument for details.
-  GOTO end
-)
+IF NOT "%~1"=="" GOTO usage
+IF "%URL%"=="" GOTO usage
 
 set VERSION=3.11.0-SNAPSHOT
 

@@ -30,7 +30,7 @@ SHIFT
 GOTO parse
 
 :endparse
-IF %URL%=="" (
+IF "%URL%"=="" (
   ECHO Wrong usage. Run with -h or --help argument for details.
   GOTO end
 )

@@ -2,8 +2,8 @@
 
 :parse
 IF "%~1"=="" GOTO endparse
-IF "%~1"=="-r" GOTO parserepository
-IF "%~1"=="--repositoryid" GOTO parserepository
+IF "%~1"=="-i" GOTO parserepository
+IF "%~1"=="--repository" GOTO parserepository
 IF "%~1"=="-u" GOTO parseurl
 IF "%~1"=="--url" GOTO parseurl
 IF "%~1"=="-h" GOTO parsehelp

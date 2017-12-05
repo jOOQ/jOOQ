@@ -8362,6 +8362,62 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     Queries ddl(Table<?> table, DDLFlag... flags);
 
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * @see #ddl(Table[], DDLFlag...)
+     */
+    Queries ddl(Table[] tables);
+
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * <p>
+     * The following {@link DDLFlag} can be set:
+     * <ul>
+     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
+     * </li>
+     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
+     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
+     * </li>
+     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
+     * constraint is specified inline with the table.</li>
+     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
+     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
+     * </li>
+     * </ul>
+     * </p>
+     */
+    Queries ddl(Table[] tables, DDLFlag... flags);
+
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * @see #ddl(Collection, DDLFlag...)
+     */
+    Queries ddl(Collection<? extends Table<?>> tables);
+
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * <p>
+     * The following {@link DDLFlag} can be set:
+     * <ul>
+     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
+     * </li>
+     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
+     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
+     * </li>
+     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
+     * constraint is specified inline with the table.</li>
+     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
+     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
+     * </li>
+     * </ul>
+     * </p>
+     */
+    Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags);
+
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------

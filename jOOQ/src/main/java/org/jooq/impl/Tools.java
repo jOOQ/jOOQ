@@ -262,6 +262,7 @@ final class Tools {
     static final RowN[]                     EMPTY_ROWN                    = {};
     static final SortField<?>[]             EMPTY_SORTFIELD               = {};
     static final String[]                   EMPTY_STRING                  = {};
+    static final Table<?>[]                 EMPTY_TABLE                   = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
 

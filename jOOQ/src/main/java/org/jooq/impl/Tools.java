@@ -3826,6 +3826,7 @@ final class Tools {
 
     static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {
         toSQLDDLTypeDeclaration(ctx, type);
+        toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, type);
 
         // [#5356] Some dialects require the DEFAULT clause prior to the
         //         NULL constraints clause
@@ -3840,6 +3841,40 @@ final class Tools {
         else if (!NO_SUPPORT_NULL.contains(ctx.family()))
             ctx.sql(' ').visit(K_NULL);
 
+        if (!DEFAULT_BEFORE_NULL.contains(ctx.family()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+
+        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
+    }
+
+    /**
+     * If a type is an identity type, some dialects require the relevant
+     * keywords before the [ NOT ] NULL constraint.
+     */
+    static final void toSQLDDLTypeDeclarationIdentityBeforeNull(Context<?> ctx, DataType<?> type) {
+        if (type.identity()) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
+                case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
+                case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
+            }
+        }
+    }
+
+    /**
+     * If a type is an identity type, some dialects require the relevant
+     * keywords after the [ NOT ] NULL constraint.
+     */
+    static final void toSQLDDLTypeDeclarationIdentityAfterNull(Context<?> ctx, DataType<?> type) {
         if (type.identity()) {
 
             // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
@@ -3854,16 +3889,12 @@ final class Tools {
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
             }
         }
-
-        if (!DEFAULT_BEFORE_NULL.contains(ctx.family()))
-            toSQLDDLTypeDeclarationDefault(ctx, type);
     }
 
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
     }
-
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         String typeName = type.getTypeName(ctx.configuration());
@@ -3946,23 +3977,6 @@ final class Tools {
         }
         else {
             ctx.sql(typeName);
-        }
-
-        if (type.identity()) {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-                case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
-                case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
-                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
-                case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
-            }
         }
     }
 

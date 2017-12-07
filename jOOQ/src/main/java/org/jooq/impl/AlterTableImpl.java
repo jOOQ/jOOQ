@@ -114,6 +114,8 @@ import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.endTryCatch;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityBeforeNull;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.EnumSet;
@@ -865,9 +867,10 @@ final class AlterTableImpl extends AbstractQuery implements
 
                 ctx.sql(' ');
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
+                toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, alterColumnType);
 
                 // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
-                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(family))
+                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(family)) {
                     switch (alterColumnType.nullability()) {
                         case NULL:
                             ctx.sql(' ').visit(K_NULL);
@@ -878,6 +881,9 @@ final class AlterTableImpl extends AbstractQuery implements
                         case DEFAULT:
                             break;
                     }
+                }
+
+                toSQLDDLTypeDeclarationIdentityAfterNull(ctx, alterColumnType);
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);

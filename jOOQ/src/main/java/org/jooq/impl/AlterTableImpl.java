@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -1000,21 +999,23 @@ final class AlterTableImpl extends AbstractQuery implements
                 }
             }
 
-            // [#5319] Older versions of H2 don't support parentheses around dropped columns
-            if (ctx.family() == H2)
-                ctx.sql(' ');
-            else if (dropColumns.size() != 1                                                 )
-                ctx.sql(" (");
-            else
-                ctx.sql(' ');
+
+
+
+
+
+
+
+            ctx.sql(' ');
 
             ctx.qualify(false)
                .visit(dropColumns)
                .qualify(true);
 
-            if (ctx.family() != H2)
-                if (dropColumns.size() != 1                                                 )
-                    ctx.sql(')');
+
+
+
+
 
             if (dropColumnCascade)
                 ctx.sql(' ').visit(K_CASCADE);

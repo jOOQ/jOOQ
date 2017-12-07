@@ -2,7 +2,7 @@
 
 :parse
 IF "%~1"=="" GOTO endparse
-IF "%~1"=="-i" GOTO parserepository
+IF "%~1"=="-r" GOTO parserepository
 IF "%~1"=="--repository" GOTO parserepository
 IF "%~1"=="-u" GOTO parseurl
 IF "%~1"=="--url" GOTO parseurl
@@ -22,7 +22,7 @@ ECHO Usage: maven-deploy.bat ^<options^>
 ECHO.
 ECHO Options:
 ECHO  -h, --help                      Display this help and exit
-ECHO  -i, --repository   (Optional)   The repository id as specified in your settings.xml
+ECHO  -r, --repository   (Optional)   The repository id as specified in your settings.xml
 ECHO  -u, --url          (Mandatory)  The repository URL
 GOTO end
 :repeat

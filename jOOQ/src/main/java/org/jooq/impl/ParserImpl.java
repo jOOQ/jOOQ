@@ -132,6 +132,7 @@ import static org.jooq.impl.DSL.percentileDisc;
 import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
+import static org.jooq.impl.DSL.privilege;
 import static org.jooq.impl.DSL.rad;
 import static org.jooq.impl.DSL.rangeBetweenCurrentRow;
 import static org.jooq.impl.DSL.rangeBetweenFollowing;
@@ -195,12 +196,17 @@ import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.unique;
+import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.K_DELETE;
+import static org.jooq.impl.Keywords.K_INSERT;
+import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.ParserImpl.Type.A;
 import static org.jooq.impl.ParserImpl.Type.B;
 import static org.jooq.impl.ParserImpl.Type.D;
@@ -274,6 +280,7 @@ import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -295,11 +302,13 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.Parser;
+import org.jooq.Privilege;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
+import org.jooq.RevokeOnStep;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
@@ -320,6 +329,7 @@ import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
 import org.jooq.UpdateReturningStep;
+import org.jooq.User;
 // ...
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowIgnoreNullsStep;
@@ -493,6 +503,13 @@ class ParserImpl implements Parser {
 
                     break;
 
+                case 'g':
+                case 'G':
+                    if (!resultQuery && peekKeyword(ctx, "GRANT"))
+                        return parseGrant(ctx);
+
+                    break;
+
                 case 'i':
                 case 'I':
                     if (!resultQuery && peekKeyword(ctx, "INSERT"))
@@ -511,6 +528,8 @@ class ParserImpl implements Parser {
                 case 'R':
                     if (!resultQuery && peekKeyword(ctx, "RENAME"))
                         return parseRename(ctx);
+                    else if (!resultQuery && peekKeyword(ctx, "REVOKE"))
+                        return parseRevoke(ctx);
 
                     break;
 
@@ -1247,9 +1266,74 @@ class ParserImpl implements Parser {
         return step3;
     }
 
+    private static final DDLQuery parseGrant(ParserContext ctx) {
+        parseKeyword(ctx, "GRANT");
+        Privilege privilege = parsePrivilege(ctx);
+        List<Privilege> privileges = null;
+
+        while (parseIf(ctx, ',')) {
+            if (privileges == null) {
+                privileges = new ArrayList<Privilege>();
+                privileges.add(privilege);
+            }
+
+            privileges.add(parsePrivilege(ctx));
+        }
+
+        parseKeyword(ctx, "ON");
+        Table<?> table = parseTableName(ctx);
+
+        parseKeyword(ctx, "TO");
+        User user = parseUser(ctx);
+
+        GrantOnStep s1 = privileges == null ? ctx.dsl.grant(privilege) : ctx.dsl.grant(privileges);
+        return s1.on(table).to(user);
+    }
+
+    private static final DDLQuery parseRevoke(ParserContext ctx) {
+        parseKeyword(ctx, "REVOKE");
+        Privilege privilege = parsePrivilege(ctx);
+        List<Privilege> privileges = null;
+
+        while (parseIf(ctx, ',')) {
+            if (privileges == null) {
+                privileges = new ArrayList<Privilege>();
+                privileges.add(privilege);
+            }
+
+            privileges.add(parsePrivilege(ctx));
+        }
+
+        parseKeyword(ctx, "ON");
+        Table<?> table = parseTableName(ctx);
+
+        parseKeyword(ctx, "FROM");
+        User user = parseUser(ctx);
+
+        RevokeOnStep s1 = privileges == null ? ctx.dsl.revoke(privilege) : ctx.dsl.revoke(privileges);
+        return s1.on(table).from(user);
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Statement clause parsing
     // -----------------------------------------------------------------------------------------------------------------
+
+    private static final Privilege parsePrivilege(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "SELECT"))
+            return privilege(K_SELECT);
+        else if (parseKeywordIf(ctx, "INSERT"))
+            return privilege(K_INSERT);
+        else if (parseKeywordIf(ctx, "UPDATE"))
+            return privilege(K_UPDATE);
+        else if (parseKeywordIf(ctx, "DELETE"))
+            return privilege(K_DELETE);
+        else
+            throw ctx.unexpectedToken();
+    }
+
+    private static final User parseUser(ParserContext ctx) {
+        return user(parseName(ctx));
+    }
 
     private static final DDLQuery parseCreateView(ParserContext ctx) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");

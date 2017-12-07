@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
+import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
@@ -2815,6 +2816,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Queries ddl(Table<?> table, DDLFlag... flags) {
         return new DDL(this, flags).queries(table);
+    }
+
+    @Override
+    public Queries ddl(Table[] tables) {
+        return ddl(tables, DDLFlag.values());
+    }
+
+    @Override
+    public Queries ddl(Table[] tables, DDLFlag... flags) {
+        return new DDL(this, flags).queries(tables);
+    }
+
+    @Override
+    public Queries ddl(Collection<? extends Table<?>> tables) {
+        return ddl(tables.toArray(EMPTY_TABLE), DDLFlag.values());
+    }
+
+    @Override
+    public Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags) {
+        return ddl(tables.toArray(EMPTY_TABLE), flags);
     }
 
     // -------------------------------------------------------------------------

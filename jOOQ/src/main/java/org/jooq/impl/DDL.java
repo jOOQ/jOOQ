@@ -77,10 +77,6 @@ final class DDL {
             this.flags.add(flag);
     }
 
-    final Queries queries(Table<?> table) {
-        return ctx.queries(createTable(table));
-    }
-
     private final Query createTable(Table<?> table) {
         List<Constraint> constraints = new ArrayList<Constraint>();
 
@@ -101,16 +97,15 @@ final class DDL {
         }
 
         return ctx.createTable(table)
-            .columns(table.fields())
-            .constraints(constraints);
+                  .columns(table.fields())
+                  .constraints(constraints);
     }
 
-    final Queries queries(Table[] tables) {
-        List<Query> queries = new ArrayList<Query>();
+    final Queries queries(Table<?>... tables) {
+        Query[] queries = new Query[tables.length];
 
-        for (Table table : tables) {
-            queries.add(createTable(table));
-        }
+        for (int i = 0; i < tables.length; i++)
+            queries[i] = createTable(tables[i]);
 
         return ctx.queries(queries);
     }

@@ -8367,11 +8367,10 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #ddl(Table[], DDLFlag...)
      */
-    Queries ddl(Table[] tables);
+    Queries ddl(Table<?>... tables);
 
     /**
      * Generate the complete creation script for tables.
-     *
      * <p>
      * The following {@link DDLFlag} can be set:
      * <ul>
@@ -8388,7 +8387,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </ul>
      * </p>
      */
-    Queries ddl(Table[] tables, DDLFlag... flags);
+    Queries ddl(Table<?>[] tables, DDLFlag... flags);
 
     /**
      * Generate the complete creation script for tables.
@@ -8399,7 +8398,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Generate the complete creation script for tables.
-     *
      * <p>
      * The following {@link DDLFlag} can be set:
      * <ul>

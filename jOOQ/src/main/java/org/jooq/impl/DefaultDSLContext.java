@@ -2810,16 +2810,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Queries ddl(Table<?> table) {
-        return ddl(table, DDLFlag.values());
+        return ddl(new Table[] { table });
     }
 
     @Override
     public Queries ddl(Table<?> table, DDLFlag... flags) {
-        return new DDL(this, flags).queries(table);
+        return ddl(new Table[] { table }, flags);
     }
 
     @Override
-    public Queries ddl(Table[] tables) {
+    public Queries ddl(Table... tables) {
         return ddl(tables, DDLFlag.values());
     }
 

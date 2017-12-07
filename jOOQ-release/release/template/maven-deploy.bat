@@ -2,8 +2,8 @@
 
 :parse
 IF "%~1"=="" GOTO endparse
-IF "%~1"=="-r" GOTO parserepository
-IF "%~1"=="--repositoryid" GOTO parserepository
+IF "%~1"=="-i" GOTO parserepository
+IF "%~1"=="--repository" GOTO parserepository
 IF "%~1"=="-u" GOTO parseurl
 IF "%~1"=="--url" GOTO parseurl
 IF "%~1"=="-h" GOTO parsehelp
@@ -29,11 +29,12 @@ GOTO end
 SHIFT
 GOTO parse
 
+:usage
+ECHO Wrong usage. Run with -h or --help argument for details.
+GOTO end
 :endparse
-IF %URL%=="" (
-  ECHO Wrong usage. Run with -h or --help argument for details.
-  GOTO end
-)
+IF NOT "%~1"=="" GOTO usage
+IF "%URL%"=="" GOTO usage
 
 set VERSION=3.11.0-SNAPSHOT
 

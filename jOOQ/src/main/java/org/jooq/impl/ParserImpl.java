@@ -1855,12 +1855,33 @@ class ParserImpl implements Parser {
             case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
-                    if (parseKeywordIf(ctx, "COLUMN")) {
+                    if (parseKeywordIf(ctx, "CONSTRAINT")) {
+                        Name constraint = parseIdentifier(ctx);
+
+                        return s1.dropConstraint(constraint);
+                    }
+                    else {
+                        parseKeywordIf(ctx, "COLUMN");
+                        boolean parens = parseIf(ctx, '(');
                         Field<?> field = parseFieldName(ctx);
+                        List<Field<?>> fields = null;
+
+                        while (parseIf(ctx, ',')) {
+                            if (fields == null) {
+                                fields = new ArrayList<Field<?>>();
+                                fields.add(field);
+                            }
+
+                            fields.add(parseFieldName(ctx));
+                        }
+
+                        if (parens)
+                            parse(ctx, ')');
+
                         boolean cascade = parseKeywordIf(ctx, "CASCADE");
                         boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
 
-                        AlterTableDropStep s2 = s1.dropColumn(field);
+                        AlterTableDropStep s2 = fields == null ? s1.dropColumn(field) : s1.dropColumns(fields);
                         AlterTableFinalStep s3 =
                               cascade
                             ? s2.cascade()
@@ -1868,11 +1889,6 @@ class ParserImpl implements Parser {
                             ? s2.restrict()
                             : s2;
                         return s3;
-                    }
-                    else if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        Name constraint = parseIdentifier(ctx);
-
-                        return s1.dropConstraint(constraint);
                     }
                 }
 

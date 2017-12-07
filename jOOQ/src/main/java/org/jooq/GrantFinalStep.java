@@ -43,5 +43,5 @@ package org.jooq;
  * @author Timur Shaidullin
  * @author Lukas Eder
  */
-public interface GrantFinalStep extends Query {
+public interface GrantFinalStep extends DDLQuery {
 }

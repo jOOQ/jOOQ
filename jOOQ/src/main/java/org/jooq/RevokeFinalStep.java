@@ -43,5 +43,5 @@ package org.jooq;
  * @author Timur Shaidullin
  * @author Lukas Eder
  */
-public interface RevokeFinalStep extends Query {
+public interface RevokeFinalStep extends DDLQuery {
 }

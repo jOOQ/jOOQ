@@ -57,6 +57,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
+import java.util.Collection;
+
 import org.jooq.impl.DSL;
 
 
@@ -398,6 +400,70 @@ public interface AlterTableStep {
      */
     @Support({ H2, POSTGRES })
     AlterTableDropStep dropColumnIfExists(String field);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #dropColumns(Collection)}.
+     */
+    @Support({ H2 })
+    AlterTableDropStep drop(Field<?>... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #dropColumns(Collection)}.
+     */
+    @Support({ H2 })
+    AlterTableDropStep drop(Name... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #dropColumns(Collection)}.
+     */
+    @Support({ H2 })
+    AlterTableDropStep drop(String... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2 })
+    AlterTableDropStep dropColumns(Field<?>... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2 })
+    AlterTableDropStep dropColumns(Name... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2 })
+    AlterTableDropStep dropColumns(String... fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #dropColumns(Collection)}.
+     */
+    @Support({ H2 })
+    AlterTableDropStep drop(Collection<? extends Field<?>> fields);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2 })
+    AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
     /**
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>

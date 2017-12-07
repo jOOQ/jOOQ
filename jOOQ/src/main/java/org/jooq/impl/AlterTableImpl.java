@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -112,12 +113,15 @@ import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.endTryCatch;
+import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityBeforeNull;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 
 import org.jooq.AlterTableAlterStep;
@@ -190,7 +194,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private Nullability                      alterColumnNullability;
     private DataType<?>                      alterColumnType;
     private Field<?>                         alterColumnDefault;
-    private Field<?>                         dropColumn;
+    private QueryPartList<Field<?>>          dropColumns;
     private boolean                          dropColumnCascade;
     private Constraint                       dropConstraint;
 
@@ -510,8 +514,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl dropColumn(Field<?> field) {
-        dropColumn = field;
-        return this;
+        return dropColumns(new Field[] { field });
     }
 
     @Override
@@ -528,6 +531,47 @@ final class AlterTableImpl extends AbstractQuery implements
     public final AlterTableImpl dropColumnIfExists(Field<?> field) {
         ifExistsColumn = true;
         return dropColumn(field);
+    }
+
+    @Override
+    public final AlterTableImpl drop(Field<?>... fields) {
+        return dropColumns(fields);
+    }
+
+    @Override
+    public final AlterTableImpl drop(Name... fields) {
+        return dropColumns(fields);
+    }
+
+    @Override
+    public final AlterTableImpl drop(String... fields) {
+        return dropColumns(fields);
+    }
+
+    @Override
+    public final AlterTableImpl dropColumns(Field<?>... fields) {
+        return dropColumns(Arrays.asList(fields));
+    }
+
+    @Override
+    public final AlterTableImpl dropColumns(Name... fields) {
+        return dropColumns(fieldsByName(fields));
+    }
+
+    @Override
+    public final AlterTableImpl dropColumns(String... fields) {
+        return dropColumns(fieldsByName(fields));
+    }
+
+    @Override
+    public final AlterTableImpl drop(Collection<? extends Field<?>> fields) {
+        return dropColumns(fields);
+    }
+
+    @Override
+    public final AlterTableImpl dropColumns(Collection<? extends Field<?>> fields) {
+        dropColumns = new QueryPartList<Field<?>>(fields);
+        return this;
     }
 
     @Override
@@ -911,10 +955,17 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.end(ALTER_TABLE_ALTER);
         }
-        else if (dropColumn != null) {
+        else if (dropColumns != null) {
             ctx.start(ALTER_TABLE_DROP);
 
             switch (family) {
+
+
+
+
+
+
+
 
 
 
@@ -949,21 +1000,21 @@ final class AlterTableImpl extends AbstractQuery implements
                 }
             }
 
-            ctx.sql(' ')
-               .qualify(false)
-               .visit(dropColumn)
+            // [#5319] Older versions of H2 don't support parentheses around dropped columns
+            if (ctx.family() == H2)
+                ctx.sql(' ');
+            else if (dropColumns.size() != 1                                                 )
+                ctx.sql(" (");
+            else
+                ctx.sql(' ');
+
+            ctx.qualify(false)
+               .visit(dropColumns)
                .qualify(true);
 
-            switch (family) {
-
-
-
-
-
-
-                default:
-                    break;
-            }
+            if (ctx.family() != H2)
+                if (dropColumns.size() != 1                                                 )
+                    ctx.sql(')');
 
             if (dropColumnCascade)
                 ctx.sql(' ').visit(K_CASCADE);

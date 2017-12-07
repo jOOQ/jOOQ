@@ -5852,9 +5852,17 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(".defaultValue(");
 
                     if (MYSQL == db.getDialect().family())
-                        sb.append("org.jooq.impl.DSL.inline(\"")
-                          .append(escapeString(d))
-                          .append("\"");
+
+                        // [#5574] While MySQL usually reports actual values, it does report
+                        //         a CURRENT_TIMESTAMP expression, inconsistently
+                        if (d != null && d.toLowerCase().startsWith("current_timestamp"))
+                            sb.append("org.jooq.impl.DSL.field(\"")
+                              .append(escapeString(d))
+                              .append("\"");
+                        else
+                            sb.append("org.jooq.impl.DSL.inline(\"")
+                              .append(escapeString(d))
+                              .append("\"");
                     else
                         sb.append("org.jooq.impl.DSL.field(\"")
                           .append(escapeString(d))

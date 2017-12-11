@@ -353,6 +353,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         // "matching" constructor with the same number of fields as this record
         Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
 
+        // [#6868] Prefer public constructors
+        Arrays.sort(constructors, (c1, c2) ->
+                (c2.getModifiers() & Modifier.PUBLIC) - (c1.getModifiers() & Modifier.PUBLIC));
+
         // [#1837] If any java.beans.ConstructorProperties annotations are
         // present use those rather than matching constructors by the number of
         // arguments

@@ -120,6 +120,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.StringUtils;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -135,8 +136,9 @@ final class MetaImpl implements Meta, Serializable {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID       = 3582980783173033809L;
-    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG = EnumSet.of(MYSQL, MARIADB);
+    private static final long                serialVersionUID                 = 3582980783173033809L;
+    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
+    private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
 
     private final DSLContext                 ctx;
     private final Configuration              configuration;
@@ -270,9 +272,8 @@ final class MetaImpl implements Meta, Serializable {
                 });
 
 
-                for (String name : schemas.getValues(0, String.class)) {
+                for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));
-                }
             }
 
             // [#2760] MySQL JDBC confuses "catalog" and "schema"
@@ -287,15 +288,13 @@ final class MetaImpl implements Meta, Serializable {
                     }
                 });
 
-                for (String name : schemas.getValues(0, String.class)) {
+                for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));
-                }
             }
 
             // There should always be at least one (empty) schema in a database
-            if (result.isEmpty()) {
+            if (result.isEmpty())
                 result.add(new MetaSchema("", MetaCatalog.this));
-            }
 
             return result;
         }
@@ -354,15 +353,12 @@ final class MetaImpl implements Meta, Serializable {
 
 
 
-
-                    if (!inverseSchemaCatalog) {
+                    if (!inverseSchemaCatalog)
                         rs = meta.getTables(null, getName(), "%", types);
-                    }
 
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    else {
+                    else
                         rs = meta.getTables(getName(), null, "%", types);
-                    }
 
                     return ctx.fetch(
                         rs,
@@ -425,12 +421,10 @@ final class MetaImpl implements Meta, Serializable {
                 }
             }
 
-            if (columnCache != null) {
+            if (columnCache != null)
                 return columnCache.get(name(schema, table));
-            }
-            else {
+            else
                 return getColumns0(schema, table);
-            }
         }
 
         private final Result<Record> getColumns0(final String schema, final String table) {
@@ -438,14 +432,13 @@ final class MetaImpl implements Meta, Serializable {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs;
-                    if (!inverseSchemaCatalog) {
+
+                    if (!inverseSchemaCatalog)
                         rs = meta.getColumns(null, schema, table, "%");
-                    }
 
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    else {
+                    else
                         rs = meta.getColumns(schema, null, table, "%");
-                    }
 
                     return ctx.fetch(
                         rs,
@@ -464,7 +457,9 @@ final class MetaImpl implements Meta, Serializable {
                         String.class, // BUFFER_LENGTH
                         int.class,    // DECIMAL_DIGITS
                         int.class,    // NUM_PREC_RADIX
-                        int.class     // NULLABLE
+                        int.class,    // NULLABLE
+                        String.class, // REMARKS
+                        String.class  // COLUMN_DEF
                     );
                 }
             });
@@ -483,9 +478,8 @@ final class MetaImpl implements Meta, Serializable {
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
-            if (columns != null) {
+            if (columns != null)
                 init(columns);
-            }
         }
 
         @Override
@@ -496,14 +490,12 @@ final class MetaImpl implements Meta, Serializable {
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs;
 
-                    if (!inverseSchemaCatalog) {
+                    if (!inverseSchemaCatalog)
                         rs = meta.getIndexInfo(null, schema, getName(), false, true);
-                    }
 
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    else {
+                    else
                         rs = meta.getIndexInfo(schema, null, getName(), false, true);
-                    }
 
                     return
                     ctx.fetch(
@@ -545,21 +537,18 @@ final class MetaImpl implements Meta, Serializable {
 
 
 
-
             final String schema = getSchema() == null ? null : getSchema().getName();
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs;
 
-                    if (!inverseSchemaCatalog) {
+                    if (!inverseSchemaCatalog)
                         rs = meta.getPrimaryKeys(null, schema, getName());
-                    }
 
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    else {
+                    else
                         rs = meta.getPrimaryKeys(schema, null, getName());
-                    }
 
                     return
                     ctx.fetch(
@@ -618,9 +607,8 @@ final class MetaImpl implements Meta, Serializable {
             });
 
             Map<String, Schema> schemas = new HashMap<String, Schema>();
-            for (Schema schema : getSchemas()) {
+            for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
-            }
 
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().get(1));
@@ -754,16 +742,19 @@ final class MetaImpl implements Meta, Serializable {
             return indexes;
         }
 
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         private final void init(Result<Record> columns) {
             for (Record column : columns) {
-                String columnName = column.getValue(3, String.class); // COLUMN_NAME
-                String typeName = column.getValue(5, String.class);   // TYPE_NAME
-                int precision = column.getValue(6, int.class);        // COLUMN_SIZE
-                int scale = column.getValue(8, int.class);            // DECIMAL_DIGITS
-                int nullable = column.getValue(10, int.class);        // NULLABLE
+                String columnName = column.get(3, String.class);    // COLUMN_NAME
+                String typeName = column.get(5, String.class);      // TYPE_NAME
+                int precision = column.get(6, int.class);           // COLUMN_SIZE
+                int scale = column.get(8, int.class);               // DECIMAL_DIGITS
+                int nullable = column.get(10, int.class);           // NULLABLE
+                String remarks = column.get(11, String.class);      // REMARKS
+                String defaultValue = column.get(12, String.class); // COLUMN_DEF
 
                 // TODO: Exception handling should be moved inside SQLDataType
-                DataType<?> type = null;
+                DataType type = null;
                 try {
                     type = DefaultDataType.getDataType(configuration.family(), typeName, precision, scale);
 
@@ -773,12 +764,21 @@ final class MetaImpl implements Meta, Serializable {
 
                     if (nullable == DatabaseMetaData.columnNoNulls)
                         type = type.nullable(false);
+
+                    // [#6883] Default values may be present
+                    if (!StringUtils.isEmpty(defaultValue))
+
+                        // [#5574] MySQL mixes constant value expressions with other column expressions here
+                        if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(configuration.family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
+                            type = type.defaultValue(DSL.field(defaultValue, type));
+                        else
+                            type = type.defaultValue(DSL.inline(defaultValue, type));
                 }
                 catch (SQLDialectNotSupportedException e) {
                     type = SQLDataType.OTHER;
                 }
 
-                createField(columnName, type, this);
+                createField(columnName, type, this, remarks);
             }
         }
     }
@@ -864,9 +864,8 @@ final class MetaImpl implements Meta, Serializable {
             });
 
             Map<String, Schema> schemas = new HashMap<String, Schema>();
-            for (Schema schema : getSchemas()) {
+            for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
-            }
 
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().get(1));

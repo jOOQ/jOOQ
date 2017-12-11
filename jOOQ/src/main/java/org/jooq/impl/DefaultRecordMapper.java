@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -354,8 +355,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
 
         // [#6868] Prefer public constructors
-        Arrays.sort(constructors, (c1, c2) ->
-                (c2.getModifiers() & Modifier.PUBLIC) - (c1.getModifiers() & Modifier.PUBLIC));
+        Arrays.sort(constructors, new Comparator<Constructor<E>>() {
+            @Override
+            public int compare(Constructor<E> c1, Constructor<E> c2) {
+                return (c2.getModifiers() & Modifier.PUBLIC) - (c1.getModifiers() & Modifier.PUBLIC);
+            }
+        });
 
         // [#1837] If any java.beans.ConstructorProperties annotations are
         // present use those rather than matching constructors by the number of

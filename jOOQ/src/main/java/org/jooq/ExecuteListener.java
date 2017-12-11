@@ -555,6 +555,12 @@ public interface ExecuteListener extends EventListener, Serializable {
      * modify this statement freely, or wrap {@link ExecuteContext#statement()}
      * with your enriched statement wrapper</li>
      * </ul>
+     * <p>
+     * Other attributes in <code>ExecuteContext</code>, affected by this
+     * lifecycle phase:
+     * <ul>
+     * <li>{@link ExecuteContext#statementExecutionCount()} is incremented.</li>
+     * </ul>
      */
     void executeStart(ExecuteContext ctx);
 

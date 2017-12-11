@@ -181,6 +181,21 @@ public interface ExecuteContext extends Scope {
     void statement(PreparedStatement statement);
 
     /**
+     * The number of times this particular statement has been executed.
+     * <p>
+     * Statements that are prepared by jOOQ can be executed multiple times
+     * without being closed if {@link Query#keepStatement(boolean)} is
+     * activated.
+     * <p>
+     * This value will increment as soon as the statement is about to be
+     * executed (at the {@link ExecuteListener#executeStart(ExecuteContext)}
+     * event).
+     *
+     * @see ExecuteListener#executeStart(ExecuteContext)
+     */
+    int statementExecutionCount();
+
+    /**
      * The {@link ResultSet} that is being fetched or <code>null</code> if the
      * result set is unknown or if no result set is being fetched.
      */

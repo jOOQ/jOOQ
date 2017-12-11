@@ -83,14 +83,15 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
-    private static final long                serialVersionUID               = -8046199737354507547L;
-    private static final JooqLogger          log                            = JooqLogger.getLogger(AbstractQuery.class);
+    private static final long       serialVersionUID = -8046199737354507547L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    private Configuration                    configuration;
-    private int                              timeout;
-    private boolean                          keepStatement;
-    transient PreparedStatement              statement;
-    transient Rendered                       rendered;
+    private Configuration           configuration;
+    private int                     timeout;
+    private boolean                 keepStatement;
+    transient PreparedStatement     statement;
+    transient int                   statementExecutionCount;
+    transient Rendered              rendered;
 
     AbstractQuery(Configuration configuration) {
         this.configuration = configuration;
@@ -297,6 +298,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
                     // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
                     ctx.connection(c.connectionProvider(), statement.getConnection());
+
+                    // [#6903] Increment and set the new statement execution count on re-execution
+                    ctx.withStatementExecutionCount(++statementExecutionCount);
                 }
 
                 // [#385] First time statement preparing
@@ -310,9 +314,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                     // [#3234] Defer initialising of a connection until the prepare step
                     // This optimises unnecessary ConnectionProvider.acquire() calls when
                     // ControlFlowSignals are thrown
-                    if (ctx.connection() == null) {
+                    if (ctx.connection() == null)
                         throw new DetachedException("Cannot execute query. No Connection configured");
-                    }
 
                     listener.prepareStart(ctx);
                     prepare(ctx);

@@ -104,6 +104,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private transient ConnectionProvider           connectionProvider;
     private transient Connection                   connection;
     private transient PreparedStatement            statement;
+    private transient int                          statementExecutionCount;
     private transient ResultSet                    resultSet;
     private transient Record                       record;
     private transient Result<?>                    result;
@@ -568,6 +569,11 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     @Override
+    public final int statementExecutionCount() {
+        return statementExecutionCount;
+    }
+
+    @Override
     public final void resultSet(ResultSet rs) {
         this.resultSet = rs;
     }
@@ -634,6 +640,15 @@ class DefaultExecuteContext implements ExecuteContext {
             LOCAL_CONNECTION.set(c);
             connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
         }
+    }
+
+    final void incrementStatementExecutionCount() {
+        statementExecutionCount++;
+    }
+
+    final DefaultExecuteContext withStatementExecutionCount(int count) {
+        statementExecutionCount = count;
+        return this;
     }
 
     @Override

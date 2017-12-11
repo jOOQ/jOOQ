@@ -55,6 +55,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
@@ -137,6 +138,10 @@ public class DDLDatabase extends H2Database {
                         }
                         catch (Exception ignore) {}
                 }
+            }
+            catch (ParserException e) {
+                log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
+                throw e;
             }
             catch (Exception e) {
                 throw new DataAccessException("Error while exporting schema", e);

@@ -23,6 +23,8 @@ ddlStatement =
 | dropSchemaStatement
 | renameStatement
 | truncateStatement
+| grantStatement
+| revokeStatement
 ;
 
 dmlStatement =
@@ -37,7 +39,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 (
   'ADD CONSTRAINT' constraintName constraint
 | 'ADD' constraint
-| 'ADD COLUMN' identifier dataType
+| 'ADD' [ 'COLUMN' ] identifier dataType
   {
     (
       [ 'NOT' ] 'NULL'
@@ -49,7 +51,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
     dataType [ [ 'NOT' ] 'NULL' ]
   | ( 'SET' | 'DROP' ) 'NOT NULL'
   )
-| 'DROP COLUMN' identifier [ 'CASCADE' | 'RESTRICT' ]
+| 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
 | 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] 'TO' identifier
 |
@@ -130,6 +132,12 @@ renameStatement = 'RENAME'
 ;
 
 truncateStatement = 'TRUNCATE TABLE' tableName [ 'CONTINUE IDENTITY' | 'RESTART IDENTITY' ] [ 'CASCADE' | 'RESTRICT' ]
+;
+
+grantStatement = 'GRANT' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'TO' ( userName | roleName | 'PUBLIC')
+;
+
+revokeStatement = 'REVOKE' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'FROM' ( userName | roleName | 'PUBLIC')
 ;
 
 selectStatement = select | values [ correlationName ]
@@ -693,6 +701,12 @@ indexName = name
 ;
 
 sequenceName = name
+;
+
+userName = name
+;
+
+roleName = name
 ;
 
 fieldNames = fieldName { ',' fieldName }

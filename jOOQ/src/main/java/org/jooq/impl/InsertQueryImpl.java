@@ -104,6 +104,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private static final Clause[]            CLAUSES               = { INSERT };
     private static final EnumSet<SQLDialect> SUPPORT_INSERT_IGNORE = EnumSet.of(MARIADB, MYSQL);
 
+    private boolean                          onConflictWhere      = false;
+    private boolean                          doUpdateWhere        = true;
     private final FieldMapForUpdate          updateMap;
     private final FieldMapsForInsert         insertMaps;
     private Select<?>                        select;
@@ -112,6 +114,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private boolean                          onDuplicateKeyIgnore;
     private QueryPartList<Field<?>>          onConflict;
     private final ConditionProviderImpl      condition;
+    private final ConditionProviderImpl      conditionOnConflict;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
@@ -119,6 +122,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
         this.condition = new ConditionProviderImpl();
+        this.conditionOnConflict = new ConditionProviderImpl();
     }
 
     @Override
@@ -145,6 +149,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
         this.onConflict = new QueryPartList<Field<?>>(fields);
+    }
+
+    @Override
+    public void onConflictWhere(boolean flag) {
+        onConflictWhere = flag;
+        doUpdateWhere = false;
+    }
+
+    @Override
+    public void doUpdateWhere(boolean flag) {
+        doUpdateWhere = flag;
+        onConflictWhere = false;
     }
 
     @Override
@@ -176,32 +192,42 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void addConditions(Condition conditions) {
-        condition.addConditions(conditions);
+        addConditions(Arrays.asList(conditions));
     }
 
     @Override
     public final void addConditions(Condition... conditions) {
-        condition.addConditions(conditions);
+        addConditions(Arrays.asList(conditions));
     }
 
     @Override
     public final void addConditions(Collection<? extends Condition> conditions) {
-        condition.addConditions(conditions);
+        if (onConflictWhere)
+            conditionOnConflict.addConditions(conditions);
+        else if (doUpdateWhere)
+            condition.addConditions(conditions);
+        else
+           throw new IllegalStateException("Cannot call addConditions() on the current state InsertQuery");
     }
 
     @Override
     public final void addConditions(Operator operator, Condition conditions) {
-        condition.addConditions(operator, conditions);
+        addConditions(operator, Arrays.asList(conditions));
     }
 
     @Override
     public final void addConditions(Operator operator, Condition... conditions) {
-        condition.addConditions(operator, conditions);
+        addConditions(operator, Arrays.asList(conditions));
     }
 
     @Override
     public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
-        condition.addConditions(operator, conditions);
+        if (onConflictWhere)
+            conditionOnConflict.addConditions(operator, conditions);
+        else if (doUpdateWhere)
+            condition.addConditions(operator, conditions);
+        else
+            throw new IllegalStateException("Cannot call addConditions() on the current state InsertQuery");
     }
 
     @Override
@@ -270,8 +296,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                            .qualify(qualify);
                     }
 
-                    ctx.sql(") ")
-                       .visit(K_DO_UPDATE)
+                    ctx.sql(") ");
+
+                    if (conditionOnConflict.hasWhere())
+                        ctx.formatSeparator()
+                           .visit(K_WHERE)
+                           .visit(conditionOnConflict)
+                           .sql(' ');
+
+                    ctx.visit(K_DO_UPDATE)
                        .formatSeparator()
                        .visit(K_SET)
                        .sql(' ')

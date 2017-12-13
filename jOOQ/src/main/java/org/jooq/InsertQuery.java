@@ -117,6 +117,27 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     @Support({ POSTGRES_9_5 })
     void onConflict(Collection<? extends Field<?>> fields);
 
+    @Support({ POSTGRES_9_5 })
+    void onConflict(Field<?> field, Name collation);
+
+    @Support({ POSTGRES_9_5 })
+    void onConflict(Field<?> field, Keyword opclass);
+
+    @Support({ POSTGRES_9_5 })
+    void onConflict(Field<?> field, Name collation, Keyword opclass);
+
+    @Support({ POSTGRES_9_5 })
+    void addOnConflict(Field<?> field, Name collation);
+
+    @Support({ POSTGRES_9_5 })
+    void addOnConflict(Field<?> field, Keyword opclass);
+
+    @Support({ POSTGRES_9_5 })
+    void addOnConflict(Field<?> field, Name collation, Keyword opclass);
+
+    @Support({ POSTGRES_9_5 })
+    void addOnConflict(OnConflict onConflict);
+
     /**
      * Whether a <code>ON DUPLICATE KEY UPDATE</code> clause should be added to
      * this <code>INSERT</code> statement.
@@ -290,6 +311,81 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Support({ POSTGRES_9_5 })
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
+
+    /**
+     * Adds new partial index conditions to the query, connecting them to existing
+     * conditions with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Condition condition);
+
+    /**
+     * Adds new partial index conditions to the query, connecting them to existing
+     * conditions with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Condition... conditions);
+
+    /**
+     * Adds new partial index conditions to the query, connecting them to existing
+     * conditions with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds new partial index conditions to the query, connecting them to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     * @param operator The connecting operator
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Operator operator, Condition condition);
+
+    /**
+     * Adds new partial index conditions to the query, connecting them to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     * @param operator The connecting operator
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Operator operator, Condition... conditions);
+
+    /**
+     * Adds new partial index condition to the query, connecting them to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     * @param operator The connecting operator
+     */
+    @Support({ POSTGRES_9_5 })
+    void addIndexConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**
      * Set an empty record with the <code>DEFAULT VALUES</code> clause.

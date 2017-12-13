@@ -218,6 +218,7 @@ import org.jooq.MergeKeyStep9;
 import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
+import org.jooq.OnConflict;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
@@ -9212,6 +9213,62 @@ public class DSL {
     @Support
     public static Index index(Name name) {
         return new IndexImpl(name);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(String field) {
+        return onConflict(field(field), null, null);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(String field, String collation) {
+        return onConflict(field(field), name(collation), null);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(String field, String collation, String opclass) {
+        return onConflict(field(field), name(collation), keyword(opclass));
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(Field<?> field) {
+        return onConflict(field, null, null);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(Field<?> field, Name collation) {
+        return onConflict(field, collation, null);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(Field<?> field, Keyword opclass) {
+        return onConflict(field, null, opclass);
+    }
+
+    /**
+     * Create a OnConflict type to be used by <code>INSERT</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    public static OnConflict onConflict(Field<?> field, Name collation, Keyword opclass) {
+        return new OnConflictImpl(field, collation, opclass);
     }
 
     // -------------------------------------------------------------------------

@@ -69,207 +69,253 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1> UpdateFromStep<R> set(Row1<T1> row, Row1<T1> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2> UpdateFromStep<R> set(Row2<T1, T2> row, Row2<T1, T2> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3> UpdateFromStep<R> set(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4> UpdateFromStep<R> set(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5> UpdateFromStep<R> set(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6> UpdateFromStep<R> set(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7> UpdateFromStep<R> set(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> UpdateFromStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateFromStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateFromStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateFromStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateFromStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateFromStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateFromStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateFromStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateFromStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateFromStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateFromStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateFromStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateFromStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateFromStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateFromStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
      * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions aren't supported.
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     UpdateFromStep<R> set(RowN row, RowN value);
 
     /**

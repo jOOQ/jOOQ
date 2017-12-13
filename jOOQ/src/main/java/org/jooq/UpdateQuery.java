@@ -68,161 +68,161 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1> void addValues(Row1<T1> row, Row1<T1> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2> void addValues(Row2<T1, T2> row, Row2<T1, T2> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3> void addValues(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4> void addValues(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5> void addValues(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6> void addValues(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7> void addValues(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> void addValues(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> void addValues(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> void addValues(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> void addValues(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> void addValues(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> void addValues(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> void addValues(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> void addValues(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> void addValues(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> void addValues(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> void addValues(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> void addValues(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> void addValues(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> void addValues(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> void addValues(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support
     void addValues(RowN row, RowN value);
 
     /**

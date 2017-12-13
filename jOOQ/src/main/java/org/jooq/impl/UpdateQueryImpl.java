@@ -46,7 +46,12 @@ import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 // ...
+import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
@@ -68,6 +73,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -132,6 +138,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+    private static final EnumSet<SQLDialect> SUPPORT_RVE_SET        = EnumSet.of(H2, HSQLDB, POSTGRES);
 
     private final FieldMapForUpdate          updateMap;
     private final TableList                  from;
@@ -545,49 +552,67 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // A multi-row update was specified
         if (multiRow != null) {
-            boolean qualify = ctx.qualify();
 
-            ctx.start(UPDATE_SET_ASSIGNMENT)
-               .qualify(false)
-               .visit(multiRow)
-               .qualify(qualify)
-               .sql(" = ");
+            // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
+            if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.family())) {
+                FieldMapForUpdate map = new FieldMapForUpdate(table, UPDATE_SET_ASSIGNMENT);
 
-            // Some dialects don't really support row value expressions on the
-            // right hand side of a SET clause
-            if (multiValue != null
+                for (int i = 0; i < multiRow.size(); i++) {
+                    Field<?> k = multiRow.field(i);
+                    Field<?> v = multiValue.field(i);
 
+                    map.put(k, Tools.field(v, k));
+                }
 
-
-            ) {
-
-                // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
-                //         single-degree rows. Let's just always render it, here.
-                if (POSTGRES_10.precedes(ctx.dialect()))
-                    ctx.visit(K_ROW).sql(" ");
-
-                ctx.visit(multiValue);
+                ctx.formatIndentLockStart()
+                   .visit(map)
+                   .formatIndentLockEnd();
             }
-
-            // Subselects or subselect emulations of row value expressions
             else {
-                Select<?> select = multiSelect;
+                boolean qualify = ctx.qualify();
 
-                if (multiValue != null)
-                    select = select(multiValue.fields());
+                ctx.start(UPDATE_SET_ASSIGNMENT)
+                   .qualify(false)
+                   .visit(multiRow)
+                   .qualify(qualify)
+                   .sql(" = ");
 
-                ctx.sql('(')
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .subquery(true)
-                   .visit(select)
-                   .subquery(false)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(')');
+                // Some dialects don't really support row value expressions on the
+                // right hand side of a SET clause
+                if (multiValue != null
+
+
+
+                ) {
+
+                    // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
+                    //         single-degree rows. Let's just always render it, here.
+                    if (POSTGRES_10.precedes(ctx.dialect()))
+                        ctx.visit(K_ROW).sql(" ");
+
+                    ctx.visit(multiValue);
+                }
+
+                // Subselects or subselect emulations of row value expressions
+                else {
+                    Select<?> select = multiSelect;
+
+                    if (multiValue != null)
+                        select = select(multiValue.fields());
+
+                    ctx.sql('(')
+                       .formatIndentStart()
+                       .formatNewLine()
+                       .subquery(true)
+                       .visit(select)
+                       .subquery(false)
+                       .formatIndentEnd()
+                       .formatNewLine()
+                       .sql(')');
+                }
+
+                ctx.end(UPDATE_SET_ASSIGNMENT);
             }
-
-            ctx.end(UPDATE_SET_ASSIGNMENT);
         }
 
         // A regular (non-multi-row) update was specified

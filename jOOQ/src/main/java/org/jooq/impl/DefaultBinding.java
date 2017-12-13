@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
@@ -81,6 +82,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
@@ -2010,9 +2012,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
-            // [#5249] Special inlining of special floating point values
-            if (value.isNaN() && ctx.family() == POSTGRES)
-                ctx.render().visit(inline("NaN")).sql("::float8");
+            // [#5249] [#6912] Special inlining of special floating point values
+            if (value.isNaN())
+                if (ctx.family() == POSTGRES)
+                    ctx.render().visit(inline("NaN")).sql("::float8");
+                else
+                    ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else
                 ctx.render().sql(value.toString());
         }
@@ -2169,9 +2174,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
-            // [#5249] Special inlining of special floating point values
-            if (value.isNaN() && POSTGRES == ctx.family())
-                ctx.render().visit(inline("NaN")).sql("::float4");
+            // [#5249] [#6912] Special inlining of special floating point values
+            if (value.isNaN())
+                if (ctx.family() == POSTGRES)
+                    ctx.render().visit(inline("NaN")).sql("::float4");
+                else
+                    ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else
                 ctx.render().sql(value.toString());
         }

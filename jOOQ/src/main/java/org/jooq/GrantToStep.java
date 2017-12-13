@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
+// ...
+
 /**
  * The step in the creation of a <code>GRANT</code> statement where the
  * <code>TO</code> clause can be added.
@@ -57,4 +60,10 @@ public interface GrantToStep {
      */
     @Support
     GrantFinalStep to(Role role);
+
+    /**
+     * Grant a privilege to <code>PUBLIC</code>.
+     */
+    @Support({ H2 })
+    GrantFinalStep toPublic();
 }

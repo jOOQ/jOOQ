@@ -44,6 +44,7 @@ import static org.jooq.Clause.GRANT_TO;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_GRANT;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_TO;
 
 import java.util.Collection;
@@ -116,6 +117,8 @@ final class GrantImpl extends AbstractQuery implements
             ctx.visit(user);
         else if (role != null)
             ctx.visit(role);
+        else
+            ctx.visit(K_PUBLIC);
 
         ctx.end(GRANT_TO);
     }
@@ -154,6 +157,11 @@ final class GrantImpl extends AbstractQuery implements
     @Override
     public final GrantImpl to(Role r) {
         this.role = r;
+        return this;
+    }
+
+    @Override
+    public final GrantImpl toPublic() {
         return this;
     }
 }

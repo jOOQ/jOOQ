@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
+// ...
+
 /**
  * The step in the creation of a <code>REVOKE</code> statement where the
  * <code>FROM</code> clause can be added.
@@ -57,4 +60,10 @@ public interface RevokeFromStep {
      */
     @Support
     RevokeFinalStep from(Role role);
+
+    /**
+     * Revoke a privilege from <code>PUBLIC</code>.
+     */
+    @Support({ H2 })
+    RevokeFinalStep fromPublic();
 }

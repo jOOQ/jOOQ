@@ -44,6 +44,7 @@ import static org.jooq.Clause.REVOKE_PRIVILEGE;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_REVOKE;
 
 import java.util.Collection;
@@ -117,6 +118,8 @@ final class RevokeImpl extends AbstractQuery implements
             ctx.visit(user);
         else if (role != null)
             ctx.visit(role);
+        else
+            ctx.visit(K_PUBLIC);
 
         ctx.end(REVOKE_FROM);
     }
@@ -155,6 +158,11 @@ final class RevokeImpl extends AbstractQuery implements
     @Override
     public final RevokeImpl from(Role r) {
         this.role = r;
+        return this;
+    }
+
+    @Override
+    public final RevokeImpl fromPublic() {
         return this;
     }
 }

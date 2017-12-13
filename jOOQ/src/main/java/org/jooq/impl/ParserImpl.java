@@ -281,6 +281,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GrantOnStep;
+import org.jooq.GrantToStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -308,6 +309,7 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
+import org.jooq.RevokeFromStep;
 import org.jooq.RevokeOnStep;
 import org.jooq.Row;
 import org.jooq.Row2;
@@ -1284,10 +1286,11 @@ class ParserImpl implements Parser {
         Table<?> table = parseTableName(ctx);
 
         parseKeyword(ctx, "TO");
-        User user = parseUser(ctx);
+        User user = parseKeywordIf(ctx, "PUBLIC") ? null : parseUser(ctx);
 
         GrantOnStep s1 = privileges == null ? ctx.dsl.grant(privilege) : ctx.dsl.grant(privileges);
-        return s1.on(table).to(user);
+        GrantToStep s2 = s1.on(table);
+        return user == null ? s2.toPublic() : s2.to(user);
     }
 
     private static final DDLQuery parseRevoke(ParserContext ctx) {
@@ -1307,11 +1310,12 @@ class ParserImpl implements Parser {
         parseKeyword(ctx, "ON");
         Table<?> table = parseTableName(ctx);
 
-        parseKeyword(ctx, "FROM");
-        User user = parseUser(ctx);
-
         RevokeOnStep s1 = privileges == null ? ctx.dsl.revoke(privilege) : ctx.dsl.revoke(privileges);
-        return s1.on(table).from(user);
+        parseKeyword(ctx, "FROM");
+        User user = parseKeywordIf(ctx, "PUBLIC") ? null : parseUser(ctx);
+
+        RevokeFromStep s2 = s1.on(table);
+        return user == null ? s2.fromPublic() : s2.from(user);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

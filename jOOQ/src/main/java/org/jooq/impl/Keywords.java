@@ -203,6 +203,7 @@ final class Keywords {
     static final Keyword K_PRECEDING                        = keyword("preceding");
     static final Keyword K_PRIMARY_KEY                      = keyword("primary key");
     static final Keyword K_PRIOR                            = keyword("prior");
+    static final Keyword K_PUBLIC                           = keyword("public");
     static final Keyword K_RAISE                            = keyword("raise");
     static final Keyword K_RAISERROR                        = keyword("raiserror");
     static final Keyword K_RECORD                           = keyword("record");

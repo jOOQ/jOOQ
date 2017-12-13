@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
+// ...
+
 /**
  * The step in the creation of a <code>GRANT</code> statement where the
  * <code>ON</code> clause can be added.
@@ -49,13 +52,13 @@ public interface GrantOnStep {
     /**
      * Grant a privilege on a table.
      */
-    @Support
+    @Support({ H2 })
     GrantToStep on(Table<?> table);
 
     /**
      * Grant a privilege on a table.
      */
-    @Support
+    @Support({ H2 })
     GrantToStep on(Name table);
 
     /**
@@ -67,6 +70,6 @@ public interface GrantOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
-    @Support
+    @Support({ H2 })
     GrantToStep on(String table);
 }

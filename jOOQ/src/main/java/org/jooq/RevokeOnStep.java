@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
+// ...
+
 /**
  * The step in the creation of a <code>REVOKE</code> statement where the
  * <code>ON</code> clause can be added.
@@ -49,13 +52,13 @@ public interface RevokeOnStep {
     /**
      * Revoke a privilege on a table.
      */
-    @Support
+    @Support({ H2 })
     RevokeFromStep on(Table<?> table);
 
     /**
      * Revoke a privilege on a table.
      */
-    @Support
+    @Support({ H2 })
     RevokeFromStep on(Name table);
 
     /**
@@ -67,6 +70,6 @@ public interface RevokeOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
-    @Support
+    @Support({ H2 })
     RevokeFromStep on(String table);
 }

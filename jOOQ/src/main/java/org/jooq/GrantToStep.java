@@ -52,13 +52,13 @@ public interface GrantToStep {
     /**
      * Grant a privilege to a user.
      */
-    @Support
+    @Support({ H2 })
     GrantFinalStep to(User user);
 
     /**
      * Grant a privilege to a role.
      */
-    @Support
+    @Support({ H2 })
     GrantFinalStep to(Role role);
 
     /**

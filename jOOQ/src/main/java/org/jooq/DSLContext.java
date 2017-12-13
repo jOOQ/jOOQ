@@ -9548,37 +9548,37 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Grant a privilege on a table to user or role.
      */
-    @Support
+    @Support({ H2 })
     GrantOnStep grant(Privilege privilege);
 
     /**
      * Grant privileges on a table to user or role.
      */
-    @Support
+    @Support({ H2 })
     GrantOnStep grant(Privilege... privileges);
 
     /**
      * Grant privileges on a table to user or role.
      */
-    @Support
+    @Support({ H2 })
     GrantOnStep grant(Collection<? extends Privilege> privileges);
 
     /**
      * Revoke a privilege on table from user or role.
      */
-    @Support
+    @Support({ H2 })
     RevokeOnStep revoke(Privilege privilege);
 
     /**
      * Revoke privileges on table from user or role.
      */
-    @Support
+    @Support({ H2 })
     RevokeOnStep revoke(Privilege... privileges);
 
     /**
      * Revoke privileges on table from user or role.
      */
-    @Support
+    @Support({ H2 })
     RevokeOnStep revoke(Collection<? extends Privilege> privileges);
 
     // -------------------------------------------------------------------------

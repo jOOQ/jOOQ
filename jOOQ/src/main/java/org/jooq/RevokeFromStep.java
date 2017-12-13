@@ -52,13 +52,13 @@ public interface RevokeFromStep {
     /**
      * Revoke a privilege from a user.
      */
-    @Support
+    @Support({ H2 })
     RevokeFinalStep from(User user);
 
     /**
      * Revoke a privilege from a role.
      */
-    @Support
+    @Support({ H2 })
     RevokeFinalStep from(Role role);
 
     /**

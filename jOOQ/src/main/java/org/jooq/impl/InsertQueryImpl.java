@@ -83,10 +83,12 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
+import org.jooq.Keyword;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
+import org.jooq.OnConflict;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -110,8 +112,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private boolean                          defaultValues;
     private boolean                          onDuplicateKeyUpdate;
     private boolean                          onDuplicateKeyIgnore;
-    private QueryPartList<Field<?>>          onConflict;
+    private final OnConflictProviderImpl     onConflict;
     private final ConditionProviderImpl      condition;
+    private final ConditionProviderImpl      conditionOnTarget;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
@@ -119,6 +122,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
         this.condition = new ConditionProviderImpl();
+        this.conditionOnTarget = new ConditionProviderImpl();
+        this.onConflict = new OnConflictProviderImpl();
     }
 
     @Override
@@ -144,7 +149,43 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
-        this.onConflict = new QueryPartList<Field<?>>(fields);
+        for(Field<?> field: fields)
+            onConflict(field, null, null);
+    }
+
+    @Override
+    public final void onConflict(Field<?> field, Name collation) {
+        onConflict(field, collation, null);
+    }
+
+    @Override
+    public final void onConflict(Field<?> field, Keyword opclass) {
+        onConflict(field, null, opclass);
+    }
+
+    @Override
+    public final void onConflict(Field<?> field, Name collation, Keyword opclass) {
+        addOnConflict(field, collation, opclass);
+    }
+
+    @Override
+    public final void addOnConflict(Field<?> field, Name collation) {
+        addOnConflict(field, collation, null);
+    }
+
+    @Override
+    public final void addOnConflict(Field<?> field, Keyword opclass) {
+        addOnConflict(field, null, opclass);
+    }
+
+    @Override
+    public final void addOnConflict(Field<?> field, Name collation, Keyword opclass) {
+        addOnConflict(DSL.onConflict(field, collation, opclass));
+    }
+
+    @Override
+    public final void addOnConflict(OnConflict onConflict) {
+        this.onConflict.addOnConflict(onConflict);
     }
 
     @Override
@@ -205,6 +246,36 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
+    public final void addIndexConditions(Condition conditions) {
+        conditionOnTarget.addConditions(conditions);
+    }
+
+    @Override
+    public final void addIndexConditions(Condition... conditions) {
+        conditionOnTarget.addConditions(conditions);
+    }
+
+    @Override
+    public final void addIndexConditions(Collection<? extends Condition> conditions) {
+        conditionOnTarget.addConditions(conditions);
+    }
+
+    @Override
+    public final void addIndexConditions(Operator operator, Condition condition) {
+        conditionOnTarget.addConditions(operator, condition);
+    }
+
+    @Override
+    public final void addIndexConditions(Operator operator, Condition... conditions) {
+        conditionOnTarget.addConditions(operator, conditions);
+    }
+
+    @Override
+    public final void addIndexConditions(Operator operator, Collection<? extends Condition> conditions) {
+        conditionOnTarget.addConditions(operator, conditions);
+    }
+
+    @Override
     public final void setDefaultValues() {
         defaultValues = true;
     }
@@ -252,7 +323,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_CONFLICT)
                        .sql(" (");
 
-                    if (onConflict != null && onConflict.size() > 0) {
+                    if (onConflict != null && onConflict.isNotEmpty()) {
                         boolean qualify = ctx.qualify();
 
                         ctx.qualify(false)
@@ -270,8 +341,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                            .qualify(qualify);
                     }
 
-                    ctx.sql(") ")
-                       .visit(K_DO_UPDATE)
+                    ctx.sql(") ");
+
+                    if (conditionOnTarget.hasWhere())
+                        ctx.formatSeparator()
+                           .visit(K_WHERE)
+                           .sql(' ')
+                           .visit(conditionOnTarget)
+                           .sql(' ');
+
+                    ctx.visit(K_DO_UPDATE)
                        .formatSeparator()
                        .visit(K_SET)
                        .sql(' ')
@@ -339,7 +418,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_CONFLICT)
                        .sql(' ');
 
-                    if (onConflict != null && onConflict.size() > 0) {
+                    if (onConflict != null && onConflict.isNotEmpty()) {
                         boolean qualify = ctx.qualify();
 
                         ctx.sql('(')

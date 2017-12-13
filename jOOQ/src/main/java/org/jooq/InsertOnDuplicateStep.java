@@ -66,6 +66,7 @@ import java.util.Collection;
  * </pre></code>
  *
  * @author Lukas Eder
+ * @author Timur Shaidullin
  */
 public interface InsertOnDuplicateStep<R extends Record> extends InsertReturningStep<R> {
 
@@ -73,13 +74,30 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * Add an <code>ON CONFLICT</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })
-    InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
+    InsertOnConflictTargetMoreStep<R> onConflict(Field<?>... keys);
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })
-    InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
+    InsertOnConflictTargetMoreStep<R> onConflict(Collection<? extends Field<?>> keys);
+
+    /**
+     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictTargetMoreStep<R> onConflict(Field<?> field, Name collation);
+    /**
+     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictTargetMoreStep<R> onConflict(Field<?> field, Keyword opclass);
+
+    /**
+     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictTargetMoreStep<R> onConflict(Field<?> field, Name collation, Keyword opclass);
 
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.

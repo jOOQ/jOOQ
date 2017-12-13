@@ -75,6 +75,7 @@ final class Keywords {
     static final Keyword K_CHANGE_COLUMN                    = keyword("change column");
     static final Keyword K_CHECK                            = keyword("check");
     static final Keyword K_COALESCE                         = keyword("coalesce");
+    static final Keyword K_COLLATE                          = keyword("collate");
     static final Keyword K_COLUMNS                          = keyword("columns");
     static final Keyword K_CONNECT_BY                       = keyword("connect by");
     static final Keyword K_CONSTRAINT                       = keyword("constraint");

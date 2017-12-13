@@ -57,6 +57,7 @@ import org.jooq.Field;
 import org.jooq.FieldLike;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictDoUpdateStep;
+import org.jooq.InsertOnConflictTargetMoreStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
@@ -85,6 +86,9 @@ import org.jooq.InsertValuesStep7;
 import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
+import org.jooq.Keyword;
+import org.jooq.Name;
+import org.jooq.OnConflict;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -130,6 +134,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     InsertSetStep<R>,
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
+    InsertOnConflictTargetMoreStep<R>,
     InsertOnConflictDoUpdateStep<R>,
     InsertOnConflictConditionStep<R>,
     InsertResultStep<R> {
@@ -616,6 +621,54 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final InsertImpl onConflict(Field<?> field, Name collation) {
+        onConflict(field, collation, null);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl onConflict(Field<?> field, Keyword opclass) {
+        onConflict(field, null,  opclass);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl onConflict(Field<?> field, Name collation, Keyword opclass) {
+        getDelegate().onConflict(field, collation, opclass);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl addOnConflict(Field<?> field) {
+        addOnConflict(field, null, null);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl addOnConflict(Field<?> field, Name collation) {
+        addOnConflict(field, collation, null);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl addOnConflict(Field<?> field, Keyword opclass) {
+        addOnConflict(field, null, opclass);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl addOnConflict(Field<?> field, Name collation, Keyword opclass) {
+        addOnConflict(DSL.onConflict(field, collation, opclass));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl addOnConflict(OnConflict onConflict) {
+        getDelegate().addOnConflict(onConflict);
+        return this;
+    }
+
+    @Override
     public final InsertImpl onConflictDoNothing() {
         onConflict().doNothing();
         return this;
@@ -877,4 +930,51 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return Optional.ofNullable(fetchOne());
     }
 
+    @Override
+    public final InsertImpl whereIndex(Condition condition) {
+        whereIndex(Arrays.asList(condition));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(Condition... conditions) {
+        whereIndex(Arrays.asList(conditions));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(Collection<? extends Condition> conditions) {
+        getDelegate().addIndexConditions(conditions);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(Field<Boolean> field) {
+        whereIndex(condition(field));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(SQL sql) {
+        whereIndex(condition(sql));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(String sql) {
+        whereIndex(condition(sql));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(String sql, Object... bindings) {
+        getDelegate().addIndexConditions(condition(sql, bindings));
+        return this;
+    }
+
+    @Override
+    public final InsertImpl whereIndex(String sql, QueryPart... parts) {
+        getDelegate().addIndexConditions(condition(sql, parts));
+        return this;
+    }
 }

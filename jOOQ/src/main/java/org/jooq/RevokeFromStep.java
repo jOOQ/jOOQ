@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the creation of a <code>REVOKE</code> statement where the
@@ -52,18 +54,18 @@ public interface RevokeFromStep {
     /**
      * Revoke a privilege from a user.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFinalStep from(User user);
 
     /**
      * Revoke a privilege from a role.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFinalStep from(Role role);
 
     /**
      * Revoke a privilege from <code>PUBLIC</code>.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFinalStep fromPublic();
 }

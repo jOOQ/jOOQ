@@ -7885,7 +7885,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static GrantOnStep grant(Privilege privilege) {
         return using(new DefaultConfiguration()).grant(privilege);
     }
@@ -7911,7 +7911,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static GrantOnStep grant(Privilege... privileges) {
         return using(new DefaultConfiguration()).grant(privileges);
     }
@@ -7937,7 +7937,7 @@ public class DSL {
      *
      * @see #grant(Privilege...)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).grant(privileges);
     }
@@ -7963,7 +7963,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static RevokeOnStep revoke(Privilege privilege) {
         return using(new DefaultConfiguration()).revoke(privilege);
     }
@@ -7989,7 +7989,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static RevokeOnStep revoke(Privilege... privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }
@@ -8015,7 +8015,7 @@ public class DSL {
      *
      * @see #revoke(Privilege...)
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }

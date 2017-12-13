@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the creation of a <code>REVOKE</code> statement where the
@@ -52,13 +54,13 @@ public interface RevokeOnStep {
     /**
      * Revoke a privilege on a table.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFromStep on(Table<?> table);
 
     /**
      * Revoke a privilege on a table.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFromStep on(Name table);
 
     /**
@@ -70,6 +72,6 @@ public interface RevokeOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     RevokeFromStep on(String table);
 }

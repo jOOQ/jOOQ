@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the creation of a <code>GRANT</code> statement where the
@@ -52,18 +54,18 @@ public interface GrantToStep {
     /**
      * Grant a privilege to a user.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantFinalStep to(User user);
 
     /**
      * Grant a privilege to a role.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantFinalStep to(Role role);
 
     /**
      * Grant a privilege to <code>PUBLIC</code>.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantFinalStep toPublic();
 }

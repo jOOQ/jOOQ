@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the creation of a <code>GRANT</code> statement where the
@@ -52,13 +54,13 @@ public interface GrantOnStep {
     /**
      * Grant a privilege on a table.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantToStep on(Table<?> table);
 
     /**
      * Grant a privilege on a table.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantToStep on(Name table);
 
     /**
@@ -70,6 +72,6 @@ public interface GrantOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     GrantToStep on(String table);
 }

@@ -187,6 +187,7 @@ final class Keywords {
     static final Keyword K_ON_COMMIT_DROP                   = keyword("on commit drop");
     static final Keyword K_ON_COMMIT_PRESERVE_ROWS          = keyword("on commit preserve rows");
     static final Keyword K_ON_CONFLICT                      = keyword("on conflict");
+    static final Keyword K_ON_CONSTRAINT                    = keyword("on constraint");
     static final Keyword K_ON_DELETE                        = keyword("on delete");
     static final Keyword K_ON_DUPLICATE_KEY_UPDATE          = keyword("on duplicate key update");
     static final Keyword K_ON_UPDATE                        = keyword("on update");

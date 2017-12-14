@@ -47,7 +47,9 @@ import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.dual;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -60,6 +62,7 @@ import static org.jooq.impl.Keywords.K_IGNORE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_ON_CONFLICT;
+import static org.jooq.impl.Keywords.K_ON_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Keywords.K_SET;
@@ -69,6 +72,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
 import java.util.Arrays;
@@ -79,6 +83,7 @@ import java.util.Map;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Identity;
@@ -93,6 +98,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -110,6 +116,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private boolean                          defaultValues;
     private boolean                          onDuplicateKeyUpdate;
     private boolean                          onDuplicateKeyIgnore;
+    private Constraint                       onConstraint;
     private QueryPartList<Field<?>>          onConflict;
     private final ConditionProviderImpl      condition;
 
@@ -145,6 +152,24 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
         this.onConflict = new QueryPartList<Field<?>>(fields);
+    }
+
+    @Override
+    public final void onConflictOnConstraint(Constraint constraint) {
+        this.onConstraint = constraint;
+    }
+
+    @Override
+    public void onConflictOnConstraint(UniqueKey<R> constraint) {
+        if (constraint.getName() == null)
+            throw new IllegalStateException("UniqueKey's name is not specified");
+
+        onConflictOnConstraint(name(constraint.getName()));
+    }
+
+    @Override
+    public final void onConflictOnConstraint(Name constraint) {
+        onConflictOnConstraint(constraint(constraint));
     }
 
     @Override
@@ -248,30 +273,41 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case POSTGRES: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .visit(K_ON_CONFLICT)
-                       .sql(" (");
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
-                    if (onConflict != null && onConflict.size() > 0) {
-                        boolean qualify = ctx.qualify();
+                    if (onConstraint != null) {
+                        ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+                        ctx.visit(K_ON_CONSTRAINT)
+                           .sql(' ')
+                           .visit(onConstraint)
+                           .sql(' ');
 
-                        ctx.qualify(false)
-                           .visit(onConflict)
-                           .qualify(qualify);
-                    }
-                    else if (table.getPrimaryKey() == null) {
-                        ctx.sql("[unknown primary key]");
+                        ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
                     else {
-                        boolean qualify = ctx.qualify();
+                        ctx.visit(K_ON_CONFLICT)
+                           .sql(" (");
 
-                        ctx.qualify(false)
-                           .visit(new Fields<Record>(table.getPrimaryKey().getFields()))
-                           .qualify(qualify);
+                        if (onConflict != null && onConflict.size() > 0) {
+                            boolean qualify = ctx.qualify();
+
+                            ctx.qualify(false)
+                               .visit(onConflict)
+                               .qualify(qualify);
+                        } else if (table.getPrimaryKey() == null) {
+                            ctx.sql("[unknown primary key]");
+                        } else {
+                            boolean qualify = ctx.qualify();
+
+                            ctx.qualify(false)
+                               .visit(new Fields<Record>(table.getPrimaryKey().getFields()))
+                               .qualify(qualify);
+                        }
+
+                        ctx.sql(") ");
                     }
 
-                    ctx.sql(") ")
-                       .visit(K_DO_UPDATE)
+                    ctx.visit(K_DO_UPDATE)
                        .formatSeparator()
                        .visit(K_SET)
                        .sql(' ')
@@ -335,18 +371,30 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case POSTGRES: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .visit(K_ON_CONFLICT)
-                       .sql(' ');
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
-                    if (onConflict != null && onConflict.size() > 0) {
-                        boolean qualify = ctx.qualify();
+                    if (onConstraint != null) {
+                        ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+                        ctx.visit(K_ON_CONSTRAINT)
+                           .sql(' ')
+                           .visit(onConstraint)
+                           .sql(' ');
 
-                        ctx.sql('(')
-                           .qualify(false)
-                           .visit(onConflict)
-                           .qualify(qualify)
-                           .sql(") ");
+                        ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+                    }
+                    else {
+                        ctx.visit(K_ON_CONFLICT)
+                           .sql(' ');
+
+                        if (onConflict != null && onConflict.size() > 0) {
+                            boolean qualify = ctx.qualify();
+
+                            ctx.sql('(')
+                               .qualify(false)
+                               .visit(onConflict)
+                               .qualify(qualify)
+                               .sql(") ");
+                        }
                     }
 
                     ctx.visit(K_DO_NOTHING)

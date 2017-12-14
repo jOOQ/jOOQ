@@ -70,6 +70,24 @@ import java.util.Collection;
 public interface InsertOnDuplicateStep<R extends Record> extends InsertReturningStep<R> {
 
     /**
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
+
+    /**
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
+
+    /**
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(UniqueKey<R> constraint);
+
+    /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })

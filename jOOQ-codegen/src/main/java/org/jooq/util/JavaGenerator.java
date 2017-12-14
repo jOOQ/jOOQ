@@ -5543,7 +5543,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!StringUtils.isBlank(header)) {
             out.println("/*");
             printJavadocParagraph(out, header, "");
-            out.println("*/");
+            out.println(" */");
         }
     }
 

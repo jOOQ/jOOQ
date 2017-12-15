@@ -47,6 +47,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.LoggerListener;
 
@@ -102,6 +103,10 @@ final class ExecuteListeners implements ExecuteListener {
             if (LOGGER_LISTENER_LOGGER.isDebugEnabled())
                 (result = init(result)).add(new LoggerListener());
         }
+
+        // [#6580] Fetching server output may require some pre / post actions around the actual statement
+        if (SettingsTools.getFetchServerOutputSize(0, ctx.settings()) > 0)
+            (result = init(result)).add(new FetchServerOutputListener());
 
         return result == null ? null : result.toArray(EMPTY_EXECUTE_LISTENER);
     }

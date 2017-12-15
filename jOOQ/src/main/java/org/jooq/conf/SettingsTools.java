@@ -264,4 +264,16 @@ public final class SettingsTools {
              ? settings.getFetchSize()
              : 0;
     }
+
+    /**
+     * Return <code>fetchServerOutputSize</code> if it is not <code>0</code>, or
+     * the specified {@link Settings#getFetchServerOutputSize()}.
+     */
+    public static final int getFetchServerOutputSize(int fetchServerOutputSize, Settings settings) {
+        return fetchServerOutputSize != 0
+             ? fetchServerOutputSize
+             : settings.getFetchServerOutputSize() != null
+             ? settings.getFetchServerOutputSize()
+             : 0;
+    }
 }

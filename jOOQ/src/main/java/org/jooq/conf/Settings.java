@@ -82,6 +82,8 @@ public class Settings
     protected ThrowExceptions throwExceptions = ThrowExceptions.THROW_ALL;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchWarnings = true;
+    @XmlElement(defaultValue = "0")
+    protected Integer fetchServerOutputSize = 0;
     @XmlElement(defaultValue = "false")
     protected Boolean returnAllOnUpdatableRecord = false;
     @XmlElement(defaultValue = "true")
@@ -645,6 +647,30 @@ public class Settings
     }
 
     /**
+     * Whether server output should be fetched after each query execution.
+     *
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *
+     */
+    public Integer getFetchServerOutputSize() {
+        return fetchServerOutputSize;
+    }
+
+    /**
+     * Sets the value of the fetchServerOutputSize property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
+    public void setFetchServerOutputSize(Integer value) {
+        this.fetchServerOutputSize = value;
+    }
+
+    /**
      * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
      * <p>
      * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
@@ -1042,6 +1068,11 @@ public class Settings
 
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
+        return this;
+    }
+
+    public Settings withFetchServerOutputSize(Integer value) {
+        setFetchServerOutputSize(value);
         return this;
     }
 

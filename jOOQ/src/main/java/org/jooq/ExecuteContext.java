@@ -308,4 +308,18 @@ public interface ExecuteContext extends Scope {
      * Override the {@link SQLWarning} being emitted.
      */
     void sqlWarning(SQLWarning e);
+
+    /**
+     * Any server output collected from this statement when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code>.
+     *
+     * @return The server output. This is never <code>null</code>.
+     */
+    String[] serverOutput();
+
+    /**
+     * Any server output collected from this statement when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code>.
+     */
+    void serverOutput(String[] output);
 }

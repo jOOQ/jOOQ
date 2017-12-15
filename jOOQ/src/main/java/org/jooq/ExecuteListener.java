@@ -297,17 +297,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * </ul>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connectionProvider(ConnectionProvider)}: The
+     * <li>{@link ExecuteContext#connectionProvider(ConnectionProvider)}: The
      * connection provider used for execution. This may be particularly
      * interesting if a {@link Query} was de-serialised and is thus lacking the
      * underlying connection</li>
@@ -320,12 +321,13 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * </ul>
      */
@@ -336,21 +338,22 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
+     * <li>{@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
      * </ul>
@@ -362,21 +365,22 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
+     * <li>{@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
      * </ul>
@@ -388,17 +392,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -418,7 +423,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>Statement</code>, <code>PreparedStatement</code>, or
      * <code>CallableStatement</code> that is about to be executed. You can
      * modify this statement freely, or wrap {@link ExecuteContext#statement()}
@@ -432,17 +437,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -459,10 +465,11 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>PreparedStatement</code>, or <code>CallableStatement</code> that is
      * about to be executed. You can modify this statement freely, or wrap
-     * {@link ExecuteContext#statement()} with your enriched statement wrapper</li>
+     * {@link ExecuteContext#statement()} with your enriched statement
+     * wrapper</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries of type
@@ -475,17 +482,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -502,7 +510,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>Statement</code>, <code>PreparedStatement</code>, or
      * <code>CallableStatement</code> that is about to be executed. You can
      * modify this statement freely, or wrap {@link ExecuteContext#statement()}
@@ -519,17 +527,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -549,7 +558,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>Statement</code>, <code>PreparedStatement</code>, or
      * <code>CallableStatement</code> that is about to be executed. You can
      * modify this statement freely, or wrap {@link ExecuteContext#statement()}
@@ -569,17 +578,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -595,17 +605,21 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched or <code>null</code>, if the <code>Query</code>
-     * returns no result set, or if a <code>Routine</code> is being executed.</li>
-     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * returns no result set, or if a <code>Routine</code> is being
+     * executed.</li>
+     * <li>{@link ExecuteContext#rows()}: The number of affected rows if
      * applicable. In case a {@link ResultSet} is fetched, this number is only
      * available at the {@link #fetchEnd(ExecuteContext)} event.</li>
+     * <li>{@link ExecuteContext#serverOutput()}: The server output if
+     * available. This may be fetched when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code></li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#resultSet(ResultSet)}: The
+     * <li>{@link ExecuteContext#resultSet(ResultSet)}: The
      * <code>ResultSet</code> that is about to be fetched. You can modify this
      * result set freely, or wrap {@link ExecuteContext#resultSet()} with your
      * enriched result set wrapper</li>
@@ -619,15 +633,16 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -637,8 +652,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is called only when executing standalone routine
@@ -652,15 +668,16 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -669,8 +686,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>A <code>java.sql.CallableStatement</code> when you are executing a
      * jOOQ <code>Routine</code></li>
      * </ul>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is called only when executing standalone routine
@@ -683,17 +701,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -709,15 +728,16 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#resultSet(ResultSet)}: The
+     * <li>{@link ExecuteContext#resultSet(ResultSet)}: The
      * <code>ResultSet</code> that is about to be fetched. You can modify this
      * result set freely, or wrap {@link ExecuteContext#resultSet()} with your
      * enriched result set wrapper</li>
@@ -737,17 +757,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -763,12 +784,13 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The set of records that are about to
+     * <li>{@link ExecuteContext#result()}: The set of records that are about to
      * be fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -782,17 +804,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -808,12 +831,13 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
-     * <li> {@link ExecuteContext#record()}: The <code>Record</code> that is
+     * <li>{@link ExecuteContext#record()}: The <code>Record</code> that is
      * about to be fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -826,17 +850,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -852,12 +877,13 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -870,17 +896,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -896,14 +923,15 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The set of records that were
+     * <li>{@link ExecuteContext#result()}: The set of records that were
      * fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -917,17 +945,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -943,16 +972,20 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * Note that the <code>Statement</code> is already closed!</li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched. Note that the <code>ResultSet</code> is already closed!</li>
-     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * <li>{@link ExecuteContext#rows()}: The number of affected rows if
      * applicable.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#serverOutput()}: The server output if
+     * available. This may be fetched when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code></li>
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * <li>{@link ExecuteContext#result()}: The last set of records that were
      * fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      * <p>
      * In case of multiple <code>ResultSets</code> with
@@ -969,17 +1002,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -995,17 +1029,21 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * Note that the <code>Statement</code> is already closed!</li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched or <code>null</code>, if no result set was fetched. Note that
      * the <code>ResultSet</code> may already be closed!</li>
-     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * <li>{@link ExecuteContext#rows()}: The number of affected rows if
      * applicable.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#serverOutput()}: The server output if
+     * available. This may be fetched when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code></li>
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * <li>{@link ExecuteContext#result()}: The last set of records that were
      * fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
-     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was
+     * emitted.</li>
      * </ul>
      */
     void end(ExecuteContext ctx);
@@ -1016,17 +1054,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -1042,18 +1081,21 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * Note that the <code>Statement</code> may be closed!</li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched or <code>null</code>, if no result set was fetched. Note that
      * the <code>ResultSet</code> may already be closed!</li>
-     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * <li>{@link ExecuteContext#rows()}: The number of affected rows if
      * applicable.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#serverOutput()}: The server output if
+     * available. This may be fetched when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code></li>
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * <li>{@link ExecuteContext#result()}: The last set of records that were
      * fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#exception()}: The {@link RuntimeException} that
+     * <li>{@link ExecuteContext#exception()}: The {@link RuntimeException} that
      * is about to be thrown</li>
-     * <li> {@link ExecuteContext#sqlException()}: The {@link SQLException} that
+     * <li>{@link ExecuteContext#sqlException()}: The {@link SQLException} that
      * was thrown by the database</li>
      * </ul>
      */
@@ -1065,17 +1107,18 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * <li>{@link ExecuteContext#connection()}: The connection used for
      * execution</li>
-     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
-     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * <li>{@link ExecuteContext#configuration()}: The execution
+     * configuration</li>
+     * <li>{@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
-     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
      * <code>SQL</code> statement is unknown..</li>
-     * <li> {@link ExecuteContext#statement()}: The
+     * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
      * the following: <br/>
@@ -1091,21 +1134,24 @@ public interface ExecuteListener extends EventListener, Serializable {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * Note that the <code>Statement</code> may be closed!</li>
-     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * <li>{@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched or <code>null</code>, if no result set was fetched. Note that
      * the <code>ResultSet</code> may already be closed!</li>
-     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * <li>{@link ExecuteContext#rows()}: The number of affected rows if
      * applicable.</li>
-     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * <li>{@link ExecuteContext#serverOutput()}: The server output if
+     * available. This may be fetched when
+     * <code>{@link Settings#getFetchServerOutputSize()} > 0</code></li>
+     * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * <li>{@link ExecuteContext#result()}: The last set of records that were
      * fetched or null if no records were fetched.</li>
-     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database</li>
-     * <li> {@link ExecuteContext#exception()}: The {@link RuntimeException} that
+     * <li>{@link ExecuteContext#exception()}: The {@link RuntimeException} that
      * is about to be thrown or <code>null</code>, if no exception is being
      * thrown.</li>
-     * <li> {@link ExecuteContext#sqlException()}: The {@link SQLException} that
+     * <li>{@link ExecuteContext#sqlException()}: The {@link SQLException} that
      * was thrown by the database or <code>null</code>, if no exception is being
      * thrown.</li>
      * </ul>

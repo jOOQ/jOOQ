@@ -112,6 +112,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private transient RuntimeException             exception;
     private transient SQLException                 sqlException;
     private transient SQLWarning                   sqlWarning;
+    private transient String[]                     serverOutput;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
@@ -739,4 +740,13 @@ class DefaultExecuteContext implements ExecuteContext {
         this.sqlWarning = e;
     }
 
+    @Override
+    public final String[] serverOutput() {
+        return serverOutput == null ? EMPTY_STRING : serverOutput;
+    }
+
+    @Override
+    public final void serverOutput(String[] output) {
+        this.serverOutput = output;
+    }
 }

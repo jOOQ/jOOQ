@@ -21,6 +21,7 @@ import java.math.BigInteger;
  * The <code>unsigned short</code> type
  *
  * @author Lukas Eder
+ * @author Jens Nerche
  */
 public final class UShort extends UNumber implements Comparable<UShort> {
 
@@ -40,6 +41,18 @@ public final class UShort extends UNumber implements Comparable<UShort> {
      * have, 2<sup>16</sup>-1.
      */
     public static final int   MAX_VALUE        = 0xffff;
+
+    /**
+     * A constant holding the minimum value an <code>unsigned short</code> can
+     * have as UShort, 0.
+     */
+    public static final UShort MIN             = valueOf(MIN_VALUE);
+
+    /**
+     * A constant holding the maximum value an <code>unsigned short</code> can
+     * have as UShort, 2<sup>16</sup>-1.
+     */
+    public static final UShort MAX             = valueOf(MAX_VALUE);
 
     /**
      * The value modelling the content of this <code>unsigned short</code>
@@ -107,9 +120,8 @@ public final class UShort extends UNumber implements Comparable<UShort> {
     }
 
     private void rangeCheck() throws NumberFormatException {
-        if (value < MIN_VALUE || value > MAX_VALUE) {
+        if (value < MIN_VALUE || value > MAX_VALUE)
             throw new NumberFormatException("Value is out of range : " + value);
-        }
     }
 
     @Override
@@ -144,11 +156,8 @@ public final class UShort extends UNumber implements Comparable<UShort> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj instanceof UShort) {
+        if (obj instanceof UShort)
             return value == ((UShort) obj).value;
-        }
 
         return false;
     }
@@ -161,5 +170,21 @@ public final class UShort extends UNumber implements Comparable<UShort> {
     @Override
     public int compareTo(UShort o) {
         return (value < o.value ? -1 : (value == o.value ? 0 : 1));
+    }
+
+    public UShort add(UShort val) throws NumberFormatException {
+        return valueOf(value + val.value);
+    }
+
+    public UShort add(int val) throws NumberFormatException {
+        return valueOf(value + val);
+    }
+
+    public UShort subtract(final UShort val) {
+        return valueOf(value - val.value);
+    }
+
+    public UShort subtract(final int val) {
+        return valueOf(value - val);
     }
 }

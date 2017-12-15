@@ -76,10 +76,16 @@ public class MockResult {
     /**
      * The result data associated with this execution result.
      * <p>
-     * This object describes the result data (including meta data). If the given
-     * query execution did not provide any results, this may be
-     * <code>null</code>. Note, that this can also be used to provide a result
-     * for {@link Statement#getGeneratedKeys()}
+     * This object describes the result data (including meta data).
+     * <p>
+     * If the given query execution did not provide any results (as in
+     * <code>{@link Statement#execute(String)} == false</code>), this may be
+     * <code>null</code>. This is not the same as producing an <em>empty</em>
+     * result, which can only be modelled by an empty {@link Result}, containing
+     * column information but no rows.
+     * </p>
+     * Note, that this can also be used to provide a result for
+     * {@link Statement#getGeneratedKeys()}
      */
     public final Result<?> data;
 

@@ -89,11 +89,12 @@ final class ExecuteListeners implements ExecuteListener {
     private static final ExecuteListener[] listeners(ExecuteContext ctx) {
         List<ExecuteListener> result = null;
 
-        for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())
+        // jOOQ-internal listeners are added first, so their results are available to user-defined listeners
+        // -------------------------------------------------------------------------------------------------
 
-            // Could be null after deserialisation
-            if (provider != null)
-                (result = init(result)).add(provider.provide());
+        // [#6580] Fetching server output may require some pre / post actions around the actual statement
+        if (SettingsTools.getFetchServerOutputSize(0, ctx.settings()) > 0)
+            (result = init(result)).add(new FetchServerOutputListener());
 
         // [#6051] The previously used StopWatchListener is no longer included by default
         if (!FALSE.equals(ctx.settings().isExecuteLogging())) {
@@ -104,9 +105,11 @@ final class ExecuteListeners implements ExecuteListener {
                 (result = init(result)).add(new LoggerListener());
         }
 
-        // [#6580] Fetching server output may require some pre / post actions around the actual statement
-        if (SettingsTools.getFetchServerOutputSize(0, ctx.settings()) > 0)
-            (result = init(result)).add(new FetchServerOutputListener());
+        for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())
+
+            // Could be null after deserialisation
+            if (provider != null)
+                (result = init(result)).add(provider.provide());
 
         return result == null ? null : result.toArray(EMPTY_EXECUTE_LISTENER);
     }

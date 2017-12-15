@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;

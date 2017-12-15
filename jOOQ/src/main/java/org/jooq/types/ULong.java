@@ -144,6 +144,11 @@ public final class ULong extends UNumber implements Comparable<ULong> {
     }
 
     @Override
+    public BigInteger toBigInteger() {
+        return value;
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }

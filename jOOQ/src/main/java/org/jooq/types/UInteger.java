@@ -16,6 +16,7 @@
 package org.jooq.types;
 
 import java.io.ObjectStreamException;
+import java.math.BigInteger;
 
 /**
  * The <code>unsigned int</code> type
@@ -271,6 +272,11 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
     @Override
     public double doubleValue() {
         return value;
+    }
+
+    @Override
+    public BigInteger toBigInteger() {
+        return BigInteger.valueOf(value);
     }
 
     @Override

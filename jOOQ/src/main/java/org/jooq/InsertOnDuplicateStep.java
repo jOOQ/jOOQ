@@ -73,13 +73,13 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * Add an <code>ON CONFLICT</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })
-    InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
+    InsertOnConflictWhereMoreStep<R> onConflict(Field<?>... keys);
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
      */
     @Support({ POSTGRES_9_5 })
-    InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
+    InsertOnConflictWhereMoreStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.

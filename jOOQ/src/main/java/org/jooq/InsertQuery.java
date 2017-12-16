@@ -118,6 +118,24 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflict(Collection<? extends Field<?>> fields);
 
     /**
+     * Set flat to <code>true</code> when use a <code>WHERE</code> clause for
+     * <code>ON CONFLICT</code> statement
+     *
+     * @see #doUpdateWhere(boolean)
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflictWhere(boolean flag);
+
+    /**
+     * Set flat to <code>true</code> when use a <code>WHERE</code> clause for
+     * <code>DO UPDATE</code> statement
+     *
+     * @see #onConflictWhere(boolean)
+     */
+    @Support({ POSTGRES_9_5 })
+    void doUpdateWhere(boolean flag);
+
+    /**
      * Whether a <code>ON DUPLICATE KEY UPDATE</code> clause should be added to
      * this <code>INSERT</code> statement.
      * <p>

@@ -488,6 +488,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         Rendered result;
 
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
+        // [#6474] [#6929] Can this be communicated in a leaner way?
         if (ctx.type() == DDL) {
             ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
             DefaultRenderContext render = new DefaultRenderContext(configuration);

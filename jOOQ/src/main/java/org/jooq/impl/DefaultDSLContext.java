@@ -96,6 +96,7 @@ import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
+import org.jooq.Block;
 import org.jooq.Catalog;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
@@ -738,6 +739,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Queries queries(Collection<? extends Query> queries) {
         return new QueriesImpl(configuration(), queries);
+    }
+
+    @Override
+    public Block begin(Query... queries) {
+        return begin(Arrays.asList(queries));
+    }
+
+    @Override
+    public Block begin(Collection<? extends Query> queries) {
+        return new BlockImpl(configuration(), queries);
     }
 
     // -------------------------------------------------------------------------

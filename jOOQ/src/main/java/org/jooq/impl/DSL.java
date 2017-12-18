@@ -109,6 +109,7 @@ import org.jooq.AlterTableStep;
 import org.jooq.AlterViewStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
+import org.jooq.Block;
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
@@ -9236,6 +9237,26 @@ public class DSL {
     @Support
     public static Queries queries(Collection<? extends Query> queries) {
         return DSL.using(new DefaultConfiguration()).queries(queries);
+    }
+
+    /**
+     * Wrap a collection of queries in an anonymous procedural block.
+     *
+     * @see DSLContext#begin(Query...)
+     */
+    @Support({ POSTGRES })
+    public static Block begin(Query... queries) {
+        return begin(Arrays.asList(queries));
+    }
+
+    /**
+     * Wrap a collection of queries in an anonymous procedural block.
+     *
+     * @see DSLContext#begin(Collection)
+     */
+    @Support({ POSTGRES })
+    public static Block begin(Collection<? extends Query> queries) {
+        return DSL.using(new DefaultConfiguration()).begin(queries);
     }
 
 

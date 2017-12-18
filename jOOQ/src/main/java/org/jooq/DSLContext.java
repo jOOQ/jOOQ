@@ -688,6 +688,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     Queries queries(Collection<? extends Query> queries);
 
+    /**
+     * Wrap a collection of queries in an anonymous procedural block.
+     *
+     * @see DSL#begin(Query...)
+     */
+    @Support({ POSTGRES })
+    Block begin(Query... queries);
+
+    /**
+     * Wrap a collection of queries in an anoymous procedural block.
+     *
+     * @see DSL#begin(Collection)
+     */
+    @Support({ POSTGRES })
+    Block begin(Collection<? extends Query> queries);
+
     // -------------------------------------------------------------------------
     // XXX Plain SQL API
     // -------------------------------------------------------------------------

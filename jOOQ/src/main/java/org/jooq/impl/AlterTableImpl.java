@@ -325,6 +325,11 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl add(Field<?> field) {
+        return addColumn(field);
+    }
+
+    @Override
     public final <T> AlterTableImpl add(Field<T> field, DataType<T> type) {
         return addColumn(field, type);
     }
@@ -337,6 +342,11 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl add(String field, DataType<?> type) {
         return addColumn(field, type);
+    }
+
+    @Override
+    public final AlterTableImpl addIfNotExists(Field<?> field) {
+        return addColumnIfNotExists(field);
     }
 
     @Override
@@ -365,6 +375,11 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl addColumn(Field<?> field) {
+        return addColumn(field, (DataType) field.getDataType());
+    }
+
+    @Override
     public final <T> AlterTableImpl addColumn(Field<T> field, DataType<T> type) {
         addColumn = field;
         addColumnType = type;
@@ -379,6 +394,11 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl addColumnIfNotExists(Name field, DataType<?> type) {
         return addColumnIfNotExists((Field) field(field, type), type);
+    }
+
+    @Override
+    public final AlterTableImpl addColumnIfNotExists(Field<?> field) {
+        return addColumnIfNotExists(field, (DataType) field.getDataType());
     }
 
     @Override

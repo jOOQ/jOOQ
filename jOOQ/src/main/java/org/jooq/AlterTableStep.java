@@ -206,6 +206,15 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>
+     * This is an alias for {@link #addColumn(Field)}.
+     */
+    @Support
+    AlterTableFinalStep add(Field<?> field);
+
+    /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
      * This is an alias for {@link #addColumn(Field, DataType)}.
      */
     @Support
@@ -228,6 +237,15 @@ public interface AlterTableStep {
      */
     @Support
     AlterTableFinalStep add(String field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #addColumnIfNotExists(Field)}.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addIfNotExists(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
@@ -261,6 +279,13 @@ public interface AlterTableStep {
      * statement.
      */
     @Support
+    AlterTableFinalStep addColumn(Field<?> field);
+
+    /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
     <T> AlterTableFinalStep addColumn(Field<T> field, DataType<T> type);
 
     /**
@@ -276,6 +301,13 @@ public interface AlterTableStep {
      */
     @Support
     AlterTableFinalStep addColumn(String field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableFinalStep addColumnIfNotExists(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>

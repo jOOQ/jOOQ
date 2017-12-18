@@ -118,6 +118,30 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflict(Collection<? extends Field<?>> fields);
 
     /**
+     * Whether use a <code>On CONFLICT</code> or
+     * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
+     * statement.
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflictOnConstraint(Constraint constraint);
+
+    /**
+     * Whether use a <code>On CONFLICT</code> or
+     * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
+     * statement.
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflictOnConstraint(UniqueKey<R> constraint);
+
+    /**
+     * Whether use a <code>On CONFLICT</code> or
+     * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
+     * statement.
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflictOnConstraint(Name constraint);
+
+    /**
      * Whether a <code>ON DUPLICATE KEY UPDATE</code> clause should be added to
      * this <code>INSERT</code> statement.
      * <p>

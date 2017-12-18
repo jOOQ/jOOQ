@@ -71,7 +71,8 @@ import org.apache.maven.project.MavenProject;
 @Mojo(
     name = "generate",
     defaultPhase = GENERATE_SOURCES,
-    requiresDependencyResolution = TEST
+    requiresDependencyResolution = TEST,
+    threadSafe = true
 )
 public class Plugin extends AbstractMojo {
 

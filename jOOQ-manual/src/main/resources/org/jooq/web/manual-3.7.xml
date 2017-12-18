@@ -10051,6 +10051,65 @@ public class BindValueAbbreviator extends DefaultVisitListener {
 						</sections>
 					</section>
 
+                    <section id="zero-based-vs-one-based">
+                        <title>Zero-based vs one-based APIs</title>
+                        <content><html>
+                            <p>
+                                Any API that bridges two languages / mind sets, such as Java / SQL will inevitably face the difficulty of finding a consistent strategy to solving the "based-ness" problem. Should arrays be one-based or zero-based?
+                            </p>
+
+                            <p>
+                                Clearly, Java is zero-based and SQL is one-based, and the best strategy for jOOQ is to keep things this way. The following are a set of rules that you should remember if this ever confuses you:
+                            </p>
+
+                            <h3>All SQL API is one-based</h3>
+
+                            <p>
+                                When using SQL API, such as the index-based <reference id="order-by-clause" title="ORDER BY clause"/>, or <reference id="window-functions" title="window functions"/> such as in the example below, jOOQ will not interpret indexes but send them directly as-is to the SQL engine. For instance:
+                            </p>
+                        </html>
+
+<code-pair><sql><![CDATA[SELECT nth_value(title, 3) OVER (ORDER BY id)
+FROM book
+ORDER BY 1]]></sql>
+<java><![CDATA[create.select(nthValue(BOOK.TITLE, 3).over(orderBy(BOOK.ID)))
+      .from(BOOK)
+      .orderBy(1).fetch();]]></java>
+</code-pair>
+
+                        <html>
+                            <p>
+                                In the above example, we're looking for the 3rd value of X in T ordered by Y. Clearly, this window function uses one-based indexing. The same is true for the <code>ORDER BY</code> clause, which orders the result by the 1st column - again one-based counting. There is no column zero in SQL.
+                            </p>
+
+                            <h3>All jOOQ API is zero-based</h3>
+
+                            <p>
+                                jOOQ is a Java API and as such, one-basedness would be quite surprising despite the fact that JDBC is one-based (see below). For instance, when you access a record by index in a jOOQ <reference class="org.jooq.Result"/>, given that the result extends <reference class="java.util.List"/>, you will use zero-based index access:
+                            </p>
+                        </html>
+
+<java><![CDATA[Result<?> result = create.select(BOOK.ID, BOOK.TITLE)
+      .from(BOOK)
+      .orderBy(1)
+      .fetch();
+
+for (int i = 0; i < result.size(); i++)
+    System.out.println(result.get(i));]]></java>
+
+                        <html>
+                            <p>
+                                Unlike in JDBC, where <reference class="java.sql.ResultSet" anchor="#absolute-int-" title="java.sql.ResultSet#absolute(int)"/> positions the underlying cursor at the one-based index, we Java developers really don't like that way of thinking. As can be seen in the above loop, we iterate over this result as we do over any other Java collection.
+                            </p>
+
+                            <h3>All JDBC API is one-based</h3>
+
+                            <p>
+                                An exception to the above rule is, obviously, all jOOQ API that is JDBC-interfacing. E.g. when you implement a <reference id="custom-binding" title="custom data type binding"/>, you will work with JDBC API directly from within jOOQ, which is one-based.
+                            </p>
+                        </html></content>
+                    </section>
+
 					<section id="scala-sql-building">
 						<title>SQL building in Scala</title>
 						<content><html>
@@ -10245,6 +10304,7 @@ fetch]]></scala><html>
 								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
 								<li><reference id="reusing-statements" title="Closing Statements"/>: JDBC keeps open resources even if they are already consumed. With JDBC, there is a lot of verbosity around safely closing resources. In jOOQ, resources are closed after consumption, by default. If you want to keep them open after consumption, you have to explicitly say so.</li>
                                 <li><reference id="jdbc-flags" title="JDBC flags"/>: JDBC execution flags and modes are not modified. They can be set fluently on a <reference id="query-vs-resultquery" title="Query"/></li>
+                                <li><reference id="zero-based-vs-one-based" title="Zero-based vs one-based APIs"/>: JDBC is a one-based API, jOOQ is a zero-based API. While this makes sense intuitively (JDBC is the less intuitive API from a Java perspective), it can lead to confusion in certain cases.</li>
 							</ul>
 						</html></content>
 					</section>

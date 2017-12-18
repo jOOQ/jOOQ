@@ -155,7 +155,7 @@ insertStatement = 'INSERT INTO' tableName
   [
     'ON DUPLICATE KEY UPDATE' 'SET' setClauses
   | 'ON DUPLICATE KEY IGNORE'
-  | 'ON CONFLICT' '(' fieldNames ')' 'DO'
+  | 'ON CONFLICT' ( 'ON CONSTRAINT' constraintName | '(' fieldNames ')' ) 'DO'
     (
       'NOTHING'
     | 'UPDATE' 'SET' setClauses [ 'WHERE' condition ]

@@ -37,9 +37,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -48,7 +46,11 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Timur Shaidullin
  */
-public interface GrantGrantedStep extends GrantFinalStep{
-    @Support({ POSTGRES, MYSQL, HSQLDB, FIREBIRD })
+public interface GrantWithGrantOptionStep extends GrantFinalStep{
+
+    /**
+     * Add the <code>WITH GRANT OPTION</code> clause.
+     */
+    @Support({ POSTGRES })
     GrantFinalStep withGrantOption();
 }

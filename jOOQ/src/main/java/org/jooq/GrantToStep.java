@@ -55,17 +55,17 @@ public interface GrantToStep {
      * Grant a privilege to a user.
      */
     @Support({ H2, POSTGRES })
-    GrantGrantedStep to(User user);
+    GrantWithGrantOptionStep to(User user);
 
     /**
      * Grant a privilege to a role.
      */
     @Support({ H2, POSTGRES })
-    GrantGrantedStep to(Role role);
+    GrantWithGrantOptionStep to(Role role);
 
     /**
      * Grant a privilege to <code>PUBLIC</code>.
      */
     @Support({ H2, POSTGRES })
-    GrantGrantedStep toPublic();
+    GrantWithGrantOptionStep toPublic();
 }

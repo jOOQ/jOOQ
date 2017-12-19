@@ -54,9 +54,9 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.GrantFinalStep;
-import org.jooq.GrantGrantedStep;
 import org.jooq.GrantOnStep;
 import org.jooq.GrantToStep;
+import org.jooq.GrantWithGrantOptionStep;
 import org.jooq.Name;
 import org.jooq.Privilege;
 import org.jooq.Role;
@@ -72,7 +72,7 @@ final class GrantImpl extends AbstractQuery implements
     // Cascading interface implementations for Select behaviour
     GrantOnStep,
     GrantToStep,
-    GrantGrantedStep,
+    GrantWithGrantOptionStep,
     GrantFinalStep {
 
     /**

@@ -9596,6 +9596,24 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ H2, POSTGRES })
     RevokeOnStep revoke(Collection<? extends Privilege> privileges);
 
+    /**
+     * Revoke grant option for a privilege on a table from user or role
+     */
+    @Support
+    RevokeOnStep revokeGrantOptionFor(Privilege privilege);
+
+    /**
+     * Revoke grant option for a privilege on a table from user or role
+     */
+    @Support
+    RevokeOnStep revokeGrantOptionFor(Privilege... privilege);
+
+    /**
+     * Revoke grant option for a privilege on a table from user or role
+     */
+    @Support
+    RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
+
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------

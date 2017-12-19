@@ -9597,21 +9597,21 @@ public interface DSLContext extends Scope , AutoCloseable  {
     RevokeOnStep revoke(Collection<? extends Privilege> privileges);
 
     /**
-     * Revoke grant option for a privilege on a table from user or role
+     * Revoke grant option for a privilege on a table from user or role.
      */
-    @Support
+    @Support({ POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Privilege privilege);
 
     /**
-     * Revoke grant option for a privilege on a table from user or role
+     * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support
-    RevokeOnStep revokeGrantOptionFor(Privilege... privilege);
+    @Support({ POSTGRES })
+    RevokeOnStep revokeGrantOptionFor(Privilege... privileges);
 
     /**
-     * Revoke grant option for a privilege on a table from user or role
+     * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support
+    @Support({ POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
 
     // -------------------------------------------------------------------------

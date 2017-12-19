@@ -8023,6 +8023,30 @@ public class DSL {
     }
 
     /**
+     * Revoke grant option for a privilege on a table from user or role.
+     */
+    @Support({ POSTGRES })
+    public static RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
+        return using(new DefaultConfiguration()).revoke(privilege);
+    }
+
+    /**
+     * Revoke grant option for some privileges on a table from user or role.
+     */
+    @Support({ POSTGRES })
+    public static RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
+        return using(new DefaultConfiguration()).revoke(privileges);
+    }
+
+    /**
+     * Revoke grant option for some privileges on a table from user or role.
+     */
+    @Support({ POSTGRES })
+    public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
+        return using(new DefaultConfiguration()).revoke(privileges);
+    }
+
+    /**
      * Create a new privilege reference.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must

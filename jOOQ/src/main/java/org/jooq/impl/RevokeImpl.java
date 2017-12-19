@@ -106,7 +106,7 @@ final class RevokeImpl extends AbstractQuery implements
 
         if (grantOptionFor)
             ctx.visit(K_GRANT_OPTION_FOR)
-                .sql(' ');
+               .sql(' ');
 
         String separator = "";
         for (Privilege privilege : privileges) {

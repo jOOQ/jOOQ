@@ -3,6 +3,7 @@ batch = query { ';' query };
 query =
   ddlStatement
 | dmlStatement
+| blockStatement
 ;
 
 ddlStatement =
@@ -33,6 +34,17 @@ dmlStatement =
 | mergeStatement
 | selectStatement
 | updateStatement
+;
+
+proceduralStatement =
+  query
+| nullStatement
+;
+
+blockStatement = 'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
+;
+
+nullStatement = 'NULL'
 ;
 
 alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break

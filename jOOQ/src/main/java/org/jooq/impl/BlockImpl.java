@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_DO;
@@ -106,6 +107,17 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
             default: {
                 accept0(ctx);
                 break;
@@ -122,8 +134,12 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
+
+
                 default:
                     ctx.formatSeparator().visit(K_NULL).sql(';');
+                    break;
             }
         }
         else {
@@ -150,8 +166,17 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         ctx.formatIndentEnd()
            .formatSeparator()
-           .visit(K_END)
-           .sql(';');
+           .visit(K_END);
+
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                ctx.sql(';');
+        }
     }
 
     @Override

@@ -9563,55 +9563,55 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Grant a privilege on a table to user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     GrantOnStep grant(Privilege privilege);
 
     /**
      * Grant privileges on a table to user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     GrantOnStep grant(Privilege... privileges);
 
     /**
      * Grant privileges on a table to user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     GrantOnStep grant(Collection<? extends Privilege> privileges);
 
     /**
      * Revoke a privilege on table from user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     RevokeOnStep revoke(Privilege privilege);
 
     /**
      * Revoke privileges on table from user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     RevokeOnStep revoke(Privilege... privileges);
 
     /**
      * Revoke privileges on table from user or role.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     RevokeOnStep revoke(Collection<? extends Privilege> privileges);
 
     /**
      * Revoke grant option for a privilege on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Privilege privilege);
 
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Privilege... privileges);
 
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
 
     // -------------------------------------------------------------------------

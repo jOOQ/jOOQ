@@ -7887,7 +7887,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static GrantOnStep grant(Privilege privilege) {
         return using(new DefaultConfiguration()).grant(privilege);
     }
@@ -7913,7 +7913,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static GrantOnStep grant(Privilege... privileges) {
         return using(new DefaultConfiguration()).grant(privileges);
     }
@@ -7939,7 +7939,7 @@ public class DSL {
      *
      * @see #grant(Privilege...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).grant(privileges);
     }
@@ -7965,7 +7965,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static RevokeOnStep revoke(Privilege privilege) {
         return using(new DefaultConfiguration()).revoke(privilege);
     }
@@ -7991,7 +7991,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static RevokeOnStep revoke(Privilege... privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }
@@ -8017,7 +8017,7 @@ public class DSL {
      *
      * @see #revoke(Privilege...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }
@@ -8025,7 +8025,7 @@ public class DSL {
     /**
      * Revoke grant option for a privilege on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
         return using(new DefaultConfiguration()).revoke(privilege);
     }
@@ -8033,7 +8033,7 @@ public class DSL {
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }
@@ -8041,7 +8041,7 @@ public class DSL {
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return using(new DefaultConfiguration()).revoke(privileges);
     }

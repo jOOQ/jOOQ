@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -52,6 +53,6 @@ public interface GrantWithGrantOptionStep extends GrantFinalStep{
     /**
      * Add the <code>WITH GRANT OPTION</code> clause.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     GrantFinalStep withGrantOption();
 }

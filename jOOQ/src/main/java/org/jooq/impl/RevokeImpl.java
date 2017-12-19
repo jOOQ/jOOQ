@@ -41,11 +41,13 @@ import static org.jooq.Clause.REVOKE;
 import static org.jooq.Clause.REVOKE_FROM;
 import static org.jooq.Clause.REVOKE_ON;
 import static org.jooq.Clause.REVOKE_PRIVILEGE;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_GRANT_OPTION_FOR;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
+import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_REVOKE;
 
 import java.util.Collection;
@@ -130,6 +132,9 @@ final class RevokeImpl extends AbstractQuery implements
             ctx.visit(role);
         else
             ctx.visit(K_PUBLIC);
+
+        if (ctx.family() == HSQLDB)
+            ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(REVOKE_FROM);
     }

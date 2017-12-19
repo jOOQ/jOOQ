@@ -43,6 +43,7 @@ import static org.jooq.Clause.REVOKE_ON;
 import static org.jooq.Clause.REVOKE_PRIVILEGE;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_GRANT_OPTION_FOR;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_REVOKE;
@@ -82,11 +83,16 @@ final class RevokeImpl extends AbstractQuery implements
     private Role                                  role;
     private Table<?>                              table;
     private User                                  user;
+    private final boolean                         grantOptionFor;
+
+    RevokeImpl(Configuration configuration, Collection<? extends Privilege> privileges, boolean grantOptionFor) {
+        super(configuration);
+        this.privileges = privileges;
+        this.grantOptionFor = grantOptionFor;
+    }
 
     RevokeImpl(Configuration configuration, Collection<? extends Privilege> privileges) {
-        super(configuration);
-
-        this.privileges = privileges;
+        this(configuration, privileges, false);
     }
 
     // ------------------------------------------------------------------------
@@ -97,6 +103,10 @@ final class RevokeImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.start(REVOKE_PRIVILEGE)
            .visit(K_REVOKE).sql(' ');
+
+        if (grantOptionFor)
+            ctx.visit(K_GRANT_OPTION_FOR)
+                .sql(' ');
 
         String separator = "";
         for (Privilege privilege : privileges) {

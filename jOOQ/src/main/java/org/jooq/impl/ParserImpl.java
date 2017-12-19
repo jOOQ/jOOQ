@@ -1305,6 +1305,7 @@ class ParserImpl implements Parser {
         }
 
         parseKeyword(ctx, "ON");
+        parseKeywordIf(ctx, "TABLE");
         Table<?> table = parseTableName(ctx);
 
         parseKeyword(ctx, "TO");
@@ -1330,6 +1331,7 @@ class ParserImpl implements Parser {
         }
 
         parseKeyword(ctx, "ON");
+        parseKeywordIf(ctx, "TABLE");
         Table<?> table = parseTableName(ctx);
 
         RevokeOnStep s1 = privileges == null ? ctx.dsl.revoke(privilege) : ctx.dsl.revoke(privileges);

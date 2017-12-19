@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -55,18 +56,18 @@ public interface RevokeFromStep {
     /**
      * Revoke a privilege from a user.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     RevokeFinalStep from(User user);
 
     /**
      * Revoke a privilege from a role.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     RevokeFinalStep from(Role role);
 
     /**
      * Revoke a privilege from <code>PUBLIC</code>.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     RevokeFinalStep fromPublic();
 }

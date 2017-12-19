@@ -37,35 +37,18 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.H2;
-// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
 
 /**
- * The step in the creation of a <code>GRANT</code> statement where the
- * <code>TO</code> clause can be added.
+ * The step of creation <code>GRANT</code> statement that assign user
+ * or role a grant option.
  *
  * @author Timur Shaidullin
- * @author Lukas Eder
  */
-public interface GrantToStep {
-
-    /**
-     * Grant a privilege to a user.
-     */
-    @Support({ H2, POSTGRES })
-    GrantGrantedStep to(User user);
-
-    /**
-     * Grant a privilege to a role.
-     */
-    @Support({ H2, POSTGRES })
-    GrantGrantedStep to(Role role);
-
-    /**
-     * Grant a privilege to <code>PUBLIC</code>.
-     */
-    @Support({ H2, POSTGRES })
-    GrantGrantedStep toPublic();
+public interface GrantGrantedStep extends GrantFinalStep{
+    @Support({ POSTGRES, MYSQL, HSQLDB, FIREBIRD })
+    GrantFinalStep withGrantOption();
 }

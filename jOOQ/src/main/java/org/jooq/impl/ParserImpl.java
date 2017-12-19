@@ -1010,8 +1010,14 @@ class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "VALUES")) {
             List<List<Field<?>>> allValues = new ArrayList<List<Field<?>>>();
 
+            valuesLoop:
             do {
                 parse(ctx, '(');
+
+                // [#6936] MySQL treats an empty VALUES() clause as the same thing as the standard DEFAULT VALUES
+                if (fields == null && parseIf(ctx, ')'))
+                    break valuesLoop;
+
                 List<Field<?>> values = parseFields(ctx);
 
                 if (fields != null && fields.length != values.size())
@@ -1023,14 +1029,19 @@ class ParserImpl implements Parser {
             while (parseIf(ctx, ','));
 
             InsertSetStep<?> step1 = ctx.dsl.insertInto(tableName);
-            InsertValuesStepN<?> step2 = (fields != null)
-                ? step1.columns(fields)
-                : (InsertValuesStepN<?>) step1;
+            if (allValues.isEmpty()) {
+                returning = onDuplicate = step1.defaultValues();
+            }
+            else {
+                InsertValuesStepN<?> step2 = (fields != null)
+                    ? step1.columns(fields)
+                    : (InsertValuesStepN<?>) step1;
 
-            for (List<Field<?>> values : allValues)
-                step2 = step2.values(values);
+                for (List<Field<?>> values : allValues)
+                    step2 = step2.values(values);
 
-            returning = onDuplicate = step2;
+                returning = onDuplicate = step2;
+            }
         }
         else if (parseKeywordIf(ctx, "SET")) {
             Map<Field<?>, Object> map = parseSetClauseList(ctx);

@@ -41,7 +41,9 @@ proceduralStatement =
 | nullStatement
 ;
 
-blockStatement = 'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
+blockStatement =
+  'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
+| 'DO' stringLiteral
 ;
 
 nullStatement = 'NULL'

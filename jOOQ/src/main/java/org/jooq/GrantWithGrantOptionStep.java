@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step of creation <code>GRANT</code> statement that assign user

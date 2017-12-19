@@ -10105,7 +10105,7 @@ for (int i = 0; i < result.size(); i++)
                             <h3>All JDBC API is one-based</h3>
 
                             <p>
-                                An exception to the above rule is, obviously, all jOOQ API that is JDBC-interfacing. E.g. when you implement a <reference id="custom-binding" title="custom data type binding"/>, you will work with JDBC API directly from within jOOQ, which is one-based.
+                                An exception to the above rule is, obviously, all jOOQ API that is JDBC-interfacing. E.g. when you implement a <reference id="custom-bindings" title="custom data type binding"/>, you will work with JDBC API directly from within jOOQ, which is one-based.
                             </p>
                         </html></content>
                     </section>

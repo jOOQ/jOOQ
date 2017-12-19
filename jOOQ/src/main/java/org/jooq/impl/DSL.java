@@ -290,6 +290,7 @@ import org.jooq.SelectField;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
+import org.jooq.Statement;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -9240,23 +9241,23 @@ public class DSL {
     }
 
     /**
-     * Wrap a collection of queries in an anonymous procedural block.
+     * Wrap a collection of statements in an anonymous procedural block.
      *
-     * @see DSLContext#begin(Query...)
+     * @see DSLContext#begin(Statement...)
      */
     @Support({ POSTGRES })
-    public static Block begin(Query... queries) {
-        return begin(Arrays.asList(queries));
+    public static Block begin(Statement... statements) {
+        return begin(Arrays.asList(statements));
     }
 
     /**
-     * Wrap a collection of queries in an anonymous procedural block.
+     * Wrap a collection of statements in an anonymous procedural block.
      *
      * @see DSLContext#begin(Collection)
      */
     @Support({ POSTGRES })
-    public static Block begin(Collection<? extends Query> queries) {
-        return DSL.using(new DefaultConfiguration()).begin(queries);
+    public static Block begin(Collection<? extends Statement> statements) {
+        return DSL.using(new DefaultConfiguration()).begin(statements);
     }
 
 

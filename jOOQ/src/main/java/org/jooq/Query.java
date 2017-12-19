@@ -39,7 +39,6 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
@@ -57,7 +56,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart, Attachable , AutoCloseable  {
+public interface Query extends Statement, Attachable , AutoCloseable  {
 
     /**
      * Execute the query, if it has been created with a proper configuration.
@@ -295,7 +294,7 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * Specify the query timeout in number of seconds for the underlying JDBC
      * {@link Statement}.
      *
-     * @see Statement#setQueryTimeout(int)
+     * @see java.sql.Statement#setQueryTimeout(int)
      */
     Query queryTimeout(int seconds);
 
@@ -321,7 +320,7 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * statement, this call is simply ignored.
      *
      * @throws DataAccessException If something went wrong closing the statement
-     * @see Statement#close()
+     * @see java.sql.Statement#close()
      */
 
     @Override
@@ -337,7 +336,7 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      *
      * @throws DataAccessException If something went wrong cancelling the
      *             statement
-     * @see Statement#cancel()
+     * @see java.sql.Statement#cancel()
      */
     void cancel() throws DataAccessException;
 

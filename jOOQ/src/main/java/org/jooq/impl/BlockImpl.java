@@ -57,8 +57,8 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
-import org.jooq.Query;
 import org.jooq.SQLDialect;
+import org.jooq.Statement;
 
 /**
  * @author Lukas Eder
@@ -68,18 +68,18 @@ final class BlockImpl extends AbstractQuery implements Block {
     /**
      * Generated UID
      */
-    private static final long                 serialVersionUID = 6881305779639901498L;
+    private static final long                     serialVersionUID                  = 6881305779639901498L;
 
 
 
 
 
-    private final Collection<? extends Query> queries;
+    private final Collection<? extends Statement> statements;
 
-    BlockImpl(Configuration configuration, Collection<? extends Query> queries) {
+    BlockImpl(Configuration configuration, Collection<? extends Statement> statements) {
         super(configuration);
 
-        this.queries = queries;
+        this.statements = statements;
     }
 
     @Override
@@ -117,7 +117,7 @@ final class BlockImpl extends AbstractQuery implements Block {
         ctx.visit(K_BEGIN)
            .formatIndentStart();
 
-        if (queries.isEmpty()) {
+        if (statements.isEmpty()) {
             switch (ctx.family()) {
 
 
@@ -127,7 +127,7 @@ final class BlockImpl extends AbstractQuery implements Block {
             }
         }
         else {
-            for (Query query : queries) {
+            for (Statement query : statements) {
                 ctx.formatSeparator();
 
 

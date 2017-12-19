@@ -223,6 +223,7 @@ import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -742,13 +743,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Block begin(Query... queries) {
-        return begin(Arrays.asList(queries));
+    public Block begin(Statement... statements) {
+        return begin(Arrays.asList(statements));
     }
 
     @Override
-    public Block begin(Collection<? extends Query> queries) {
-        return new BlockImpl(configuration(), queries);
+    public Block begin(Collection<? extends Statement> statements) {
+        return new BlockImpl(configuration(), statements);
     }
 
     // -------------------------------------------------------------------------

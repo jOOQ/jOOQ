@@ -67,7 +67,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -689,20 +688,20 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Queries queries(Collection<? extends Query> queries);
 
     /**
-     * Wrap a collection of queries in an anonymous procedural block.
+     * Wrap a collection of statements in an anonymous procedural block.
      *
-     * @see DSL#begin(Query...)
+     * @see DSL#begin(Statement...)
      */
     @Support({ POSTGRES })
-    Block begin(Query... queries);
+    Block begin(Statement... statements);
 
     /**
-     * Wrap a collection of queries in an anoymous procedural block.
+     * Wrap a collection of statements in an anoymous procedural block.
      *
      * @see DSL#begin(Collection)
      */
     @Support({ POSTGRES })
-    Block begin(Collection<? extends Query> queries);
+    Block begin(Collection<? extends Statement> statements);
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL API
@@ -7986,7 +7985,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * s.execute();
      * </pre></code>
      *
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(Query... queries);
@@ -8005,7 +8004,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * s.execute();
      * </pre></code>
      *
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(Queries queries);
@@ -8019,7 +8018,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #query(String)
      * @see #batch(Query...)
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(String... queries);
@@ -8038,7 +8037,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * s.execute();
      * </pre></code>
      *
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(Collection<? extends Query> queries);
@@ -8072,7 +8071,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #batch(Query...)}, if you choose to execute queries with
      * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
      *
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     BatchBindStep batch(Query query);
@@ -8086,7 +8085,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #query(String)
      * @see #batch(Query)
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     BatchBindStep batch(String sql);
@@ -8103,7 +8102,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
      *
      * @see #batch(Query)
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(Query query, Object[]... bindings);
@@ -8117,7 +8116,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #query(String)
      * @see #batch(Query, Object[][])
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batch(String sql, Object[]... bindings);
@@ -8172,7 +8171,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * individual record has been fetched from the database prior to storing it.
      *
      * @see UpdatableRecord#store()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchStore(UpdatableRecord<?>... records);
@@ -8184,7 +8183,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #batchStore(UpdatableRecord...)
      * @see UpdatableRecord#store()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchStore(Collection<? extends UpdatableRecord<?>> records);
@@ -8196,7 +8195,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #batchStore(UpdatableRecord...)
      * @see TableRecord#insert()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchInsert(TableRecord<?>... records);
@@ -8207,7 +8206,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link TableRecord#insert()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchInsert(Collection<? extends TableRecord<?>> records);
@@ -8219,7 +8218,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #batchStore(UpdatableRecord...)
      * @see UpdatableRecord#update()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchUpdate(UpdatableRecord<?>... records);
@@ -8231,7 +8230,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #batchStore(UpdatableRecord...)
      * @see UpdatableRecord#update()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records);
@@ -8277,7 +8276,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * only a single batch statement is serialised to the database.
      *
      * @see UpdatableRecord#delete()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchDelete(UpdatableRecord<?>... records);
@@ -8289,7 +8288,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #batchDelete(UpdatableRecord...)
      * @see UpdatableRecord#delete()
-     * @see Statement#executeBatch()
+     * @see java.sql.Statement#executeBatch()
      */
     @Support
     Batch batchDelete(Collection<? extends UpdatableRecord<?>> records);

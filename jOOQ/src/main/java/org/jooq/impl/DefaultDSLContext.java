@@ -3477,6 +3477,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new RevokeImpl(configuration(), privileges);
     }
 
+    @Override
+    public RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
+        return revokeGrantOptionFor(Arrays.asList(privilege));
+    }
+
+    @Override
+    public RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
+        return revokeGrantOptionFor(Arrays.asList(privileges));
+    }
+
+    @Override
+    public RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
+        return new RevokeImpl(configuration(), privileges, true);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------

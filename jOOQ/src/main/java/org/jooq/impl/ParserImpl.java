@@ -246,6 +246,7 @@ import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
+import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
@@ -319,6 +320,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -480,105 +482,107 @@ class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
-        try {
-            switch (ctx.character()) {
-                case 'a':
-                case 'A':
-                    if (!resultQuery && peekKeyword(ctx, "ALTER"))
-                        return parseAlter(ctx);
+        switch (ctx.character()) {
+            case 'a':
+            case 'A':
+                if (!resultQuery && peekKeyword(ctx, "ALTER"))
+                    return parseAlter(ctx);
 
-                    break;
+                break;
 
-                case 'c':
-                case 'C':
-                    if (!resultQuery && peekKeyword(ctx, "CREATE"))
-                        return parseCreate(ctx);
+            case 'b':
+            case 'B':
+                if (!resultQuery && peekKeyword(ctx, "BEGIN"))
+                    return parseBlock(ctx);
 
-                    break;
+                break;
 
-                case 'd':
-                case 'D':
-                    if (!resultQuery && peekKeyword(ctx, "DELETE"))
-                        return parseDelete(ctx);
-                    else if (!resultQuery && peekKeyword(ctx, "DROP"))
-                        return parseDrop(ctx);
+            case 'c':
+            case 'C':
+                if (!resultQuery && peekKeyword(ctx, "CREATE"))
+                    return parseCreate(ctx);
 
-                    break;
+                break;
 
-                case 'g':
-                case 'G':
-                    if (!resultQuery && peekKeyword(ctx, "GRANT"))
-                        return parseGrant(ctx);
+            case 'd':
+            case 'D':
+                if (!resultQuery && peekKeyword(ctx, "DELETE"))
+                    return parseDelete(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "DROP"))
+                    return parseDrop(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "DO"))
+                    return parseDo(ctx);
 
-                    break;
+                break;
 
-                case 'i':
-                case 'I':
-                    if (!resultQuery && peekKeyword(ctx, "INSERT"))
-                        return parseInsert(ctx);
+            case 'g':
+            case 'G':
+                if (!resultQuery && peekKeyword(ctx, "GRANT"))
+                    return parseGrant(ctx);
 
-                    break;
+                break;
 
-                case 'm':
-                case 'M':
-                    if (!resultQuery && peekKeyword(ctx, "MERGE"))
-                        return parseMerge(ctx);
+            case 'i':
+            case 'I':
+                if (!resultQuery && peekKeyword(ctx, "INSERT"))
+                    return parseInsert(ctx);
 
-                    break;
+                break;
 
-                case 'r':
-                case 'R':
-                    if (!resultQuery && peekKeyword(ctx, "RENAME"))
-                        return parseRename(ctx);
-                    else if (!resultQuery && peekKeyword(ctx, "REVOKE"))
-                        return parseRevoke(ctx);
+            case 'm':
+            case 'M':
+                if (!resultQuery && peekKeyword(ctx, "MERGE"))
+                    return parseMerge(ctx);
 
-                    break;
+                break;
 
-                case 's':
-                case 'S':
-                    if (peekKeyword(ctx, "SELECT"))
-                        return parseSelect(ctx);
+            case 'r':
+            case 'R':
+                if (!resultQuery && peekKeyword(ctx, "RENAME"))
+                    return parseRename(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "REVOKE"))
+                    return parseRevoke(ctx);
 
-                    break;
+                break;
 
-                case 't':
-                case 'T':
-                    if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
-                        return parseTruncate(ctx);
-
-                    break;
-
-                case 'u':
-                case 'U':
-                    if (!resultQuery && peekKeyword(ctx, "UPDATE"))
-                        return parseUpdate(ctx);
-
-                    break;
-
-                case 'v':
-                case 'V':
-                    if (peekKeyword(ctx, "VALUES"))
-                        return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
-
-                case 'w':
-                case 'W':
-                    if (peekKeyword(ctx, "WITH"))
-                        return parseWith(ctx);
-
-                    break;
-
-                case '(':
-                    // TODO are there other possible statement types?
+            case 's':
+            case 'S':
+                if (peekKeyword(ctx, "SELECT"))
                     return parseSelect(ctx);
-                default:
-                    break;
-            }
-        }
-        finally {
-            parseWhitespaceIf(ctx);
-            if (!ctx.done() && ctx.character() != ';')
-                throw ctx.unexpectedToken();
+
+                break;
+
+            case 't':
+            case 'T':
+                if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
+                    return parseTruncate(ctx);
+
+                break;
+
+            case 'u':
+            case 'U':
+                if (!resultQuery && peekKeyword(ctx, "UPDATE"))
+                    return parseUpdate(ctx);
+
+                break;
+
+            case 'v':
+            case 'V':
+                if (peekKeyword(ctx, "VALUES"))
+                    return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
+
+            case 'w':
+            case 'W':
+                if (peekKeyword(ctx, "WITH"))
+                    return parseWith(ctx);
+
+                break;
+
+            case '(':
+                // TODO are there other possible statement types?
+                return parseSelect(ctx);
+            default:
+                break;
         }
 
         throw ctx.exception("Unsupported query type");
@@ -1323,6 +1327,55 @@ class ParserImpl implements Parser {
 
         RevokeFromStep s2 = s1.on(table);
         return user == null ? s2.fromPublic() : s2.from(user);
+    }
+
+    private static final Block parseBlock(ParserContext ctx) {
+        parseKeyword(ctx, "BEGIN");
+
+        List<Statement> statements = new ArrayList<Statement>();
+        for (;;) {
+            Statement statement = parseStatement(ctx);
+            statements.add(statement);
+
+            if (!(statement instanceof Block))
+                parse(ctx, ';');
+
+            if (parseKeywordIf(ctx, "END"))
+                break;
+        }
+
+        parse(ctx, ';');
+        return ctx.dsl.begin(statements);
+    }
+
+    private static final Block parseDo(ParserContext ctx) {
+        parseKeyword(ctx, "DO");
+        String block = parseStringLiteral(ctx);
+        return (Block) ctx.dsl.parser().parseQuery(block);
+    }
+
+    private static final Statement parseStatement(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+
+        switch (ctx.character()) {
+            case 'n':
+            case 'N':
+                if (peekKeyword(ctx, "NULL"))
+                    return parseNullStatement(ctx);
+
+                break;
+        }
+
+        return parseQuery(ctx, false);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Statement parsing
+    // -----------------------------------------------------------------------------------------------------------------
+
+    private static final Statement parseNullStatement(ParserContext ctx) {
+        parseKeyword(ctx, "NULL");
+        return new NullStatement();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -6162,12 +6215,6 @@ class ParserImpl implements Parser {
 
     private static final char upper(char c) {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
-    }
-
-    public static final void main(String[] args) {
-        System.out.println(new ParserImpl(new DefaultConfiguration()).parse(
-            "DROP INDEX   y on a.b.c"
-        ));
     }
 
     static final class ParserContext {

@@ -46,6 +46,7 @@ import static org.jooq.impl.Keywords.K_GRANT;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.K_WITH_GRANT_OPTION;
 
 import java.util.Collection;
 
@@ -53,6 +54,7 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.GrantFinalStep;
+import org.jooq.GrantGrantedStep;
 import org.jooq.GrantOnStep;
 import org.jooq.GrantToStep;
 import org.jooq.Name;
@@ -70,6 +72,7 @@ final class GrantImpl extends AbstractQuery implements
     // Cascading interface implementations for Select behaviour
     GrantOnStep,
     GrantToStep,
+    GrantGrantedStep,
     GrantFinalStep {
 
     /**
@@ -81,6 +84,7 @@ final class GrantImpl extends AbstractQuery implements
     private Role                                  role;
     private Table<?>                              table;
     private User                                  user;
+    private boolean                               withGrantOption;
 
     GrantImpl(Configuration configuration, Collection<? extends Privilege> privileges) {
         super(configuration);
@@ -119,6 +123,10 @@ final class GrantImpl extends AbstractQuery implements
             ctx.visit(role);
         else
             ctx.visit(K_PUBLIC);
+
+        if (withGrantOption)
+            ctx.sql(' ')
+               .visit(K_WITH_GRANT_OPTION);
 
         ctx.end(GRANT_TO);
     }
@@ -162,6 +170,12 @@ final class GrantImpl extends AbstractQuery implements
 
     @Override
     public final GrantImpl toPublic() {
+        return this;
+    }
+
+    @Override
+    public final GrantImpl withGrantOption() {
+        withGrantOption = true;
         return this;
     }
 }

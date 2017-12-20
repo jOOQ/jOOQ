@@ -151,7 +151,16 @@ truncateStatement = 'TRUNCATE TABLE' tableName [ 'CONTINUE IDENTITY' | 'RESTART 
 grantStatement = 'GRANT' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'TO' ( userName | roleName | 'PUBLIC')
 ;
 
-revokeStatement = 'REVOKE' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'FROM' ( userName | roleName | 'PUBLIC')
+revokeStatement = 'REVOKE'
+ [ 'GRANT OPTION FOR' ]
+ (
+   'SELECT'
+ | 'INSERT'
+ | 'UPDATE'
+ | 'DELETE'
+ )
+  'ON' tableName
+  'FROM' ( userName | roleName | 'PUBLIC')
 ;
 
 selectStatement = select | values [ correlationName ]

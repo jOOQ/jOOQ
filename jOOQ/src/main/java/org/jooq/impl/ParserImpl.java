@@ -1318,6 +1318,7 @@ class ParserImpl implements Parser {
 
     private static final DDLQuery parseRevoke(ParserContext ctx) {
         parseKeyword(ctx, "REVOKE");
+        boolean grantOptionFor = parseKeywordIf(ctx, "GRANT OPTION FOR");
         Privilege privilege = parsePrivilege(ctx);
         List<Privilege> privileges = null;
 
@@ -1334,7 +1335,12 @@ class ParserImpl implements Parser {
         parseKeywordIf(ctx, "TABLE");
         Table<?> table = parseTableName(ctx);
 
-        RevokeOnStep s1 = privileges == null ? ctx.dsl.revoke(privilege) : ctx.dsl.revoke(privileges);
+        RevokeOnStep s1 = null;
+        if (grantOptionFor)
+            s1 = privileges == null ? ctx.dsl.revokeGrantOptionFor(privilege) : ctx.dsl.revokeGrantOptionFor(privileges);
+        else
+            s1 = privileges == null ? ctx.dsl.revoke(privilege) : ctx.dsl.revoke(privileges);
+
         parseKeyword(ctx, "FROM");
         User user = parseKeywordIf(ctx, "PUBLIC") ? null : parseUser(ctx);
 

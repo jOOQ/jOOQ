@@ -283,6 +283,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GrantOnStep;
 import org.jooq.GrantToStep;
+import org.jooq.GrantWithGrantOptionStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -1313,7 +1314,14 @@ class ParserImpl implements Parser {
 
         GrantOnStep s1 = privileges == null ? ctx.dsl.grant(privilege) : ctx.dsl.grant(privileges);
         GrantToStep s2 = s1.on(table);
-        return user == null ? s2.toPublic() : s2.to(user);
+        GrantWithGrantOptionStep s3 = user == null ? s2.toPublic() : s2.to(user);
+
+        if (peekKeyword(ctx, "WITH GRANT OPTION")) {
+            parseKeyword(ctx, "WITH GRANT OPTION");
+            s3.withGrantOption();
+        }
+
+        return s3;
     }
 
     private static final DDLQuery parseRevoke(ParserContext ctx) {

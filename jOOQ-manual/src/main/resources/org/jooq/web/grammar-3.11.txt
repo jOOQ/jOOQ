@@ -148,7 +148,7 @@ renameStatement = 'RENAME'
 truncateStatement = 'TRUNCATE TABLE' tableName [ 'CONTINUE IDENTITY' | 'RESTART IDENTITY' ] [ 'CASCADE' | 'RESTRICT' ]
 ;
 
-grantStatement = 'GRANT' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'TO' ( userName | roleName | 'PUBLIC')
+grantStatement = 'GRANT' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'TO' ( userName | roleName | 'PUBLIC') [ 'WITH GRANT OPTION' ]
 ;
 
 revokeStatement = 'REVOKE' ( 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' ) 'ON' tableName 'FROM' ( userName | roleName | 'PUBLIC')

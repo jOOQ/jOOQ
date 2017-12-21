@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd"
   elementFormDefault="qualified"
   jxb:version="2.1">
 
@@ -1025,6 +1025,10 @@ by specifying <code>java\.lang\..*</code>]]></jxb:javadoc></jxb:property></appin
 source code generator, rather than JDBC's java.sql types.
 <p>
 This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="primaryKeyTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="transform" type="{http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd}MatcherTransformType" minOccurs="0"/&gt;
+ *         &lt;element name="transform" type="{http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd}MatcherTransformType" minOccurs="0"/&gt;
  *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;

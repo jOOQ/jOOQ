@@ -96,9 +96,8 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
         allParameters = new ArrayList<ParameterDefinition>();
 
         try {
-            if (returnValue != null) {
+            if (returnValue != null)
                 addParameter(InOutDefinition.RETURN, returnValue);
-            }
 
             init0();
         }
@@ -116,27 +115,24 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
     @Override
     public final List<ParameterDefinition> getInParameters() {
-        if (inParameters == null) {
+        if (inParameters == null)
             init();
-        }
 
         return inParameters;
     }
 
     @Override
     public final List<ParameterDefinition> getOutParameters() {
-        if (outParameters == null) {
+        if (outParameters == null)
             init();
-        }
 
         return outParameters;
     }
 
     @Override
     public final List<ParameterDefinition> getAllParameters() {
-        if (allParameters == null) {
+        if (allParameters == null)
             init();
-        }
 
         return allParameters;
     }
@@ -152,12 +148,18 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
     @Override
     public final DataTypeDefinition getReturnType() {
-        if (getReturnValue() != null) {
+        if (getReturnValue() != null)
             return getReturnValue().getType();
-        }
-        else {
+        else
             return new DefaultDataTypeDefinition(getDatabase(), getSchema(), "unknown");
-        }
+    }
+
+    @Override
+    public final DataTypeDefinition getReturnType(JavaTypeResolver resolver) {
+        if (getReturnValue() != null)
+            return getReturnValue().getType(resolver);
+        else
+            return new DefaultDataTypeDefinition(getDatabase(), getSchema(), "unknown");
     }
 
     @Override

@@ -44,6 +44,7 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
 
     private final DataTypeDefinition     definedType;
     private transient DataTypeDefinition type;
+    private transient DataTypeDefinition resolvedType;
 
     public DefaultArrayDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
         super(schema.getDatabase(), schema, name, "");
@@ -64,9 +65,18 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
     @Override
     public DataTypeDefinition getElementType() {
         if (type == null) {
-            type = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType);
+            type = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType, null);
         }
 
         return type;
+    }
+
+    @Override
+    public DataTypeDefinition getElementType(JavaTypeResolver resolver) {
+        if (resolvedType == null) {
+            resolvedType = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType, resolver);
+        }
+
+        return resolvedType;
     }
 }

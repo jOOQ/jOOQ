@@ -686,7 +686,7 @@ public class JavaGenerator extends AbstractGenerator {
                     empty = false;
 
                     final String identityType = out.ref(getStrategy().getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD));
-                    final String columnTypeFull = getJavaType(identity.getColumn().getType());
+                    final String columnTypeFull = getJavaType(identity.getColumn().getType(resolver()));
                     final String columnType = out.ref(columnTypeFull);
                     final String identityId = getStrategy().getJavaIdentifier(identity.getColumn().getContainer());
                     final int block = allIdentities.size() / INITIALISER_SIZE;
@@ -942,7 +942,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void printIdentity(JavaWriter out, int identityCounter, IdentityDefinition identity) {
         final int block = identityCounter / INITIALISER_SIZE;
-        final String identityTypeFull = getJavaType(identity.getColumn().getType());
+        final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
         final String identityType = out.ref(identityTypeFull);
 
         // Print new nested class
@@ -1246,7 +1246,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
-                final String colTypeFull = getJavaType(column.getType());
+                final String colTypeFull = getJavaType(column.getType(resolver()));
                 final String colType = out.ref(colTypeFull);
                 final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
@@ -1270,7 +1270,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
-                final String colTypeFull = getJavaType(column.getType());
+                final String colTypeFull = getJavaType(column.getType(resolver()));
                 final String colType = out.ref(colTypeFull);
                 final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
 
@@ -1294,7 +1294,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
-                final String colTypeFull = getJavaType(column.getType());
+                final String colTypeFull = getJavaType(column.getType(resolver()));
                 final String colType = out.ref(colTypeFull);
                 final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
 
@@ -1318,7 +1318,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
-                final String colTypeFull = getJavaType(column.getType());
+                final String colTypeFull = getJavaType(column.getType(resolver()));
                 final String colType = out.ref(colTypeFull);
                 final String colSetter = getStrategy().getJavaSetterName(column, Mode.RECORD);
 
@@ -1349,7 +1349,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
-                final String colType = out.ref(getJavaType(column.getType()));
+                final String colType = out.ref(getJavaType(column.getType(resolver())));
 
                 if (scala) {
                     arguments.add("value" + i + " : " + colType);
@@ -1405,7 +1405,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < degree; i++) {
                 final TypedElementDefinition<?> column = columns.get(i);
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-                final String type = out.ref(getJavaType(column.getType()));
+                final String type = out.ref(getJavaType(column.getType(resolver())));
 
                 if (scala)
                 	arguments.add(columnMember + " : " + type);
@@ -1466,12 +1466,12 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
-        final String typeFull = getJavaType(column.getType());
+        final String typeFull = getJavaType(column.getType(resolver()));
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
-        final boolean isUDT = column.getType().isUDT();
-        final boolean isArray = column.getType().isArray();
-        final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType()).getElementType().isUDT();
+        final boolean isUDT = column.getType(resolver()).isUDT();
+        final boolean isArray = column.getType(resolver()).isArray();
+        final boolean isUDTArray = column.getType(resolver()).isArray() && database.getArray(column.getType(resolver()).getSchema(), column.getType(resolver()).getQualifiedUserType()).getElementType(resolver()).isUDT();
 
 
         // We cannot have covariant setters for arrays because of type erasure
@@ -1498,9 +1498,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#3117] Avoid covariant setters for UDTs when generating interfaces
         if (generateInterfaces() && !generateImmutableInterfaces() && (isUDT || isArray)) {
-            final String columnTypeFull = getJavaType(column.getType(), Mode.RECORD);
+            final String columnTypeFull = getJavaType(column.getType(resolver(Mode.RECORD)), Mode.RECORD);
             final String columnType = out.ref(columnTypeFull);
-            final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
+            final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
@@ -1529,9 +1529,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(3).println("set(%s, value.into(new %s()));", index, type);
                 }
                 else if (isArray) {
-                    final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType());
-                    final String componentType = out.ref(getJavaType(array.getElementType(), Mode.RECORD));
-                    final String componentTypeInterface = out.ref(getJavaType(array.getElementType(), Mode.INTERFACE));
+                    final ArrayDefinition array = database.getArray(column.getType(resolver()).getSchema(), column.getType(resolver()).getQualifiedUserType());
+                    final String componentType = out.ref(getJavaType(array.getElementType(resolver(Mode.RECORD)), Mode.RECORD));
+                    final String componentTypeInterface = out.ref(getJavaType(array.getElementType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
                     out.tab(2).println("else {");
                     out.tab(3).println("%s a = new %s();", columnType, columnType);
@@ -1573,7 +1573,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final void generateRecordGetter0(TypedElementDefinition<?> column, int index, JavaWriter out) {
         final String comment = StringUtils.defaultString(column.getComment());
         final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-        final String typeFull = getJavaType(column.getType());
+        final String typeFull = getJavaType(column.getType(resolver()));
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
@@ -1633,7 +1633,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TypedElementDefinition<?> column : columns) {
             result.append(separator);
-            result.append(out.ref(getJavaType(column.getType())));
+            result.append(out.ref(getJavaType(column.getType(resolver()))));
 
             separator = ", ";
         }
@@ -1762,7 +1762,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String comment = StringUtils.defaultString(column.getComment());
         final String setterReturnType = generateFluentSetters() ? className : "void";
         final String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
-        final String typeFull = getJavaType(column.getType(), Mode.INTERFACE);
+        final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
@@ -1792,7 +1792,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final void generateInterfaceGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String comment = StringUtils.defaultString(column.getComment());
         final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
-        final String typeFull = getJavaType(column.getType(), Mode.INTERFACE);
+        final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
@@ -1895,14 +1895,14 @@ public class JavaGenerator extends AbstractGenerator {
         printRecordTypeMethod(out, udt);
 
         for (AttributeDefinition attribute : udt.getAttributes()) {
-            final String attrTypeFull = getJavaType(attribute.getType());
+            final String attrTypeFull = getJavaType(attribute.getType(resolver()));
             final String attrType = out.ref(attrTypeFull);
-            final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType());
+            final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver()));
             final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
             final String attrName = attribute.getName();
             final String attrComment = StringUtils.defaultString(attribute.getComment());
-            final List<String> converter = out.ref(list(attribute.getType().getConverter()));
-            final List<String> binding = out.ref(list(attribute.getType().getBinding()));
+            final List<String> converter = out.ref(list(attribute.getType(resolver()).getConverter()));
+            final List<String> binding = out.ref(list(attribute.getType(resolver()).getBinding()));
 
             if (scala) {
                 printDeprecationIfUnknownType(out, attrTypeFull);
@@ -2757,14 +2757,14 @@ public class JavaGenerator extends AbstractGenerator {
         List<ColumnDefinition> keyColumns = key.getKeyColumns();
 
         if (keyColumns.size() == 1) {
-            tType = getJavaType(keyColumns.get(0).getType());
+            tType = getJavaType(keyColumns.get(0).getType(resolver()));
         }
         else if (keyColumns.size() <= Constants.MAX_ROW_DEGREE) {
             String generics = "";
             String separator = "";
 
             for (ColumnDefinition column : keyColumns) {
-                generics += separator + out.ref(getJavaType(column.getType()));
+                generics += separator + out.ref(getJavaType(column.getType(resolver())));
                 separator = ", ";
             }
 
@@ -2866,7 +2866,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (ColumnDefinition column : table.getColumns()) {
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column);
-            final String colTypeFull = getJavaType(column.getType());
+            final String colTypeFull = getJavaType(column.getType(resolver()));
             final String colType = out.ref(colTypeFull);
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
@@ -2990,7 +2990,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         int maxLength = 0;
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(), Mode.POJO)).length());
+            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
         }
 
         if (scala) {
@@ -3002,7 +3002,7 @@ public class JavaGenerator extends AbstractGenerator {
                     separator,
                     generateImmutablePojos() ? "" : "private var ",
                     getStrategy().getJavaMemberName(column, Mode.POJO),
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(), Mode.POJO)), maxLength));
+                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength));
 
                 separator = ", ";
             }
@@ -3017,7 +3017,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 out.tab(1).println("private %s%s %s;",
                     generateImmutablePojos() ? "final " : "",
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(), Mode.POJO)), maxLength),
+                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
                     getStrategy().getJavaMemberName(column, Mode.POJO));
             }
         }
@@ -3040,7 +3040,7 @@ public class JavaGenerator extends AbstractGenerator {
                         // Avoid ambiguities between a single-T-value constructor
                         // and the copy constructor
                         if (size == 1)
-                            nulls.add("null : " + out.ref(getJavaType(column.getType(), Mode.POJO)));
+                            nulls.add("null : " + out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
                         else
                             nulls.add("null");
 
@@ -3103,7 +3103,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(separator1);
 
                 out.tab(2).print("%s %s",
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(), Mode.POJO)), maxLength),
+                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
                     getStrategy().getJavaMemberName(column, Mode.POJO));
                 separator1 = ",";
             }
@@ -3173,7 +3173,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generatePojoGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
-        final String columnTypeFull = getJavaType(column.getType(), Mode.POJO);
+        final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
@@ -3218,13 +3218,13 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final void generatePojoSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.POJO);
-        final String columnTypeFull = getJavaType(column.getType(), Mode.POJO);
+        final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnSetterReturnType = generateFluentSetters() ? className : (scala ? "Unit" : "void");
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-        final boolean isUDT = column.getType().isUDT();
-        final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType()).getElementType().isUDT();
+        final boolean isUDT = column.getType(resolver()).isUDT();
+        final boolean isUDTArray = column.getType(resolver()).isArray() && database.getArray(column.getType(resolver()).getSchema(), column.getType(resolver()).getQualifiedUserType()).getElementType(resolver()).isUDT();
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isUDTArray)) {
@@ -3250,7 +3250,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
         if (generateInterfaces() && (isUDT || isUDTArray)) {
-            final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
+            final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
             out.println();
 
@@ -3279,9 +3279,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(3).println("this.%s = %s.into(new %s());", columnMember, columnMember, columnType);
                 }
                 else if (isUDTArray) {
-                    final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType());
-                    final String componentType = out.ref(getJavaType(array.getElementType(), Mode.POJO));
-                    final String componentTypeInterface = out.ref(getJavaType(array.getElementType(), Mode.INTERFACE));
+                    final ArrayDefinition array = database.getArray(column.getType(resolver()).getSchema(), column.getType(resolver()).getQualifiedUserType());
+                    final String componentType = out.ref(getJavaType(array.getElementType(resolver(Mode.POJO)), Mode.POJO));
+                    final String componentTypeInterface = out.ref(getJavaType(array.getElementType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
                     out.tab(2).println("else {");
                     out.tab(3).println("this.%s = new %s();", columnMember, ArrayList.class);
@@ -3323,7 +3323,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(4).println("return false");
                 out.tab(2).println("}");
 
-                if (getJavaType(column.getType()).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
                     out.tab(2).println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
                 }
                 else {
@@ -3356,7 +3356,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(4).println("return false;");
                 out.tab(2).println("}");
 
-                if (getJavaType(column.getType()).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
                     out.tab(2).println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
                 }
                 else {
@@ -3380,7 +3380,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType()).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
                     out.tab(2).println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
                 }
                 else {
@@ -3400,7 +3400,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType()).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
                     out.tab(2).println("result = prime * result + ((this.%s == null) ? 0 : %s.hashCode(this.%s));", columnMember, Arrays.class, columnMember);
                 }
                 else {
@@ -3427,7 +3427,7 @@ public class JavaGenerator extends AbstractGenerator {
             String separator = "";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-                final String columnType = getJavaType(column.getType());
+                final String columnType = getJavaType(column.getType(resolver()));
 
                 if (columnType.equals("scala.Array[scala.Byte]")) {
                     out.tab(2).println("sb%s.append(\"[binary...]\")", separator);
@@ -3454,7 +3454,7 @@ public class JavaGenerator extends AbstractGenerator {
             String separator = "";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-                final String columnType = getJavaType(column.getType());
+                final String columnType = getJavaType(column.getType(resolver()));
                 final boolean array = columnType.endsWith("[]");
 
                 if (array && columnType.equals("byte[]")) {
@@ -3573,14 +3573,14 @@ public class JavaGenerator extends AbstractGenerator {
         printRecordTypeMethod(out, table);
 
         for (ColumnDefinition column : table.getColumns()) {
-            final String columnTypeFull = getJavaType(column.getType());
+            final String columnTypeFull = getJavaType(column.getType(resolver()));
             final String columnType = out.ref(columnTypeFull);
-            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType());
+            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver()));
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
             final String columnComment = StringUtils.defaultString(column.getComment());
-            final List<String> converter = out.ref(list(column.getType().getConverter()));
-            final List<String> binding = out.ref(list(column.getType().getBinding()));
+            final List<String> converter = out.ref(list(column.getType(resolver()).getConverter()));
+            final List<String> binding = out.ref(list(column.getType(resolver()).getBinding()));
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(columnComment), ""));
@@ -3714,7 +3714,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // The identity column
             if (identity != null) {
-                final String identityTypeFull = getJavaType(identity.getColumn().getType());
+                final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
                 final String identityType = out.ref(identityTypeFull);
                 final String identityFullId = out.ref(getStrategy().getFullJavaIdentifier(identity), 2);
 
@@ -3805,7 +3805,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if ((p.matcher(column.getName()).matches() ||
                          p.matcher(column.getQualifiedName()).matches())) {
 
-                        final String columnTypeFull = getJavaType(column.getType());
+                        final String columnTypeFull = getJavaType(column.getType(resolver()));
                         final String columnType = out.ref(columnTypeFull);
                         final String columnId = getStrategy().getJavaIdentifier(column);
 
@@ -3841,7 +3841,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if ((p.matcher(column.getName()).matches() ||
                          p.matcher(column.getQualifiedName()).matches())) {
 
-                        final String columnTypeFull = getJavaType(column.getType());
+                        final String columnTypeFull = getJavaType(column.getType(resolver()));
                         final String columnType = out.ref(columnTypeFull);
                         final String columnId = getStrategy().getJavaIdentifier(column);
 
@@ -3985,7 +3985,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
 
                         out.tab(3).print(separator);
 
@@ -4011,7 +4011,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
 
                         out.tab(3).print(separator);
 
@@ -4090,12 +4090,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public class Sequences {");
 
         for (SequenceDefinition sequence : database.getSequences(schema)) {
-            final String seqTypeFull = getJavaType(sequence.getType());
+            final String seqTypeFull = getJavaType(sequence.getType(resolver()));
             final String seqType = out.ref(seqTypeFull);
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
             final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
-            final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType());
+            final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver()));
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
                 out.tab(1).javadoc("The sequence <code>%s</code>", sequence.getQualifiedOutputName());
@@ -4507,7 +4507,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             String nullable = "";
-            if (!column.getType().isNullable()) {
+            if (!column.getType(resolver()).isNullable()) {
                 nullable = ", nullable = false";
             }
 
@@ -4515,14 +4515,14 @@ public class JavaGenerator extends AbstractGenerator {
             String precision = "";
             String scale = "";
 
-            if (column.getType().getLength() > 0) {
-                length = ", length = " + column.getType().getLength();
+            if (column.getType(resolver()).getLength() > 0) {
+                length = ", length = " + column.getType(resolver()).getLength();
             }
-            else if (column.getType().getPrecision() > 0) {
-                precision = ", precision = " + column.getType().getPrecision();
+            else if (column.getType(resolver()).getPrecision() > 0) {
+                precision = ", precision = " + column.getType(resolver()).getPrecision();
 
-                if (column.getType().getScale() > 0) {
-                    scale = ", scale = " + column.getType().getScale();
+                if (column.getType(resolver()).getScale() > 0) {
+                    scale = ", scale = " + column.getType(resolver()).getScale();
                 }
             }
 
@@ -4548,12 +4548,12 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printValidationAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
         if (generateValidationAnnotations()) {
-            DataTypeDefinition type = column.getType();
+            DataTypeDefinition type = column.getType(resolver());
 
             // [#5128] defaulted columns are nullable in Java
-            if (!column.getType().isNullable() &&
-                !column.getType().isDefaulted() &&
-                !column.getType().isIdentity())
+            if (!column.getType(resolver()).isNullable() &&
+                !column.getType(resolver()).isDefaulted() &&
+                !column.getType(resolver()).isIdentity())
                 out.tab(1).println("@%s", out.ref("javax.validation.constraints.NotNull"));
 
             if ("java.lang.String".equals(getJavaType(type))) {
@@ -4567,7 +4567,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private boolean printDeprecationIfUnknownTypes(JavaWriter out, Collection<? extends ParameterDefinition> params) {
         for (ParameterDefinition param : params)
-            if (printDeprecationIfUnknownType(out, getJavaType(param.getType())))
+            if (printDeprecationIfUnknownType(out, getJavaType(param.getType(resolver()))))
                 return true;
 
         return false;
@@ -4603,20 +4603,20 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(routine);
         final String returnTypeFull = (routine.getReturnValue() == null)
             ? Void.class.getName()
-            : getJavaType(routine.getReturnType());
+            : getJavaType(routine.getReturnType(resolver()));
         final String returnType = (routine.getReturnValue() == null)
             ? Void.class.getName()
             : out.ref(returnTypeFull);
         final List<String> returnTypeRef = list((routine.getReturnValue() != null)
-            ? getJavaTypeReference(database, routine.getReturnType())
+            ? getJavaTypeReference(database, routine.getReturnType(resolver()))
             : null);
         final List<String> returnConverter = out.ref(list(
              (routine.getReturnValue() != null)
-            ? routine.getReturnType().getConverter()
+            ? routine.getReturnType(resolver()).getConverter()
             : null));
         final List<String> returnBinding = out.ref(list(
              (routine.getReturnValue() != null)
-            ? routine.getReturnType().getBinding()
+            ? routine.getReturnType(resolver()).getBinding()
             : null));
 
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(routine, Mode.DEFAULT));
@@ -4628,17 +4628,17 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
         	out.println("object %s {", className);
             for (ParameterDefinition parameter : routine.getAllParameters()) {
-                final String paramTypeFull = getJavaType(parameter.getType());
+                final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
-                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                 final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converters = out.ref(list(
-                        parameter.getType().getConverter(),
-                        parameter.getType().getBinding()
+                        parameter.getType(resolver()).getConverter(),
+                        parameter.getType(resolver()).getBinding()
                 ));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
@@ -4667,16 +4667,16 @@ public class JavaGenerator extends AbstractGenerator {
             out.printSerial();
 
             for (ParameterDefinition parameter : routine.getAllParameters()) {
-                final String paramTypeFull = getJavaType(parameter.getType());
+                final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
-                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                 final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
-                final List<String> converter = out.ref(list(parameter.getType().getConverter()));
-                final List<String> binding = out.ref(list(parameter.getType().getBinding()));
+                final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
+                final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
@@ -4764,20 +4764,20 @@ public class JavaGenerator extends AbstractGenerator {
         for (ParameterDefinition parameter : routine.getInParameters()) {
             final String setterReturnType = generateFluentSetters() ? className : (scala ? "Unit" : "void");
             final String setter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
-            final String numberValue = parameter.getType().isGenericNumberType() ? "Number" : "Value";
-            final String numberField = parameter.getType().isGenericNumberType() ? "Number" : "Field";
+            final String numberValue = parameter.getType(resolver()).isGenericNumberType() ? "Number" : "Value";
+            final String numberField = parameter.getType(resolver()).isGenericNumberType() ? "Number" : "Field";
             final String paramId = getStrategy().getJavaIdentifier(parameter);
             final String paramName = "value".equals(paramId) ? "value_" : "value";
 
             out.tab(1).javadoc("Set the <code>%s</code> parameter IN value to the routine", parameter.getOutputName());
 
             if (scala) {
-            	out.tab(1).println("def %s(%s : %s) : Unit = {", setter, paramName, refNumberType(out, parameter.getType()));
+            	out.tab(1).println("def %s(%s : %s) : Unit = {", setter, paramName, refNumberType(out, parameter.getType(resolver())));
                 out.tab(2).println("set%s(%s.%s, %s)", numberValue, className, paramId, paramName);
                 out.tab(1).println("}");
             }
             else {
-                out.tab(1).println("public void %s(%s %s) {", setter, varargsIfArray(refNumberType(out, parameter.getType())), paramName);
+                out.tab(1).println("public void %s(%s %s) {", setter, varargsIfArray(refNumberType(out, parameter.getType(resolver()))), paramName);
                 out.tab(2).println("set%s(%s, %s);", numberValue, paramId, paramName);
                 out.tab(1).println("}");
             }
@@ -4786,14 +4786,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc("Set the <code>%s</code> parameter to the function to be used with a {@link org.jooq.Select} statement", parameter.getOutputName());
 
                 if (scala) {
-                    out.tab(1).println("def %s(field : %s[%s]) : %s = {", setter, Field.class, refExtendsNumberType(out, parameter.getType()), setterReturnType);
+                    out.tab(1).println("def %s(field : %s[%s]) : %s = {", setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver())), setterReturnType);
                     out.tab(2).println("set%s(%s.%s, field)", numberField, className, paramId);
                     if (generateFluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
                 }
                 else {
-                    out.tab(1).println("public %s %s(%s<%s> field) {", setterReturnType, setter, Field.class, refExtendsNumberType(out, parameter.getType()));
+                    out.tab(1).println("public %s %s(%s<%s> field) {", setterReturnType, setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                     out.tab(2).println("set%s(%s, field);", numberField, paramId);
                     if (generateFluentSetters())
                         out.tab(2).println("return this;");
@@ -4808,7 +4808,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (isOutParameter && !isReturnValue) {
                 final String paramName = parameter.getOutputName();
-                final String paramTypeFull = getJavaType(parameter.getType());
+                final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
                 final String paramGetter = getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
                 final String paramId = getStrategy().getJavaIdentifier(parameter);
@@ -4860,7 +4860,7 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        final String functionTypeFull = getJavaType(function.getReturnType());
+        final String functionTypeFull = getJavaType(function.getReturnType(resolver()));
         final String functionType = out.ref(functionTypeFull);
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
@@ -4886,16 +4886,16 @@ public class JavaGenerator extends AbstractGenerator {
             	out.print("%s : ", getStrategy().getJavaMemberName(parameter));
 
                 if (parametersAsField) {
-                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType()));
+                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                 } else {
-                    out.print(refNumberType(out, parameter.getType()));
+                    out.print(refNumberType(out, parameter.getType(resolver())));
                 }
             }
             else {
                 if (parametersAsField) {
-                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType()));
+                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                 } else {
-                    out.print(refNumberType(out, parameter.getType()));
+                    out.print(refNumberType(out, parameter.getType(resolver())));
                 }
 
                 out.print(" %s", getStrategy().getJavaMemberName(parameter));
@@ -4997,18 +4997,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("%s : ", getStrategy().getJavaMemberName(parameter));
 
                 if (parametersAsField) {
-                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType()));
+                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                 }
                 else {
-                    out.print(refNumberType(out, parameter.getType()));
+                    out.print(refNumberType(out, parameter.getType(resolver())));
                 }
             }
             else {
                 if (parametersAsField) {
-                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType()));
+                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                 }
                 else {
-                    out.print(refNumberType(out, parameter.getType()));
+                    out.print(refNumberType(out, parameter.getType(resolver())));
                 }
 
                 out.print(" %s", getStrategy().getJavaMemberName(parameter));
@@ -5046,7 +5046,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String functionName = function.getQualifiedOutputName();
-        final String functionTypeFull = getJavaType(function.getReturnType());
+        final String functionTypeFull = getJavaType(function.getReturnType(resolver()));
         final String functionType = out.ref(functionTypeFull);
         final String methodName = getStrategy().getJavaMethodName(function, Mode.DEFAULT);
 
@@ -5079,7 +5079,7 @@ public class JavaGenerator extends AbstractGenerator {
                 continue;
             }
 
-            final String paramType = refNumberType(out, parameter.getType());
+            final String paramType = refNumberType(out, parameter.getType(resolver()));
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
             if (scala)
@@ -5158,7 +5158,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("void ");
             }
             else if (outParams.size() == 1) {
-                out.print(out.ref(getJavaType(outParams.get(0).getType())));
+                out.print(out.ref(getJavaType(outParams.get(0).getType(resolver()))));
                 out.print(" ");
             }
             else {
@@ -5188,9 +5188,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.print(glue);
 
             if (scala)
-                out.print("%s : %s", getStrategy().getJavaMemberName(parameter), refNumberType(out, parameter.getType()));
+                out.print("%s : %s", getStrategy().getJavaMemberName(parameter), refNumberType(out, parameter.getType(resolver())));
             else
-                out.print("%s %s", refNumberType(out, parameter.getType()), getStrategy().getJavaMemberName(parameter));
+                out.print("%s %s", refNumberType(out, parameter.getType(resolver())), getStrategy().getJavaMemberName(parameter));
 
             glue = ", ";
         }
@@ -5202,7 +5202,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("Unit");
             }
             else if (outParams.size() == 1) {
-                out.print(out.ref(getJavaType(outParams.get(0).getType())));
+                out.print(out.ref(getJavaType(outParams.get(0).getType(resolver()))));
             }
             else {
                 out.print(className);
@@ -5243,13 +5243,13 @@ public class JavaGenerator extends AbstractGenerator {
             final String getter = parameter == procedure.getReturnValue()
                 ? "getReturnValue"
                 : getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
-            final boolean isUDT = parameter.getType().isUDT();
+            final boolean isUDT = parameter.getType(resolver()).isUDT();
 
             if (instance) {
 
                 // [#3117] Avoid funny call-site ambiguity if this is a UDT that is implemented by an interface
                 if (generateInterfaces() && isUDT) {
-                    final String columnTypeInterface = out.ref(getJavaType(parameter.getType(), Mode.INTERFACE));
+                    final String columnTypeInterface = out.ref(getJavaType(parameter.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
                     if (scala)
                         out.tab(2).println("from(%s.%s.asInstanceOf[%s])", localVar, getter, columnTypeInterface);
@@ -5629,6 +5629,24 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    protected JavaTypeResolver resolver() {
+        return new JavaTypeResolver() {
+            @Override
+            public String resolve(DataTypeDefinition type) {
+                return getJavaType(type);
+            }
+        };
+    }
+
+    protected JavaTypeResolver resolver(final Mode udtMode) {
+        return new JavaTypeResolver() {
+            @Override
+            public String resolve(DataTypeDefinition type) {
+                return getJavaType(type, udtMode);
+            }
+        };
+    }
+
     protected String getJavaType(DataTypeDefinition type) {
         return getJavaType(type, Mode.RECORD);
     }
@@ -5688,19 +5706,19 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Check for Oracle-style VARRAY types
         else if (db.getArray(schema, u) != null) {
-            boolean udtArray = db.getArray(schema, u).getElementType().isUDT();
+            boolean udtArray = db.getArray(schema, u).getElementType(resolver()).isUDT();
 
             if (udtMode == Mode.POJO || (udtMode == Mode.INTERFACE && !udtArray)) {
                 if (scala)
-                    type = "java.util.List[" + getJavaType(db.getArray(schema, u).getElementType(), udtMode) + "]";
+                    type = "java.util.List[" + getJavaType(db.getArray(schema, u).getElementType(resolver(udtMode)), udtMode) + "]";
                 else
-                    type = "java.util.List<" + getJavaType(db.getArray(schema, u).getElementType(), udtMode) + ">";
+                    type = "java.util.List<" + getJavaType(db.getArray(schema, u).getElementType(resolver(udtMode)), udtMode) + ">";
             }
             else if (udtMode == Mode.INTERFACE) {
                 if (scala)
-                    type = "java.util.List[_ <:" + getJavaType(db.getArray(schema, u).getElementType(), udtMode) + "]";
+                    type = "java.util.List[_ <:" + getJavaType(db.getArray(schema, u).getElementType(resolver(udtMode)), udtMode) + "]";
                 else
-                    type = "java.util.List<? extends " + getJavaType(db.getArray(schema, u).getElementType(), udtMode) + ">";
+                    type = "java.util.List<? extends " + getJavaType(db.getArray(schema, u).getElementType(resolver(udtMode)), udtMode) + ">";
             }
             else {
                 type = getStrategy().getFullJavaClassName(db.getArray(schema, u), Mode.RECORD);
@@ -5766,7 +5784,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
 
-            sb.append(getJavaTypeReference(db, array.getElementType()));
+            sb.append(getJavaTypeReference(db, array.getElementType(resolver())));
             sb.append(".asArrayDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(array, Mode.RECORD)));
             sb.append(")");

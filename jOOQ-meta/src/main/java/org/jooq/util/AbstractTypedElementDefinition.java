@@ -71,6 +71,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     private final T                      container;
     private final DataTypeDefinition     definedType;
     private transient DataTypeDefinition type;
+    private transient DataTypeDefinition resolvedType;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         super(container.getDatabase(),
@@ -121,10 +122,19 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     @Override
     public DataTypeDefinition getType() {
         if (type == null) {
-            type = mapDefinedType(container, this, definedType);
+            type = mapDefinedType(container, this, definedType, null);
         }
 
         return type;
+    }
+
+    @Override
+    public DataTypeDefinition getType(JavaTypeResolver resolver) {
+        if (resolvedType == null) {
+            resolvedType = mapDefinedType(container, this, definedType, resolver);
+        }
+
+        return resolvedType;
     }
 
     @Override
@@ -133,7 +143,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     }
 
     @SuppressWarnings("deprecation")
-    static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType) {
+    static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
 
@@ -174,10 +184,18 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
 
-                    String tType = DefaultDataType
-                        .getDataType(db.getDialect(), definedType.getType(), definedType.getPrecision(), definedType.getScale())
-                        .getType()
-                        .getName();
+                    String tType = Object.class.getName();
+
+                    if (resolver != null)
+                        tType = resolver.resolve(definedType);
+                    else
+                        try {
+                            tType = DefaultDataType
+                                .getDataType(db.getDialect(), definedType.getType(), definedType.getPrecision(), definedType.getScale())
+                                .getType()
+                                .getName();
+                        }
+                        catch (SQLDialectNotSupportedException ignore) {}
 
                     converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + tType + ".class, " + uType + ".class)";
                 }
@@ -258,13 +276,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         // [#4598] Legacy use-case where a <forcedType/> referes to a <customType/>
         //         element by name.
         if (StringUtils.isBlank(forcedType.getUserType())) {
-            if (name != null) {
-                for (CustomType type : db.getConfiguredCustomTypes()) {
-                    if (name.equals(type.getName())) {
+            if (name != null)
+                for (CustomType type : db.getConfiguredCustomTypes())
+                    if (name.equals(type.getName()))
                         return type;
-                    }
-                }
-            }
         }
 
         // [#4598] New default use-case where <forcedType/> embeds <customType/>

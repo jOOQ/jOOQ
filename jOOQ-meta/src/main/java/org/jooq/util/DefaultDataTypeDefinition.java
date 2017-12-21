@@ -310,6 +310,14 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public final String getJavaType(JavaTypeResolver resolver) {
+        if (resolver == null)
+            return getJavaType();
+        else
+            return resolver.resolve(this);
+    }
+
+    @Override
     public final boolean isGenericNumberType() {
 
 

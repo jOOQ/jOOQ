@@ -62,9 +62,9 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
 
         this.enumType = Number.class.isAssignableFrom(fromType) ? EnumType.ORDINAL : EnumType.STRING;
         this.lookup = new LinkedHashMap<T, U>();
-        for (U u : toType.getEnumConstants()) {
+
+        for (U u : toType.getEnumConstants())
             this.lookup.put(to(u), u);
-        }
     }
 
     @Override
@@ -80,15 +80,12 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
      */
     @Override
     public T to(U userObject) {
-        if (userObject == null) {
+        if (userObject == null)
             return null;
-        }
-        else if (enumType == EnumType.ORDINAL) {
+        else if (enumType == EnumType.ORDINAL)
             return convert(userObject.ordinal(), fromType());
-        }
-        else {
+        else
             return convert(userObject.name(), fromType());
-        }
     }
 
     /**

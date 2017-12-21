@@ -90,8 +90,16 @@ public interface DataTypeDefinition {
 
     /**
      * The custom Java type to represent this data type, if applicable.
+     * <p>
+     * This is the same as calling {@link #getJavaType(JavaTypeResolver)} with a
+     * <code>null</code> resolver.
      */
     String getJavaType();
+
+    /**
+     * The custom Java type to represent this data type, if applicable.
+     */
+    String getJavaType(JavaTypeResolver resolver);
 
     /**
      * Whether this data type is nullable.

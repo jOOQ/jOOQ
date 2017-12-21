@@ -64,6 +64,11 @@ public class DefaultIndexColumnDefinition
     }
 
     @Override
+    public DataTypeDefinition getType(JavaTypeResolver resolver) {
+        return getColumn().getType(resolver);
+    }
+
+    @Override
     public DataTypeDefinition getDefinedType() {
         return getColumn().getDefinedType();
     }

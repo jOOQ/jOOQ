@@ -79,6 +79,11 @@ public interface RoutineDefinition extends Definition {
     DataTypeDefinition getReturnType();
 
     /**
+     * @return The return value simple Java type
+     */
+    DataTypeDefinition getReturnType(JavaTypeResolver resolver);
+
+    /**
      * @return Whether this routine can be used in SQL (a function without OUT
      *         parameters)
      */

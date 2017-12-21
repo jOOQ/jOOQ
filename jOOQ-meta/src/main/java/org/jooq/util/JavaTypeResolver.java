@@ -37,22 +37,22 @@
  */
 package org.jooq.util;
 
-
 /**
- * A definition for an ARRAY type
+ * A function that can be injected into jOOQ-meta elements to resolve Java types
+ * from {@link DataTypeDefinition}.
+ * <p>
+ * This inversion of control is necessary to inject jOOQ-codegen behaviour into
+ * jOOQ-meta. It might become obsolete once we merge the two modules again.
  *
  * @author Lukas Eder
  */
-public interface ArrayDefinition extends Definition {
+
+@FunctionalInterface
+
+public interface JavaTypeResolver {
 
     /**
-     * @return The type of the ARRAY's elements
+     * Resolve a Java type from a {@link DataTypeDefinition}.
      */
-    DataTypeDefinition getElementType();
-
-    /**
-     * @return The type of the ARRAY's elements
-     */
-    DataTypeDefinition getElementType(JavaTypeResolver resolver);
-
+    String resolve(DataTypeDefinition type);
 }

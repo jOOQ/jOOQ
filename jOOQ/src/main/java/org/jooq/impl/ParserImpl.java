@@ -1316,12 +1316,9 @@ class ParserImpl implements Parser {
         GrantToStep s2 = s1.on(table);
         GrantWithGrantOptionStep s3 = user == null ? s2.toPublic() : s2.to(user);
 
-        if (peekKeyword(ctx, "WITH GRANT OPTION")) {
-            parseKeyword(ctx, "WITH GRANT OPTION");
-            s3.withGrantOption();
-        }
-
-        return s3;
+        return parseKeywordIf(ctx, "WITH GRANT OPTION")
+            ? s3.withGrantOption()
+            : s3;
     }
 
     private static final DDLQuery parseRevoke(ParserContext ctx) {

@@ -99,6 +99,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateTableValuedFunctions       = false;
     boolean                            generateEmptyCatalogs              = false;
     boolean                            generateEmptySchemas               = false;
+    boolean                            generatePrimaryKeyTypes            = false;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                     = "UTF-8";
@@ -634,6 +635,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateEmptySchemas(boolean generateEmptySchemas) {
         this.generateEmptySchemas = generateEmptySchemas;
+    }
+
+    @Override
+    public boolean generatePrimaryKeyTypes() {
+        return generatePrimaryKeyTypes;
+    }
+
+    @Override
+    public void setGeneratePrimaryKeyTypes(boolean generatePrimaryKeyTypes) {
+        this.generatePrimaryKeyTypes = generatePrimaryKeyTypes;
     }
 
     // ----

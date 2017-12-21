@@ -48,7 +48,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class MatcherRule implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlSchemaType(name = "string")
     protected MatcherTransformType transform;
     @XmlElement(required = true)

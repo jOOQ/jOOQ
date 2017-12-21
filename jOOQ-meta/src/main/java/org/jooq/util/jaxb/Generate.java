@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Generate implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(defaultValue = "true")
     protected Boolean indexes = true;
     @XmlElement(defaultValue = "true")
@@ -115,6 +115,8 @@ public class Generate implements Serializable
     protected Boolean emptySchemas = false;
     @XmlElement(defaultValue = "false")
     protected Boolean javaTimeTypes = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean primaryKeyTypes = false;
 
     /**
      * Generate index information.
@@ -1106,6 +1108,30 @@ public class Generate implements Serializable
         this.javaTimeTypes = value;
     }
 
+    /**
+     * Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isPrimaryKeyTypes() {
+        return primaryKeyTypes;
+    }
+
+    /**
+     * Sets the value of the primaryKeyTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setPrimaryKeyTypes(Boolean value) {
+        this.primaryKeyTypes = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -1303,6 +1329,11 @@ public class Generate implements Serializable
 
     public Generate withJavaTimeTypes(Boolean value) {
         setJavaTimeTypes(value);
+        return this;
+    }
+
+    public Generate withPrimaryKeyTypes(Boolean value) {
+        setPrimaryKeyTypes(value);
         return this;
     }
 

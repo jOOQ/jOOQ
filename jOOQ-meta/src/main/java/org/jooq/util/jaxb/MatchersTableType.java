@@ -32,7 +32,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class MatchersTableType implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule tableClass;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd"
   elementFormDefault="qualified"
   jxb:version="2.1">
 

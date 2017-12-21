@@ -603,6 +603,8 @@ public class GenerationTool {
                 generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
             if (g.getGenerate().isEmptySchemas() != null)
                 generator.setGenerateEmptySchemas(g.getGenerate().isEmptySchemas());
+            if (g.getGenerate().isPrimaryKeyTypes() != null)
+                generator.setGeneratePrimaryKeyTypes(g.getGenerate().isPrimaryKeyTypes());
 
 
             // [#3669] Optional Database element

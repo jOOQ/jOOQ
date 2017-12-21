@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Configuration implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlSchemaType(name = "string")
     protected Logging logging;
     protected Jdbc jdbc;

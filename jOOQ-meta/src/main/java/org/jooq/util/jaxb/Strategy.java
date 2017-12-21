@@ -34,7 +34,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Strategy implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(defaultValue = "org.jooq.util.DefaultGeneratorStrategy")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name = "org.jooq.util.DefaultGeneratorStrategy";

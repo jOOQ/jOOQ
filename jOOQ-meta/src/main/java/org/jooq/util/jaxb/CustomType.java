@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class CustomType implements Serializable
 {
 
-    private final static long serialVersionUID = 31000L;
+    private final static long serialVersionUID = 31100L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;

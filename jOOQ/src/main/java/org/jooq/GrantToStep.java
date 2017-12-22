@@ -40,6 +40,8 @@ package org.jooq;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -56,18 +58,18 @@ public interface GrantToStep {
     /**
      * Grant a privilege to a user.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep to(User user);
 
     /**
      * Grant a privilege to a role.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep to(Role role);
 
     /**
      * Grant a privilege to <code>PUBLIC</code>.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep toPublic();
 }

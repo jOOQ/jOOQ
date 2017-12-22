@@ -40,6 +40,8 @@ package org.jooq;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -56,13 +58,13 @@ public interface RevokeOnStep {
     /**
      * Revoke a privilege on a table.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFromStep on(Table<?> table);
 
     /**
      * Revoke a privilege on a table.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFromStep on(Name table);
 
     /**
@@ -74,6 +76,6 @@ public interface RevokeOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFromStep on(String table);
 }

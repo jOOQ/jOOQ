@@ -144,6 +144,10 @@ that is created from a POJO (e.g. in a DAO) should return all Record values to t
 IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other values.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="mapMutablePojoStrategy" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[It sets the precedence of mapping the POJO objects.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="mapJPAAnnotations" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

@@ -129,6 +129,7 @@ import org.jooq.util.GeneratorStrategy.Mode;
 // ...
 // ...
 // ...
+import org.jooq.util.jaxb.JpaVersion;
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -278,6 +279,9 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generateGeneratedAnnotation && (useSchemaVersionProvider || useCatalogVersionProvider)) ?
                 " (forced to true because of <schemaVersionProvider/> or <catalogVersionProvider/>)" : ""));
         log.info("  JPA annotations", generateJPAAnnotations());
+        log.info("  JPA version", generateJpaVersion()
+            + (!generateJPAAnnotations && generateJpaVersion != null ? " (forced to null because of <jpaAnnotations/>)"  :
+              (generateJPAAnnotations && generateJpaVersion == null ? " (forced to " + JpaVersion.latest().name() + " because of <jpaVersion/>)" : "")));
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
         log.info("  sequences", generateSequences());
@@ -4439,43 +4443,45 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print(scala ? ")" : "}");
             }
 
-            StringBuilder sb2 = new StringBuilder();
-            String glue2 = "\n";
+            if (generateJpaVersion() != null && generateJpaVersion().supportedIndex()) {
+                StringBuilder sb2 = new StringBuilder();
+                String glue2 = "\n";
 
-            for (IndexDefinition index : table.getIndexes()) {
-                sb2.append(glue2);
-                sb2.append("\t")
-                   .append(scala ? "new " : "@")
-                   .append(out.ref("javax.persistence.Index"))
-                   .append("(name = \"").append(index.getOutputName().replace("\"", "\\\"")).append("\"");
+                for (IndexDefinition index : table.getIndexes()) {
+                    sb2.append(glue2);
+                    sb2.append("\t")
+                       .append(scala ? "new " : "@")
+                       .append(out.ref("javax.persistence.Index"))
+                       .append("(name = \"").append(index.getOutputName().replace("\"", "\\\"")).append("\"");
 
-                if (index.isUnique())
-                    sb2.append(", unique = true");
+                    if (index.isUnique())
+                        sb2.append(", unique = true");
 
-                sb2.append(", columnList = \"");
+                    sb2.append(", columnList = \"");
 
-                String glue2Inner = "";
-                for (IndexColumnDefinition column : index.getIndexColumns()) {
-                    sb2.append(glue2Inner)
-                       .append(column.getOutputName().replace("\"", "\\\""));
+                    String glue2Inner = "";
+                    for (IndexColumnDefinition column : index.getIndexColumns()) {
+                        sb2.append(glue2Inner)
+                           .append(column.getOutputName().replace("\"", "\\\""));
 
-                    if (column.getSortOrder() == SortOrder.ASC)
-                        sb2.append(" ASC");
-                    else if (column.getSortOrder() == SortOrder.DESC)
-                        sb2.append(" DESC");
+                        if (column.getSortOrder() == SortOrder.ASC)
+                            sb2.append(" ASC");
+                        else if (column.getSortOrder() == SortOrder.DESC)
+                            sb2.append(" DESC");
 
-                    glue2Inner = ", ";
+                        glue2Inner = ", ";
+                    }
+
+                    sb2.append("\")");
+                    glue2 = ",\n";
                 }
 
-                sb2.append("\")");
-                glue2 = ",\n";
-            }
-
-            if (sb2.length() > 0) {
-                out.print(", indexes = ")
-                   .print(scala ? "Array(" : "{");
-                out.println(sb2.toString());
-                out.print(scala ? ")" : "}");
+                if (sb2.length() > 0) {
+                    out.print(", indexes = ")
+                       .print(scala ? "Array(" : "{");
+                    out.println(sb2.toString());
+                    out.print(scala ? ")" : "}");
+                }
             }
 
             out.println(")");

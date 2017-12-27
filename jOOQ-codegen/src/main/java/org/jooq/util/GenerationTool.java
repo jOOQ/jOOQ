@@ -77,6 +77,7 @@ import org.jooq.util.jaxb.Catalog;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
+import org.jooq.util.jaxb.JpaVersion;
 import org.jooq.util.jaxb.Matchers;
 import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
@@ -555,8 +556,18 @@ public class GenerationTool {
                 generator.setGenerateImmutableInterfaces(g.getGenerate().isImmutableInterfaces());
             if (g.getGenerate().isDaos() != null)
                 generator.setGenerateDaos(g.getGenerate().isDaos());
-            if (g.getGenerate().isJpaAnnotations() != null)
+            if (g.getGenerate().isJpaAnnotations() != null) {
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
+
+                if (g.getGenerate().getJpaVersion() != null)
+                    generator.setGenerateJpaVersion(g.getGenerate().getJpaVersion());
+                else
+                    generator.setGenerateJpaVersion(JpaVersion.latest());
+            }
+            else
+                generator.setGenerateJpaVersion(null);
+
+
             if (g.getGenerate().isValidationAnnotations() != null)
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
             if (g.getGenerate().isSpringAnnotations() != null)

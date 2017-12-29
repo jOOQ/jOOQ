@@ -562,7 +562,7 @@ final class Tools {
 
     private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
 
     // ------------------------------------------------------------------------

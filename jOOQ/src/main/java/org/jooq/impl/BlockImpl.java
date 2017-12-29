@@ -38,12 +38,16 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
@@ -70,10 +74,7 @@ final class BlockImpl extends AbstractQuery implements Block {
      * Generated UID
      */
     private static final long                     serialVersionUID                  = 6881305779639901498L;
-
-
-
-
+    private static final EnumSet<SQLDialect>      REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = EnumSet.of(FIREBIRD);
 
     private final Collection<? extends Statement> statements;
 
@@ -86,6 +87,20 @@ final class BlockImpl extends AbstractQuery implements Block {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+            case FIREBIRD: {
+                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
+                    ctx.paramType(INLINED)
+                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).sql(' ')
+                       .formatSeparator();
+
+                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                }
+
+                accept0(ctx);
+
+                decrement(ctx.data(), DATA_BLOCK_NESTING);
+                break;
+            }
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
@@ -131,6 +146,9 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
+                case FIREBIRD:
+                    break;
+
 
 
 
@@ -145,6 +163,8 @@ final class BlockImpl extends AbstractQuery implements Block {
         else {
             for (Statement query : statements) {
                 ctx.formatSeparator();
+
+
 
 
 
@@ -169,6 +189,9 @@ final class BlockImpl extends AbstractQuery implements Block {
            .visit(K_END);
 
         switch (ctx.family()) {
+            case FIREBIRD:
+                break;
+
 
 
 

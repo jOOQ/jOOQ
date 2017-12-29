@@ -9269,7 +9269,7 @@ public class DSL {
      *
      * @see DSLContext#begin(Statement...)
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     public static Block begin(Statement... statements) {
         return begin(Arrays.asList(statements));
     }
@@ -9279,7 +9279,7 @@ public class DSL {
      *
      * @see DSLContext#begin(Collection)
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }

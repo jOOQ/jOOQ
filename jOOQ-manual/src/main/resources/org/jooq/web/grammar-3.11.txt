@@ -64,6 +64,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
   (
     dataType [ [ 'NOT' ] 'NULL' ]
   | ( 'SET' | 'DROP' ) 'NOT NULL'
+  | [ 'RENAME' ] 'TO' identifier
   )
 | 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName

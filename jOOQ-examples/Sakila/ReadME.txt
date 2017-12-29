@@ -4,7 +4,6 @@ Sakila sample database was ported to the following databases
  SQL Server
  SQLIte
  Interbase/Firebird
- Microsoft Access
 
 by DB Software Laboratory 
 http://www.etl-tools.com

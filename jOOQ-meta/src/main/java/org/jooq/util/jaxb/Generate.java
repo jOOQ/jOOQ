@@ -12,6 +12,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -80,6 +81,8 @@ public class Generate implements Serializable
     protected Boolean daos = false;
     @XmlElement(defaultValue = "false")
     protected Boolean jpaAnnotations = false;
+    @XmlSchemaType(name = "string")
+    protected JpaVersion jpaVersion;
     @XmlElement(defaultValue = "false")
     protected Boolean validationAnnotations = false;
     @XmlElement(defaultValue = "false")
@@ -676,6 +679,31 @@ public class Generate implements Serializable
      */
     public void setJpaAnnotations(Boolean value) {
         this.jpaAnnotations = value;
+    }
+
+    /**
+     * Sets the version of JPA specification to generate version-specific annotations.
+     * If it is omitted, the latest version is used by default.
+     *
+     * @return
+     *     possible object is
+     *     {@link JpaVersion }
+     *
+     */
+    public JpaVersion getJpaVersion() {
+        return jpaVersion;
+    }
+
+    /**
+     * Sets the value of the jpaVersion property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link JpaVersion }
+     *
+     */
+    public void setJpaVersion(JpaVersion value) {
+        this.jpaVersion = value;
     }
 
     /**
@@ -1296,6 +1324,11 @@ public class Generate implements Serializable
 
     public Generate withJpaAnnotations(Boolean value) {
         setJpaAnnotations(value);
+        return this;
+    }
+
+    public Generate withJpaVersion(JpaVersion value) {
+        setJpaVersion(value);
         return this;
     }
 

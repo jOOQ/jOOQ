@@ -16931,6 +16931,7 @@ implements IBook {
 								<li><strong>daos</strong>: Records are a pre-requisite for DAOs. If DAOs are generated, records are generated as well</li>
 								<li><strong>interfaces</strong>: If interfaces are generated, records will implement them</li>
 								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
+								<li><strong>jpaVersion</strong>: Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.</li>
 							</ul>
 
 							<h3>Flags controlling record generation</h3>
@@ -16994,6 +16995,7 @@ public class Book implements java.io.Serializable
 								<li><strong>daos</strong>: POJOs are a pre-requisite for DAOs. If DAOs are generated, POJOs are generated as well</li>
 								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
 								<li><strong>validationAnnotations</strong>: JSR-303 validation annotations are used on generated records</li>
+								<li><strong>jpaVersion</strong>: Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.</li>
 							</ul>
 
 							<h3>Flags controlling POJO generation</h3>

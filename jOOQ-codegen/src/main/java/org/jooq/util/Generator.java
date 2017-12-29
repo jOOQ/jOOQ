@@ -38,6 +38,8 @@
 
 package org.jooq.util;
 
+import org.jooq.util.jaxb.JpaVersion;
+
 import javax.annotation.Generated;
 
 /**
@@ -258,6 +260,16 @@ public interface Generator {
      * Whether POJO's and records should be annotated with JPA annotations
      */
     void setGenerateJPAAnnotations(boolean generateJPAAnnotations);
+
+    /**
+     * Whether used a provided JPA spec version or latest version of it.
+     */
+    JpaVersion generateJpaVersion();
+
+    /**
+     * Whether used a provided JPA spec version or latest version of it.
+     */
+    void setGenerateJpaVersion(JpaVersion generateJpaVersion);
 
     /**
      * Whether POJO's and records should be annotated with JSR-303 validation

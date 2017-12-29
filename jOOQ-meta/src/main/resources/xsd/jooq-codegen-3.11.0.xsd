@@ -912,6 +912,10 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JPA annotations.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="jpaVersion" type="tns:JpaVersion" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JSR-303 validation annotations]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1040,6 +1044,15 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       </element>
     </all>
   </complexType>
+
+
+  <simpleType name="JpaVersion">
+    <restriction base="string">
+      <enumeration value="V_2_0"/>
+      <enumeration value="V_2_1"/>
+      <enumeration value="V_2_2"/>
+    </restriction>
+  </simpleType>
 
   <complexType name="Target">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options to define where the generated code should be located.]]></jxb:javadoc></jxb:class></appinfo></annotation>

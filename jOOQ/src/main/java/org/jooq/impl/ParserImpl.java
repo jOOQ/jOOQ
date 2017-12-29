@@ -550,6 +550,8 @@ class ParserImpl implements Parser {
             case 'S':
                 if (peekKeyword(ctx, "SELECT"))
                     return parseSelect(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "SET"))
+                    return parseSet(ctx);
 
                 break;
 
@@ -1207,6 +1209,15 @@ class ParserImpl implements Parser {
         return s3;
     }
 
+    private static final Query parseSet(ParserContext ctx) {
+        parseKeyword(ctx, "SET");
+
+        if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseSetGenerator(ctx);
+        else
+            throw ctx.unexpectedToken();
+    }
+
     private static final DDLQuery parseCreate(ParserContext ctx) {
         parseKeyword(ctx, "CREATE");
 
@@ -1214,6 +1225,8 @@ class ParserImpl implements Parser {
             return parseCreateTable(ctx, false);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseCreateSequence(ctx);
         else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
@@ -1256,6 +1269,8 @@ class ParserImpl implements Parser {
             return parseDropIndex(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseDropView(ctx);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseDropSequence(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseDropSequence(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
@@ -1497,6 +1512,12 @@ class ParserImpl implements Parser {
                 return s1.restart();
         else
             throw ctx.unexpectedToken();
+    }
+
+    private static final DDLQuery parseSetGenerator(ParserContext ctx) {
+        Sequence<?> sequenceName = parseSequenceName(ctx);
+        parseKeyword(ctx, "TO");
+        return ctx.dsl.alterSequence((Sequence) sequenceName).restartWith(parseUnsignedInteger(ctx));
     }
 
     private static final DDLQuery parseDropSequence(ParserContext ctx) {

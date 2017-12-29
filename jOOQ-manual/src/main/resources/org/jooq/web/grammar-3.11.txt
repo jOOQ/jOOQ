@@ -80,10 +80,14 @@ alterSchemaStatement = 'ALTER SCHEMA' [ 'IF EXISTS' ] schemaName
   'RENAME TO' schemaName
 ;
 
-alterSequenceStatement = 'ALTER SEQUENCE' [ 'IF EXISTS' ] sequenceName
+alterSequenceStatement =
 (
-  'RENAME TO' sequenceName
-| 'RESTART' [ 'WITH' unsignedInteger ]
+  'ALTER SEQUENCE' [ 'IF EXISTS' ] sequenceName
+  (
+    'RENAME TO' sequenceName
+  | 'RESTART' [ 'WITH' unsignedInteger ]
+  )
+| 'SET GENERATOR' sequenceName 'TO' unsignedInteger
 )
 ;
 
@@ -112,7 +116,7 @@ createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] indexNa
 createSchemaStatement = 'CREATE SCHEMA' [ 'IF NOT EXISTS' ] schemaName
 ;
 
-createSequenceStatement = 'CREATE SEQUENCE' [ 'IF NOT EXISTS' ] sequenceName
+createSequenceStatement = 'CREATE' ( 'SEQUENCE' | 'GENERATOR' ) [ 'IF NOT EXISTS' ] sequenceName
 ;
 
 createViewStatement = 'CREATE VIEW' [ 'IF NOT EXISTS' ] tableName
@@ -128,7 +132,7 @@ dropIndexStatement = 'DROP INDEX' [ 'IF EXISTS' ] indexName [ 'ON' tableName ]
 dropViewStatement = 'DROP VIEW' [ 'IF EXISTS' ] tableName
 ;
 
-dropSequenceStatement = 'DROP SEQUENCE' [ 'IF EXISTS' ] sequenceName
+dropSequenceStatement = 'DROP' ( 'SEQUENCE' | 'GENERATOR' ) [ 'IF EXISTS' ] sequenceName
 ;
 
 dropSchemaStatement = 'DROP SCHEMA' [ 'IF EXISTS' ] schemaName [ 'CASCADE' | 'RESTRICT' ]

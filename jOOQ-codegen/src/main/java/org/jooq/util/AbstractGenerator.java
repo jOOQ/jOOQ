@@ -78,7 +78,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateImmutableInterfaces        = false;
     boolean                            generateDaos                       = false;
     boolean                            generateJPAAnnotations             = false;
-    String                             generateJpaVersion                 = "";
+    String                             generateJPAVersion                 = "";
     boolean                            generateValidationAnnotations      = false;
     boolean                            generateSpringAnnotations          = false;
     boolean                            generateQueues                     = true;
@@ -397,13 +397,13 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
-    public String generateJpaVersion() {
-        return generateJpaVersion;
+    public String generateJPAVersion() {
+        return generateJPAVersion;
     }
 
     @Override
-    public void setGenerateJpaVersion(String generateJpaVersion) {
-        this.generateJpaVersion = generateJpaVersion;
+    public void setGenerateJPAVersion(String generateJPAVersion) {
+        this.generateJPAVersion = generateJPAVersion;
     }
 
     @Override

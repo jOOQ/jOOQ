@@ -278,7 +278,7 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generateGeneratedAnnotation && (useSchemaVersionProvider || useCatalogVersionProvider)) ?
                 " (forced to true because of <schemaVersionProvider/> or <catalogVersionProvider/>)" : ""));
         log.info("  JPA annotations", generateJPAAnnotations());
-        log.info("  JPA version", generateJpaVersion());
+        log.info("  JPA version", generateJPAVersion());
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
         log.info("  sequences", generateSequences());
@@ -4445,7 +4445,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print(scala ? ")" : "}");
             }
 
-            if (StringUtils.isBlank(generateJpaVersion()) || "2.1".compareTo(generateJpaVersion()) <= 0) {
+            if (StringUtils.isBlank(generateJPAVersion()) || "2.1".compareTo(generateJPAVersion()) <= 0) {
                 StringBuilder sb2 = new StringBuilder();
                 String glue2 = "\n";
 

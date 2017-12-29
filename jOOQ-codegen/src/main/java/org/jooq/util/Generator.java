@@ -262,12 +262,12 @@ public interface Generator {
     /**
      * The minimum JPA version that is supported by generated code (latest version if empty).
      */
-    String generateJpaVersion();
+    String generateJPAVersion();
 
     /**
      * The minimum JPA version that is supported by generated code (latest version if empty).
      */
-    void setGenerateJpaVersion(String generateJpaVersion);
+    void setGenerateJPAVersion(String generateJPAVersion);
 
     /**
      * Whether POJO's and records should be annotated with JSR-303 validation

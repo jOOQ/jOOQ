@@ -4581,7 +4581,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateDeprecationOnUnknownTypes() && "java.lang.Object".equals(type)) {
             out.tab(indentation).javadoc("@deprecated Unknown data type. "
                 + "Please define an explicit {@link org.jooq.Binding} to specify how this "
-                + "type should be handled.");
+                + "type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> "
+                + "in your code generator configuration.");
             out.tab(indentation).println("@java.lang.Deprecated");
             return true;
         }

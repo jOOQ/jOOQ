@@ -87,6 +87,11 @@ public class Converters<T, U> implements Converter<T, U> {
             public final Class<T> toType() {
                 return type;
             }
+
+            @Override
+            public String toString() {
+                return "IdentityConverter [ " + fromType().getName() + " ]";
+            }
         };
     }
 

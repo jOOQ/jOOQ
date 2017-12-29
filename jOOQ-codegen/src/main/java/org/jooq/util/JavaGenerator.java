@@ -272,37 +272,48 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("");
         log.info("JavaGenerator parameters");
         log.info("----------------------------------------------------------");
-        log.info("  strategy", strategy.delegate.getClass());
-        log.info("  deprecated", generateDeprecated());
-        log.info("  generated annotation", generateGeneratedAnnotation()
+        log.info("  annotations (generated)", generateGeneratedAnnotation()
             + ((!generateGeneratedAnnotation && (useSchemaVersionProvider || useCatalogVersionProvider)) ?
                 " (forced to true because of <schemaVersionProvider/> or <catalogVersionProvider/>)" : ""));
-        log.info("  JPA annotations", generateJPAAnnotations());
-        log.info("  JPA version", generateJPAVersion());
-        log.info("  validation annotations", generateValidationAnnotations());
-        log.info("  instance fields", generateInstanceFields());
-        log.info("  sequences", generateSequences());
-        log.info("  udts", generateUDTs());
-        log.info("  routines", generateRoutines());
-        log.info("  tables", generateTables()
-            + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
-              ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" : "")));
-        log.info("  records", generateRecords()
-            + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
-        log.info("  pojos", generatePojos()
-            + ((!generatePojos && generateDaos) ? " (forced to true because of <daos/>)" :
-              ((!generatePojos && generateImmutablePojos) ? " (forced to true because of <immutablePojos/>)" : "")));
-        log.info("  immutable pojos", generateImmutablePojos());
-        log.info("  interfaces", generateInterfaces()
-            + ((!generateInterfaces && generateImmutableInterfaces) ? " (forced to true because of <immutableInterfaces/>)" : ""));
-        log.info("  immutable interfaces", generateInterfaces());
+        log.info("  annotations (JPA: any)", generateJPAAnnotations());
+        log.info("  annotations (JPA: version)", generateJPAVersion());
+        log.info("  annotations (validation)", generateValidationAnnotations());
         log.info("  daos", generateDaos());
+        log.info("  deprecated code", generateDeprecated());
+        log.info("  global references (any)", generateGlobalObjectReferences());
+        log.info("  global references (catalogs)", generateGlobalCatalogReferences());
+        log.info("  global references (keys)", generateGlobalKeyReferences());
+        log.info("  global references (links)", generateGlobalLinkReferences());
+        log.info("  global references (queues)", generateGlobalQueueReferences());
+        log.info("  global references (routines)", generateGlobalRoutineReferences());
+        log.info("  global references (schemas)", generateGlobalSchemaReferences());
+        log.info("  global references (sequences)", generateGlobalSequenceReferences());
+        log.info("  global references (tables)", generateGlobalTableReferences());
+        log.info("  global references (udts)", generateGlobalUDTReferences());
         log.info("  indexes", generateIndexes());
+        log.info("  instance fields", generateInstanceFields());
+        log.info("  interfaces", generateInterfaces()
+              + ((!generateInterfaces && generateImmutableInterfaces) ? " (forced to true because of <immutableInterfaces/>)" : ""));
+        log.info("  interfaces (immutable)", generateInterfaces());
+        log.info("  keys", generateKeys());
+        log.info("  links", generateLinks());
+        log.info("  pojos", generatePojos()
+              + ((!generatePojos && generateDaos) ? " (forced to true because of <daos/>)" :
+                ((!generatePojos && generateImmutablePojos) ? " (forced to true because of <immutablePojos/>)" : "")));
+        log.info("  pojos (immutable)", generateImmutablePojos());
+        log.info("  queues", generateQueues());
+        log.info("  records", generateRecords()
+              + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
+        log.info("  routines", generateRoutines());
+        log.info("  sequences", generateSequences());
+        log.info("  table-valued functions", generateTableValuedFunctions());
+        log.info("  tables", generateTables()
+              + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
+                ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" : "")));
+        log.info("  udts", generateUDTs());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :
               ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : "")));
-        log.info("  table-valued functions", generateTableValuedFunctions());
-        log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
 
         if (!generateInstanceFields()) {

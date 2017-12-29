@@ -2141,6 +2141,8 @@ class ParserImpl implements Parser {
             return s1.alter(field).dropNotNull();
         else if (parseKeywordIf(ctx, "SET NOT NULL"))
             return s1.alter(field).setNotNull();
+        else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO"))
+            return s1.renameColumn(field).to(parseFieldName(ctx));
         else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
             ;
 

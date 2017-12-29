@@ -755,6 +755,16 @@ final class AlterTableImpl extends AbstractQuery implements
                        .qualify(qualify);
                     break;
 
+                case FIREBIRD:
+                    ctx.qualify(false)
+                       .visit(K_ALTER_COLUMN).sql(' ')
+                       .visit(renameColumn)
+                       .formatSeparator()
+                       .visit(K_TO).sql(' ')
+                       .visit(renameColumnTo)
+                       .qualify(qualify);
+                    break;
+
                 default:
                     ctx.qualify(false)
                        .visit(K_RENAME_COLUMN).sql(' ')

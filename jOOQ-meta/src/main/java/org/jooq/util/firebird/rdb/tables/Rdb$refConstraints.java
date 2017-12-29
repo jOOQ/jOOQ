@@ -4,9 +4,6 @@
 package org.jooq.util.firebird.rdb.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.annotation.Generated;
 
 import org.jooq.Field;
@@ -15,11 +12,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.firebird.rdb.DefaultSchema;
-import org.jooq.util.firebird.rdb.Keys;
 
 
 /**
@@ -35,7 +30,7 @@ import org.jooq.util.firebird.rdb.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$refConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1804235386;
+    private static final long serialVersionUID = 48700203;
 
     /**
      * The reference instance of <code>RDB$REF_CONSTRAINTS</code>
@@ -110,14 +105,6 @@ public class Rdb$refConstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_13);
     }
 
     /**

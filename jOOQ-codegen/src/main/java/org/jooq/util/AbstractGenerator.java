@@ -82,6 +82,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateSpringAnnotations          = false;
     boolean                            generateQueues                     = true;
     boolean                            generateLinks                      = true;
+    boolean                            generateKeys                       = true;
     boolean                            generateGlobalObjectReferences     = true;
     boolean                            generateGlobalCatalogReferences    = true;
     boolean                            generateGlobalSchemaReferences     = true;
@@ -91,6 +92,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalUDTReferences        = true;
     boolean                            generateGlobalQueueReferences      = true;
     boolean                            generateGlobalLinkReferences       = true;
+    boolean                            generateGlobalKeyReferences        = true;
     boolean                            generateFluentSetters              = false;
     boolean                            generateJavaBeansGettersAndSetters = false;
     boolean                            generateVarargsSetters             = true;
@@ -504,6 +506,16 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateGlobalKeyReferences() {
+        return generateKeys() && generateGlobalObjectReferences() && generateGlobalKeyReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalKeyReferences(boolean globalKeyReferences) {
+        this.generateGlobalKeyReferences = globalKeyReferences;
+    }
+
+    @Override
     public boolean generateQueues() {
         return generateQueues;
     }
@@ -521,6 +533,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateLinks(boolean links) {
         this.generateLinks = links;
+    }
+
+    @Override
+    public boolean generateKeys() {
+        return generateKeys;
+    }
+
+    @Override
+    public void setGenerateKeys(boolean keys) {
+        this.generateKeys = keys;
     }
 
     @Override

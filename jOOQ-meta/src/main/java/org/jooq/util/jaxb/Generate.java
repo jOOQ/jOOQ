@@ -57,6 +57,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean links = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean keys = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean tables = true;
     @XmlElement(defaultValue = "true")
     protected Boolean records = true;
@@ -100,6 +102,8 @@ public class Generate implements Serializable
     protected Boolean globalQueueReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalLinkReferences = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean globalKeyReferences = true;
     @XmlElement(defaultValue = "false")
     protected Boolean fluentSetters = false;
     @XmlElement(defaultValue = "false")
@@ -384,6 +388,30 @@ public class Generate implements Serializable
      */
     public void setLinks(Boolean value) {
         this.links = value;
+    }
+
+    /**
+     * Generate Key classes.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isKeys() {
+        return keys;
+    }
+
+    /**
+     * Sets the value of the keys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setKeys(Boolean value) {
+        this.keys = value;
     }
 
     /**
@@ -915,6 +943,30 @@ public class Generate implements Serializable
     }
 
     /**
+     * Turn off generation of global key references.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isGlobalKeyReferences() {
+        return globalKeyReferences;
+    }
+
+    /**
+     * Sets the value of the globalKeyReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setGlobalKeyReferences(Boolean value) {
+        this.globalKeyReferences = value;
+    }
+
+    /**
      * Generate fluent setters in records, POJOs, interfaces.
      *
      * @return
@@ -1187,6 +1239,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withKeys(Boolean value) {
+        setKeys(value);
+        return this;
+    }
+
     public Generate withTables(Boolean value) {
         setTables(value);
         return this;
@@ -1294,6 +1351,11 @@ public class Generate implements Serializable
 
     public Generate withGlobalLinkReferences(Boolean value) {
         setGlobalLinkReferences(value);
+        return this;
+    }
+
+    public Generate withGlobalKeyReferences(Boolean value) {
+        setGlobalKeyReferences(value);
         return this;
     }
 

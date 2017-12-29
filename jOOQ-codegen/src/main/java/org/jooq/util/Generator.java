@@ -374,6 +374,16 @@ public interface Generator {
     void setGenerateGlobalLinkReferences(boolean globalLinkReferences);
 
     /**
+     * Whether global key references should be generated
+     */
+    boolean generateGlobalKeyReferences();
+
+    /**
+     * Whether global key references should be generated
+     */
+    void setGenerateGlobalKeyReferences(boolean globalKeyReferences);
+
+    /**
      * Whether queue related code should be generated
      */
     boolean generateQueues();
@@ -392,6 +402,16 @@ public interface Generator {
      * Whether link related code should be generated
      */
     void setGenerateLinks(boolean links);
+
+    /**
+     * Whether key related code should be generated
+     */
+    boolean generateKeys();
+
+    /**
+     * Whether key related code should be generated
+     */
+    void setGenerateKeys(boolean keys);
 
     /**
      * Whether fluent setters should be generated

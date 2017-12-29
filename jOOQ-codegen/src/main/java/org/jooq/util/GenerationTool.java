@@ -565,8 +565,8 @@ public class GenerationTool {
                 generator.setGenerateQueues(g.getGenerate().isQueues());
             if (g.getGenerate().isLinks() != null)
                 generator.setGenerateLinks(g.getGenerate().isLinks());
-            if (g.getGenerate().isGlobalLinkReferences() != null)
-                generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
+            if (g.getGenerate().isKeys() != null)
+                generator.setGenerateKeys(g.getGenerate().isKeys());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isGlobalCatalogReferences() != null)
@@ -585,6 +585,8 @@ public class GenerationTool {
                 generator.setGenerateGlobalQueueReferences(g.getGenerate().isGlobalQueueReferences());
             if (g.getGenerate().isGlobalLinkReferences() != null)
                 generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
+            if (g.getGenerate().isGlobalKeyReferences() != null)
+                generator.setGenerateGlobalKeyReferences(g.getGenerate().isGlobalKeyReferences());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setGenerateFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isJavaBeansGettersAndSetters() != null)

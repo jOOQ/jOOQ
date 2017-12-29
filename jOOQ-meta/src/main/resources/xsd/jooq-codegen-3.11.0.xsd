@@ -864,6 +864,10 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate database Link classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="keys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Key classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Table classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -950,6 +954,10 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
 
       <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global database link references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="globalKeyReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global key references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">

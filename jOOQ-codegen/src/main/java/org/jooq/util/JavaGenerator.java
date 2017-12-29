@@ -463,7 +463,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateTableReferences(schema);
         }
 
-        if (generateRelations() && database.getTables(schema).size() > 0) {
+        if (generateGlobalKeyReferences() && generateRelations() && database.getTables(schema).size() > 0) {
             generateRelations(schema);
         }
 
@@ -3709,7 +3709,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Add primary / unique / foreign key information
-        if (generateRelations()) {
+        if (generateRelations() && generateGlobalKeyReferences()) {
             IdentityDefinition identity = table.getIdentity();
 
             // The identity column

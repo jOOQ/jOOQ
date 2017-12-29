@@ -516,6 +516,13 @@ class ParserImpl implements Parser {
 
                 break;
 
+            case 'e':
+            case 'E':
+                if (!resultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
+                    return parseBlock(ctx);
+
+                break;
+
             case 'g':
             case 'G':
                 if (!resultQuery && peekKeyword(ctx, "GRANT"))
@@ -1371,6 +1378,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Block parseBlock(ParserContext ctx) {
+        parseKeywordIf(ctx, "EXECUTE BLOCK AS");
         parseKeyword(ctx, "BEGIN");
 
         List<Statement> statements = new ArrayList<Statement>();

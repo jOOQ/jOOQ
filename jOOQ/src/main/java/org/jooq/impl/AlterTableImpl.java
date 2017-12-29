@@ -987,31 +987,21 @@ final class AlterTableImpl extends AbstractQuery implements
         else if (dropColumns != null) {
             ctx.start(ALTER_TABLE_DROP);
 
-            switch (family) {
+            if (family == FIREBIRD) {
+                String separator = "";
 
+                for (Field<?> dropColumn : dropColumns) {
+                    ctx.sql(separator)
+                       .qualify(false)
+                       .visit(K_DROP)
+                       .sql(' ')
+                       .visit(dropColumn)
+                       .qualify(true);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                default:
-                    ctx.visit(K_DROP);
-                    break;
+                    separator = ", ";
+                }
             }
-
-            if (ifExistsColumn) {
+            else {
                 switch (family) {
 
 
@@ -1021,34 +1011,60 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-                    case H2:
-                    case POSTGRES:
+
+
+
+
+
+
+
+
+
+
                     default:
-                        ctx.sql(' ').visit(K_IF_EXISTS);
+                        ctx.visit(K_DROP);
                         break;
                 }
+
+                if (ifExistsColumn) {
+                    switch (family) {
+
+
+
+
+
+
+
+
+                        case H2:
+                        case POSTGRES:
+                        default:
+                            ctx.sql(' ').visit(K_IF_EXISTS);
+                            break;
+                    }
+                }
+
+
+
+
+
+
+
+
+                ctx.sql(' ');
+
+                ctx.qualify(false)
+                   .visit(dropColumns)
+                   .qualify(true);
+
+
+
+
+
+
+                if (dropColumnCascade)
+                    ctx.sql(' ').visit(K_CASCADE);
             }
-
-
-
-
-
-
-
-
-            ctx.sql(' ');
-
-            ctx.qualify(false)
-               .visit(dropColumns)
-               .qualify(true);
-
-
-
-
-
-
-            if (dropColumnCascade)
-                ctx.sql(' ').visit(K_CASCADE);
 
             ctx.end(ALTER_TABLE_DROP);
         }

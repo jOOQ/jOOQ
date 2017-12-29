@@ -1045,15 +1045,6 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
     </all>
   </complexType>
 
-
-  <simpleType name="JpaVersion">
-    <restriction base="string">
-      <enumeration value="V_2_0"/>
-      <enumeration value="V_2_1"/>
-      <enumeration value="V_2_2"/>
-    </restriction>
-  </simpleType>
-
   <complexType name="Target">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options to define where the generated code should be located.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
@@ -1089,6 +1080,15 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="UNICODE_CASE"/>
       <enumeration value="CANON_EQ"/>
       <enumeration value="UNICODE_CHARACTER_CLASS"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="JpaVersion">
+    <restriction base="string">
+      <enumeration value="1.0"/>
+      <enumeration value="2.0"/>
+      <enumeration value="2.1"/>
+      <enumeration value="2.2"/>
     </restriction>
   </simpleType>
 </schema>

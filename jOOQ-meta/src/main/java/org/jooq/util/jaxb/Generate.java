@@ -12,7 +12,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -81,8 +80,8 @@ public class Generate implements Serializable
     protected Boolean daos = false;
     @XmlElement(defaultValue = "false")
     protected Boolean jpaAnnotations = false;
-    @XmlSchemaType(name = "string")
-    protected JpaVersion jpaVersion;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String jpaVersion;
     @XmlElement(defaultValue = "false")
     protected Boolean validationAnnotations = false;
     @XmlElement(defaultValue = "false")
@@ -682,15 +681,14 @@ public class Generate implements Serializable
     }
 
     /**
-     * Sets the version of JPA specification to generate version-specific annotations.
-     * If it is omitted, the latest version is used by default.
+     * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
      *
      * @return
      *     possible object is
-     *     {@link JpaVersion }
+     *     {@link String }
      *
      */
-    public JpaVersion getJpaVersion() {
+    public String getJpaVersion() {
         return jpaVersion;
     }
 
@@ -699,10 +697,10 @@ public class Generate implements Serializable
      *
      * @param value
      *     allowed object is
-     *     {@link JpaVersion }
+     *     {@link String }
      *
      */
-    public void setJpaVersion(JpaVersion value) {
+    public void setJpaVersion(String value) {
         this.jpaVersion = value;
     }
 
@@ -1327,7 +1325,7 @@ public class Generate implements Serializable
         return this;
     }
 
-    public Generate withJpaVersion(JpaVersion value) {
+    public Generate withJpaVersion(String value) {
         setJpaVersion(value);
         return this;
     }

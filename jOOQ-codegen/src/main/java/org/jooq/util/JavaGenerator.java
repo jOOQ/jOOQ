@@ -129,7 +129,6 @@ import org.jooq.util.GeneratorStrategy.Mode;
 // ...
 // ...
 // ...
-import org.jooq.util.jaxb.JpaVersion;
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -279,9 +278,7 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generateGeneratedAnnotation && (useSchemaVersionProvider || useCatalogVersionProvider)) ?
                 " (forced to true because of <schemaVersionProvider/> or <catalogVersionProvider/>)" : ""));
         log.info("  JPA annotations", generateJPAAnnotations());
-        log.info("  JPA version", generateJpaVersion()
-            + (!generateJPAAnnotations && generateJpaVersion != null ? " (forced to null because of <jpaAnnotations/>)"  :
-              (generateJPAAnnotations && generateJpaVersion == null ? " (forced to " + JpaVersion.latest().name() + " because of <jpaVersion/>)" : "")));
+        log.info("  JPA version", generateJpaVersion());
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
         log.info("  sequences", generateSequences());
@@ -4397,7 +4394,10 @@ public class JavaGenerator extends AbstractGenerator {
         SchemaDefinition schema = table.getSchema();
 
         if (generateJPAAnnotations()) {
+            // Since JPA 1.0
             out.println("@%s", out.ref("javax.persistence.Entity"));
+
+            // Since JPA 1.0
             out.print("@%s(name = \"", out.ref("javax.persistence.Table"));
             out.print(table.getName().replace("\"", "\\\""));
             out.print("\"");
@@ -4418,6 +4418,8 @@ public class JavaGenerator extends AbstractGenerator {
                     sb1.append(glue1);
                     sb1.append("\t")
                        .append(scala ? "new " : "@")
+
+                       // Since JPA 1.0
                        .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
 
                     String glue1Inner = "";
@@ -4443,7 +4445,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print(scala ? ")" : "}");
             }
 
-            if (generateJpaVersion() != null && generateJpaVersion().supportedIndex()) {
+            if (StringUtils.isBlank(generateJpaVersion()) || "2.1".compareTo(generateJpaVersion()) <= 0) {
                 StringBuilder sb2 = new StringBuilder();
                 String glue2 = "\n";
 
@@ -4495,8 +4497,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (pk != null) {
                 if (pk.getKeyColumns().size() == 1) {
+
+                    // Since JPA 1.0
                     out.tab(1).println("@%s", out.ref("javax.persistence.Id"));
 
+                    // Since JPA 1.0
                     if (pk.getKeyColumns().get(0).isIdentity())
                         out.tab(1).println("@%s(strategy = %s.IDENTITY)",
                             out.ref("javax.persistence.GeneratedValue"),
@@ -4532,6 +4537,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
+            // Since JPA 1.0
             out.print("\t@%s(name = \"", out.ref("javax.persistence.Column"));
             out.print(column.getName().replace("\"", "\\\""));
             out.print("\"");

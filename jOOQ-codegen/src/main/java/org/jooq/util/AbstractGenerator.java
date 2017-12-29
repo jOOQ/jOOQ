@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.jooq.tools.JooqLogger;
-import org.jooq.util.jaxb.JpaVersion;
 
 
 /**
@@ -79,6 +78,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateImmutableInterfaces        = false;
     boolean                            generateDaos                       = false;
     boolean                            generateJPAAnnotations             = false;
+    String                             generateJpaVersion                 = "";
     boolean                            generateValidationAnnotations      = false;
     boolean                            generateSpringAnnotations          = false;
     boolean                            generateQueues                     = true;
@@ -103,7 +103,6 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateEmptyCatalogs              = false;
     boolean                            generateEmptySchemas               = false;
     boolean                            generatePrimaryKeyTypes            = false;
-    JpaVersion                         generateJpaVersion;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                     = "UTF-8";
@@ -398,12 +397,12 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
-    public JpaVersion generateJpaVersion() {
+    public String generateJpaVersion() {
         return generateJpaVersion;
     }
 
     @Override
-    public void setGenerateJpaVersion(JpaVersion generateJpaVersion) {
+    public void setGenerateJpaVersion(String generateJpaVersion) {
         this.generateJpaVersion = generateJpaVersion;
     }
 

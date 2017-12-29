@@ -42,7 +42,7 @@ proceduralStatement =
 ;
 
 blockStatement =
-  'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
+  [ 'EXECUTE BLOCK AS' ] 'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
 | 'DO' stringLiteral
 ;
 

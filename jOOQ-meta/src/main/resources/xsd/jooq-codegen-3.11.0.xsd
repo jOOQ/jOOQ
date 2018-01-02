@@ -444,6 +444,10 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether routines should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeTriggerRoutines" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether trigger implementation routines should be included in output produced by this database (e.g. in PostgreSQL)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includePackages" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether packages should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

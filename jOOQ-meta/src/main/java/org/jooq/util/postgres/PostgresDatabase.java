@@ -768,6 +768,9 @@ public class PostgresDatabase extends AbstractDatabase {
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
                     : noCondition())
+            .and(!getIncludeTriggerRoutines()
+                    ? r1.DATA_TYPE.ne(inline("trigger"))
+                    : noCondition())
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
                 r1.ROUTINE_NAME.asc(),

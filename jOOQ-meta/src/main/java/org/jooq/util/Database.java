@@ -462,6 +462,16 @@ public interface Database {
     boolean getIncludeRoutines();
 
     /**
+     * whether trigger routines should be included.
+     */
+    void setIncludeTriggerRoutines(boolean includeTriggerRoutines);
+
+    /**
+     * whether trigger routines should be included.
+     */
+    boolean getIncludeTriggerRoutines();
+
+    /**
      * Whether tables (and views) should be included.
      */
     void setIncludeTables(boolean includeTables);

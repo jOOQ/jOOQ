@@ -121,6 +121,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeExcludeColumns;
     private boolean                                                          includeTables            = true;
     private boolean                                                          includeRoutines          = true;
+    private boolean                                                          includeTriggerRoutines   = false;
     private boolean                                                          includePackages          = true;
     private boolean                                                          includeUDTs              = true;
     private boolean                                                          includeSequences         = true;
@@ -740,6 +741,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setIncludeRoutines(boolean includeRoutines) {
         this.includeRoutines = includeRoutines;
+    }
+
+    @Override
+    public void setIncludeTriggerRoutines(boolean includeTriggerRoutines) {
+        this.includeTriggerRoutines = includeTriggerRoutines;
+    }
+
+    @Override
+    public boolean getIncludeTriggerRoutines() {
+        return includeTriggerRoutines;
     }
 
     @Override

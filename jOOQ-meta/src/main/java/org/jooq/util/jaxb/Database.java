@@ -58,6 +58,8 @@ public class Database implements Serializable
     protected Boolean includeTables = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeRoutines = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean includeTriggerRoutines = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includePackages = true;
     @XmlElement(defaultValue = "true")
@@ -363,6 +365,30 @@ public class Database implements Serializable
      */
     public void setIncludeRoutines(Boolean value) {
         this.includeRoutines = value;
+    }
+
+    /**
+     * This flag indicates whether trigger implementation routines should be included in output produced by this database (e.g. in PostgreSQL)
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeTriggerRoutines() {
+        return includeTriggerRoutines;
+    }
+
+    /**
+     * Sets the value of the includeTriggerRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeTriggerRoutines(Boolean value) {
+        this.includeTriggerRoutines = value;
     }
 
     /**
@@ -1169,6 +1195,11 @@ public class Database implements Serializable
 
     public Database withIncludeRoutines(Boolean value) {
         setIncludeRoutines(value);
+        return this;
+    }
+
+    public Database withIncludeTriggerRoutines(Boolean value) {
+        setIncludeTriggerRoutines(value);
         return this;
     }
 

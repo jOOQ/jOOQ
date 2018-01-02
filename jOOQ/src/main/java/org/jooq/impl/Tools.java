@@ -3656,6 +3656,7 @@ final class Tools {
 
 
             case FIREBIRD: {
+                begin(ctx);
                 beginExecuteImmediate(ctx);
                 break;
             }

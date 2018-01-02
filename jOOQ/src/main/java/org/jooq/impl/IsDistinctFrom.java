@@ -90,7 +90,6 @@ final class IsDistinctFrom<T> extends AbstractCondition {
     private transient QueryPartInternal      mySQLCondition;
     private transient QueryPartInternal      sqliteCondition;
     private transient QueryPartInternal      compareCondition;
-    private transient QueryPartInternal      caseExpression;
 
     IsDistinctFrom(Field<T> lhs, Field<T> rhs, Comparator comparator) {
         this.lhs = lhs;

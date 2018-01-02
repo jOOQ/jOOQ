@@ -933,6 +933,7 @@ final class AlterTableImpl extends AbstractQuery implements
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
 
+                    case FIREBIRD:
                     case POSTGRES:
                         ctx.sql(' ').visit(K_TYPE);
                         break;

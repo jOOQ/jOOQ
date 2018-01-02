@@ -7480,6 +7480,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(String)
+     */
+    @Support
+    public static DropTableStep dropTemporaryTable(String table) {
+        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(Name)
+     */
+    @Support
+    public static DropTableStep dropTemporaryTable(Name table) {
+        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(Table)
+     */
+    @Support
+    public static DropTableStep dropTemporaryTable(Table<?> table) {
+        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+    }
+
+    /**
      * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is

@@ -124,7 +124,7 @@ createViewStatement = 'CREATE VIEW' [ 'IF NOT EXISTS' ] tableName
   [ '(' fieldNames ')' ] 'AS' select
 ;
 
-dropTableStatement = 'DROP TABLE' [ 'IF EXISTS' ] tableName [ 'CASCADE' | 'RESTRICT' ]
+dropTableStatement = 'DROP' [ 'TEMPORARY' ] 'TABLE' [ 'IF EXISTS' ] tableName [ 'CASCADE' | 'RESTRICT' ]
 ;
 
 dropIndexStatement = 'DROP INDEX' [ 'IF EXISTS' ] indexName [ 'ON' tableName ]

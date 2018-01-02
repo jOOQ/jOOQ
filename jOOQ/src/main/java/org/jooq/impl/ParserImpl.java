@@ -1271,7 +1271,9 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "DROP");
 
         if (parseKeywordIf(ctx, "TABLE"))
-            return parseDropTable(ctx);
+            return parseDropTable(ctx, false);
+        else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
+            return parseDropTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseDropIndex(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
@@ -2234,7 +2236,7 @@ final class ParserImpl implements Parser {
         return ctx.dsl.alterTable(oldName).renameTo(newName);
     }
 
-    private static final DDLQuery parseDropTable(ParserContext ctx) {
+    private static final DDLQuery parseDropTable(ParserContext ctx, boolean temporary) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> tableName = parseTableName(ctx);
         boolean cascade = parseKeywordIf(ctx, "CASCADE");
@@ -2244,14 +2246,16 @@ final class ParserImpl implements Parser {
         DropTableFinalStep s2;
 
         s1 = ifExists
-            ? ctx.dsl.dropTableIfExists(tableName)
-            : ctx.dsl.dropTable(tableName);
+           ? ctx.dsl.dropTableIfExists(tableName)
+           : temporary
+           ? ctx.dsl.dropTemporaryTable(tableName)
+           : ctx.dsl.dropTable(tableName);
 
         s2 = cascade
-            ? s1.cascade()
-            : restrict
-            ? s1.restrict()
-            : s1;
+           ? s1.cascade()
+           : restrict
+           ? s1.restrict()
+           : s1;
 
         return s2;
     }

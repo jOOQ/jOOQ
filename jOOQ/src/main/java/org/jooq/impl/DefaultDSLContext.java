@@ -3353,6 +3353,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public DropTableStep dropTemporaryTable(String table) {
+        return dropTable(name(table));
+    }
+
+    @Override
+    public DropTableStep dropTemporaryTable(Name table) {
+        return dropTable(table(table));
+    }
+
+    @Override
+    public DropTableStep dropTemporaryTable(Table<?> table) {
+        return new DropTableImpl(configuration(), table);
+    }
+
+    @Override
     public DropTableStep dropTableIfExists(String table) {
         return dropTableIfExists(name(table));
     }

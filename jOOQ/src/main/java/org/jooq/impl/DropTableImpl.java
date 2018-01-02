@@ -76,18 +76,24 @@ final class DropTableImpl extends AbstractQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
 
     private final Table<?>                   table;
+    private final boolean                    temporary;
     private final boolean                    ifExists;
     private boolean                          cascade;
 
     DropTableImpl(Configuration configuration, Table<?> table) {
-        this(configuration, table, false);
+        this(configuration, table, false, false);
     }
 
     DropTableImpl(Configuration configuration, Table<?> table, boolean ifExists) {
+        this(configuration, table, ifExists, false);
+    }
+
+    DropTableImpl(Configuration configuration, Table<?> table, boolean ifExists, boolean temporary) {
         super(configuration);
 
         this.table = table;
         this.ifExists = ifExists;
+        this.temporary = temporary;
     }
 
     // ------------------------------------------------------------------------
@@ -130,14 +136,17 @@ final class DropTableImpl extends AbstractQuery implements
         ctx.start(DROP_TABLE_TABLE)
            .visit(K_DROP_TABLE).sql(' ');
 
+        // [#6371] The keyword isn't strictly required in any dialect we've seen so far.
+        if (temporary)
+            ;
+
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
 
-        if (cascade) {
+        if (cascade)
             ctx.sql(' ').visit(K_CASCADE);
-        }
 
         ctx.end(DROP_TABLE_TABLE);
     }

@@ -9322,6 +9322,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropTableStep dropTableIfExists(Table<?> table);
 
     /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(String)
+     */
+    @Support
+    DropTableStep dropTemporaryTable(String table);
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(Name)
+     */
+    @Support
+    DropTableStep dropTemporaryTable(Name table);
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(Table)
+     */
+    @Support
+    DropTableStep dropTemporaryTable(Table<?> table);
+
+    /**
      * Create a new DSL <code>DROP INDEX</code> statement.
      *
      * @see DSL#dropIndex(String)

@@ -348,7 +348,7 @@ import org.jooq.WindowSpecificationRowsStep;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class ParserImpl implements Parser {
+final class ParserImpl implements Parser {
 
     private final DSLContext    dsl;
 

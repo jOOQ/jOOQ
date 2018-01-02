@@ -369,7 +369,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    @Deprecated
     public Parser parser() {
         return new ParserImpl(configuration());
     }

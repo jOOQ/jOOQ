@@ -74,6 +74,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -178,6 +179,8 @@ public class JDBCUtils {
 
         return dialect;
     }
+
+
 
 
 

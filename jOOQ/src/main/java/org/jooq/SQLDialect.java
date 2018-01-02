@@ -358,6 +358,15 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
+
     ;
 
     private static final SQLDialect[] FAMILIES;
@@ -593,6 +602,7 @@ public enum SQLDialect {
          */
         public final String hibernateDialect() {
             switch (SQLDialect.this) {
+
 
 
 

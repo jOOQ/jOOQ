@@ -14774,7 +14774,7 @@ result.forEach((Object[] entities) -> {
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withIncludes(".*")
-      .withExcludes("UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA\.SECRET_TABLE|SECRET_ROUTINE"))));]]></java><html>
+      .withExcludes("UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA\\.SECRET_TABLE|SECRET_ROUTINE"))));]]></java><html>
 
                                     <p>
                                         <strong>Gradle configuration</strong>
@@ -14784,7 +14784,7 @@ result.forEach((Object[] entities) -> {
   generator {
     database {
       includes = '.*'
-      excludes = 'UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA\.SECRET_TABLE|SECRET_ROUTINE'
+      excludes = 'UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA\\.SECRET_TABLE|SECRET_ROUTINE'
     }
   }
 }]]></java><html>

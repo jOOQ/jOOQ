@@ -66,4 +66,9 @@ public enum DDLFlag {
      * Whether <code>FOREIGN KEY</code> constraints should be generated.
      */
     FOREIGN_KEY,
+
+    /**
+     * Whether <code>COMMENT</code> statements should be generated.
+     */
+    COMMENT,
 }

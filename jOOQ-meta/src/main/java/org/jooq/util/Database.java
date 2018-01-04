@@ -59,7 +59,7 @@ import org.jooq.util.jaxb.Schema;
  *
  * @author Lukas Eder
  */
-public interface Database {
+public interface Database  extends AutoCloseable  {
 
     /**
      * The catalogs generated from this database.
@@ -781,6 +781,14 @@ public interface Database {
      * same reason.
      */
     Properties getProperties();
+
+    /**
+     * Release any resources that this Database may have allocated.
+     */
+
+    @Override
+
+    void close();
 
     /**
      * A filter type that can be used with {@link Database#addFilter(Filter)}

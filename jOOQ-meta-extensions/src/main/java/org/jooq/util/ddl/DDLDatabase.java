@@ -57,6 +57,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
 
@@ -149,6 +150,12 @@ public class DDLDatabase extends H2Database {
         }
 
         return DSL.using(connection);
+    }
+
+    @Override
+    public void close() {
+        JDBCUtils.safeClose(connection);
+        super.close();
     }
 
     @Override

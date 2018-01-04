@@ -245,6 +245,8 @@ public class GenerationTool {
         if (g.getTarget() == null)
             g.setTarget(new Target());
 
+        Database database = null;
+
         try {
 
             // Initialise connection
@@ -306,7 +308,7 @@ public class GenerationTool {
                 : connection != null
                 ? databaseClass(connection)
                 : databaseClass(j);
-            Database database = databaseClass.newInstance();
+            database = databaseClass.newInstance();
             database.setProperties(properties(d.getProperties()));
 
             List<Catalog> catalogs = d.getCatalogs();
@@ -649,6 +651,13 @@ public class GenerationTool {
             generator.generate(database);
         }
         finally {
+            if (database != null)
+                try {
+                    database.close();
+                }
+                catch (Exception e) {
+                    log.error("Error while closing database", e);
+                }
 
             // Close connection only if it was created by the GenerationTool
             if (close && connection != null)

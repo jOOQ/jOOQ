@@ -2099,6 +2099,9 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
+    @Override
+    public void close() {}
+
     /**
      * Create a new Factory
      */

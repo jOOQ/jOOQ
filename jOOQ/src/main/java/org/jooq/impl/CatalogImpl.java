@@ -46,6 +46,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -67,18 +68,33 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
 
     private final Name            name;
+    private final Comment         comment;
 
     public CatalogImpl(Name name) {
-        this.name = name;
+        this(name, null);
     }
 
     public CatalogImpl(String name) {
-        this(DSL.name(name));
+        this(name, null);
+    }
+
+    public CatalogImpl(Name name, Comment comment) {
+        this.name = name;
+        this.comment = comment;
+    }
+
+    public CatalogImpl(String name, String comment) {
+        this(DSL.name(name), comment == null ? null : DSL.comment(comment));
     }
 
     @Override
     public final String getName() {
         return name.last();
+    }
+
+    @Override
+    public String getComment() {
+        return null;
     }
 
     @Override

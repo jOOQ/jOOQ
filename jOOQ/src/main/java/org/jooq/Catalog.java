@@ -53,6 +53,11 @@ public interface Catalog extends QueryPart {
     String getName();
 
     /**
+     * The comment on this catalog.
+     */
+    String getComment();
+
+    /**
      * The qualified name of this catalog.
      */
     Name getQualifiedName();

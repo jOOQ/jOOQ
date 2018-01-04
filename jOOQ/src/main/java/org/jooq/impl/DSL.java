@@ -117,6 +117,7 @@ import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
+import org.jooq.Comment;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -5802,6 +5803,18 @@ public class DSL {
     @Support
     public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return using(new DefaultConfiguration()).deleteFrom(table);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Comments
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a comment.
+     */
+    @Support
+    public static Comment comment(String comment) {
+        return new CommentImpl(comment);
     }
 
     // -------------------------------------------------------------------------

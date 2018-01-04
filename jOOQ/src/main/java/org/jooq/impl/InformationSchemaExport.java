@@ -182,6 +182,7 @@ final class InformationSchemaExport {
 
         if (!StringUtils.isBlank(c.getName())) {
             ic.setCatalogName(c.getName());
+            ic.setComment(c.getComment());
             result.getCatalogs().add(ic);
         }
     }
@@ -194,6 +195,7 @@ final class InformationSchemaExport {
 
         if (!StringUtils.isBlank(s.getName())) {
             is.setSchemaName(s.getName());
+            is.setComment(s.getComment());
             result.getSchemata().add(is);
         }
     }
@@ -208,6 +210,7 @@ final class InformationSchemaExport {
             it.setTableSchema(t.getSchema().getName());
 
         it.setTableName(t.getName());
+        it.setComment(t.getComment());
         result.getTables().add(it);
 
         Field<?>[] fields = t.fields();
@@ -223,6 +226,7 @@ final class InformationSchemaExport {
 
             ic.setTableName(t.getName());
             ic.setColumnName(f.getName());
+            ic.setComment(f.getComment());
             ic.setDataType(f.getDataType().getTypeName(configuration));
 
             if (f.getDataType().hasLength())

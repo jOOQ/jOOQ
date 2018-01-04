@@ -60,7 +60,11 @@ public class DefaultParameterDefinition
     }
 
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed) {
-        super(routine, name, position, type, null);
+        this(routine, name, position, type, isDefaulted, isUnnamed, null);
+    }
+
+    public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed, String comment) {
+        super(routine, name, position, type, comment);
 
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;

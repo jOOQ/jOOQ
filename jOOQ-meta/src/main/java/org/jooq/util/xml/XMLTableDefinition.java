@@ -63,7 +63,11 @@ public class XMLTableDefinition extends AbstractTableDefinition {
     private final Table             table;
 
     public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table) {
-        super(schema, table.getTableName(), "");
+        this(schema, info, table, "");
+    }
+
+    public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment) {
+        super(schema, table.getTableName(), comment);
 
         this.info = info;
         this.table = table;
@@ -97,7 +101,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getOrdinalPosition()),
                     type,
                     column.getIdentityGeneration() != null,
-                    ""
+                    column.getComment()
                 ));
             }
         }

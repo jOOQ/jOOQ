@@ -45,6 +45,10 @@ public class DefaultSequenceDefinition
     implements SequenceDefinition {
 
     public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
-        super(schema, name, -1, type, null);
+        this(schema, name, type, null);
+    }
+
+    public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type, String comment) {
+        super(schema, name, -1, type, comment);
     }
 }

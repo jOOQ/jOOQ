@@ -71,7 +71,7 @@ public class XMLPackageDefinition extends AbstractPackageDefinition {
             String routineName = defaultIfBlank(routine.getSpecificPackage(), routine.getRoutinePackage());
 
             if (getName().equals(routineName)) {
-                result.add(new XMLRoutineDefinition(getSchema(), this, info, routine));
+                result.add(new XMLRoutineDefinition(getSchema(), this, info, routine, routine.getComment()));
             }
         }
 

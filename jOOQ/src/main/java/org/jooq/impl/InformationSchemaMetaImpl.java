@@ -125,7 +125,7 @@ final class InformationSchemaMetaImpl implements Meta {
         // -------------------------------------------------------------------------------------------------------------
         boolean hasCatalogs = false;
         for (org.jooq.util.xml.jaxb.Catalog xc : meta.getCatalogs()) {
-            InformationSchemaCatalog ic = new InformationSchemaCatalog(xc.getCatalogName());
+            InformationSchemaCatalog ic = new InformationSchemaCatalog(xc.getCatalogName(), xc.getComment());
             catalogs.add(ic);
             catalogsByName.put(name(xc.getCatalogName()), ic);
             hasCatalogs = true;
@@ -138,7 +138,7 @@ final class InformationSchemaMetaImpl implements Meta {
 
             // [#6662] This is kept for backwards compatibility reasons
             if (!hasCatalogs) {
-                InformationSchemaCatalog ic = new InformationSchemaCatalog(xs.getCatalogName());
+                InformationSchemaCatalog ic = new InformationSchemaCatalog(xs.getCatalogName(), null);
 
                 if (!catalogs.contains(ic)) {
                     catalogs.add(ic);
@@ -154,7 +154,7 @@ final class InformationSchemaMetaImpl implements Meta {
                 continue schemaLoop;
             }
 
-            InformationSchemaSchema is = new InformationSchemaSchema(xs.getSchemaName(), catalog);
+            InformationSchemaSchema is = new InformationSchemaSchema(xs.getSchemaName(), catalog, xs.getComment());
             schemas.add(is);
             schemasByName.put(name(xs.getCatalogName(), xs.getSchemaName()), is);
         }
@@ -171,7 +171,7 @@ final class InformationSchemaMetaImpl implements Meta {
                 continue tableLoop;
             }
 
-            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema);
+            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema, xt.getComment());
             tables.add(it);
             tablesByName.put(name(xt.getTableCatalog(), xt.getTableSchema(), xt.getTableName()), it);
         }
@@ -216,7 +216,8 @@ final class InformationSchemaMetaImpl implements Meta {
             AbstractTable.createField(
                 xc.getColumnName(),
                 type(typeName, length, precision, scale, nullable),
-                table
+                table,
+                xc.getComment()
             );
         }
 
@@ -526,8 +527,8 @@ final class InformationSchemaMetaImpl implements Meta {
          */
         private static final long serialVersionUID = 87038321849045492L;
 
-        InformationSchemaCatalog(String name) {
-            super(name);
+        InformationSchemaCatalog(String name, String comment) {
+            super(name, comment);
         }
 
         @Override
@@ -543,8 +544,8 @@ final class InformationSchemaMetaImpl implements Meta {
          */
         private static final long serialVersionUID = 7290709749127378187L;
 
-        public InformationSchemaSchema(String name, Catalog catalog) {
-            super(name, catalog);
+        public InformationSchemaSchema(String name, Catalog catalog, String comment) {
+            super(name, catalog, comment);
         }
 
         @Override
@@ -570,8 +571,8 @@ final class InformationSchemaMetaImpl implements Meta {
         final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<ForeignKey<Record, Record>>();
         final List<Index>                      indexes          = new ArrayList<Index>();
 
-        public InformationSchemaTable(String name, Schema schema) {
-            super(name, schema);
+        public InformationSchemaTable(String name, Schema schema, String comment) {
+            super(name, schema, null, null, comment);
         }
 
         @Override

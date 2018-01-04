@@ -290,7 +290,7 @@ public class XMLDatabase extends AbstractDatabase {
 
                 final Name name = name(i.getIndexCatalog(), i.getIndexSchema(), i.getTableName(), i.getIndexName());
 
-                IndexDefinition index = new AbstractIndexDefinition(schema, i.getIndexName(), table, Boolean.TRUE.equals(i.isIsUnique())) {
+                IndexDefinition index = new AbstractIndexDefinition(schema, i.getIndexName(), table, Boolean.TRUE.equals(i.isIsUnique()), i.getComment()) {
                     private final List<IndexColumnDefinition> indexColumns;
 
                     {
@@ -441,7 +441,7 @@ public class XMLDatabase extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
         for (Schema schema : info().getSchemata()) {
-            result.add(new SchemaDefinition(this, schema.getSchemaName(), null));
+            result.add(new SchemaDefinition(this, schema.getSchemaName(), schema.getComment()));
         }
 
         return result;
@@ -466,7 +466,7 @@ public class XMLDatabase extends AbstractDatabase {
                     (String) null
                 );
 
-                result.add(new DefaultSequenceDefinition(schema, sequence.getSequenceName(), type));
+                result.add(new DefaultSequenceDefinition(schema, sequence.getSequenceName(), type, sequence.getComment()));
             }
         }
 
@@ -481,7 +481,7 @@ public class XMLDatabase extends AbstractDatabase {
             if (getInputSchemata().contains(table.getTableSchema())) {
                 SchemaDefinition schema = getSchema(table.getTableSchema());
 
-                result.add(new XMLTableDefinition(schema, info(), table));
+                result.add(new XMLTableDefinition(schema, info(), table, table.getComment()));
             }
         }
 
@@ -523,7 +523,7 @@ public class XMLDatabase extends AbstractDatabase {
                 if (getInputSchemata().contains(schemaName)) {
                     SchemaDefinition schema = getSchema(schemaName);
 
-                    result.add(new XMLRoutineDefinition(schema, null, info(), routine));
+                    result.add(new XMLRoutineDefinition(schema, null, info(), routine, routine.getComment()));
                 }
             }
         }

@@ -50,7 +50,11 @@ public abstract class AbstractIndexDefinition extends AbstractDefinition impleme
     private List<IndexColumnDefinition> indexColumns;
 
     public AbstractIndexDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean unique) {
-        super(schema.getDatabase(), schema, name, "");
+        this(schema, name, table, unique, "");
+    }
+
+    public AbstractIndexDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean unique, String comment) {
+        super(schema.getDatabase(), schema, name, comment);
 
         this.table = table;
         this.unique = unique;

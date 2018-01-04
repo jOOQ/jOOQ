@@ -62,7 +62,11 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
     private final InformationSchema info;
 
     public XMLRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, InformationSchema info, Routine routine) {
-        super(schema, pkg, routine.getRoutineName(), "", overload(info, routine));
+        this(schema, pkg, info, routine, "");
+    }
+
+    public XMLRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, InformationSchema info, Routine routine, String comment) {
+        super(schema, pkg, routine.getRoutineName(), comment, overload(info, routine));
 
         this.info = info;
 
@@ -145,7 +149,8 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                     parameter.getOrdinalPosition(),
                     type,
                     !StringUtils.isBlank(parameter.getParameterDefault()),
-                    StringUtils.isBlank(parameter.getParameterName())
+                    StringUtils.isBlank(parameter.getParameterName()),
+                    parameter.getComment()
                 );
 
                 switch (parameter.getParameterMode()) {

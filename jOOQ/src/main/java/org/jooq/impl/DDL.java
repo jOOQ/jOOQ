@@ -82,21 +82,19 @@ final class DDL {
     private final Query createTable(Table<?> table) {
         List<Constraint> constraints = new ArrayList<Constraint>();
 
-        if (flags.contains(TABLE)) {
-            if (flags.contains(PRIMARY_KEY))
-                for (UniqueKey<?> key : table.getKeys())
-                    if (key.isPrimary())
-                        constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
+        if (flags.contains(PRIMARY_KEY))
+            for (UniqueKey<?> key : table.getKeys())
+                if (key.isPrimary())
+                    constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
 
-            if (flags.contains(UNIQUE))
-                for (UniqueKey<?> key : table.getKeys())
-                    if (!key.isPrimary())
-                        constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
+        if (flags.contains(UNIQUE))
+            for (UniqueKey<?> key : table.getKeys())
+                if (!key.isPrimary())
+                    constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
 
-            if (flags.contains(FOREIGN_KEY))
-                for (ForeignKey<?, ?> key : table.getReferences())
-                    constraints.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
-        }
+        if (flags.contains(FOREIGN_KEY))
+            for (ForeignKey<?, ?> key : table.getReferences())
+                constraints.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
 
         return ctx.createTable(table)
                   .columns(table.fields())
@@ -107,7 +105,8 @@ final class DDL {
         List<Query> queries = new ArrayList<Query>();
 
         for (Table<?> table : tables) {
-            queries.add(createTable(table));
+            if (flags.contains(TABLE))
+                queries.add(createTable(table));
 
             if (flags.contains(COMMENT)) {
                 String tComment = table.getComment();

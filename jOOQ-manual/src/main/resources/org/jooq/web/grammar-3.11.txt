@@ -67,10 +67,10 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
   | ( 'SET' | 'DROP' ) 'NOT NULL'
   | [ 'RENAME' ] 'TO' identifier
   )
+| 'COMMENT' [ '=' ] stringLiteral
 | 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
 | 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] 'TO' identifier
-|
 )
 ;
 

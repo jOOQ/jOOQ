@@ -99,6 +99,7 @@ import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
 import org.jooq.Block;
 import org.jooq.Catalog;
+import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -2853,6 +2854,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    @Override
+    public CommentOnIsStep commentOnTable(String tableName) {
+        return commentOnTable(name(tableName));
+    }
+
+    @Override
+    public CommentOnIsStep commentOnTable(Name tableName) {
+        return commentOnTable(table(tableName));
+    }
+
+    @Override
+    public CommentOnIsStep commentOnTable(Table<?> table) {
+        return new CommentOnImpl(configuration(), table);
+    }
+
+    @Override
+    public CommentOnIsStep commentOnColumn(Name columnName) {
+        return commentOnColumn(field(columnName));
+    }
+
+    @Override
+    public CommentOnIsStep commentOnColumn(Field<?> field) {
+        return new CommentOnImpl(configuration(), field);
+    }
 
     @Override
     public CreateViewAsStep<Record> createView(String view, String... fields) {

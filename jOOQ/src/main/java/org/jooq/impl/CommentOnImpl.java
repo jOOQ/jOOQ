@@ -1,0 +1,116 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
+ *
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+package org.jooq.impl;
+
+import static org.jooq.impl.DSL.comment;
+import static org.jooq.impl.Keywords.K_COLUMN;
+import static org.jooq.impl.Keywords.K_COMMENT;
+import static org.jooq.impl.Keywords.K_IS;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_TABLE;
+
+import org.jooq.Clause;
+import org.jooq.Comment;
+import org.jooq.CommentOnFinalStep;
+import org.jooq.CommentOnIsStep;
+import org.jooq.Configuration;
+import org.jooq.Context;
+import org.jooq.Field;
+import org.jooq.Table;
+
+/**
+ * @author Lukas Eder
+ */
+class CommentOnImpl extends AbstractQuery
+implements
+    CommentOnIsStep,
+    CommentOnFinalStep {
+
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 2665659331902435568L;
+
+    private final Table<?>    table;
+    private final Field<?>    field;
+    private Comment           comment;
+
+    CommentOnImpl(Configuration configuration, Table<?> table) {
+        super(configuration);
+
+        this.table = table;
+        this.field = null;
+    }
+
+    CommentOnImpl(Configuration configuration, Field<?> field) {
+        super(configuration);
+
+        this.table = null;
+        this.field = field;
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
+
+        if (table != null)
+            ctx.visit(K_TABLE).sql(' ').visit(table);
+        else if (field != null)
+            ctx.visit(K_COLUMN).sql(' ').visit(field);
+        else
+            throw new IllegalStateException();
+
+        ctx.sql(' ').visit(K_IS).sql(' ').visit(comment);
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
+    @Override
+    public final CommentOnImpl is(String c) {
+        return is(comment(c));
+    }
+
+    @Override
+    public final CommentOnImpl is(Comment c) {
+        this.comment = c;
+        return this;
+    }
+}

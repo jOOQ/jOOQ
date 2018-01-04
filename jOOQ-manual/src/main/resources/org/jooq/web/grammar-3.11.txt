@@ -12,6 +12,7 @@ ddlStatement =
 | alterSchemaStatement
 | alterSequenceStatement
 | alterViewStatement
+| commentStatement
 | createTableStatement
 | createIndexStatement
 | createSchemaStatement
@@ -94,6 +95,14 @@ alterSequenceStatement =
 
 alterViewStatement = 'ALTER VIEW' [ 'IF EXISTS' ] tableName
   'RENAME TO' tableName
+;
+
+commentStatement = 'COMMENT ON' (
+  'TABLE' tableName
+| 'COLUMN' fieldName
+)
+break
+'IS' stringLiteral
 ;
 
 createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT EXISTS' ] tableName

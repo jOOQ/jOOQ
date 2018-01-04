@@ -118,6 +118,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
 import org.jooq.Comment;
+import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -5820,6 +5821,56 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX DDL Clauses
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnTable(String tableName) {
+        return using(new DefaultConfiguration()).commentOnTable(tableName);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnTable(Name tableName) {
+        return using(new DefaultConfiguration()).commentOnTable(tableName);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnTable(Table<?> table) {
+        return using(new DefaultConfiguration()).commentOnTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSLContext#commentOnColumn(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnColumn(Name columnName) {
+        return using(new DefaultConfiguration()).commentOnColumn(columnName);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSLContext#commentOnColumn(Field)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnColumn(Field<?> field) {
+        return using(new DefaultConfiguration()).commentOnColumn(field);
+    }
 
     /**
      * Create an unnamed (system named) <code>CONSTRAINT</code> specification.

@@ -8437,6 +8437,46 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnTable(String tableName);
+
+    /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnTable(Name tableName);
+
+    /**
+     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSL#commentOnColumn(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnColumn(Name columnName);
+
+    /**
+     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSL#commentOnColumn(Field)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnColumn(Field<?> field);
+
+    /**
      * Create a new DSL <code>CREATE SCHEMA</code> statement.
      *
      * @see DSL#createSchema(String)

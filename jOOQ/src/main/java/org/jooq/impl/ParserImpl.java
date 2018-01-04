@@ -251,6 +251,7 @@ import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -503,6 +504,8 @@ final class ParserImpl implements Parser {
             case 'C':
                 if (!resultQuery && peekKeyword(ctx, "CREATE"))
                     return parseCreate(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "COMMENT ON"))
+                    return parseCommentOn(ctx);
 
                 break;
 
@@ -1226,6 +1229,22 @@ final class ParserImpl implements Parser {
             return parseSetGenerator(ctx);
         else
             throw ctx.unexpectedToken();
+    }
+
+    private static final DDLQuery parseCommentOn(ParserContext ctx) {
+        parseKeyword(ctx, "COMMENT ON");
+
+        CommentOnIsStep s1;
+
+        if (parseKeywordIf(ctx, "TABLE"))
+            s1 = ctx.dsl.commentOnTable(parseTableName(ctx));
+        else if (parseKeywordIf(ctx, "COLUMN"))
+            s1 = ctx.dsl.commentOnColumn(parseFieldName(ctx));
+        else
+            throw ctx.unexpectedToken();
+
+        parseKeyword(ctx, "IS");
+        return s1.is(parseStringLiteral(ctx));
     }
 
     private static final DDLQuery parseCreate(ParserContext ctx) {

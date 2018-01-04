@@ -93,8 +93,8 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     }
 
     @Override
-    public String getComment() {
-        return null;
+    public final String getComment() {
+        return comment == null ? null : comment.getComment();
     }
 
     @Override

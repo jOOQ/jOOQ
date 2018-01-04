@@ -35,6 +35,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -75,6 +76,8 @@ public class TableConstraint implements Serializable
     @XmlElement(name = "table_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableName;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     /**
      * Gets the value of the constraintCatalog property.
@@ -244,6 +247,30 @@ public class TableConstraint implements Serializable
         this.tableName = value;
     }
 
+    /**
+     * Gets the value of the comment property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public TableConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
@@ -276,6 +303,11 @@ public class TableConstraint implements Serializable
 
     public TableConstraint withTableName(String value) {
         setTableName(value);
+        return this;
+    }
+
+    public TableConstraint withComment(String value) {
+        setComment(value);
         return this;
     }
 

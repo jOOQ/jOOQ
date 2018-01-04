@@ -41,6 +41,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -96,6 +97,8 @@ public class Routine implements Serializable
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
     protected Integer numericScale;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     /**
      * Gets the value of the specificCatalog property.
@@ -409,6 +412,30 @@ public class Routine implements Serializable
         this.numericScale = value;
     }
 
+    /**
+     * Gets the value of the comment property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public Routine withSpecificCatalog(String value) {
         setSpecificCatalog(value);
         return this;
@@ -471,6 +498,11 @@ public class Routine implements Serializable
 
     public Routine withNumericScale(Integer value) {
         setNumericScale(value);
+        return this;
+    }
+
+    public Routine withComment(String value) {
+        setComment(value);
         return this;
     }
 

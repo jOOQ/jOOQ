@@ -29,6 +29,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *       &lt;all&gt;
  *         &lt;element name="catalog_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="schema_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -54,6 +55,8 @@ public class Schema implements Serializable
     @XmlElement(name = "schema_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String schemaName;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     /**
      * Gets the value of the catalogName property.
@@ -103,6 +106,30 @@ public class Schema implements Serializable
         this.schemaName = value;
     }
 
+    /**
+     * Gets the value of the comment property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public Schema withCatalogName(String value) {
         setCatalogName(value);
         return this;
@@ -110,6 +137,11 @@ public class Schema implements Serializable
 
     public Schema withSchemaName(String value) {
         setSchemaName(value);
+        return this;
+    }
+
+    public Schema withComment(String value) {
+        setComment(value);
         return this;
     }
 

@@ -39,6 +39,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="identity_generation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -89,6 +90,8 @@ public class Column implements Serializable
     @XmlElement(name = "column_default")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String columnDefault;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     /**
      * Gets the value of the tableCatalog property.
@@ -378,6 +381,30 @@ public class Column implements Serializable
         this.columnDefault = value;
     }
 
+    /**
+     * Gets the value of the comment property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public Column withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
@@ -435,6 +462,11 @@ public class Column implements Serializable
 
     public Column withColumnDefault(String value) {
         setColumnDefault(value);
+        return this;
+    }
+
+    public Column withComment(String value) {
+        setComment(value);
         return this;
     }
 

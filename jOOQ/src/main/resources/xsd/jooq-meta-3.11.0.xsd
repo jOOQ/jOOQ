@@ -32,6 +32,7 @@
     <complexType name="Catalog">
         <all>
             <element name="catalog_name" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -45,6 +46,7 @@
         <all>
             <element name="catalog_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="schema_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -63,6 +65,7 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -77,6 +80,7 @@
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -100,6 +104,7 @@
             <element name="identity_generation" type="string" minOccurs="0" maxOccurs="1" />
             <element name="is_nullable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -118,6 +123,7 @@
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -181,6 +187,7 @@
             <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="is_unique" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -225,6 +232,7 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -255,6 +263,7 @@
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
             <element name="parameter_default" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 

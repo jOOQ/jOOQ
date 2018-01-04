@@ -34,6 +34,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="is_unique" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -73,6 +74,8 @@ public class Index implements Serializable
     protected String tableName;
     @XmlElement(name = "is_unique")
     protected Boolean isUnique;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     /**
      * Gets the value of the indexCatalog property.
@@ -242,6 +245,30 @@ public class Index implements Serializable
         this.isUnique = value;
     }
 
+    /**
+     * Gets the value of the comment property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public Index withIndexCatalog(String value) {
         setIndexCatalog(value);
         return this;
@@ -274,6 +301,11 @@ public class Index implements Serializable
 
     public Index withIsUnique(Boolean value) {
         setIsUnique(value);
+        return this;
+    }
+
+    public Index withComment(String value) {
+        setComment(value);
         return this;
     }
 

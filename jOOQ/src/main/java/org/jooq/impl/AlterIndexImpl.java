@@ -196,8 +196,14 @@ final class AlterIndexImpl extends AbstractQuery implements
                 if (ifExists && supportsIfExists(ctx))
                     ctx.sql(' ').visit(K_IF_EXISTS);
 
-                ctx.sql(' ').visit(index)
-                   .end(ALTER_INDEX_INDEX)
+                ctx.sql(' ');
+
+                if (on != null)
+                    ctx.visit(on).sql('.').visit(index.getUnqualifiedName());
+                else
+                    ctx.visit(index);
+
+                ctx.end(ALTER_INDEX_INDEX)
                    .formatIndentStart()
                    .formatSeparator();
 

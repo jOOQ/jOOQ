@@ -521,6 +521,8 @@ final class ParserImpl implements Parser {
             case 'E':
                 if (!resultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
                     return parseBlock(ctx);
+                else if (!resultQuery && peekKeyword(ctx, "EXEC"))
+                    return parseExec(ctx);
 
                 break;
 
@@ -1378,6 +1380,42 @@ final class ParserImpl implements Parser {
 
         RevokeFromStep s2 = s1.on(table);
         return user == null ? s2.fromPublic() : s2.from(user);
+    }
+
+    private static final Query parseExec(ParserContext ctx) {
+        parseKeyword(ctx, "EXEC");
+
+        if (parseKeywordIf(ctx, "SP_RENAME")) {
+            if (parseKeywordIf(ctx, "@OBJNAME"))
+                parse(ctx, '=');
+            Name oldName = ctx.dsl.parser().parseName(parseStringLiteral(ctx));
+
+            parse(ctx, ',');
+            if (parseKeywordIf(ctx, "@NEWNAME"))
+                parse(ctx, '=');
+            Name newName = ctx.dsl.parser().parseName(parseStringLiteral(ctx));
+
+            String objectType = "TABLE";
+            if (parseIf(ctx, ',')) {
+                if (parseKeywordIf(ctx, "@OBJTYPE"))
+                    parse(ctx, '=');
+
+                if (!parseKeywordIf(ctx, "NULL"))
+                    objectType = parseStringLiteral(ctx);
+            }
+
+            if ("TABLE".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterTable(oldName).renameTo(newName.unqualifiedName());
+            else if ("INDEX".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterIndex(oldName).renameTo(newName.unqualifiedName());
+            else if ("COLUMN".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterTable(oldName.qualifier()).renameColumn(oldName.unqualifiedName()).to(newName.unqualifiedName());
+            else
+                throw ctx.exception("Unsupported object type: " + objectType);
+        }
+        else {
+            throw ctx.unexpectedToken();
+        }
     }
 
     private static final Block parseBlock(ParserContext ctx) {

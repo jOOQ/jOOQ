@@ -194,6 +194,7 @@ import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
 import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
+import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.user;
@@ -3448,6 +3449,8 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldTrimIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldTranslateIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldTruncIf(ctx)) != null)
@@ -4053,6 +4056,21 @@ final class ParserImpl implements Parser {
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
             return trim(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldTranslateIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TRANSLATE")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parse(ctx, ',');
+            Field<String> f2 = (Field) parseField(ctx, S);
+            parse(ctx, ',');
+            Field<String> f3 = (Field) parseField(ctx, S);
+            parse(ctx, ')');
+            return translate(f1, f2, f3);
         }
 
         return null;

@@ -598,13 +598,14 @@ term =
 | 'STDDEV_POP' '(' field ')' [ over ]
 | 'STDDEV_SAMP' '(' field ')' [ over ]
 | 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ]
-| truthValue
-| 'TRIM' '(' field ')'
-| 'TRUNC' '(' sum ',' sum ')'
 | 'TAN' '(' sum ')'
 | 'TANH' '(' sum ')'
 | timeLiteral
 | timestampLiteral
+| 'TRANSLATE' '(' field ',' field ',' field ')'
+| 'TRIM' '(' field ')'
+| 'TRUNC' '(' sum ',' sum ')'
+| truthValue
 | ( 'UPPER' | 'UCASE' ) '(' field ')'
 | 'VAR_POP' '(' field ')' [ over ]
 | 'VAR_SAMP' '(' field ')' [ over ]

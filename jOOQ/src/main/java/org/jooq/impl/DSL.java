@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -12539,6 +12540,24 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
+    }
+
+    /**
+     * Get the translate(field, from, to) function.
+     *
+     * @see #translate(Field, Field, Field)
+     */
+    @Support({ POSTGRES })
+    public static Field<String> translate(Field<String> text, String from, String to) {
+        return translate(text, Tools.field(from), Tools.field(to));
+    }
+
+    /**
+     * Get the translate(field, from, to) function.
+     */
+    @Support({ POSTGRES })
+    public static Field<String> translate(Field<String> text, Field<String> from, Field<String> to) {
+        return function("translate", text.getDataType(), text, from, to);
     }
 
     /**

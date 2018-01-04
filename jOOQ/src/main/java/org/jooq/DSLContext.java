@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -9117,7 +9118,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterIndex(String)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexStep alterIndex(String index);
+    AlterIndexOnStep alterIndex(String index);
 
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
@@ -9125,7 +9126,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterIndex(Name)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexStep alterIndex(Name index);
+    AlterIndexOnStep alterIndex(Name index);
 
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
@@ -9133,7 +9134,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterIndex(Name)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterIndexStep alterIndex(Index index);
+    AlterIndexOnStep alterIndex(Index index);
 
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.

@@ -87,6 +87,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 import javax.sql.DataSource;
 
+import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
@@ -3248,17 +3249,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public AlterIndexStep alterIndex(String index) {
+    public AlterIndexOnStep alterIndex(String index) {
         return alterIndex(name(index));
     }
 
     @Override
-    public AlterIndexStep alterIndex(Name index) {
+    public AlterIndexOnStep alterIndex(Name index) {
         return alterIndex(index(index));
     }
 
     @Override
-    public AlterIndexStep alterIndex(Index index) {
+    public AlterIndexOnStep alterIndex(Index index) {
         return new AlterIndexImpl(configuration(), index);
     }
 

@@ -49,8 +49,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.DSL.index;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_ALTER_INDEX;
+import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
@@ -61,13 +64,14 @@ import static org.jooq.impl.Tools.endTryCatch;
 import java.util.EnumSet;
 
 import org.jooq.AlterIndexFinalStep;
-import org.jooq.AlterIndexStep;
+import org.jooq.AlterIndexOnStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -75,7 +79,7 @@ import org.jooq.SQLDialect;
 final class AlterIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for ALTER INDEX behaviour
-    AlterIndexStep,
+    AlterIndexOnStep,
     AlterIndexFinalStep {
 
     /**
@@ -88,6 +92,7 @@ final class AlterIndexImpl extends AbstractQuery implements
 
     private final Index                      index;
     private final boolean                    ifExists;
+    private Table<?>                         on;
     private Index                            renameTo;
 
     AlterIndexImpl(Configuration configuration, Index index) {
@@ -104,6 +109,22 @@ final class AlterIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final AlterIndexImpl on(Table<?> table) {
+        this.on = table;
+        return this;
+    }
+
+    @Override
+    public final AlterIndexImpl on(String tableName) {
+        return on(name(tableName));
+    }
+
+    @Override
+    public final AlterIndexImpl on(Name tableName) {
+        return on(table(tableName));
+    }
 
     @Override
     public final AlterIndexImpl renameTo(String newName) {
@@ -143,29 +164,54 @@ final class AlterIndexImpl extends AbstractQuery implements
 
     private final void accept0(Context<?> ctx) {
         boolean renameIndex = SUPPORT_RENAME_INDEX.contains(ctx.family());
+        boolean qualify = ctx.qualify();
 
-        ctx.start(ALTER_INDEX_INDEX)
-           .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
+        switch (ctx.family()) {
 
-        if (ifExists && supportsIfExists(ctx))
-            ctx.sql(' ').visit(K_IF_EXISTS);
 
-        ctx.sql(' ').visit(index)
-           .end(ALTER_INDEX_INDEX)
-           .formatIndentStart()
-           .formatSeparator();
 
-        if (renameTo != null) {
-            boolean qualify = ctx.qualify();
 
-            ctx.start(ALTER_INDEX_RENAME)
-               .qualify(false)
-               .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
-               .qualify(qualify)
-               .end(ALTER_INDEX_RENAME);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default: {
+                ctx.start(ALTER_INDEX_INDEX)
+                   .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
+
+                if (ifExists && supportsIfExists(ctx))
+                    ctx.sql(' ').visit(K_IF_EXISTS);
+
+                ctx.sql(' ').visit(index)
+                   .end(ALTER_INDEX_INDEX)
+                   .formatIndentStart()
+                   .formatSeparator();
+
+                if (renameTo != null)
+                    ctx.start(ALTER_INDEX_RENAME)
+                       .qualify(false)
+                       .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
+                       .qualify(qualify)
+                       .end(ALTER_INDEX_RENAME);
+
+                ctx.formatIndentEnd();
+                break;
+            }
         }
-
-        ctx.formatIndentEnd();
     }
 
     @Override

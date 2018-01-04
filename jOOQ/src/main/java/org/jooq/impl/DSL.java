@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -103,6 +104,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
+import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
@@ -7267,7 +7269,7 @@ public class DSL {
      * @see DSLContext#alterIndex(String)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterIndexStep alterIndex(String index) {
+    public static AlterIndexOnStep alterIndex(String index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
 
@@ -7277,7 +7279,7 @@ public class DSL {
      * @see DSLContext#alterIndex(Name)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterIndexStep alterIndex(Name index) {
+    public static AlterIndexOnStep alterIndex(Name index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
 
@@ -7287,7 +7289,7 @@ public class DSL {
      * @see DSLContext#alterIndex(Index)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterIndexStep alterIndex(Index index) {
+    public static AlterIndexOnStep alterIndex(Index index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
 

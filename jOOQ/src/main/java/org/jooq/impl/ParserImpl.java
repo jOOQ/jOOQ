@@ -2115,6 +2115,17 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'c':
+            case 'C':
+
+                // TODO: support all of the storageLoop from the CREATE TABLE statement
+                if (parseKeywordIf(ctx, "COMMENT")) {
+                    parseIf(ctx, '=');
+                    return ctx.dsl.commentOnTable(tableName).is(parseStringLiteral(ctx));
+                }
+
+                break;
+
             case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {

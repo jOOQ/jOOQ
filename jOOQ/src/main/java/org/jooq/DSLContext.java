@@ -8441,7 +8441,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#commentOnTable(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(String tableName);
 
     /**
@@ -8449,7 +8449,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#commentOnTable(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(Name tableName);
 
     /**
@@ -8457,7 +8457,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#commentOnTable(Table)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(Table<?> table);
 
     /**

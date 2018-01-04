@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.comment;
+import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_IS;
@@ -86,6 +87,29 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+            case MARIADB:
+            case MYSQL: {
+                if (table != null)
+                    acceptMySQL(ctx);
+                else
+                    acceptDefault(ctx);
+
+                break;
+            }
+
+            default: {
+                acceptDefault(ctx);
+                break;
+            }
+        }
+    }
+
+    private final void acceptMySQL(Context<?> ctx) {
+        ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
         if (table != null)

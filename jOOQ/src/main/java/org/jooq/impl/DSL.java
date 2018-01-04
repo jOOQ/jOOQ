@@ -5827,7 +5827,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(String tableName) {
         return using(new DefaultConfiguration()).commentOnTable(tableName);
     }
@@ -5837,7 +5837,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Name tableName) {
         return using(new DefaultConfiguration()).commentOnTable(tableName);
     }
@@ -5847,7 +5847,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(Table)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Table<?> table) {
         return using(new DefaultConfiguration()).commentOnTable(table);
     }

@@ -145,22 +145,30 @@ final class DDL {
             else
                 queries.addAll(alterTableAddConstraints(table));
 
-            if (flags.contains(COMMENT)) {
-                String tComment = table.getComment();
-
-                if (!StringUtils.isEmpty(tComment))
-                    queries.add(ctx.commentOnTable(table).is(tComment));
-
-                for (Field<?> field : table.fields()) {
-                    String fComment = field.getComment();
-
-                    if (!StringUtils.isEmpty(fComment))
-                        queries.add(ctx.commentOnColumn(field).is(fComment));
-                }
-            }
+            queries.addAll(commentOn(table));
         }
 
         return ctx.queries(queries);
+    }
+
+    private List<Query> commentOn(Table<?> table) {
+        List<Query> result = new ArrayList<Query>();
+
+        if (flags.contains(COMMENT)) {
+            String tComment = table.getComment();
+
+            if (!StringUtils.isEmpty(tComment))
+                result.add(ctx.commentOnTable(table).is(tComment));
+
+            for (Field<?> field : table.fields()) {
+                String fComment = field.getComment();
+
+                if (!StringUtils.isEmpty(fComment))
+                    result.add(ctx.commentOnColumn(field).is(fComment));
+            }
+        }
+
+        return result;
     }
 
     final Queries queries(Schema schema) {
@@ -199,6 +207,10 @@ final class DDL {
             for (Table<?> table : schema.getTables())
                 for (Constraint constraint : foreignKeys(table))
                     queries.add(ctx.alterTable(table).add(constraint));
+
+        if (flags.contains(COMMENT))
+            for (Table<?> table : schema.getTables())
+                queries.addAll(commentOn(table));
 
         return ctx.queries(queries);
     }

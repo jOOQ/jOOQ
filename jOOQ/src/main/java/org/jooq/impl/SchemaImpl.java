@@ -47,6 +47,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -69,6 +70,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     private final Name            name;
     private Catalog               catalog;
+    private final Comment         comment;
 
     public SchemaImpl(String name) {
         this(name, null);
@@ -78,13 +80,27 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         this(DSL.name(name), catalog);
     }
 
+    public SchemaImpl(String name, Catalog catalog, String comment) {
+        this(DSL.name(name), catalog, DSL.comment(comment));
+    }
+
     public SchemaImpl(Name name) {
         this(name, null);
     }
 
     public SchemaImpl(Name name, Catalog catalog) {
+        this(name, catalog, null);
+    }
+
+    public SchemaImpl(Name name, Catalog catalog, Comment comment) {
         this.name = name;
         this.catalog = catalog;
+        this.comment = comment;
+    }
+
+    @Override
+    public final String getComment() {
+        return comment == null ? null : comment.getComment();
     }
 
     @Override

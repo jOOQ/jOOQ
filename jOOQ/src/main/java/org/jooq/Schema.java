@@ -59,6 +59,11 @@ public interface Schema extends QueryPart {
     String getName();
 
     /**
+     * The comment of this schema.
+     */
+    String getComment();
+
+    /**
      * The qualified name of this schema.
      */
     Name getQualifiedName();

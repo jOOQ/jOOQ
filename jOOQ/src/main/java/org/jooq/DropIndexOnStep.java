@@ -57,7 +57,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 
 /**
- * A {@link Query} that can create indexes.
+ * A {@link Query} that can drop indexes.
  *
  * @author Lukas Eder
  */

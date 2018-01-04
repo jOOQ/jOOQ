@@ -101,12 +101,34 @@ final class DDL {
                   .constraints(constraints);
     }
 
+    private final List<Query> alterTableAddConstraints(Table<?> table) {
+        List<Query> result = new ArrayList<Query>();
+
+        if (flags.contains(PRIMARY_KEY))
+            for (UniqueKey<?> key : table.getKeys())
+                if (key.isPrimary())
+                    result.add(ctx.alterTable(table).add(constraint(key.getName()).primaryKey(key.getFieldsArray())));
+
+        if (flags.contains(UNIQUE))
+            for (UniqueKey<?> key : table.getKeys())
+                if (!key.isPrimary())
+                    result.add(ctx.alterTable(table).add(constraint(key.getName()).unique(key.getFieldsArray())));
+
+        if (flags.contains(FOREIGN_KEY))
+            for (ForeignKey<?, ?> key : table.getReferences())
+                result.add(ctx.alterTable(table).add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray())));
+
+        return result;
+    }
+
     final Queries queries(Table<?>... tables) {
         List<Query> queries = new ArrayList<Query>();
 
         for (Table<?> table : tables) {
             if (flags.contains(TABLE))
                 queries.add(createTable(table));
+            else
+                queries.addAll(alterTableAddConstraints(table));
 
             if (flags.contains(COMMENT)) {
                 String tComment = table.getComment();

@@ -49,6 +49,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.UUID;
 
 import org.jooq.DSLContext;
 import org.jooq.Queries;
@@ -94,7 +95,7 @@ public class DDLDatabase extends H2Database {
                 Properties info = new Properties();
                 info.put("user", "sa");
                 info.put("password", "");
-                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions", info);
+                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
 
                 InputStream in = null;
                 try {

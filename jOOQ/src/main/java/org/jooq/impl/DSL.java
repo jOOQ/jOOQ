@@ -6583,7 +6583,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(String schema) {
         return using(new DefaultConfiguration()).createSchema(schema);
     }
@@ -6593,7 +6593,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Name table) {
         return using(new DefaultConfiguration()).createSchema(table);
     }
@@ -6603,7 +6603,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Schema schema) {
         return using(new DefaultConfiguration()).createSchema(schema);
     }
@@ -6613,7 +6613,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
         return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
     }
@@ -6623,7 +6623,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Name table) {
         return using(new DefaultConfiguration()).createSchemaIfNotExists(table);
     }
@@ -6633,7 +6633,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
     }
@@ -7392,7 +7392,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(String schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }
@@ -7402,7 +7402,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(Name schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }
@@ -7412,7 +7412,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(Schema schema){
         return using(new DefaultConfiguration()).dropSchema(schema);
     }
@@ -7422,7 +7422,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(String schema){
         return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
     }
@@ -7432,7 +7432,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Name schema){
         return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
     }
@@ -7442,7 +7442,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Schema schema){
         return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
     }

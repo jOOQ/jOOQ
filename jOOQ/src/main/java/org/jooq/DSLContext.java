@@ -8481,7 +8481,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchema(String schema);
 
     /**
@@ -8489,7 +8489,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchema(Name schema);
 
     /**
@@ -8497,7 +8497,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchema(Schema schema);
 
     /**
@@ -8505,7 +8505,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(String schema);
 
     /**
@@ -8513,7 +8513,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
 
     /**
@@ -8521,7 +8521,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
     /**
@@ -9205,7 +9205,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchema(String schema);
 
     /**
@@ -9213,7 +9213,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchema(Name schema);
 
     /**
@@ -9221,7 +9221,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchema(Schema schema);
 
     /**
@@ -9229,7 +9229,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(String schema);
 
     /**
@@ -9237,7 +9237,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Name schema);
 
     /**
@@ -9245,7 +9245,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Schema)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**

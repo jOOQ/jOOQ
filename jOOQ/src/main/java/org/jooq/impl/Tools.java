@@ -1619,12 +1619,12 @@ final class Tools {
     static final <R extends Record> R filterOne(List<R> list) throws TooManyRowsException {
         int size = list.size();
 
-        if (size == 1)
+        if (size == 0)
+            return null;
+        else if (size == 1)
             return list.get(0);
-        else if (size > 1)
+        else
             throw new TooManyRowsException("Too many rows selected : " + size);
-
-        return null;
     }
 
     /**
@@ -1641,12 +1641,18 @@ final class Tools {
      */
     static final <R extends Record> R fetchOne(Cursor<R> cursor) throws TooManyRowsException {
         try {
-            R record = cursor.fetchNext();
 
-            if (cursor.hasNext())
+            // [#7001] Fetching at most two rows rather than at most one row
+            //         (and then checking of additional rows) improves debug logs
+            Result<R> result = cursor.fetchNext(2);
+            int size = result.size();
+
+            if (size == 0)
+                return null;
+            else if (size == 1)
+                return result.get(0);
+            else
                 throw new TooManyRowsException("Cursor returned more than one result");
-
-            return record;
         }
         finally {
             cursor.close();
@@ -1667,14 +1673,18 @@ final class Tools {
      */
     static final <R extends Record> R fetchSingle(Cursor<R> cursor) throws NoDataFoundException, TooManyRowsException {
         try {
-            R record = cursor.fetchNext();
 
-            if (record == null)
+            // [#7001] Fetching at most two rows rather than at most one row
+            //         (and then checking of additional rows) improves debug logs
+            Result<R> result = cursor.fetchNext(2);
+            int size = result.size();
+
+            if (size == 0)
                 throw new NoDataFoundException("Cursor returned no rows");
-            if (cursor.hasNext())
+            else if (size == 1)
+                return result.get(0);
+            else
                 throw new TooManyRowsException("Cursor returned more than one result");
-
-            return record;
         }
         finally {
             cursor.close();

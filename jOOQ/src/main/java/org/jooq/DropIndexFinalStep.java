@@ -31,11 +31,14 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
 /**
- * A {@link Query} that can create indexes.
+ * A {@link Query} that can drop indexes.
  *
  * @author Lukas Eder
  */

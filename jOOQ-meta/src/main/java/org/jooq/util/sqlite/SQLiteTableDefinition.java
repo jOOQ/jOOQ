@@ -31,9 +31,14 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.util.sqlite;
 
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.util.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
 import java.sql.SQLException;
@@ -41,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
@@ -66,7 +72,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         int position = 0;
-        for (Record record : create().fetch("pragma table_info('" + getName() + "')")) {
+        for (Record record : create().fetch("pragma table_info({0})", inline(getName()))) {
             position++;
 
             String name = record.get("name", String.class);
@@ -78,9 +84,23 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
             int pk = record.get("pk", int.class);
-            boolean identity = pk > 0 && existsSqliteSequence() && create()
-                .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
-                .get(0, Boolean.class);
+            boolean identity = false;
+
+            if (pk > 0) {
+
+                // [#6854] sqlite_sequence only contains identity information once a table contains records.
+                identity |= existsSqliteSequence() && create()
+                    .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
+                    .get(0, Boolean.class);
+
+                if (!identity && !create().fetchExists(selectOne().from("{0}", DSL.name(getName()))))
+                    identity = create()
+                        .select(SQLiteMaster.SQL)
+                        .from(SQLITE_MASTER)
+                        .where(SQLiteMaster.NAME.eq(getName()))
+                        .fetchOneInto(String.class)
+                        .matches("(?s:.*\\b" + getName() + "\\b[^,]*(?i:\\bautoincrement\\b)[^,]*.*)");
+            }
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),

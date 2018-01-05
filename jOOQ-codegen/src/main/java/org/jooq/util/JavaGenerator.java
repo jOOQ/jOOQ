@@ -31,11 +31,13 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.util;
 
 
-import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SortOrder.DESC;
@@ -4579,7 +4581,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateDeprecationOnUnknownTypes() && "java.lang.Object".equals(type)) {
             out.tab(indentation).javadoc("@deprecated Unknown data type. "
                 + "Please define an explicit {@link org.jooq.Binding} to specify how this "
-                + "type should be handled.");
+                + "type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> "
+                + "in your code generator configuration.");
             out.tab(indentation).println("@java.lang.Deprecated");
             return true;
         }
@@ -5851,14 +5854,23 @@ public class JavaGenerator extends AbstractGenerator {
                 if (dataType.defaulted()) {
                     sb.append(".defaultValue(");
 
-                    if (asList(MYSQL).contains(db.getDialect().family()))
-                        sb.append("org.jooq.impl.DSL.inline(\"")
-                          .append(escapeString(d))
-                          .append("\"");
+                    if (MYSQL == db.getDialect().family())
+
+                        // [#5574] While MySQL usually reports actual values, it
+                        // does report
+                        // a CURRENT_TIMESTAMP expression, inconsistently
+                        if (d != null && d.toLowerCase().startsWith("current_timestamp"))
+                            sb.append("org.jooq.impl.DSL.field(\"")
+                                .append(escapeString(d))
+                                .append("\"");
+                        else
+                            sb.append("org.jooq.impl.DSL.inline(\"")
+                                .append(escapeString(d))
+                                .append("\"");
                     else
                         sb.append("org.jooq.impl.DSL.field(\"")
-                          .append(escapeString(d))
-                          .append("\"");
+                            .append(escapeString(d))
+                            .append("\"");
 
                     sb.append(", ")
                       .append(sqlDataTypeRef)

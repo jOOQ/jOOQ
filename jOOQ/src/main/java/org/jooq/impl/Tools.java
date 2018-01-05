@@ -31,6 +31,9 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.impl;
 
@@ -3574,6 +3577,7 @@ final class Tools {
 
 
             case FIREBIRD: {
+                begin(ctx);
                 beginExecuteImmediate(ctx);
                 break;
             }

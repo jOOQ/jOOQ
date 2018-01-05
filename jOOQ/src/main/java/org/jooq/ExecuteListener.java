@@ -31,6 +31,9 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq;
 
@@ -193,8 +196,8 @@ import org.jooq.tools.LoggerListener;
  * </tr>
  * <tr>
  * <td>{@link #resultStart(ExecuteContext)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
@@ -221,8 +224,8 @@ import org.jooq.tools.LoggerListener;
  * </tr>
  * <tr>
  * <td>{@link #resultEnd(ExecuteContext)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
  * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
@@ -290,7 +293,7 @@ import org.jooq.tools.LoggerListener;
 public interface ExecuteListener extends EventListener, Serializable {
 
     /**
-     * Called to initialise an <code>ExecuteListener</code>
+     * Called to initialise an <code>ExecuteListener</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -313,7 +316,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void start(ExecuteContext ctx);
 
     /**
-     * Called before rendering SQL from a <code>QueryPart</code>
+     * Called before rendering SQL from a <code>QueryPart</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -329,7 +332,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void renderStart(ExecuteContext ctx);
 
     /**
-     * Called after rendering SQL from a <code>QueryPart</code>
+     * Called after rendering SQL from a <code>QueryPart</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -355,7 +358,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void renderEnd(ExecuteContext ctx);
 
     /**
-     * Called before preparing / creating the SQL statement
+     * Called before preparing / creating the SQL statement.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -381,7 +384,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void prepareStart(ExecuteContext ctx);
 
     /**
-     * Called after preparing / creating the SQL statement
+     * Called after preparing / creating the SQL statement.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -425,7 +428,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void prepareEnd(ExecuteContext ctx);
 
     /**
-     * Called before bind variables to the <code>PreparedStatement</code>
+     * Called before bind variables to the <code>PreparedStatement</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -468,7 +471,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void bindStart(ExecuteContext ctx);
 
     /**
-     * Called after bind variables to the <code>PreparedStatement</code>
+     * Called after bind variables to the <code>PreparedStatement</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -512,7 +515,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void bindEnd(ExecuteContext ctx);
 
     /**
-     * Called before executing a statement
+     * Called before executing a statement.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -556,7 +559,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void executeStart(ExecuteContext ctx);
 
     /**
-     * Called after executing a statement
+     * Called after executing a statement.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -724,7 +727,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void fetchStart(ExecuteContext ctx);
 
     /**
-     * Called before fetching a set of records from a <code>ResultSet</code>
+     * Called before fetching a set of records from a <code>ResultSet</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -764,12 +767,12 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines. This is also not called when
-     * fetching single records, with {@link Cursor#fetchOne()} for instance.
+     * fetching single records, with {@link Cursor#fetchNext()} for instance.
      */
     void resultStart(ExecuteContext ctx);
 
     /**
-     * Called before fetching a record from a <code>ResultSet</code>
+     * Called before fetching a record from a <code>ResultSet</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -813,7 +816,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void recordStart(ExecuteContext ctx);
 
     /**
-     * Called after fetching a record from a <code>ResultSet</code>
+     * Called after fetching a record from a <code>ResultSet</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -857,7 +860,7 @@ public interface ExecuteListener extends EventListener, Serializable {
     void recordEnd(ExecuteContext ctx);
 
     /**
-     * Called after fetching a set of records from a <code>ResultSet</code>
+     * Called after fetching a set of records from a <code>ResultSet</code>.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -899,7 +902,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines. This is also not called when
-     * fetching single records, with {@link Cursor#fetchOne()} for instance.
+     * fetching single records, with {@link Cursor#fetchNext()} for instance.
      */
     void resultEnd(ExecuteContext ctx);
 

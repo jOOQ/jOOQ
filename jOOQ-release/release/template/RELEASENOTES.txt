@@ -10,6 +10,34 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+
+Version 3.10.3 - January 5, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#6900 - Log a link to GitHub when DDLDatabase runs into a ParserException
+#6965 - Generate hint about <deprecationOnUnknownType/> in Javadoc
+
+Bug Fixes
+---------
+#6856 - sqlite_sequence is not a reliable way to discover identities
+#6888 - org.jooq.Meta ignores foreign key names
+#6890 - maven-deploy.bat's help options do not work (cannot be discovered easily)
+#6891 - In MySQL, an incorrect column default is generated when the default is CURRENT_TIMESTAMP
+#6894 - Scala generated code for Oracle queues does not compile
+#6901 - Parser API doesn't document thrown ParserException
+#6905 - Javadoc warnings in ExecuteListener
+#6924 - Clarify the meaning of MockResult.data == null
+#6974 - Firebird IF [ NOT ] EXISTS clause emulations broken
+#6981 - Wrong Javadoc on DropIndexOnStep
+#6983 - DDLDatabase and JPADatabase should use unique in-memory database name
+#6996 - Oracle array of object containing date mapped to LocalDate cannot be bound as a variable
+#7002 - Line numbers not aligned correctly between OSS and Pro edition
+
+
 Version 3.10.2 - November 29, 2017
 ================================================================================
 

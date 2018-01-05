@@ -31,6 +31,9 @@
  *
  *
  *
+ *
+ *
+ *
  */
 package org.jooq.impl;
 
@@ -1332,8 +1335,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Clob.class) {
             ctx.output().writeClob((Clob) value);
         }
-        else if (type == Date.class) {
-            Date date = (Date) value;
+        else if (Tools.isDate(type)) {
+            Date date = getDate(type, value);
 
 
 
@@ -1385,11 +1388,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.output().writeString((String) value);
             }
         }
-        else if (type == Time.class) {
-            ctx.output().writeTime((Time) value);
+        else if (Tools.isTime(type)) {
+            ctx.output().writeTime(getTime(type, value));
         }
-        else if (type == Timestamp.class) {
-            ctx.output().writeTimestamp((Timestamp) value);
+        else if (Tools.isTimestamp(type)) {
+            ctx.output().writeTimestamp(getTimestamp(type, value));
         }
         else if (type == YearToMonth.class) {
             ctx.output().writeString(value.toString());
@@ -1421,6 +1424,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2007,7 +2027,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Clob.class) {
             result = (T) ctx.input().readClob();
         }
-        else if (type == Date.class) {
+        else if (Tools.isDate(type)) {
 
 
 
@@ -2018,6 +2038,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             result = (T) ctx.input().readDate();
+
+
+            if (result != null && type == LocalDate.class)
+                result = (T) ((Date) result).toLocalDate();
+
         }
         else if (type == Double.class) {
             result = (T) wasNull(ctx.input(), Double.valueOf(ctx.input().readDouble()));
@@ -2037,11 +2062,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == String.class) {
             result = (T) ctx.input().readString();
         }
-        else if (type == Time.class) {
+        else if (Tools.isTime(type)) {
             result = (T) ctx.input().readTime();
+
+
+            if (result != null && type == LocalTime.class)
+                result = (T) ((Time) result).toLocalTime();
+
         }
-        else if (type == Timestamp.class) {
+        else if (Tools.isTimestamp(type)) {
             result = (T) ctx.input().readTimestamp();
+
+
+            if (result != null && type == LocalDateTime.class)
+                result = (T) ((Timestamp) result).toLocalDateTime();
+
         }
         else if (type == YearToMonth.class) {
             String string = ctx.input().readString();

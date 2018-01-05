@@ -3,7 +3,7 @@
 :parse
 IF "%~1"=="" GOTO endparse
 IF "%~1"=="-r" GOTO parserepository
-IF "%~1"=="--repositoryid" GOTO parserepository
+IF "%~1"=="--repository" GOTO parserepository
 IF "%~1"=="-u" GOTO parseurl
 IF "%~1"=="--url" GOTO parseurl
 IF "%~1"=="-h" GOTO parsehelp
@@ -22,20 +22,21 @@ ECHO Usage: maven-deploy.bat ^<options^>
 ECHO.
 ECHO Options:
 ECHO  -h, --help                      Display this help and exit
-ECHO  -i, --repository   (Optional)   The repository id as specified in your settings.xml
+ECHO  -r, --repository   (Optional)   The repository id as specified in your settings.xml
 ECHO  -u, --url          (Mandatory)  The repository URL
 GOTO end
 :repeat
 SHIFT
 GOTO parse
 
+:usage
+ECHO Wrong usage. Run with -h or --help argument for details.
+GOTO end
 :endparse
-IF %URL%=="" (
-  ECHO Wrong usage. Run with -h or --help argument for details.
-  GOTO end
-)
+IF NOT "%~1"=="" GOTO usage
+IF "%URL%"=="" GOTO usage
 
-set VERSION=3.10.2
+set VERSION=3.10.3
 
 if exist jOOQ-javadoc\jooq-%VERSION%-javadoc.jar (
   set JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc\jooq-%VERSION%-javadoc.jar

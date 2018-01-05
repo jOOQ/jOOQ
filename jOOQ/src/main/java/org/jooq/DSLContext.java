@@ -693,7 +693,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#begin(Statement...)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, POSTGRES })
     Block begin(Statement... statements);
 
     /**
@@ -701,7 +701,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#begin(Collection)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, POSTGRES })
     Block begin(Collection<? extends Statement> statements);
 
     // -------------------------------------------------------------------------

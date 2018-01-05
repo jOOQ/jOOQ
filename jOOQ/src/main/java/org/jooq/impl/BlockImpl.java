@@ -39,15 +39,18 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
@@ -101,6 +104,20 @@ final class BlockImpl extends AbstractQuery implements Block {
                 decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
             }
+//            case MARIADB: {
+//                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
+//                    ctx/*.paramType(INLINED)
+//                       */.visit(K_BEGIN).sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC)
+//                       .formatIndentStart();
+//
+//                    // ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+//                }
+//
+//                accept0(ctx);
+//
+//                decrement(ctx.data(), DATA_BLOCK_NESTING);
+//                break;
+//            }
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
@@ -141,22 +158,26 @@ final class BlockImpl extends AbstractQuery implements Block {
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.visit(K_BEGIN)
-           .formatIndentStart();
+        ctx.visit(K_BEGIN);
+
+        if (ctx.family() == MARIADB)
+            ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
+
+        ctx.formatIndentStart();
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
                 case FIREBIRD:
-                    break;
-
-
-
-
-
-
-
+                case MARIADB:
                 default:
-                    ctx.formatSeparator().visit(K_NULL).sql(';');
                     break;
             }
         }

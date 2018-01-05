@@ -59,6 +59,7 @@ final class Keywords {
     static final Keyword K_ARRAY                            = keyword("array");
     static final Keyword K_AS                               = keyword("as");
     static final Keyword K_AS_OF                            = keyword("as of");
+    static final Keyword K_ATOMIC                           = keyword("atomic");
     static final Keyword K_AUTO_INCREMENT                   = keyword("auto_increment");
     static final Keyword K_AUTOINCREMENT                    = keyword("autoincrement");
     static final Keyword K_BEGIN                            = keyword("begin");

@@ -61,10 +61,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
-<<<<<<< HEAD
 import static org.jooq.SQLDialect.MYSQL;
-=======
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -173,11 +170,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS                  = EnumSet.of(CUBRID, DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
-<<<<<<< HEAD
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_KEYWORD_ON_MULTI_ALTER = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
-=======
-    private static final EnumSet<SQLDialect> REQUIRE_REPEAT_KEYWORD_ON_MULTI_ALTER = EnumSet.of(FIREBIRD, MARIADB);
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
 
 
 

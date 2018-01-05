@@ -439,11 +439,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep drop(Field<?>... fields);
 
     /**
@@ -452,11 +448,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep drop(Name... fields);
 
     /**
@@ -465,44 +457,28 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep drop(String... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep dropColumns(Field<?>... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep dropColumns(Name... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep dropColumns(String... fields);
 
     /**
@@ -511,22 +487,14 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep drop(Collection<? extends Field<?>> fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-<<<<<<< HEAD
     @Support({ H2, FIREBIRD, MARIADB, MYSQL })
-=======
-    @Support({ H2, FIREBIRD, MARIADB })
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
     AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
     /**

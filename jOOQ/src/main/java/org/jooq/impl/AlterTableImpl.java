@@ -167,7 +167,8 @@ final class AlterTableImpl extends AbstractQuery implements
      */
     private static final long                serialVersionUID                      = 8904572826501186329L;
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS                  = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS                  = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = EnumSet.of(CUBRID, DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_KEYWORD_ON_MULTI_ALTER = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
@@ -632,9 +633,13 @@ final class AlterTableImpl extends AbstractQuery implements
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
+    private final boolean supportsIfExistsColumn(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        if ((ifExists || ifExistsColumn || ifNotExistsColumn) && !supportsIfExists(ctx)) {
+        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifNotExistsColumn) && !supportsIfExistsColumn(ctx))) {
             beginTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
             accept0(ctx);
             endTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
@@ -839,6 +844,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
                     case H2:
+                    case MARIADB:
                     case POSTGRES:
                     default:
                         ctx.visit(K_IF_NOT_EXISTS).sql(' ');
@@ -996,9 +1002,12 @@ final class AlterTableImpl extends AbstractQuery implements
 
                 for (Field<?> dropColumn : dropColumns) {
                     ctx.sql(separator)
-                       .qualify(false)
-                       .visit(K_DROP)
-                       .sql(' ')
+                       .qualify(false);
+
+                    acceptDropColumn(ctx);
+                    acceptIfExistsColumn(ctx);
+
+                    ctx.sql(' ')
                        .visit(dropColumn)
                        .qualify(true);
 
@@ -1006,47 +1015,8 @@ final class AlterTableImpl extends AbstractQuery implements
                 }
             }
             else {
-                switch (family) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    default:
-                        ctx.visit(K_DROP);
-                        break;
-                }
-
-                if (ifExistsColumn) {
-                    switch (family) {
-
-
-
-
-
-
-
-
-                        case H2:
-                        case POSTGRES:
-                        default:
-                            ctx.sql(' ').visit(K_IF_EXISTS);
-                            break;
-                    }
-                }
+                acceptDropColumn(ctx);
+                acceptIfExistsColumn(ctx);
 
 
 
@@ -1086,6 +1056,53 @@ final class AlterTableImpl extends AbstractQuery implements
 
         if (!omitAlterTable)
             ctx.formatIndentEnd();
+    }
+
+    private final void acceptDropColumn(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(K_DROP);
+                break;
+        }
+    }
+
+    private final void acceptIfExistsColumn(Context<?> ctx) {
+        if (ifExistsColumn) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                case H2:
+                case MARIADB:
+                case POSTGRES:
+                default:
+                    ctx.sql(' ').visit(K_IF_EXISTS);
+                    break;
+            }
+        }
     }
 
 

@@ -370,7 +370,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(Field)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Field<?> field);
 
     /**
@@ -379,7 +379,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(Name)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Name field);
 
     /**
@@ -388,7 +388,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(String)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(String field);
 
     /**
@@ -416,21 +416,21 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Field<?> field);
 
     /**
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Name field);
 
     /**
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(String field);
 
     /**

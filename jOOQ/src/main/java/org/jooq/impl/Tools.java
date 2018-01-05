@@ -89,6 +89,7 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_AUTOINCREMENT;
 import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
@@ -114,6 +115,7 @@ import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_LIKE;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
@@ -3518,11 +3520,17 @@ final class Tools {
                 break;
             }
 
+            case MARIADB: {
+                ctx.visit(K_BEGIN).sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC).formatIndentStart().formatSeparator();
+                break;
+            }
+
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
 
                 ctx.visit(K_BEGIN).formatIndentStart().formatSeparator();
+                break;
             }
         }
     }
@@ -3541,7 +3549,8 @@ final class Tools {
 
 
 
-            case FIREBIRD: {
+            case FIREBIRD:
+            case MARIADB: {
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
                 break;
@@ -3668,6 +3677,35 @@ final class Tools {
             case FIREBIRD: {
                 begin(ctx);
                 beginExecuteImmediate(ctx);
+                break;
+            }
+
+            case MARIADB: {
+                List<String> sqlstates = new ArrayList<String>();
+
+//                if (type == CREATE_SCHEMA)
+//                    sqlstates.add("42710");
+//                else if (type == CREATE_SEQUENCE)
+//                    sqlstates.add("42710");
+//                else if (type == CREATE_VIEW)
+//                    sqlstates.add("42710");
+//                else
+//                    if (type == ALTER_TABLE) {
+//                    if (TRUE.equals(container))
+//                        sqlstates.add("42704");
+//
+//                    if (TRUE.equals(element))
+//                        sqlstates.add("42703");
+//                    else if (FALSE.equals(element))
+//                        sqlstates.add("42711");
+//                }
+//                else
+                    sqlstates.add("42S02");
+
+                begin(ctx);
+                for (String sqlstate : sqlstates)
+                    ctx.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
+
                 break;
             }
 
@@ -3826,6 +3864,12 @@ final class Tools {
                 ctx.formatSeparator()
                    .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
                    .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
+                end(ctx);
+                break;
+            }
+
+            case MARIADB: {
+                ctx.sql(';');
                 end(ctx);
                 break;
             }

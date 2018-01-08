@@ -49,6 +49,7 @@ import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
@@ -82,6 +83,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_SCHEMA,
                 COLUMNS.UDT_NAME,
+                COLUMNS.IS_IDENTITY,
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
             .join(PG_NAMESPACE)
@@ -118,12 +120,15 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 )
             );
 
+            boolean isIdentity = Objects.equals(defaultString(record.get(COLUMNS.IS_IDENTITY)), "YES")
+                || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
+
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.get(COLUMNS.COLUMN_NAME),
                 record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
+                isIdentity,
                 record.get(PG_DESCRIPTION.DESCRIPTION)
             );
 

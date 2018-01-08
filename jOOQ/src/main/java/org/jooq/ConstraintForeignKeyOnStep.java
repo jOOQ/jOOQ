@@ -96,7 +96,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onDeleteSetDefault();
 
     /**
@@ -131,7 +131,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON UPDATE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onUpdateSetDefault();
 
 }

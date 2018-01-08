@@ -95,7 +95,9 @@ public class Plugin extends AbstractMojo {
     /**
      * Whether to skip the execution of the Maven Plugin for this module.
      */
-    @Parameter
+    @Parameter(
+        property = "jooq.skip"
+    )
     private boolean                      skip;
 
     /**

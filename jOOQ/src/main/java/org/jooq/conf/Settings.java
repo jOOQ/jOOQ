@@ -88,6 +88,8 @@ public class Settings
     protected Boolean returnAllOnUpdatableRecord = false;
     @XmlElement(defaultValue = "true")
     protected Boolean returnRecordToPojo = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean mapMutablePojoStrategy = false;
     @XmlElement(defaultValue = "true")
     protected Boolean mapJPAAnnotations = true;
     @XmlElement(defaultValue = "false")
@@ -724,6 +726,28 @@ public class Settings
     }
 
     /**
+     * It sets the precedence of mapping the POJO objects
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     */
+    public Boolean isMapMutablePojoStrategy() {
+        return mapMutablePojoStrategy;
+    }
+
+    /**
+     * Set the value of the mapMutablePojoStrategy property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     */
+    public void setMapMutablePojoStrategy(Boolean value) {
+        this.mapMutablePojoStrategy = value;
+    }
+
+    /**
      * Whether JPA annotations should be considered by the DefaultRecordMapper.
      *
      * @return
@@ -1083,6 +1107,11 @@ public class Settings
 
     public Settings withReturnRecordToPojo(Boolean value) {
         setReturnRecordToPojo(value);
+        return this;
+    }
+
+    public Settings withMapMutablePojoStrategy(Boolean value) {
+        setMapMutablePojoStrategy(value);
         return this;
     }
 

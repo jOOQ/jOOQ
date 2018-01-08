@@ -3007,18 +3007,28 @@ final class Tools {
                 String camelCase = StringUtils.toCamelCase(name);
                 String camelCaseLC = StringUtils.toLC(camelCase);
 
+                Settings settings = (configuration != null ? configuration : new DefaultConfiguration()).settings();
+
                 for (Method method : getInstanceMethods(type)) {
                     Class<?>[] parameterTypes = method.getParameterTypes();
 
                     if (parameterTypes.length == 1)
-                        if (name.equals(method.getName()))
-                            result.add(accessible(method));
-                        else if (camelCaseLC.equals(method.getName()))
-                            result.add(accessible(method));
-                        else if (("set" + name).equals(method.getName()))
-                            result.add(accessible(method));
-                        else if (("set" + camelCase).equals(method.getName()))
-                            result.add(accessible(method));
+                        if (settings.isMapMutablePojoStrategy()) {
+                            if (("set" + name).equals(method.getName()))
+                                result.add(accessible(method));
+                            else if (("set" + camelCase).equals(method.getName()))
+                                result.add(accessible(method));
+                        }
+                        else {
+                            if (name.equals(method.getName()))
+                                result.add(accessible(method));
+                            else if (camelCaseLC.equals(method.getName()))
+                                result.add(accessible(method));
+                            else if (("set" + name).equals(method.getName()))
+                                result.add(accessible(method));
+                            else if (("set" + camelCase).equals(method.getName()))
+                                result.add(accessible(method));
+                        }
                 }
 
                 return result;

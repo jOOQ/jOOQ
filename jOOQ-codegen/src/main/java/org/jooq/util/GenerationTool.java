@@ -288,16 +288,35 @@ public class GenerationTool {
                 if (dataSource != null) {
                     connection = dataSource.getConnection();
                 }
-                else if (j != null) {
-                    Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
+                else {
+                    String url = System.getProperty("jooq.codegen.jdbc.url");
 
-                    Properties properties = properties(j.getProperties());
-                    if (!properties.containsKey("user"))
-                        properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
-                    if (!properties.containsKey("password"))
-                        properties.put("password", defaultString(j.getPassword()));
+                    if (url != null) {
+                        j = defaultIfNull(j, new Jdbc());
 
-                    connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                        if (j.getDriver() == null)
+                            j.setDriver(System.getProperty("jooq.codegen.jdbc.driver"));
+                        if (j.getUrl() == null)
+                            j.setUrl(url);
+                        if (j.getUser() == null)
+                            j.setUser(System.getProperty("jooq.codegen.jdbc.user"));
+                        if (j.getUsername() == null)
+                            j.setUsername(System.getProperty("jooq.codegen.jdbc.username"));
+                        if (j.getPassword() == null)
+                            j.setPassword(System.getProperty("jooq.codegen.jdbc.password"));
+                    }
+
+                    if (j != null) {
+                        Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
+
+                        Properties properties = properties(j.getProperties());
+                        if (!properties.containsKey("user"))
+                            properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
+                        if (!properties.containsKey("password"))
+                            properties.put("password", defaultString(j.getPassword()));
+
+                        connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                    }
                 }
             }
 

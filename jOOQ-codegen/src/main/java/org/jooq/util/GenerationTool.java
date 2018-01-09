@@ -55,6 +55,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
@@ -69,14 +70,15 @@ import javax.xml.bind.ValidationEventHandler;
 import javax.xml.validation.SchemaFactory;
 
 import org.jooq.Constants;
+import org.jooq.Log.Level;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.JooqLogger.Level;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.Catalog;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
+import org.jooq.util.jaxb.Logging;
 import org.jooq.util.jaxb.Matchers;
 import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
@@ -140,28 +142,40 @@ public class GenerationTool {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length < 1) {
-            log.error("Usage : GenerationTool <configuration-file>");
-            System.exit(-1);
-            return;
+        String[] files;
+
+        if (args.length > 0) {
+            files = args;
+        }
+        else {
+            String property = System.getProperty("jooq.codegen.configurationFile");
+
+            if (property != null) {
+                files = new String[] { property };
+            }
+            else {
+                log.error("Usage : GenerationTool <configuration-file>");
+                System.exit(-1);
+                return;
+            }
         }
 
-        for (String arg : args) {
-            InputStream in = GenerationTool.class.getResourceAsStream(arg);
+        for (String file : files) {
+            InputStream in = GenerationTool.class.getResourceAsStream(file);
 
             try {
 
                 // [#2932] Retry loading the file, if it wasn't found. This may be helpful
                 // to some users who were unaware that this file is loaded from the classpath
-                if (in == null && !arg.startsWith("/"))
-                    in = GenerationTool.class.getResourceAsStream("/" + arg);
+                if (in == null && !file.startsWith("/"))
+                    in = GenerationTool.class.getResourceAsStream("/" + file);
 
                 // [#3668] Also check the local file system for configuration files
-                if (in == null && new File(arg).exists())
-                    in = new FileInputStream(new File(arg));
+                if (in == null && new File(file).exists())
+                    in = new FileInputStream(new File(file));
 
                 if (in == null) {
-                    log.error("Cannot find " + arg + " on classpath, or in directory " + new File(".").getCanonicalPath());
+                    log.error("Cannot find " + file + " on classpath, or in directory " + new File(".").getCanonicalPath());
                     log.error("-----------");
                     log.error("Please be sure it is located");
                     log.error("  - on the classpath and qualified as a classpath location.");
@@ -171,11 +185,11 @@ public class GenerationTool {
                     return;
                 }
 
-                log.info("Initialising properties", arg);
+                log.info("Initialising properties", file);
                 generate(load(in));
             }
             catch (Exception e) {
-                log.error("Cannot read " + arg + ". Error : " + e.getMessage(), e);
+                log.error("Cannot read " + file + ". Error : " + e.getMessage(), e);
 
                 System.exit(-1);
                 return;
@@ -205,6 +219,11 @@ public class GenerationTool {
 
     @SuppressWarnings("unchecked")
     public void run(Configuration configuration) throws Exception {
+        if (Boolean.getBoolean("jooq.codegen.skip")) {
+            log.info("Skipping jOOQ code generation");
+            return;
+        }
+
         if (configuration.getLogging() != null) {
             switch (configuration.getLogging()) {
                 case TRACE:
@@ -225,6 +244,18 @@ public class GenerationTool {
                 case FATAL:
                     JooqLogger.globalThreshold(Level.FATAL);
                     break;
+            }
+        }
+        else {
+            String property = System.getProperty("jooq.codegen.logging");
+
+            if (property != null) {
+                try {
+                    Logging.valueOf(property);
+                }
+                catch (IllegalArgumentException e) {
+                    log.error("Unsupported property", "Unsupported value for system property jooq.codegen.logging: " + property + ". Supported values include: " + Arrays.asList(Logging.values()));
+                }
             }
         }
 

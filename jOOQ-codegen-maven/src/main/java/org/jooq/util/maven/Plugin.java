@@ -89,19 +89,25 @@ public class Plugin extends AbstractMojo {
     /**
      * An external configuration file that overrides anything in the Maven configuration
      */
-    @Parameter
+    @Parameter(
+        property = "jooq.codegen.configurationFile"
+    )
     private String                       configurationFile;
 
     /**
      * Whether to skip the execution of the Maven Plugin for this module.
      */
-    @Parameter
+    @Parameter(
+        property = "jooq.codegen.skip"
+    )
     private boolean                      skip;
 
     /**
      * The logging threshold.
      */
-    @Parameter
+    @Parameter(
+        property = "jooq.codegen.logging"
+    )
     private org.jooq.util.jaxb.Logging   logging;
 
     /**

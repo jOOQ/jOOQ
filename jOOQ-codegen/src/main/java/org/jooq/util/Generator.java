@@ -394,6 +394,146 @@ public interface Generator {
     void setGenerateGlobalKeyReferences(boolean globalKeyReferences);
 
     /**
+     * Whether any SQL comments should be generated as Javadoc.
+     */
+    boolean generateComments();
+
+    /**
+     * Whether any SQL comments should be generated as Javadoc.
+     */
+    void setGenerateComments(boolean comments);
+
+    /**
+     * Whether SQL comments on attributes should be generated as Javadoc.
+     */
+    boolean generateCommentsOnAttributes();
+
+    /**
+     * Whether SQL comments on attributes should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnAttributes(boolean commentsOnAttributes);
+
+    /**
+     * Whether SQL comments on catalogs should be generated as Javadoc.
+     */
+    boolean generateCommentsOnCatalogs();
+
+    /**
+     * Whether SQL comments on catalogs should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnCatalogs(boolean commentsOnCatalogs);
+
+    /**
+     * Whether SQL comments on columns should be generated as Javadoc.
+     */
+    boolean generateCommentsOnColumns();
+
+    /**
+     * Whether SQL comments on columns should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnColumns(boolean commentsOnColumns);
+
+    /**
+     * Whether SQL comments on keys should be generated as Javadoc.
+     */
+    boolean generateCommentsOnKeys();
+
+    /**
+     * Whether SQL comments on keys should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnKeys(boolean commentsOnKeys);
+
+    /**
+     * Whether SQL comments on links should be generated as Javadoc.
+     */
+    boolean generateCommentsOnLinks();
+
+    /**
+     * Whether SQL comments on links should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnLinks(boolean commentsOnLinks);
+
+    /**
+     * Whether SQL comments on packages should be generated as Javadoc.
+     */
+    boolean generateCommentsOnPackages();
+
+    /**
+     * Whether SQL comments on packages should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnPackages(boolean commentsOnPackages);
+
+    /**
+     * Whether SQL comments on parameters should be generated as Javadoc.
+     */
+    boolean generateCommentsOnParameters();
+
+    /**
+     * Whether SQL comments on parameters should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnParameters(boolean commentsOnParameters);
+
+    /**
+     * Whether SQL comments on queues should be generated as Javadoc.
+     */
+    boolean generateCommentsOnQueues();
+
+    /**
+     * Whether SQL comments on queues should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnQueues(boolean commentsOnQueues);
+
+    /**
+     * Whether SQL comments on routines should be generated as Javadoc.
+     */
+    boolean generateCommentsOnRoutines();
+
+    /**
+     * Whether SQL comments on routines should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnRoutines(boolean commentsOnRoutines);
+
+    /**
+     * Whether SQL comments on schemas should be generated as Javadoc.
+     */
+    boolean generateCommentsOnSchemas();
+
+    /**
+     * Whether SQL comments on schemas should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnSchemas(boolean commentsOnSchemas);
+
+    /**
+     * Whether SQL comments on sequences should be generated as Javadoc.
+     */
+    boolean generateCommentsOnSequences();
+
+    /**
+     * Whether SQL comments on sequences should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnSequences(boolean commentsOnSequences);
+
+    /**
+     * Whether SQL comments on tables should be generated as Javadoc.
+     */
+    boolean generateCommentsOnTables();
+
+    /**
+     * Whether SQL comments on tables should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnTables(boolean commentsOnTables);
+
+    /**
+     * Whether SQL comments on UDTs should be generated as Javadoc.
+     */
+    boolean generateCommentsOnUDTs();
+
+    /**
+     * Whether SQL comments on UDTs should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnUDTs(boolean commentsOnUDTs);
+
+    /**
      * Whether queue related code should be generated
      */
     boolean generateQueues();

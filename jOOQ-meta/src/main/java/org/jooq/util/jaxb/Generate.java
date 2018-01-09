@@ -106,6 +106,34 @@ public class Generate implements Serializable
     protected Boolean globalLinkReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalKeyReferences = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean comments = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnCatalogs = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnSchemas = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnTables = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnColumns = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnUDTs = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnAttributes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnPackages = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnRoutines = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnParameters = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnSequences = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnLinks = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnQueues = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnKeys = true;
     @XmlElement(defaultValue = "false")
     protected Boolean fluentSetters = false;
     @XmlElement(defaultValue = "false")
@@ -993,6 +1021,342 @@ public class Generate implements Serializable
     }
 
     /**
+     * Turn off generation of all SQL comments as Javadoc on all objects.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isComments() {
+        return comments;
+    }
+
+    /**
+     * Sets the value of the comments property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setComments(Boolean value) {
+        this.comments = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all catalogs.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnCatalogs() {
+        return commentsOnCatalogs;
+    }
+
+    /**
+     * Sets the value of the commentsOnCatalogs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnCatalogs(Boolean value) {
+        this.commentsOnCatalogs = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all schemas.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnSchemas() {
+        return commentsOnSchemas;
+    }
+
+    /**
+     * Sets the value of the commentsOnSchemas property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnSchemas(Boolean value) {
+        this.commentsOnSchemas = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all tables.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnTables() {
+        return commentsOnTables;
+    }
+
+    /**
+     * Sets the value of the commentsOnTables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnTables(Boolean value) {
+        this.commentsOnTables = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all columns.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnColumns() {
+        return commentsOnColumns;
+    }
+
+    /**
+     * Sets the value of the commentsOnColumns property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnColumns(Boolean value) {
+        this.commentsOnColumns = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all UDTs.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnUDTs() {
+        return commentsOnUDTs;
+    }
+
+    /**
+     * Sets the value of the commentsOnUDTs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnUDTs(Boolean value) {
+        this.commentsOnUDTs = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all attributes.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnAttributes() {
+        return commentsOnAttributes;
+    }
+
+    /**
+     * Sets the value of the commentsOnAttributes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnAttributes(Boolean value) {
+        this.commentsOnAttributes = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all packages.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnPackages() {
+        return commentsOnPackages;
+    }
+
+    /**
+     * Sets the value of the commentsOnPackages property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnPackages(Boolean value) {
+        this.commentsOnPackages = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all routines.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnRoutines() {
+        return commentsOnRoutines;
+    }
+
+    /**
+     * Sets the value of the commentsOnRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnRoutines(Boolean value) {
+        this.commentsOnRoutines = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all parameters.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnParameters() {
+        return commentsOnParameters;
+    }
+
+    /**
+     * Sets the value of the commentsOnParameters property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnParameters(Boolean value) {
+        this.commentsOnParameters = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all sequences.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnSequences() {
+        return commentsOnSequences;
+    }
+
+    /**
+     * Sets the value of the commentsOnSequences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnSequences(Boolean value) {
+        this.commentsOnSequences = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all links.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnLinks() {
+        return commentsOnLinks;
+    }
+
+    /**
+     * Sets the value of the commentsOnLinks property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnLinks(Boolean value) {
+        this.commentsOnLinks = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all queues.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnQueues() {
+        return commentsOnQueues;
+    }
+
+    /**
+     * Sets the value of the commentsOnQueues property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnQueues(Boolean value) {
+        this.commentsOnQueues = value;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all keys.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isCommentsOnKeys() {
+        return commentsOnKeys;
+    }
+
+    /**
+     * Sets the value of the commentsOnKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setCommentsOnKeys(Boolean value) {
+        this.commentsOnKeys = value;
+    }
+
+    /**
      * Generate fluent setters in records, POJOs, interfaces.
      *
      * @return
@@ -1387,6 +1751,76 @@ public class Generate implements Serializable
 
     public Generate withGlobalKeyReferences(Boolean value) {
         setGlobalKeyReferences(value);
+        return this;
+    }
+
+    public Generate withComments(Boolean value) {
+        setComments(value);
+        return this;
+    }
+
+    public Generate withCommentsOnCatalogs(Boolean value) {
+        setCommentsOnCatalogs(value);
+        return this;
+    }
+
+    public Generate withCommentsOnSchemas(Boolean value) {
+        setCommentsOnSchemas(value);
+        return this;
+    }
+
+    public Generate withCommentsOnTables(Boolean value) {
+        setCommentsOnTables(value);
+        return this;
+    }
+
+    public Generate withCommentsOnColumns(Boolean value) {
+        setCommentsOnColumns(value);
+        return this;
+    }
+
+    public Generate withCommentsOnUDTs(Boolean value) {
+        setCommentsOnUDTs(value);
+        return this;
+    }
+
+    public Generate withCommentsOnAttributes(Boolean value) {
+        setCommentsOnAttributes(value);
+        return this;
+    }
+
+    public Generate withCommentsOnPackages(Boolean value) {
+        setCommentsOnPackages(value);
+        return this;
+    }
+
+    public Generate withCommentsOnRoutines(Boolean value) {
+        setCommentsOnRoutines(value);
+        return this;
+    }
+
+    public Generate withCommentsOnParameters(Boolean value) {
+        setCommentsOnParameters(value);
+        return this;
+    }
+
+    public Generate withCommentsOnSequences(Boolean value) {
+        setCommentsOnSequences(value);
+        return this;
+    }
+
+    public Generate withCommentsOnLinks(Boolean value) {
+        setCommentsOnLinks(value);
+        return this;
+    }
+
+    public Generate withCommentsOnQueues(Boolean value) {
+        setCommentsOnQueues(value);
+        return this;
+    }
+
+    public Generate withCommentsOnKeys(Boolean value) {
+        setCommentsOnKeys(value);
         return this;
     }
 

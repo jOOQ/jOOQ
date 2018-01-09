@@ -968,6 +968,62 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global key references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="comments" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all objects.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnCatalogs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all catalogs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnSchemas" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all schemas.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnTables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnColumns" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all columns.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all UDTs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnAttributes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all attributes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnPackages" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all packages.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnRoutines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all routines.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnParameters" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnSequences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all sequences.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnLinks" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all links.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnQueues" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all queues.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate fluent setters in records, POJOs, interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

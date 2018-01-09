@@ -94,6 +94,20 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalQueueReferences      = true;
     boolean                            generateGlobalLinkReferences       = true;
     boolean                            generateGlobalKeyReferences        = true;
+    boolean                            generateComments                   = true;
+    boolean                            generateCommentsOnAttributes       = true;
+    boolean                            generateCommentsOnCatalogs         = true;
+    boolean                            generateCommentsOnColumns          = true;
+    boolean                            generateCommentsOnKeys             = true;
+    boolean                            generateCommentsOnLinks            = true;
+    boolean                            generateCommentsOnPackages         = true;
+    boolean                            generateCommentsOnParameters       = true;
+    boolean                            generateCommentsOnQueues           = true;
+    boolean                            generateCommentsOnRoutines         = true;
+    boolean                            generateCommentsOnSchemas          = true;
+    boolean                            generateCommentsOnSequences        = true;
+    boolean                            generateCommentsOnTables           = true;
+    boolean                            generateCommentsOnUDTs             = true;
     boolean                            generateFluentSetters              = false;
     boolean                            generateJavaBeansGettersAndSetters = false;
     boolean                            generateVarargsSetters             = true;
@@ -554,6 +568,146 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateKeys(boolean keys) {
         this.generateKeys = keys;
+    }
+
+    @Override
+    public boolean generateComments() {
+        return generateComments;
+    }
+
+    @Override
+    public void setGenerateComments(boolean comments) {
+        this.generateComments = comments;
+    }
+
+    @Override
+    public boolean generateCommentsOnAttributes() {
+        return generateComments() && generateCommentsOnAttributes;
+    }
+
+    @Override
+    public void setGenerateCommentsOnAttributes(boolean commentsOnAttributes) {
+        this.generateCommentsOnAttributes = commentsOnAttributes;
+    }
+
+    @Override
+    public boolean generateCommentsOnCatalogs() {
+        return generateComments() && generateCommentsOnCatalogs;
+    }
+
+    @Override
+    public void setGenerateCommentsOnCatalogs(boolean commentsOnCatalogs) {
+        this.generateCommentsOnCatalogs = commentsOnCatalogs;
+    }
+
+    @Override
+    public boolean generateCommentsOnColumns() {
+        return generateComments() && generateCommentsOnColumns;
+    }
+
+    @Override
+    public void setGenerateCommentsOnColumns(boolean commentsOnColumns) {
+        this.generateCommentsOnColumns = commentsOnColumns;
+    }
+
+    @Override
+    public boolean generateCommentsOnKeys() {
+        return generateComments() && generateCommentsOnKeys;
+    }
+
+    @Override
+    public void setGenerateCommentsOnKeys(boolean commentsOnKeys) {
+        this.generateCommentsOnKeys = commentsOnKeys;
+    }
+
+    @Override
+    public boolean generateCommentsOnLinks() {
+        return generateComments() && generateCommentsOnLinks;
+    }
+
+    @Override
+    public void setGenerateCommentsOnLinks(boolean commentsOnLinks) {
+        this.generateCommentsOnLinks = commentsOnLinks;
+    }
+
+    @Override
+    public boolean generateCommentsOnPackages() {
+        return generateComments() && generateCommentsOnPackages;
+    }
+
+    @Override
+    public void setGenerateCommentsOnPackages(boolean commentsOnPackages) {
+        this.generateCommentsOnPackages = commentsOnPackages;
+    }
+
+    @Override
+    public boolean generateCommentsOnParameters() {
+        return generateComments() && generateCommentsOnParameters;
+    }
+
+    @Override
+    public void setGenerateCommentsOnParameters(boolean commentsOnParameters) {
+        this.generateCommentsOnParameters = commentsOnParameters;
+    }
+
+    @Override
+    public boolean generateCommentsOnQueues() {
+        return generateComments() && generateCommentsOnQueues;
+    }
+
+    @Override
+    public void setGenerateCommentsOnQueues(boolean commentsOnQueues) {
+        this.generateCommentsOnQueues = commentsOnQueues;
+    }
+
+    @Override
+    public boolean generateCommentsOnRoutines() {
+        return generateComments() && generateCommentsOnRoutines;
+    }
+
+    @Override
+    public void setGenerateCommentsOnRoutines(boolean commentsOnRoutines) {
+        this.generateCommentsOnRoutines = commentsOnRoutines;
+    }
+
+    @Override
+    public boolean generateCommentsOnSchemas() {
+        return generateComments() && generateCommentsOnSchemas;
+    }
+
+    @Override
+    public void setGenerateCommentsOnSchemas(boolean commentsOnSchemas) {
+        this.generateCommentsOnSchemas = commentsOnSchemas;
+    }
+
+    @Override
+    public boolean generateCommentsOnSequences() {
+        return generateComments() && generateCommentsOnSequences;
+    }
+
+    @Override
+    public void setGenerateCommentsOnSequences(boolean commentsOnSequences) {
+        this.generateCommentsOnSequences = commentsOnSequences;
+    }
+
+    @Override
+    public boolean generateCommentsOnTables() {
+        return generateComments() && generateCommentsOnTables;
+    }
+
+    @Override
+    public void setGenerateCommentsOnTables(boolean commentsOnTables) {
+        this.generateCommentsOnTables = commentsOnTables;
+    }
+
+    @Override
+    public boolean generateCommentsOnUDTs() {
+        return generateComments() && generateCommentsOnUDTs;
+    }
+
+    @Override
+    public void setGenerateCommentsOnUDTs(boolean commentsOnUDTs) {
+        this.generateCommentsOnUDTs = commentsOnUDTs;
     }
 
     @Override

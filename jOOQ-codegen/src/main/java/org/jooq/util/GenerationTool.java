@@ -642,6 +642,34 @@ public class GenerationTool {
                 generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
             if (g.getGenerate().isGlobalKeyReferences() != null)
                 generator.setGenerateGlobalKeyReferences(g.getGenerate().isGlobalKeyReferences());
+            if (g.getGenerate().isComments() != null)
+                generator.setGenerateComments(g.getGenerate().isComments());
+            if (g.getGenerate().isCommentsOnAttributes() != null)
+                generator.setGenerateCommentsOnAttributes(g.getGenerate().isCommentsOnAttributes());
+            if (g.getGenerate().isCommentsOnCatalogs() != null)
+                generator.setGenerateCommentsOnCatalogs(g.getGenerate().isCommentsOnCatalogs());
+            if (g.getGenerate().isCommentsOnColumns() != null)
+                generator.setGenerateCommentsOnColumns(g.getGenerate().isCommentsOnColumns());
+            if (g.getGenerate().isCommentsOnKeys() != null)
+                generator.setGenerateCommentsOnKeys(g.getGenerate().isCommentsOnKeys());
+            if (g.getGenerate().isCommentsOnLinks() != null)
+                generator.setGenerateCommentsOnLinks(g.getGenerate().isCommentsOnLinks());
+            if (g.getGenerate().isCommentsOnPackages() != null)
+                generator.setGenerateCommentsOnPackages(g.getGenerate().isCommentsOnPackages());
+            if (g.getGenerate().isCommentsOnParameters() != null)
+                generator.setGenerateCommentsOnParameters(g.getGenerate().isCommentsOnParameters());
+            if (g.getGenerate().isCommentsOnQueues() != null)
+                generator.setGenerateCommentsOnQueues(g.getGenerate().isCommentsOnQueues());
+            if (g.getGenerate().isCommentsOnRoutines() != null)
+                generator.setGenerateCommentsOnRoutines(g.getGenerate().isCommentsOnRoutines());
+            if (g.getGenerate().isCommentsOnSchemas() != null)
+                generator.setGenerateCommentsOnSchemas(g.getGenerate().isCommentsOnSchemas());
+            if (g.getGenerate().isCommentsOnSequences() != null)
+                generator.setGenerateCommentsOnSequences(g.getGenerate().isCommentsOnSequences());
+            if (g.getGenerate().isCommentsOnTables() != null)
+                generator.setGenerateCommentsOnTables(g.getGenerate().isCommentsOnTables());
+            if (g.getGenerate().isCommentsOnUDTs() != null)
+                generator.setGenerateCommentsOnUDTs(g.getGenerate().isCommentsOnUDTs());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setGenerateFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isJavaBeansGettersAndSetters() != null)

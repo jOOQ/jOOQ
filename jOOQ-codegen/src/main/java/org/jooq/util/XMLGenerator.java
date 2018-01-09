@@ -106,7 +106,9 @@ public class XMLGenerator extends AbstractGenerator {
             String catalogName = c.getOutputName();
 
             if (hasNonDefaultCatalogs)
-                is.getCatalogs().add(new Catalog().withCatalogName(catalogName).withComment(c.getComment()));
+                is.getCatalogs().add(new Catalog()
+                    .withCatalogName(catalogName)
+                    .withComment(generateCommentsOnCatalogs() ? c.getComment() : null));
 
             for (SchemaDefinition s : c.getSchemata()) {
                 String schemaName = s.getOutputName();
@@ -114,7 +116,9 @@ public class XMLGenerator extends AbstractGenerator {
                 Schema schema = new Schema();
                 schema.setCatalogName(catalogName);
                 schema.setSchemaName(schemaName);
-                schema.setComment(s.getComment());
+
+                if (generateCommentsOnSchemas())
+                    schema.setComment(s.getComment());
 
                 is.getSchemata().add(schema);
 
@@ -125,7 +129,9 @@ public class XMLGenerator extends AbstractGenerator {
                     table.setTableCatalog(catalogName);
                     table.setTableSchema(schemaName);
                     table.setTableName(tableName);
-                    table.setComment(t.getComment());
+
+                    if (generateCommentsOnTables())
+                        table.setComment(t.getComment());
 
                     is.getTables().add(table);
 
@@ -138,7 +144,10 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setTableSchema(schemaName);
                         column.setTableName(tableName);
                         column.setColumnName(columnName);
-                        column.setComment(co.getComment());
+
+                        if (generateCommentsOnColumns())
+                            column.setComment(co.getComment());
+
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
@@ -162,7 +171,10 @@ public class XMLGenerator extends AbstractGenerator {
                     index.setIndexCatalog(catalogName);
                     index.setIndexSchema(schemaName);
                     index.setIndexName(indexName);
-                    index.setComment(i.getComment());
+
+                    if (generateCommentsOnKeys())
+                        index.setComment(i.getComment());
+
                     index.setTableCatalog(table.getCatalog().getOutputName());
                     index.setTableSchema(table.getSchema().getOutputName());
                     index.setTableName(table.getOutputName());
@@ -199,7 +211,10 @@ public class XMLGenerator extends AbstractGenerator {
                     constraint.setConstraintSchema(schemaName);
                     constraint.setConstraintName(constraintName);
                     constraint.setConstraintType(u.isPrimaryKey() ? PRIMARY_KEY : UNIQUE);
-                    constraint.setComment(u.getComment());
+
+                    if (generateCommentsOnKeys())
+                        constraint.setComment(u.getComment());
+
                     constraint.setTableCatalog(table.getCatalog().getOutputName());
                     constraint.setTableSchema(table.getSchema().getOutputName());
                     constraint.setTableName(table.getOutputName());
@@ -235,7 +250,10 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setConstraintSchema(schemaName);
                     tc.setConstraintName(constraintName);
                     tc.setConstraintType(FOREIGN_KEY);
-                    tc.setComment(f.getComment());
+
+                    if (generateCommentsOnKeys())
+                        tc.setComment(f.getComment());
+
                     tc.setTableCatalog(table.getCatalog().getOutputName());
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
@@ -278,7 +296,10 @@ public class XMLGenerator extends AbstractGenerator {
                     constraint.setConstraintSchema(schemaName);
                     constraint.setConstraintName(constraintName);
                     constraint.setConstraintType(CHECK);
-                    constraint.setComment(ch.getComment());
+
+                    if (generateCommentsOnKeys())
+                        constraint.setComment(ch.getComment());
+
                     constraint.setTableCatalog(table.getCatalog().getOutputName());
                     constraint.setTableSchema(table.getSchema().getOutputName());
                     constraint.setTableName(table.getOutputName());
@@ -294,7 +315,10 @@ public class XMLGenerator extends AbstractGenerator {
                     sequence.setSequenceCatalog(catalogName);
                     sequence.setSequenceSchema(schemaName);
                     sequence.setSequenceName(sequenceName);
-                    sequence.setComment(se.getComment());
+
+                    if (generateCommentsOnSequences())
+                        sequence.setComment(se.getComment());
+
                     sequence.setCharacterMaximumLength(type.getLength());
                     sequence.setDataType(type.getType());
                     sequence.setNumericPrecision(type.getPrecision());
@@ -334,7 +358,9 @@ public class XMLGenerator extends AbstractGenerator {
 
         routine.setRoutineName(r.getName());
         routine.setSpecificName(specificName);
-        routine.setComment(r.getComment());
+
+        if (generateCommentsOnRoutines())
+            routine.setComment(r.getComment());
 
         if (r.getReturnValue() == null) {
             routine.setRoutineType(RoutineType.PROCEDURE);
@@ -363,7 +389,9 @@ public class XMLGenerator extends AbstractGenerator {
                 parameter.setSpecificName(specificName);
                 parameter.setOrdinalPosition(i++);
                 parameter.setParameterName(p.getName());
-                parameter.setComment(p.getComment());
+
+                if (generateCommentsOnParameters())
+                    parameter.setComment(p.getComment());
 
                 boolean in = r.getInParameters().contains(p);
                 boolean out = r.getOutParameters().contains(p);

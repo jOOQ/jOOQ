@@ -278,6 +278,20 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  annotations (JPA: any)", generateJPAAnnotations());
         log.info("  annotations (JPA: version)", generateJPAVersion());
         log.info("  annotations (validation)", generateValidationAnnotations());
+        log.info("  comments", generateComments());
+        log.info("  comments on attributes", generateCommentsOnAttributes());
+        log.info("  comments on catalogs", generateCommentsOnCatalogs());
+        log.info("  comments on columns", generateCommentsOnColumns());
+        log.info("  comments on keys", generateCommentsOnKeys());
+        log.info("  comments on links", generateCommentsOnLinks());
+        log.info("  comments on packages", generateCommentsOnPackages());
+        log.info("  comments on parameters", generateCommentsOnParameters());
+        log.info("  comments on queues", generateCommentsOnQueues());
+        log.info("  comments on routines", generateCommentsOnRoutines());
+        log.info("  comments on schemas", generateCommentsOnSchemas());
+        log.info("  comments on sequences", generateCommentsOnSequences());
+        log.info("  comments on tables", generateCommentsOnTables());
+        log.info("  comments on udts", generateCommentsOnUDTs());
         log.info("  daos", generateDaos());
         log.info("  deprecated code", generateDeprecated());
         log.info("  global references (any)", generateGlobalObjectReferences());
@@ -1489,7 +1503,7 @@ public class JavaGenerator extends AbstractGenerator {
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
             if (!printDeprecationIfUnknownType(out, typeFull))
-                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
 
             if (scala) {
                 out.tab(1).println("def %s(value : %s) : %s = {", setter, type, setterReturnType);
@@ -1590,7 +1604,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
 
         if (column.getContainer() instanceof TableDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -1636,7 +1650,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateRecordClassJavadoc(TableDefinition table, JavaWriter out) {
-        printClassJavadoc(out, table);
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, table);
+        else
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
     }
 
     private String refRowType(JavaWriter out, Collection<? extends TypedElementDefinition<?>> columns) {
@@ -1779,7 +1796,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
 
         if (scala)
             out.tab(1).println("def %s(value : %s) : %s", setter, type, setterReturnType);
@@ -1809,7 +1826,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
+            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -1820,6 +1837,19 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("def %s : %s", getter, type);
         else
             out.tab(1).println("public %s %s();", type, getter);
+    }
+
+    private String columnComment(TypedElementDefinition<?> column, String comment) {
+        return column instanceof ColumnDefinition && generateCommentsOnColumns()
+            || column instanceof AttributeDefinition && generateCommentsOnAttributes()
+            ?  defaultIfBlank(" " + escapeEntities(comment), "")
+            :  "";
+    }
+
+    private String parameterComment(String comment) {
+        return generateCommentsOnParameters()
+            ?  defaultIfBlank(" " + escapeEntities(comment), "")
+            :  "";
     }
 
     /**
@@ -1833,7 +1863,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateInterfaceClassJavadoc(TableDefinition table, JavaWriter out) {
-        printClassJavadoc(out, table);
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, table);
+        else
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateUDTs(SchemaDefinition schema) {
@@ -1879,7 +1912,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
                 final String attrComment = StringUtils.defaultString(attribute.getComment());
 
-                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(attrComment), ""));
+                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
                 out.tab(1).println("val %s = %s.%s", attrId, udtId, attrId);
             }
 
@@ -1923,7 +1956,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 if (!printDeprecationIfUnknownType(out, attrTypeFull))
-                    out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
+                    out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
 
                 out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
                     UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
@@ -1990,7 +2023,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateUDTClassJavadoc(UDTDefinition udt, JavaWriter out) {
-        printClassJavadoc(out, udt);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateUDTPojos(SchemaDefinition schema) {
@@ -2018,7 +2054,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateUDTPojoClassJavadoc(UDTDefinition udt, JavaWriter out) {
-        printClassJavadoc(out, udt);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateUDTInterfaces(SchemaDefinition schema) {
@@ -2045,7 +2084,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateUDTInterfaceClassJavadoc(UDTDefinition udt, JavaWriter out) {
-        printClassJavadoc(out, udt);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
     }
 
     /**
@@ -2075,7 +2117,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateUDTRecordClassJavadoc(UDTDefinition udt, JavaWriter out) {
-        printClassJavadoc(out, udt);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateUDTRoutines(SchemaDefinition schema) {
@@ -2267,7 +2312,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateArrayClassJavadoc(ArrayDefinition array, JavaWriter out) {
-        printClassJavadoc(out, array);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, array);
+        else
+            printClassJavadoc(out, "The type <code>" + array.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateEnums(SchemaDefinition schema) {
@@ -2447,7 +2495,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateEnumClassJavadoc(EnumDefinition e, JavaWriter out) {
-        printClassJavadoc(out, e);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, e);
+        else
+            printClassJavadoc(out, "The enum <code>" + e.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateDomain(DomainDefinition d) {
@@ -2489,7 +2540,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateDomainClassJavadoc(DomainDefinition e, JavaWriter out) {
-        printClassJavadoc(out, e);
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, e);
+        else
+            printClassJavadoc(out, "The domain <code>" + e.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateRoutines(SchemaDefinition schema) {
@@ -2700,7 +2754,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String className = out.ref(getStrategy().getFullJavaClassName(table));
             final String id = getStrategy().getJavaIdentifier(table);
             final String fullId = getStrategy().getFullJavaIdentifier(table);
-            final String comment = !StringUtils.isBlank(table.getComment())
+            final String comment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                 ? escapeEntities(table.getComment())
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
@@ -2938,7 +2992,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateDaoClassJavadoc(TableDefinition table, JavaWriter out) {
-        printClassJavadoc(out, table);
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, table);
+        else
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
     }
 
     protected void generatePojos(SchemaDefinition schema) {
@@ -3514,7 +3571,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generatePojoClassJavadoc(TableDefinition table, JavaWriter out) {
-        printClassJavadoc(out, table);
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, table);
+        else
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateTables(SchemaDefinition schema) {
@@ -3595,7 +3655,7 @@ public class JavaGenerator extends AbstractGenerator {
             final List<String> binding = out.ref(list(column.getType(resolver()).getBinding()));
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
-                out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(columnComment), ""));
+                out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), columnComment(column, columnComment));
 
             if (scala) {
                 out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
@@ -4085,7 +4145,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateTableClassJavadoc(TableDefinition table, JavaWriter out) {
-        printClassJavadoc(out, table);
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, table);
+        else
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateSequences(SchemaDefinition schema) {
@@ -4171,7 +4234,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
                     final String schemaId = getStrategy().getJavaIdentifier(schema);
                     final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
-                    final String schemaComment = !StringUtils.isBlank(schema.getComment())
+                    final String schemaComment = !StringUtils.isBlank(schema.getComment()) && generateCommentsOnSchemas()
                         ? escapeEntities(schema.getComment())
                         : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
 
@@ -4209,8 +4272,11 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own Javadoc.
      */
-    protected void generateCatalogClassJavadoc(CatalogDefinition schema, JavaWriter out) {
-        printClassJavadoc(out, schema);
+    protected void generateCatalogClassJavadoc(CatalogDefinition catalog, JavaWriter out) {
+        if (generateCommentsOnCatalogs())
+            printClassJavadoc(out, catalog);
+        else
+            printClassJavadoc(out, "The catalog <code>" + catalog.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateSchema(SchemaDefinition schema) {
@@ -4255,7 +4321,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                     final String tableId = getStrategy().getJavaIdentifier(table);
                     final String tableFullId = getStrategy().getFullJavaIdentifier(table);
-                    final String tableComment = !StringUtils.isBlank(table.getComment())
+                    final String tableComment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                         ? escapeEntities(table.getComment())
                         : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
@@ -4314,7 +4380,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateSchemaClassJavadoc(SchemaDefinition schema, JavaWriter out) {
-        printClassJavadoc(out, schema);
+        if (generateCommentsOnSchemas())
+            printClassJavadoc(out, schema);
+        else
+            printClassJavadoc(out, "The schema <code>" + schema.getQualifiedInputName() + "</code>.");
     }
 
     protected void printFromAndInto(JavaWriter out, TableDefinition table) {
@@ -4666,7 +4735,7 @@ public class JavaGenerator extends AbstractGenerator {
                 ));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
-                    out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(paramComment), ""));
+                    out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
                 out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s[[before=, ][new %s]])",
                         paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
@@ -4703,7 +4772,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
-                    out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
+                    out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
                 out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
                         Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
@@ -4867,7 +4936,10 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateRoutineClassJavadoc(RoutineDefinition routine, JavaWriter out) {
-        printClassJavadoc(out, routine);
+        if (generateCommentsOnRoutines())
+            printClassJavadoc(out, routine);
+        else
+            printClassJavadoc(out, "The routine <code>" + routine.getQualifiedInputName() + "</code>.");
     }
 
     protected void printConvenienceMethodFunctionAsField(JavaWriter out, RoutineDefinition function, boolean parametersAsField) {

@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
@@ -78,6 +79,7 @@ final class BlockImpl extends AbstractQuery implements Block {
      */
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final EnumSet<SQLDialect>      REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = EnumSet.of(FIREBIRD);
+    private static final EnumSet<SQLDialect>      SUPPORTS_NULL_STATEMENT           = EnumSet.of(POSTGRES);
 
     private final Collection<? extends Statement> statements;
 
@@ -182,7 +184,11 @@ final class BlockImpl extends AbstractQuery implements Block {
             }
         }
         else {
-            for (Statement query : statements) {
+            statementLoop:
+            for (Statement s : statements) {
+                if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.family()))
+                    continue statementLoop;
+
                 ctx.formatSeparator();
 
 
@@ -193,14 +199,14 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-                ctx.visit(query);
+                ctx.visit(s);
 
 
 
 
 
 
-                if (!(query instanceof Block))
+                if (!(s instanceof Block))
                     ctx.sql(';');
             }
         }

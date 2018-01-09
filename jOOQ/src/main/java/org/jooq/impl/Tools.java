@@ -1743,7 +1743,7 @@ final class Tools {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
-        SQLDialect dialect = render.configuration().dialect();
+        SQLDialect dialect = render.dialect();
         SQLDialect family = dialect.family();
         boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(family);
         String[][] quotes = QUOTES.get(family);
@@ -1958,7 +1958,8 @@ final class Tools {
 
                     // [#4131] Consume the named bind variable
                 if (sqlChars[i] == ':')
-                    while (++i < sqlChars.length && isJavaIdentifierPart(sqlChars[i]));
+                    while (i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1]))
+                        i++;
 
                 QueryPart substitute = substitutes.get(substituteIndex++);
 

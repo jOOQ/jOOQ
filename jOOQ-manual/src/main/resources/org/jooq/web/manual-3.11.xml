@@ -18273,6 +18273,30 @@ org.jooq.util.GenerationTool.generate(
 ]]></java><html>
                         </html></content>
                     </section>
+
+                    <section id="codegen-system-properties">
+                        <title>System properties governing code generation</title>
+                        <content><html>
+                            <p>
+                                Regardless if you're using a standalone code generation configuration, or if you're generating code with <reference id="codegen-maven" title="Maven"/>, <reference id="codegen-ant" title="ant"/>, or <reference id="codegen-gradle" title="gradle"/>, you can always provide default values for certain configuration elements through the following system properties:
+                            </p>
+
+                            <ul>
+                                <li><code>-Djooq.codegen.configurationFile</code> (path): Specify an external configuration file, rather than using the inline configuration, e.g. in Maven</li>
+                                <li><code>-Djooq.codegen.jdbc.driver</code> (class name): The JDBC driver to use for JDBC connection based code generation</li>
+                                <li><code>-Djooq.codegen.jdbc.url</code> (url): The JDBC URL to use for JDBC connection based code generation</li>
+                                <li><code>-Djooq.codegen.jdbc.user</code> (string): The JDBC user name to use for JDBC connection based code generation</li>
+                                <li><code>-Djooq.codegen.jdbc.username</code> (string, same as user): The JDBC user name to use for JDBC connection based code generation</li>
+                                <li><code>-Djooq.codegen.jdbc.password</code> (string): The JDBC password to use for JDBC connection based code generation</li>
+                                <li><code>-Djooq.codegen.logging</code> (TRACE, DEBUG, INFO, WARN, ERROR, FATAL): The log level to use</li>
+                                <li><code>-Djooq.codegen.skip</code> (boolean): Allows for skipping the execution of jOOQ code generation. Useful for larger builds, e.g. with Maven</li>
+                            </ul>
+
+                            <p>
+                                In case of conflict between the above default value and a more concrete, local configuration, the latter prevails and the default is overridden.
+                            </p>
+                        </html></content>
+                    </section>
 				</sections>
 			</section>
 

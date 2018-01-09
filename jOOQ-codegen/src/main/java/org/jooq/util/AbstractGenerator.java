@@ -94,6 +94,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalQueueReferences      = true;
     boolean                            generateGlobalLinkReferences       = true;
     boolean                            generateGlobalKeyReferences        = true;
+    boolean                            generateJavadoc                    = true;
     boolean                            generateComments                   = true;
     boolean                            generateCommentsOnAttributes       = true;
     boolean                            generateCommentsOnCatalogs         = true;
@@ -568,6 +569,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateKeys(boolean keys) {
         this.generateKeys = keys;
+    }
+
+    @Override
+    public boolean generateJavadoc() {
+        return generateJavadoc;
+    }
+
+    @Override
+    public void setGenerateJavadoc(boolean javadoc) {
+        this.generateJavadoc = javadoc;
     }
 
     @Override

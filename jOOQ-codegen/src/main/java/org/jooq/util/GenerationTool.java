@@ -642,6 +642,8 @@ public class GenerationTool {
                 generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
             if (g.getGenerate().isGlobalKeyReferences() != null)
                 generator.setGenerateGlobalKeyReferences(g.getGenerate().isGlobalKeyReferences());
+            if (g.getGenerate().isJavadoc() != null)
+                generator.setGenerateJavadoc(g.getGenerate().isJavadoc());
             if (g.getGenerate().isComments() != null)
                 generator.setGenerateComments(g.getGenerate().isComments());
             if (g.getGenerate().isCommentsOnAttributes() != null)

@@ -968,6 +968,10 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global key references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="javadoc" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of Javadoc on all objects.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="comments" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all objects.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

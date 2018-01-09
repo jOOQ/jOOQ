@@ -107,6 +107,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean globalKeyReferences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean javadoc = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean comments = true;
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnCatalogs = true;
@@ -1021,6 +1023,30 @@ public class Generate implements Serializable
     }
 
     /**
+     * Turn off generation of Javadoc on all objects.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isJavadoc() {
+        return javadoc;
+    }
+
+    /**
+     * Sets the value of the javadoc property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setJavadoc(Boolean value) {
+        this.javadoc = value;
+    }
+
+    /**
      * Turn off generation of all SQL comments as Javadoc on all objects.
      *
      * @return
@@ -1751,6 +1777,11 @@ public class Generate implements Serializable
 
     public Generate withGlobalKeyReferences(Boolean value) {
         setGlobalKeyReferences(value);
+        return this;
+    }
+
+    public Generate withJavadoc(Boolean value) {
+        setJavadoc(value);
         return this;
     }
 

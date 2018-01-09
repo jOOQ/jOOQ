@@ -31,6 +31,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private static final String       IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
 
     private final Pattern             fullyQualifiedTypes;
+    private final boolean             javadoc;
     private final Set<String>         qualifiedTypes   = new TreeSet<String>();
     private final Map<String, String> unqualifiedTypes = new TreeMap<String, String>();
     private final String              className;
@@ -42,12 +43,17 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding) {
+        this(file, fullyQualifiedTypes, encoding, true);
+    }
+
+    public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc) {
         super(file, encoding);
 
         this.className = file.getName().replaceAll("\\.(java|scala)$", "");
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
+        this.javadoc = javadoc;
 
         if (isJava)
             tabString("    ");
@@ -66,19 +72,22 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter javadoc(String string, Object... args) {
-        final int t = tab();
-
-        // [#3450] [#4575] Must not print */ inside Javadoc
-        String escaped = escapeJavadoc(string);
-        Object[] escapedArgs = Arrays.copyOf(args, args.length);
-        for (int i = 0; i < escapedArgs.length; i++)
-            if (escapedArgs[i] instanceof String)
-                escapedArgs[i] = escapeJavadoc((String) escapedArgs[i]);
-
+        int t = tab();
         tab(t).println();
-        tab(t).println("/**");
-        tab(t).println(" * " + escaped, escapedArgs);
-        tab(t).println(" */");
+
+        if (javadoc) {
+
+            // [#3450] [#4575] Must not print */ inside Javadoc
+            String escaped = escapeJavadoc(string);
+            Object[] escapedArgs = Arrays.copyOf(args, args.length);
+            for (int i = 0; i < escapedArgs.length; i++)
+                if (escapedArgs[i] instanceof String)
+                    escapedArgs[i] = escapeJavadoc((String) escapedArgs[i]);
+
+            tab(t).println("/**");
+            tab(t).println(" * " + escaped, escapedArgs);
+            tab(t).println(" */");
+        }
 
         return this;
     }

@@ -394,6 +394,16 @@ public interface Generator {
     void setGenerateGlobalKeyReferences(boolean globalKeyReferences);
 
     /**
+     * Whether any Javadoc should be generated.
+     */
+    boolean generateJavadoc();
+
+    /**
+     * Whether any Javadoc should be generated.
+     */
+    void setGenerateJavadoc(boolean javadoc);
+
+    /**
      * Whether any SQL comments should be generated as Javadoc.
      */
     boolean generateComments();

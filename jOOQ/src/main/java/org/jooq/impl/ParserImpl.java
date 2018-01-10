@@ -235,7 +235,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -6241,7 +6240,6 @@ final class ParserImpl implements Parser {
         parseWhitespaceIf(ctx);
         int length = string.length();
 
-        ctx.expectedTokens.add(string);
         if (ctx.sql.length < ctx.position + length)
             return false;
 
@@ -6252,7 +6250,6 @@ final class ParserImpl implements Parser {
         }
 
         ctx.position = ctx.position + length;
-        ctx.expectedTokens.clear();
         return true;
     }
 
@@ -6281,14 +6278,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean parseKeywordIf(ParserContext ctx, String keyword) {
-        ctx.expectedTokens.add(keyword);
-
-        if (peekKeyword(ctx, keyword, true, false, false))
-            ctx.expectedTokens.clear();
-        else
-            return false;
-
-        return true;
+        return peekKeyword(ctx, keyword, true, false, false);
     }
 
     private static final Keyword parseAndGetKeyword(ParserContext ctx, String... keywords) {
@@ -6479,7 +6469,6 @@ final class ParserImpl implements Parser {
         private final DSLContext   dsl;
         private final String       sqlString;
         private final char[]       sql;
-        private final List<String> expectedTokens;
         private int                position = 0;
         private final Object[]     bindings;
         private int                bindIndex = 0;
@@ -6488,7 +6477,6 @@ final class ParserImpl implements Parser {
             this.dsl = dsl;
             this.sqlString = sqlString;
             this.sql = sqlString.toCharArray();
-            this.expectedTokens = new ArrayList<String>();
             this.bindings = bindings;
         }
 
@@ -6509,7 +6497,7 @@ final class ParserImpl implements Parser {
         }
 
         ParserException unexpectedToken() {
-            return new ParserException(mark(), "Expected tokens: " + new TreeSet<String>(expectedTokens));
+            return new ParserException(mark());
         }
 
         Object nextBinding() {

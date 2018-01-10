@@ -5413,16 +5413,14 @@ final class ParserImpl implements Parser {
         switch (ctx.character()) {
             case 'b':
             case 'B':
-                if (parseKeywordIf(ctx, "BIGINT UNSIGNED"))
-                    return SQLDataType.BIGINTUNSIGNED;
-                else if (parseKeywordIf(ctx, "BIGINT"))
-                    return SQLDataType.BIGINT;
+                if (parseKeywordIf(ctx, "BIGINT"))
+                    return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.BIGINT));
                 else if (parseKeywordIf(ctx, "BINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.BINARY);
                 else if (parseKeywordIf(ctx, "BIT"))
-                    return SQLDataType.BIT;
+                    return parseDataTypeLength(ctx, SQLDataType.BIT);
                 else if (parseKeywordIf(ctx, "BLOB"))
-                    return SQLDataType.BLOB;
+                    return parseDataTypeLength(ctx, SQLDataType.BLOB);
                 else if (parseKeywordIf(ctx, "BOOLEAN"))
                     return SQLDataType.BOOLEAN;
                 else
@@ -5445,7 +5443,7 @@ final class ParserImpl implements Parser {
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
                 else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
                          parseKeywordIf(ctx, "DOUBLE"))
-                    return SQLDataType.DOUBLE;
+                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.DOUBLE);
                 else
                     throw ctx.unexpectedToken();
 
@@ -5459,18 +5457,15 @@ final class ParserImpl implements Parser {
             case 'f':
             case 'F':
                 if (parseKeywordIf(ctx, "FLOAT"))
-                    return SQLDataType.FLOAT;
+                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.FLOAT);
                 else
                     throw ctx.unexpectedToken();
 
             case 'i':
             case 'I':
-                if (parseKeywordIf(ctx, "INTEGER UNSIGNED") ||
-                    parseKeywordIf(ctx, "INT UNSIGNED"))
-                    return SQLDataType.INTEGERUNSIGNED;
-                else if (parseKeywordIf(ctx, "INTEGER") ||
-                         parseKeywordIf(ctx, "INT"))
-                    return SQLDataType.INTEGER;
+                if (parseKeywordIf(ctx, "INTEGER") ||
+                    parseKeywordIf(ctx, "INT"))
+                    return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
                 else
                     throw ctx.unexpectedToken();
 
@@ -5493,10 +5488,8 @@ final class ParserImpl implements Parser {
             case 'M':
                 if (parseKeywordIf(ctx, "MEDIUMBLOB"))
                     return SQLDataType.BLOB;
-                else if (parseKeywordIf(ctx, "MEDIUMINT UNSIGNED"))
-                    return SQLDataType.INTEGERUNSIGNED;
                 else if (parseKeywordIf(ctx, "MEDIUMINT"))
-                    return SQLDataType.INTEGER;
+                    return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
                 else if (parseKeywordIf(ctx, "MEDIUMTEXT"))
                     return SQLDataType.CLOB;
                 else
@@ -5519,7 +5512,7 @@ final class ParserImpl implements Parser {
             case 'r':
             case 'R':
                 if (parseKeywordIf(ctx, "REAL"))
-                    return SQLDataType.REAL;
+                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.REAL);
                 else
                     throw ctx.unexpectedToken();
 
@@ -5531,17 +5524,15 @@ final class ParserImpl implements Parser {
                     return SQLDataType.BIGINT.identity(true);
                 else if (parseKeywordIf(ctx, "SET"))
                     return parseDataTypeEnum(ctx);
-                else if (parseKeywordIf(ctx, "SMALLINT UNSIGNED"))
-                    return SQLDataType.SMALLINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "SMALLINT"))
-                    return SQLDataType.SMALLINT;
+                    return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
                 else
                     throw ctx.unexpectedToken();
 
             case 't':
             case 'T':
                 if (parseKeywordIf(ctx, "TEXT"))
-                    return SQLDataType.CLOB;
+                    return parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB);
 
                 else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
                          parseKeywordIf(ctx, "TIMESTAMPTZ"))
@@ -5559,10 +5550,8 @@ final class ParserImpl implements Parser {
 
                 else if (parseKeywordIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
-                else if (parseKeywordIf(ctx, "TINYINT UNSIGNED"))
-                    return SQLDataType.TINYINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "TINYINT"))
-                    return SQLDataType.TINYINT;
+                    return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.TINYINT));
                 else if (parseKeywordIf(ctx, "TINYTEXT"))
                     return SQLDataType.CLOB;
                 else
@@ -5591,9 +5580,45 @@ final class ParserImpl implements Parser {
         throw ctx.unexpectedToken();
     }
 
+    private static final DataType<?> parseUnsigned(ParserContext ctx, DataType result) {
+        if (parseKeywordIf(ctx, "UNSIGNED"))
+            if (result == SQLDataType.TINYINT)
+                return SQLDataType.TINYINTUNSIGNED;
+            else if (result == SQLDataType.SMALLINT)
+                return SQLDataType.SMALLINTUNSIGNED;
+            else if (result == SQLDataType.INTEGER)
+                return SQLDataType.INTEGERUNSIGNED;
+            else if (result == SQLDataType.BIGINT)
+                return SQLDataType.BIGINTUNSIGNED;
+
+        return result;
+    }
+
+    private static final DataType<?> parseAndIgnoreDataTypeLength(ParserContext ctx, DataType<?> result) {
+        if (parseIf(ctx, '(')) {
+            parseUnsignedInteger(ctx);
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
     private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
             result = result.length((int) (long) parseUnsignedInteger(ctx));
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
+    private static final DataType<?> parseAndIgnoreDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {
+        if (parseIf(ctx, '(')) {
+            parseUnsignedInteger(ctx);
+
+            if (parseIf(ctx, ','))
+                parseUnsignedInteger(ctx);
+
             parse(ctx, ')');
         }
 

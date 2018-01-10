@@ -5402,6 +5402,13 @@ final class ParserImpl implements Parser {
                 else
                     throw ctx.unexpectedToken();
 
+            case 'e':
+            case 'E':
+                if (parseKeywordIf(ctx, "ENUM"))
+                    return parseDataTypeEnum(ctx);
+                else
+                    throw ctx.unexpectedToken();
+
             case 'f':
             case 'F':
                 if (parseKeywordIf(ctx, "FLOAT"))
@@ -5475,6 +5482,8 @@ final class ParserImpl implements Parser {
                     return SQLDataType.INTEGER.identity(true);
                 else if (parseKeywordIf(ctx, "SERIAL8"))
                     return SQLDataType.BIGINT.identity(true);
+                else if (parseKeywordIf(ctx, "SET"))
+                    return parseDataTypeEnum(ctx);
                 else if (parseKeywordIf(ctx, "SMALLINT UNSIGNED"))
                     return SQLDataType.SMALLINTUNSIGNED;
                 else if (parseKeywordIf(ctx, "SMALLINT"))
@@ -5557,6 +5566,19 @@ final class ParserImpl implements Parser {
         }
 
         return result;
+    }
+
+    private static final DataType<?> parseDataTypeEnum(ParserContext ctx) {
+        parse(ctx, '(');
+        List<String> literals = new ArrayList<String>();
+
+        do {
+            literals.add(parseStringLiteral(ctx));
+        }
+        while (parseIf(ctx, ','));
+
+        parse(ctx, ')');
+        return SQLDataType.VARCHAR;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

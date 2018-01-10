@@ -116,6 +116,7 @@ createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT E
 )
 break
 [ 'ON COMMIT' ( 'DELETE ROWS' | 'DROP' | 'PRESERVE ROWS' ) ]
+[ 'COMMENT' [ '=' ] stringLiteral ]
 ;
 
 createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] indexName break
@@ -237,10 +238,11 @@ column =
         [ identity ]
       ')'
     | 'PRIMARY KEY'
-    | 'UNIQUE'
+    | 'UNIQUE' [ 'KEY' | 'INDEX' ]
     | 'CHECK' '(' condition ')'
     | 'AUTO_INCREMENT'
     | 'AUTOINCREMENT'
+    | 'COMMENT' stringLiteral
     )
   }
 )
@@ -248,7 +250,7 @@ column =
 
 constraint =
   'PRIMARY KEY' '(' fieldNames ')'
-| 'UNIQUE' '(' fieldNames ')'
+| 'UNIQUE' [ 'KEY' | 'INDEX' ] '(' fieldNames ')'
 | 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCS' '(' fieldNames ')'
   {
     'ON' ( 'DELETE' | 'UPDATE' )
@@ -679,42 +681,44 @@ comparator = '=' | '!=' | '<>' | '>=' | '>' | '<=>' | '<=' | '<'
 dataType =
   'BIGINT' [ 'UNSIGNED' ]
 | 'BINARY' [ '(' unsignedInteger ')' ]
-| 'BIT'
-| 'BLOB'
+| 'BIT' [ '(' unsignedInteger ')' ]
+| 'BLOB' [ '(' unsignedInteger ')' ]
 | 'BOOLEAN'
 | 'CHAR' [ '(' unsignedInteger ')' ]
 | 'CLOB' [ '(' unsignedInteger ')' ]
 | 'DATE'
 | 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
-| 'DOUBLE' [ 'PRECISION' ]
-| 'FLOAT'
-| 'INT' [ 'UNSIGNED' ]
-| 'INTEGER' [ 'UNSIGNED' ]
+| 'DOUBLE' [ 'PRECISION' ] [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
+| 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')'
+| 'FLOAT' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
+| 'INT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
+| 'INTEGER' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'LONGBLOB'
 | 'LONGTEXT'
 | 'LONG NVARCHAR' [ '(' unsignedInteger ')' ]
 | 'LONG VARBINARY' [ '(' unsignedInteger ')' ]
 | 'LONG VARCHAR' [ '(' unsignedInteger ')' ]
 | 'MEDIUMBLOB'
-| 'MEDIUMINT' [ 'UNSIGNED' ]
+| 'MEDIUMINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'MEDIUMTEXT'
 | 'NCHAR' [ '(' unsignedInteger ')' ]
 | 'NCLOB'
 | 'NUMBER' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NUMERIC' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NVARCHAR' [ '(' unsignedInteger ')' ]
-| 'REAL' [ '(' unsignedInteger ')' ]
+| 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'SERIAL'
 | 'SERIAL4'
 | 'SERIAL8'
-| 'SMALLINT' [ 'UNSIGNED' ]
-| 'TEXT'
+| 'SET' '(' stringLiteral [ ',' stringLiteral ] ')'
+| 'SMALLINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
+| 'TEXT' [ '(' unsignedInteger ')' ]
 | 'TIMESTAMP' [ 'WITH TIME ZONE' ]
 | 'TIMESTAMPTZ'
 | 'TIME' [ 'WITH TIME ZONE' ]
 | 'TIMETZ'
 | 'TINYBLOB'
-| 'TINYINT' [ 'UNSIGNED' ]
+| 'TINYINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'TINYTEXT'
 | 'UUID'
 | 'VARCHAR' [ '(' unsignedInteger ')' ]

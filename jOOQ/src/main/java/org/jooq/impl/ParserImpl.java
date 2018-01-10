@@ -1749,6 +1749,9 @@ final class ParserImpl implements Parser {
                             continue;
                         }
                         else if (parseKeywordIf(ctx, "UNIQUE")) {
+                            if (!parseKeywordIf(ctx, "KEY"))
+                                parseKeywordIf(ctx, "INDEX");
+
                             constraints.add(unique(fieldName));
                             unique = true;
                             continue;
@@ -1805,8 +1808,12 @@ final class ParserImpl implements Parser {
                         primary = true;
                         constraints.add(parsePrimaryKeySpecification(ctx, constraint));
                     }
-                    else if (parseKeywordIf(ctx, "UNIQUE"))
+                    else if (parseKeywordIf(ctx, "UNIQUE")) {
+                        if (!parseKeywordIf(ctx, "KEY"))
+                            parseKeywordIf(ctx, "INDEX");
+
                         constraints.add(parseUniqueSpecification(ctx, constraint));
+                    }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY"))
                         constraints.add(parseForeignKeySpecification(ctx, constraint));
                     else if (parseKeywordIf(ctx, "CHECK"))
@@ -2086,8 +2093,12 @@ final class ParserImpl implements Parser {
 
                     if (parseKeywordIf(ctx, "PRIMARY KEY"))
                         return s1.add(parsePrimaryKeySpecification(ctx, constraint));
-                    else if (parseKeywordIf(ctx, "UNIQUE"))
+                    else if (parseKeywordIf(ctx, "UNIQUE")) {
+                        if (!parseKeywordIf(ctx, "KEY"))
+                            parseKeywordIf(ctx, "INDEX");
+
                         return s1.add(parseUniqueSpecification(ctx, constraint));
+                    }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY"))
                         return s1.add(parseForeignKeySpecification(ctx, constraint));
                     else if (parseKeywordIf(ctx, "CHECK"))

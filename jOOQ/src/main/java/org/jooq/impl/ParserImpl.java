@@ -5578,6 +5578,8 @@ final class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         parse(ctx, ')');
+
+        // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
         return SQLDataType.VARCHAR;
     }
 

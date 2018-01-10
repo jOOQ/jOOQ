@@ -75,6 +75,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -5815,7 +5816,7 @@ public class DSL {
      */
     @Support
     public static Comment comment(String comment) {
-        return new CommentImpl(comment);
+        return isEmpty(comment) ? CommentImpl.NO_COMMENT : new CommentImpl(comment);
     }
 
     // -------------------------------------------------------------------------
@@ -9124,6 +9125,28 @@ public class DSL {
     }
 
     /**
+     * Create a qualified table, given its table name.
+     * <p>
+     * This constructs a table reference given the table's qualified name. jOOQ
+     * will render the table name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This table...
+     * tableByName("MY_SCHEMA", "MY_TABLE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE]
+     * </pre></code>
+     */
+    @Support
+    public static Table<Record> table(Name name, Comment comment) {
+        return new TableImpl<Record>(name, null, null, null, comment);
+    }
+
+    /**
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
@@ -9327,6 +9350,37 @@ public class DSL {
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<T>(name, type);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
+     *       .from(table(name("T_BOOK")))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     */
+    @Support
+    public static <T> Field<T> field(Name name, DataType<T> type, Comment comment) {
+        return new QualifiedField<T>(name, type, comment);
     }
 
     /**

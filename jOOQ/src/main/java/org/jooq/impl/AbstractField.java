@@ -63,7 +63,6 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.tools.Convert.FALSE_VALUES;
 import static org.jooq.tools.Convert.TRUE_VALUES;
-import static org.jooq.tools.StringUtils.defaultString;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -81,6 +80,7 @@ import org.jooq.Binding;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -114,19 +114,23 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private static final Clause[] CLAUSES          = { FIELD };
 
     private final Name            name;
-    private final String          comment;
+    private final Comment         comment;
     private final DataType<T>     dataType;
 
     AbstractField(Name name, DataType<T> type) {
-        this(name, type, null, type.getBinding());
+        this(name, type, null);
+    }
+
+    AbstractField(Name name, DataType<T> type, Comment comment) {
+        this(name, type, comment, type.getBinding());
     }
 
     @SuppressWarnings("unchecked")
-    AbstractField(Name name, DataType<T> type, String comment, Binding<?, T> binding) {
+    AbstractField(Name name, DataType<T> type, Comment comment, Binding<?, T> binding) {
         super();
 
         this.name = name;
-        this.comment = defaultString(comment);
+        this.comment = comment == null ? CommentImpl.NO_COMMENT : comment;
         this.dataType = type.asConvertedDataType((Binding<T, T>) binding);
     }
 
@@ -226,7 +230,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final String getComment() {
-        return comment;
+        return comment.getComment();
     }
 
     @Override

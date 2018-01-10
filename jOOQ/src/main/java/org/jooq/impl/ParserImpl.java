@@ -251,6 +251,8 @@ import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
@@ -259,6 +261,7 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
+import org.jooq.Context;
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
@@ -1598,8 +1601,33 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
+        final class MutableComment extends AbstractQueryPart implements Comment {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -5034168783226853829L;
+            private String            comment          = "";
+
+            @Override
+            public final void accept(Context<?> c) {
+                c.visit(inline(comment));
+            }
+
+            @Override
+            public final Clause[] clauses(Context<?> c) {
+                return null;
+            }
+
+            @Override
+            public final String getComment() {
+                return comment;
+            }
+        }
+
         boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
-        Table<?> tableName = parseTableName(ctx);
+        MutableComment tableComment = new MutableComment();
+        Table<?> tableName = DSL.table(parseTableName(ctx).getQualifiedName(), tableComment);
         CreateTableStorageStep storageStep;
 
         // [#5309] TODO: Move this after the column specification
@@ -1624,11 +1652,13 @@ final class ParserImpl implements Parser {
             do {
                 Name fieldName = parseIdentifier(ctx);
                 DataType<?> type = parseDataType(ctx);
+                Comment fieldComment = null;
 
                 boolean nullable = false;
                 boolean defaultValue = false;
                 boolean unique = false;
                 boolean identity = type.identity();
+                boolean comment = false;
 
                 for (;;) {
                     if (!nullable) {
@@ -1739,10 +1769,18 @@ final class ParserImpl implements Parser {
                         }
                     }
 
+
+                    if (!comment) {
+                        if (parseKeywordIf(ctx, "COMMENT")) {
+                            fieldComment = parseComment(ctx);
+                            continue;
+                        }
+                    }
+
                     break;
                 }
 
-                fields.add(field(fieldName, type));
+                fields.add(field(fieldName, type, fieldComment));
             }
             while (parseIf(ctx, ',')
                && (noConstraint =
@@ -1844,7 +1882,7 @@ final class ParserImpl implements Parser {
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
                 parseIf(ctx, '=');
-                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
+                tableComment.comment = parseStringLiteral(ctx);
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMPRESSION")) != null) {
                 parseIf(ctx, '=');
@@ -2066,10 +2104,12 @@ final class ParserImpl implements Parser {
 
                         Name fieldName = parseIdentifier(ctx);
                         DataType type = parseDataType(ctx);
+                        Comment fieldComment = null;
 
                         boolean nullable = false;
                         boolean defaultValue = false;
                         boolean unique = false;
+                        boolean comment = false;
 
                         for (;;) {
                             if (!nullable) {
@@ -2102,10 +2142,17 @@ final class ParserImpl implements Parser {
                             if (parseKeywordIf(ctx, "CHECK"))
                                 throw ctx.unexpectedToken();
 
+                            if (!comment) {
+                                if (parseKeywordIf(ctx, "COMMENT")) {
+                                    fieldComment = parseComment(ctx);
+                                    continue;
+                                }
+                            }
+
                             break;
                         }
 
-                        return s1.add(field(fieldName, type), type);
+                        return s1.add(field(fieldName, type, fieldComment), type);
                     }
                 }
                 else if (parseKeywordIf(ctx, "ALTER")) {
@@ -5615,6 +5662,10 @@ final class ParserImpl implements Parser {
             default:
                 throw ctx.exception("Illegal bind variable character");
         }
+    }
+
+    private static final Comment parseComment(ParserContext ctx) {
+        return DSL.comment(parseStringLiteral(ctx));
     }
 
     private static final String parseStringLiteral(ParserContext ctx) {

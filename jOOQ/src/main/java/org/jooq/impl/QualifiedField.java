@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -64,6 +65,12 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
 
     QualifiedField(Name name, DataType<T> type) {
         super(name, type);
+
+        this.name = name;
+    }
+
+    QualifiedField(Name name, DataType<T> type, Comment comment) {
+        super(name, type, comment);
 
         this.name = name;
     }

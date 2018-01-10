@@ -68,6 +68,7 @@ import java.util.stream.Stream;
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -113,7 +114,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     private Schema                tableschema;
     private final Name            tablename;
-    private final String          tablecomment;
+    private final Comment         tablecomment;
     private transient DataType<R> type;
 
     /**
@@ -137,7 +138,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      */
     @Deprecated
     AbstractTable(String name, Schema schema, String comment) {
-        this(DSL.name(name), schema, comment);
+        this(DSL.name(name), schema, DSL.comment(comment));
     }
 
     AbstractTable(Name name) {
@@ -148,10 +149,10 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         this(name, schema, null);
     }
 
-    AbstractTable(Name name, Schema schema, String comment) {
+    AbstractTable(Name name, Schema schema, Comment comment) {
         this.tableschema = schema;
         this.tablename = name;
-        this.tablecomment = comment;
+        this.tablecomment = comment == null ? CommentImpl.NO_COMMENT : comment;
     }
 
     // ------------------------------------------------------------------------
@@ -406,7 +407,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final String getComment() {
-        return tablecomment;
+        return tablecomment.getComment();
     }
 
     /**
@@ -573,7 +574,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
           : type.asConvertedDataType(actualBinding);
 
         // [#5999] TODO: Allow for user-defined Names
-        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(DSL.name(name), actualType, table, comment, actualBinding);
+        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(DSL.name(name), actualType, table, DSL.comment(comment), actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {

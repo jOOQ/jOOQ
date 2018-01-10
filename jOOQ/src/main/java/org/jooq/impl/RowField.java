@@ -68,7 +68,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, (DataType) SQLDataType.RECORD, "", binding(new Converter<Object, REC>() {
+        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(new Converter<Object, REC>() {
             @Override
             public REC from(final Object t) {
                 // So far, this is only supported for PostgreSQL

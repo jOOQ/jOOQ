@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -124,22 +125,30 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Name name) {
-        this(name, null, null, null, null);
+        this(name, null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema) {
-        this(name, schema, null, null, null);
+        this(name, schema, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased) {
-        this(name, schema, aliased, null, null);
+        this(name, schema, aliased, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        this(name, schema, aliased, parameters, null);
+        this(name, schema, aliased, parameters, (Comment) null);
     }
 
+    /**
+     * @deprecated - 3.11 - [#7027] - Use {@link #TableImpl(Name, Schema, Table, Field[], Comment)} instead.
+     */
+    @Deprecated
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
+        this(name, schema, aliased, parameters, DSL.comment(comment));
+    }
+
+    public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         super(name, schema, comment);
 
         this.fields = new Fields<R>();

@@ -44,6 +44,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import org.jooq.Binding;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Name;
@@ -64,7 +65,7 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
 
     private final Table<R>        table;
 
-    TableFieldImpl(Name name, DataType<T> type, Table<R> table, String comment, Binding<?, T> binding) {
+    TableFieldImpl(Name name, DataType<T> type, Table<R> table, Comment comment, Binding<?, T> binding) {
         super(name, type, comment, binding);
 
         this.table = table;

@@ -71,6 +71,24 @@ import org.jooq.impl.DSL;
 public interface AlterTableStep {
 
     /**
+     * Specify a comment for a table using MySQL's syntax.
+     *
+     * @see DSL#commentOnTable(Table)
+     * @see DSLContext#commentOnTable(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep comment(String comment);
+
+    /**
+     * Specify a comment for a table using MySQL's syntax.
+     *
+     * @see DSL#commentOnTable(Table)
+     * @see DSLContext#commentOnTable(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep comment(Comment comment);
+
+    /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

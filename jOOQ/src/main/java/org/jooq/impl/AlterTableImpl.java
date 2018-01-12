@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.index;
@@ -78,6 +79,7 @@ import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
+import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
@@ -134,6 +136,7 @@ import org.jooq.AlterTableRenameIndexToStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTableUsingIndexStep;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
@@ -180,6 +183,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private final boolean                    ifExists;
     private boolean                          ifExistsColumn;
     private boolean                          ifNotExistsColumn;
+    private Comment                          comment;
     private Table<?>                         renameTo;
     private Field<?>                         renameColumn;
     private Field<?>                         renameColumnTo;
@@ -215,6 +219,17 @@ final class AlterTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final AlterTableImpl comment(String c) {
+        return comment(DSL.comment(c));
+    }
+
+    @Override
+    public final AlterTableImpl comment(Comment c) {
+        this.comment = c;
+        return this;
+    }
 
     @Override
     public final AlterTableImpl renameTo(Table<?> newName) {
@@ -652,6 +667,18 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
+        if (comment != null) {
+            switch (family) {
+                case MARIADB:
+                case MYSQL:
+                    break;
+
+                default:
+                    ctx.visit(commentOnTable(table).is(comment));
+                    return;
+            }
+        }
+
 
 
 
@@ -710,9 +737,9 @@ final class AlterTableImpl extends AbstractQuery implements
         SQLDialect family = ctx.family();
 
         boolean omitAlterTable =
-               (family == HSQLDB && renameConstraint != null)
-            || (family == DERBY && renameColumn != null);
-        boolean renameTable = SUPPORT_RENAME_TABLE.contains(family) && renameTo != null;
+               (renameConstraint != null && family == HSQLDB)
+            || (renameColumn != null && family == DERBY);
+        boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(family);
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
@@ -727,7 +754,10 @@ final class AlterTableImpl extends AbstractQuery implements
                .formatSeparator();
         }
 
-        if (renameTo != null) {
+        if (comment != null) {
+            ctx.visit(K_COMMENT).sql(' ').visit(comment);
+        }
+        else if (renameTo != null) {
             boolean qualify = ctx.qualify();
 
             ctx.start(ALTER_TABLE_RENAME)

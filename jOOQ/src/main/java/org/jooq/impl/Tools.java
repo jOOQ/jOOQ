@@ -544,7 +544,9 @@ final class Tools {
      * <a href=
      * "https://www.postgresql.org/docs/9.5/static/functions-json.html">https://www.postgresql.org/docs/current/static/functions-json.html</a>,
      * <a href=
-     * "https://www.postgresql.org/docs/current/static/ltree.html">https://www.postgresql.org/docs/current/static/ltree.html</a>.
+     * "https://www.postgresql.org/docs/current/static/ltree.html">https://www.postgresql.org/docs/current/static/ltree.html</a>,
+     * <a href=
+     * "https://www.postgresql.org/docs/current/static/functions-geometry.html">https://www.postgresql.org/docs/current/static/functions-geometry.html</a>.
      * <p>
      * [#5307] Known PostgreSQL JSON operators:
      * <ul>
@@ -552,13 +554,20 @@ final class Tools {
      * <li>?&</li>
      * </ul>
      * <p>
-     * Known PostgreSQL LTREE operators:
+     * [#7035] Known PostgreSQL LTREE operators:
      * <ul>
      * <li>? (we cannot handle this one)</li>
      * <li>?@&gt;</li>
      * <li>?&lt;@</li>
      * <li>?~</li>
      * <li>?@</li>
+     * </ul>
+     * <p>
+     * [#7037] Known PostgreSQL Geometry operators:
+     * <ul>
+     * <li>?#</li>
+     * <li>?-</li>
+     * <li>?|</li>
      * </ul>
      */
     private static final String[] NON_BIND_VARIABLE_SUFFIXES                   = {
@@ -567,7 +576,9 @@ final class Tools {
         "&",
         "@",
         "<",
-        "~"
+        "~",
+        "#",
+        "-"
     };
 
     /**

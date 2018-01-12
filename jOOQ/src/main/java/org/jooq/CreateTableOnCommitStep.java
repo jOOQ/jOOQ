@@ -58,7 +58,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableStorageStep onCommitDeleteRows();
+    CreateTableCommentStep onCommitDeleteRows();
 
     /**
      * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
@@ -69,7 +69,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableStorageStep onCommitPreserveRows();
+    CreateTableCommentStep onCommitPreserveRows();
 
     /**
      * Add an <code>ON COMMIT DROP</code> clause.
@@ -80,5 +80,5 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ POSTGRES })
-    CreateTableStorageStep onCommitDrop();
+    CreateTableCommentStep onCommitDrop();
 }

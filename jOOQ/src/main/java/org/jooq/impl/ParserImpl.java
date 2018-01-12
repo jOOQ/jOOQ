@@ -250,7 +250,6 @@ import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
@@ -260,12 +259,12 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
-import org.jooq.Context;
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
+import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableStorageStep;
 import org.jooq.DDLQuery;
@@ -1600,33 +1599,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
-        final class MutableComment extends AbstractQueryPart implements Comment {
-
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -5034168783226853829L;
-            private String            comment          = "";
-
-            @Override
-            public final void accept(Context<?> c) {
-                c.visit(inline(comment));
-            }
-
-            @Override
-            public final Clause[] clauses(Context<?> c) {
-                return null;
-            }
-
-            @Override
-            public final String getComment() {
-                return comment;
-            }
-        }
-
         boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
-        MutableComment tableComment = new MutableComment();
-        Table<?> tableName = DSL.table(parseTableName(ctx).getQualifiedName(), tableComment);
+        Table<?> tableName = DSL.table(parseTableName(ctx).getQualifiedName());
+        CreateTableCommentStep commentStep;
         CreateTableStorageStep storageStep;
 
         // [#5309] TODO: Move this after the column specification
@@ -1639,7 +1614,7 @@ final class ParserImpl implements Parser {
                     ? ctx.dsl.createTemporaryTable(tableName)
                     : ctx.dsl.createTable(tableName);
 
-            storageStep = s1.as(select);
+            storageStep = commentStep = s1.as(select);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -1834,7 +1809,7 @@ final class ParserImpl implements Parser {
             CreateTableConstraintStep s3 = constraints.isEmpty()
                 ? s2
                 : s2.constraints(constraints);
-            CreateTableStorageStep s4 = s3;
+            CreateTableCommentStep s4 = s3;
 
             if (temporary && parseKeywordIf(ctx, "ON COMMIT")) {
                 if (parseKeywordIf(ctx, "DELETE ROWS"))
@@ -1847,10 +1822,11 @@ final class ParserImpl implements Parser {
                     throw ctx.unexpectedToken();
             }
 
-            storageStep = s4;
+            storageStep = commentStep = s4;
         }
 
         List<SQL> storage = new ArrayList<SQL>();
+        Comment comment = null;
 
         storageLoop:
         for (boolean first = true;; first = false) {
@@ -1888,7 +1864,7 @@ final class ParserImpl implements Parser {
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
                 parseIf(ctx, '=');
-                tableComment.comment = parseStringLiteral(ctx);
+                comment = parseComment(ctx);
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMPRESSION")) != null) {
                 parseIf(ctx, '=');
@@ -1975,6 +1951,9 @@ final class ParserImpl implements Parser {
             else
                 throw ctx.expected("storage clause after ','");
         }
+
+        if (comment != null)
+            storageStep = commentStep.comment(comment);
 
         if (storage.size() > 0)
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));

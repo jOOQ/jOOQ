@@ -542,18 +542,32 @@ final class Tools {
      * rather than a JDBC bind variable. This is particularly useful to prevent
      * parsing PostgreSQL operators as bind variables, as can be seen here:
      * <a href=
-     * "https://www.postgresql.org/docs/9.5/static/functions-json.html">https://www.postgresql.org/docs/9.5/static/functions-json.html</a>
+     * "https://www.postgresql.org/docs/9.5/static/functions-json.html">https://www.postgresql.org/docs/current/static/functions-json.html</a>,
+     * <a href=
+     * "https://www.postgresql.org/docs/current/static/ltree.html">https://www.postgresql.org/docs/current/static/ltree.html</a>.
      * <p>
-     * Known PostgreSQL JSON operators:
+     * [#5307] Known PostgreSQL JSON operators:
      * <ul>
      * <li>?|</li>
      * <li>?&</li>
+     * </ul>
+     * <p>
+     * Known PostgreSQL LTREE operators:
+     * <ul>
+     * <li>? (we cannot handle this one)</li>
+     * <li>?@&gt;</li>
+     * <li>?&lt;@</li>
+     * <li>?~</li>
+     * <li>?@</li>
      * </ul>
      */
     private static final String[] NON_BIND_VARIABLE_SUFFIXES                   = {
         "?",
         "|",
-        "&"
+        "&",
+        "@",
+        "<",
+        "~"
     };
 
     /**

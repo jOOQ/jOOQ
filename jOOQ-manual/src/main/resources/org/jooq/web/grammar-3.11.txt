@@ -234,6 +234,7 @@ column =
     (
       [ 'NOT' ] 'NULL'
     | 'DEFAULT' [ 'ON NULL' ] concat
+    | 'ON UPDATE' concat
     | 'GENERATED' ( 'ALWAYS' | 'BY DEFAULT' [ 'ON NULL' ] ) 'AS IDENTITY' '('
         [ identity ]
       ')'

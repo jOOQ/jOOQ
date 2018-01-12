@@ -1630,6 +1630,7 @@ final class ParserImpl implements Parser {
 
                 boolean nullable = false;
                 boolean defaultValue = false;
+                boolean onUpdate = false;
                 boolean unique = false;
                 boolean identity = type.identity();
                 boolean comment = false;
@@ -1711,6 +1712,16 @@ final class ParserImpl implements Parser {
                             type = type.identity(true);
                             defaultValue = true;
                             identity = true;
+                            continue;
+                        }
+                    }
+
+                    if (!onUpdate) {
+                        if (parseKeywordIf(ctx, "ON UPDATE")) {
+
+                            // [#6132] TODO: Support this feature in the jOOQ DDL API
+                            parseConcat(ctx, null);
+                            onUpdate = true;
                             continue;
                         }
                     }
@@ -2097,6 +2108,7 @@ final class ParserImpl implements Parser {
 
                         boolean nullable = false;
                         boolean defaultValue = false;
+                        boolean onUpdate = false;
                         boolean unique = false;
                         boolean comment = false;
 
@@ -2118,6 +2130,16 @@ final class ParserImpl implements Parser {
                                 if (parseKeywordIf(ctx, "DEFAULT")) {
                                     type = type.defaultValue(toField(ctx, parseConcat(ctx, null)));
                                     defaultValue = true;
+                                    continue;
+                                }
+                            }
+
+                            if (!onUpdate) {
+                                if (parseKeywordIf(ctx, "ON UPDATE")) {
+
+                                    // [#6132] TODO: Support this feature in the jOOQ DDL API
+                                    parseConcat(ctx, null);
+                                    onUpdate = true;
                                     continue;
                                 }
                             }

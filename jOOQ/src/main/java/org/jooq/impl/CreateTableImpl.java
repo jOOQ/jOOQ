@@ -61,6 +61,7 @@ import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
@@ -84,15 +85,12 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
-import org.jooq.CreateTableConstraintStep;
-import org.jooq.CreateTableFinalStep;
-import org.jooq.CreateTableOnCommitStep;
-import org.jooq.CreateTableStorageStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -131,6 +129,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final boolean                    temporary;
     private final boolean                    ifNotExists;
     private OnCommit                         onCommit;
+    private Comment                          comment;
     private SQL                              storage;
 
     CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
@@ -149,24 +148,24 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateTableOnCommitStep as(Select<? extends R> s) {
+    public final CreateTableImpl<R> as(Select<? extends R> s) {
         this.select = s;
         return this;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final CreateTableColumnStep column(Field<?> field) {
+    public final CreateTableImpl<R> column(Field<?> field) {
         return column((Field) field, field.getDataType());
     }
 
     @Override
-    public final CreateTableColumnStep columns(Field<?>... fields) {
+    public final CreateTableImpl<R> columns(Field<?>... fields) {
         return columns(Arrays.asList(fields));
     }
 
     @Override
-    public final CreateTableColumnStep columns(Collection<? extends Field<?>> fields) {
+    public final CreateTableImpl<R> columns(Collection<? extends Field<?>> fields) {
         for (Field<?> field : fields)
             column(field);
 
@@ -174,76 +173,87 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final <T> CreateTableColumnStep column(Field<T> field, DataType<T> type) {
+    public final <T> CreateTableImpl<R> column(Field<T> field, DataType<T> type) {
         columnFields.add(field);
         columnTypes.add(type);
         return this;
     }
 
     @Override
-    public final CreateTableColumnStep column(Name field, DataType<?> type) {
+    public final CreateTableImpl<R> column(Name field, DataType<?> type) {
         columnFields.add(field(field, type));
         columnTypes.add(type);
         return this;
     }
 
     @Override
-    public final CreateTableColumnStep column(String field, DataType<?> type) {
+    public final CreateTableImpl<R> column(String field, DataType<?> type) {
         return column(name(field), type);
     }
 
     @Override
-    public final CreateTableConstraintStep constraint(Constraint c) {
+    public final CreateTableImpl<R> constraint(Constraint c) {
         return constraints(Arrays.asList(c));
     }
 
     @Override
-    public final CreateTableConstraintStep constraints(Constraint... c) {
+    public final CreateTableImpl<R> constraints(Constraint... c) {
         return constraints(Arrays.asList(c));
     }
 
     @Override
-    public final CreateTableConstraintStep constraints(Collection<? extends Constraint> c) {
+    public final CreateTableImpl<R> constraints(Collection<? extends Constraint> c) {
         constraints.addAll(c);
         return this;
     }
 
     @Override
-    public final CreateTableStorageStep onCommitDeleteRows() {
+    public final CreateTableImpl<R> onCommitDeleteRows() {
         onCommit = OnCommit.DELETE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableStorageStep onCommitPreserveRows() {
+    public final CreateTableImpl<R> onCommitPreserveRows() {
         onCommit = OnCommit.PRESERVE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableStorageStep onCommitDrop() {
+    public final CreateTableImpl<R> onCommitDrop() {
         onCommit = OnCommit.DROP;
         return this;
     }
 
     @Override
-    public final CreateTableFinalStep storage(SQL sql) {
+    public final CreateTableImpl<R> comment(String c) {
+        return comment(DSL.comment(c));
+    }
+
+    @Override
+    public final CreateTableImpl<R> comment(Comment c) {
+        comment = c;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl<R> storage(SQL sql) {
         storage = sql;
         return this;
     }
 
     @Override
-    public final CreateTableFinalStep storage(String sql) {
+    public final CreateTableImpl<R> storage(String sql) {
         return storage(sql(sql));
     }
 
     @Override
-    public final CreateTableFinalStep storage(String sql, Object... bindings) {
+    public final CreateTableImpl<R> storage(String sql, Object... bindings) {
         return storage(sql(sql, bindings));
     }
 
     @Override
-    public final CreateTableFinalStep storage(String sql, QueryPart... parts) {
+    public final CreateTableImpl<R> storage(String sql, QueryPart... parts) {
         return storage(sql(sql, parts));
     }
 
@@ -327,6 +337,10 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             toSQLOnCommit(ctx);
         }
+
+        if (comment != null)
+            ctx.formatSeparator()
+               .visit(K_COMMENT).sql(' ').visit(comment);
 
         if (storage != null)
             ctx.formatSeparator()

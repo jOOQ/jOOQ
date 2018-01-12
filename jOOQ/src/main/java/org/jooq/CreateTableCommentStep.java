@@ -37,48 +37,26 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-
-import org.jooq.impl.DSL;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 
 /**
  * A {@link Query} that can create tables.
  *
  * @author Lukas Eder
  */
-public interface CreateTableOnCommitStep extends CreateTableCommentStep {
+public interface CreateTableCommentStep extends CreateTableStorageStep {
 
     /**
-     * Add an <code>ON COMMIT DELETE ROWS</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
+     * Add a comment to the table.
      */
-    @Support({ POSTGRES })
-    CreateTableStorageStep onCommitDeleteRows();
+    @Support({ MARIADB, MYSQL })
+    CreateTableStorageStep comment(String comment);
 
     /**
-     * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
+     * Add a comment to the table.
      */
-    @Support({ POSTGRES })
-    CreateTableStorageStep onCommitPreserveRows();
+    @Support({ MARIADB, MYSQL })
+    CreateTableStorageStep comment(Comment comment);
 
-    /**
-     * Add an <code>ON COMMIT DROP</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
-     */
-    @Support({ POSTGRES })
-    CreateTableStorageStep onCommitDrop();
 }

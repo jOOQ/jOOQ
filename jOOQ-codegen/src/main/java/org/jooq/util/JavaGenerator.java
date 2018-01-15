@@ -2751,8 +2751,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public class Tables {");
 
         for (TableDefinition table : database.getTables(schema)) {
-
-            final String className = out.ref(getStrategy().getFullJavaClassName(table));
+            final String className = scala
+                ? ""
+                : out.ref(getStrategy().getFullJavaClassName(table));
             final String id = getStrategy().getJavaIdentifier(table);
             final String fullId = getStrategy().getFullJavaIdentifier(table);
             final String comment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()

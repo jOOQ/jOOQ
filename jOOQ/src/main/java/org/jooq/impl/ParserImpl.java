@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
@@ -3264,7 +3265,9 @@ final class ParserImpl implements Parser {
             case 'a':
             case 'A':
                 if (N.is(type))
-                    if ((field = parseFieldAsciiIf(ctx)) != null)
+                    if (parseFunctionNameIf(ctx, "ABS"))
+                        return abs((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseFieldAsciiIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "ACOS"))
                         return acos((Field) parseFieldSumParenthesised(ctx));

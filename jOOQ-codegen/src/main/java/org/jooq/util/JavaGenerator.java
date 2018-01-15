@@ -2766,7 +2766,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc(comment);
 
                 if (scala)
-                	out.tab(1).println("val %s = %s", id, fullId);
+                	out.tab(1).println("val %s : %s = %s", id, className, fullId);
                 else
                 	out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
             }

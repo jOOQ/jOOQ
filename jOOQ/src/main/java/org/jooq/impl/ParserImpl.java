@@ -3643,6 +3643,34 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case '{':
+                parse(ctx, '{');
+
+                switch (ctx.character()) {
+                    case 'd':
+                    case 'D':
+                        parseKeyword(ctx, "D");
+                        field = inline(parseDateLiteral(ctx));
+                        break;
+
+                    case 't':
+                    case 'T':
+                        if (parseKeywordIf(ctx, "TS")) {
+                            field = inline(parseTimestampLiteral(ctx));
+                        }
+                        else {
+                            parseKeyword(ctx, "T");
+                            field = inline(parseTimeLiteral(ctx));
+                        }
+                        break;
+
+                    default:
+                        throw ctx.unexpectedToken();
+                }
+
+                parse(ctx, '}');
+                return field;
+
             case '(':
                 parse(ctx, '(');
 

@@ -2,6 +2,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 ------------------------------------------------------------------------
 - Aaron Digulla
 - Andreas Franzén
+- Anuraag Agrawal
 - Arnaud Roger
 - Art O Cathain
 - Artur Dryomov
@@ -11,6 +12,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Christopher Deckers
 - Ed Schaller
 - Eric Peters
+- Ernest Mishkin
 - Espen Stromsnes
 - Eugeny Karpov
 - Fabrice Le Roy
@@ -39,12 +41,14 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Sander Plas
 - Sean Wellington
 - Sergey Epik
+- Sergey Zhuravlev
 - Stanislas Nanchen
 - Stephan Schroevers
 - Sugiharto Lim
 - Sven Jacobs
 - Szymon Jachim
 - Terence Zhang
+- Timur Shaidullin
 - Thomas Darimont
 - Tsukasa Kitachi
 - Vladimir Kulev

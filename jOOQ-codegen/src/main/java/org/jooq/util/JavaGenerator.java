@@ -3038,13 +3038,13 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final void generatePojo0(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+        final String interfaceName = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableOrUDT, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.POJO));
         final List<String> superTypes = list(superName, interfaces);
 
-        if (generateInterfaces()) {
-            interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE)));
-        }
+        if (generateInterfaces())
+            interfaces.add(interfaceName);
 
         printPackage(out, tableOrUDT, Mode.POJO);
 
@@ -3124,11 +3124,11 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        // [#1363] copy constructor
+        // [#1363] [#7055] copy constructor
         out.println();
 
         if (scala) {
-            out.tab(1).println("def this (value : %s) = {", className, className);
+            out.tab(1).println("def this (value : %s) = {", generateInterfaces() ? interfaceName : className);
             out.tab(2).println("this(");
 
             String separator = "  ";
@@ -3136,7 +3136,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(3).println("%svalue.%s",
                     separator,
                     getStrategy().getJavaMemberName(column, Mode.POJO),
-                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                    generateInterfaces()
+                        ? getStrategy().getJavaMemberName(column, Mode.INTERFACE)
+                        : getStrategy().getJavaMemberName(column, Mode.POJO));
 
                 separator = ", ";
             }
@@ -3145,12 +3147,17 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
         else {
-            out.tab(1).println("public %s(%s value) {", className, className);
+            out.tab(1).println("public %s(%s value) {", className, generateInterfaces() ? interfaceName : className);
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                out.tab(2).println("this.%s = value.%s;",
+                out.tab(2).println("this.%s = value.%s%s;",
                     getStrategy().getJavaMemberName(column, Mode.POJO),
-                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                    generateInterfaces()
+                        ? getStrategy().getJavaGetterName(column, Mode.INTERFACE)
+                        : getStrategy().getJavaMemberName(column, Mode.POJO),
+                    generateInterfaces()
+                        ? "()"
+                        : "");
             }
 
             out.tab(1).println("}");

@@ -3038,7 +3038,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final void generatePojo0(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
-        final String interfaceName = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
+        final String interfaceName = generateInterfaces()
+            ? out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE))
+            : "";
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableOrUDT, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.POJO));
         final List<String> superTypes = list(superName, interfaces);

@@ -3251,7 +3251,7 @@ final class ParserImpl implements Parser {
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
         parseWhitespaceIf(ctx);
 
-        Field<?> field;
+        FieldOrRow field;
         Object value;
 
         switch (ctx.character()) {
@@ -3654,6 +3654,15 @@ final class ParserImpl implements Parser {
                     case 'D':
                         parseKeyword(ctx, "D");
                         field = inline(parseDateLiteral(ctx));
+                        break;
+
+                    case 'f':
+                    case 'F':
+                        parseKeyword(ctx, "FN");
+
+                        // TODO: Limit the supported expressions in this context to the ones specified here:
+                        // http://download.oracle.com/otn-pub/jcp/jdbc-4_2-mrel2-eval-spec/jdbc4.2-fr-spec.pdf
+                        field = parseTerm(ctx, type);
                         break;
 
                     case 't':

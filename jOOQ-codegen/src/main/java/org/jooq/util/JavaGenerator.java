@@ -3643,8 +3643,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : %s, aliased : %s[%s], parameters : %s[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, DSL.comment(\"%s\"))[[before= with ][separator= with ][%s]] {",
-                    className, Name.class, Table.class, recordType, out.ref("scala.Array"), Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
+            out.println("class %s(alias : %s, aliased : %s[%s], parameters : %s[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, %s.comment(\"%s\"))[[before= with ][separator= with ][%s]] {",
+                    className, Name.class, Table.class, recordType, out.ref("scala.Array"), Field.class, TableImpl.class, recordType, schemaId, DSL.class, escapeString(comment), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -3754,7 +3754,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println();
             out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
-            out.tab(2).println("super(alias, null, aliased, parameters, \"%s\");", escapeString(comment));
+            out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"));", DSL.class, escapeString(comment));
             out.tab(1).println("}");
         }
 

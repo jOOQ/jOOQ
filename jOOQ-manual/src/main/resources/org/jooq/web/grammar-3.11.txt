@@ -627,6 +627,10 @@ term =
 | unsignedNumericLiteral
 | '(' select ')'
 | '(' fields ')'
+| '{' 'd' stringLiteral '}'
+| '{' 't' stringLiteral '}'
+| '{' 'fn' term '}'
+| '{' 'ts' stringLiteral '}'
 ;
 
 truthValue = 'TRUE' | 'FALSE' | 'NULL'

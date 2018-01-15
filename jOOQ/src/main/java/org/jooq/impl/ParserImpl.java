@@ -5450,6 +5450,8 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DATE"))
                     return SQLDataType.DATE;
+                else if (parseKeywordIf(ctx, "DATETIME"))
+                    return SQLDataType.TIMESTAMP;
                 else if (parseKeywordIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
                 else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||

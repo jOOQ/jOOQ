@@ -3075,7 +3075,7 @@ public class JavaGenerator extends AbstractGenerator {
                     separator,
                     generateImmutablePojos() ? "" : "private var ",
                     getStrategy().getJavaMemberName(column, Mode.POJO),
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength));
+                    out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
 
                 separator = ", ";
             }
@@ -3520,7 +3520,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.tab(2).println();
-            out.tab(2).println("sb.append(\")\");");
+            out.tab(2).println("sb.append(\")\")");
 
             out.tab(2).println("return sb.toString");
             out.tab(1).println("}");

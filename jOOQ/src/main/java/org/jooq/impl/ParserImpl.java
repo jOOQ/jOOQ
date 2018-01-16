@@ -373,12 +373,14 @@ final class ParserImpl implements Parser {
     public final Queries parse(String sql, Object... bindings) {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         List<Query> result = new ArrayList<Query>();
+
         do {
+            parseDelimiters(ctx);
             Query query = parseQuery(ctx, false);
             if (query != null)
                 result.add(query);
         }
-        while (parseIf(ctx, ";"));
+        while (parseIf(ctx, ctx.delimiter));
 
         ctx.done("Unexpected content after end of queries input");
         return dsl.queries(result);
@@ -480,6 +482,15 @@ final class ParserImpl implements Parser {
 
         ctx.done("Unexpected content after end of name input");
         return result;
+    }
+
+    private static final void parseDelimiters(ParserContext ctx) {
+        while (parseKeywordIf(ctx, "DELIMITER")) {
+            if (ctx.character() != ' ')
+                throw ctx.unexpectedToken();
+
+            ctx.delimiter = parseUntilEOL(ctx).trim();
+        }
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
@@ -6280,6 +6291,31 @@ final class ParserImpl implements Parser {
     // Other tokens
     // -----------------------------------------------------------------------------------------------------------------
 
+    private static final String parseUntilEOL(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+        int start = ctx.position;
+        int stop = start;
+
+        for (; stop < ctx.sql.length; stop++) {
+            char c = ctx.character(stop);
+
+            if (c == '\r') {
+                if (ctx.character(stop + 1) == '\n')
+                    stop++;
+
+                break;
+            }
+            else if (c == '\n')
+                break;
+        }
+
+        if (start == stop)
+            throw ctx.unexpectedToken();
+
+        ctx.position = stop;
+        return new String(ctx.sql, start, stop - start);
+    }
+
     private static final boolean parseIf(ParserContext ctx, String string) {
         parseWhitespaceIf(ctx);
         int length = string.length();
@@ -6510,12 +6546,13 @@ final class ParserImpl implements Parser {
     }
 
     static final class ParserContext {
-        private final DSLContext   dsl;
-        private final String       sqlString;
-        private final char[]       sql;
-        private int                position = 0;
-        private final Object[]     bindings;
-        private int                bindIndex = 0;
+        final DSLContext dsl;
+        final String     sqlString;
+        final char[]     sql;
+        int              position  = 0;
+        final Object[]   bindings;
+        int              bindIndex = 0;
+        String           delimiter = ";";
 
         ParserContext(DSLContext dsl, String sqlString, Object[] bindings) {
             this.dsl = dsl;

@@ -6553,6 +6553,30 @@ final class ParserImpl implements Parser {
                 throw exception("No binding provided for bind index " + (bindIndex + 1));
         }
 
+        int[] line() {
+            int line = 1;
+            int column = 1;
+
+            for (int i = 0; i < position; i++) {
+                if (sql[i] == '\r') {
+                    line++;
+                    column = 1;
+
+                    if (i + 1 < sql.length && sql[i + 1] == '\n')
+                        i++;
+                }
+                else if (sql[i] == '\n') {
+                    line++;
+                    column = 1;
+                }
+                else {
+                    column++;
+                }
+            }
+
+            return new int[] { line, column };
+        }
+
         char character() {
             return character(position);
         }
@@ -6590,7 +6614,8 @@ final class ParserImpl implements Parser {
         }
 
         String mark() {
-            return sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
+            int[] line = line();
+            return "[" + line[0] + ":" + line[1] + "] " + sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
         }
 
         @Override

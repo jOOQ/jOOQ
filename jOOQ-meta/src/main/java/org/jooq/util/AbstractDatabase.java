@@ -117,7 +117,7 @@ public abstract class AbstractDatabase implements Database {
     private List<RegexFlag>                                                  regexFlags;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
-    private String[]                                                         includes;
+    private String[]                                                         includes                 = { ".*" };
     private boolean                                                          includeExcludeColumns;
     private boolean                                                          includeTables            = true;
     private boolean                                                          includeRoutines          = true;

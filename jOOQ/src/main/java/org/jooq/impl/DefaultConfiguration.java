@@ -48,6 +48,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.time.Clock;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 
@@ -79,6 +80,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
+import org.jooq.impl.Tools.DataCacheKey;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
@@ -94,30 +96,34 @@ public class DefaultConfiguration implements Configuration {
     /**
      * Serial version UID
      */
-    private static final long                       serialVersionUID = 8193158984283234708L;
+    private static final long                           serialVersionUID = 4296981040491238190L;
 
     // Configuration objects
-    private SQLDialect                              dialect;
-    private Settings                                settings;
-    private ConcurrentHashMap<Object, Object>       data;
+    private SQLDialect                                  dialect;
+    private Settings                                    settings;
 
-    private Clock                                   clock;
+    private Clock                                       clock;
 
 
-    // Non-serializable Configuration objects
-    private transient ConnectionProvider            connectionProvider;
-    private transient ExecutorProvider              executorProvider;
-    private transient TransactionProvider           transactionProvider;
-    private transient RecordMapperProvider          recordMapperProvider;
-    private transient RecordUnmapperProvider        recordUnmapperProvider;
-    private transient RecordListenerProvider[]      recordListenerProviders;
-    private transient ExecuteListenerProvider[]     executeListenerProviders;
-    private transient VisitListenerProvider[]       visitListenerProviders;
-    private transient TransactionListenerProvider[] transactionListenerProviders;
-    private transient ConverterProvider             converterProvider;
+    // These objects may be user defined and thus not necessarily serialisable
+    private transient ConnectionProvider                connectionProvider;
+    private transient ExecutorProvider                  executorProvider;
+    private transient TransactionProvider               transactionProvider;
+    private transient RecordMapperProvider              recordMapperProvider;
+    private transient RecordUnmapperProvider            recordUnmapperProvider;
+    private transient RecordListenerProvider[]          recordListenerProviders;
+    private transient ExecuteListenerProvider[]         executeListenerProviders;
+    private transient VisitListenerProvider[]           visitListenerProviders;
+    private transient TransactionListenerProvider[]     transactionListenerProviders;
+    private transient ConverterProvider                 converterProvider;
+
+    // [#7062] Apart from the possibility of containing user defined objects, the data
+    //         map also contains the reflection cache, which isn't serializable (and
+    //         should not be serialized anyway).
+    private transient ConcurrentHashMap<Object, Object> data;
 
     // Derived objects
-    private org.jooq.SchemaMapping                  mapping;
+    private org.jooq.SchemaMapping                      mapping;
 
     // -------------------------------------------------------------------------
     // XXX: Constructors
@@ -1297,7 +1303,21 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(converterProvider instanceof Serializable
             ? converterProvider
             : null);
+
+        // [#7062] Exclude reflection cache from serialisation
+        for (Entry<Object, Object> entry : data.entrySet()) {
+            if (entry.getKey() instanceof DataCacheKey)
+                continue;
+
+            oos.writeObject(entry.getKey());
+            oos.writeObject(entry.getValue());
+        }
+
+        // [#7062] End of Map marker
+        oos.writeObject(END_OF_MAP_MARKER);
     }
+
+    private static final String END_OF_MAP_MARKER = "EOM";
 
     private <E> E[] cloneSerializables(E[] array) {
         E[] clone = array.clone();
@@ -1323,6 +1343,15 @@ public class DefaultConfiguration implements Configuration {
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
+        data = new ConcurrentHashMap<Object, Object>();
+
+        Object key;
+        Object value;
+
+        while (!END_OF_MAP_MARKER.equals(key = ois.readObject())) {
+            value = ois.readObject();
+            data.put(key, value);
+        }
     }
 
     private final class ExecutorWrapper implements ExecutorProvider {

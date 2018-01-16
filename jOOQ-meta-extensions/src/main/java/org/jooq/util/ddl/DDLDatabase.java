@@ -37,6 +37,7 @@
  */
 package org.jooq.util.ddl;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -50,6 +51,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
 import org.jooq.Queries;
@@ -60,6 +63,8 @@ import org.jooq.impl.ParserException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
+
+import org.h2.api.ErrorCode;
 
 /**
  * The DDL database.
@@ -75,9 +80,11 @@ import org.jooq.util.h2.H2Database;
  */
 public class DDLDatabase extends H2Database {
 
-    private static final JooqLogger log = JooqLogger.getLogger(DDLDatabase.class);
+    private static final JooqLogger log    = JooqLogger.getLogger(DDLDatabase.class);
+    private static final Pattern    P_NAME = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
 
     private Connection              connection;
+    private DSLContext              ctx;
 
     @Override
     protected DSLContext create0() {
@@ -95,6 +102,7 @@ public class DDLDatabase extends H2Database {
                 info.put("user", "sa");
                 info.put("password", "");
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
+                ctx = DSL.using(connection);
 
                 InputStream in = null;
                 try {
@@ -118,14 +126,38 @@ public class DDLDatabase extends H2Database {
 
                     if (in != null) {
                         Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
-                        Queries queries = DSL
-                            .using(connection)
-                            .parser()
-                            .parse(s.hasNext() ? s.next() : "");
+                        Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
 
                         for (Query query : queries) {
-                            log.info(query);
-                            query.execute();
+
+                            repeat:
+                            for (;;) {
+                                try {
+                                    query.execute();
+                                    log.info(query);
+                                    break repeat;
+                                }
+                                catch (DataAccessException e) {
+
+                                    // [#7039] Auto create missing schemas. We're using the
+                                    if (Integer.toString(ErrorCode.SCHEMA_NOT_FOUND_1).equals(e.sqlState())) {
+                                        SQLException cause = e.getCause(SQLException.class);
+
+                                        if (cause != null) {
+                                            Matcher m = P_NAME.matcher(cause.getMessage());
+
+                                            if (m.find()) {
+                                                Query createSchema = ctx.createSchemaIfNotExists(name(m.group(1)));
+                                                createSchema.execute();
+                                                log.info(createSchema);
+                                                continue repeat;
+                                            }
+                                        }
+                                    }
+
+                                    throw e;
+                                }
+                            }
                         }
                     }
                     else {
@@ -149,7 +181,7 @@ public class DDLDatabase extends H2Database {
             }
         }
 
-        return DSL.using(connection);
+        return ctx;
     }
 
     @Override

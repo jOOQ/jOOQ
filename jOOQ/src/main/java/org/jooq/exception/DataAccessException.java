@@ -53,7 +53,12 @@ public class DataAccessException extends RuntimeException {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 491834858363345767L;
+    private static final long serialVersionUID   = 491834858363345767L;
+
+    /**
+     * Never run infinite loops
+     */
+    private static int        maxCauseLookups    = 256;
 
     /**
      * Constructor for DataAccessException.
@@ -81,9 +86,9 @@ public class DataAccessException extends RuntimeException {
      * {@link SQLException}.
      */
     public String sqlState() {
-        Throwable t = getCause();
-        if (t instanceof SQLException)
-            return ((SQLException) t).getSQLState();
+        SQLException e = getCause(SQLException.class);
+        if (e != null)
+            return e.getSQLState();
 
         return "00000";
     }
@@ -94,9 +99,9 @@ public class DataAccessException extends RuntimeException {
      * caused by a {@link SQLException}.
      */
     public SQLStateClass sqlStateClass() {
-        Throwable t = getCause();
-        if (t instanceof SQLException)
-            return SQLStateClass.fromCode(((SQLException) t).getSQLState());
+        SQLException e = getCause(SQLException.class);
+        if (e != null)
+            return SQLStateClass.fromCode(e.getSQLState());
 
         return SQLStateClass.NONE;
     }
@@ -107,9 +112,9 @@ public class DataAccessException extends RuntimeException {
      * caused by a {@link SQLException}.
      */
     public SQLStateSubclass sqlStateSubclass() {
-        Throwable t= getCause();
-        if (t instanceof SQLException)
-            return SQLStateSubclass.fromCode(((SQLException) t).getSQLState());
+        SQLException e = getCause(SQLException.class);
+        if (e != null)
+            return SQLStateSubclass.fromCode(e.getSQLState());
 
         return SQLStateSubclass.NONE;
     }
@@ -119,5 +124,30 @@ public class DataAccessException extends RuntimeException {
         return super.getStackTrace();
     }
 
+    /**
+     * Find a root cause of a given type, or <code>null</code> if no root cause
+     * of that type was found.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Throwable> T getCause(Class<? extends T> type) {
+        Throwable next = getCause();
+        Throwable prev;
 
+        for (int i = 0; i < maxCauseLookups; i++) {
+            if (next == null)
+                return null;
+
+            if (type.isInstance(next))
+                return (T) next;
+
+            prev = next;
+            next = next.getCause();
+
+            // Don't trust exceptions to respect the default behaviour of Throwable.getCause()
+            if (prev == next)
+                return null;
+        }
+
+        return null;
+    }
 }

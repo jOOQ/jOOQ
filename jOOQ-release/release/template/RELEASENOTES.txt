@@ -11,6 +11,33 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.10.4 - January 16, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#7041 - DDLDatabase should auto-create missing schemas
+#7072 - Add DataAccessException.getCause(Class<? extends Throwable>)
+
+Bug Fixes
+---------
+#7012 - Invalid SQL rendered for inlined named parameters
+#7026 - DDLDatabase fails with MySQL ENUM columns
+#7029 - DDLDatabase fails with COMMENT on columns
+#7030 - DDLDatabase fails with MySQL TINYINT(1) type columns
+#7031 - DDLDatabase fails with MySQL UNIQUE INDEX clause
+#7033 - Remove broken Parser "Expected Tokens" error message
+#7036 - Plain SQL API should recognise multi-character PostgreSQL ltree operators
+#7038 - Plain SQL API should recognise multi-character PostgreSQL geometry operators
+#7046 - DDLDatabase fails with MySQL ON UPDATE
+#7059 - Generated Tables.scala has unused imports
+#7063 - Programmatic code generator Database configuration doesn't default to <includes>.*</includes>
+#7065 - NotSerializableException when Record references reflection cache
+#7071 - jOOQ-scala 2.11 cannot be built with JDK 9
+
+
 Version 3.10.3 - January 5, 2018
 ================================================================================
 

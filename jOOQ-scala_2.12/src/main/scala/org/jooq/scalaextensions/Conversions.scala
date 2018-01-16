@@ -44,7 +44,7 @@ import org.jooq.impl._
 
 // Avoid ambiguity with the internal org.jooq.impl.Array type.
 import scala.Array
-import scala.collection.convert.WrapAsScala
+import scala.collection.JavaConverters._
 
 /**
  * jOOQ type conversions used to enhance the jOOQ Java API with Scala Traits
@@ -172,7 +172,7 @@ object Conversions {
     def fetchAnyOptionArray            ()                                                         : Option[Array[AnyRef]]       = Option(query.fetchAnyArray)
     def fetchAnyOptionInto[E]          (newType : Class[_ <: E])                                  : Option[E]                   = Option(query.fetchAnyInto(newType))
     def fetchAnyOptionInto[Z <: Record](table : Table[Z])                                         : Option[Z]                   = Option(query.fetchAnyInto(table))
-    def fetchAnyOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchAnyMap).map(WrapAsScala.mapAsScalaMap)
+    def fetchAnyOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchAnyMap).map{ _.asScala }
 
     def fetchOneOption                 ()                                                         : Option[R]                   = Option(query.fetchOne)
     def fetchOneOption[E]              (mapper : RecordMapper[_ >: R, E])                         : Option[E]                   = Option(query.fetchOne(mapper))
@@ -188,7 +188,7 @@ object Conversions {
     def fetchOneOptionArray            ()                                                         : Option[Array[AnyRef]]       = Option(query.fetchOneArray)
     def fetchOneOptionInto[E]          (newType : Class[_ <: E])                                  : Option[E]                   = Option(query.fetchOneInto(newType))
     def fetchOneOptionInto[Z <: Record](table : Table[Z])                                         : Option[Z]                   = Option(query.fetchOneInto(table))
-    def fetchOneOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchOneMap).map(WrapAsScala.mapAsScalaMap)
+    def fetchOneOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchOneMap).map{ _.asScala }
   }
 
   // -------------------------------------------------------------------------

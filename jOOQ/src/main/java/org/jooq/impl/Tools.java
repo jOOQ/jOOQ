@@ -129,6 +129,13 @@ import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_GETTER;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
@@ -469,14 +476,22 @@ final class Tools {
      * <code>new String()</code> is used to allow for synchronizing on these
      * objects.
      */
-    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER   = new String("org.jooq.configuration.reflection-cache.get-annotated-getter");
-    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS  = new String("org.jooq.configuration.reflection-cache.get-annotated-members");
-    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS  = new String("org.jooq.configuration.reflection-cache.get-annotated-setters");
-    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_GETTER    = new String("org.jooq.configuration.reflection-cache.get-matching-getter");
-    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS   = new String("org.jooq.configuration.reflection-cache.get-matching-members");
-    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS   = new String("org.jooq.configuration.reflection-cache.get-matching-setters");
-    static final String          DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS = new String("org.jooq.configuration.reflection-cache.has-column-annotations");
-    static final String          DATA_CACHE_RECORD_MAPPERS                    = new String("org.jooq.configuration.cache.record-mappers");
+    enum DataCacheKey {
+        DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER("org.jooq.configuration.reflection-cache.get-annotated-getter"),
+        DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS("org.jooq.configuration.reflection-cache.get-annotated-members"),
+        DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS("org.jooq.configuration.reflection-cache.get-annotated-setters"),
+        DATA_REFLECTION_CACHE_GET_MATCHING_GETTER("org.jooq.configuration.reflection-cache.get-matching-getter"),
+        DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS("org.jooq.configuration.reflection-cache.get-matching-members"),
+        DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS("org.jooq.configuration.reflection-cache.get-matching-setters"),
+        DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS("org.jooq.configuration.reflection-cache.has-column-annotations"),
+        DATA_CACHE_RECORD_MAPPERS("org.jooq.configuration.cache.record-mappers");
+
+        final String key;
+
+        private DataCacheKey(String key) {
+            this.key = key;
+        }
+    }
 
     // ------------------------------------------------------------------------
     // Other constants
@@ -2684,7 +2699,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Object key) {
+        static final <V> V run(Configuration configuration, CachedOperation<V> operation, DataCacheKey type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -2696,8 +2711,6 @@ final class Tools {
 
             Map<Object, Object> cache = (Map<Object, Object>) configuration.data(type);
             if (cache == null) {
-
-                // String synchronization is OK as all type literals were created using new String()
                 synchronized (type) {
                     cache = (Map<Object, Object>) configuration.data(type);
 
@@ -2709,7 +2722,6 @@ final class Tools {
             }
 
             Object result = cache.get(key);
-
             if (result == null) {
                 synchronized (cache) {
                     result = cache.get(key);

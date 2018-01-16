@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.Tools.DATA_CACHE_RECORD_MAPPERS;
+import static org.jooq.impl.Tools.DataCacheKey.DATA_CACHE_RECORD_MAPPERS;
 
 import java.io.Serializable;
 

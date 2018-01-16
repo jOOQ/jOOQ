@@ -5658,7 +5658,8 @@ final class ParserImpl implements Parser {
 
     private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
-            result = result.length((int) (long) parseUnsignedInteger(ctx));
+            if (!parseKeywordIf(ctx, "MAX"))
+                result = result.length((int) (long) parseUnsignedInteger(ctx));
             parse(ctx, ')');
         }
 

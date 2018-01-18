@@ -17976,7 +17976,14 @@ CREATE TABLE book_to_book_store (
       <name>org.jooq.util.ddl.DDLDatabase</name>
       <properties>
 
-        <!-- Specify the location of your SQL script. Future versions may also support more than one script, or directories -->
+        <!-- Specify the location of your SQL script.
+             You may use ant-style file matching, e.g. /path/**/to/*.sql
+
+             Where:
+             - ** matches any directory subtree
+             - * matches any number of characters in a directory / file name
+             - ? matches a single character in a directory / file name
+          -->
         <property>
           <key>scripts</key>
           <value>src/main/resources/database.sql</value>

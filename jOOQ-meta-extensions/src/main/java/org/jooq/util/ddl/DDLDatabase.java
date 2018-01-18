@@ -42,6 +42,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -106,72 +107,40 @@ public class DDLDatabase extends H2Database {
                 ctx = DSL.using(connection);
 
                 InputStream in = null;
-                try {
-                    in = DDLDatabase.class.getResourceAsStream(scripts);
-                    if (in != null) {
-                        log.info("Reading from classpath: " + scripts);
+                boolean loaded = false;
+                in = DDLDatabase.class.getResourceAsStream(scripts);
+                if (in != null) {
+                    log.info("Reading from classpath: " + scripts);
+                    load(encoding, in);
+                    loaded = true;
+                }
+                else {
+                    File file = new File(scripts);
+
+                    if (file.exists()) {
+                        load(encoding, file, null);
+                        loaded = true;
                     }
-                    else {
-                        File file = new File(scripts);
+                    else if (scripts.contains("*") || scripts.contains("?")) {
+                        file = new File(scripts.replaceAll("[*?].*", ""));
 
                         if (file.exists()) {
-                            if (file.isFile()) {
-                                log.info("Reading from file: " + scripts);
-                                in = new FileInputStream(file);
-                            }
-                            else if (file.isDirectory()) {
-                                log.warn("Reading from directory not yet supported: " + scripts);
-                            }
+                            Pattern pattern = Pattern.compile(scripts
+                                .replace("\\", "/")
+                                .replace(".", "\\.")
+                                .replace("?", ".")
+                                .replace("**", ".+?")
+                                .replace("*", "[^/]*")
+                            );
+
+                            load(encoding, file, pattern);
+                            loaded = true;
                         }
-                    }
-
-                    if (in != null) {
-                        Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
-                        Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
-
-                        for (Query query : queries) {
-
-                            repeat:
-                            for (;;) {
-                                try {
-                                    query.execute();
-                                    log.info(query);
-                                    break repeat;
-                                }
-                                catch (DataAccessException e) {
-
-                                    // [#7039] Auto create missing schemas. We're using the
-                                    if (Integer.toString(ErrorCode.SCHEMA_NOT_FOUND_1).equals(e.sqlState())) {
-                                        SQLException cause = e.getCause(SQLException.class);
-
-                                        if (cause != null) {
-                                            Matcher m = P_NAME.matcher(cause.getMessage());
-
-                                            if (m.find()) {
-                                                Query createSchema = ctx.createSchemaIfNotExists(name(m.group(1)));
-                                                createSchema.execute();
-                                                log.info(createSchema);
-                                                continue repeat;
-                                            }
-                                        }
-                                    }
-
-                                    throw e;
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        log.error("Could not find script source : " + scripts);
                     }
                 }
-                finally {
-                    if (in != null)
-                        try {
-                            in.close();
-                        }
-                        catch (Exception ignore) {}
-                }
+
+                if (!loaded)
+                    log.error("Could not find script source : " + scripts);
             }
             catch (ParserException e) {
                 log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
@@ -183,6 +152,67 @@ public class DDLDatabase extends H2Database {
         }
 
         return ctx;
+    }
+
+    private void load(String encoding, File file, Pattern pattern) throws IOException {
+        if (file.isFile()) {
+            if (pattern == null || pattern.matcher(file.getCanonicalPath().replace("\\", "/")).matches()) {
+                log.info("Reading from: " + file + " [*]");
+                load(encoding, new FileInputStream(file));
+            }
+        }
+        else if (file.isDirectory()) {
+            log.info("Reading from: " + file);
+
+            for (File f : file.listFiles())
+                load(encoding, f, pattern);
+        }
+    }
+
+    private void load(String encoding, InputStream in) {
+        try {
+            Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
+            Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
+
+            for (Query query : queries) {
+
+                repeat:
+                for (;;) {
+                    try {
+                        query.execute();
+                        log.info(query);
+                        break repeat;
+                    }
+                    catch (DataAccessException e) {
+
+                        // [#7039] Auto create missing schemas. We're using the
+                        if (Integer.toString(ErrorCode.SCHEMA_NOT_FOUND_1).equals(e.sqlState())) {
+                            SQLException cause = e.getCause(SQLException.class);
+
+                            if (cause != null) {
+                                Matcher m = P_NAME.matcher(cause.getMessage());
+
+                                if (m.find()) {
+                                    Query createSchema = ctx.createSchemaIfNotExists(name(m.group(1)));
+                                    createSchema.execute();
+                                    log.info(createSchema);
+                                    continue repeat;
+                                }
+                            }
+                        }
+
+                        throw e;
+                    }
+                }
+            }
+        }
+        finally {
+            if (in != null)
+                try {
+                    in.close();
+                }
+                catch (Exception ignore) {}
+        }
     }
 
     @Override

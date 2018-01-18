@@ -90,7 +90,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     }
 
     public SchemaImpl(Name name, Catalog catalog, Comment comment) {
-        super(name, comment);
+        super(qualify(catalog, name), comment);
 
         this.catalog = catalog;
     }

@@ -66,7 +66,7 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
     private final Table<R>        table;
 
     TableFieldImpl(Name name, DataType<T> type, Table<R> table, Comment comment, Binding<?, T> binding) {
-        super(name, type, comment, binding);
+        super(qualify(table, name), type, comment, binding);
 
         this.table = table;
     }

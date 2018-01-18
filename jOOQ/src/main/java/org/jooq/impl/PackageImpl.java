@@ -59,12 +59,12 @@ public class PackageImpl extends AbstractNamed implements Package {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 7466890004995197675L;
+    private static final long serialVersionUID = 7466890004995197675L;
 
-    private final Schema          schema;
+    private Schema            schema;
 
     public PackageImpl(String name, Schema schema) {
-        super(DSL.name(name), CommentImpl.NO_COMMENT);
+        super(qualify(schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
         this.schema = schema;
     }
@@ -76,6 +76,11 @@ public class PackageImpl extends AbstractNamed implements Package {
 
     @Override
     public final Schema getSchema() {
+        if (schema == null)
+            schema = getQualifiedName().qualified()
+                   ? DSL.schema(getQualifiedName().qualifier())
+                   : null;
+
         return schema;
     }
 

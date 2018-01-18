@@ -81,7 +81,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     }
 
     public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
-        super(DSL.name(name), CommentImpl.NO_COMMENT);
+        super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
         this.fields = new Fields<R>();
         this.schema = schema;

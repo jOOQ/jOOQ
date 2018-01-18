@@ -57,6 +57,10 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
         this.comment = comment == null ? CommentImpl.NO_COMMENT : comment;
     }
 
+    // -------------------------------------------------------------------------
+    // The Named API
+    // -------------------------------------------------------------------------
+
     @Override
     public final String getName() {
         return StringUtils.defaultIfNull(name.last(), "");
@@ -103,5 +107,13 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
                 return false;
 
         return super.equals(that);
+    }
+
+    // -------------------------------------------------------------------------
+    // Utilities
+    // -------------------------------------------------------------------------
+
+    static Name qualify(Named qualifier, Name name) {
+        return qualifier == null || name.qualified() ? name : qualifier.getQualifiedName().append(name);
     }
 }

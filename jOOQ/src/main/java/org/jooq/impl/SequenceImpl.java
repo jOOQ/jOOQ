@@ -82,7 +82,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
-        super(DSL.name(name), CommentImpl.NO_COMMENT);
+        super(qualify(schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
         this.name = name;
         this.schema = schema;

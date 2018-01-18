@@ -147,7 +147,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     AbstractTable(Name name, Schema schema, Comment comment) {
-        super(name, comment);
+        super(qualify(schema, name), comment);
 
         this.tableschema = schema;
     }

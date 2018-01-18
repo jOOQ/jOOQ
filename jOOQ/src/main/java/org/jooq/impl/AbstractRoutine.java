@@ -76,7 +76,6 @@ import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 
@@ -136,7 +135,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Routine<T> {
+public abstract class AbstractRoutine<T> extends AbstractNamed implements Routine<T> {
 
     /**
      * Generated UID
@@ -150,7 +149,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final Schema                      schema;
     private final Package                     pkg;
-    private final String                      name;
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
     private final List<Parameter<?>>          outParameters;
@@ -227,11 +225,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
+        super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
+
         this.resultIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
         this.pkg = pkg;
-        this.name = name;
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
@@ -1250,11 +1249,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final String getName() {
-        return name;
-    }
-
-    @Override
     public final Parameter<T> getReturnParameter() {
         return returnParameter;
     }
@@ -1413,16 +1407,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
 
         // [#2393] Fully qualify custom aggregate functions.
-        // TODO: Merge this code into RoutineField!
-        List<String> names = new ArrayList<String>();
-        if (schema != null) {
-            names.add(schema.getName());
-        }
-        if (pkg != null) {
-            names.add(pkg.getName());
-        }
-        names.add(name);
-        return (AggregateFunction<T>) function(DSL.name(names.toArray(EMPTY_STRING)), type, array);
+        return (AggregateFunction<T>) function(getQualifiedName(), type, array);
     }
 
     /**
@@ -1633,17 +1618,5 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             ctx.visit(result);
         }
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return name.hashCode();
     }
 }

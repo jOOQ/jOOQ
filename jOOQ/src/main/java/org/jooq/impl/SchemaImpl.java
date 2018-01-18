@@ -54,7 +54,6 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
-import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database schemata
@@ -63,14 +62,12 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-public class SchemaImpl extends AbstractQueryPart implements Schema {
+public class SchemaImpl extends AbstractNamed implements Schema {
 
     private static final long     serialVersionUID = -8101463810207566546L;
     private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
 
-    private final Name            name;
     private Catalog               catalog;
-    private final Comment         comment;
 
     public SchemaImpl(String name) {
         this(name, null);
@@ -93,39 +90,19 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     }
 
     public SchemaImpl(Name name, Catalog catalog, Comment comment) {
-        this.name = name;
-        this.catalog = catalog;
-        this.comment = comment;
-    }
+        super(name, comment);
 
-    @Override
-    public final String getComment() {
-        return comment == null ? null : comment.getComment();
+        this.catalog = catalog;
     }
 
     @Override
     public /* non-final */ Catalog getCatalog() {
         if (catalog == null)
-            catalog = name.qualified()
-                    ? DSL.catalog(name.qualifier())
+            catalog = getQualifiedName().qualified()
+                    ? DSL.catalog(getQualifiedName().qualifier())
                     : null;
 
         return catalog;
-    }
-
-    @Override
-    public final String getName() {
-        return name.last();
-    }
-
-    @Override
-    public final Name getQualifiedName() {
-        return name;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return name.unqualifiedName();
     }
 
     @Override
@@ -137,7 +114,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
             ctx.sql('.');
         }
 
-        ctx.visit(name.unqualifiedName());
+        ctx.visit(getUnqualifiedName());
     }
 
     @Override
@@ -218,34 +195,4 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         return getSequences().stream();
     }
 
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return getName() != null ? getName().hashCode() : 0;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#2144] SchemaImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof SchemaImpl) {
-            SchemaImpl other = (SchemaImpl) that;
-            return
-                StringUtils.equals(getCatalog(), other.getCatalog()) &&
-                StringUtils.equals(getName(), other.getName());
-        }
-
-        return super.equals(that);
-    }
 }

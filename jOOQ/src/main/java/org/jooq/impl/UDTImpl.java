@@ -62,12 +62,11 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
-public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implements UDT<R> {
+public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UDT<R> {
 
     private static final long     serialVersionUID = -2208672099190913126L;
 
     private final Schema          schema;
-    private final String          name;
     private final Fields<R>       fields;
     private final Package         pkg;
     private final boolean         synthetic;
@@ -82,8 +81,9 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
+        super(DSL.name(name), CommentImpl.NO_COMMENT);
+
         this.fields = new Fields<R>();
-        this.name = name;
         this.schema = schema;
         this.pkg = pkg;
         this.synthetic = synthetic;
@@ -102,11 +102,6 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     @Override
     public final Package getPackage() {
         return pkg;
-    }
-
-    @Override
-    public final String getName() {
-        return name;
     }
 
     @SuppressWarnings({ "rawtypes" })
@@ -288,17 +283,5 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(DSL.name(name), actualType, udt, DSL.comment(comment), actualBinding);
 
         return udtField;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return name.hashCode();
     }
 }

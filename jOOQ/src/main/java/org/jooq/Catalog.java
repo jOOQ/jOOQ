@@ -45,27 +45,7 @@ import java.util.stream.Stream;
  *
  * @author Lukas Eder
  */
-public interface Catalog extends QueryPart {
-
-    /**
-     * The name of this catalog.
-     */
-    String getName();
-
-    /**
-     * The comment on this catalog.
-     */
-    String getComment();
-
-    /**
-     * The qualified name of this catalog.
-     */
-    Name getQualifiedName();
-
-    /**
-     * The unqualified name of this catalog.
-     */
-    Name getUnqualifiedName();
+public interface Catalog extends Named {
 
     /**
      * List all schemas contained in this catalog.

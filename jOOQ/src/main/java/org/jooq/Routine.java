@@ -84,7 +84,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public interface Routine<T> extends QueryPart, Attachable {
+public interface Routine<T> extends Named, Attachable {
 
     // -------------------------------------------------------------------------
     // XXX: Meta information
@@ -99,11 +99,6 @@ public interface Routine<T> extends QueryPart, Attachable {
      * Get the routine schema
      */
     Schema getSchema();
-
-    /**
-     * The name of this routine
-     */
-    String getName();
 
     /**
      * The container package of this stored procedure or function.

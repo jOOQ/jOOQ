@@ -50,7 +50,6 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Schema;
-import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database catalogs
@@ -59,16 +58,13 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-public class CatalogImpl extends AbstractQueryPart implements Catalog {
+public class CatalogImpl extends AbstractNamed implements Catalog {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = -3650318934053960244L;
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
-
-    private final Name            name;
-    private final Comment         comment;
 
     public CatalogImpl(Name name) {
         this(name, null);
@@ -79,37 +75,16 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     }
 
     public CatalogImpl(Name name, Comment comment) {
-        this.name = name;
-        this.comment = comment;
+        super(name, comment);
     }
 
     public CatalogImpl(String name, String comment) {
-        this(DSL.name(name), comment == null ? null : DSL.comment(comment));
-    }
-
-    @Override
-    public final String getName() {
-        return name.last();
-    }
-
-    @Override
-    public final String getComment() {
-        return comment == null ? null : comment.getComment();
-    }
-
-    @Override
-    public final Name getQualifiedName() {
-        return name;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return name.unqualifiedName();
+        super(DSL.name(name), DSL.comment(comment));
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name.unqualifiedName());
+        ctx.visit(getUnqualifiedName());
     }
 
     @Override
@@ -142,26 +117,4 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
         return getSchemas().stream();
     }
 
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        return getQualifiedName() != null ? getQualifiedName().hashCode() : 0;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that)
-            return true;
-
-        // [#1626] CatalogImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof CatalogImpl)
-            return StringUtils.equals(getQualifiedName(), (((CatalogImpl) that).getQualifiedName()));
-
-        return super.equals(that);
-    }
 }

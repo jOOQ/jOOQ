@@ -38,22 +38,29 @@
 package org.jooq;
 
 /**
- * A container for stored procedures and functions
- * <p>
- * This is only supported in the {@link SQLDialect#ORACLE} dialect
+ * A common base type for all qualifiable, named objects.
  *
  * @author Lukas Eder
  */
-public interface Package extends Named {
+public interface Named extends QueryPart {
 
     /**
-     * Get the package catalog.
+     * The name of this object.
      */
-    Catalog getCatalog();
+    String getName();
 
     /**
-     * Get the package schema
+     * The qualified name of this object.
      */
-    Schema getSchema();
+    Name getQualifiedName();
 
+    /**
+     * The unqualified name of this object.
+     */
+    Name getUnqualifiedName();
+
+    /**
+     * The comment on this object.
+     */
+    String getComment();
 }

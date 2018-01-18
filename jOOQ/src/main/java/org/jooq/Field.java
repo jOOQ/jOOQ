@@ -79,7 +79,7 @@ import org.jooq.types.Interval;
  * @param <T> The field type
  * @author Lukas Eder
  */
-public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, FieldOrRow {
+public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, FieldOrRow, Named {
 
     // ------------------------------------------------------------------------
     // API
@@ -99,16 +99,6 @@ public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, Fie
      */
     @Override
     String getName();
-
-    /**
-     * The qualified name of this field.
-     */
-    Name getQualifiedName();
-
-    /**
-     * The unqualified name of this field.
-     */
-    Name getUnqualifiedName();
 
     /**
      * The comment given to the field.

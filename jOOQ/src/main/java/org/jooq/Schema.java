@@ -46,7 +46,7 @@ import java.util.stream.Stream;
  *
  * @author Lukas Eder
  */
-public interface Schema extends QueryPart {
+public interface Schema extends Named {
 
     /**
      * The catalog of this schema.
@@ -54,24 +54,9 @@ public interface Schema extends QueryPart {
     Catalog getCatalog();
 
     /**
-     * The name of this schema.
-     */
-    String getName();
-
-    /**
      * The comment of this schema.
      */
     String getComment();
-
-    /**
-     * The qualified name of this schema.
-     */
-    Name getQualifiedName();
-
-    /**
-     * The unqualified name of this schema.
-     */
-    Name getUnqualifiedName();
 
     /**
      * Stream all tables contained in this schema.

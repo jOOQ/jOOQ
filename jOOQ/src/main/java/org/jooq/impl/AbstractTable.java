@@ -99,12 +99,11 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
-import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractTable<R extends Record> extends AbstractQueryPart implements Table<R> {
+abstract class AbstractTable<R extends Record> extends AbstractNamed implements Table<R> {
 
     /**
      * Generated UID
@@ -113,8 +112,6 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private static final Clause[] CLAUSES          = { TABLE };
 
     private Schema                tableschema;
-    private final Name            tablename;
-    private final Comment         tablecomment;
     private transient DataType<R> type;
 
     /**
@@ -150,9 +147,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     AbstractTable(Name name, Schema schema, Comment comment) {
+        super(name, comment);
+
         this.tableschema = schema;
-        this.tablename = name;
-        this.tablecomment = comment == null ? CommentImpl.NO_COMMENT : comment;
     }
 
     // ------------------------------------------------------------------------
@@ -383,31 +380,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public /* non-final */ Schema getSchema() {
         if (tableschema == null)
-            tableschema = tablename.qualified()
-                        ? DSL.schema(tablename.qualifier())
+            tableschema = getQualifiedName().qualified()
+                        ? DSL.schema(getQualifiedName().qualifier())
                         : null;
 
         return tableschema;
-    }
-
-    @Override
-    public final String getName() {
-        return tablename.last();
-    }
-
-    @Override
-    public final Name getQualifiedName() {
-        return tablename;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return tablename.unqualifiedName();
-    }
-
-    @Override
-    public final String getComment() {
-        return tablecomment.getComment();
     }
 
     /**
@@ -1335,36 +1312,5 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TableOptionalOnStep<Record> straightJoin(Name name) {
         return straightJoin(table(name));
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#2144] Non-equality can be decided early, without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractTable) {
-            if (StringUtils.equals(tablename, (((AbstractTable<?>) that).tablename))) {
-                return super.equals(that);
-            }
-
-            return false;
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return tablename.hashCode();
     }
 }

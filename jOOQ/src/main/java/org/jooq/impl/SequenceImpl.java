@@ -64,7 +64,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  *
  * @author Lukas Eder
  */
-public class SequenceImpl<T extends Number> extends AbstractQueryPart implements Sequence<T> {
+public class SequenceImpl<T extends Number> extends AbstractNamed implements Sequence<T> {
 
     /**
      * Generated UID
@@ -82,15 +82,12 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     }
 
     SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
+        super(DSL.name(name), CommentImpl.NO_COMMENT);
+
         this.name = name;
         this.schema = schema;
         this.type = type;
         this.nameIsPlainSQL = nameIsPlainSQL;
-    }
-
-    @Override
-    public final String getName() {
-        return name;
     }
 
     @Override
@@ -256,17 +253,5 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return name.hashCode();
     }
 }

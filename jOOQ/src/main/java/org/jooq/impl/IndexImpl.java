@@ -54,14 +54,13 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class IndexImpl extends AbstractQueryPart implements Index {
+class IndexImpl extends AbstractNamed implements Index {
 
     /**
      * Generated UID
      */
     private static final long    serialVersionUID = -5253463940194393996L;
 
-    private final Name           name;
     private final Table<?>       table;
     private final SortField<?>[] fields;
     private final Condition      where;
@@ -72,7 +71,8 @@ class IndexImpl extends AbstractQueryPart implements Index {
     }
 
     IndexImpl(Name name, Table<?> table, OrderField<?>[] fields, Condition where, boolean unique) {
-        this.name = name;
+        super(name, CommentImpl.NO_COMMENT);
+
         this.table = table;
         this.fields = Tools.sortFields(fields);
         this.where = where;
@@ -81,27 +81,12 @@ class IndexImpl extends AbstractQueryPart implements Index {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name);
+        ctx.visit(getQualifiedName());
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
-    }
-
-    @Override
-    public final String getName() {
-        return name.last();
-    }
-
-    @Override
-    public final Name getQualifiedName() {
-        return name;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return name.unqualifiedName();
     }
 
     @Override

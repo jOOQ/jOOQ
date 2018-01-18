@@ -45,12 +45,7 @@ package org.jooq;
  * @param <T> The parameter type
  * @author Lukas Eder
  */
-public interface Parameter<T> extends QueryPart {
-
-    /**
-     * The name of this parameter
-     */
-    String getName();
+public interface Parameter<T> extends Named {
 
     /**
      * The Java type of the parameter.

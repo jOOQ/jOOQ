@@ -100,12 +100,11 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
-import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
+abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     /**
      * Generated UID
@@ -113,8 +112,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private static final long     serialVersionUID = 2884811923648354905L;
     private static final Clause[] CLAUSES          = { FIELD };
 
-    private final Name            name;
-    private final Comment         comment;
     private final DataType<T>     dataType;
 
     AbstractField(Name name, DataType<T> type) {
@@ -127,10 +124,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @SuppressWarnings("unchecked")
     AbstractField(Name name, DataType<T> type, Comment comment, Binding<?, T> binding) {
-        super();
+        super(name, comment);
 
-        this.name = name;
-        this.comment = comment == null ? CommentImpl.NO_COMMENT : comment;
         this.dataType = type.asConvertedDataType((Binding<T, T>) binding);
     }
 
@@ -212,26 +207,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
 
-
-    @Override
-    public final String getName() {
-        return StringUtils.defaultIfNull(name.last(), "");
-    }
-
-    @Override
-    public final Name getQualifiedName() {
-        return name;
-    }
-
-    @Override
-    public final Name getUnqualifiedName() {
-        return name.unqualifiedName();
-    }
-
-    @Override
-    public final String getComment() {
-        return comment.getComment();
-    }
 
     @Override
     public final Converter<?, T> getConverter() {
@@ -2095,33 +2070,5 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Deprecated
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
         return DSL.coalesce(this, Tools.combine(option, options));
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that)
-            return true;
-
-        // [#2144] Non-equality can be decided early, without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractField)
-            if (StringUtils.equals(name.last(), (((AbstractField<?>) that).name.last())))
-                return super.equals(that);
-            else
-                return false;
-        else
-            return false;
-    }
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return name.last().hashCode();
     }
 }

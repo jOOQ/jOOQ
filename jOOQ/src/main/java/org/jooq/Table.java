@@ -76,7 +76,7 @@ import org.jooq.impl.DSL;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends TableLike<R> {
+public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * Get the table catalog.
@@ -87,21 +87,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * Get the table schema.
      */
     Schema getSchema();
-
-    /**
-     * The name of this table.
-     */
-    String getName();
-
-    /**
-     * The qualified name of this table.
-     */
-    Name getQualifiedName();
-
-    /**
-     * The unqualified name of this table.
-     */
-    Name getUnqualifiedName();
 
     /**
      * The comment given to the table.

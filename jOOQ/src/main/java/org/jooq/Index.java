@@ -44,22 +44,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface Index extends QueryPart {
-
-    /**
-     * The name of the index.
-     */
-    String getName();
-
-    /**
-     * The qualified name of this field.
-     */
-    Name getQualifiedName();
-
-    /**
-     * The unqualified name of this field.
-     */
-    Name getUnqualifiedName();
+public interface Index extends Named {
 
     /**
      * The table on which this index is defined.

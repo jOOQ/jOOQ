@@ -56,12 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface Sequence<T extends Number> extends QueryPart {
-
-    /**
-     * Get the sequence name
-     */
-    String getName();
+public interface Sequence<T extends Number> extends Named {
 
     /**
      * Get the sequence catalog.

@@ -45,7 +45,7 @@ import java.util.stream.Stream;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends QueryPart {
+public interface UDT<R extends UDTRecord<R>> extends Named {
 
     /**
      * Get this UDT's fields as a {@link Row}.
@@ -154,11 +154,6 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
      * Get the UDT package.
      */
     Package getPackage();
-
-    /**
-     * The name of this UDT.
-     */
-    String getName();
 
     /**
      * @return The record type produced by this table.

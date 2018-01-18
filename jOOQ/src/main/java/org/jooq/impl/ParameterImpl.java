@@ -45,33 +45,27 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Parameter;
-import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for stored procedure parameters
  *
  * @author Lukas Eder
  */
-final class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
+final class ParameterImpl<T> extends AbstractNamed implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 
-    private final String      name;
     private final DataType<T> type;
     private final boolean     isDefaulted;
     private final boolean     isUnnamed;
 
     @SuppressWarnings("unchecked")
     ParameterImpl(String name, DataType<T> type, Binding<?, T> binding, boolean isDefaulted, boolean isUnnamed) {
-        this.name = name;
+        super(DSL.name(name), CommentImpl.NO_COMMENT);
+
         this.type = type.asConvertedDataType((Binding<T, T>) binding);
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
-    }
-
-    @Override
-    public final String getName() {
-        return name;
     }
 
     @Override
@@ -101,7 +95,7 @@ final class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.literal(getName());
+        ctx.visit(getUnqualifiedName());
     }
 
     @Override
@@ -117,32 +111,5 @@ final class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     @Override
     public final boolean isUnnamed() {
         return isUnnamed;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-
-        // [#1938] This is a much more efficient hashCode() implementation
-        // compared to that of standard QueryParts
-        return name != null ? name.hashCode() : 0;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#1626] ParameterImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof ParameterImpl) {
-            return StringUtils.equals(name, ((ParameterImpl<?>) that).name);
-        }
-
-        return super.equals(that);
     }
 }

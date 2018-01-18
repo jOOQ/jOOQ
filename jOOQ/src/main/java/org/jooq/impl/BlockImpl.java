@@ -52,7 +52,6 @@ import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
@@ -152,6 +151,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
             default: {
                 accept0(ctx);
                 break;
@@ -169,6 +169,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
+
 
 
 

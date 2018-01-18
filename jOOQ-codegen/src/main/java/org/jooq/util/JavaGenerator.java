@@ -3520,7 +3520,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.tab(2).println();
-            out.tab(2).println("sb.append(\")\");");
+            out.tab(2).println("sb.append(\")\")");
 
             out.tab(2).println("return sb.toString");
             out.tab(1).println("}");

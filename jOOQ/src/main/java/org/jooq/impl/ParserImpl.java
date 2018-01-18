@@ -5477,6 +5477,8 @@ final class ParserImpl implements Parser {
             case 'B':
                 if (parseKeywordIf(ctx, "BIGINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.BIGINT));
+                else if (parseKeywordIf(ctx, "BIGSERIAL"))
+                    return SQLDataType.BIGINT.identity(true);
                 else if (parseKeywordIf(ctx, "BINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.BINARY);
                 else if (parseKeywordIf(ctx, "BIT"))
@@ -5590,6 +5592,8 @@ final class ParserImpl implements Parser {
                     return parseDataTypeEnum(ctx);
                 else if (parseKeywordIf(ctx, "SMALLINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
+                else if (parseKeywordIf(ctx, "SMALLSERIAL"))
+                    return SQLDataType.SMALLINT.identity(true);
                 else
                     throw ctx.unexpectedToken();
 

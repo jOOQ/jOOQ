@@ -347,6 +347,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * @author Lukas Eder
@@ -373,14 +374,17 @@ final class ParserImpl implements Parser {
     public final Queries parse(String sql, Object... bindings) {
         ParserContext ctx = new ParserContext(dsl, sql, bindings);
         List<Query> result = new ArrayList<Query>();
+        Query query;
 
         do {
-            parseDelimiters(ctx);
-            Query query = parseQuery(ctx, false);
+            parseDelimiterSpecifications(ctx);
+            query = parseQuery(ctx, false);
+            if (query == IGNORE || query == IGNORE_NO_DELIMITER)
+                continue;
             if (query != null)
                 result.add(query);
         }
-        while (parseIf(ctx, ctx.delimiter));
+        while (query == IGNORE_NO_DELIMITER || parseIf(ctx, ctx.delimiter));
 
         ctx.done("Unexpected content after end of queries input");
         return dsl.queries(result);
@@ -484,7 +488,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final void parseDelimiters(ParserContext ctx) {
+    private static final void parseDelimiterSpecifications(ParserContext ctx) {
         while (parseKeywordIf(ctx, "DELIMITER")) {
             if (ctx.character() != ' ')
                 throw ctx.unexpectedToken();
@@ -1240,8 +1244,10 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "GENERATOR"))
             return parseSetGenerator(ctx);
-        else
-            throw ctx.unexpectedToken();
+
+        // There are many SET commands in programs like sqlplus, which we'll simply ignore
+        parseUntilEOL(ctx);
+        return IGNORE_NO_DELIMITER;
     }
 
     private static final DDLQuery parseCommentOn(ParserContext ctx) {
@@ -6705,7 +6711,7 @@ final class ParserImpl implements Parser {
         REGR_SXY,
     }
 
-    private static final String[] SELECT_KEYWORDS = {
+    private static final String[] SELECT_KEYWORDS     = {
         "CONNECT",
         "CROSS",
         "EXCEPT",
@@ -6738,7 +6744,12 @@ final class ParserImpl implements Parser {
         "WHERE",
     };
 
-    private static final String[] PIVOT_KEYWORDS = {
+    private static final String[] PIVOT_KEYWORDS      = {
         "FOR"
     };
+
+    private static final Ignore   IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
+    private static final Ignore   IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
+
+    private static interface Ignore extends Query {}
 }

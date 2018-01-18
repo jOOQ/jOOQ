@@ -38,9 +38,17 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.comment;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
+import static org.jooq.impl.Keywords.K_BEGIN_TRY;
 import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
+import static org.jooq.impl.Keywords.K_DECLARE;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_END_CATCH;
+import static org.jooq.impl.Keywords.K_END_TRY;
+import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_TABLE;
@@ -52,6 +60,7 @@ import org.jooq.CommentOnIsStep;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Table;
 
 /**
@@ -88,6 +97,12 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             case MARIADB:
             case MYSQL: {
                 if (table != null)
@@ -104,6 +119,45 @@ implements
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptMySQL(Context<?> ctx) {
         ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);

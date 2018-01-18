@@ -571,6 +571,9 @@ public class GenerationTool {
             generator.setTargetDirectory(g.getTarget().getDirectory());
             generator.setTargetEncoding(g.getTarget().getEncoding());
 
+            if (g.getTarget().isClean() != null)
+                generator.setTargetClean(g.getTarget().isClean());
+
             // [#1394] The <generate/> element should be optional
             if (g.getGenerate() == null)
                 g.setGenerate(new Generate());

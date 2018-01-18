@@ -121,6 +121,7 @@ abstract class AbstractGenerator implements Generator {
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                     = "UTF-8";
+    protected boolean                  targetClean                        = true;
     final Language                     language;
 
     AbstractGenerator(Language language) {
@@ -877,6 +878,16 @@ abstract class AbstractGenerator implements Generator {
         this.targetEncoding = encoding;
     }
 
+    @Override
+    public boolean getTargetClean() {
+        return targetClean;
+    }
+
+    @Override
+    public void setTargetClean(boolean clean) {
+        this.targetClean = clean;
+    }
+
     /**
      * If file is a directory, recursively empty its children.
      * If file is a file, delete it.
@@ -890,6 +901,9 @@ abstract class AbstractGenerator implements Generator {
      * If file is a file, delete it, except if it is in the list of files to keep.
      */
     protected void empty(File file, String suffix, Set<File> keep, Set<File> ignore) {
+        if (!targetClean)
+            return;
+
         if (file != null) {
 
             // Just a Murphy's Law safeguard in case a user misconfigures their config...

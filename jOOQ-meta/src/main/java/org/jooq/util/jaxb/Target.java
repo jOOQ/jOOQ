@@ -43,6 +43,8 @@ public class Target implements Serializable
     @XmlElement(defaultValue = "UTF-8")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String encoding = "UTF-8";
+    @XmlElement(defaultValue = "true")
+    protected Boolean clean = true;
 
     /**
      * The destination package of your generated classes (within the destination directory)
@@ -119,6 +121,30 @@ public class Target implements Serializable
         this.encoding = value;
     }
 
+    /**
+     * Whether the target package should be cleaned to contain only generated code after a generation run.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isClean() {
+        return clean;
+    }
+
+    /**
+     * Sets the value of the clean property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setClean(Boolean value) {
+        this.clean = value;
+    }
+
     public Target withPackageName(String value) {
         setPackageName(value);
         return this;
@@ -131,6 +157,11 @@ public class Target implements Serializable
 
     public Target withEncoding(String value) {
         setEncoding(value);
+        return this;
+    }
+
+    public Target withClean(Boolean value) {
+        setClean(value);
         return this;
     }
 

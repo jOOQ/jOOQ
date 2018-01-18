@@ -16207,6 +16207,35 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
                                 </html></content>
                             </section>
+
+                            <section id="codegen-config-target">
+                                <title>Output target configuration</title>
+                                <content><html>
+                                    <p>
+                                        In the previous sections, we've seen the <code>&lt;target/&gt;</code> element which configures the location of your generated output. The following XML snippet illustrates some additional flags that can be specified in that section:
+                                    </p>
+
+</html><![CDATA[
+<configuration>
+  ...
+  <generator>
+    ...
+    <target>
+      <packageName>[org.jooq.your.packagename]</packageName>
+      <directory>[/path/to/your/dir]</directory>
+      <encoding>UTF-8</encoding>
+      <clean>true</clean>
+    </target>
+  </generator>
+</configuration>]]><html>
+                                    <ul>
+                                        <li><strong>packageName</strong>: Specifies the root package name inside of which all generated code is located. This package is located inside of the <code>&lt;directory/&gt;</code>. The package name is part of the <reference id="codegen-generatorstrategy" title="generator strategy"/> and can be modified by a custom implementation, if so desired.</li>
+                                        <li><strong>directory</strong>: Specifies the root directoy inside of which all generated code is located.</li>
+                                        <li><strong>encoding</strong>: The encoding that should be used for generated classes.</li>
+                                        <li><strong>clean</strong>: Whether the target package (<code>&lt;packageName/&gt;</code>) should be cleaned to contain only generated code after a generation run. Defaults to true.</li>
+                                    </ul>
+                                </html></content>
+                            </section>
                         </sections>
                     </section>
 

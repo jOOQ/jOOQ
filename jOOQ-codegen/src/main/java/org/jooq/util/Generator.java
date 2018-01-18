@@ -748,4 +748,13 @@ public interface Generator {
      */
     void setTargetPackage(String packageName);
 
+    /**
+     * Whether the target package should be cleaned to contain only generated code after a generation run.
+     */
+    boolean getTargetClean();
+
+    /**
+     * Whether the target package should be cleaned to contain only generated code after a generation run.
+     */
+    void setTargetClean(boolean clean);
 }

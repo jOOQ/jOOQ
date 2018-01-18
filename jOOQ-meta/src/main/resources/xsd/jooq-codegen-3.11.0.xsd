@@ -1126,6 +1126,10 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <element name="encoding" type="string" default="UTF-8" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The file encoding to be used with all output files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="clean" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the target package should be cleaned to contain only generated code after a generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

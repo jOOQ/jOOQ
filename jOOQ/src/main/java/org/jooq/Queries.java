@@ -58,6 +58,11 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
      */
     Query[] queries();
 
+    /**
+     * The wrapped collection of queries as a {@link Block}.
+     */
+    Block block();
+
 
     /**
      * The wrapped collection of queries.

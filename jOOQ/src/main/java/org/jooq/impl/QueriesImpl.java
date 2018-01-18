@@ -43,6 +43,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import org.jooq.Block;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -80,6 +81,11 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
         return queries.toArray(EMPTY_QUERY);
     }
 
+    @Override
+    public final Block block() {
+        return configuration.dsl().begin(queries);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Iterator<Query> iterator() {
@@ -106,7 +112,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     @Override
     public final Results fetchMany() {
         ResultsImpl results = new ResultsImpl(configuration());
-        DSLContext ctx = DSL.using(configuration());
+        DSLContext ctx = configuration().dsl();
 
         for (Query query : this)
             if (query instanceof ResultQuery)
@@ -119,7 +125,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     @Override
     public final int[] executeBatch() {
-        return DSL.using(configuration()).batch(this).execute();
+        return configuration().dsl().batch(this).execute();
     }
 
     // ------------------------------------------------------------------------

@@ -1373,14 +1373,16 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlter(ParserContext ctx) {
         parseKeyword(ctx, "ALTER");
 
-        if (parseKeywordIf(ctx, "TABLE"))
-            return parseAlterTable(ctx);
+        if (parseKeywordIf(ctx, "DOMAIN"))
+            return parseAlterDomain(ctx);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseAlterIndex(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseAlterSchema(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseAlterSequence(ctx);
+        else if (parseKeywordIf(ctx, "TABLE"))
+            return parseAlterTable(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseAlterView(ctx);
         else
@@ -2496,14 +2498,21 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterSchema(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Schema schemaName = parseSchemaName(ctx);
-        parseKeyword(ctx, "RENAME TO");
-        Schema newName = parseSchemaName(ctx);
-
         AlterSchemaStep s1 = ifExists
             ? ctx.dsl.alterSchemaIfExists(schemaName)
             : ctx.dsl.alterSchema(schemaName);
-        AlterSchemaFinalStep s2 = s1.renameTo(newName);
-        return s2;
+
+        if (parseKeywordIf(ctx, "RENAME TO")) {
+            Schema newName = parseSchemaName(ctx);
+            AlterSchemaFinalStep s2 = s1.renameTo(newName);
+            return s2;
+        }
+        else if (parseKeywordIf(ctx, "OWNER TO")) {
+            parseUser(ctx);
+            return IGNORE;
+        }
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final DDLQuery parseDropSchema(ParserContext ctx) {
@@ -2554,6 +2563,50 @@ final class ParserImpl implements Parser {
             : s2;
 
         return s3;
+    }
+
+    private static final DDLQuery parseAlterDomain(ParserContext ctx) {
+        parseIdentifier(ctx);
+
+        // Some known PostgreSQL no-arg ALTER DOMAIN statements:
+        // https://www.postgresql.org/docs/current/static/sql-alterdomain.html
+        if (parseAndGetKeywordIf(ctx,
+            "DROP DEFAULT",
+            "DROP NOT NULL",
+            "SET NOT NULL"
+        ) != null)
+            return IGNORE;
+
+        // ALTER DOMAIN statements with arguments:
+        else if (parseKeywordIf(ctx, "SET DEFAULT")) {
+            parseConcat(ctx, null);
+            return IGNORE;
+        }
+        else if (parseKeywordIf(ctx, "DROP CONSTRAINT")) {
+            parseKeywordIf(ctx, "IF EXISTS");
+            parseIdentifier(ctx);
+            if (parseKeywordIf(ctx, "RESTRICT") || parseKeywordIf(ctx, "CASCADE"));
+            return IGNORE;
+        }
+        else if (parseKeywordIf(ctx, "RENAME CONSTRAINT")) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "TO");
+            parseIdentifier(ctx);
+            return IGNORE;
+        }
+        else if (parseAndGetKeywordIf(ctx,
+            "OWNER TO",
+            "RENAME TO",
+            "SET SCHEMA",
+            "VALIDATE CONSTRAINT"
+        ) != null) {
+            parseIdentifier(ctx);
+            return IGNORE;
+        }
+
+        // TODO (PostgreSQL): ADD
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final DDLQuery parseAlterIndex(ParserContext ctx) {

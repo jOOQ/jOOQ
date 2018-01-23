@@ -315,6 +315,7 @@ import org.jooq.Privilege;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.RevokeFromStep;
@@ -1292,10 +1293,12 @@ final class ParserImpl implements Parser {
 
         CommentOnIsStep s1;
 
-        if (parseKeywordIf(ctx, "TABLE"))
-            s1 = ctx.dsl.commentOnTable(parseTableName(ctx));
-        else if (parseKeywordIf(ctx, "COLUMN"))
+        if (parseKeywordIf(ctx, "COLUMN"))
             s1 = ctx.dsl.commentOnColumn(parseFieldName(ctx));
+        else if (parseKeywordIf(ctx, "TABLE"))
+            s1 = ctx.dsl.commentOnTable(parseTableName(ctx));
+        else if (parseKeywordIf(ctx, "VIEW"))
+            s1 = ctx.dsl.commentOnView(parseTableName(ctx));
 
         // Ignored no-arg object comments
         // https://www.postgresql.org/docs/10/static/sql-comment.html
@@ -6938,5 +6941,6 @@ final class ParserImpl implements Parser {
     private static interface Ignore
     extends
         DDLQuery,
-        ResultQuery<Record> {}
+        ResultQuery<Record>,
+        QueryPartInternal {}
 }

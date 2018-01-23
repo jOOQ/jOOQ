@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.bitLength;
 import static org.jooq.impl.DSL.boolOr;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
 import static org.jooq.impl.DSL.charLength;
 import static org.jooq.impl.DSL.check;
@@ -251,6 +252,7 @@ import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.Catalog;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
@@ -1242,12 +1244,42 @@ final class ParserImpl implements Parser {
     private static final Query parseSet(ParserContext ctx) {
         parseKeyword(ctx, "SET");
 
-        if (parseKeywordIf(ctx, "GENERATOR"))
+        if (parseKeywordIf(ctx, "CATALOG"))
+            return parseSetCatalog(ctx);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
             return parseSetGenerator(ctx);
+        else if (parseKeywordIf(ctx, "SCHEMA"))
+            return parseSetSchema(ctx);
+        else if (parseKeywordIf(ctx, "SEARCH_PATH"))
+            return parseSetSearchPath(ctx);
 
         // There are many SET commands in programs like sqlplus, which we'll simply ignore
         parseUntilEOL(ctx);
         return IGNORE_NO_DELIMITER;
+    }
+
+    private static final Query parseSetCatalog(ParserContext ctx) {
+        return ctx.dsl.setCatalog(parseCatalogName(ctx));
+    }
+
+    private static final Query parseSetSchema(ParserContext ctx) {
+        return ctx.dsl.setSchema(parseSchemaName(ctx));
+    }
+
+    private static final Query parseSetSearchPath(ParserContext ctx) {
+        if (!parseIf(ctx, '='))
+            parseKeyword(ctx, "TO");
+
+        Schema schema = null;
+
+        do {
+            Schema s = parseSchemaName(ctx);
+            if (schema == null)
+                schema = s;
+        }
+        while (parseIf(ctx, ','));
+
+        return ctx.dsl.setSchema(schema);
     }
 
     private static final DDLQuery parseCommentOn(ParserContext ctx) {
@@ -5482,6 +5514,10 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
     // Name parsing
     // -----------------------------------------------------------------------------------------------------------------
+
+    private static final Catalog parseCatalogName(ParserContext ctx) {
+        return catalog(parseName(ctx));
+    }
 
     private static final Schema parseSchemaName(ParserContext ctx) {
         return schema(parseName(ctx));

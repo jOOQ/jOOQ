@@ -63,6 +63,7 @@ final class SetSchema extends AbstractQuery {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case H2:
+            case POSTGRES:
             default:
                 ctx.visit(K_SET).sql(' ').visit(K_SCHEMA).sql(' ').visit(schema);
                 break;

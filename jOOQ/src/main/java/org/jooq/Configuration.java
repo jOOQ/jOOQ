@@ -50,6 +50,7 @@ import javax.sql.DataSource;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConnectionProvider;
+import org.jooq.impl.DefaultDiagnosticsListenerProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultExecutorProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
@@ -292,6 +293,12 @@ public interface Configuration extends Serializable {
      * configuration.
      */
     TransactionListenerProvider[] transactionListenerProviders();
+
+    /**
+     * Get the configured <code>DiagnosticsListenerProvider</code>s from this
+     * configuration.
+     */
+    DiagnosticsListenerProvider[] diagnosticsListenerProviders();
 
     /**
      * Get this configuration's underlying record mapper provider.
@@ -652,6 +659,33 @@ public interface Configuration extends Serializable {
     Configuration set(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
+     * Change this configuration to hold a new diagnostics listeners.
+     * <p>
+     * This will wrap the argument {@link DiagnosticsListener} in a
+     * {@link DefaultDiagnosticsListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDiagnosticsListeners The new diagnostics listeners to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(DiagnosticsListener... newDiagnosticsListeners);
+
+    /**
+     * Change this configuration to hold a new diagnostics listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDiagnosticsListenerProviders The new diagnostics listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
+
+    /**
      * Change this configuration to hold a new converter provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -906,6 +940,26 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(TransactionListenerProvider... newTransactionListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new diagnostics
+     * listeners.
+     *
+     * @param newDiagnosticsListeners The new diagnostics listeners to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(DiagnosticsListener... newDiagnosticsListeners);
+
+    /**
+     * Create a derived configuration from this one, with new diagnostics
+     * listener providers.
+     *
+     * @param newDiagnosticsListenerProviders The new diagnostics listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new converter

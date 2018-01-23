@@ -217,6 +217,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Connection parsingConnection();
 
     /**
+     * A JDBC connection that proxies the underlying connection to run the jOOQ
+     * Diagnostics Pack on executed queries.
+     * <p>
+     * <strong>This is experimental functionality.</strong>
+     */
+    Connection diagnosticsConnection();
+
+    /**
      * Access the database meta data.
      * <p>
      * This method returns a wrapper type that gives access to your JDBC

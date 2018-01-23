@@ -73,4 +73,21 @@ public interface DiagnosticsContext {
      * then this will return the same value as {@link #resultSetFetchedRows()}.
      */
     int resultSetActualRows();
+
+    /**
+     * The number of columns that were fetched from the {@link #resultSet()}, or
+     * <code>-1</code> if there was no result set.
+     * <p>
+     * If the result set is still being consumed (i.e. prior to the
+     * {@link ResultSet#close()} call), then this will return the number of
+     * columns that were retrieved from the {@link #resultSet()} set <em>thus
+     * far</em>.
+     */
+    int resultSetFetchedColumns();
+
+    /**
+     * The number of columns that were actually available from
+     * {@link #resultSet()}, or <code>-1</code> if there was no result set.
+     */
+    int resultSetActualColumns();
 }

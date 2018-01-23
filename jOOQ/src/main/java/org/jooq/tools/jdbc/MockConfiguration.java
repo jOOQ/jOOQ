@@ -48,6 +48,8 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
+import org.jooq.DiagnosticsListener;
+import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
@@ -160,6 +162,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public TransactionListenerProvider[] transactionListenerProviders() {
         return delegate.transactionListenerProviders();
+    }
+
+    @Override
+    public DiagnosticsListenerProvider[] diagnosticsListenerProviders() {
+        return delegate.diagnosticsListenerProviders();
     }
 
     @Override
@@ -285,6 +292,16 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(DiagnosticsListener... newDiagnosticsListeners) {
+        return delegate.set(newDiagnosticsListeners);
+    }
+
+    @Override
+    public Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
+        return delegate.set(newDiagnosticsListenerProviders);
+    }
+
+    @Override
     public Configuration set(ConverterProvider newConverterProvider) {
         return delegate.set(newConverterProvider);
     }
@@ -399,6 +416,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return delegate.derive(newTransactionListenerProviders);
+    }
+
+    @Override
+    public Configuration derive(DiagnosticsListener... newDiagnosticsListeners) {
+        return delegate.derive(newDiagnosticsListeners);
+    }
+
+    @Override
+    public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
+        return delegate.derive(newDiagnosticsListenerProviders);
     }
 
     @Override

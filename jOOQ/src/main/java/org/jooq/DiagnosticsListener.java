@@ -47,7 +47,7 @@ import java.sql.ResultSet;
 public interface DiagnosticsListener {
 
     /**
-     * The fetched JDBC {@link ResultSet} was too large.
+     * The fetched JDBC {@link ResultSet} returned more rows than necessary.
      * <p>
      * An event indicating that a JDBC {@link ResultSet} was fetched with
      * <code>A</code> rows, but only <code>B</code> rows (<code>B &lt; A</code>)
@@ -57,6 +57,18 @@ public interface DiagnosticsListener {
      * <code>LIMIT</code> clause in SQL, or {@link SelectLimitStep#limit(int)}
      * clause in jOOQ.
      */
-    void resultSetTooLarge(DiagnosticsContext ctx);
+    void tooManyRowsFetched(DiagnosticsContext ctx);
+
+    /**
+     * The fetched JDBC {@link ResultSet} returned more columns than necessary.
+     * <p>
+     * An event indicating that a JDBC {@link ResultSet} was fetched with
+     * <code>A</code> columns, but only <code>B</code> (<code>B &lt; A</code>)
+     * were consumed.
+     * <p>
+     * Typically, this problem can be remedied by not running a
+     * <code>SELECT *</code> query when this isn't strictly required.
+     */
+    void tooManyColumnsFetched(DiagnosticsContext ctx);
 
 }

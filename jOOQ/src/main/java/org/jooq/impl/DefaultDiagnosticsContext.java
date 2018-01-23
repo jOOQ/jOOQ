@@ -48,6 +48,8 @@ import org.jooq.DiagnosticsContext;
 final class DefaultDiagnosticsContext implements DiagnosticsContext {
 
     ResultSet resultSet;
+    int       resultSetFetchedColumns;
+    int       resultSetActualColumns;
     int       resultSetFetchedRows;
     int       resultSetActualRows;
 
@@ -74,5 +76,15 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
         }
         catch (SQLException ignore) {}
         return resultSetActualRows;
+    }
+
+    @Override
+    public final int resultSetFetchedColumns() {
+        return resultSet == null ? -1 : resultSetFetchedColumns;
+    }
+
+    @Override
+    public final int resultSetActualColumns() {
+        return resultSet == null ? -1 : resultSetActualColumns;
     }
 }

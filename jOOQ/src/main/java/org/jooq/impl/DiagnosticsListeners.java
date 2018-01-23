@@ -62,8 +62,14 @@ final class DiagnosticsListeners implements DiagnosticsListener {
     }
 
     @Override
-    public final void resultSetTooLarge(DiagnosticsContext ctx) {
+    public final void tooManyRowsFetched(DiagnosticsContext ctx) {
         for (DiagnosticsListener listener : listeners)
-            listener.resultSetTooLarge(ctx);
+            listener.tooManyRowsFetched(ctx);
+    }
+
+    @Override
+    public final void tooManyColumnsFetched(DiagnosticsContext ctx) {
+        for (DiagnosticsListener listener : listeners)
+            listener.tooManyColumnsFetched(ctx);
     }
 }

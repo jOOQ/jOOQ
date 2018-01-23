@@ -51,6 +51,6 @@ import org.jooq.DiagnosticsListener;
 public class DefaultDiagnosticsListener implements DiagnosticsListener {
 
     @Override
-    public void resultSetTooLarge(DiagnosticsContext ctx) {}
+    public void tooManyRowsFetched(DiagnosticsContext ctx) {}
 
 }

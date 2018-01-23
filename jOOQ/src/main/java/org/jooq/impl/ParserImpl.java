@@ -1259,6 +1259,85 @@ final class ParserImpl implements Parser {
             s1 = ctx.dsl.commentOnTable(parseTableName(ctx));
         else if (parseKeywordIf(ctx, "COLUMN"))
             s1 = ctx.dsl.commentOnColumn(parseFieldName(ctx));
+
+        // Ignored no-arg object comments
+        // https://www.postgresql.org/docs/10/static/sql-comment.html
+        // https://docs.oracle.com/database/121/SQLRF/statements_4010.htm
+        else if (parseAndGetKeywordIf(ctx,
+            "ACCESS METHOD",
+            "AUDIT POLICY",
+            "COLLATION",
+            "CONVERSION",
+            "DATABASE",
+            "DOMAIN",
+            "EDITION",
+            "EXTENSION",
+            "EVENT TRIGGER",
+            "FOREIGN DATA WRAPPER",
+            "FOREIGN TABLE",
+            "INDEX",
+            "INDEXTYPE",
+            "LANGUAGE",
+            "LARGE OBJECT",
+            "MATERIALIZED VIEW",
+            "MINING MODEL",
+            "OPERATOR",
+            "PROCEDURAL LANGUAGE",
+            "PUBLICATION",
+            "ROLE",
+            "SCHEMA",
+            "SEQUENCE",
+            "SERVER",
+            "STATISTICS",
+            "SUBSCRIPTION",
+            "TABLESPACE",
+            "TEXT SEARCH CONFIGURATION",
+            "TEXT SEARCH DICTIONARY",
+            "TEXT SEARCH PARSER",
+            "TEXT SEARCH TEMPLATE",
+            "TYPE",
+            "VIEW"
+        ) != null) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "IS");
+            parseStringLiteral(ctx);
+            return IGNORE;
+        }
+
+        // TODO: (PostgreSQL)
+        // AGGREGATE, CAST, FUNCTION, OPERATOR, OPERATOR CLASS, OPERATOR FAMILY
+
+        // Ignored object comments with arguments
+        // https://www.postgresql.org/docs/10/static/sql-comment.html
+        else if (parseKeywordIf(ctx, "CONSTRAINT")) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "ON");
+            parseKeywordIf(ctx, "DOMAIN");
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "IS");
+            parseStringLiteral(ctx);
+            return IGNORE;
+        }
+        else if (parseAndGetKeywordIf(ctx,
+            "POLICY",
+            "RULE",
+            "TRIGGER"
+        ) != null) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "ON");
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "IS");
+            parseStringLiteral(ctx);
+            return IGNORE;
+        }
+        else if (parseKeywordIf(ctx, "TRANSFORM FOR")) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "LANGUAGE");
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "IS");
+            parseStringLiteral(ctx);
+            return IGNORE;
+        }
         else
             throw ctx.unexpectedToken();
 
@@ -6751,5 +6830,8 @@ final class ParserImpl implements Parser {
     private static final Ignore   IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
     private static final Ignore   IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
 
-    private static interface Ignore extends Query {}
+    private static interface Ignore
+    extends
+        DDLQuery,
+        ResultQuery<Record> {}
 }

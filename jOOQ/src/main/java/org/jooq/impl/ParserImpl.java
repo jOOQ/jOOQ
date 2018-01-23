@@ -5661,12 +5661,17 @@ final class ParserImpl implements Parser {
                     return parseDataTypeLength(ctx, SQLDataType.BLOB);
                 else if (parseKeywordIf(ctx, "BOOLEAN"))
                     return SQLDataType.BOOLEAN;
+                else if (parseKeywordIf(ctx, "BYTEA"))
+                    return SQLDataType.BLOB;
                 else
                     throw ctx.unexpectedToken();
 
             case 'c':
             case 'C':
-                if (parseKeywordIf(ctx, "CHAR"))
+                if (parseKeywordIf(ctx, "CHARACTER VARYING"))
+                    return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
+                else if (parseKeywordIf(ctx, "CHAR") ||
+                         parseKeywordIf(ctx, "CHARACTER"))
                     return parseDataTypeLength(ctx, SQLDataType.CHAR);
                 else if (parseKeywordIf(ctx, "CLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.CLOB);
@@ -5704,8 +5709,13 @@ final class ParserImpl implements Parser {
             case 'i':
             case 'I':
                 if (parseKeywordIf(ctx, "INTEGER") ||
-                    parseKeywordIf(ctx, "INT"))
+                    parseKeywordIf(ctx, "INT") ||
+                    parseKeywordIf(ctx, "INT4"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
+                else if (parseKeywordIf(ctx, "INT2"))
+                    return SQLDataType.SMALLINT;
+                else if (parseKeywordIf(ctx, "INT8"))
+                    return SQLDataType.BIGINT;
                 else
                     throw ctx.unexpectedToken();
 
@@ -5780,14 +5790,16 @@ final class ParserImpl implements Parser {
                          parseKeywordIf(ctx, "TIMESTAMPTZ"))
                     return SQLDataType.TIMESTAMPWITHTIMEZONE;
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP"))
+                else if (parseKeywordIf(ctx, "TIMESTAMP WITHOUT TIME ZONE") ||
+                         parseKeywordIf(ctx, "TIMESTAMP"))
                     return SQLDataType.TIMESTAMP;
 
                 else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") ||
                          parseKeywordIf(ctx, "TIMETZ"))
                     return SQLDataType.TIMEWITHTIMEZONE;
 
-                else if (parseKeywordIf(ctx, "TIME"))
+                else if (parseKeywordIf(ctx, "TIME WITHOUT TIME ZONE") ||
+                         parseKeywordIf(ctx, "TIME"))
                     return SQLDataType.TIME;
 
                 else if (parseKeywordIf(ctx, "TINYBLOB"))
@@ -5809,8 +5821,7 @@ final class ParserImpl implements Parser {
             case 'v':
             case 'V':
                 if (parseKeywordIf(ctx, "VARCHAR") ||
-                    parseKeywordIf(ctx, "VARCHAR2") ||
-                    parseKeywordIf(ctx, "CHARACTER VARYING"))
+                    parseKeywordIf(ctx, "VARCHAR2"))
                     return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
                 else if (parseKeywordIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);

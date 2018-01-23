@@ -23,10 +23,12 @@ ddlStatement =
 | dropViewStatement
 | dropSequenceStatement
 | dropSchemaStatement
-| renameStatement
-| truncateStatement
 | grantStatement
+| renameStatement
 | revokeStatement
+| setCatalogStatement
+| setSchemaStatement
+| truncateStatement
 ;
 
 dmlStatement =
@@ -98,8 +100,9 @@ alterViewStatement = 'ALTER VIEW' [ 'IF EXISTS' ] tableName
 ;
 
 commentStatement = 'COMMENT ON' (
-  'TABLE' tableName
-| 'COLUMN' fieldName
+  'COLUMN' fieldName
+| 'TABLE' tableName
+| 'VIEW' tableName
 )
 break
 'IS' stringLiteral
@@ -158,6 +161,12 @@ renameStatement = 'RENAME'
 | 'VIEW' tabelName 'TO' tableName
 | [ 'TABLE' ] tableName 'TO' tableName
 )
+;
+
+setCatalogStatement = 'SET CATALOG' catalogName
+;
+
+setSchemaStatement = 'SET SCHEMA' schemaName
 ;
 
 truncateStatement = 'TRUNCATE TABLE' tableName [ 'CONTINUE IDENTITY' | 'RESTART IDENTITY' ] [ 'CASCADE' | 'RESTRICT' ]
@@ -690,6 +699,7 @@ dataType =
 | 'BLOB' [ '(' unsignedInteger ')' ]
 | 'BOOLEAN'
 | 'CHAR' [ '(' unsignedInteger ')' ]
+| 'CHARACTER' [ '(' unsignedInteger ')' ]
 | 'CLOB' [ '(' unsignedInteger ')' ]
 | 'DATE'
 | 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]

@@ -39,6 +39,9 @@ package org.jooq.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.jooq.DiagnosticsContext;
 
@@ -47,11 +50,22 @@ import org.jooq.DiagnosticsContext;
  */
 final class DefaultDiagnosticsContext implements DiagnosticsContext {
 
-    ResultSet resultSet;
-    int       resultSetFetchedColumns;
-    int       resultSetActualColumns;
-    int       resultSetFetchedRows;
-    int       resultSetActualRows;
+    ResultSet          resultSet;
+    int                resultSetFetchedColumns;
+    int                resultSetActualColumns;
+    int                resultSetFetchedRows;
+    int                resultSetActualRows;
+    final String       normalisedStatement;
+    final List<String> duplicateStatements;
+
+    DefaultDiagnosticsContext(String statement) {
+        this(statement, Arrays.asList(statement));
+    }
+
+    DefaultDiagnosticsContext(String normalisedStatement, List<String> duplicateStatements) {
+        this.normalisedStatement = normalisedStatement;
+        this.duplicateStatements = duplicateStatements;
+    }
 
     @Override
     public final ResultSet resultSet() {
@@ -86,5 +100,15 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     @Override
     public final int resultSetActualColumns() {
         return resultSet == null ? -1 : resultSetActualColumns;
+    }
+
+    @Override
+    public final String normalisedStatement() {
+        return normalisedStatement;
+    }
+
+    @Override
+    public final List<String> duplicateStatements() {
+        return Collections.unmodifiableList(duplicateStatements);
     }
 }

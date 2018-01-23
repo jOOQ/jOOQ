@@ -72,4 +72,10 @@ final class DiagnosticsListeners implements DiagnosticsListener {
         for (DiagnosticsListener listener : listeners)
             listener.tooManyColumnsFetched(ctx);
     }
+
+    @Override
+    public final void duplicateStatements(DiagnosticsContext ctx) {
+        for (DiagnosticsListener listener : listeners)
+            listener.duplicateStatements(ctx);
+    }
 }

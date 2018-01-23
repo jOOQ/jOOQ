@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * A parameter object that is passed to {@link DiagnosticsListener} methods.
@@ -90,4 +91,14 @@ public interface DiagnosticsContext {
      * {@link #resultSet()}, or <code>-1</code> if there was no result set.
      */
     int resultSetActualColumns();
+
+    /**
+     * The normalised statement that all duplicates correspond to.
+     */
+    String normalisedStatement();
+
+    /**
+     * The duplicate statements that all correspond to a single normalised statement.
+     */
+    List<String> duplicateStatements();
 }

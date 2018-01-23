@@ -53,4 +53,10 @@ public class DefaultDiagnosticsListener implements DiagnosticsListener {
     @Override
     public void tooManyRowsFetched(DiagnosticsContext ctx) {}
 
+    @Override
+    public void tooManyColumnsFetched(DiagnosticsContext ctx) {}
+
+    @Override
+    public void duplicateStatements(DiagnosticsContext ctx) {}
+
 }

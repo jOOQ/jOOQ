@@ -150,6 +150,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         this.forcedParamType = SettingsTools.getStatementType(settings()) == StatementType.STATIC_STATEMENT
             ? ParamType.INLINED
+            : SettingsTools.getParamType(settings()) == ParamType.FORCE_INDEXED
+            ? ParamType.INDEXED
             : null;
 
         ParamCastMode m = settings().getParamCastMode();

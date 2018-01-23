@@ -67,16 +67,18 @@ import org.jooq.tools.jdbc.DefaultResultSet;
 final class DiagnosticsResultSet extends DefaultResultSet {
 
     final DiagnosticsConnection connection;
+    final String                sql;
     final ResultSetMetaData     meta;
     final BitSet                read;
     final int                   columns;
     int                         current;
     int                         rows;
 
-    DiagnosticsResultSet(ResultSet delegate, Statement creator, DiagnosticsConnection connection) throws SQLException {
+    DiagnosticsResultSet(ResultSet delegate, String sql, Statement creator, DiagnosticsConnection connection) throws SQLException {
         super(delegate, creator);
 
         this.connection = connection;
+        this.sql = sql;
         this.meta = delegate.getMetaData();
         this.columns = meta.getColumnCount();
         this.read = new BitSet(columns);
@@ -590,7 +592,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
     }
 
     private final DefaultDiagnosticsContext ctx() {
-        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext();
+        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(sql);
 
         ctx.resultSet = super.getDelegate();
         ctx.resultSetFetchedColumns = read.cardinality();

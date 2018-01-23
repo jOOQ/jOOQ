@@ -278,6 +278,9 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <!-- Execute statements with indexed parameters, the way JDBC expects them -->
       <enumeration value="INDEXED"/>
 
+      <!-- Execute statements with indexed parameters, forcing explicit inlined and named parameters to be indexed as well -->
+      <enumeration value="FORCE_INDEXED"/>
+
       <!-- Execute statements with named parameters -->
       <enumeration value="NAMED"/>
 

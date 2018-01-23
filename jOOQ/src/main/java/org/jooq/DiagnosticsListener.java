@@ -71,4 +71,43 @@ public interface DiagnosticsListener {
      */
     void tooManyColumnsFetched(DiagnosticsContext ctx);
 
+    /**
+     * The executed JDBC statement has duplicates.
+     * <p>
+     * Many databases maintain an execution plan cache, which remembers
+     * execution plans for a given SQL string. These caches often use the
+     * verbatim SQL string (or a hash thereof) as a key, meaning that "similar"
+     * but not identical statements will produce different keys. This may be
+     * desired in rare cases when querying skewed data, as a hack to force the
+     * optimiser to calculate a new plan for a given "similar" but not identical
+     * query, but mostly, this is not desirable as calculating execution plans
+     * can turn out to be expensive.
+     * <p>
+     * Examples of such similar statements include:
+     * <p>
+     * <h3>Whitespace differences</h3>
+     * <p>
+     * <code><pre>
+     * SELECT * FROM  actor;
+     * SELECT  * FROM actor;
+     * </pre></code>
+     * <p>
+     * <h3>Inline bind values</h3>
+     * <p>
+     * <code><pre>
+     * SELECT * FROM actor WHERE id = 1;
+     * SELECT * FROM actor WHERE id = 2;
+     * </pre></code>
+     * <p>
+     * <h3>Aliasing and qualification</h3>
+     * <p>
+     * <code><pre>
+     * SELECT a1.* FROM actor a1 WHERE id = ?;
+     * SELECT * FROM actor a2 WHERE a2.id = ?;
+     * </pre></code>
+     * <p>
+     * This event is triggered every time a new duplicate is encountered.
+     */
+    void duplicateStatements(DiagnosticsContext ctx);
+
 }

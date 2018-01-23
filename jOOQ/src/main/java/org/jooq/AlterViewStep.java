@@ -37,10 +37,15 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+
+import org.jooq.impl.DSL;
 
 /**
  * The step in the <code>ALTER VIEW</code> where the action can be decided.
@@ -48,6 +53,26 @@ import static org.jooq.SQLDialect.POSTGRES;
  * @author Lukas Eder
  */
 public interface AlterViewStep {
+
+    /**
+     * Specify a comment for a table using MySQL's syntax (which MySQL currently
+     * doesn't support on views).
+     *
+     * @see DSL#commentOnView(Table)
+     * @see DSLContext#commentOnView(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterViewFinalStep comment(String comment);
+
+    /**
+     * Specify a comment for a table using MySQL's syntax (which MySQL currently
+     * doesn't support on views).
+     *
+     * @see DSL#commentOnView(Table)
+     * @see DSLContext#commentOnView(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterViewFinalStep comment(Comment comment);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>

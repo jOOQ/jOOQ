@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.impl.DSL.commentOnView;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_EXEC;
@@ -66,6 +67,7 @@ import java.util.EnumSet;
 import org.jooq.AlterViewFinalStep;
 import org.jooq.AlterViewStep;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
@@ -90,6 +92,7 @@ final class AlterViewImpl extends AbstractQuery implements
 
     private final Table<?>                   view;
     private final boolean                    ifExists;
+    private Comment                          comment;
     private Table<?>                         renameTo;
 
     AlterViewImpl(Configuration configuration, Table<?> view) {
@@ -106,6 +109,17 @@ final class AlterViewImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final AlterViewImpl comment(String c) {
+        return comment(DSL.comment(c));
+    }
+
+    @Override
+    public final AlterViewImpl comment(Comment c) {
+        this.comment = c;
+        return this;
+    }
 
     @Override
     public final AlterViewImpl renameTo(Table<?> newName) {
@@ -145,6 +159,11 @@ final class AlterViewImpl extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+        if (comment != null) {
+            ctx.visit(commentOnView(view).is(comment));
+            return;
+        }
+
 
 
 

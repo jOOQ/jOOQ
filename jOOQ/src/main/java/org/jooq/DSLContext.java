@@ -8516,6 +8516,33 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CommentOnIsStep commentOnTable(Table<?> table);
 
     /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(String)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(String viewName);
+
+    /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(Name)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(Name viewName);
+
+    /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(Table)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(Table<?> view);
+
+    /**
      * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
      *
      * @see DSL#commentOnColumn(Name)
@@ -9164,7 +9191,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterView(String)
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(String view);
 
     /**
@@ -9172,7 +9199,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterView(Name)
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(Name view);
 
     /**

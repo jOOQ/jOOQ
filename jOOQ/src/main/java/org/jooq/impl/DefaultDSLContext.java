@@ -2902,7 +2902,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CommentOnIsStep commentOnTable(Table<?> table) {
-        return new CommentOnImpl(configuration(), table);
+        return new CommentOnImpl(configuration(), table, false);
+    }
+
+    @Override
+    public CommentOnIsStep commentOnView(String viewName) {
+        return commentOnView(name(viewName));
+    }
+
+    @Override
+    public CommentOnIsStep commentOnView(Name viewName) {
+        return commentOnView(table(viewName));
+    }
+
+    @Override
+    public CommentOnIsStep commentOnView(Table<?> view) {
+        return new CommentOnImpl(configuration(), view, true);
     }
 
     @Override

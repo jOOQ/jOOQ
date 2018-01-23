@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
@@ -52,6 +53,9 @@ import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_VIEW;
+
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Comment;
@@ -61,6 +65,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -74,16 +79,19 @@ implements
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 2665659331902435568L;
+    private static final long                serialVersionUID         = 2665659331902435568L;
+    private static final EnumSet<SQLDialect> SUPPORTS_COMMENT_ON_VIEW = EnumSet.of(POSTGRES);
 
-    private final Table<?>    table;
-    private final Field<?>    field;
-    private Comment           comment;
+    private final Table<?>                   table;
+    private final boolean                    isView;
+    private final Field<?>                   field;
+    private Comment                          comment;
 
-    CommentOnImpl(Configuration configuration, Table<?> table) {
+    CommentOnImpl(Configuration configuration, Table<?> table, boolean isView) {
         super(configuration);
 
         this.table = table;
+        this.isView = isView;
         this.field = null;
     }
 
@@ -91,6 +99,7 @@ implements
         super(configuration);
 
         this.table = null;
+        this.isView = false;
         this.field = field;
     }
 
@@ -167,7 +176,11 @@ implements
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
         if (table != null)
-            ctx.visit(K_TABLE).sql(' ').visit(table);
+            ctx.visit(isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.family())
+                        ? K_VIEW
+                        : K_TABLE)
+               .sql(' ')
+               .visit(table);
         else if (field != null)
             ctx.visit(K_COLUMN).sql(' ').visit(field);
         else

@@ -5857,6 +5857,39 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(String)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnView(String viewName) {
+        return using(new DefaultConfiguration()).commentOnView(viewName);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(Name)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnView(Name viewName) {
+        return using(new DefaultConfiguration()).commentOnView(viewName);
+    }
+
+    /**
+     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(Table)
+     * @see AlterViewStep#comment(Comment)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CommentOnIsStep commentOnView(Table<?> view) {
+        return using(new DefaultConfiguration()).commentOnView(view);
+    }
+
+    /**
      * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
      *
      * @see DSLContext#commentOnColumn(Name)
@@ -7340,7 +7373,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(String)
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(String view) {
         return using(new DefaultConfiguration()).alterView(view);
     }
@@ -7350,7 +7383,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Name)
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Name view) {
         return using(new DefaultConfiguration()).alterView(view);
     }

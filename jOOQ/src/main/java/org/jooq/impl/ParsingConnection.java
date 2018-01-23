@@ -51,7 +51,6 @@ import org.jooq.tools.jdbc.DefaultConnection;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 final class ParsingConnection extends DefaultConnection {
 
     private static final JooqLogger log = JooqLogger.getLogger(ParsingConnection.class);

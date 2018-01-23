@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
 
-    private static final long serialVersionUID = -1125747411;
+    private static final long serialVersionUID = 417443386;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_TO_BOOK_STORE</code>
@@ -94,7 +94,7 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
     }
 
     private BookToBookStore(Name alias, Table<BookToBookStoreRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
     /**

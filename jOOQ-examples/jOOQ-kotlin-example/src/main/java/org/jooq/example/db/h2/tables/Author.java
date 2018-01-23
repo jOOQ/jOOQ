@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 2144482306;
+    private static final long serialVersionUID = -1556820779;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -110,7 +110,7 @@ public class Author extends TableImpl<AuthorRecord> {
     }
 
     private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
     /**

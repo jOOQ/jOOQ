@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
@@ -2854,6 +2855,40 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public Query setSchema(String schema) {
+        return setSchema(name(schema));
+    }
+
+    @Override
+    public Query setSchema(Name schema) {
+        return setSchema(schema(schema));
+    }
+
+    @Override
+    public Query setSchema(Schema schema) {
+        return new SetSchema(configuration(), schema);
+    }
 
     @Override
     public CommentOnIsStep commentOnTable(String tableName) {

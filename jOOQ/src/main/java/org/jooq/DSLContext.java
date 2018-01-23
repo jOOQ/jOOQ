@@ -8433,6 +8433,58 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags);
 
     // -------------------------------------------------------------------------
+    // XXX Session Statements
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ H2, POSTGRES} )
+    Query setSchema(String schema);
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ H2, POSTGRES} )
+    Query setSchema(Name schema);
+
+    /**
+     * Set the current schema to a new value.
+     */
+    @Support({ H2, POSTGRES} )
+    Query setSchema(Schema schema);
+
+    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 

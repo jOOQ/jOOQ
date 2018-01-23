@@ -6579,6 +6579,70 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Session Statements
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ H2, POSTGRES} )
+    public static Query setSchema(String schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ H2, POSTGRES} )
+    public static Query setSchema(Name schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    /**
+     * Set the current schema to a new value.
+     */
+    @Support({ H2, POSTGRES} )
+    public static Query setSchema(Schema schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 

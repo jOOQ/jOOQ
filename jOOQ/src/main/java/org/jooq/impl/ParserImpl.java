@@ -1244,9 +1244,12 @@ final class ParserImpl implements Parser {
     private static final Query parseSet(ParserContext ctx) {
         parseKeyword(ctx, "SET");
 
-        if (parseKeywordIf(ctx, "CATALOG"))
-            return parseSetCatalog(ctx);
-        else if (parseKeywordIf(ctx, "GENERATOR"))
+
+
+
+
+
+        if (parseKeywordIf(ctx, "GENERATOR"))
             return parseSetGenerator(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseSetSchema(ctx);
@@ -1258,9 +1261,11 @@ final class ParserImpl implements Parser {
         return IGNORE_NO_DELIMITER;
     }
 
-    private static final Query parseSetCatalog(ParserContext ctx) {
-        return ctx.dsl.setCatalog(parseCatalogName(ctx));
-    }
+
+
+
+
+
 
     private static final Query parseSetSchema(ParserContext ctx) {
         return ctx.dsl.setSchema(parseSchemaName(ctx));

@@ -2693,7 +2693,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        return using(new DefaultConfiguration()).selectFrom(table);
+        return dsl().selectFrom(table);
     }
 
     /**
@@ -2733,7 +2733,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
-        return using(new DefaultConfiguration()).select(fields);
+        return dsl().select(fields);
     }
 
     /**
@@ -2773,7 +2773,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> select(SelectField<?>... fields) {
-        return using(new DefaultConfiguration()).select(fields);
+        return dsl().select(fields);
     }
 
 // [jooq-tools] START [select]
@@ -3653,7 +3653,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
-        return using(new DefaultConfiguration()).selectDistinct(fields);
+        return dsl().selectDistinct(fields);
     }
 
     /**
@@ -3693,7 +3693,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
-        return using(new DefaultConfiguration()).selectDistinct(fields);
+        return dsl().selectDistinct(fields);
     }
 
 // [jooq-tools] START [selectDistinct]
@@ -4566,7 +4566,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
-        return using(new DefaultConfiguration()).selectZero();
+        return dsl().selectZero();
     }
 
     /**
@@ -4599,7 +4599,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
-        return using(new DefaultConfiguration()).selectOne();
+        return dsl().selectOne();
     }
 
     /**
@@ -4631,7 +4631,7 @@ public class DSL {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
-        return using(new DefaultConfiguration()).selectCount();
+        return dsl().selectCount();
     }
 
     /**
@@ -4664,7 +4664,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
-        return using(new DefaultConfiguration()).insertInto(into);
+        return dsl().insertInto(into);
     }
 
     // [jooq-tools] START [insert]
@@ -5311,7 +5311,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
-        return using(new DefaultConfiguration()).insertInto(into, fields);
+        return dsl().insertInto(into, fields);
     }
 
     /**
@@ -5338,7 +5338,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
-        return using(new DefaultConfiguration()).insertInto(into, fields);
+        return dsl().insertInto(into, fields);
     }
 
     /**
@@ -5370,7 +5370,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
-        return using(new DefaultConfiguration()).update(table);
+        return dsl().update(table);
     }
 
     /**
@@ -5456,7 +5456,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
-        return using(new DefaultConfiguration()).mergeInto(table);
+        return dsl().mergeInto(table);
     }
 
     // [jooq-tools] START [merge]
@@ -5470,7 +5470,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1);
+        return dsl().mergeInto(table, field1);
     }
 
     /**
@@ -5482,7 +5482,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
+        return dsl().mergeInto(table, field1, field2);
     }
 
     /**
@@ -5494,7 +5494,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
+        return dsl().mergeInto(table, field1, field2, field3);
     }
 
     /**
@@ -5506,7 +5506,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
+        return dsl().mergeInto(table, field1, field2, field3, field4);
     }
 
     /**
@@ -5518,7 +5518,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5);
     }
 
     /**
@@ -5530,7 +5530,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6);
     }
 
     /**
@@ -5542,7 +5542,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
     }
 
     /**
@@ -5554,7 +5554,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
     }
 
     /**
@@ -5566,7 +5566,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
 
     /**
@@ -5578,7 +5578,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
 
     /**
@@ -5590,7 +5590,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
 
     /**
@@ -5602,7 +5602,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
 
     /**
@@ -5614,7 +5614,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
 
     /**
@@ -5626,7 +5626,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
 
     /**
@@ -5638,7 +5638,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
 
     /**
@@ -5650,7 +5650,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
 
     /**
@@ -5662,7 +5662,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
 
     /**
@@ -5674,7 +5674,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
 
     /**
@@ -5686,7 +5686,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
 
     /**
@@ -5698,7 +5698,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
 
     /**
@@ -5710,7 +5710,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
 
     /**
@@ -5722,7 +5722,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
-        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
+        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
 // [jooq-tools] END [merge]
@@ -5755,7 +5755,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
-        return using(new DefaultConfiguration()).mergeInto(table, fields);
+        return dsl().mergeInto(table, fields);
     }
 
     /**
@@ -5769,7 +5769,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
-        return using(new DefaultConfiguration()).mergeInto(table, fields);
+        return dsl().mergeInto(table, fields);
     }
 
     /**
@@ -5794,7 +5794,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
-        return using(new DefaultConfiguration()).deleteFrom(table);
+        return dsl().deleteFrom(table);
     }
 
     /**
@@ -5804,7 +5804,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
-        return using(new DefaultConfiguration()).deleteFrom(table);
+        return dsl().deleteFrom(table);
     }
 
     // -------------------------------------------------------------------------
@@ -5831,7 +5831,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(String tableName) {
-        return using(new DefaultConfiguration()).commentOnTable(tableName);
+        return dsl().commentOnTable(tableName);
     }
 
     /**
@@ -5842,7 +5842,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Name tableName) {
-        return using(new DefaultConfiguration()).commentOnTable(tableName);
+        return dsl().commentOnTable(tableName);
     }
 
     /**
@@ -5853,7 +5853,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Table<?> table) {
-        return using(new DefaultConfiguration()).commentOnTable(table);
+        return dsl().commentOnTable(table);
     }
 
     /**
@@ -5864,7 +5864,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(String viewName) {
-        return using(new DefaultConfiguration()).commentOnView(viewName);
+        return dsl().commentOnView(viewName);
     }
 
     /**
@@ -5875,7 +5875,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(Name viewName) {
-        return using(new DefaultConfiguration()).commentOnView(viewName);
+        return dsl().commentOnView(viewName);
     }
 
     /**
@@ -5886,7 +5886,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(Table<?> view) {
-        return using(new DefaultConfiguration()).commentOnView(view);
+        return dsl().commentOnView(view);
     }
 
     /**
@@ -5896,7 +5896,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Name columnName) {
-        return using(new DefaultConfiguration()).commentOnColumn(columnName);
+        return dsl().commentOnColumn(columnName);
     }
 
     /**
@@ -5906,7 +5906,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Field<?> field) {
-        return using(new DefaultConfiguration()).commentOnColumn(field);
+        return dsl().commentOnColumn(field);
     }
 
     /**
@@ -6654,7 +6654,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES} )
     public static Query setSchema(String schema) {
-        return using(new DefaultConfiguration()).setSchema(schema);
+        return dsl().setSchema(schema);
     }
 
     /**
@@ -6664,7 +6664,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES} )
     public static Query setSchema(Name schema) {
-        return using(new DefaultConfiguration()).setSchema(schema);
+        return dsl().setSchema(schema);
     }
 
     /**
@@ -6672,7 +6672,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES} )
     public static Query setSchema(Schema schema) {
-        return using(new DefaultConfiguration()).setSchema(schema);
+        return dsl().setSchema(schema);
     }
 
     // -------------------------------------------------------------------------
@@ -6686,7 +6686,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(String schema) {
-        return using(new DefaultConfiguration()).createSchema(schema);
+        return dsl().createSchema(schema);
     }
 
     /**
@@ -6696,7 +6696,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Name table) {
-        return using(new DefaultConfiguration()).createSchema(table);
+        return dsl().createSchema(table);
     }
 
     /**
@@ -6706,7 +6706,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Schema schema) {
-        return using(new DefaultConfiguration()).createSchema(schema);
+        return dsl().createSchema(schema);
     }
 
     /**
@@ -6716,7 +6716,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
+        return dsl().createSchemaIfNotExists(schema);
     }
 
     /**
@@ -6726,7 +6726,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Name table) {
-        return using(new DefaultConfiguration()).createSchemaIfNotExists(table);
+        return dsl().createSchemaIfNotExists(table);
     }
 
     /**
@@ -6736,7 +6736,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
-        return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
+        return dsl().createSchemaIfNotExists(schema);
     }
 
 
@@ -6747,7 +6747,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(String table) {
-        return using(new DefaultConfiguration()).createTable(table);
+        return dsl().createTable(table);
     }
 
     /**
@@ -6757,7 +6757,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(Name table) {
-        return using(new DefaultConfiguration()).createTable(table);
+        return dsl().createTable(table);
     }
 
     /**
@@ -6767,7 +6767,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(Table<?> table) {
-        return using(new DefaultConfiguration()).createTable(table);
+        return dsl().createTable(table);
     }
 
     /**
@@ -6777,7 +6777,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTableIfNotExists(String table) {
-        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+        return dsl().createTableIfNotExists(table);
     }
 
     /**
@@ -6787,7 +6787,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTableIfNotExists(Name table) {
-        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+        return dsl().createTableIfNotExists(table);
     }
 
     /**
@@ -6797,7 +6797,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTableIfNotExists(Table<?> table) {
-        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+        return dsl().createTableIfNotExists(table);
     }
 
     /**
@@ -6807,7 +6807,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(String table) {
-        return using(new DefaultConfiguration()).createTemporaryTable(table);
+        return dsl().createTemporaryTable(table);
     }
 
     /**
@@ -6817,7 +6817,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Name table) {
-        return using(new DefaultConfiguration()).createTemporaryTable(table);
+        return dsl().createTemporaryTable(table);
     }
 
     /**
@@ -6827,7 +6827,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
-        return using(new DefaultConfiguration()).createTemporaryTable(table);
+        return dsl().createTemporaryTable(table);
     }
 
     /**
@@ -6837,7 +6837,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
-        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
+        return dsl().createGlobalTemporaryTable(table);
     }
 
     /**
@@ -6847,7 +6847,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
-        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
+        return dsl().createGlobalTemporaryTable(table);
     }
 
     /**
@@ -6857,7 +6857,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
-        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
+        return dsl().createGlobalTemporaryTable(table);
     }
 
     /**
@@ -6867,7 +6867,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(String view, String... fields) {
-        return using(new DefaultConfiguration()).createView(view, fields);
+        return dsl().createView(view, fields);
     }
 
     /**
@@ -6877,7 +6877,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(Name view, Name... fields) {
-        return using(new DefaultConfiguration()).createView(view, fields);
+        return dsl().createView(view, fields);
     }
 
     /**
@@ -6887,7 +6887,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
-        return using(new DefaultConfiguration()).createView(view, fields);
+        return dsl().createView(view, fields);
     }
 
 
@@ -6902,7 +6902,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createView(view, fieldNameFunction);
+        return dsl().createView(view, fieldNameFunction);
     }
 
     /**
@@ -6916,7 +6916,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createView(view, fieldNameFunction);
+        return dsl().createView(view, fieldNameFunction);
     }
 
     /**
@@ -6930,7 +6930,7 @@ public class DSL {
      */
     @Support
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createView(view, fieldNameFunction);
+        return dsl().createView(view, fieldNameFunction);
     }
 
 
@@ -6941,7 +6941,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, String... fields) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+        return dsl().createViewIfNotExists(view, fields);
     }
 
     /**
@@ -6951,7 +6951,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Name... fields) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+        return dsl().createViewIfNotExists(view, fields);
     }
 
     /**
@@ -6961,7 +6961,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+        return dsl().createViewIfNotExists(view, fields);
     }
 
 
@@ -6976,7 +6976,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fieldNameFunction);
+        return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
     /**
@@ -6990,7 +6990,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fieldNameFunction);
+        return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
     /**
@@ -7004,7 +7004,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
-        return using(new DefaultConfiguration()).createViewIfNotExists(view, fieldNameFunction);
+        return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
 
@@ -7015,7 +7015,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createIndex(String index) {
-        return using(new DefaultConfiguration()).createIndex(index);
+        return dsl().createIndex(index);
     }
 
     /**
@@ -7025,7 +7025,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createIndex(Name index) {
-        return using(new DefaultConfiguration()).createIndex(index);
+        return dsl().createIndex(index);
     }
 
     /**
@@ -7035,7 +7035,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createIndex(Index index) {
-        return using(new DefaultConfiguration()).createIndex(index);
+        return dsl().createIndex(index);
     }
 
     /**
@@ -7045,7 +7045,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(String index) {
-        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
+        return dsl().createIndexIfNotExists(index);
     }
 
     /**
@@ -7055,7 +7055,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Name index) {
-        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
+        return dsl().createIndexIfNotExists(index);
     }
 
     /**
@@ -7065,7 +7065,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Index index) {
-        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
+        return dsl().createIndexIfNotExists(index);
     }
 
     /**
@@ -7075,7 +7075,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndex(String index) {
-        return using(new DefaultConfiguration()).createUniqueIndex(index);
+        return dsl().createUniqueIndex(index);
     }
 
     /**
@@ -7085,7 +7085,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndex(Name index) {
-        return using(new DefaultConfiguration()).createUniqueIndex(index);
+        return dsl().createUniqueIndex(index);
     }
 
     /**
@@ -7095,7 +7095,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndex(Index index) {
-        return using(new DefaultConfiguration()).createUniqueIndex(index);
+        return dsl().createUniqueIndex(index);
     }
 
     /**
@@ -7105,7 +7105,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(String index) {
-        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
+        return dsl().createUniqueIndexIfNotExists(index);
     }
 
     /**
@@ -7115,7 +7115,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
-        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
+        return dsl().createUniqueIndexIfNotExists(index);
     }
 
     /**
@@ -7125,7 +7125,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Index index) {
-        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
+        return dsl().createUniqueIndexIfNotExists(index);
     }
 
     /**
@@ -7135,7 +7135,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequence(String sequence) {
-        return using(new DefaultConfiguration()).createSequence(sequence);
+        return dsl().createSequence(sequence);
     }
 
     /**
@@ -7145,7 +7145,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequence(Name sequence) {
-        return using(new DefaultConfiguration()).createSequence(sequence);
+        return dsl().createSequence(sequence);
     }
 
     /**
@@ -7155,7 +7155,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).createSequence(sequence);
+        return dsl().createSequence(sequence);
     }
 
     /**
@@ -7165,7 +7165,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequenceIfNotExists(String sequence) {
-        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+        return dsl().createSequenceIfNotExists(sequence);
     }
 
     /**
@@ -7175,7 +7175,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequenceIfNotExists(Name sequence) {
-        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+        return dsl().createSequenceIfNotExists(sequence);
     }
 
     /**
@@ -7185,7 +7185,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+        return dsl().createSequenceIfNotExists(sequence);
     }
 
     /**
@@ -7195,7 +7195,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(String sequence) {
-        return using(new DefaultConfiguration()).alterSequence(sequence);
+        return dsl().alterSequence(sequence);
     }
 
     /**
@@ -7205,7 +7205,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
-        return using(new DefaultConfiguration()).alterSequence(sequence);
+        return dsl().alterSequence(sequence);
     }
 
     /**
@@ -7215,7 +7215,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
-        return using(new DefaultConfiguration()).alterSequence(sequence);
+        return dsl().alterSequence(sequence);
     }
 
     /**
@@ -7225,7 +7225,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
-        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+        return dsl().alterSequenceIfExists(sequence);
     }
 
     /**
@@ -7235,7 +7235,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
-        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+        return dsl().alterSequenceIfExists(sequence);
     }
 
     /**
@@ -7245,7 +7245,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
-        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+        return dsl().alterSequenceIfExists(sequence);
     }
 
     /**
@@ -7255,7 +7255,7 @@ public class DSL {
      */
     @Support
     public static AlterTableStep alterTable(String table) {
-        return using(new DefaultConfiguration()).alterTable(table);
+        return dsl().alterTable(table);
     }
 
     /**
@@ -7265,7 +7265,7 @@ public class DSL {
      */
     @Support
     public static AlterTableStep alterTable(Name table) {
-        return using(new DefaultConfiguration()).alterTable(table);
+        return dsl().alterTable(table);
     }
 
     /**
@@ -7275,7 +7275,7 @@ public class DSL {
      */
     @Support
     public static AlterTableStep alterTable(Table<?> table) {
-        return using(new DefaultConfiguration()).alterTable(table);
+        return dsl().alterTable(table);
     }
 
     /**
@@ -7285,7 +7285,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(String table) {
-        return using(new DefaultConfiguration()).alterTableIfExists(table);
+        return dsl().alterTableIfExists(table);
     }
 
     /**
@@ -7295,7 +7295,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Name table) {
-        return using(new DefaultConfiguration()).alterTableIfExists(table);
+        return dsl().alterTableIfExists(table);
     }
 
     /**
@@ -7305,7 +7305,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
-        return using(new DefaultConfiguration()).alterTableIfExists(table);
+        return dsl().alterTableIfExists(table);
     }
 
     /**
@@ -7315,7 +7315,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(String schema) {
-        return using(new DefaultConfiguration()).alterSchema(schema);
+        return dsl().alterSchema(schema);
     }
 
     /**
@@ -7325,7 +7325,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(Name schema) {
-        return using(new DefaultConfiguration()).alterSchema(schema);
+        return dsl().alterSchema(schema);
     }
 
     /**
@@ -7335,7 +7335,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(Schema schema) {
-        return using(new DefaultConfiguration()).alterSchema(schema);
+        return dsl().alterSchema(schema);
     }
 
     /**
@@ -7345,7 +7345,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(String schema) {
-        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
+        return dsl().alterSchemaIfExists(schema);
     }
 
     /**
@@ -7355,7 +7355,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(Name schema) {
-        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
+        return dsl().alterSchemaIfExists(schema);
     }
 
     /**
@@ -7365,7 +7365,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(Schema schema) {
-        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
+        return dsl().alterSchemaIfExists(schema);
     }
 
     /**
@@ -7375,7 +7375,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(String view) {
-        return using(new DefaultConfiguration()).alterView(view);
+        return dsl().alterView(view);
     }
 
     /**
@@ -7385,7 +7385,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Name view) {
-        return using(new DefaultConfiguration()).alterView(view);
+        return dsl().alterView(view);
     }
 
     /**
@@ -7395,7 +7395,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Table<?> view) {
-        return using(new DefaultConfiguration()).alterView(view);
+        return dsl().alterView(view);
     }
 
     /**
@@ -7405,7 +7405,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(String view) {
-        return using(new DefaultConfiguration()).alterViewIfExists(view);
+        return dsl().alterViewIfExists(view);
     }
 
     /**
@@ -7415,7 +7415,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(Name view) {
-        return using(new DefaultConfiguration()).alterViewIfExists(view);
+        return dsl().alterViewIfExists(view);
     }
 
     /**
@@ -7425,7 +7425,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(Table<?> view) {
-        return using(new DefaultConfiguration()).alterViewIfExists(view);
+        return dsl().alterViewIfExists(view);
     }
 
     /**
@@ -7435,7 +7435,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(String index) {
-        return using(new DefaultConfiguration()).alterIndex(index);
+        return dsl().alterIndex(index);
     }
 
     /**
@@ -7445,7 +7445,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(Name index) {
-        return using(new DefaultConfiguration()).alterIndex(index);
+        return dsl().alterIndex(index);
     }
 
     /**
@@ -7455,7 +7455,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(Index index) {
-        return using(new DefaultConfiguration()).alterIndex(index);
+        return dsl().alterIndex(index);
     }
 
     /**
@@ -7465,7 +7465,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(String index) {
-        return using(new DefaultConfiguration()).alterIndexIfExists(index);
+        return dsl().alterIndexIfExists(index);
     }
 
     /**
@@ -7475,7 +7475,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Name index) {
-        return using(new DefaultConfiguration()).alterIndexIfExists(index);
+        return dsl().alterIndexIfExists(index);
     }
 
     /**
@@ -7485,7 +7485,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Index index) {
-        return using(new DefaultConfiguration()).alterIndexIfExists(index);
+        return dsl().alterIndexIfExists(index);
     }
 
     /**
@@ -7495,7 +7495,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(String schema){
-        return using(new DefaultConfiguration()).dropSchema(schema);
+        return dsl().dropSchema(schema);
     }
 
     /**
@@ -7505,7 +7505,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(Name schema){
-        return using(new DefaultConfiguration()).dropSchema(schema);
+        return dsl().dropSchema(schema);
     }
 
     /**
@@ -7515,7 +7515,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchema(Schema schema){
-        return using(new DefaultConfiguration()).dropSchema(schema);
+        return dsl().dropSchema(schema);
     }
 
     /**
@@ -7525,7 +7525,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(String schema){
-        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
+        return dsl().dropSchemaIfExists(schema);
     }
 
     /**
@@ -7535,7 +7535,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Name schema){
-        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
+        return dsl().dropSchemaIfExists(schema);
     }
 
     /**
@@ -7545,7 +7545,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Schema schema){
-        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
+        return dsl().dropSchemaIfExists(schema);
     }
 
     /**
@@ -7555,7 +7555,7 @@ public class DSL {
      */
     @Support
     public static DropViewFinalStep dropView(String view) {
-        return using(new DefaultConfiguration()).dropView(view);
+        return dsl().dropView(view);
     }
 
     /**
@@ -7565,7 +7565,7 @@ public class DSL {
      */
     @Support
     public static DropViewFinalStep dropView(Name view) {
-        return using(new DefaultConfiguration()).dropView(view);
+        return dsl().dropView(view);
     }
 
     /**
@@ -7575,7 +7575,7 @@ public class DSL {
      */
     @Support
     public static DropViewFinalStep dropView(Table<?> view) {
-        return using(new DefaultConfiguration()).dropView(view);
+        return dsl().dropView(view);
     }
 
     /**
@@ -7588,7 +7588,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(String view) {
-        return using(new DefaultConfiguration()).dropViewIfExists(view);
+        return dsl().dropViewIfExists(view);
     }
 
     /**
@@ -7601,7 +7601,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(Name view) {
-        return using(new DefaultConfiguration()).dropViewIfExists(view);
+        return dsl().dropViewIfExists(view);
     }
 
     /**
@@ -7614,7 +7614,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(Table<?> view) {
-        return using(new DefaultConfiguration()).dropViewIfExists(view);
+        return dsl().dropViewIfExists(view);
     }
 
     /**
@@ -7624,7 +7624,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTable(String table) {
-        return using(new DefaultConfiguration()).dropTable(table);
+        return dsl().dropTable(table);
     }
 
     /**
@@ -7634,7 +7634,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTable(Name table) {
-        return using(new DefaultConfiguration()).dropTable(table);
+        return dsl().dropTable(table);
     }
 
     /**
@@ -7644,7 +7644,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTable(Table<?> table) {
-        return using(new DefaultConfiguration()).dropTable(table);
+        return dsl().dropTable(table);
     }
 
     /**
@@ -7654,7 +7654,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTemporaryTable(String table) {
-        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+        return dsl().dropTemporaryTable(table);
     }
 
     /**
@@ -7664,7 +7664,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTemporaryTable(Name table) {
-        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+        return dsl().dropTemporaryTable(table);
     }
 
     /**
@@ -7674,7 +7674,7 @@ public class DSL {
      */
     @Support
     public static DropTableStep dropTemporaryTable(Table<?> table) {
-        return using(new DefaultConfiguration()).dropTemporaryTable(table);
+        return dsl().dropTemporaryTable(table);
     }
 
     /**
@@ -7687,7 +7687,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(String table) {
-        return using(new DefaultConfiguration()).dropTableIfExists(table);
+        return dsl().dropTableIfExists(table);
     }
 
     /**
@@ -7700,7 +7700,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Name table) {
-        return using(new DefaultConfiguration()).dropTableIfExists(table);
+        return dsl().dropTableIfExists(table);
     }
 
     /**
@@ -7713,7 +7713,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Table<?> table) {
-        return using(new DefaultConfiguration()).dropTableIfExists(table);
+        return dsl().dropTableIfExists(table);
     }
 
     /**
@@ -7723,7 +7723,7 @@ public class DSL {
      */
     @Support
     public static DropIndexOnStep dropIndex(String index) {
-        return using(new DefaultConfiguration()).dropIndex(index);
+        return dsl().dropIndex(index);
     }
 
     /**
@@ -7733,7 +7733,7 @@ public class DSL {
      */
     @Support
     public static DropIndexOnStep dropIndex(Name index) {
-        return using(new DefaultConfiguration()).dropIndex(index);
+        return dsl().dropIndex(index);
     }
 
     /**
@@ -7743,7 +7743,7 @@ public class DSL {
      */
     @Support
     public static DropIndexOnStep dropIndex(Index index) {
-        return using(new DefaultConfiguration()).dropIndex(index);
+        return dsl().dropIndex(index);
     }
 
     /**
@@ -7756,7 +7756,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(String index) {
-        return using(new DefaultConfiguration()).dropIndexIfExists(index);
+        return dsl().dropIndexIfExists(index);
     }
 
     /**
@@ -7769,7 +7769,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Name index) {
-        return using(new DefaultConfiguration()).dropIndexIfExists(index);
+        return dsl().dropIndexIfExists(index);
     }
 
     /**
@@ -7782,7 +7782,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Index index) {
-        return using(new DefaultConfiguration()).dropIndexIfExists(index);
+        return dsl().dropIndexIfExists(index);
     }
 
     /**
@@ -7792,7 +7792,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
-        return using(new DefaultConfiguration()).dropSequence(sequence);
+        return dsl().dropSequence(sequence);
     }
 
     /**
@@ -7802,7 +7802,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
-        return using(new DefaultConfiguration()).dropSequence(sequence);
+        return dsl().dropSequence(sequence);
     }
 
     /**
@@ -7812,7 +7812,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).dropSequence(sequence);
+        return dsl().dropSequence(sequence);
     }
 
     /**
@@ -7825,7 +7825,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+        return dsl().dropSequenceIfExists(sequence);
     }
 
     /**
@@ -7838,7 +7838,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
-        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+        return dsl().dropSequenceIfExists(sequence);
     }
 
     /**
@@ -7851,7 +7851,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+        return dsl().dropSequenceIfExists(sequence);
     }
 
     /**
@@ -7898,7 +7898,7 @@ public class DSL {
      */
     @Support
     public static TruncateIdentityStep<Record> truncate(Name table) {
-        return using(new DefaultConfiguration()).truncate(table);
+        return dsl().truncate(table);
     }
 
     /**
@@ -7945,7 +7945,7 @@ public class DSL {
      */
     @Support
     public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
-        return using(new DefaultConfiguration()).truncate(table);
+        return dsl().truncate(table);
     }
 
     // -------------------------------------------------------------------------
@@ -8087,7 +8087,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Privilege privilege) {
-        return using(new DefaultConfiguration()).grant(privilege);
+        return dsl().grant(privilege);
     }
 
     /**
@@ -8113,7 +8113,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Privilege... privileges) {
-        return using(new DefaultConfiguration()).grant(privileges);
+        return dsl().grant(privileges);
     }
 
     /**
@@ -8139,7 +8139,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
-        return using(new DefaultConfiguration()).grant(privileges);
+        return dsl().grant(privileges);
     }
 
     /**
@@ -8165,7 +8165,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Privilege privilege) {
-        return using(new DefaultConfiguration()).revoke(privilege);
+        return dsl().revoke(privilege);
     }
 
     /**
@@ -8191,7 +8191,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Privilege... privileges) {
-        return using(new DefaultConfiguration()).revoke(privileges);
+        return dsl().revoke(privileges);
     }
 
     /**
@@ -8217,7 +8217,7 @@ public class DSL {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
-        return using(new DefaultConfiguration()).revoke(privileges);
+        return dsl().revoke(privileges);
     }
 
     /**
@@ -8225,7 +8225,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
-        return using(new DefaultConfiguration()).revoke(privilege);
+        return dsl().revoke(privilege);
     }
 
     /**
@@ -8233,7 +8233,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
-        return using(new DefaultConfiguration()).revoke(privileges);
+        return dsl().revoke(privileges);
     }
 
     /**
@@ -8241,7 +8241,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
-        return using(new DefaultConfiguration()).revoke(privileges);
+        return dsl().revoke(privileges);
     }
 
     /**
@@ -9762,7 +9762,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Query query(SQL sql) {
-        return using(new DefaultConfiguration()).query(sql);
+        return dsl().query(sql);
     }
 
     /**
@@ -9786,7 +9786,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Query query(String sql) {
-        return using(new DefaultConfiguration()).query(sql);
+        return dsl().query(sql);
     }
 
     /**
@@ -9812,7 +9812,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Query query(String sql, Object... bindings) {
-        return using(new DefaultConfiguration()).query(sql, bindings);
+        return dsl().query(sql, bindings);
     }
 
     /**
@@ -9846,7 +9846,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Query query(String sql, QueryPart... parts) {
-        return using(new DefaultConfiguration()).query(sql, parts);
+        return dsl().query(sql, parts);
     }
 
     /**
@@ -9894,7 +9894,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(SQL sql) {
-        return using(new DefaultConfiguration()).resultQuery(sql);
+        return dsl().resultQuery(sql);
     }
 
     /**
@@ -9942,7 +9942,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql) {
-        return using(new DefaultConfiguration()).resultQuery(sql);
+        return dsl().resultQuery(sql);
     }
 
     /**
@@ -9993,7 +9993,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, Object... bindings) {
-        return using(new DefaultConfiguration()).resultQuery(sql, bindings);
+        return dsl().resultQuery(sql, bindings);
     }
 
     /**
@@ -10027,7 +10027,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
-        return using(new DefaultConfiguration()).resultQuery(sql, parts);
+        return dsl().resultQuery(sql, parts);
     }
 
     /**
@@ -21047,6 +21047,10 @@ public class DSL {
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
         return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);
+    }
+
+    private static final DSLContext dsl() {
+        return using(new DefaultConfiguration());
     }
 
     /**

@@ -66,7 +66,7 @@ final class DiagnosticsConnection extends DefaultConnection {
 
     static final Map<String, Set<String>> DUPLICATE_SQL = Collections.synchronizedMap(new LRU());
     final Configuration                   configuration;
-    final RenderContext                   forceIndexed;
+    final RenderContext                   duplicates;
     final Parser                          parser;
     final DiagnosticsListeners            listeners;
 
@@ -75,7 +75,16 @@ final class DiagnosticsConnection extends DefaultConnection {
         super(configuration.connectionProvider().acquire());
 
         this.configuration = configuration;
-        this.forceIndexed = configuration.derive(SettingsTools.clone(configuration.settings()).withParamType(FORCE_INDEXED)).dsl().renderContext();
+        this.duplicates = configuration.derive(
+            SettingsTools.clone(configuration.settings())
+
+            // Forcing all inline parameters to be indexed helps find opportunities to use bind variables
+            .withParamType(FORCE_INDEXED)
+
+            // Padding IN lists shows duplicates that arise from arbitrary-length dynamic IN lists
+            .withInListPadding(true)
+            .withInListPadBase(16)
+        ).dsl().renderContext();
         this.parser = configuration.dsl().parser();
         this.listeners = DiagnosticsListeners.get(configuration);
     }
@@ -145,7 +154,6 @@ final class DiagnosticsConnection extends DefaultConnection {
         configuration.connectionProvider().release(getDelegate());
     }
 
-    @SuppressWarnings("deprecation")
     final String parse(String sql) {
         Queries queries;
 
@@ -156,7 +164,7 @@ final class DiagnosticsConnection extends DefaultConnection {
             return sql;
         }
 
-        String normalised = forceIndexed.render(queries);
+        String normalised = duplicates.render(queries);
         List<String> duplicates = null;
 
         synchronized (DUPLICATE_SQL) {

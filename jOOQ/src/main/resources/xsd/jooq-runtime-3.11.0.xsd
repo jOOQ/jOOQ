@@ -172,7 +172,11 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       </element>
 
       <element name="inListPadding" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5600] Whether IN lists in IN predicates should be padded to powers of 2.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="inListPadBase" type="int" minOccurs="0" maxOccurs="1" default="2">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7095] The base to use to calculate the powers of when applying in list padding.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="delimiter" type="string" minOccurs="0" maxOccurs="1" default=";">

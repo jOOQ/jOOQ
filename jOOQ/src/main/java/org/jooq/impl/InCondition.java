@@ -39,6 +39,12 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.ceil;
+import static java.lang.Math.log;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.pow;
+import static java.lang.Math.round;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
@@ -52,6 +58,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
 import java.util.Arrays;
@@ -156,7 +163,8 @@ final class InCondition<T> extends AbstractCondition {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
             ? new PaddedList<Field<?>>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
                 ? IN_LIMIT
-                : Integer.MAX_VALUE)
+                : Integer.MAX_VALUE,
+                  defaultIfNull(ctx.settings().getInListPadBase(), 2))
             : list;
     }
 
@@ -196,11 +204,12 @@ final class InCondition<T> extends AbstractCondition {
         private final int     realSize;
         private final int     padSize;
 
-        PaddedList(List<T> delegate, int maxPadding) {
+        PaddedList(List<T> delegate, int maxPadding, int padBase) {
+            int b = max(2, padBase);
+
             this.delegate = delegate;
             this.realSize = delegate.size();
-            int r = Integer.highestOneBit(realSize);
-            this.padSize = Math.min(maxPadding, r == realSize ? realSize : r << 1);
+            this.padSize = min(maxPadding, (int) round(pow(b, ceil(log(realSize) / log(b)))));
         }
 
         @Override

@@ -102,6 +102,8 @@ public class Settings
     protected Boolean debugInfoOnStackTrace = true;
     @XmlElement(defaultValue = "false")
     protected Boolean inListPadding = false;
+    @XmlElement(defaultValue = "2")
+    protected Integer inListPadBase = 2;
     @XmlElement(defaultValue = ";")
     protected String delimiter = ";";
     @XmlElement(defaultValue = "LOG_DEBUG")
@@ -871,7 +873,7 @@ public class Settings
     }
 
     /**
-     * [#5600] Whether IN lists in IN predicates should be padded to powers of 2.
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
      *
      * @return
      *     possible object is
@@ -892,6 +894,30 @@ public class Settings
      */
     public void setInListPadding(Boolean value) {
         this.inListPadding = value;
+    }
+
+    /**
+     * [#7095] The base to use to calculate the powers of when applying in list padding.
+     *
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *
+     */
+    public Integer getInListPadBase() {
+        return inListPadBase;
+    }
+
+    /**
+     * Sets the value of the inListPadBase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
+    public void setInListPadBase(Integer value) {
+        this.inListPadBase = value;
     }
 
     /**
@@ -1118,6 +1144,11 @@ public class Settings
 
     public Settings withInListPadding(Boolean value) {
         setInListPadding(value);
+        return this;
+    }
+
+    public Settings withInListPadBase(Integer value) {
+        setInListPadBase(value);
         return this;
     }
 

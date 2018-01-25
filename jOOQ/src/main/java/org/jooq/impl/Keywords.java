@@ -87,6 +87,7 @@ final class Keywords {
     static final Keyword K_CREATE_SCHEMA                    = keyword("create schema");
     static final Keyword K_CREATE_VIEW                      = keyword("create view");
     static final Keyword K_CROSS_JOIN_LATERAL               = keyword("cross join lateral");
+    static final Keyword K_CURRENT_SCHEMA                   = keyword("current_schema");
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
@@ -242,6 +243,7 @@ final class Keywords {
     static final Keyword K_SEQUENCE                         = keyword("sequence");
     static final Keyword K_SERIAL                           = keyword("serial");
     static final Keyword K_SERIAL8                          = keyword("serial8");
+    static final Keyword K_SESSION                          = keyword("session");
     static final Keyword K_SET                              = keyword("set");
     static final Keyword K_SET_DATA_TYPE                    = keyword("set data type");
     static final Keyword K_SET_DEFAULT                      = keyword("set default");

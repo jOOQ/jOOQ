@@ -1410,7 +1410,7 @@ final class ParserImpl implements Parser {
             throw ctx.unexpectedToken();
     }
 
-    private static final DDLQuery parseAlter(ParserContext ctx) {
+    private static final Query parseAlter(ParserContext ctx) {
         parseKeyword(ctx, "ALTER");
 
         if (parseKeywordIf(ctx, "DOMAIN"))
@@ -1421,6 +1421,8 @@ final class ParserImpl implements Parser {
             return parseAlterSchema(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseAlterSequence(ctx);
+        else if (parseKeywordIf(ctx, "SESSION"))
+            return parseAlterSession(ctx);
         else if (parseKeywordIf(ctx, "TABLE"))
             return parseAlterTable(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
@@ -1720,6 +1722,12 @@ final class ParserImpl implements Parser {
                 return s1.restart();
         else
             throw ctx.unexpectedToken();
+    }
+
+    private static final Query parseAlterSession(ParserContext ctx) {
+        parseKeyword(ctx, "SET CURRENT_SCHEMA");
+        parse(ctx, '=');
+        return ctx.dsl.setSchema(parseSchemaName(ctx));
     }
 
     private static final DDLQuery parseSetGenerator(ParserContext ctx) {

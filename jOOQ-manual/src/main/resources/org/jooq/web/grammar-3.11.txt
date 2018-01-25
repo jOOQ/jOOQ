@@ -11,6 +11,7 @@ ddlStatement =
 | alterIndexStatement
 | alterSchemaStatement
 | alterSequenceStatement
+| alterSessionStatement
 | alterViewStatement
 | commentStatement
 | createTableStatement
@@ -93,6 +94,9 @@ alterSequenceStatement =
   )
 | 'SET GENERATOR' sequenceName 'TO' unsignedInteger
 )
+;
+
+alterSessionStatement = 'ALTER SESSION' 'SET CURRENT_SCHEMA' '=' schemaName
 ;
 
 alterViewStatement = 'ALTER VIEW' [ 'IF EXISTS' ] tableName

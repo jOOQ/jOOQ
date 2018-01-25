@@ -37,7 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
 import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Keywords.K_SESSION;
 import static org.jooq.impl.Keywords.K_SET;
 
 import org.jooq.Clause;
@@ -62,6 +65,12 @@ final class SetSchema extends AbstractQuery {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             case H2:
             case POSTGRES:
             default:

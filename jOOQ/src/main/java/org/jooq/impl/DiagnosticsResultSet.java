@@ -745,6 +745,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
                 super.absolute(current = rows);
 
             DefaultDiagnosticsContext ctx = ctx();
+            ctx.resultSetClosing = true;
 
             if (super.next())
                 connection.listeners.tooManyRowsFetched(ctx);

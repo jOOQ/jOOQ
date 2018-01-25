@@ -51,6 +51,7 @@ import org.jooq.DiagnosticsContext;
 final class DefaultDiagnosticsContext implements DiagnosticsContext {
 
     ResultSet          resultSet;
+    boolean            resultSetClosing;
     int                resultSetFetchedColumns;
     int                resultSetActualColumns;
     int                resultSetFetchedRows;
@@ -90,12 +91,15 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
             return -1;
 
         try {
-            while (resultSet.next())
-                resultSetActualRows++;
+            if (resultSetClosing || resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
+                while (resultSet.next())
+                    resultSetActualRows++;
 
-            resultSet.absolute(resultSetFetchedRows);
+                resultSet.absolute(resultSetFetchedRows);
+            }
         }
         catch (SQLException ignore) {}
+
         return resultSetActualRows;
     }
 

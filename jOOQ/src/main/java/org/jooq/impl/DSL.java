@@ -6615,44 +6615,40 @@ public class DSL {
     // XXX Session Statements
     // -------------------------------------------------------------------------
 
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(String catalog) {
+        return dsl().setCatalog(catalog);
+    }
 
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(Name catalog) {
+        return dsl().setCatalog(catalog);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Set the current catalog to a new value.
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(Catalog catalog) {
+        return dsl().setCatalog(catalog);
+    }
 
     /**
      * Set the current schema to a new value.
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     public static Query setSchema(String schema) {
         return dsl().setSchema(schema);
     }
@@ -6662,7 +6658,7 @@ public class DSL {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     public static Query setSchema(Name schema) {
         return dsl().setSchema(schema);
     }
@@ -6670,7 +6666,7 @@ public class DSL {
     /**
      * Set the current schema to a new value.
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     public static Query setSchema(Schema schema) {
         return dsl().setSchema(schema);
     }

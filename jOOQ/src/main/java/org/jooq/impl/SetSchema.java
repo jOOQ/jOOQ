@@ -42,6 +42,7 @@ import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
 import static org.jooq.impl.Keywords.K_SCHEMA;
 import static org.jooq.impl.Keywords.K_SESSION;
 import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_USE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -70,6 +71,11 @@ final class SetSchema extends AbstractQuery {
 
 
 
+
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(K_USE).sql(' ').visit(schema);
+                break;
 
             case H2:
             case POSTGRES:

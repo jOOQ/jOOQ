@@ -66,8 +66,10 @@ final class SetCatalog extends AbstractQuery {
 
 
 
-
-
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(K_USE).sql(' ').visit(catalog);
+                break;
 
             default:
                 ctx.visit(K_SET).sql(' ').visit(K_CATALOG).sql(' ').visit(catalog);

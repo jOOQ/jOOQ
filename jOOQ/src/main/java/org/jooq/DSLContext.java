@@ -8466,7 +8466,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#catalog(Name)
      */
-    @Support({})
+    @Support({ MARIADB, MYSQL })
     Query setCatalog(String catalog);
 
     /**
@@ -8474,13 +8474,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#catalog(Name)
      */
-    @Support({})
+    @Support({ MARIADB, MYSQL })
     Query setCatalog(Name catalog);
 
     /**
      * Set the current catalog to a new value.
      */
-    @Support({})
+    @Support({ MARIADB, MYSQL })
     Query setCatalog(Catalog catalog);
 
     /**
@@ -8488,7 +8488,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     Query setSchema(String schema);
 
     /**
@@ -8496,13 +8496,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     Query setSchema(Name schema);
 
     /**
      * Set the current schema to a new value.
      */
-    @Support({ H2, POSTGRES} )
+    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
     Query setSchema(Schema schema);
 
     // -------------------------------------------------------------------------

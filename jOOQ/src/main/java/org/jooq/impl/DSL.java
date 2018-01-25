@@ -6648,7 +6648,7 @@ public class DSL {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(String schema) {
         return dsl().setSchema(schema);
     }
@@ -6658,7 +6658,7 @@ public class DSL {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(Name schema) {
         return dsl().setSchema(schema);
     }
@@ -6666,7 +6666,7 @@ public class DSL {
     /**
      * Set the current schema to a new value.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(Schema schema) {
         return dsl().setSchema(schema);
     }

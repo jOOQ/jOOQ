@@ -8488,7 +8488,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(String schema);
 
     /**
@@ -8496,13 +8496,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#schema(Name)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(Name schema);
 
     /**
      * Set the current schema to a new value.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES} )
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(Schema schema);
 
     // -------------------------------------------------------------------------

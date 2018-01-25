@@ -1249,6 +1249,10 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "CATALOG"))
             return parseSetCatalog(ctx);
+        else if (parseKeywordIf(ctx, "CURRENT SCHEMA"))
+            return parseSetSchema(ctx);
+        else if (parseKeywordIf(ctx, "CURRENT SQLID"))
+            return parseSetSchema(ctx);
         else if (parseKeywordIf(ctx, "GENERATOR"))
             return parseSetGenerator(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
@@ -1271,6 +1275,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Query parseSetSchema(ParserContext ctx) {
+        parseIf(ctx, '=');
         return ctx.dsl.setSchema(parseSchemaName(ctx));
     }
 

@@ -74,6 +74,18 @@ final class DiagnosticsListeners implements DiagnosticsListener {
     }
 
     @Override
+    public final void unnecessaryWasNullCall(DiagnosticsContext ctx) {
+        for (DiagnosticsListener listener : listeners)
+            listener.unnecessaryWasNullCall(ctx);
+    }
+
+    @Override
+    public final void missingWasNullCall(DiagnosticsContext ctx) {
+        for (DiagnosticsListener listener : listeners)
+            listener.missingWasNullCall(ctx);
+    }
+
+    @Override
     public final void duplicateStatements(DiagnosticsContext ctx) {
         for (DiagnosticsListener listener : listeners)
             listener.duplicateStatements(ctx);

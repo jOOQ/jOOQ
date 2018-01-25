@@ -57,6 +57,12 @@ public class DefaultDiagnosticsListener implements DiagnosticsListener {
     public void tooManyColumnsFetched(DiagnosticsContext ctx) {}
 
     @Override
+    public void unnecessaryWasNullCall(DiagnosticsContext ctx) {}
+
+    @Override
+    public void missingWasNullCall(DiagnosticsContext ctx) {}
+
+    @Override
     public void duplicateStatements(DiagnosticsContext ctx) {}
 
 }

@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.List;
 
 /**
@@ -93,12 +94,43 @@ public interface DiagnosticsContext {
     int resultSetActualColumns();
 
     /**
+     * There had been an unnecessary {@link ResultSet#wasNull()} call to check
+     * the a non-primitive type fetched previously was null, or the call was
+     * made more than once.
+     * <p>
+     * {@link #resultSetColumnIndex()} will return the relevant column index for
+     * which the {@link ResultSet#wasNull()} call was missing.
+     *
+     * @see #resultSetColumnIndex()
+     */
+    boolean resultSetUnnecessaryWasNullCall();
+
+    /**
+     * There had been a missing {@link ResultSet#wasNull()} call on a previously
+     * fetched primitive type, which is reported to be
+     * {@link ResultSetMetaData#isNullable(int)}.
+     * <p>
+     * {@link #resultSetColumnIndex()} will return the relevant column index for
+     * which the {@link ResultSet#wasNull()} call was missing.
+     *
+     * @see #resultSetColumnIndex()
+     */
+    boolean resultSetMissingWasNullCall();
+
+    /**
+     * The relevant column index (1 based) in the {@link ResultSet} if
+     * applicable, or <code>0</code> if there was no result set.
+     */
+    int resultSetColumnIndex();
+
+    /**
      * The normalised statement that all duplicates correspond to.
      */
     String normalisedStatement();
 
     /**
-     * The duplicate statements that all correspond to a single normalised statement.
+     * The duplicate statements that all correspond to a single normalised
+     * statement.
      */
     List<String> duplicateStatements();
 }

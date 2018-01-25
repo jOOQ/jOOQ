@@ -57,6 +57,9 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     int                resultSetActualRows;
     final String       normalisedStatement;
     final List<String> duplicateStatements;
+    boolean            resultSetUnnecessaryWasNullCall;
+    boolean            resultSetMissingWasNullCall;
+    int                resultSetColumnIndex;
 
     DefaultDiagnosticsContext(String statement) {
         this(statement, Arrays.asList(statement));
@@ -100,6 +103,21 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     @Override
     public final int resultSetActualColumns() {
         return resultSet == null ? -1 : resultSetActualColumns;
+    }
+
+    @Override
+    public final boolean resultSetUnnecessaryWasNullCall() {
+        return resultSet == null ? false : resultSetUnnecessaryWasNullCall;
+    }
+
+    @Override
+    public final boolean resultSetMissingWasNullCall() {
+        return resultSet == null ? false : resultSetMissingWasNullCall;
+    }
+
+    @Override
+    public final int resultSetColumnIndex() {
+        return resultSet == null ? 0 : resultSetColumnIndex;
     }
 
     @Override

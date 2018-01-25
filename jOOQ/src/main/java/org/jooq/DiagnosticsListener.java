@@ -72,6 +72,20 @@ public interface DiagnosticsListener {
     void tooManyColumnsFetched(DiagnosticsContext ctx);
 
     /**
+     * The fetched JDBC {@link ResultSet} returned a value for a column, on
+     * which {@link ResultSet#wasNull()} was called unnecessarily (more than
+     * once, or for a non-primitive type).
+     */
+    void unnecessaryWasNullCall(DiagnosticsContext ctx);
+
+    /**
+     * The fetched JDBC {@link ResultSet} returned a primitive type value for a
+     * column, which could have been null, but {@link ResultSet#wasNull()} was
+     * not called.
+     */
+    void missingWasNullCall(DiagnosticsContext ctx);
+
+    /**
      * The executed JDBC statement has duplicates.
      * <p>
      * Many databases maintain an execution plan cache, which remembers

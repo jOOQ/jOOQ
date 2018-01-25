@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -97,7 +99,7 @@ public interface DiagnosticsListener {
      * query, but mostly, this is not desirable as calculating execution plans
      * can turn out to be expensive.
      * <p>
-     * Examples of such similar statements include:
+     * Examples of such duplicate statements include:
      * <p>
      * <h3>Whitespace differences</h3>
      * <p>
@@ -120,8 +122,57 @@ public interface DiagnosticsListener {
      * SELECT * FROM actor a2 WHERE a2.id = ?;
      * </pre></code>
      * <p>
-     * This event is triggered every time a new duplicate is encountered.
+     * Examples of identical statements (which are not considered duplicate, but
+     * {@link #repeatedStatements(DiagnosticsContext)}, if on the same
+     * {@link Connection}) are:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM actor WHERE id = ?;
+     * SELECT * FROM actor WHERE id = ?;
+     * </pre></code>
+     * <p>
+     * This is a system-wide diagnostic that is not specific to individual
+     * {@link Connection} instances.
      */
     void duplicateStatements(DiagnosticsContext ctx);
+
+    /**
+     * The executed JDBC statement is repeated consecutively on the same JDBC
+     * {@link Connection}.
+     * <p>
+     * This problem goes by many names, the most famous one being the <strong>N
+     * + 1</strong> problem, when a single (1) query for a parent entity
+     * requires many (N) subsequent queries for child entities. This could have
+     * been prevented by rewriting the parent query to use a JOIN. If such a
+     * rewrite is not possible (or not easy), the subsequent N queries could at
+     * least profit (depending on the exact query):
+     * <ul>
+     * <li>From reusing the {@link PreparedStatement}</li>
+     * <li>From being batched</li>
+     * <li>From being re-written as a bulk fetch or write query</li>
+     * </ul>
+     * <p>
+     * This problem can be aggravated if combined with the
+     * {@link #duplicateStatements(DiagnosticsContext)} problem, in case of
+     * which the repeated statements might not be diagnosed as easily.
+     * <p>
+     * Repeated statements may or may not be "identical". In the following
+     * example, there are two repeated <em>and</em> identical statements:
+     * <code><pre>
+     * SELECT * FROM actor WHERE id = ?;
+     * SELECT * FROM actor WHERE id = ?;
+     * </pre></code>
+     * <p>
+     * In this example, we have three repeated statements, only some of which
+     * are also identical: <code><pre>
+     * SELECT * FROM actor WHERE id = ?;
+     * SELECT * FROM actor WHERE id = ?;
+     * SELECT * FROM actor WHERE id =  ?;
+     * </pre></code>
+     * <p>
+     * This is a {@link Connection}-specific diagnostic that is reset every time
+     * {@link Connection#close()} is called.
+     */
+    void repeatedStatements(DiagnosticsContext ctx);
 
 }

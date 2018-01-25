@@ -64,9 +64,15 @@ import org.jooq.tools.jdbc.DefaultConnection;
  */
 final class DiagnosticsConnection extends DefaultConnection {
 
-    static final Map<String, Set<String>> DUPLICATE_SQL = Collections.synchronizedMap(new LRU());
+    // TODO: Make these configurable
+    static final int                      LRU_SIZE_GLOBAL = 50000;
+    static final int                      LRU_SIZE_LOCAL  = 500;
+    static final int                      DUP_SIZE        = 500;
+    static final Map<String, Set<String>> DUPLICATE_SQL   = Collections.synchronizedMap(new LRU<Set<String>>(LRU_SIZE_GLOBAL));
+
+    final Map<String, List<String>>       repeatedSQL     = new LRU<List<String>>(LRU_SIZE_LOCAL);
     final Configuration                   configuration;
-    final RenderContext                   duplicates;
+    final RenderContext                   normalisingRenderer;
     final Parser                          parser;
     final DiagnosticsListeners            listeners;
 
@@ -75,7 +81,7 @@ final class DiagnosticsConnection extends DefaultConnection {
         super(configuration.connectionProvider().acquire());
 
         this.configuration = configuration;
-        this.duplicates = configuration.derive(
+        this.normalisingRenderer = configuration.derive(
             SettingsTools.clone(configuration.settings())
 
             // Forcing all inline parameters to be indexed helps find opportunities to use bind variables
@@ -151,55 +157,79 @@ final class DiagnosticsConnection extends DefaultConnection {
 
     @Override
     public final void close() throws SQLException {
+        repeatedSQL.clear();
         configuration.connectionProvider().release(getDelegate());
     }
 
     final String parse(String sql) {
         Queries queries;
+        String normalised;
 
         try {
             queries = parser.parse(sql);
+            normalised = normalisingRenderer.render(queries);
         }
         catch (ParserException ignore) {
-            return sql;
+            normalised = sql;
         }
 
-        String normalised = duplicates.render(queries);
-        List<String> duplicates = null;
-
+        Set<String> duplicates;
         synchronized (DUPLICATE_SQL) {
-            Set<String> v = DUPLICATE_SQL.get(normalised);
-
-            if (v == null) {
-                v = new HashSet<String>();
-                DUPLICATE_SQL.put(normalised, v);
-            }
-
-            if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
-                duplicates = new ArrayList<String>(v);
+            duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
         }
 
         if (duplicates != null)
-            listeners.duplicateStatements(new DefaultDiagnosticsContext(normalised, duplicates));
+            listeners.duplicateStatements(new DefaultDiagnosticsContext(sql, normalised, duplicates, null));
+
+        List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
+
+        if (repetitions != null)
+            listeners.repeatedStatements(new DefaultDiagnosticsContext(sql, normalised, null, repetitions));
 
         return sql;
     }
 
-    // TODO: Make this configurable
-    static final int LRU_SIZE = 50000;
-    static final int DUP_SIZE = 500;
+    private Set<String> duplicates(Map<String, Set<String>> map, String sql, String normalised) {
+        Set<String> v = map.get(normalised);
+
+        if (v == null) {
+            v = new HashSet<String>();
+            map.put(normalised, v);
+        }
+
+        if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
+            return v;
+        else
+            return null;
+    }
+
+    private List<String> repetitions(Map<String, List<String>> map, String sql, String normalised) {
+        List<String> v = map.get(normalised);
+
+        if (v == null) {
+            v = new ArrayList<String>();
+            map.put(normalised, v);
+        }
+
+        if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
+            return v;
+        else
+            return null;
+    }
 
     // See https://stackoverflow.com/a/1953516/521799
-    static class LRU extends LinkedHashMap<String, Set<String>> {
+    static class LRU<V> extends LinkedHashMap<String, V> {
         private static final long serialVersionUID = 5287799057535876982L;
+        private final int         size;
 
-        LRU() {
-            super(LRU_SIZE + 1, 1.0f, true);
+        LRU(int size) {
+            super(size + 1, 1.0f, true);
+            this.size = size;
         }
 
         @Override
-        protected boolean removeEldestEntry(Entry<String, Set<String>> eldest) {
-            return size() > LRU_SIZE;
+        protected boolean removeEldestEntry(Entry<String, V> eldest) {
+            return size() > size;
         }
     }
 }

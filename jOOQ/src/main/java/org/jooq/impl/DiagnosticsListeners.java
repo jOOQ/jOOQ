@@ -90,4 +90,10 @@ final class DiagnosticsListeners implements DiagnosticsListener {
         for (DiagnosticsListener listener : listeners)
             listener.duplicateStatements(ctx);
     }
+
+    @Override
+    public final void repeatedStatements(DiagnosticsContext ctx) {
+        for (DiagnosticsListener listener : listeners)
+            listener.repeatedStatements(ctx);
+    }
 }

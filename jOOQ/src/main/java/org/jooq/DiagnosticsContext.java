@@ -40,6 +40,7 @@ package org.jooq;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A parameter object that is passed to {@link DiagnosticsListener} methods.
@@ -124,6 +125,11 @@ public interface DiagnosticsContext {
     int resultSetColumnIndex();
 
     /**
+     * The actual statement that is being executed.
+     */
+    String actualStatement();
+
+    /**
      * The normalised statement that all duplicates correspond to.
      */
     String normalisedStatement();
@@ -132,5 +138,11 @@ public interface DiagnosticsContext {
      * The duplicate statements that all correspond to a single normalised
      * statement.
      */
-    List<String> duplicateStatements();
+    Set<String> duplicateStatements();
+
+    /**
+     * The repeated statements that all correspond to a single normalised
+     * statement.
+     */
+    List<String> repeatedStatements();
 }

@@ -65,4 +65,7 @@ public class DefaultDiagnosticsListener implements DiagnosticsListener {
     @Override
     public void duplicateStatements(DiagnosticsContext ctx) {}
 
+    @Override
+    public void repeatedStatements(DiagnosticsContext ctx) {}
+
 }

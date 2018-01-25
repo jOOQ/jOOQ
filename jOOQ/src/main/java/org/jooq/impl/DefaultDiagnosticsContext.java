@@ -39,9 +39,9 @@ package org.jooq.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.DiagnosticsContext;
 
@@ -55,19 +55,23 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     int                resultSetActualColumns;
     int                resultSetFetchedRows;
     int                resultSetActualRows;
+    final String       actualStatement;
     final String       normalisedStatement;
-    final List<String> duplicateStatements;
+    final Set<String>  duplicateStatements;
+    final List<String> repeatedStatements;
     boolean            resultSetUnnecessaryWasNullCall;
     boolean            resultSetMissingWasNullCall;
     int                resultSetColumnIndex;
 
-    DefaultDiagnosticsContext(String statement) {
-        this(statement, Arrays.asList(statement));
+    DefaultDiagnosticsContext(String actualStatement) {
+        this(actualStatement, actualStatement, Collections.singleton(actualStatement), Collections.singletonList(actualStatement));
     }
 
-    DefaultDiagnosticsContext(String normalisedStatement, List<String> duplicateStatements) {
+    DefaultDiagnosticsContext(String actualStatement, String normalisedStatement, Set<String> duplicateStatements, List<String> repeatedStatements) {
+        this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;
-        this.duplicateStatements = duplicateStatements;
+        this.duplicateStatements = duplicateStatements == null ? Collections.emptySet() : duplicateStatements;
+        this.repeatedStatements = repeatedStatements == null ? Collections.emptyList() : repeatedStatements;
     }
 
     @Override
@@ -121,12 +125,22 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     }
 
     @Override
+    public final String actualStatement() {
+        return actualStatement;
+    }
+
+    @Override
     public final String normalisedStatement() {
         return normalisedStatement;
     }
 
     @Override
-    public final List<String> duplicateStatements() {
-        return Collections.unmodifiableList(duplicateStatements);
+    public final Set<String> duplicateStatements() {
+        return Collections.unmodifiableSet(duplicateStatements);
+    }
+
+    @Override
+    public final List<String> repeatedStatements() {
+        return Collections.unmodifiableList(repeatedStatements);
     }
 }

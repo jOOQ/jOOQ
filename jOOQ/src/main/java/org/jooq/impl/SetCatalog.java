@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_CATALOG;
 import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_USE;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -62,6 +63,12 @@ final class SetCatalog extends AbstractQuery {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             default:
                 ctx.visit(K_SET).sql(' ').visit(K_CATALOG).sql(' ').visit(catalog);
                 break;

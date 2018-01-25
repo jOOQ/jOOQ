@@ -275,6 +275,7 @@ final class Keywords {
     static final Keyword K_UNNEST                           = keyword("unnest");
     static final Keyword K_UPDATE                           = keyword("update");
     static final Keyword K_UPSERT                           = keyword("upsert");
+    static final Keyword K_USE                              = keyword("use");
     static final Keyword K_USING                            = keyword("using");
     static final Keyword K_USING_INDEX                      = keyword("using index");
     static final Keyword K_VALUES                           = keyword("values");

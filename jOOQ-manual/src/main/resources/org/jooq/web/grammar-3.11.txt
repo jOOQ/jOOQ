@@ -30,6 +30,7 @@ ddlStatement =
 | setCatalogStatement
 | setSchemaStatement
 | truncateStatement
+| useStatement
 ;
 
 dmlStatement =
@@ -171,6 +172,9 @@ setCatalogStatement = 'SET CATALOG' catalogName
 ;
 
 setSchemaStatement = 'SET SCHEMA' schemaName
+;
+
+useStatement = 'USE' ( catalogName | schemaName )
 ;
 
 truncateStatement = 'TRUNCATE TABLE' tableName [ 'CONTINUE IDENTITY' | 'RESTART IDENTITY' ] [ 'CASCADE' | 'RESTRICT' ]

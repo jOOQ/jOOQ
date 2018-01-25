@@ -2871,24 +2871,20 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 
+    @Override
+    public Query setCatalog(String catalog) {
+        return setCatalog(name(catalog));
+    }
 
+    @Override
+    public Query setCatalog(Name catalog) {
+        return setCatalog(catalog(catalog));
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public Query setCatalog(Catalog catalog) {
+        return new SetCatalog(configuration(), catalog);
+    }
 
     @Override
     public Query setSchema(String schema) {

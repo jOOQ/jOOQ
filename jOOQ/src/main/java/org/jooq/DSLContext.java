@@ -8461,31 +8461,27 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // XXX Session Statements
     // -------------------------------------------------------------------------
 
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({})
+    Query setCatalog(String catalog);
 
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({})
+    Query setCatalog(Name catalog);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Set the current catalog to a new value.
+     */
+    @Support({})
+    Query setCatalog(Catalog catalog);
 
     /**
      * Set the current schema to a new value.

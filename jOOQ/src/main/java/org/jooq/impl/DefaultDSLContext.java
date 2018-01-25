@@ -382,8 +382,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public DataSource parsingDataSource() {
+        return new ParsingDataSource(configuration());
+    }
+
+    @Override
     public Connection diagnosticsConnection() {
         return new DiagnosticsConnection(configuration());
+    }
+
+    @Override
+    public DataSource diagnosticsDataSource() {
+        return new DiagnosticsDataSource(configuration());
     }
 
     @Override

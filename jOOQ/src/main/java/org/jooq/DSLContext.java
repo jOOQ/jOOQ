@@ -80,6 +80,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
+import javax.sql.DataSource;
 
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
@@ -217,12 +218,28 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Connection parsingConnection();
 
     /**
+     * A JDBC data source that runs each statement through the {@link #parser()}
+     * first, prior to re-generating and running the SQL.
+     * <p>
+     * This simply wraps the {@link #parsingConnection()} in a {@link DataSource}.
+     */
+    DataSource parsingDataSource();
+
+    /**
      * A JDBC connection that proxies the underlying connection to run the jOOQ
      * Diagnostics Pack on executed queries.
      * <p>
      * <strong>This is experimental functionality.</strong>
      */
     Connection diagnosticsConnection();
+
+    /**
+     * A JDBC connection that proxies the underlying connection to run the jOOQ
+     * Diagnostics Pack on executed queries.
+     * <p>
+     * This simply wraps the {@link #diagnosticsConnection()} in a {@link DataSource}.
+     */
+    DataSource diagnosticsDataSource();
 
     /**
      * Access the database meta data.

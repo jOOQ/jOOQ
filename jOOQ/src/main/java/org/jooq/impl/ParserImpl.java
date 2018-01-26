@@ -2796,6 +2796,9 @@ final class ParserImpl implements Parser {
                 Field right = toField(ctx, parseConcat(ctx, null));
                 return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
             }
+            else if (!not && parseIf(ctx, "@>")) {
+                return toField(ctx, left).contains((Field) toField(ctx, parseConcat(ctx, null)));
+            }
             else if (parseKeywordIf(ctx, "IN")) {
                 Condition result;
 

@@ -41,6 +41,8 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
+import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.atan;
@@ -248,6 +250,7 @@ import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
+import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Block;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
@@ -4836,18 +4839,21 @@ final class ParserImpl implements Parser {
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx, boolean basic) {
         AggregateFunction<?> agg;
+        AggregateFilterStep<?> filter;
         WindowBeforeOverStep<?> over;
         Object keep = null;
         Field<?> result;
-        Condition filter;
+        Condition condition;
 
-        keep = over = agg = parseCountIf(ctx);
+        keep = over = filter = agg = parseCountIf(ctx);
         if (agg == null)
-            keep = over = agg = parseGeneralSetFunctionIf(ctx);
+            keep = over = filter = agg = parseGeneralSetFunctionIf(ctx);
         if (agg == null && !basic)
-            over = agg = parseBinarySetFunctionIf(ctx);
+            over = filter = agg = parseBinarySetFunctionIf(ctx);
         if (agg == null && !basic)
-            over = parseOrderedSetFunctionIf(ctx);
+            over = filter = parseOrderedSetFunctionIf(ctx);
+        if (agg == null && !basic)
+            over = filter = parseArrayAggFunctionIf(ctx);
 
         if (agg == null && over == null)
             if (!basic)
@@ -4875,13 +4881,13 @@ final class ParserImpl implements Parser {
 
 
 
-        if (agg != null && !basic && parseKeywordIf(ctx, "FILTER")) {
+        if (filter != null && !basic && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
-            filter = parseCondition(ctx);
+            condition = parseCondition(ctx);
             parse(ctx, ')');
 
-            result = over = agg.filterWhere(filter);
+            result = over = filter.filterWhere(condition);
         }
         else if (agg != null)
             result = agg;
@@ -5112,8 +5118,7 @@ final class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, rank(args));
-            return result;
+            return rank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -5129,8 +5134,7 @@ final class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, denseRank(args));
-            return result;
+            return denseRank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -5146,8 +5150,7 @@ final class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, percentRank(args));
-            return result;
+            return percentRank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -5163,8 +5166,7 @@ final class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, cumeDist(args));
-            return result;
+            return cumeDist(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -5324,7 +5326,7 @@ final class ParserImpl implements Parser {
         }
     }
 
-    private static final WindowBeforeOverStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
+    private static final AggregateFilterStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
         // TODO Listagg set function
         OrderedAggregateFunction<?> orderedN;
         OrderedAggregateFunctionOfDeferredType ordered1;
@@ -5335,29 +5337,52 @@ final class ParserImpl implements Parser {
         if (orderedN == null)
             orderedN = parseListaggFunctionIf(ctx);
         if (orderedN != null)
-            return parseWithinGroupN(ctx, orderedN);
+            return orderedN.withinGroupOrderBy(parseWithinGroupN(ctx));
 
         ordered1 = parseModeIf(ctx);
         if (ordered1 != null)
-            return parseWithinGroup1(ctx, ordered1);
+            return ordered1.withinGroupOrderBy(parseWithinGroup1(ctx));
 
         return null;
     }
 
-    private static final AggregateFilterStep<?> parseWithinGroupN(ParserContext ctx, OrderedAggregateFunction<?> ordered) {
+    private static final AggregateFilterStep<?> parseArrayAggFunctionIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ARRAY_AGG")) {
+            parse(ctx, '(');
+
+            boolean distinct = parseKeywordIf(ctx, "DISTINCT");
+            Field<?> a1 = parseField(ctx);
+            List<SortField<?>> sort = null;
+
+            if (parseKeywordIf(ctx, "ORDER BY"))
+                sort = parseSortSpecification(ctx);
+
+            parse(ctx, ')');
+
+            ArrayAggOrderByStep<?> s1 = distinct
+                ? arrayAggDistinct(a1)
+                : arrayAgg(a1);
+
+            return sort == null ? s1 : s1.orderBy(sort);
+        }
+
+        return null;
+    }
+
+    private static final List<SortField<?>> parseWithinGroupN(ParserContext ctx) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
-        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortSpecification(ctx));
+        List<SortField<?>> result = parseSortSpecification(ctx);
         parse(ctx, ')');
         return result;
     }
 
-    private static final AggregateFilterStep<?> parseWithinGroup1(ParserContext ctx, OrderedAggregateFunctionOfDeferredType ordered) {
+    private static final SortField<?> parseWithinGroup1(ParserContext ctx) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
-        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortField(ctx));
+        SortField<?> result = parseSortField(ctx);
         parse(ctx, ')');
         return result;
     }

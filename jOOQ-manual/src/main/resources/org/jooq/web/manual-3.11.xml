@@ -6264,6 +6264,37 @@ VALUES ('John', 'Hitchcock')</sql>
                         </html></content>
 
                         <sections>
+                            <section id="set-statement">
+                                <title>The SET statement</title>
+                                <content><html>
+                                    <p>
+                                        Most databases support a variety of <code>SET</code> statements to set session specific environment variables. jOOQ supports two of these set statements that are particularly useful when running DDL scripts:
+                                    </p>
+
+</html><code-pair>
+<sql><![CDATA[SET CATALOG catalogname;
+SET SCHEMA schemaname;]]></sql>
+<java><![CDATA[create.setCatalog("catalogname").execute();
+create.setSchema("schemaname").execute();]]></java>
+</code-pair><html>
+                                    <p>
+                                        Depending on whether your database supports <reference id="catalog-and-schema-expressions" title="catalogs and schemas"/>, the above <code>SET</code> statements may be supported in your database.
+                                    </p>
+
+                                    <p>
+                                        In MariaDB, MySQL, SQL Server, the SET CATALOG statement is emulated using:
+                                    </p>
+
+</html><sql><![CDATA[USE catalogname;]]></sql><html>
+
+                                    <p>
+                                        In Oracle, the SET SCHEMA statement is emulated using:
+                                    </p>
+
+</html><sql><![CDATA[ALTER SESSION SET CURRENT_SCHEMA = schemaname;]]></sql><html>
+                                </html></content>
+                            </section>
+
                             <section id="alter-statement">
                                 <title>The ALTER statement</title>
                                 <content><html>

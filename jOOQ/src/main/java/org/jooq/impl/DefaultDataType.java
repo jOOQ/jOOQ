@@ -50,6 +50,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
@@ -446,7 +448,15 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasPrecision() {
-        return tType == BigInteger.class || tType == BigDecimal.class;
+        return tType == BigInteger.class
+            || tType == BigDecimal.class
+            || tType == Timestamp.class
+            || tType == Time.class
+
+            || tType == OffsetDateTime.class
+            || tType == OffsetTime.class
+
+        ;
     }
 
     @Override

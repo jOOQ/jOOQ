@@ -5734,7 +5734,7 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "DATE"))
                     return SQLDataType.DATE;
                 else if (parseKeywordIf(ctx, "DATETIME"))
-                    return SQLDataType.TIMESTAMP;
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMP);
                 else if (parseKeywordIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
                 else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
@@ -5837,21 +5837,29 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "TEXT"))
                     return parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB);
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMESTAMPTZ"))
-                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
+                else if (parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP WITHOUT TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMESTAMP"))
-                    return SQLDataType.TIMESTAMP;
+                else if (parseKeywordIf(ctx, "TIMESTAMP")) {
+                    Integer precision = parseDataTypePrecision(ctx);
 
-                else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMETZ"))
-                    return SQLDataType.TIMEWITHTIMEZONE;
+                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                        return precision == null ? SQLDataType.TIMESTAMPWITHTIMEZONE : SQLDataType.TIMESTAMPWITHTIMEZONE(precision);
+                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                        return precision == null ? SQLDataType.TIMESTAMP : SQLDataType.TIMESTAMP(precision);
+                }
 
-                else if (parseKeywordIf(ctx, "TIME WITHOUT TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIME"))
-                    return SQLDataType.TIME;
+                else if (parseKeywordIf(ctx, "TIMETZ"))
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMEWITHTIMEZONE);
+
+                else if (parseKeywordIf(ctx, "TIME")) {
+                    Integer precision = parseDataTypePrecision(ctx);
+
+                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                        return precision == null ? SQLDataType.TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
+                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                        return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
+                }
 
                 else if (parseKeywordIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
@@ -5924,6 +5932,27 @@ final class ParserImpl implements Parser {
             if (parseIf(ctx, ','))
                 parseUnsignedInteger(ctx);
 
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
+    private static final Integer parseDataTypePrecision(ParserContext ctx) {
+        Integer precision = null;
+
+        if (parseIf(ctx, '(')) {
+            precision = (int) (long) parseUnsignedInteger(ctx);
+            parse(ctx, ')');
+        }
+
+        return precision;
+    }
+
+    private static final DataType<?> parseDataTypePrecision(ParserContext ctx, DataType<?> result) {
+        if (parseIf(ctx, '(')) {
+            int precision = (int) (long) parseUnsignedInteger(ctx);
+            result = result.precision(precision);
             parse(ctx, ')');
         }
 

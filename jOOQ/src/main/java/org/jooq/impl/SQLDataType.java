@@ -341,9 +341,23 @@ public final class SQLDataType {
     public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<Timestamp>(null, Timestamp.class, "timestamp");
 
     /**
+     * The {@link Types#TIMESTAMP} type.
+     */
+    public static final DataType<Timestamp> TIMESTAMP(int precision) {
+        return TIMESTAMP.precision(precision);
+    }
+
+    /**
      * The {@link Types#TIME} type.
      */
     public static final DataType<Time> TIME = new DefaultDataType<Time>(null, Time.class, "time");
+
+    /**
+     * The {@link Types#TIME} type.
+     */
+    public static final DataType<Time> TIME(int precision) {
+        return TIME.precision(precision);
+    }
 
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type.
@@ -392,6 +406,24 @@ public final class SQLDataType {
     public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<OffsetTime>(null, OffsetTime.class, "time with time zone");
 
     /**
+     * The {@link Types#TIME_WITH_TIMEZONE} type.
+     * <p>
+     * The behaviour of this data type is influenced by the JDBC driver and the
+     * database that is used. Some databases support actual time zones (as in
+     * {@link ZonedDateTime}), other databases support only offsets (as in
+     * {@link OffsetDateTime}). Some databases retain the actual time zone
+     * information that is stored and reproduce it with every fetch (e.g.
+     * {@link SQLDialect#ORACLE}), others use this type as a synonym for a
+     * timestamp in UTC (e.g. {@link SQLDialect#POSTGRES}), producing possibly a
+     * value in the current time zone of the database or the client. Please
+     * refer to your database for more information about the behaviour of this
+     * data type.
+     */
+    public static final DataType<OffsetTime> OFFSETTIME(int precision) {
+        return OFFSETTIME.precision(precision);
+    }
+
+    /**
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
      * <p>
      * The behaviour of this data type is influenced by the JDBC driver and the
@@ -408,6 +440,24 @@ public final class SQLDataType {
     public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<OffsetDateTime>(null, OffsetDateTime.class, "timestamp with time zone");
 
     /**
+     * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
+     * <p>
+     * The behaviour of this data type is influenced by the JDBC driver and the
+     * database that is used. Some databases support actual time zones (as in
+     * {@link ZonedDateTime}), other databases support only offsets (as in
+     * {@link OffsetDateTime}). Some databases retain the actual time zone
+     * information that is stored and reproduce it with every fetch (e.g.
+     * {@link SQLDialect#ORACLE}), others use this type as a synonym for a
+     * timestamp in UTC (e.g. {@link SQLDialect#POSTGRES}), producing possibly a
+     * value in the current time zone of the database or the client. Please
+     * refer to your database for more information about the behaviour of this
+     * data type.
+     */
+    public static final DataType<OffsetDateTime> OFFSETDATETIME(int precision) {
+        return OFFSETDATETIME.precision(precision);
+    }
+
+    /**
      * The {@link Types#TIME_WITH_TIMEZONE} type.
      * <p>
      * An alias for {@link #OFFSETTIME}
@@ -415,11 +465,29 @@ public final class SQLDataType {
     public static final DataType<OffsetTime> TIMEWITHTIMEZONE = OFFSETTIME;
 
     /**
+     * The {@link Types#TIME_WITH_TIMEZONE} type.
+     * <p>
+     * An alias for {@link #OFFSETTIME}
+     */
+    public static final DataType<OffsetTime> TIMEWITHTIMEZONE(int precision) {
+        return TIMEWITHTIMEZONE.precision(precision);
+    }
+
+    /**
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
      * <p>
      * An alias for {@link #OFFSETDATETIME}
      */
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = OFFSETDATETIME;
+
+    /**
+     * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
+     * <p>
+     * An alias for {@link #OFFSETDATETIME}
+     */
+    public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE(int precision) {
+        return TIMESTAMPWITHTIMEZONE.precision(precision);
+    }
 
 
     // -------------------------------------------------------------------------

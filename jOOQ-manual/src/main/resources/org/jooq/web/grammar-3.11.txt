@@ -489,6 +489,7 @@ predicate =
     ')'
   | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
   | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
+  | '@>' concat
   ]
 | row2 'OVERLAPS' row2
 ;
@@ -515,8 +516,10 @@ term =
   ':' identifier
 | '?'
 | stringLiteral
-| 'ASCII' '(' field ')'
+| 'ANY' '(' field ')' [ filter ] [ over ]
 | 'ACOS' '(' sum ')'
+| 'ARRAY_AGG' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] ')' [ filter ] [ over ]
+| 'ASCII' '(' field ')'
 | 'ASIN' '(' sum ')'
 | 'ATAN' '(' sum ')'
 | ( 'ATN2' | 'ATAN2' ) '(' sum ',' sum ')'
@@ -549,7 +552,6 @@ term =
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
-| 'ANY' '(' field ')' [ filter ] [ over ]
 | 'FLOOR' '(' sum ')'
 | 'FIRST_VALUE' '(' field ')' over
 | 'GREATEST' '(' fields ')'

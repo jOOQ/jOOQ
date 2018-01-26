@@ -384,6 +384,8 @@ final class ParserImpl implements Parser {
 
         do {
             parseDelimiterSpecifications(ctx);
+            while (parseIf(ctx, ctx.delimiter));
+
             query = parseQuery(ctx, false);
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
                 continue;
@@ -4862,16 +4864,16 @@ final class ParserImpl implements Parser {
         Condition condition;
 
         keep = over = filter = agg = parseCountIf(ctx);
-        if (agg == null)
+        if (filter == null)
             keep = over = filter = agg = parseGeneralSetFunctionIf(ctx);
-        if (agg == null && !basic)
+        if (filter == null && !basic)
             over = filter = agg = parseBinarySetFunctionIf(ctx);
-        if (agg == null && !basic)
+        if (filter == null && !basic)
             over = filter = parseOrderedSetFunctionIf(ctx);
-        if (agg == null && !basic)
+        if (filter == null && !basic)
             over = filter = parseArrayAggFunctionIf(ctx);
 
-        if (agg == null && over == null)
+        if (filter == null && over == null)
             if (!basic)
                 return parseSpecialAggregateFunctionIf(ctx);
             else
@@ -4905,13 +4907,13 @@ final class ParserImpl implements Parser {
 
             result = over = filter.filterWhere(condition);
         }
-        else if (agg != null)
-            result = agg;
+        else if (filter != null)
+            result = filter;
         else
             result = over;
 
         if (!basic && parseKeywordIf(ctx, "OVER")) {
-            Object nameOrSpecification = parseWindowNameOrSpecification(ctx, agg != null);
+            Object nameOrSpecification = parseWindowNameOrSpecification(ctx, filter != null);
 
             if (nameOrSpecification instanceof Name)
                 result = over.over((Name) nameOrSpecification);

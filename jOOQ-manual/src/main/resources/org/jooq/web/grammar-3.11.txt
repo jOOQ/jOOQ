@@ -201,7 +201,7 @@ revokeStatement = 'REVOKE'
 selectStatement = select | values [ correlationName ]
 ;
 
-insertStatement = 'INSERT INTO' tableName
+insertStatement = [ with ] 'INSERT INTO' tableName
   [ '(' identifiers ')' ]
   (
     values
@@ -226,7 +226,7 @@ insertStatement = 'INSERT INTO' tableName
 values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 ;
 
-updateStatement = 'UPDATE' tableName 'SET' setClauses [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
+updateStatement = [ with ] 'UPDATE' tableName 'SET' setClauses [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
 ;
 
 setClauses = setClause { ',' setClause }
@@ -235,10 +235,10 @@ setClauses = setClause { ',' setClause }
 setClause = fieldName '=' field
 ;
 
-deleteStatement = 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
+deleteStatement = [ with ] 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
 ;
 
-mergeStatement = 'MERGE INTO' tableName [ [ 'AS' ] identifier ]
+mergeStatement = [ with ] 'MERGE INTO' tableName [ [ 'AS' ] identifier ]
   'USING' '(' select ')' [ [ 'AS' ] identifier ]
   'ON' condition break
   {
@@ -305,8 +305,8 @@ commonTableExpression = identifier [ '(' identifiers ')' ] 'AS' '(' select ')'
 ;
 
 select =
-  with select
-| queryExpressionBody
+  [ with ]
+  queryExpressionBody
   [ orderBy ]
   [ offsetFetch ]
   [ forUpdate ]

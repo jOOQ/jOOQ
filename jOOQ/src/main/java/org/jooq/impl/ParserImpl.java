@@ -1203,13 +1203,20 @@ final class ParserImpl implements Parser {
             target = target.as(parseIdentifier(ctx));
 
         parseKeyword(ctx, "USING");
-        parse(ctx, '(');
-        Select<?> using = parseSelect(ctx);
-        TableLike<?> usingTable = using;
-        parse(ctx, ')');
+        Table<?> table = null;
+        Select<?> using = null;
 
+        if (parseIf(ctx, '(')) {
+            using = parseSelect(ctx);
+            parse(ctx, ')');
+        }
+        else {
+            table = parseTableName(ctx);
+        }
+
+        TableLike<?> usingTable = (table != null ? table : using);
         if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "ON"))
-            usingTable = DSL.table(using).as(parseIdentifier(ctx));
+            usingTable = (table != null ? table : DSL.table(using)).as(parseIdentifier(ctx));
 
         parseKeyword(ctx, "ON");
         Condition on = parseCondition(ctx);
@@ -6715,17 +6722,18 @@ final class ParserImpl implements Parser {
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
+            int p = ctx.position + i + skip;
 
             switch (c) {
                 case ' ':
                 case '\t':
                 case '\r':
                 case '\n':
-                    skip = skip + (afterWhitespace(ctx, ctx.position + i + skip) - ctx.position - i - 1);
+                    skip = skip + (afterWhitespace(ctx, p) - p - 1);
                     break;
 
                 default:
-                    if (upper(ctx.sql[ctx.position + i + skip]) != keyword.charAt(i))
+                    if (upper(ctx.sql[p]) != keyword.charAt(i))
                         return false;
 
                     break;

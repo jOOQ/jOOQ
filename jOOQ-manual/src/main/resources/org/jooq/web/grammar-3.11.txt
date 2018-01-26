@@ -263,6 +263,7 @@ column =
     | 'CHECK' '(' condition ')'
     | 'AUTO_INCREMENT'
     | 'AUTOINCREMENT'
+    | 'IDENTITY' [ '(' signedInteger ',' signedInteger ')' ]
     | 'COMMENT' stringLiteral
     )
   }

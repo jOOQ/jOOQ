@@ -1851,7 +1851,20 @@ final class ParserImpl implements Parser {
                     }
 
                     if (!defaultValue) {
-                        if (parseKeywordIf(ctx, "DEFAULT")) {
+                        if (parseKeywordIf(ctx, "IDENTITY")) {
+                            if (parseIf(ctx, '(')) {
+                                parseSignedInteger(ctx);
+                                parse(ctx, ',');
+                                parseSignedInteger(ctx);
+                                parse(ctx, ')');
+                            }
+
+                            type = type.identity(true);
+                            defaultValue = true;
+                            identity = true;
+                            continue;
+                        }
+                        else if (parseKeywordIf(ctx, "DEFAULT")) {
 
                             // TODO: Ignored keyword from Oracle
                             parseKeywordIf(ctx, "ON NULL");

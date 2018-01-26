@@ -238,8 +238,8 @@ setClause = fieldName '=' field
 deleteStatement = 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
 ;
 
-mergeStatement = 'MERGE INTO' tableName
-  'USING' '(' select ')' [ 'AS' identifier ]
+mergeStatement = 'MERGE INTO' tableName [ [ 'AS' ] identifier ]
+  'USING' '(' select ')' [ [ 'AS' ] identifier ]
   'ON' condition break
   {
     'WHEN MATCHED THEN UPDATE' 'SET' setClauses

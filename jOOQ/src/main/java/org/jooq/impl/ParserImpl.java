@@ -1198,13 +1198,19 @@ final class ParserImpl implements Parser {
     private static final Merge<?> parseMerge(ParserContext ctx) {
         parseKeyword(ctx, "MERGE INTO");
         Table<?> target = parseTableName(ctx);
+
+        if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "USING"))
+            target = target.as(parseIdentifier(ctx));
+
         parseKeyword(ctx, "USING");
         parse(ctx, '(');
         Select<?> using = parseSelect(ctx);
         TableLike<?> usingTable = using;
         parse(ctx, ')');
-        if (parseKeywordIf(ctx, "AS"))
+
+        if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "ON"))
             usingTable = DSL.table(using).as(parseIdentifier(ctx));
+
         parseKeyword(ctx, "ON");
         Condition on = parseCondition(ctx);
         boolean update = false;

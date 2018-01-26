@@ -741,10 +741,10 @@ dataType =
 | 'SET' '(' stringLiteral [ ',' stringLiteral ] ')'
 | 'SMALLINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'TEXT' [ '(' unsignedInteger ')' ]
-| 'TIMESTAMP' [ 'WITH TIME ZONE' ]
-| 'TIMESTAMPTZ'
-| 'TIME' [ 'WITH TIME ZONE' ]
-| 'TIMETZ'
+| 'TIMESTAMP' [ '(' unsignedInteger ')' ] [ ( 'WITH' | 'WITHOUT' ) 'TIME ZONE' ]
+| 'TIMESTAMPTZ' [ '(' unsignedInteger ')' ]
+| 'TIME' [ '(' unsignedInteger ')' ] [ ( 'WITH' | 'WITHOUT' ) 'TIME ZONE' ]
+| 'TIMETZ' [ '(' unsignedInteger ')' ]
 | 'TINYBLOB'
 | 'TINYINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'TINYTEXT'

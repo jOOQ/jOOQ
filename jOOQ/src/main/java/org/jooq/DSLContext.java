@@ -10654,6 +10654,16 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
+    /**
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a single value.
+     *
+     * @param field The field for which to fetch a single value.
+     * @return The value or <code>null</code>, if no record was found.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> T fetchValue(Field<T> field) throws DataAccessException;
+
 
     /**
      * Execute a {@link ResultQuery} in the context of this

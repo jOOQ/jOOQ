@@ -4145,6 +4145,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchValue(select(field).from(field.getTable()));
     }
 
+    @Override
+    public <T> T fetchValue(Field<T> field) {
+        return fetchValue(select(field));
+    }
+
 
     @Override
     public <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) {

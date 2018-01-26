@@ -386,7 +386,7 @@ final class ParserImpl implements Parser {
 
         do {
             parseDelimiterSpecifications(ctx);
-            while (parseIf(ctx, ctx.delimiter));
+            while (parseDelimiterIf(ctx));
 
             query = parseQuery(ctx, false);
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
@@ -394,7 +394,7 @@ final class ParserImpl implements Parser {
             if (query != null)
                 result.add(query);
         }
-        while (query == IGNORE_NO_DELIMITER || parseIf(ctx, ctx.delimiter));
+        while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
 
         ctx.done("Unexpected content after end of queries input");
         return dsl.queries(result);
@@ -505,6 +505,22 @@ final class ParserImpl implements Parser {
 
             ctx.delimiter = parseUntilEOL(ctx).trim();
         }
+    }
+
+    private static final boolean parseDelimiterIf(ParserContext ctx) {
+        if (parseIf(ctx, ctx.delimiter))
+            return true;
+
+        if (parseKeywordIf(ctx, "GO")) {
+            String line = parseUntilEOLIf(ctx);
+
+            if (line != null && !"".equals(line.trim()))
+                throw ctx.unexpectedToken();
+
+            return true;
+        }
+
+        return false;
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
@@ -6589,7 +6605,15 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     private static final String parseUntilEOL(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
+        String result = parseUntilEOLIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final String parseUntilEOLIf(ParserContext ctx) {
         int start = ctx.position;
         int stop = start;
 
@@ -6607,7 +6631,7 @@ final class ParserImpl implements Parser {
         }
 
         if (start == stop)
-            throw ctx.unexpectedToken();
+            return null;
 
         ctx.position = stop;
         return new String(ctx.sql, start, stop - start);
@@ -7007,6 +7031,7 @@ final class ParserImpl implements Parser {
         "FOR",
         "FROM",
         "FULL",
+        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
         "GROUP BY",
         "HAVING",
         "INNER",

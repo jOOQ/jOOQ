@@ -309,6 +309,7 @@ import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
+import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -344,6 +345,7 @@ import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
 import org.jooq.UpdateReturningStep;
+import org.jooq.UpdateSetFirstStep;
 import org.jooq.User;
 // ...
 import org.jooq.WindowBeforeOverStep;
@@ -537,7 +539,7 @@ final class ParserImpl implements Parser {
             case 'd':
             case 'D':
                 if (!resultQuery && peekKeyword(ctx, "DELETE"))
-                    return parseDelete(ctx);
+                    return parseDelete(ctx, null);
                 else if (!resultQuery && peekKeyword(ctx, "DROP"))
                     return parseDrop(ctx);
                 else if (!resultQuery && peekKeyword(ctx, "DO"))
@@ -564,14 +566,14 @@ final class ParserImpl implements Parser {
             case 'i':
             case 'I':
                 if (!resultQuery && peekKeyword(ctx, "INSERT"))
-                    return parseInsert(ctx);
+                    return parseInsert(ctx, null);
 
                 break;
 
             case 'm':
             case 'M':
                 if (!resultQuery && peekKeyword(ctx, "MERGE"))
-                    return parseMerge(ctx);
+                    return parseMerge(ctx, null);
 
                 break;
 
@@ -603,7 +605,7 @@ final class ParserImpl implements Parser {
             case 'u':
             case 'U':
                 if (!resultQuery && peekKeyword(ctx, "UPDATE"))
-                    return parseUpdate(ctx);
+                    return parseUpdate(ctx, null);
                 else if (!resultQuery && peekKeyword(ctx, "USE"))
                     return parseUse(ctx);
 
@@ -660,9 +662,19 @@ final class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         // TODO Better model API for WITH clause
-        return parseSelect(ctx, null, (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
-
-        // TODO Other statements than SELECT
+        WithImpl with = (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
+        if (peekKeyword(ctx, "DELETE"))
+            return parseDelete(ctx, with);
+        else if (peekKeyword(ctx, "INSERT"))
+            return parseInsert(ctx, with);
+        else if (peekKeyword(ctx, "MERGE"))
+            return parseMerge(ctx, with);
+        else if (peekKeyword(ctx, "SELECT"))
+            return parseSelect(ctx, null, with);
+        else if (peekKeyword(ctx, "UPDATE"))
+            return parseUpdate(ctx, with);
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
@@ -1013,7 +1025,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Delete<?> parseDelete(ParserContext ctx) {
+    private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "DELETE");
         parseKeywordIf(ctx, "FROM");
         Table<?> tableName = parseTableName(ctx);
@@ -1023,7 +1035,7 @@ final class ParserImpl implements Parser {
         DeleteWhereStep<?> s1;
         DeleteReturningStep<?> s2;
 
-        s1 = ctx.dsl.delete(tableName);
+        s1 = (with == null ? ctx.dsl.delete(tableName) : with.delete(tableName));
         s2 = where
             ? s1.where(condition)
             : s1;
@@ -1037,9 +1049,10 @@ final class ParserImpl implements Parser {
             return s2;
     }
 
-    private static final Insert<?> parseInsert(ParserContext ctx) {
+    private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "INSERT INTO");
         Table<?> tableName = parseTableName(ctx);
+        InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(tableName) : with.insertInto(tableName));
         Field<?>[] fields = null;
 
         if (parseIf(ctx, '(')) {
@@ -1071,14 +1084,13 @@ final class ParserImpl implements Parser {
             }
             while (parseIf(ctx, ','));
 
-            InsertSetStep<?> step1 = ctx.dsl.insertInto(tableName);
             if (allValues.isEmpty()) {
-                returning = onDuplicate = step1.defaultValues();
+                returning = onDuplicate = s1.defaultValues();
             }
             else {
                 InsertValuesStepN<?> step2 = (fields != null)
-                    ? step1.columns(fields)
-                    : (InsertValuesStepN<?>) step1;
+                    ? s1.columns(fields)
+                    : (InsertValuesStepN<?>) s1;
 
                 for (List<Field<?>> values : allValues)
                     step2 = step2.values(values);
@@ -1089,20 +1101,20 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "SET")) {
             Map<Field<?>, Object> map = parseSetClauseList(ctx);
 
-            returning = onDuplicate =  ctx.dsl.insertInto(tableName).set(map);
+            returning = onDuplicate =  s1.set(map);
         }
         else if (peekKeyword(ctx, "SELECT", false, true, false)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             returning = onDuplicate = (fields == null)
-                ? ctx.dsl.insertInto(tableName).select(select)
-                : ctx.dsl.insertInto(tableName).columns(fields).select(select);
+                ? s1.select(select)
+                : s1.columns(fields).select(select);
         }
         else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
             if (fields != null)
                 throw ctx.notImplemented("DEFAULT VALUES without INSERT field list");
             else
-                returning = onDuplicate = ctx.dsl.insertInto(tableName).defaultValues();
+                returning = onDuplicate = s1.defaultValues();
         }
         else
             throw ctx.unexpectedToken();
@@ -1154,9 +1166,10 @@ final class ParserImpl implements Parser {
             return returning;
     }
 
-    private static final Update<?> parseUpdate(ParserContext ctx) {
+    private static final Update<?> parseUpdate(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "UPDATE");
         Table<?> tableName = parseTableName(ctx);
+        UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));
         parseKeyword(ctx, "SET");
 
         // TODO Row value expression updates
@@ -1165,10 +1178,9 @@ final class ParserImpl implements Parser {
         // TODO support FROM
         Condition condition = parseKeywordIf(ctx, "WHERE") ? parseCondition(ctx) : null;
 
-        // TODO support RETURNING
         UpdateReturningStep<?> returning = condition == null
-            ? ctx.dsl.update(tableName).set(map)
-            : ctx.dsl.update(tableName).set(map).where(condition);
+            ? s1.set(map)
+            : s1.set(map).where(condition);
 
         if (parseKeywordIf(ctx, "RETURNING"))
             if (parseIf(ctx, '*'))
@@ -1197,7 +1209,7 @@ final class ParserImpl implements Parser {
         return map;
     }
 
-    private static final Merge<?> parseMerge(ParserContext ctx) {
+    private static final Merge<?> parseMerge(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "MERGE INTO");
         Table<?> target = parseTableName(ctx);
 
@@ -1255,11 +1267,12 @@ final class ParserImpl implements Parser {
         // TODO support multi clause MERGE
         // TODO support DELETE
 
-        MergeMatchedStep<?> s1 = ctx.dsl.mergeInto(target).using(usingTable).on(on);
-        MergeNotMatchedStep<?> s2 = update ? s1.whenMatchedThenUpdate().set(updateSet) : s1;
-        MergeFinalStep<?> s3 = insert ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s2;
+        MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
+        MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
+        MergeNotMatchedStep<?> s3 = update ? s2.whenMatchedThenUpdate().set(updateSet) : s2;
+        MergeFinalStep<?> s4 = insert ? s3.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s3;
 
-        return s3;
+        return s4;
     }
 
     private static final Query parseSet(ParserContext ctx) {

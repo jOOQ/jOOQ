@@ -2247,11 +2247,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param sql The SQL
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      * @see SQL
      */
     @Support
     @PlainSQL
-    List<?> fetchValues(SQL sql) throws DataAccessException;
+    List<?> fetchValues(SQL sql) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2273,11 +2275,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param sql The SQL
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      * @see SQL
      */
     @Support
     @PlainSQL
-    List<?> fetchValues(String sql) throws DataAccessException;
+    List<?> fetchValues(String sql) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2303,12 +2307,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param bindings The bindings
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
-    List<?> fetchValues(String sql, Object... bindings) throws DataAccessException;
+    List<?> fetchValues(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2336,12 +2342,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            {numbered placeholder} locations
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
-    List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException;
+    List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a query holding plain SQL.
@@ -3080,9 +3088,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param rs The JDBC ResultSet to fetch data from
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    List<?> fetchValues(ResultSet rs) throws DataAccessException;
+    List<?> fetchValues(ResultSet rs) throws DataAccessException, InvalidResultException;
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -3095,9 +3105,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param field The field to use in the desired output
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> List<T> fetchValues(ResultSet rs, Field<T> field) throws DataAccessException;
+    <T> List<T> fetchValues(ResultSet rs, Field<T> field) throws DataAccessException, InvalidResultException;
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -3110,9 +3122,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param type The data type to use in the desired output
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> List<T> fetchValues(ResultSet rs, DataType<T> type) throws DataAccessException;
+    <T> List<T> fetchValues(ResultSet rs, DataType<T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -3125,9 +3139,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param type The data types to use in the desired output
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> List<T> fetchValues(ResultSet rs, Class<T> type) throws DataAccessException;
+    <T> List<T> fetchValues(ResultSet rs, Class<T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
@@ -10635,11 +10651,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
-     * @throws InvalidResultException if the query returned a record with more
-     *             than one value
      */
-    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query)
-        throws DataAccessException, TooManyRowsException, InvalidResultException;
+    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -10649,10 +10662,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
-     * @throws InvalidResultException if the query returned a record with more
-     *             than one value
      */
-    <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this

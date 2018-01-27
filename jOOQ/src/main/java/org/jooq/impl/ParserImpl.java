@@ -4585,7 +4585,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "LENGTH")) {
+        if (parseFunctionNameIf(ctx, "LENGTH") || parseFunctionNameIf(ctx, "LEN")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');

@@ -201,6 +201,7 @@ import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
@@ -3621,6 +3622,8 @@ final class ParserImpl implements Parser {
                 if (D.is(type))
                     if ((field = parseFieldDateLiteralIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDateTruncIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
@@ -3859,9 +3862,7 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (N.is(type))
-                    if ((field = parseFieldTruncIf(ctx)) != null)
-                        return field;
-                    else if (parseFunctionNameIf(ctx, "TANH"))
+                    if (parseFunctionNameIf(ctx, "TANH"))
                         return tanh((Field) parseFieldSumParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "TAN"))
                         return tan((Field) parseFieldSumParenthesised(ctx));
@@ -3870,6 +3871,10 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldTimestampLiteralIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldTimeLiteralIf(ctx)) != null)
+                        return field;
+
+                if (N.is(type) || D.is(type))
+                    if ((field = parseFieldTruncIf(ctx)) != null)
                         return field;
 
                 break;
@@ -4087,11 +4092,37 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldTruncIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "TRUNC")) {
             parse(ctx, '(');
-            Field<?> arg1 = toField(ctx, parseSum(ctx, N));
+            Field<?> arg1 = parseField(ctx);
             parse(ctx, ',');
-            Field<?> arg2 = toField(ctx, parseSum(ctx, N));
-            parse(ctx, ')');
-            return DSL.trunc((Field) arg1, (Field) arg2);
+
+            String part;
+            if ((part = parseStringLiteralIf(ctx)) != null) {
+                part = part.toUpperCase();
+
+                DatePart p;
+                if ("YY".equals(part) || "YYYY".equals(part) || "YEAR".equals(part))
+                    p = DatePart.YEAR;
+                else if ("MM".equals(part) || "MONTH".equals(part))
+                    p = DatePart.MONTH;
+                else if ("DD".equals(part))
+                    p = DatePart.DAY;
+                else if ("HH".equals(part))
+                    p = DatePart.HOUR;
+                else if ("MI".equals(part))
+                    p = DatePart.MINUTE;
+                else if ("SS".equals(part))
+                    p = DatePart.SECOND;
+                else
+                    throw ctx.unexpectedToken();
+
+                parse(ctx, ')');
+                return DSL.trunc((Field) arg1, p);
+            }
+            else {
+                Field<?> arg2 = toField(ctx, parseSum(ctx, N));
+                parse(ctx, ')');
+                return DSL.trunc((Field) arg1, (Field) arg2);
+            }
         }
 
         return null;
@@ -4286,6 +4317,21 @@ final class ParserImpl implements Parser {
 
         return null;
     }
+
+    private static final Field<?> parseFieldDateTruncIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DATE_TRUNC")) {
+            parse(ctx, '(');
+            DatePart part = DatePart.valueOf(parseStringLiteral(ctx).toUpperCase());
+            parse(ctx, ',');
+            Field<?> field = parseField(ctx, D);
+            parse(ctx, ')');
+
+            return trunc(field, part);
+        }
+
+        return null;
+    }
+
 
     private static final Date parseDateLiteral(ParserContext ctx) {
         try {
@@ -6095,14 +6141,25 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseStringLiteral(ParserContext ctx) {
+        String result = parseStringLiteralIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final String parseStringLiteralIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseIf(ctx, 'q') || parseIf(ctx, 'Q'))
+        if (parseIf(ctx, 'q', '\'') || parseIf(ctx, 'Q', '\''))
             return parseOracleQuotedStringLiteral(ctx);
-        else if (parseIf(ctx, 'e') || parseIf(ctx, 'E'))
+        else if (parseIf(ctx, 'e', '\'') || parseIf(ctx, 'E', '\''))
             return parseUnquotedStringLiteral(ctx, true);
-        else
+        else if (peek(ctx, '\''))
             return parseUnquotedStringLiteral(ctx, false);
+        else
+            return null;
     }
 
     private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {
@@ -6661,19 +6718,31 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean parseIf(ParserContext ctx, String string) {
-        parseWhitespaceIf(ctx);
-        int length = string.length();
+        boolean result = peek(ctx, string);
 
-        if (ctx.sql.length < ctx.position + length)
+        if (result)
+            ctx.position = ctx.position + string.length();
+
+        return result;
+    }
+
+    private static final boolean parseIf(ParserContext ctx, String string, String peek) {
+        parseWhitespaceIf(ctx);
+        int l1 = string.length();
+        int l2 = peek.length();
+
+        if (ctx.sql.length < ctx.position + l1 + l2)
             return false;
 
-        for (int i = 0; i < length; i++) {
-            char c = string.charAt(i);
-            if (ctx.sql[ctx.position + i] != c)
+        for (int i = 0; i < l1; i++)
+            if (ctx.sql[ctx.position + i] != string.charAt(i))
                 return false;
-        }
 
-        ctx.position = ctx.position + length;
+        for (int i = l1; i < l2; i++)
+            if (ctx.sql[ctx.position + i] != peek.charAt(i))
+                return false;
+
+        ctx.position = ctx.position + l1;
         return true;
     }
 
@@ -6683,9 +6752,21 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {
+        boolean result = peek(ctx, c);
+
+        if (result)
+            ctx.position = ctx.position + 1;
+
+        return result;
+    }
+
+    private static final boolean parseIf(ParserContext ctx, char c, char peek) {
         parseWhitespaceIf(ctx);
 
         if (ctx.character() != c)
+            return false;
+
+        if (ctx.character(ctx.position + 1) != peek)
             return false;
 
         ctx.position = ctx.position + 1;
@@ -6736,6 +6817,29 @@ final class ParserImpl implements Parser {
             return keyword(keyword.toLowerCase());
 
         return null;
+    }
+
+    private static final boolean peek(ParserContext ctx, char c) {
+        parseWhitespaceIf(ctx);
+
+        if (ctx.character() != c)
+            return false;
+
+        return true;
+    }
+
+    private static final boolean peek(ParserContext ctx, String string) {
+        parseWhitespaceIf(ctx);
+        int length = string.length();
+
+        if (ctx.sql.length < ctx.position + length)
+            return false;
+
+        for (int i = 0; i < length; i++)
+            if (ctx.sql[ctx.position + i] != string.charAt(i))
+                return false;
+
+        return true;
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String... keywords) {

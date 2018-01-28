@@ -87,6 +87,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.floor;
 import static org.jooq.impl.DSL.foreignKey;
+import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.grouping;
 import static org.jooq.impl.DSL.groupingId;
@@ -2963,6 +2964,14 @@ final class ParserImpl implements Parser {
         else if (parseFunctionNameIf(ctx, "UNNEST")) {
             // TODO
             throw ctx.notImplemented("UNNEST");
+        }
+        else if (parseFunctionNameIf(ctx, "GENERATE_SERIES")) {
+            parse(ctx, '(');
+            Field from = toField(ctx, parseConcat(ctx, Type.N));
+            parse(ctx, ',');
+            Field to = toField(ctx, parseConcat(ctx, Type.N));
+            result = generateSeries(from, to);
+            parse(ctx, ')');
         }
         else if (parseIf(ctx, '(')) {
             if (peekKeyword(ctx, "SELECT")) {

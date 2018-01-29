@@ -94,6 +94,7 @@ import org.jooq.util.jaxb.Catalog;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.Nullability;
 import org.jooq.util.jaxb.RegexFlag;
 import org.jooq.util.jaxb.Schema;
 // ...
@@ -1508,6 +1509,12 @@ public abstract class AbstractDatabase implements Database {
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
             String expression = StringUtils.defaultIfNull(forcedType.getExpressions(), forcedType.getExpression());
             String types = forcedType.getTypes();
+            Nullability nullability = forcedType.getNullability();
+
+            if (     (nullability != null && nullability != Nullability.ALL)
+                 && ((nullability == Nullability.NOT_NULL && definedType.isNullable())
+                 ||  (nullability == Nullability.NULL && !definedType.isNullable())))
+                continue forcedTypeLoop;
 
             if (expression != null) {
                 Pattern p = pattern(expression);

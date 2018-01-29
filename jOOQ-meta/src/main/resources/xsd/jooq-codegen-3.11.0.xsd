@@ -814,6 +814,10 @@ etc to be forced to have this type. If provided, both "expressions" and
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching data types to be forced to have this
 type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="nullability" type="tns:Nullability" default="ALL" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to nullable / non-nullable / all columns]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1157,6 +1161,14 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="2.0"/>
       <enumeration value="2.1"/>
       <enumeration value="2.2"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="Nullability">
+    <restriction base="string">
+      <enumeration value="ALL"/>
+      <enumeration value="NULL"/>
+      <enumeration value="NOT_NULL"/>
     </restriction>
   </simpleType>
 </schema>

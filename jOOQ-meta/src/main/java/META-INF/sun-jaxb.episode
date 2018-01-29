@@ -107,5 +107,8 @@
     <bindings if-exists="true" scd="~tns:RegexFlag">
       <typesafeEnumClass ref="org.jooq.util.jaxb.RegexFlag"/>
     </bindings>
+    <bindings if-exists="true" scd="~tns:Nullability">
+      <typesafeEnumClass ref="org.jooq.util.jaxb.Nullability"/>
+    </bindings>
   </bindings>
 </bindings>

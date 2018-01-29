@@ -11,6 +11,8 @@ package org.jooq.util.jaxb;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -48,6 +50,9 @@ public class ForcedType implements Serializable
     protected String expressions;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String types;
+    @XmlElement(defaultValue = "ALL")
+    @XmlSchemaType(name = "string")
+    protected Nullability nullability = Nullability.ALL;
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
@@ -247,6 +252,30 @@ public class ForcedType implements Serializable
         this.types = value;
     }
 
+    /**
+     * Whether this forced type should apply to nullable / non-nullable / all columns
+     *
+     * @return
+     *     possible object is
+     *     {@link Nullability }
+     *
+     */
+    public Nullability getNullability() {
+        return nullability;
+    }
+
+    /**
+     * Sets the value of the nullability property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Nullability }
+     *
+     */
+    public void setNullability(Nullability value) {
+        this.nullability = value;
+    }
+
     public ForcedType withName(String value) {
         setName(value);
         return this;
@@ -284,6 +313,11 @@ public class ForcedType implements Serializable
 
     public ForcedType withTypes(String value) {
         setTypes(value);
+        return this;
+    }
+
+    public ForcedType withNullability(Nullability value) {
+        setNullability(value);
         return this;
     }
 

@@ -16007,6 +16007,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
                If provided, both "expressions" and "types" must match. -->
           <types>.*</types>
+
+          <!-- Force a type on ALL / NULL (nullable) / NOT_NULL (non-nullable) types -->
+          <nullability>ALL</nullability>
         </forcedType>
       </forcedTypes>
     </database>
@@ -16024,7 +16027,8 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
       .withForcedTypes(new ForcedType()
         .withName("BOOLEAN")
         .withExpression(".*\.IS_VALID")
-        .withTypes(".*")))));]]></java><html>
+        .withTypes(".*")
+        .withNullability(Nullability.ALL)))));]]></java><html>
 
                                     <p>
                                         <strong>Gradle configuration</strong>
@@ -16039,6 +16043,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
           name = 'BOOLEAN'
           expression = '.*\.IS_VALID'
           types = '.*'
+          nullability = ALL
         }
       }
     }

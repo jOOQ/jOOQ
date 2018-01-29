@@ -3736,7 +3736,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias);
 
     /**
@@ -3752,7 +3752,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
 
@@ -3772,7 +3772,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
      */
-    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -3791,7 +3791,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
      */
-    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
@@ -3811,7 +3811,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep1 with(String alias, String fieldAlias1);
 
     /**
@@ -3828,7 +3828,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2);
 
     /**
@@ -3845,7 +3845,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
 
     /**
@@ -3862,7 +3862,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
 
     /**
@@ -3879,7 +3879,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
 
     /**
@@ -3896,7 +3896,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
 
     /**
@@ -3913,7 +3913,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
 
     /**
@@ -3930,7 +3930,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
 
     /**
@@ -3947,7 +3947,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
 
     /**
@@ -3964,7 +3964,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
 
     /**
@@ -3981,7 +3981,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
 
     /**
@@ -3998,7 +3998,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
 
     /**
@@ -4015,7 +4015,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
 
     /**
@@ -4032,7 +4032,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
 
     /**
@@ -4049,7 +4049,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
 
     /**
@@ -4066,7 +4066,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
 
     /**
@@ -4083,7 +4083,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
 
     /**
@@ -4100,7 +4100,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
 
     /**
@@ -4117,7 +4117,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
 
     /**
@@ -4134,7 +4134,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
 
     /**
@@ -4151,7 +4151,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
 
     /**
@@ -4168,7 +4168,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
     /**
@@ -4185,7 +4185,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep1 with(Name alias, Name fieldAlias1);
 
     /**
@@ -4202,7 +4202,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2);
 
     /**
@@ -4219,7 +4219,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
 
     /**
@@ -4236,7 +4236,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
 
     /**
@@ -4253,7 +4253,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
 
     /**
@@ -4270,7 +4270,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
 
     /**
@@ -4287,7 +4287,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
 
     /**
@@ -4304,7 +4304,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
 
     /**
@@ -4321,7 +4321,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
 
     /**
@@ -4338,7 +4338,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
 
     /**
@@ -4355,7 +4355,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
 
     /**
@@ -4372,7 +4372,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
 
     /**
@@ -4389,7 +4389,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
 
     /**
@@ -4406,7 +4406,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
 
     /**
@@ -4423,7 +4423,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
 
     /**
@@ -4440,7 +4440,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
 
     /**
@@ -4457,7 +4457,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
 
     /**
@@ -4474,7 +4474,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
 
     /**
@@ -4491,7 +4491,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
 
     /**
@@ -4508,7 +4508,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
 
     /**
@@ -4525,7 +4525,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
 
     /**
@@ -4542,7 +4542,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
 // [jooq-tools] END [with]
@@ -4568,7 +4568,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithStep with(CommonTableExpression<?>... tables);
 
     /**

@@ -693,7 +693,7 @@ public class DSL {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
     }
@@ -711,7 +711,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -733,7 +733,7 @@ public class DSL {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, false).with(alias, fieldNameFunction);
     }
@@ -755,7 +755,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep1 with(String alias, String fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -774,7 +774,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -793,7 +793,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -812,7 +812,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -831,7 +831,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -850,7 +850,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -869,7 +869,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -888,7 +888,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -907,7 +907,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -926,7 +926,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -945,7 +945,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -964,7 +964,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -983,7 +983,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1002,7 +1002,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1021,7 +1021,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1040,7 +1040,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1059,7 +1059,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1078,7 +1078,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1097,7 +1097,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1116,7 +1116,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1135,7 +1135,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1154,7 +1154,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1173,7 +1173,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep1 with(Name alias, Name fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -1192,7 +1192,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -1211,7 +1211,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -1230,7 +1230,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -1249,7 +1249,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -1268,7 +1268,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -1287,7 +1287,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -1306,7 +1306,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -1325,7 +1325,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -1344,7 +1344,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1363,7 +1363,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1382,7 +1382,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1401,7 +1401,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1420,7 +1420,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1439,7 +1439,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1458,7 +1458,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1477,7 +1477,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1496,7 +1496,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1515,7 +1515,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1534,7 +1534,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1553,7 +1553,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1572,7 +1572,7 @@ public class DSL {
      * recursive CTE.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1600,7 +1600,7 @@ public class DSL {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
     }
@@ -5470,7 +5470,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
-        return dsl().mergeInto(table, field1);
+        return using(new DefaultConfiguration()).mergeInto(table, field1);
     }
 
     /**
@@ -5482,7 +5482,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
-        return dsl().mergeInto(table, field1, field2);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
     }
 
     /**
@@ -5494,7 +5494,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
-        return dsl().mergeInto(table, field1, field2, field3);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
     }
 
     /**
@@ -5506,7 +5506,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
-        return dsl().mergeInto(table, field1, field2, field3, field4);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
     }
 
     /**
@@ -5518,7 +5518,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
     }
 
     /**
@@ -5530,7 +5530,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
     }
 
     /**
@@ -5542,7 +5542,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
     }
 
     /**
@@ -5554,7 +5554,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
     }
 
     /**
@@ -5566,7 +5566,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
 
     /**
@@ -5578,7 +5578,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
 
     /**
@@ -5590,7 +5590,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
 
     /**
@@ -5602,7 +5602,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
 
     /**
@@ -5614,7 +5614,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
 
     /**
@@ -5626,7 +5626,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
 
     /**
@@ -5638,7 +5638,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
 
     /**
@@ -5650,7 +5650,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
 
     /**
@@ -5662,7 +5662,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
 
     /**
@@ -5674,7 +5674,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
 
     /**
@@ -5686,7 +5686,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
 
     /**
@@ -5698,7 +5698,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
 
     /**
@@ -5710,7 +5710,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
 
     /**
@@ -5722,7 +5722,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
-        return dsl().mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
+        return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
 // [jooq-tools] END [merge]

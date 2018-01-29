@@ -7044,7 +7044,12 @@ final class ParserImpl implements Parser {
         }
 
         ParserException unexpectedToken() {
-            return new ParserException(mark());
+            return init(new ParserException(mark()));
+        }
+
+        ParserException init(ParserException e) {
+            int[] line = line();
+            return e.position(position).line(line[0]).column(line[1]);
         }
 
         Object nextBinding() {

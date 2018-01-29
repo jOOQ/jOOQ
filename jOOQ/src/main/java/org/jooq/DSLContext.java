@@ -8938,6 +8938,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
+     * @see DSL#createIndex()
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createIndex();
+
+    /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
      * @see DSL#createIndex(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -8982,6 +8990,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Index index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex()
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndex();
 
     /**
      * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.

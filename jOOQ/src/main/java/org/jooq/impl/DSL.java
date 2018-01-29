@@ -7007,6 +7007,16 @@ public class DSL {
     /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
+     * @see DSLContext#createIndex()
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createIndex() {
+        return dsl().createIndex();
+    }
+
+    /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
      * @see DSLContext#createIndex(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -7062,6 +7072,16 @@ public class DSL {
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex()
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createUniqueIndex() {
+        return dsl().createUniqueIndex();
     }
 
     /**

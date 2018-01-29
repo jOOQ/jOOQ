@@ -127,7 +127,7 @@ break
 [ 'COMMENT' [ '=' ] stringLiteral ]
 ;
 
-createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] indexName break
+createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] [ indexName ] break
   'ON' tableName '(' identifiers ')'
   [ 'WHERE' condition ]
 ;
@@ -380,7 +380,7 @@ orderBy =
 offsetFetch =
   'OFFSET' unsignedInteger
   [
-    [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) [ unsignedInteger ] ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
+    [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) unsignedInteger ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
   | [ 'LIMIT' unsignedInteger [ 'WITH TIES' ] ]
   ]
 | 'LIMIT' unsignedInteger
@@ -547,9 +547,8 @@ term =
 | 'COALESCE' '(' fields ')'
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
 | dateLiteral
-| 'DATE_TRUNC' '(' stringLiteral ',' field ')'
-| 'DAY' '(' field ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
+| 'DAY' '(' field ')'
 | ( 'DEG' | 'DEGREE' ) '(' sum ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
@@ -569,7 +568,6 @@ term =
 | 'LPAD' '(' field ',' field [ ',' field ] ')'
 | 'LTRIM' '(' field ')'
 | 'LEFT' '(' field ',' field ')'
-| 'LEN' '(' field ')'
 | 'LENGTH' '(' field ')'
 | 'LN' '(' sum ')'
 | 'LOG' '(' sum ',' unsignedInteger ')'
@@ -641,7 +639,6 @@ term =
 | timestampLiteral
 | 'TRANSLATE' '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
-| 'TRUNC' '(' field ',' stringLiteral ')'
 | 'TRUNC' '(' sum ',' sum ')'
 | truthValue
 | ( 'UPPER' | 'UCASE' ) '(' field ')'

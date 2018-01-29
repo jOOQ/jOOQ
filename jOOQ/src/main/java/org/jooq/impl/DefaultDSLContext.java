@@ -3126,6 +3126,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public CreateIndexStep createIndex() {
+        return new CreateIndexImpl(configuration(), null, false, false);
+    }
+
+    @Override
     public CreateIndexStep createIndex(String index) {
         return createIndex(name(index));
     }
@@ -3153,6 +3158,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateIndexStep createIndexIfNotExists(Index index) {
         return new CreateIndexImpl(configuration(), index, index.getUnique(), true);
+    }
+
+    @Override
+    public CreateIndexStep createUniqueIndex() {
+        return new CreateIndexImpl(configuration(), null, true, false);
     }
 
     @Override

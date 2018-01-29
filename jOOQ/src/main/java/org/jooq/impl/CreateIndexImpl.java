@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -90,6 +91,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     private static final long                serialVersionUID         = 8904572826501186329L;
     private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> SUPPORT_UNNAMED_INDEX    = EnumSet.of(POSTGRES);
 
     private final Index                      index;
     private final boolean                    unique;
@@ -105,9 +107,12 @@ final class CreateIndexImpl extends AbstractQuery implements
         this.index = index;
         this.unique = unique;
         this.ifNotExists = ifNotExists;
-        this.table = index.getTable();
-        this.sortFields = index.getFields().toArray(EMPTY_SORTFIELD);
-        this.where = index.getWhere();
+
+        if (index != null) {
+            this.table = index.getTable();
+            this.sortFields = index.getFields().toArray(EMPTY_SORTFIELD);
+            this.where = index.getWhere();
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -210,9 +215,14 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
-        ctx.visit(index)
-           .sql(' ')
-           .visit(K_ON)
+        if (index != null)
+            ctx.visit(index)
+               .sql(' ');
+        else if (!SUPPORT_UNNAMED_INDEX.contains(ctx.family()))
+            ctx.visit(generatedName())
+               .sql(' ');
+
+        ctx.visit(K_ON)
            .sql(' ')
            .visit(table)
            .sql('(')
@@ -228,6 +238,20 @@ final class CreateIndexImpl extends AbstractQuery implements
                .qualify(false)
                .visit(where)
                .qualify(true);
+    }
+
+    private final Name generatedName() {
+        Name t = table.getQualifiedName();
+
+        StringBuilder sb = new StringBuilder(table.getName());
+        for (SortField<?> f : sortFields)
+            sb.append('_').append(f.getName());
+        sb.append("_idx");
+
+        if (t.qualified())
+            return t.qualifier().append(sb.toString());
+        else
+            return name(sb.toString());
     }
 
     @Override

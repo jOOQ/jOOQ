@@ -2657,7 +2657,7 @@ final class ParserImpl implements Parser {
 
     private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
-        Name indexName = parseIndexName(ctx);
+        Name indexName = parseIndexNameIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
         parse(ctx, '(');
@@ -2673,8 +2673,13 @@ final class ParserImpl implements Parser {
                 ? ctx.dsl.createUniqueIndexIfNotExists(indexName)
                 : ctx.dsl.createIndexIfNotExists(indexName)
             : unique
-                ? ctx.dsl.createUniqueIndex(indexName)
-                : ctx.dsl.createIndex(indexName);
+                ? indexName == null
+                    ? ctx.dsl.createUniqueIndex()
+                    : ctx.dsl.createUniqueIndex(indexName)
+                : indexName == null
+                    ? ctx.dsl.createIndex()
+                    : ctx.dsl.createIndex(indexName);
+
         CreateIndexWhereStep s2 = s1.on(tableName, fieldNames);
         CreateIndexFinalStep s3 = condition != null
             ? s2.where(condition)
@@ -5726,7 +5731,19 @@ final class ParserImpl implements Parser {
     }
 
     private static final Name parseIndexName(ParserContext ctx) {
-        return parseName(ctx);
+        Name result = parseNameIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Name parseIndexNameIf(ParserContext ctx) {
+        if (!peekKeyword(ctx, "ON"))
+            return parseNameIf(ctx);
+        else
+            return null;
     }
 
     private static final Name parseName(ParserContext ctx) {

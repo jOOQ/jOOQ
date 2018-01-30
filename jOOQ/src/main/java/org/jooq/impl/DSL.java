@@ -118,6 +118,7 @@ import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
+import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
@@ -8258,6 +8259,24 @@ public class DSL {
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return dsl().revoke(privileges);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Other objects
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a collation by its unqualified name.
+     */
+    public static Collation collation(String collation) {
+        return collation(name(collation));
+    }
+
+    /**
+     * Create a collation by its qualified name.
+     */
+    public static Collation collation(Name collation) {
+        return new CollationImpl(collation);
     }
 
     /**

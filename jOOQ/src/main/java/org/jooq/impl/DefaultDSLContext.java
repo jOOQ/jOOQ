@@ -453,7 +453,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         TransactionProvider tp = configuration().transactionProvider();
 
         if (!(tp instanceof ThreadLocalTransactionProvider))
-            throw new ConfigurationException("Cannot use ThreadLocalTransactionalCallable with TransactionProvider of type " + tp.getClass());
+            throw new ConfigurationException("Cannot use ContextTransactionalCallable with TransactionProvider of type " + tp.getClass());
 
         return transactionResult0(new TransactionalCallable<T>() {
             @Override

@@ -95,6 +95,7 @@ import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_COLLATE;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DO;
@@ -4071,6 +4072,9 @@ final class Tools {
         else {
             ctx.sql(typeName);
         }
+
+        if (type.collation() != null)
+            ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
     }
 
     // -------------------------------------------------------------------------

@@ -67,7 +67,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
   }
 | ( 'ALTER' | 'MODIFY' ) [ 'COLUMN' ] identifier
   (
-    dataType [ [ 'NOT' ] 'NULL' ]
+    [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
   | ( 'SET' | 'DROP' ) 'NOT NULL'
   | [ 'RENAME' ] 'TO' identifier
   )
@@ -718,47 +718,47 @@ dataType =
 | 'BIT' [ '(' unsignedInteger ')' ]
 | 'BLOB' [ '(' unsignedInteger ')' ]
 | 'BOOLEAN'
-| 'CHAR' [ '(' unsignedInteger ')' ]
-| 'CHARACTER' [ '(' unsignedInteger ')' ]
-| 'CLOB' [ '(' unsignedInteger ')' ]
+| 'CHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'CHARACTER' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'CLOB' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'DATE'
 | 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'DOUBLE' [ 'PRECISION' ] [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
-| 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')'
+| 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')' [ 'COLLATE' collationName ]
 | 'FLOAT' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'INT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'INTEGER' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'LONGBLOB'
-| 'LONGTEXT'
-| 'LONG NVARCHAR' [ '(' unsignedInteger ')' ]
+| 'LONGTEXT' [ 'COLLATE' collationName ]
+| 'LONG NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'LONG VARBINARY' [ '(' unsignedInteger ')' ]
-| 'LONG VARCHAR' [ '(' unsignedInteger ')' ]
+| 'LONG VARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'MEDIUMBLOB'
 | 'MEDIUMINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
-| 'MEDIUMTEXT'
-| 'NCHAR' [ '(' unsignedInteger ')' ]
-| 'NCLOB'
+| 'MEDIUMTEXT' [ 'COLLATE' collationName ]
+| 'NCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'NCLOB' [ 'COLLATE' collationName ]
 | 'NUMBER' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NUMERIC' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
-| 'NVARCHAR' [ '(' unsignedInteger ')' ]
+| 'NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'SERIAL'
 | 'SERIAL4'
 | 'SERIAL8'
-| 'SET' '(' stringLiteral [ ',' stringLiteral ] ')'
+| 'SET' '(' stringLiteral [ ',' stringLiteral ] ')' [ 'COLLATE' collationName ]
 | 'SMALLINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
-| 'TEXT' [ '(' unsignedInteger ')' ]
+| 'TEXT' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'TIMESTAMP' [ '(' unsignedInteger ')' ] [ ( 'WITH' | 'WITHOUT' ) 'TIME ZONE' ]
 | 'TIMESTAMPTZ' [ '(' unsignedInteger ')' ]
 | 'TIME' [ '(' unsignedInteger ')' ] [ ( 'WITH' | 'WITHOUT' ) 'TIME ZONE' ]
 | 'TIMETZ' [ '(' unsignedInteger ')' ]
 | 'TINYBLOB'
 | 'TINYINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
-| 'TINYTEXT'
+| 'TINYTEXT' [ 'COLLATE' collationName ]
 | 'UUID'
-| 'VARCHAR' [ '(' unsignedInteger ')' ]
-| 'VARCHAR2' [ '(' unsignedInteger ')' ]
-| 'CHARACTER VARYING' [ '(' unsignedInteger ')' ]
+| 'VARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'VARCHAR2' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'CHARACTER VARYING' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'VARBINARY' [ '(' unsignedInteger ')' ]
 ;
 

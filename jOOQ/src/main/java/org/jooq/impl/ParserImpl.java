@@ -5866,12 +5866,12 @@ final class ParserImpl implements Parser {
             case 'c':
             case 'C':
                 if (parseKeywordIf(ctx, "CHARACTER VARYING"))
-                    return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
                 else if (parseKeywordIf(ctx, "CHAR") ||
                          parseKeywordIf(ctx, "CHARACTER"))
-                    return parseDataTypeLength(ctx, SQLDataType.CHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CHAR));
                 else if (parseKeywordIf(ctx, "CLOB"))
-                    return parseDataTypeLength(ctx, SQLDataType.CLOB);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CLOB));
                 else
                     throw ctx.unexpectedToken();
 
@@ -5892,7 +5892,7 @@ final class ParserImpl implements Parser {
             case 'e':
             case 'E':
                 if (parseKeywordIf(ctx, "ENUM"))
-                    return parseDataTypeEnum(ctx);
+                    return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
                 else
                     throw ctx.unexpectedToken();
 
@@ -5921,13 +5921,13 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "LONGBLOB"))
                     return SQLDataType.BLOB;
                 else if (parseKeywordIf(ctx, "LONGTEXT"))
-                    return SQLDataType.CLOB;
+                    return parseDataTypeCollation(ctx, SQLDataType.CLOB);
                 else if (parseKeywordIf(ctx, "LONG NVARCHAR"))
-                    return parseDataTypeLength(ctx, SQLDataType.LONGNVARCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGNVARCHAR));
                 else if (parseKeywordIf(ctx, "LONG VARBINARY"))
-                    return parseDataTypeLength(ctx, SQLDataType.LONGVARBINARY);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARBINARY));
                 else if (parseKeywordIf(ctx, "LONG VARCHAR"))
-                    return parseDataTypeLength(ctx, SQLDataType.LONGVARCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARCHAR));
                 else
                     throw ctx.unexpectedToken();
 
@@ -5938,21 +5938,21 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "MEDIUMINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
                 else if (parseKeywordIf(ctx, "MEDIUMTEXT"))
-                    return SQLDataType.CLOB;
+                    return parseDataTypeCollation(ctx, SQLDataType.CLOB);
                 else
                     throw ctx.unexpectedToken();
 
             case 'n':
             case 'N':
                 if (parseKeywordIf(ctx, "NCHAR"))
-                    return parseDataTypeLength(ctx, SQLDataType.NCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NCHAR));
                 else if (parseKeywordIf(ctx, "NCLOB"))
-                    return SQLDataType.NCLOB;
+                    return parseDataTypeCollation(ctx, SQLDataType.NCLOB);
                 else if (parseKeywordIf(ctx, "NUMBER") ||
                          parseKeywordIf(ctx, "NUMERIC"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
                 else if (parseKeywordIf(ctx, "NVARCHAR"))
-                    return parseDataTypeLength(ctx, SQLDataType.NVARCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
                 else
                     throw ctx.unexpectedToken();
 
@@ -5970,7 +5970,7 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "SERIAL8"))
                     return SQLDataType.BIGINT.identity(true);
                 else if (parseKeywordIf(ctx, "SET"))
-                    return parseDataTypeEnum(ctx);
+                    return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
                 else if (parseKeywordIf(ctx, "SMALLINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
                 else if (parseKeywordIf(ctx, "SMALLSERIAL"))
@@ -5981,7 +5981,7 @@ final class ParserImpl implements Parser {
             case 't':
             case 'T':
                 if (parseKeywordIf(ctx, "TEXT"))
-                    return parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB);
+                    return parseDataTypeCollation(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB));
 
                 else if (parseKeywordIf(ctx, "TIMESTAMPTZ"))
                     return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
@@ -6012,7 +6012,7 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TINYINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.TINYINT));
                 else if (parseKeywordIf(ctx, "TINYTEXT"))
-                    return SQLDataType.CLOB;
+                    return parseDataTypeCollation(ctx, SQLDataType.CLOB);
                 else
                     throw ctx.unexpectedToken();
 
@@ -6027,7 +6027,7 @@ final class ParserImpl implements Parser {
             case 'V':
                 if (parseKeywordIf(ctx, "VARCHAR") ||
                     parseKeywordIf(ctx, "VARCHAR2"))
-                    return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
+                    return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
                 else if (parseKeywordIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
                 else
@@ -6067,6 +6067,13 @@ final class ParserImpl implements Parser {
                 result = result.length((int) (long) parseUnsignedInteger(ctx));
             parse(ctx, ')');
         }
+
+        return result;
+    }
+
+    private static final DataType<?> parseDataTypeCollation(ParserContext ctx, DataType<?> result) {
+        if (parseKeywordIf(ctx, "COLLATE"))
+            result = result.collation(parseCollation(ctx));
 
         return result;
     }

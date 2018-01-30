@@ -66,34 +66,13 @@ extends AbstractDefinition {
     private static final JooqLogger log             = JooqLogger.getLogger(AbstractElementContainerDefinition.class);
 
     private List<E>                 elements;
-    private final PackageDefinition pkg;
 
     public AbstractElementContainerDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, null, name, comment);
     }
 
     public AbstractElementContainerDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment) {
-        super(schema.getDatabase(), schema, name, comment);
-
-        this.pkg = pkg;
-    }
-
-    public final PackageDefinition getPackage() {
-        return pkg;
-    }
-
-    @Override
-    public final List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
-
-        result.addAll(getSchema().getDefinitionPath());
-
-        if (pkg != null)
-            result.add(pkg);
-
-        result.add(this);
-
-        return result;
+        super(schema.getDatabase(), schema, pkg, name, comment, null);
     }
 
     protected final List<E> getElements() {

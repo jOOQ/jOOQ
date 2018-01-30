@@ -37,9 +37,6 @@
  */
 package org.jooq.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DefaultArrayDefinition extends AbstractDefinition implements ArrayDefinition {
 
     private final DataTypeDefinition     definedType;
@@ -47,19 +44,13 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
     private transient DataTypeDefinition resolvedType;
 
     public DefaultArrayDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
-        super(schema.getDatabase(), schema, name, "");
-
-        this.definedType = type;
+        this(schema, null, name, type);
     }
 
-    @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+    public DefaultArrayDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, DataTypeDefinition type) {
+        super(schema.getDatabase(), schema, pkg, name, "", null);
 
-        result.addAll(getSchema().getDefinitionPath());
-        result.add(this);
-
-        return result;
+        this.definedType = type;
     }
 
     @Override

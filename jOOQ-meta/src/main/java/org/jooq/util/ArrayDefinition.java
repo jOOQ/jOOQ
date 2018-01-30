@@ -46,6 +46,11 @@ package org.jooq.util;
 public interface ArrayDefinition extends Definition {
 
     /**
+     * The array's package. <code>null</code> if the UDT is not in a package
+     */
+    PackageDefinition getPackage();
+
+    /**
      * @return The type of the ARRAY's elements
      */
     DataTypeDefinition getElementType();

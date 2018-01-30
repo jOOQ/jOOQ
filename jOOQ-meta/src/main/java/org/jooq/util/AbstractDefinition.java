@@ -56,11 +56,12 @@ import org.jooq.tools.StringUtils;
  */
 public abstract class AbstractDefinition implements Definition {
 
-    private final Database         database;
-    private final SchemaDefinition schema;
-    private final String           name;
-    private final String           comment;
-    private final String           overload;
+    private final Database          database;
+    private final SchemaDefinition  schema;
+    private final PackageDefinition pkg;
+    private final String            name;
+    private final String            comment;
+    private final String            overload;
 
     // [#2238] Some caches for strings that are heavy to calculate in large schemas
     private transient String       qualifiedInputName;
@@ -78,15 +79,36 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     public AbstractDefinition(Database database, SchemaDefinition schema, String name, String comment, String overload) {
+        this(database, schema, null, name, comment, overload);
+    }
+
+    public AbstractDefinition(Database database, SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload) {
         this.database = database;
 
         // The subclass constructor cannot pass "this" to the super constructor
         this.schema = (schema == null && this instanceof SchemaDefinition)
             ? (SchemaDefinition) this
             : schema;
+        this.pkg = pkg;
         this.name = name;
         this.comment = comment;
         this.overload = overload;
+    }
+
+    @Override
+    public List<Definition> getDefinitionPath() {
+        List<Definition> result = new ArrayList<Definition>();
+        result.addAll(getSchema().getDefinitionPath());
+
+        if (getPackage() != null)
+            result.add(getPackage());
+
+        result.add(this);
+        return result;
+    }
+
+    public final PackageDefinition getPackage() {
+        return pkg;
     }
 
     @Override

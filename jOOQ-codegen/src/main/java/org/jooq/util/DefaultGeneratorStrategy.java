@@ -312,8 +312,15 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof DomainDefinition) {
             return "domains";
         }
+
         else if (definition instanceof ArrayDefinition) {
-            return "udt";
+            ArrayDefinition array = (ArrayDefinition) definition;
+
+            // [#7125] An array inside of a package is a PL/SQL TABLE type
+            if (array.getPackage() != null)
+                return "packages." + getJavaIdentifier(array.getPackage()).toLowerCase() + ".udt";
+            else
+                return "udt";
         }
 
         // Default always to the main package

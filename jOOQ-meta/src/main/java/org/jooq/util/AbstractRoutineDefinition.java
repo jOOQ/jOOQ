@@ -64,7 +64,6 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     protected ParameterDefinition       returnValue;
     protected List<ParameterDefinition> allParameters;
 
-    private final PackageDefinition     pkg;
     private final boolean               aggregate;
 
     public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload) {
@@ -72,22 +71,8 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload, boolean aggregate) {
-        super(schema.getDatabase(), schema, name, comment, overload);
-
-        this.pkg = pkg;
+        super(schema.getDatabase(), schema, pkg, name, comment, overload);
         this.aggregate = aggregate;
-    }
-
-    @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
-        result.addAll(getSchema().getDefinitionPath());
-
-        if (pkg != null)
-            result.add(pkg);
-
-        result.add(this);
-        return result;
     }
 
     protected void init() {
@@ -107,11 +92,6 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     protected abstract void init0() throws SQLException;
-
-    @Override
-    public final PackageDefinition getPackage() {
-        return pkg;
-    }
 
     @Override
     public final List<ParameterDefinition> getInParameters() {

@@ -58,6 +58,7 @@ import static org.jooq.impl.DSL.charLength;
 import static org.jooq.impl.DSL.check;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
@@ -259,6 +260,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Catalog;
+import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
@@ -3424,11 +3426,21 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseConcat(ParserContext ctx, Type type) {
-        FieldOrRow r = parseSum(ctx, type);
+        FieldOrRow r = parseCollated(ctx, type);
 
         if (S.is(type) && r instanceof Field)
             while (parseIf(ctx, "||"))
-                r = concat((Field) r, toField(ctx, parseSum(ctx, type)));
+                r = concat((Field) r, toField(ctx, parseCollated(ctx, type)));
+
+        return r;
+    }
+
+    private static final FieldOrRow parseCollated(ParserContext ctx, Type type) {
+        FieldOrRow r = parseSum(ctx, type);
+
+        if (S.is(type) && r instanceof Field)
+            if (parseKeywordIf(ctx, "COLLATE"))
+                r = ((Field) r).collate(parseCollation(ctx));
 
         return r;
     }
@@ -5744,6 +5756,10 @@ final class ParserImpl implements Parser {
             return parseNameIf(ctx);
         else
             return null;
+    }
+
+    private static final Collation parseCollation(ParserContext ctx) {
+        return collation(parseName(ctx));
     }
 
     private static final Name parseName(ParserContext ctx) {

@@ -498,7 +498,10 @@ predicate =
 row2 = [ 'ROW' ] '(' field ',' field ')'
 ;
 
-concat = sum { '||' sum }
+concat = collated { '||' collated }
+;
+
+collated = sum [ 'COLLATE' collation ]
 ;
 
 sum = factor { ( '+' | '-' ) factor }
@@ -787,6 +790,9 @@ fieldNames = fieldName { ',' fieldName }
 ;
 
 fieldName = name
+;
+
+collation = name
 ;
 
 name = identifier { '.' identifier }

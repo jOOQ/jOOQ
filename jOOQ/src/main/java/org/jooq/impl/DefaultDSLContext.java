@@ -576,7 +576,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) {
         if (configuration().transactionProvider() instanceof ThreadLocalTransactionProvider)
-            throw new ConfigurationException("Cannot use TransactionalCallable with ThreadLocalTransactionProvider");
+            throw new ConfigurationException("Cannot use TransactionalRunnable with ThreadLocalTransactionProvider");
 
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
             () -> { transaction(transactional); return null; }, executor),

@@ -234,6 +234,17 @@ public interface DataType<T> extends Serializable {
     boolean nullable();
 
     /**
+     * Return a new data type like this, with a new collation.
+     */
+    DataType<T> collation(Collation collation);
+
+    /**
+     * Get the collation of this data type, or <code>null</code> if there is no
+     * collation, or if the default collation applies.
+     */
+    Collation collation();
+
+    /**
      * Return a new data type like this, with a new identity flag.
      * <p>
      * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all

@@ -63,6 +63,7 @@ import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Binding;
+import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -212,6 +213,7 @@ public class DefaultDataType<T> implements DataType<T> {
     private final String                                 typeName;
 
     private final Nullability                            nullability;
+    private final Collation                              collation;
     private final boolean                                identity;
     private final Field<T>                               defaultValue;
     private final int                                    precision;
@@ -267,10 +269,10 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullability, false, defaultValue);
+        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullability, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, Nullability nullability, Collation collation, boolean identity, Field<T> defaultValue) {
 
         // Initialise final instance members
         // ---------------------------------
@@ -286,6 +288,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
         this.nullability = nullability;
+        this.collation = collation;
         this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(type, precision);
@@ -329,7 +332,7 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * [#3225] Performant constructor for creating derived types.
      */
-    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, Nullability nullability, boolean identity, Field<T> defaultValue) {
+    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, Nullability nullability, Collation collation, boolean identity, Field<T> defaultValue) {
         this.dialect = t.dialect;
         this.sqlDataType = t.sqlDataType;
         this.uType = t.uType;
@@ -340,6 +343,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.arrayType = t.arrayType;
 
         this.nullability = nullability;
+        this.collation = collation;
         this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(uType, precision);
@@ -370,7 +374,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> nullability(Nullability n) {
-        return new DefaultDataType<T>(this, precision, scale, length, n, n.nullable() ? false : identity, defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, n, collation, n.nullable() ? false : identity, defaultValue);
     }
 
     @Override
@@ -389,8 +393,18 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final DataType<T> collation(Collation c) {
+        return new DefaultDataType<T>(this, precision, scale, length, nullability, c, identity, defaultValue);
+    }
+
+    @Override
+    public final Collation collation() {
+        return collation;
+    }
+
+    @Override
     public final DataType<T> identity(boolean i) {
-        return new DefaultDataType<T>(this, precision, scale, length, i ? NOT_NULL : nullability, i, i ? null : defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, i ? NOT_NULL : nullability, collation, i, i ? null : defaultValue);
     }
 
     @Override
@@ -405,7 +419,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaultValue(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullability, d != null ? false : identity, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullability, collation, d != null ? false : identity, d);
     }
 
     @Override
@@ -438,7 +452,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, p, s, length, nullability, identity, defaultValue);
+            return new DefaultDataType<T>(this, p, s, length, nullability, collation, identity, defaultValue);
     }
 
     @Override
@@ -468,7 +482,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, s, length, nullability, identity, defaultValue);
+            return new DefaultDataType<T>(this, precision, s, length, nullability, collation, identity, defaultValue);
     }
 
     @Override
@@ -490,7 +504,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, scale, l, nullability, identity, defaultValue);
+            return new DefaultDataType<T>(this, precision, scale, l, nullability, collation, identity, defaultValue);
     }
 
     @Override

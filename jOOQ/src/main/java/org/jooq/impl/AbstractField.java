@@ -80,6 +80,7 @@ import org.jooq.Binding;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
+import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -1899,6 +1900,21 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     @Deprecated
     public final Field<Integer> ascii() {
         return DSL.ascii(varchar());
+    }
+
+    @Override
+    public final Field<String> collate(String collation) {
+        return collate(DSL.collation(collation));
+    }
+
+    @Override
+    public final Field<String> collate(Name collation) {
+        return collate(DSL.collation(collation));
+    }
+
+    @Override
+    public final Field<String> collate(Collation collation) {
+        return new CollatedField(this, collation);
     }
 
     @Override

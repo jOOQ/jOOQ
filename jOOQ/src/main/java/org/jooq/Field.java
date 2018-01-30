@@ -108,6 +108,7 @@ public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, Fie
      * expressions return the empty string <code>""</code> here, never
      * <code>null</code>.
      */
+    @Override
     String getComment();
 
     /**
@@ -3323,6 +3324,28 @@ public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, Fie
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> ascii();
+
+    /**
+     * Apply a collation operator to this column expression.
+     *
+     * @see DSL#collation(String)
+     */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Field<String> collate(String collation);
+
+    /**
+     * Apply a collation operator to this column expression.
+     *
+     * @see DSL#collation(Name)
+     */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Field<String> collate(Name collation);
+
+    /**
+     * Apply a collation operator to this column expression.
+     */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Field<String> collate(Collation collation);
 
     /**
      * This method is part of the pre-2.0 API. This API is maintained for

@@ -705,14 +705,7 @@ final class ParserImpl implements Parser {
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree) {
         return parseSelect(ctx, degree, null);
     }
-/*
- *  QueryPart condition = parseNot(ctx);
 
-        while (parseKeywordIf(ctx, "AND"))
-            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx)));
-
-        return condition;
- */
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with);
 
@@ -3254,9 +3247,9 @@ final class ParserImpl implements Parser {
             Name alias = null;
 
             if (parseKeywordIf(ctx, "AS"))
-                alias = parseIdentifier(ctx);
+                alias = parseIdentifier(ctx, true);
             else if (!peekKeyword(ctx, SELECT_KEYWORDS))
-                alias = parseIdentifierIf(ctx);
+                alias = parseIdentifierIf(ctx, true);
 
             result.add(alias == null ? field : field.as(alias));
         }
@@ -5798,7 +5791,11 @@ final class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifier(ParserContext ctx) {
-        Name result = parseIdentifierIf(ctx);
+        return parseIdentifier(ctx, false);
+    }
+
+    private static final Name parseIdentifier(ParserContext ctx, boolean allowAposQuotes) {
+        Name result = parseIdentifierIf(ctx, allowAposQuotes);
 
         if (result == null)
             throw ctx.expected("Identifier");
@@ -5807,12 +5804,17 @@ final class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifierIf(ParserContext ctx) {
+        return parseIdentifierIf(ctx, false);
+    }
+
+    private static final Name parseIdentifierIf(ParserContext ctx, boolean allowAposQuotes) {
         parseWhitespaceIf(ctx);
 
         char quoteEnd =
             parseIf(ctx, '"') ? '"'
           : parseIf(ctx, '`') ? '`'
           : parseIf(ctx, '[') ? ']'
+          : allowAposQuotes && parseIf(ctx, '\'') ? '\''
           : 0;
 
         int start = ctx.position;

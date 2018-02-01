@@ -143,38 +143,41 @@ public class H2Database extends AbstractDatabase {
             final Result<Record> columns = entry.getValue();
 
             final SchemaDefinition tableSchema = getSchema(index.get(Indexes.TABLE_SCHEMA));
+            if (tableSchema == null)
+                continue indexLoop;
+
             final String indexName = index.get(Indexes.INDEX_NAME);
             final String tableName = index.get(Indexes.TABLE_NAME);
             final TableDefinition table = getTable(tableSchema, tableName);
+            if (table == null)
+                continue indexLoop;
+
             final boolean unique = !index.get(Indexes.NON_UNIQUE, boolean.class);
 
-            if (table != null) {
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            for (Record column : columns)
+                if (table.getColumn(column.get(Indexes.COLUMN_NAME)) == null)
+                    continue indexLoop;
 
-                // [#6310] [#6620] Function-based indexes are not yet supported
-                for (Record column : columns)
-                    if (table.getColumn(column.get(Indexes.COLUMN_NAME)) == null)
-                        continue indexLoop;
+            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 
-                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
-                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
-
-                    {
-                        for (Record column : columns) {
-                            indexColumns.add(new DefaultIndexColumnDefinition(
-                                this,
-                                table.getColumn(column.get(Indexes.COLUMN_NAME)),
-                                SortOrder.ASC,
-                                column.get(Indexes.ORDINAL_POSITION, int.class)
-                            ));
-                        }
+                {
+                    for (Record column : columns) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            table.getColumn(column.get(Indexes.COLUMN_NAME)),
+                            SortOrder.ASC,
+                            column.get(Indexes.ORDINAL_POSITION, int.class)
+                        ));
                     }
+                }
 
-                    @Override
-                    protected List<IndexColumnDefinition> getIndexColumns0() {
-                        return indexColumns;
-                    }
-                });
-            }
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
         }
 
         return result;

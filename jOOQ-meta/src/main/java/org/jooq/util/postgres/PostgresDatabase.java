@@ -176,46 +176,49 @@ public class PostgresDatabase extends AbstractDatabase {
                 .orderBy(1, 2, 3)) {
 
             final SchemaDefinition tableSchema = getSchema(record.get(tnsp.NSPNAME));
+            if (tableSchema == null)
+                continue indexLoop;
+
             final String indexName = record.get(irel.RELNAME);
             final String tableName = record.get(trel.RELNAME);
             final String[] columns = record.value5();
             final Integer[] options = record.value6();
             final TableDefinition table = getTable(tableSchema, tableName);
+            if (table == null)
+                continue indexLoop;
+
             final boolean unique = record.get(i.INDISUNIQUE);
 
-            if (table != null) {
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            for (String column : columns)
+                if (table.getColumn(column) == null)
+                    continue indexLoop;
 
-                // [#6310] [#6620] Function-based indexes are not yet supported
-                for (String column : columns)
-                    if (table.getColumn(column) == null)
-                        continue indexLoop;
+            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 
-                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
-                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+                {
+                    for (int ordinal = 0; ordinal < columns.length; ordinal++) {
+                        ColumnDefinition column = table.getColumn(columns[ordinal]);
 
-                    {
-                        for (int ordinal = 0; ordinal < columns.length; ordinal++) {
-                            ColumnDefinition column = table.getColumn(columns[ordinal]);
+                        // [#6307] Some background info on this bitwise operation here:
+                        // https://stackoverflow.com/a/18128104/521799
+                        SortOrder order = (options[ordinal] & 1) == 1 ? SortOrder.DESC : SortOrder.ASC;
 
-                            // [#6307] Some background info on this bitwise operation here:
-                            // https://stackoverflow.com/a/18128104/521799
-                            SortOrder order = (options[ordinal] & 1) == 1 ? SortOrder.DESC : SortOrder.ASC;
-
-                            indexColumns.add(new DefaultIndexColumnDefinition(
-                                this,
-                                column,
-                                order,
-                                ordinal + 1
-                            ));
-                        }
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            column,
+                            order,
+                            ordinal + 1
+                        ));
                     }
+                }
 
-                    @Override
-                    protected List<IndexColumnDefinition> getIndexColumns0() {
-                        return indexColumns;
-                    }
-                });
-            }
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
         }
 
         return result;

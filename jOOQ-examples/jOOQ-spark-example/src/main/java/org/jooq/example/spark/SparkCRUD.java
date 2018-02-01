@@ -45,14 +45,20 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 
 import java.util.Properties;
-import java.util.stream.Collectors;
 
+import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
+import org.jooq.JSONFormat;
+import org.jooq.JSONFormat.RecordFormat;
 import org.jooq.Record2;
 import org.jooq.SQLDialect;
 import org.jooq.example.db.h2.tables.records.AuthorRecord;
 import org.jooq.example.db.h2.tables.records.BookRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DataSourceConnectionProvider;
+import org.jooq.impl.DefaultConfiguration;
+import org.jooq.impl.ThreadLocalTransactionProvider;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -73,20 +79,28 @@ public class SparkCRUD {
         ds.setUsername(properties.getProperty("db.username"));
         ds.setPassword(properties.getProperty("db.password"));
 
-        final DSLContext ctx = DSL.using(ds, SQLDialect.H2);
+        final ConnectionProvider cp = new DataSourceConnectionProvider(ds);
+        final Configuration configuration = new DefaultConfiguration()
+            .set(cp)
+            .set(SQLDialect.H2)
+            .set(new ThreadLocalTransactionProvider(cp, true));
+        final DSLContext ctx = DSL.using(configuration);
+        final JSONFormat format = new JSONFormat().format(true).header(false).recordFormat(RecordFormat.OBJECT);
 
         // Creates a new book resource, will return the ID to the created resource
         // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
         post("/books", (request, response) -> {
-            AuthorRecord author = upsertAuthor(ctx, request);
+            return ctx.transactionResult(() -> {
+                AuthorRecord author = upsertAuthor(ctx, request);
 
-            BookRecord book = ctx.newRecord(BOOK);
-            book.setAuthorId(author.getId());
-            book.setTitle(request.queryParams("title"));
-            book.store();
+                BookRecord book = ctx.newRecord(BOOK);
+                book.setAuthorId(author.getId());
+                book.setTitle(request.queryParams("title"));
+                book.store();
 
-            response.status(201); // 201 Created
-            return book.getId();
+                response.status(201); // 201 Created
+                return book.formatJSON(format);
+            });
         });
 
         // Gets the book resource for the provided id
@@ -99,70 +113,70 @@ public class SparkCRUD {
                 .fetchOne();
 
             if (book != null) {
-                return "Title: " + book.value1() + ", Author: " + book.value2();
+                return book.formatJSON(format);
             }
             else {
                 response.status(404); // 404 Not found
-                return "Book not found";
+                return "{\"error\":\"Book not found\"}";
             }
         });
 
         // Updates the book resource for the provided id with new information
         // author and title are sent as query parameters e.g. /books/<id>?author=Foo&title=Bar
         put("/books/:id", (request, response) -> {
-            BookRecord book = ctx
-                .selectFrom(BOOK)
-                .where(BOOK.ID.eq(BOOK.ID.getDataType().convert(request.params(":id"))))
-                .fetchOne();
+            return ctx.transactionResult(() -> {
+                BookRecord book = ctx
+                    .selectFrom(BOOK)
+                    .where(BOOK.ID.eq(BOOK.ID.getDataType().convert(request.params(":id"))))
+                    .fetchOne();
 
-            if (book != null) {
-                AuthorRecord author = upsertAuthor(ctx, request);
+                if (book != null) {
+                    AuthorRecord author = upsertAuthor(ctx, request);
 
-                String newAuthor = request.queryParams("author");
-                String newTitle = request.queryParams("title");
+                    String newAuthor = request.queryParams("author");
+                    String newTitle = request.queryParams("title");
 
-                if (newAuthor != null) {
-                    book.setAuthorId(author.getId());
+                    if (newAuthor != null)
+                        book.setAuthorId(author.getId());
+                    if (newTitle != null)
+                        book.setTitle(newTitle);
+
+                    book.update();
+                    return book.formatJSON(format);
                 }
-                if (newTitle != null) {
-                    book.setTitle(newTitle);
+                else {
+                    response.status(404); // 404 Not found
+                    return "{\"error\":\"Book not found\"}";
                 }
-
-                book.update();
-                return "Book with id '" + book.getId() + "' updated";
-            }
-            else {
-                response.status(404); // 404 Not found
-                return "Book not found";
-            }
+            });
         });
 
         // Deletes the book resource for the provided id
         delete("/books/:id", (request, response) -> {
-            BookRecord book = ctx
-                .deleteFrom(BOOK)
-                .where(BOOK.ID.eq(BOOK.ID.getDataType().convert(request.params(":id"))))
-                .returning()
-                .fetchOne();
+            return ctx.transactionResult(() -> {
+                BookRecord book = ctx
+                    .deleteFrom(BOOK)
+                    .where(BOOK.ID.eq(BOOK.ID.getDataType().convert(request.params(":id"))))
+                    .returning()
+                    .fetchOne();
 
-            if (book != null) {
-                return "Book with id '" + book.getId() + "' deleted";
-            }
-            else {
-                response.status(404); // 404 Not found
-                return "Book not found";
-            }
+                if (book != null) {
+                    return book.formatJSON(format);
+                }
+                else {
+                    response.status(404); // 404 Not found
+                    return "{\"error\":\"Book not found\"}";
+                }
+            });
         });
 
-        // Gets all available book resources (id's)
+        // Gets all available book resources
         get("/books", (request, response) -> {
             return ctx
-                .select(BOOK.ID)
+                .select(BOOK.ID, BOOK.TITLE)
                 .from(BOOK)
-                .fetch(BOOK.ID)
-                .stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(" "));
+                .fetch()
+                .formatJSON(format);
         });
     }
 

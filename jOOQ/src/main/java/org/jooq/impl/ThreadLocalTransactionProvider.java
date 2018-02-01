@@ -71,8 +71,8 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
     final ThreadLocal<Connection>           localTxConnection;
     final ThreadLocal<Deque<Configuration>> localConfigurations;
 
-    public ThreadLocalTransactionProvider(ConnectionProvider provider) {
-        this(provider, true);
+    public ThreadLocalTransactionProvider(ConnectionProvider connectionProvider) {
+        this(connectionProvider, true);
     }
 
     /**

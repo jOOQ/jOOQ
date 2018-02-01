@@ -1064,10 +1064,7 @@ final class ParserImpl implements Parser {
             : s1;
 
         if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return s2.returning();
-            else
-                return s2.returning(parseFields(ctx));
+            return s2.returning(parseSelectList(ctx));
         else
             return s2;
     }
@@ -1181,10 +1178,7 @@ final class ParserImpl implements Parser {
         }
 
         if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return returning.returning();
-            else
-                return returning.returning(parseFields(ctx));
+            return returning.returning(parseSelectList(ctx));
         else
             return returning;
     }
@@ -1201,17 +1195,14 @@ final class ParserImpl implements Parser {
         // TODO support FROM
         Condition condition = parseKeywordIf(ctx, "WHERE") ? parseCondition(ctx) : null;
 
-        UpdateReturningStep<?> returning = condition == null
+        UpdateReturningStep<?> s2 = condition == null
             ? s1.set(map)
             : s1.set(map).where(condition);
 
         if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return returning.returning();
-            else
-                return returning.returning(parseFields(ctx));
+            return s2.returning(parseSelectList(ctx));
         else
-            return returning;
+            return s2;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {

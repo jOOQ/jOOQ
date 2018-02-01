@@ -196,6 +196,14 @@ object Conversions {
   // -------------------------------------------------------------------------
 
   /**
+   * A Scala-esque representation of {@link org.jooq.Table}, adding overloaded
+   * operators for common jOOQ operations to arbitrary tables
+   */
+  implicit class ScalaTable[R <: Record](val table : Table[R]) extends AnyVal {
+    def * : QualifiedAsterisk = table.asterisk
+  }
+
+  /**
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to arbitrary fields
    */

@@ -3248,26 +3248,23 @@ final class ParserImpl implements Parser {
             if (peekKeyword(ctx, SELECT_KEYWORDS))
                 throw ctx.unexpectedToken();
 
+            QualifiedAsterisk qa;
             if (parseIf(ctx, '*')) {
                 result.add(DSL.asterisk());
             }
+            else if ((qa = parseQualifiedAsteriskIf(ctx)) != null) {
+                result.add(qa);
+            }
             else {
-                QueryPart identifier = parseNameOrQualifiedAsteriskIf(ctx);
+                Field<?> field = parseField(ctx);
+                Name alias = null;
 
-                if (identifier != null && identifier instanceof QualifiedAsterisk) {
-                    result.add((QualifiedAsterisk) identifier);
-                }
-                else {
-                    Field<?> field = identifier != null ? field((Name) identifier) : parseField(ctx);
-                    Name alias = null;
+                if (parseKeywordIf(ctx, "AS"))
+                    alias = parseIdentifier(ctx, true);
+                else if (!peekKeyword(ctx, SELECT_KEYWORDS))
+                    alias = parseIdentifierIf(ctx, true);
 
-                    if (parseKeywordIf(ctx, "AS"))
-                        alias = parseIdentifier(ctx, true);
-                    else if (!peekKeyword(ctx, SELECT_KEYWORDS))
-                        alias = parseIdentifierIf(ctx, true);
-
-                    result.add(alias == null ? field : field.as(alias));
-                }
+                result.add(alias == null ? field : field.as(alias));
             }
         }
         while (parseIf(ctx, ','));
@@ -5796,7 +5793,10 @@ final class ParserImpl implements Parser {
         return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
     }
 
-    private static final QueryPart parseNameOrQualifiedAsteriskIf(ParserContext ctx) {
+    private static final QualifiedAsterisk parseQualifiedAsteriskIf(ParserContext ctx) {
+        parseWhitespaceIf(ctx);
+
+        int position = ctx.position;
         Name identifier = parseIdentifierIf(ctx);
 
         if (identifier == null)
@@ -5815,7 +5815,8 @@ final class ParserImpl implements Parser {
             }
         }
 
-        return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
+        ctx.position = position;
+        return null;
     }
 
     private static final List<Name> parseIdentifiers(ParserContext ctx) {

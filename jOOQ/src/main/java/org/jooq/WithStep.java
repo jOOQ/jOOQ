@@ -488,7 +488,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#select(Collection)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
-    SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields);
+    SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * Create a new DSL select statement.
@@ -513,14 +513,14 @@ public interface WithStep extends QueryPart {
      * @see DSL#select(SelectField...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
-    SelectSelectStep<Record> select(SelectField<?>... fields);
+    SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
 
     // [jooq-tools] START [select]
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -541,8 +541,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -551,7 +551,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -572,8 +572,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -582,7 +582,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -603,8 +603,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -613,7 +613,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -634,8 +634,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -644,7 +644,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -665,8 +665,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -675,7 +675,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -696,8 +696,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -706,7 +706,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -727,8 +727,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -737,7 +737,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -758,8 +758,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -768,7 +768,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -789,8 +789,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -799,7 +799,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -820,8 +820,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -830,7 +830,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -851,8 +851,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -861,7 +861,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -882,8 +882,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -892,7 +892,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -913,8 +913,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -923,7 +923,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -944,8 +944,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -954,7 +954,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -975,8 +975,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -985,7 +985,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1006,8 +1006,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1016,7 +1016,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1037,8 +1037,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1047,7 +1047,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1068,8 +1068,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1078,7 +1078,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1099,8 +1099,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1109,7 +1109,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1130,8 +1130,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1140,7 +1140,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1161,8 +1161,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1171,7 +1171,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1192,8 +1192,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1223,7 +1223,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#selectDistinct(Collection)
      */
     @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
-    SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields);
+    SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * Create a new DSL select statement.
@@ -1247,14 +1247,14 @@ public interface WithStep extends QueryPart {
      * @see DSL#selectDistinct(SelectField...)
      */
     @Support({ FIREBIRD, HSQLDB, MYSQL_8_0, POSTGRES })
-    SelectSelectStep<Record> selectDistinct(SelectField<?>... fields);
+    SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields);
 
     // [jooq-tools] START [selectDistinct]
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1275,8 +1275,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1285,7 +1285,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1306,8 +1306,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1316,7 +1316,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1337,8 +1337,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1347,7 +1347,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1368,8 +1368,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1378,7 +1378,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1399,8 +1399,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1409,7 +1409,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1430,8 +1430,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1440,7 +1440,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1461,8 +1461,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1471,7 +1471,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1492,8 +1492,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1502,7 +1502,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1523,8 +1523,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1533,7 +1533,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1554,8 +1554,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1564,7 +1564,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1585,8 +1585,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1595,7 +1595,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1616,8 +1616,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1626,7 +1626,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1647,8 +1647,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1657,7 +1657,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1678,8 +1678,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1688,7 +1688,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1709,8 +1709,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1719,7 +1719,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1740,8 +1740,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1750,7 +1750,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1771,8 +1771,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1781,7 +1781,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1802,8 +1802,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1812,7 +1812,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1833,8 +1833,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1843,7 +1843,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1864,8 +1864,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1874,7 +1874,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1895,8 +1895,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
@@ -1905,7 +1905,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -1926,8 +1926,8 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })

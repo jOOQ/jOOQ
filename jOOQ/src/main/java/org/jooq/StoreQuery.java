@@ -116,7 +116,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @see #getReturnedRecords()
      */
     @Support
-    void setReturning(Field<?>... fields);
+    void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
      * Configure the <code>INSERT</code> or <code>UPDATE</code> statement to return a list of fields in
@@ -126,7 +126,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @see #getReturnedRecords()
      */
     @Support
-    void setReturning(Collection<? extends Field<?>> fields);
+    void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * The record holding returned values as specified by any of the

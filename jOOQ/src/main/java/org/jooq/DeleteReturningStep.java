@@ -84,7 +84,7 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
      * @see UpdateResultStep
      */
     @Support({ FIREBIRD, POSTGRES })
-    DeleteResultStep<R> returning(Field<?>... fields);
+    DeleteResultStep<R> returning(SelectFieldOrAsterisk... fields);
 
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
@@ -94,5 +94,5 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
      * @see UpdateResultStep
      */
     @Support({ FIREBIRD, POSTGRES })
-    DeleteResultStep<R> returning(Collection<? extends Field<?>> fields);
+    DeleteResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> fields);
 }

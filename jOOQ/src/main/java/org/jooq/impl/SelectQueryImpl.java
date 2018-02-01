@@ -143,6 +143,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.jooq.Asterisk;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -157,11 +158,12 @@ import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
+import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.SelectField;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -204,44 +206,44 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final WithImpl                       with;
-    private final SelectFieldList                select;
-    private Table<?>                             into;
-    private String                               hint;
-    private String                               option;
-    private boolean                              distinct;
-    private QueryPartList<SelectField<?>>        distinctOn;
-    private boolean                              forUpdate;
-    private QueryPartList<Field<?>>              forUpdateOf;
-    private TableList                            forUpdateOfTables;
-    private ForUpdateMode                        forUpdateMode;
-    private int                                  forUpdateWait;
-    private boolean                              forShare;
+    private final WithImpl                               with;
+    private final SelectFieldList<SelectFieldOrAsterisk> select;
+    private Table<?>                                     into;
+    private String                                       hint;
+    private String                                       option;
+    private boolean                                      distinct;
+    private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
+    private boolean                                      forUpdate;
+    private QueryPartList<Field<?>>                      forUpdateOf;
+    private TableList                                    forUpdateOfTables;
+    private ForUpdateMode                                forUpdateMode;
+    private int                                          forUpdateWait;
+    private boolean                                      forShare;
 
 
 
 
-    private final TableList                      from;
-    private final ConditionProviderImpl          condition;
-    private final ConditionProviderImpl          connectBy;
-    private boolean                              connectByNoCycle;
-    private final ConditionProviderImpl          connectByStartWith;
-    private boolean                              grouping;
-    private QueryPartList<GroupField>            groupBy;
-    private final ConditionProviderImpl          having;
-    private WindowList                           window;
-    private final SortFieldList                  orderBy;
-    private boolean                              orderBySiblings;
-    private final QueryPartList<Field<?>>        seek;
-    private boolean                              seekBefore;
-    private final Limit                          limit;
-    private final List<CombineOperator>          unionOp;
-    private final List<QueryPartList<Select<?>>> union;
-    private final SortFieldList                  unionOrderBy;
-    private boolean                              unionOrderBySiblings; // [#3579] TODO
-    private final QueryPartList<Field<?>>        unionSeek;
-    private boolean                              unionSeekBefore;      // [#3579] TODO
-    private final Limit                          unionLimit;
+    private final TableList                              from;
+    private final ConditionProviderImpl                  condition;
+    private final ConditionProviderImpl                  connectBy;
+    private boolean                                      connectByNoCycle;
+    private final ConditionProviderImpl                  connectByStartWith;
+    private boolean                                      grouping;
+    private QueryPartList<GroupField>                    groupBy;
+    private final ConditionProviderImpl                  having;
+    private WindowList                                   window;
+    private final SortFieldList                          orderBy;
+    private boolean                                      orderBySiblings;
+    private final QueryPartList<Field<?>>                seek;
+    private boolean                                      seekBefore;
+    private final Limit                                  limit;
+    private final List<CombineOperator>                  unionOp;
+    private final List<QueryPartList<Select<?>>>         union;
+    private final SortFieldList                          unionOrderBy;
+    private boolean                                      unionOrderBySiblings; // [#3579] TODO
+    private final QueryPartList<Field<?>>                unionSeek;
+    private boolean                                      unionSeekBefore;      // [#3579] TODO
+    private final Limit                                  unionLimit;
 
     SelectQueryImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, null);
@@ -260,7 +262,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         this.with = with;
         this.distinct = distinct;
-        this.select = new SelectFieldList();
+        this.select = new SelectFieldList<SelectFieldOrAsterisk>();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
@@ -861,7 +863,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ctx.visit(K_SELECT).sql(' ')
            .declareFields(true)
-           .visit(new SelectFieldList(unaliasedFields))
+           .visit(new SelectFieldList<Field<?>>(unaliasedFields))
            .declareFields(false)
            .formatSeparator()
            .visit(K_FROM).sql(" (")
@@ -1116,9 +1118,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // non-ambiguous column names as ambiguous column names are not allowed in subqueries
         if (alternativeFields != null) {
             if (wrapQueryExpressionBodyInDerivedTable && originalFields.length < alternativeFields.length)
-                context.visit(new SelectFieldList(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
+                context.visit(new SelectFieldList<Field<?>>(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
             else
-                context.visit(new SelectFieldList(alternativeFields));
+                context.visit(new SelectFieldList<Field<?>>(alternativeFields));
         }
 
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
@@ -1595,12 +1597,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addSelect(Collection<? extends SelectField<?>> fields) {
-        getSelect0().addAll(Tools.fields(fields));
+    public final void addSelect(Collection<? extends SelectFieldOrAsterisk> fields) {
+        getSelect0().addAll(fields);
     }
 
     @Override
-    public final void addSelect(SelectField<?>... fields) {
+    public final void addSelect(SelectFieldOrAsterisk... fields) {
         addSelect(Arrays.asList(fields));
     }
 
@@ -1610,14 +1612,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addDistinctOn(SelectField<?>... fields) {
+    public final void addDistinctOn(SelectFieldOrAsterisk... fields) {
         addDistinctOn(Arrays.asList(fields));
     }
 
     @Override
-    public final void addDistinctOn(Collection<? extends SelectField<?>> fields) {
+    public final void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields) {
         if (distinctOn == null)
-            distinctOn = new QueryPartList<SelectField<?>>();
+            distinctOn = new QueryPartList<SelectFieldOrAsterisk>();
 
         distinctOn.addAll(fields);
     }
@@ -1750,46 +1752,52 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final List<Field<?>> getSelect() {
-        return getSelect1();
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        for (SelectFieldOrAsterisk f : getSelect1())
+            if (f instanceof Field<?>)
+                result.add((Field<?>) f);
+            else if (f instanceof QualifiedAsterisk)
+                result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+            else if (f instanceof Asterisk)
+                result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+
+        return result;
     }
 
-    final SelectFieldList getSelect0() {
+    final SelectFieldList<SelectFieldOrAsterisk> getSelect0() {
         return select;
     }
 
-    final SelectFieldList getSelect1() {
-        if (getSelect0().isEmpty()) {
-            SelectFieldList result = new SelectFieldList();
-
-            // [#109] [#489]: SELECT * is only applied when at least one table
-            // from the table source is "unknown", i.e. not generated from a
-            // physical table. Otherwise, the fields are selected explicitly
-            if (knownTableSource()) {
-                for (TableLike<?> table : getFrom()) {
-                    for (Field<?> field : table.asTable().fields()) {
-                        result.add(field);
-                    }
-                }
-            }
-
-            // The default is SELECT 1, when projections and table sources are
-            // both empty
-            if (getFrom().isEmpty()) {
-                result.add(one());
-            }
-
-            return result;
-        }
+    final SelectFieldList<SelectFieldOrAsterisk> getSelect1() {
+        if (getSelect0().isEmpty())
+            return resolveAsterisk(new SelectFieldList<SelectFieldOrAsterisk>());
 
         return getSelect0();
     }
 
+    private <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
+
+        // [#109] [#489]: SELECT * is only applied when at least one table
+        // from the table source is "unknown", i.e. not generated from a
+        // physical table. Otherwise, the fields are selected explicitly
+        if (knownTableSource())
+            for (TableLike<?> table : getFrom())
+                for (Field<?> field : table.asTable().fields())
+                    result.add(field);
+
+        // The default is SELECT 1, when projections and table sources are
+        // both empty
+        if (getFrom().isEmpty())
+            result.add(one());
+
+        return result;
+    }
+
     private final boolean knownTableSource() {
-        for (Table<?> table : getFrom()) {
-            if (!knownTable(table)) {
+        for (Table<?> table : getFrom())
+            if (!knownTable(table))
                 return false;
-            }
-        }
 
         return true;
     }

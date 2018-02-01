@@ -92,7 +92,7 @@ public interface InsertReturningStep<R extends Record> extends InsertFinalStep<R
      * @see InsertResultStep
      */
     @Support
-    InsertResultStep<R> returning(Field<?>... fields);
+    InsertResultStep<R> returning(SelectFieldOrAsterisk... fields);
 
     /**
      * Configure the <code>INSERT</code> statement to return a list of fields in
@@ -102,5 +102,5 @@ public interface InsertReturningStep<R extends Record> extends InsertFinalStep<R
      * @see InsertResultStep
      */
     @Support
-    InsertResultStep<R> returning(Collection<? extends Field<?>> fields);
+    InsertResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> fields);
 }

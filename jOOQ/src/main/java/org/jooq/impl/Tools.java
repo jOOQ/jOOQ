@@ -218,7 +218,6 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
-import org.jooq.SelectField;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -1468,51 +1467,19 @@ final class Tools {
     static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
-        if (values != null && types != null) {
-            for (int i = 0; i < values.length && i < types.length; i++) {
+        if (values != null && types != null)
+            for (int i = 0; i < values.length && i < types.length; i++)
                 result.add(field(values[i], types[i]));
-            }
-        }
 
         return result;
-    }
-
-    static final List<Field<?>> fields(Collection<? extends SelectField<?>> fields) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        if (fields != null) {
-            for (SelectField<?> field : fields) {
-                result.add(DSL.field(field));
-            }
-        }
-
-        return result;
-    }
-
-    static final List<Field<?>> fields(SelectField<?>... fields) {
-        return fields == null ? fields(Collections.<SelectField<?>>emptyList()) : fields(Arrays.asList(fields));
     }
 
     static final <T> List<Field<T>> inline(T[] values) {
         List<Field<T>> result = new ArrayList<Field<T>>();
 
-        if (values != null) {
-            for (T value : values) {
+        if (values != null)
+            for (T value : values)
                 result.add(DSL.inline(value));
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Return a list of unqualified {@link Field}s.
-     */
-    static final List<Field<?>> unqualify(List<? extends Field<?>> fields) {
-        QueryPartList<Field<?>> result = new QueryPartList<Field<?>>();
-
-        for (Field<?> field : fields)
-            result.add(DSL.field(name(field.getName())));
 
         return result;
     }

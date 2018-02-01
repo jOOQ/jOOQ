@@ -353,7 +353,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Override
     @Support
-    void setReturning(Field<?>... fields);
+    void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
      * {@inheritDoc}
@@ -362,7 +362,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Override
     @Support
-    void setReturning(Collection<? extends Field<?>> fields);
+    void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * {@inheritDoc}

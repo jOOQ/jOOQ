@@ -58,28 +58,45 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList;
+    private final boolean     qualify;
 
     QueryPartList() {
-        this((Collection<T>) null);
+        this(true);
     }
 
     QueryPartList(Collection<? extends T> wrappedList) {
+        this(wrappedList, true);
+    }
+
+    QueryPartList(T[] wrappedList) {
+        this(wrappedList, true);
+    }
+
+    QueryPartList(boolean qualify) {
+        this((Collection<T>) null, qualify);
+    }
+
+    QueryPartList(Collection<? extends T> wrappedList, boolean qualify) {
         super();
 
         this.wrappedList = new ArrayList<T>();
+        this.qualify = qualify;
 
         // [#4664] Don't allocate the backing array if not necessary!
         if (wrappedList != null && !wrappedList.isEmpty())
             addAll(wrappedList);
     }
 
-    @SafeVarargs
-    QueryPartList(T... wrappedList) {
-        this(asList(wrappedList));
+    QueryPartList(T[] wrappedList, boolean qualify) {
+        this(asList(wrappedList), qualify);
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    public /* non-final */ void accept(Context<?> ctx) {
+        boolean previous = ctx.qualify();
+
+        if (!qualify)
+            ctx.qualify(qualify);
 
         // Some lists render different SQL when empty
         if (isEmpty()) {
@@ -106,6 +123,8 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             if (indent)
                 ctx.formatIndentEnd().formatNewLine();
         }
+
+        ctx.qualify(previous);
     }
 
     @Override

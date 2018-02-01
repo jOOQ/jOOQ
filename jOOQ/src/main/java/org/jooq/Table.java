@@ -96,6 +96,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * expressions return the empty string <code>""</code> here, never
      * <code>null</code>.
      */
+    @Override
     String getComment();
 
     /**
@@ -275,6 +276,17 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Expressions based on this table
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a qualified asterisk expression from this table
+     * (<code>table.*</code>) for use with <code>SELECT</code>.
+     */
+    @Support
+    QualifiedAsterisk asterisk();
 
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses

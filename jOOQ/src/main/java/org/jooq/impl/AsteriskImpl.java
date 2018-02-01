@@ -35,52 +35,26 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import java.util.Collection;
-
+import org.jooq.Asterisk;
+import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.SelectFieldOrAsterisk;
 
 /**
  * @author Lukas Eder
  */
-final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
+final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
-    private static final long serialVersionUID = 8850104968428500798L;
+    static final AsteriskImpl INSTANCE = new AsteriskImpl();
 
-    SelectFieldList() {
-        super();
-    }
-
-    SelectFieldList(Collection<? extends F> wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(F[] wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(boolean qualify) {
-        super(qualify);
-    }
-
-    SelectFieldList(Collection<? extends F> wrappedList, boolean qualify) {
-        super(wrappedList, qualify);
-    }
-
-    SelectFieldList(F[] wrappedList, boolean qualify) {
-        super(wrappedList, qualify);
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.sql('*');
     }
 
     @Override
-    protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.visit(AsteriskImpl.INSTANCE);
-    }
-
-    @Override
-    public final boolean declaresFields() {
-        return true;
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

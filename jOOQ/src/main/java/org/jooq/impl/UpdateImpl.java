@@ -104,6 +104,7 @@ import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.SQL;
 import org.jooq.Select;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateConditionStep;
@@ -730,13 +731,13 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
-    public final UpdateImpl<R> returning(Field<?>... f) {
+    public final UpdateImpl<R> returning(SelectFieldOrAsterisk... f) {
         getDelegate().setReturning(f);
         return this;
     }
 
     @Override
-    public final UpdateImpl<R> returning(Collection<? extends Field<?>> f) {
+    public final UpdateImpl<R> returning(Collection<? extends SelectFieldOrAsterisk> f) {
         getDelegate().setReturning(f);
         return this;
     }

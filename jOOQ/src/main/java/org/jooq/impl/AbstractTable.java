@@ -83,6 +83,7 @@ import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
 import org.jooq.PivotForStep;
+import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
@@ -173,6 +174,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     // ------------------------------------------------------------------------
     // XXX: TableLike API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final QualifiedAsterisk asterisk() {
+        return new QualifiedAsteriskImpl(this);
+    }
 
     /**
      * Subclasses should override this method to provide the set of fields

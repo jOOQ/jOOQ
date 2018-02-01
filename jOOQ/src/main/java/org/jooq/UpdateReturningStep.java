@@ -87,7 +87,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @Support({ FIREBIRD, POSTGRES })
-    UpdateResultStep<R> returning(Field<?>... fields);
+    UpdateResultStep<R> returning(SelectFieldOrAsterisk... fields);
 
     /**
      * Configure the <code>UPDATE</code> statement to return a list of fields in
@@ -97,5 +97,5 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @Support({ FIREBIRD, POSTGRES })
-    UpdateResultStep<R> returning(Collection<? extends Field<?>> fields);
+    UpdateResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> fields);
 }

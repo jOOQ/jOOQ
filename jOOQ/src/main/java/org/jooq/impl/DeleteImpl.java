@@ -57,6 +57,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQL;
 import org.jooq.Select;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 
 /**
@@ -272,13 +273,13 @@ final class DeleteImpl<R extends Record>
     }
 
     @Override
-    public final DeleteImpl<R> returning(Field<?>... f) {
+    public final DeleteImpl<R> returning(SelectFieldOrAsterisk... f) {
         getDelegate().setReturning(f);
         return this;
     }
 
     @Override
-    public final DeleteImpl<R> returning(Collection<? extends Field<?>> f) {
+    public final DeleteImpl<R> returning(Collection<? extends SelectFieldOrAsterisk> f) {
         getDelegate().setReturning(f);
         return this;
     }

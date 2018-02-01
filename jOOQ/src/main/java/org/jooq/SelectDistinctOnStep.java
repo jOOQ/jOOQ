@@ -93,7 +93,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @Support({ POSTGRES })
-    SelectIntoStep<R> on(SelectField<?>... fields);
+    SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
      * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
@@ -103,19 +103,19 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @Support({ POSTGRES })
-    SelectIntoStep<R> on(Collection<? extends SelectField<?>> fields);
+    SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @Support({ POSTGRES })
-    SelectIntoStep<R> distinctOn(SelectField<?>... fields);
+    SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
      * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @Support({ POSTGRES })
-    SelectIntoStep<R> distinctOn(Collection<? extends SelectField<?>> fields);
+    SelectIntoStep<R> distinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 }

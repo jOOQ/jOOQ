@@ -490,7 +490,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Support({ FIREBIRD, POSTGRES })
-    void setReturning(Field<?>... fields);
+    void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
      * {@inheritDoc}
@@ -500,7 +500,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Support({ FIREBIRD, POSTGRES })
-    void setReturning(Collection<? extends Field<?>> fields);
+    void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * {@inheritDoc}

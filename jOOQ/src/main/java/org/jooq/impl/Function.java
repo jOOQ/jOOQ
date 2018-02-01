@@ -312,7 +312,7 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
-        toSQLArguments1(ctx, new QueryPartList<QueryPart>(arguments.get(0)));
+        toSQLArguments1(ctx, new QueryPartList<QueryPart>(Arrays.asList(arguments.get(0))));
 
         if (!withinGroupOrderBy.isEmpty())
             ctx.sql(' ').visit(K_ORDER_BY).sql(' ')

@@ -222,6 +222,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
@@ -2075,12 +2076,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
+    public SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields) {
         return new SelectImpl(configuration(), null).select(fields);
     }
 
     @Override
-    public SelectSelectStep<Record> select(SelectField<?>... fields) {
+    public SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields) {
         return new SelectImpl(configuration(), null).select(fields);
     }
 
@@ -2221,12 +2222,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 // [jooq-tools] END [select]
 
     @Override
-    public SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
+    public SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
         return new SelectImpl(configuration(), null, true).select(fields);
     }
 
     @Override
-    public SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
+    public SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields) {
         return new SelectImpl(configuration(), null, true).select(fields);
     }
 

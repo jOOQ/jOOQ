@@ -40,11 +40,11 @@ package org.jooq;
 
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
- * clauses
+ * clauses.
  *
  * @author Lukas Eder
  */
-public interface SelectField<T> extends QueryPart {
+public interface SelectField<T> extends SelectFieldOrAsterisk {
 
     // ------------------------------------------------------------------------
     // API

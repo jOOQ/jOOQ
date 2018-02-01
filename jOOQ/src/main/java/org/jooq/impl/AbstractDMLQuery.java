@@ -60,9 +60,8 @@ import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
-import static org.jooq.impl.Tools.fieldArray;
-import static org.jooq.impl.Tools.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -78,6 +77,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.jooq.Asterisk;
 import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -88,9 +88,11 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.ExecuteWithoutWhere;
@@ -108,23 +110,25 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID         = -7438014075226919192L;
-    private static final JooqLogger          log                      = JooqLogger.getLogger(AbstractQuery.class);
+    private static final long                    serialVersionUID         = -7438014075226919192L;
+    private static final JooqLogger              log                      = JooqLogger.getLogger(AbstractQuery.class);
 
 
 
 
-    final WithImpl                           with;
-    final Table<R>                           table;
-    final SelectFieldList                    returning;
-    Result<R>                                returned;
+    final WithImpl                               with;
+    final Table<R>                               table;
+    final SelectFieldList<SelectFieldOrAsterisk> returning;
+    final List<Field<?>>                         returningResolvedAsterisks;
+    Result<R>                                    returned;
 
     AbstractDMLQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration);
 
         this.with = with;
         this.table = table;
-        this.returning = new SelectFieldList();
+        this.returning = new SelectFieldList<SelectFieldOrAsterisk>();
+        this.returningResolvedAsterisks = new ArrayList<Field<?>>();
     }
 
     // @Override
@@ -134,36 +138,42 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
     // @Override
     public final void setReturning(Identity<R, ?> identity) {
-        if (identity != null) {
+        if (identity != null)
             setReturning(identity.getField());
-        }
     }
 
     // @Override
-    public final void setReturning(Field<?>... fields) {
+    public final void setReturning(SelectFieldOrAsterisk... fields) {
         setReturning(Arrays.asList(fields));
     }
 
     // @Override
-    public final void setReturning(Collection<? extends Field<?>> fields) {
+    public final void setReturning(Collection<? extends SelectFieldOrAsterisk> fields) {
         returning.clear();
         returning.addAll(fields);
+
+        returningResolvedAsterisks.clear();
+        for (SelectFieldOrAsterisk f : fields)
+            if (f instanceof Field<?>)
+                returningResolvedAsterisks.add((Field<?>) f);
+            else if (f instanceof QualifiedAsterisk)
+                returningResolvedAsterisks.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+            else if (f instanceof Asterisk)
+                returningResolvedAsterisks.addAll(Arrays.asList(table.fields()));
     }
 
     // @Override
     public final R getReturnedRecord() {
-        if (getReturnedRecords().size() == 0) {
+        if (getReturnedRecords().size() == 0)
             return null;
-        }
 
         return getReturnedRecords().get(0);
     }
 
     // @Override
     public final Result<R> getReturnedRecords() {
-        if (returned == null) {
-            returned = new ResultImpl<R>(configuration(), returning);
-        }
+        if (returned == null)
+            returned = new ResultImpl<R>(configuration(), returningResolvedAsterisks);
 
         return returned;
     }
@@ -453,7 +463,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     List<String> names = new ArrayList<String>();
                     RenderNameStyle style = configuration().settings().getRenderNameStyle();
 
-                    for (Field<?> field : returning) {
+                    for (Field<?> field : returningResolvedAsterisks) {
 
                         // [#2845] Field names should be passed to JDBC in the case
                         // imposed by the user. For instance, if the user uses
@@ -525,7 +535,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
-                    selectReturning(ctx.configuration(), create(ctx.configuration()).lastID());
+                    selectReturning(ctx.configuration(), ctx.dsl().lastID());
                     return result;
                 }
 
@@ -679,7 +689,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true).fetch();
+            returned = new CursorImpl<R>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
 
             // [#3682] Plain SQL tables do not have any fields
             if (table.fields().length > 0)
@@ -716,7 +726,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
+                if (returningResolvedAsterisks.size() == 1 && new Fields<Record>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
                         getReturnedRecords().add(
                         Tools.newRecord(true, table, configuration)
@@ -738,10 +748,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 // Other values are requested, too. Run another query
                 else {
                     returned =
-                    create(configuration).select(returning)
-                                         .from(table)
-                                         .where(field.in(ids))
-                                         .fetchInto(table);
+                    configuration.dsl().select(returning)
+                                       .from(table)
+                                       .where(field.in(ids))
+                                       .fetchInto(table);
                 }
             }
         }

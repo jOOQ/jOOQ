@@ -321,6 +321,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Privilege;
+import org.jooq.QualifiedAsterisk;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -335,6 +336,7 @@ import org.jooq.RowN;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Statement;
@@ -908,9 +910,16 @@ final class ParserImpl implements Parser {
             limit = parseUnsignedInteger(ctx);
         }
 
-        List<Field<?>> select = parseSelectList(ctx);
-        if (degree != null && select.size() != degree)
+        List<SelectFieldOrAsterisk> select = parseSelectList(ctx);
+
+        degreeCheck:
+        if (degree != null && select.size() != degree) {
+            for (SelectFieldOrAsterisk s : select)
+                if (!(s instanceof Field<?>))
+                    break degreeCheck;
+
             throw ctx.exception("Select list must contain " + degree + " columns. Got: " + select.size());
+        }
 
         Table<?> into = null;
         List<Table<?>> from = null;
@@ -3231,27 +3240,35 @@ final class ParserImpl implements Parser {
         }
     }
 
-    private static final List<Field<?>> parseSelectList(ParserContext ctx) {
+    private static final List<SelectFieldOrAsterisk> parseSelectList(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseIf(ctx, '*'))
-            return Collections.emptyList();
-
-        // TODO Support qualified asterisk
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
         do {
             if (peekKeyword(ctx, SELECT_KEYWORDS))
                 throw ctx.unexpectedToken();
 
-            Field<?> field = parseField(ctx);
-            Name alias = null;
+            if (parseIf(ctx, '*')) {
+                result.add(DSL.asterisk());
+            }
+            else {
+                QueryPart identifier = parseNameOrQualifiedAsteriskIf(ctx);
 
-            if (parseKeywordIf(ctx, "AS"))
-                alias = parseIdentifier(ctx, true);
-            else if (!peekKeyword(ctx, SELECT_KEYWORDS))
-                alias = parseIdentifierIf(ctx, true);
+                if (identifier != null && identifier instanceof QualifiedAsterisk) {
+                    result.add((QualifiedAsterisk) identifier);
+                }
+                else {
+                    Field<?> field = identifier != null ? field((Name) identifier) : parseField(ctx);
+                    Name alias = null;
 
-            result.add(alias == null ? field : field.as(alias));
+                    if (parseKeywordIf(ctx, "AS"))
+                        alias = parseIdentifier(ctx, true);
+                    else if (!peekKeyword(ctx, SELECT_KEYWORDS))
+                        alias = parseIdentifierIf(ctx, true);
+
+                    result.add(alias == null ? field : field.as(alias));
+                }
+            }
         }
         while (parseIf(ctx, ','));
         return result;
@@ -5775,6 +5792,28 @@ final class ParserImpl implements Parser {
 
         while (parseIf(ctx, '.'))
             result.add(parseIdentifier(ctx));
+
+        return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
+    }
+
+    private static final QueryPart parseNameOrQualifiedAsteriskIf(ParserContext ctx) {
+        Name identifier = parseIdentifierIf(ctx);
+
+        if (identifier == null)
+            return null;
+
+        List<Name> result = new ArrayList<Name>();
+        result.add(identifier);
+
+        while (parseIf(ctx, '.')) {
+            if ((identifier = parseIdentifierIf(ctx)) != null) {
+                result.add(identifier);
+            }
+            else {
+                parse(ctx, '*');
+                return table(result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+            }
+        }
 
         return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
     }

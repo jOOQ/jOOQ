@@ -79,18 +79,18 @@ implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -7918219502110473521L;
+    private static final long               serialVersionUID = -7918219502110473521L;
 
-    private final Table<?>        table;
-    private final SelectFieldList aggregateFunctions;
-    private Field<T>              on;
-    private SelectFieldList       in;
+    private final Table<?>                  table;
+    private final SelectFieldList<Field<?>> aggregateFunctions;
+    private Field<T>                        on;
+    private SelectFieldList<Field<?>>       in;
 
     Pivot(Table<?> table, Field<?>... aggregateFunctions) {
         super("pivot");
 
         this.table = table;
-        this.aggregateFunctions = new SelectFieldList(aggregateFunctions);
+        this.aggregateFunctions = new SelectFieldList<Field<?>>(aggregateFunctions);
     }
 
     // ------------------------------------------------------------------------

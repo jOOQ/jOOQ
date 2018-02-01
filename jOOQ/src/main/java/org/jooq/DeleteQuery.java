@@ -121,7 +121,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @see #getReturnedRecords()
      */
     @Support({ FIREBIRD, POSTGRES })
-    void setReturning(Field<?>... fields);
+    void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
@@ -131,7 +131,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @see #getReturnedRecords()
      */
     @Support({ FIREBIRD, POSTGRES })
-    void setReturning(Collection<? extends Field<?>> fields);
+    void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * The record holding returned values as specified by any of the

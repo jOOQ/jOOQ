@@ -113,6 +113,7 @@ import org.jooq.AlterTableStep;
 import org.jooq.AlterViewStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
+import org.jooq.Asterisk;
 import org.jooq.Block;
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
@@ -294,6 +295,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
@@ -2733,7 +2735,7 @@ public class DSL {
      * @see DSLContext#select(Collection)
      */
     @Support
-    public static SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
+    public static SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields) {
         return dsl().select(fields);
     }
 
@@ -2773,7 +2775,7 @@ public class DSL {
      * @see DSLContext#select(SelectField...)
      */
     @Support
-    public static SelectSelectStep<Record> select(SelectField<?>... fields) {
+    public static SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields) {
         return dsl().select(fields);
     }
 
@@ -2782,7 +2784,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2808,8 +2810,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -2820,7 +2822,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2846,8 +2848,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -2858,7 +2860,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2884,8 +2886,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -2896,7 +2898,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2922,8 +2924,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -2934,7 +2936,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2960,8 +2962,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -2972,7 +2974,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -2998,8 +3000,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3010,7 +3012,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3036,8 +3038,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3048,7 +3050,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3074,8 +3076,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3086,7 +3088,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3112,8 +3114,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3124,7 +3126,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3150,8 +3152,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3162,7 +3164,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3188,8 +3190,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3200,7 +3202,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3226,8 +3228,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3238,7 +3240,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3264,8 +3266,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3276,7 +3278,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3302,8 +3304,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3314,7 +3316,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3340,8 +3342,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3352,7 +3354,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3378,8 +3380,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3390,7 +3392,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3416,8 +3418,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3428,7 +3430,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3454,8 +3456,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3466,7 +3468,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3492,8 +3494,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3504,7 +3506,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3530,8 +3532,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3542,7 +3544,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3568,8 +3570,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3580,7 +3582,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it declares
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it declares
      * additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3606,8 +3608,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#select(SelectField...)
-     * @see #select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
+     * @see #select(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3653,7 +3655,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(Collection)
      */
     @Support
-    public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
+    public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
         return dsl().selectDistinct(fields);
     }
 
@@ -3693,7 +3695,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectField...)
      */
     @Support
-    public static SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
+    public static SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields) {
         return dsl().selectDistinct(fields);
     }
 
@@ -3702,7 +3704,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3728,8 +3730,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3740,7 +3742,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3766,8 +3768,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3778,7 +3780,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3804,8 +3806,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3816,7 +3818,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3842,8 +3844,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3854,7 +3856,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3880,8 +3882,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3892,7 +3894,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3918,8 +3920,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3930,7 +3932,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3956,8 +3958,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -3968,7 +3970,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -3994,8 +3996,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4006,7 +4008,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4032,8 +4034,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4044,7 +4046,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4070,8 +4072,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4082,7 +4084,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4108,8 +4110,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4120,7 +4122,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4146,8 +4148,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4158,7 +4160,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4184,8 +4186,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4196,7 +4198,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4222,8 +4224,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4234,7 +4236,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4260,8 +4262,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4272,7 +4274,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4298,8 +4300,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4310,7 +4312,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4336,8 +4338,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4348,7 +4350,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4374,8 +4376,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4386,7 +4388,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4412,8 +4414,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4424,7 +4426,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4450,8 +4452,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4462,7 +4464,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4488,8 +4490,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -4500,7 +4502,7 @@ public class DSL {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * This is the same as {@link #selectDistinct(SelectField...)}, except that it
+     * This is the same as {@link #selectDistinct(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -4526,8 +4528,8 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
-     * @see #selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
+     * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
@@ -20964,6 +20966,14 @@ public class DSL {
      */
     protected static <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
+    }
+
+    /**
+     * The asterisk (<code>*</code>) to be used in <code>SELECT</code> clauses.
+     */
+    @Support
+    public static Asterisk asterisk() {
+        return AsteriskImpl.INSTANCE;
     }
 
     /**

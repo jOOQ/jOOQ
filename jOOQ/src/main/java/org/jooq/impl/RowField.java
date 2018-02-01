@@ -108,7 +108,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new SelectFieldList(emulatedFields()));
+            ctx.visit(new SelectFieldList<Field<?>>(emulatedFields()));
             ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
         }
         else {

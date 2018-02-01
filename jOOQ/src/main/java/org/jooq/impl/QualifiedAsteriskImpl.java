@@ -35,52 +35,37 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import java.util.Collection;
-
+import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.QualifiedAsterisk;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
+final class QualifiedAsteriskImpl extends AbstractQueryPart implements QualifiedAsterisk {
 
-    private static final long serialVersionUID = 8850104968428500798L;
+    private static final long serialVersionUID = 4509166418833560865L;
+    private final Table<?>    table;
 
-    SelectFieldList() {
-        super();
-    }
-
-    SelectFieldList(Collection<? extends F> wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(F[] wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(boolean qualify) {
-        super(qualify);
-    }
-
-    SelectFieldList(Collection<? extends F> wrappedList, boolean qualify) {
-        super(wrappedList, qualify);
-    }
-
-    SelectFieldList(F[] wrappedList, boolean qualify) {
-        super(wrappedList, qualify);
+    QualifiedAsteriskImpl(Table<?> table) {
+        this.table = table;
     }
 
     @Override
-    protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.visit(AsteriskImpl.INSTANCE);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE);
     }
 
     @Override
-    public final boolean declaresFields() {
-        return true;
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
+    @Override
+    public final Table<?> qualifier() {
+        return table;
     }
 }

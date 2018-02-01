@@ -90,6 +90,7 @@ import org.jooq.Record9;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Table;
@@ -514,12 +515,12 @@ implements
     }
 
     @Override
-    public final SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields) {
+    public final SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields) {
         return new SelectImpl(configuration, this).select(fields);
     }
 
     @Override
-    public final SelectSelectStep<Record> select(SelectField<?>... fields) {
+    public final SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields) {
         return new SelectImpl(configuration, this).select(fields);
     }
 
@@ -660,12 +661,12 @@ implements
 // [jooq-tools] END [select]
 
     @Override
-    public final SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields) {
+    public final SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
         return new SelectImpl(configuration, this, true).select(fields);
     }
 
     @Override
-    public final SelectSelectStep<Record> selectDistinct(SelectField<?>... fields) {
+    public final SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields) {
         return new SelectImpl(configuration, this, true).select(fields);
     }
 

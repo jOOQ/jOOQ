@@ -1924,10 +1924,12 @@ public class JavaGenerator extends AbstractGenerator {
         generateUDTClassJavadoc(udt, out);
         printClassAnnotations(out, schema);
 
-        // [#799] Oracle UDTs with member procedures have similarities with packages
-        if (udt.getRoutines().size() > 0) {
-            interfaces.add(out.ref(Package.class));
-        }
+
+
+
+
+
+
 
         if (scala) {
             out.println("class %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), packageId, synthetic, interfaces);

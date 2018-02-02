@@ -148,7 +148,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     // ------------------------------------------------------------------------
 
     private final Schema                      schema;
-    private final Package                     pkg;
+
+
+
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
     private final List<Parameter<?>>          outParameters;
@@ -230,7 +232,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         this.resultIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
-        this.pkg = pkg;
+
+
+
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
@@ -1112,10 +1116,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-            if (getPackage() != null) {
-                context.visit(DSL.name(getPackage().getName()));
-                context.sql('.');
-            }
+
+
+
+
         }
 
         context.literal(getName());
@@ -1243,10 +1247,12 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         return schema;
     }
 
-    @Override
-    public final Package getPackage() {
-        return pkg;
-    }
+
+
+
+
+
+
 
     @Override
     public final Parameter<T> getReturnParameter() {

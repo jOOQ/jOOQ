@@ -68,7 +68,9 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     private final Schema          schema;
     private final Fields<R>       fields;
-    private final Package         pkg;
+
+
+
     private final boolean         synthetic;
     private transient DataType<R> type;
 
@@ -85,7 +87,9 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
         this.fields = new Fields<R>();
         this.schema = schema;
-        this.pkg = pkg;
+
+
+
         this.synthetic = synthetic;
     }
 
@@ -99,10 +103,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return schema;
     }
 
-    @Override
-    public final Package getPackage() {
-        return pkg;
-    }
+
+
+
+
+
+
 
     @SuppressWarnings({ "rawtypes" })
     @Override
@@ -177,7 +183,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     @Override
     public final boolean isSQLUsable() {
-        return pkg == null;
+        return true                                        ;
     }
 
     @Override
@@ -203,15 +209,13 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     public final void accept(Context<?> ctx) {
         Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
-        if (mappedSchema != null) {
-            ctx.visit(mappedSchema);
-            ctx.sql('.');
-        }
+        if (mappedSchema != null)
+            ctx.visit(mappedSchema).sql('.');
 
-        if (getPackage() != null) {
-            ctx.visit(getPackage());
-            ctx.sql('.');
-        }
+
+
+
+
 
         ctx.visit(DSL.name(getName()));
     }

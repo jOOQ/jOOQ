@@ -150,10 +150,12 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      */
     Schema getSchema();
 
-    /**
-     * Get the UDT package.
-     */
-    Package getPackage();
+
+
+
+
+
+
 
     /**
      * @return The record type produced by this table.

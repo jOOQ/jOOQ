@@ -100,15 +100,17 @@ public interface Routine<T> extends Named, Attachable {
      */
     Schema getSchema();
 
-    /**
-     * The container package of this stored procedure or function.
-     * <p>
-     * This is only supported in the {@link SQLDialect#ORACLE} dialect.
-     *
-     * @return The container package of this object, or <code>null</code> if
-     *         there is no such container.
-     */
-    Package getPackage();
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The parameter representing this routine's {@link #getReturnValue()}

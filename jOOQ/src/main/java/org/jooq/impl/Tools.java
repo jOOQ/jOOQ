@@ -2409,6 +2409,11 @@ final class Tools {
         if (mapped != null)
             sb.append(mapped.getName()).append('.');
 
+
+
+
+
+
         sb.append(record.getUDT().getName());
         return sb.toString();
     }

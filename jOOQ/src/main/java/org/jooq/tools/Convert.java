@@ -55,6 +55,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.sql.Date;
+import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -84,6 +85,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.types.UByte;
@@ -994,6 +996,21 @@ public final class Convert {
                 else if (Record.class.isAssignableFrom(fromClass)) {
                     Record record = (Record) from;
                     return record.into(toClass);
+                }
+
+                else if (Struct.class.isAssignableFrom(fromClass)) {
+                    Struct struct = (Struct) from;
+
+                    if (UDTRecord.class.isAssignableFrom(toClass)) {
+                        try {
+                            UDTRecord<?> record = ((UDTRecord<?>) toClass.newInstance());
+                            record.from(struct.getAttributes());
+                            return (U) record;
+                        }
+                        catch (Exception e) {
+                            throw new DataTypeException("Cannot convert from " + fromClass + " to " + toClass, e);
+                        }
+                    }
                 }
 
 

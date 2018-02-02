@@ -88,6 +88,7 @@ import static org.jooq.impl.CombineOperator.INTERSECT;
 import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -1226,7 +1227,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ------------
         context.start(SELECT_WHERE);
 
-        if (!getWhere().hasWhere() && semiAntiJoinPredicates == null)
+        if (TRUE.equals(context.data().get(DataKey.DATA_SELECT_NO_DATA)))
+            context.formatSeparator()
+                   .visit(K_WHERE)
+                   .sql(' ')
+                   .visit(falseCondition());
+        else if (!getWhere().hasWhere() && semiAntiJoinPredicates == null)
             ;
         else {
             ConditionProviderImpl where = new ConditionProviderImpl();

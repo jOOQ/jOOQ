@@ -67,7 +67,7 @@ public interface CreateTableAsStep<R extends Record> {
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableOnCommitStep as(Select<? extends R> select);
+    CreateTableWithDataStep as(Select<? extends R> select);
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code>

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CREATE_TABLE;
 import static org.jooq.Clause.CREATE_TABLE_AS;
 import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
@@ -47,6 +49,7 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
@@ -77,6 +80,7 @@ import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_SELECT_NO_DATA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,6 +95,7 @@ import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
+import org.jooq.CreateTableWithDataStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -108,6 +113,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableAsStep<R>,
+    CreateTableWithDataStep,
     CreateTableColumnStep {
 
     /**
@@ -115,6 +121,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
      */
     private static final long                serialVersionUID               = 8904572826501186329L;
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2);
+    private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
 
@@ -123,6 +131,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     private final Table<?>                   table;
     private Select<?>                        select;
+    private Boolean                          withData;
     private final List<Field<?>>             columnFields;
     private final List<DataType<?>>          columnTypes;
     private final List<Constraint>           constraints;
@@ -150,6 +159,18 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final CreateTableImpl<R> as(Select<? extends R> s) {
         this.select = s;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl<R> withData() {
+        withData = true;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl<R> withNoData() {
+        withData = false;
         return this;
     }
 
@@ -369,20 +390,36 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         else
             ctx.formatSeparator();
 
+        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+            ctx.data(DATA_SELECT_NO_DATA, true);
+
         ctx.start(CREATE_TABLE_AS)
            .visit(select)
            .end(CREATE_TABLE_AS);
+
+        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+            ctx.data().remove(DATA_SELECT_NO_DATA);
 
         if (WRAP_SELECT_IN_PARENS.contains(ctx.family())) {
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
-
-            if (ctx.family() == HSQLDB)
-                ctx.sql(' ')
-                   .visit(K_WITH_DATA);
         }
+
+        if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+            ctx.sql(' ')
+               .visit(K_WITH_NO_DATA);
+        else if (TRUE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+            ctx.sql(' ')
+               .visit(K_WITH_DATA);
+        else if (REQUIRES_WITH_DATA.contains(ctx.family()))
+            ctx.sql(' ')
+               .visit(K_WITH_DATA);
     }
+
+
+
+
 
 
 
@@ -454,9 +491,15 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     private final void acceptSelectInto(Context<?> ctx) {
+        if (FALSE.equals(withData))
+            ctx.data(DATA_SELECT_NO_DATA, true);
+
         ctx.data(DATA_SELECT_INTO_TABLE, table);
         ctx.visit(select);
         ctx.data().remove(DATA_SELECT_INTO_TABLE);
+
+        if (FALSE.equals(withData))
+            ctx.data().remove(DATA_SELECT_NO_DATA);
     }
 
     @Override

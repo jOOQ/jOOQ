@@ -406,6 +406,11 @@ final class Tools {
         DATA_SELECT_INTO_TABLE,
 
         /**
+         * [#7139] No data must be selected in the <code>SELECT</code> statement.
+         */
+        DATA_SELECT_NO_DATA,
+
+        /**
          * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.
          */
         DATA_OMIT_INTO_CLAUSE,
@@ -2407,6 +2412,11 @@ final class Tools {
         sb.append(record.getUDT().getName());
         return sb.toString();
     }
+
+
+
+
+
 
 
 

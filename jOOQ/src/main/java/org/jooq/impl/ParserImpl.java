@@ -278,6 +278,7 @@ import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableStorageStep;
+import org.jooq.CreateTableWithDataStep;
 import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1813,7 +1814,14 @@ final class ParserImpl implements Parser {
                     ? ctx.dsl.createTemporaryTable(tableName)
                     : ctx.dsl.createTable(tableName);
 
-            storageStep = commentStep = s1.as(select);
+            CreateTableWithDataStep s2 = s1.as(select);
+
+            storageStep = commentStep =
+                parseKeywordIf(ctx, "WITH DATA")
+              ? s2.withData()
+              : parseKeywordIf(ctx, "WITH NO DATA")
+              ? s2.withNoData()
+              : s2;
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -7260,6 +7268,7 @@ final class ParserImpl implements Parser {
         "UNION",
         "USING",
         "WHERE",
+        "WITH",
     };
 
     private static final String[] PIVOT_KEYWORDS      = {

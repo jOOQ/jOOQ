@@ -2301,6 +2301,8 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
     }
 
     /**
@@ -6096,7 +6098,6 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     private static final <T> List<T> list(T first, List<T> remaining) {
         List<T> result = new ArrayList<T>();
 

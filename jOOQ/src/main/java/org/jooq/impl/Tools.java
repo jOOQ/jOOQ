@@ -4184,11 +4184,11 @@ final class Tools {
             return null;
     }
 
-    static final Alias<? extends Table<?>> alias(Table<?> table) {
+    static final <R extends Record> Alias<Table<R>> alias(Table<R> table) {
         if (table instanceof TableImpl)
-            return ((TableImpl<?>) table).alias;
+            return ((TableImpl<R>) table).alias;
         else if (table instanceof TableAlias)
-            return ((TableAlias<?>) table).alias;
+            return ((TableAlias<R>) table).alias;
         else
             return null;
     }

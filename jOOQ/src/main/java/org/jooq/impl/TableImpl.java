@@ -153,8 +153,14 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
         this.fields = new Fields<R>();
 
-        if (aliased != null)
-            alias = new Alias<Table<R>>(aliased, name);
+        if (aliased != null) {
+            Alias<Table<R>> existingAlias = Tools.alias(aliased);
+            if (existingAlias != null) {
+                alias = existingAlias;
+            } else {
+                alias = new Alias<Table<R>>(aliased, name);
+            }
+        }
         else
             alias = null;
 

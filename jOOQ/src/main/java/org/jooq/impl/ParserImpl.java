@@ -352,8 +352,10 @@ import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
+import org.jooq.UpdateFromStep;
 import org.jooq.UpdateReturningStep;
 import org.jooq.UpdateSetFirstStep;
+import org.jooq.UpdateWhereStep;
 import org.jooq.User;
 // ...
 import org.jooq.WindowBeforeOverStep;
@@ -1192,18 +1194,20 @@ final class ParserImpl implements Parser {
 
         // TODO Row value expression updates
         Map<Field<?>, Object> map = parseSetClauseList(ctx);
+        UpdateFromStep<?> s2 = s1.set(map);
+        UpdateWhereStep<?> s3 =
+              parseKeywordIf(ctx, "FROM")
+            ? s2.from(parseTables(ctx))
+            : s2;
 
-        // TODO support FROM
-        Condition condition = parseKeywordIf(ctx, "WHERE") ? parseCondition(ctx) : null;
+        UpdateReturningStep<?> s4 =
+              parseKeywordIf(ctx, "WHERE")
+            ? s3.where(parseCondition(ctx))
+            : s3;
 
-        UpdateReturningStep<?> s2 = condition == null
-            ? s1.set(map)
-            : s1.set(map).where(condition);
-
-        if (parseKeywordIf(ctx, "RETURNING"))
-            return s2.returning(parseSelectList(ctx));
-        else
-            return s2;
+        return parseKeywordIf(ctx, "RETURNING")
+            ? s4.returning(parseSelectList(ctx))
+            : s4;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {

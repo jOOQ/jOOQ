@@ -451,6 +451,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void accept(Context<?> context) {
+        context.scopeStart();
+
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
 
@@ -764,6 +766,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
         }
+
+        context.scopeEnd();
     }
 
     private final void pushWindow(Context<?> context) {

@@ -54,7 +54,7 @@ final class FieldAlias<T> extends AbstractField<T> {
     FieldAlias(Field<T> field, Name alias) {
         super(alias, field.getDataType());
 
-        this.alias = new Alias<Field<T>>(field, alias, false);
+        this.alias = new Alias<Field<T>>(field, this, alias, false);
     }
 
     @Override

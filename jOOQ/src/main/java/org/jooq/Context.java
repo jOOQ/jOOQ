@@ -150,6 +150,31 @@ public interface Context<C extends Context<C>> extends Scope {
     C subquery(boolean subquery);
 
     /**
+     * Start a new SELECT scope.
+     */
+    C scopeStart();
+
+    /**
+     * Mark the beginning of a scoped query part.
+     */
+    C scopeMarkStart(QueryPart part);
+
+    /**
+     * Register a "special" query part in the scope.
+     */
+    C scopeRegister(QueryPart part);
+
+    /**
+     * Mark the end of a scoped query part.
+     */
+    C scopeMarkEnd(QueryPart part);
+
+    /**
+     * End a previous SELECT scope.
+     */
+    C scopeEnd();
+
+    /**
      * whether the current context is rendering a string literal.
      */
     boolean stringLiteral();

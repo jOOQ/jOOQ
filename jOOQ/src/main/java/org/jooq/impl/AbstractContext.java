@@ -48,15 +48,22 @@ import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.ForeignKey;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -94,6 +101,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     int                                      stringLiteral;
     String                                   stringLiteralEscapedApos    = "'";
     int                                      index;
+    int                                      scopeLevel                  = -1;
+    final ScopeStack                         scopeStack;
 
     // [#2665] VisitListener API
     final VisitListener[]                    visitListeners;
@@ -164,6 +173,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             ? CastMode.NEVER
             : CastMode.DEFAULT;
         this.quote = settings().getRenderNameStyle() == RenderNameStyle.QUOTED;
+        this.scopeStack = new ScopeStack();
     }
 
     // ------------------------------------------------------------------------
@@ -504,6 +514,41 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C scopeStart() {
+        scopeLevel++;
+        scopeStart0();
+
+        return (C) this;
+    }
+
+    @Override
+    public /* non-final */ C scopeMarkStart(QueryPart part) {
+        return (C) this;
+    }
+
+    @Override
+    public /* non-final */ C scopeRegister(QueryPart part) {
+        return (C) this;
+    }
+
+    @Override
+    public /* non-final */ C scopeMarkEnd(QueryPart part) {
+        return (C) this;
+    }
+
+    @Override
+    public final C scopeEnd() {
+        scopeEnd0();
+        scopeLevel--;
+        scopeStack.trim();
+
+        return (C) this;
+    }
+
+    void scopeStart0() {}
+    void scopeEnd0() {}
+
+    @Override
     public final boolean stringLiteral() {
         return stringLiteral > 0;
     }
@@ -667,5 +712,110 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         sb.append("]\nsubquery     [");
         sb.append(subquery);
         sb.append("]");
+    }
+
+    static class JoinNode {
+        final Table<?>                        table;
+        final Map<ForeignKey<?, ?>, JoinNode> children;
+
+        JoinNode(Table<?> table) {
+            this.table = table;
+            this.children = new LinkedHashMap<ForeignKey<?, ?>, JoinNode>();
+        }
+
+        public Table<?> joinTree() {
+            Table<?> result = table;
+
+            for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet())
+                result = result.leftJoin(e.getValue().table).onKey(e.getKey());
+
+            return result;
+        }
+    }
+
+    static class ScopeStackElement {
+        int[]    positions;
+        JoinNode joinNode;
+    }
+
+    class ScopeStack implements Iterable<ScopeStackElement> {
+        private Map<QueryPart, List<ScopeStackElement>> stack;
+
+        private Map<QueryPart, List<ScopeStackElement>> stack() {
+            if (stack == null)
+                stack = new LinkedHashMap<QueryPart, List<ScopeStackElement>>();
+
+            return stack;
+        }
+
+        final void trim() {
+            if (scopeLevel > 0)
+                for (List<ScopeStackElement> list : stack.values())
+                    while (list.size() > scopeLevel || list.size() > 0 && list.get(list.size() - 1) == null)
+                        list.remove(list.size() - 1);
+        }
+
+        @Override
+        public final Iterator<ScopeStackElement> iterator() {
+            return new Iterator<ScopeStackElement>() {
+                Iterator<List<ScopeStackElement>> it = stack().values().iterator();
+                ScopeStackElement next;
+
+                @Override
+                public boolean hasNext() {
+                    return move() != null;
+                }
+
+                @Override
+                public ScopeStackElement next() {
+                    if (next == null) {
+                        return move();
+                    }
+                    else {
+                        ScopeStackElement result = next;
+                        next = null;
+                        return result;
+                    }
+                }
+
+                private ScopeStackElement move() {
+                    while (it.hasNext()) {
+                        List<ScopeStackElement> list = it.next();
+
+                        int size = scopeLevel + 1;
+                        if (list.size() >= size && (next = list.get(scopeLevel)) != null)
+                            break;
+                    }
+
+                    return next;
+                }
+
+                @Override
+                public void remove() {
+                    throw new UnsupportedOperationException("remove");
+                }
+            };
+        }
+
+        ScopeStackElement get(QueryPart key) {
+            List<ScopeStackElement> list = stack().get(key);
+
+            if (list == null) {
+                list = new ArrayList<ScopeStackElement>();
+                stack().put(key, list);
+            }
+
+            int size = scopeLevel + 1;
+            if (list.size() < size)
+                list.addAll(Collections.nCopies(size - list.size(), null));
+
+            ScopeStackElement result = list.get(scopeLevel);
+            if (result == null) {
+                result = new ScopeStackElement();
+                list.set(scopeLevel, result);
+            }
+
+            return result;
+        }
     }
 }

@@ -53,6 +53,7 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -78,6 +79,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     final Alias<Table<R>>                    alias;
 
     protected final Field<?>[]               parameters;
+    final Table<?>                           child;
+    final ForeignKey<?, R>                   path;
 
     /**
      * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or
@@ -125,19 +128,19 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Name name) {
-        this(name, null, null, null, (Comment) null);
+        this(name, null, null, null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema) {
-        this(name, schema, null, null, (Comment) null);
+        this(name, schema, null, null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased) {
-        this(name, schema, aliased, null, (Comment) null);
+        this(name, schema, null, null, aliased, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        this(name, schema, aliased, parameters, (Comment) null);
+        this(name, schema, null, null, aliased, parameters, (Comment) null);
     }
 
     /**
@@ -145,13 +148,23 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      */
     @Deprecated
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        this(name, schema, aliased, parameters, DSL.comment(comment));
+        this(name, schema, null, null, aliased, parameters, DSL.comment(comment));
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, null, null, aliased, parameters, comment);
+    }
+
+    public <O extends Record> TableImpl(Table<O> child, ForeignKey<O, R> path, Table<R> parent) {
+        this(parent.getQualifiedName(), parent.getSchema(), child, path, null, null, DSL.comment(parent.getComment()));
+    }
+
+    public <O extends Record> TableImpl(Name name, Schema schema, Table<O> child, ForeignKey<O, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         super(name, schema, comment);
 
         this.fields = new Fields<R>();
+        this.child = child;
+        this.path = path;
 
         if (aliased != null) {
 
@@ -160,9 +173,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             Alias<Table<R>> existingAlias = Tools.alias(aliased);
 
             if (existingAlias != null)
-                alias = new Alias<Table<R>>(existingAlias.wrapped, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
+                alias = new Alias<Table<R>>(existingAlias.wrapped, this, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
             else
-                alias = new Alias<Table<R>>(aliased, name);
+                alias = new Alias<Table<R>>(aliased, this, name);
         }
         else
             alias = null;
@@ -174,9 +187,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * Get the aliased table wrapped by this table
      */
     Table<R> getAliasedTable() {
-        if (alias != null) {
+        if (alias != null)
             return alias.wrapped();
-        }
 
         return null;
     }
@@ -193,6 +205,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (child != null)
+            ctx.scopeRegister(this);
+
         if (alias != null) {
             ctx.visit(alias);
         }
@@ -217,6 +232,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     private void accept0(Context<?> ctx) {
+        if (ctx.declareTables())
+            ctx.scopeMarkStart(this);
+
         if (ctx.qualify() &&
                 (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.family()) || parameters == null || ctx.declareTables())) {
             Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
@@ -239,6 +257,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                    .visit(new QueryPartList<Field<?>>(parameters))
                    .sql(')');
         }
+
+        if (ctx.declareTables())
+            ctx.scopeMarkEnd(this);
     }
 
     /**
@@ -249,12 +270,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      */
     @Override
     public Table<R> as(Name as) {
-        if (alias != null) {
+        if (alias != null)
             return alias.wrapped().as(as);
-        }
-        else {
+        else
             return new TableAlias<R>(this, as);
-        }
     }
 
     /**
@@ -265,12 +284,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      */
     @Override
     public Table<R> as(Name as, Name... fieldAliases) {
-        if (alias != null) {
+        if (alias != null)
             return alias.wrapped().as(as, fieldAliases);
-        }
-        else {
+        else
             return new TableAlias<R>(this, as, fieldAliases);
-        }
     }
 
     public Table<R> rename(String rename) {
@@ -295,7 +312,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public boolean declaresTables() {
-        return (alias != null) || (parameters != null) || super.declaresTables();
+        return true;
     }
 
     // ------------------------------------------------------------------------

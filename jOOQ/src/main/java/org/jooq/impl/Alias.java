@@ -95,24 +95,26 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final EnumSet<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
 
     final Q                                  wrapped;
+    final Q                                  wrapping;
     final Name                               alias;
     final Name[]                             fieldAliases;
     final boolean                            wrapInParentheses;
 
-    Alias(Q wrapped, Name alias) {
-        this(wrapped, alias, null, false);
+    Alias(Q wrapped, Q wrapping, Name alias) {
+        this(wrapped, wrapping, alias, null, false);
     }
 
-    Alias(Q wrapped, Name alias, boolean wrapInParentheses) {
-        this(wrapped, alias, null, wrapInParentheses);
+    Alias(Q wrapped, Q wrapping, Name alias, boolean wrapInParentheses) {
+        this(wrapped, wrapping, alias, null, wrapInParentheses);
     }
 
-    Alias(Q wrapped, Name alias, Name[] fieldAliases) {
-        this(wrapped, alias, fieldAliases, false);
+    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases) {
+        this(wrapped, wrapping, alias, fieldAliases, false);
     }
 
-    Alias(Q wrapped, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
+    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         this.wrapped = wrapped;
+        this.wrapping = wrapping;
         this.alias = alias;
         this.fieldAliases = fieldAliases;
         this.wrapInParentheses = wrapInParentheses;
@@ -128,6 +130,9 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
         if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
             context.declareAliases(false);
+
+            if (wrapped instanceof Table)
+                context.scopeMarkStart(wrapping);
 
             SQLDialect family = context.family();
             boolean emulatedDerivedColumnList = false;
@@ -195,6 +200,9 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             else {
                 toSQLWrapped(context);
             }
+
+            if (wrapped instanceof Table)
+                context.scopeMarkEnd(wrapping);
 
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
             toSQLAs(context);

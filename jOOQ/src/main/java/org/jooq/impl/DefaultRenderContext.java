@@ -50,9 +50,11 @@ import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Tools.DataKey.DATA_COUNT_BIND_VALUES;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -60,11 +62,13 @@ import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
@@ -161,6 +165,91 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
     // RenderContext API
     // ------------------------------------------------------------------------
+
+    @Override
+    public RenderContext scopeMarkStart(QueryPart part) {
+        if (scopeLevel >= 0) {
+            ScopeStackElement e = scopeStack.get(part);
+            if (e.positions == null)
+                e.positions = new int[2];
+
+            e.positions[0] = sql.length();
+        }
+
+        return this;
+    }
+
+    @Override
+    public RenderContext scopeMarkEnd(QueryPart part) {
+        if (scopeLevel >= 0) {
+            ScopeStackElement e = scopeStack.get(part);
+            e.positions[1] = sql.length();
+        }
+
+        return this;
+    }
+
+    @Override
+    public RenderContext scopeRegister(QueryPart part) {
+        if (scopeLevel >= 0) {
+            if (part instanceof TableImpl) {
+                Table<?> table = (Table<?>) part;
+                Table<?> root = table;
+                Table<?> child = root;
+                List<ForeignKey<?, ?>> keys = new ArrayList<ForeignKey<?, ?>>();
+                List<Table<?>> tables = new ArrayList<Table<?>>();
+
+                while (root instanceof TableImpl && (child = ((TableImpl<?>) root).child) != null) {
+                    keys.add(((TableImpl<?>) root).path);
+                    tables.add(root);
+                    root = child;
+                }
+
+                ScopeStackElement e = scopeStack.get(root);
+                if (e.joinNode == null)
+                    e.joinNode = new JoinNode(root);
+
+                JoinNode childNode = e.joinNode;
+                for (int i = keys.size() - 1; i >= 0; i--) {
+                    ForeignKey<?, ?> k = keys.get(i);
+                    Table<?> t = tables.get(i);
+
+                    JoinNode next = childNode.children.get(k);
+                    if (next == null) {
+                        next = new JoinNode(t);
+                        childNode.children.put(k, next);
+                    }
+                }
+            }
+        }
+
+        return this;
+    }
+
+    @Override
+    void scopeEnd0() {
+        outer:
+        for (ScopeStackElement e1 : scopeStack) {
+            if (e1.positions == null || e1.joinNode == null)
+                continue outer;
+
+            String replaced = "(" + DSL.using(configuration).render(e1.joinNode.joinTree()) + ")";
+            sql.replace(e1.positions[0], e1.positions[1], replaced);
+
+            int shift = replaced.length() - (e1.positions[1] - e1.positions[0]);
+
+            inner:
+            for (ScopeStackElement e2 : scopeStack) {
+                if (e2.positions == null)
+                    continue inner;
+
+                if (e2.positions[0] > e1.positions[0]) {
+                    e2.positions[0] = e2.positions[0] + shift;
+                    e2.positions[1] = e2.positions[1] + shift;
+                }
+            }
+        }
+    }
 
     final int peekSkipUpdateCounts() {
         return skipUpdateCounts;

@@ -3912,17 +3912,17 @@ public class JavaGenerator extends AbstractGenerator {
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
                         final String keyFullId = out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
                         final String referencedTableClassName = out.ref(getStrategy().getJavaClassName(foreignKey.getReferencedTable()));
-                        final String keyMemberName = out.ref(getStrategy().getJavaMemberName(foreignKey));
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
                         if (scala) {
                             out.tab(1).println();
-                            out.tab(1).println("def %s : %s = {", keyMemberName, referencedTableClassName);
+                            out.tab(1).println("def %s : %s = {", keyMethodName, referencedTableClassName);
                             out.tab(2).println("return new %s(this, %s)", referencedTableClassName, keyFullId);
                             out.tab(1).println("}");
                         }
                         else {
                             out.tab(1).println();
-                            out.tab(1).println("public %s %s() {", referencedTableClassName, keyMemberName);
+                            out.tab(1).println("public %s %s() {", referencedTableClassName, keyMethodName);
                             out.tab(2).println("return new %s(this, %s);", referencedTableClassName, keyFullId);
                             out.tab(1).println("}");
                         }

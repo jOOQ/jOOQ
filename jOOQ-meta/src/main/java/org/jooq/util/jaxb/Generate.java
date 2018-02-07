@@ -39,6 +39,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean relations = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean implicitJoinPathsToOne = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
     @XmlElement(defaultValue = "true")
     protected Boolean deprecationOnUnknownTypes = true;
@@ -201,6 +203,30 @@ public class Generate implements Serializable
      */
     public void setRelations(Boolean value) {
         this.relations = value;
+    }
+
+    /**
+     * Generate implict join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isImplicitJoinPathsToOne() {
+        return implicitJoinPathsToOne;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathsToOne property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setImplicitJoinPathsToOne(Boolean value) {
+        this.implicitJoinPathsToOne = value;
     }
 
     /**
@@ -1607,6 +1633,11 @@ public class Generate implements Serializable
 
     public Generate withRelations(Boolean value) {
         setRelations(value);
+        return this;
+    }
+
+    public Generate withImplicitJoinPathsToOne(Boolean value) {
+        setImplicitJoinPathsToOne(value);
         return this;
     }
 

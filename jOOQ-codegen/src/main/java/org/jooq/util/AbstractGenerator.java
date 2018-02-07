@@ -60,6 +60,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateDeprecationOnUnknownTypes  = true;
     boolean                            generateIndexes                    = true;
     boolean                            generateRelations                  = true;
+    boolean                            generateImplicitJoinPathsToOne                        = true;
     boolean                            generateInstanceFields             = true;
     boolean                            generateGeneratedAnnotation        = true;
     boolean                            useSchemaVersionProvider           = false;
@@ -230,6 +231,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRelations(boolean generateRelations) {
         this.generateRelations = generateRelations;
+    }
+
+    @Override
+    public boolean generateImplicitJoinPathsToOne() {
+        return generateImplicitJoinPathsToOne && generateRelations();
+    }
+
+    @Override
+    public void setGenerateImplicitJoinPathsToOne(boolean generateImplicitJoinPathsToOne) {
+        this.generateImplicitJoinPathsToOne = generateImplicitJoinPathsToOne;
     }
 
     @Override

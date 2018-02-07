@@ -3762,6 +3762,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
+        if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences()) {
+            out.println();
+
+            if (scala) {
+                out.tab(1).println("def this(child : %s[_], key : %s[_, %s]) = {", Table.class, ForeignKey.class, recordType);
+                out.tab(2).println("this(child, key, %s)", tableId);
+                out.tab(1).println("}");
+            }
+            else {
+                out.tab(1).println("<O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
+                out.tab(2).println("super(child, key, %s);", tableId);
+                out.tab(1).println("}");
+            }
+        }
+
         if (scala) {
             out.println();
             out.tab(1).println("override def getSchema : %s = %s", Schema.class, schemaId);
@@ -3878,6 +3893,28 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("public %s<%s<%s, ?>> getReferences() {", List.class, ForeignKey.class, recordType);
                     out.tab(2).println("return %s.<%s<%s, ?>>asList([[%s]]);", Arrays.class, ForeignKey.class, recordType, keyFullIds);
                     out.tab(1).println("}");
+                }
+
+                // Outbound (to-one) implicit join paths
+                if (generateImplicitJoinPathsToOne()) {
+                    for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                        final String keyFullId = out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
+                        final String referencedTableClassName = out.ref(getStrategy().getJavaClassName(foreignKey.getReferencedTable()));
+                        final String keyMemberName = out.ref(getStrategy().getJavaMemberName(foreignKey));
+
+                        if (scala) {
+                            out.tab(1).println();
+                            out.tab(1).println("def %s : %s = {", keyMemberName, referencedTableClassName);
+                            out.tab(2).println("return new %s(this, %s)", referencedTableClassName, keyFullId);
+                            out.tab(1).println("}");
+                        }
+                        else {
+                            out.tab(1).println();
+                            out.tab(1).println("public %s %s() {", referencedTableClassName, keyMemberName);
+                            out.tab(2).println("return new %s(this, %s);", referencedTableClassName, keyFullId);
+                            out.tab(1).println("}");
+                        }
+                    }
                 }
             }
         }

@@ -581,6 +581,8 @@ public class GenerationTool {
                 generator.setGenerateIndexes(g.getGenerate().isIndexes());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
+            if (g.getGenerate().isImplicitJoinPathsToOne() != null)
+                generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
             if (g.getGenerate().isDeprecated() != null)
                 generator.setGenerateDeprecated(g.getGenerate().isDeprecated());
             if (g.getGenerate().isDeprecationOnUnknownTypes() != null)

@@ -833,6 +833,10 @@ type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></j
 This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="implicitJoinPathsToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecated code for backwards compatibility]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

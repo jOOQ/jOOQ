@@ -103,6 +103,18 @@ public interface Generator {
     void setGenerateRelations(boolean generateRelations);
 
     /**
+     * Whether implicit join path constructors on generated tables for outgoing
+     * foreign key relationships (to-one relationships) should be generated.
+     */
+    boolean generateImplicitJoinPathsToOne();
+
+    /**
+     * Whether implicit join path constructors on generated tables for outgoing
+     * foreign key relationships (to-one relationships) should be generated.
+     */
+    void setGenerateImplicitJoinPathsToOne(boolean generateImplicitJoinPathsToOne);
+
+    /**
      * Whether table-valued functions should be generated as tables.
      */
     boolean generateTableValuedFunctions();

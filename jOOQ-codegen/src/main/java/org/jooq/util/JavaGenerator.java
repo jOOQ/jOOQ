@@ -3763,17 +3763,29 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences()) {
-            out.println();
+            boolean hasInboundForeignKeys = false;
 
-            if (scala) {
-                out.tab(1).println("def this(child : %s[_], key : %s[_, %s]) = {", Table.class, ForeignKey.class, recordType);
-                out.tab(2).println("this(child, key, %s)", tableId);
-                out.tab(1).println("}");
+            uniqueKeyLoop:
+            for (UniqueKeyDefinition u : table.getUniqueKeys()) {
+                if (!u.getForeignKeys().isEmpty()) {
+                    hasInboundForeignKeys = true;
+                    break uniqueKeyLoop;
+                }
             }
-            else {
-                out.tab(1).println("<O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
-                out.tab(2).println("super(child, key, %s);", tableId);
-                out.tab(1).println("}");
+
+            if (hasInboundForeignKeys) {
+                out.println();
+
+                if (scala) {
+                    out.tab(1).println("def this(child : %s[_], key : %s[_, %s]) = {", Table.class, ForeignKey.class, recordType);
+                    out.tab(2).println("this(child, key, %s)", tableId);
+                    out.tab(1).println("}");
+                }
+                else {
+                    out.tab(1).println("<O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
+                    out.tab(2).println("super(child, key, %s);", tableId);
+                    out.tab(1).println("}");
+                }
             }
         }
 

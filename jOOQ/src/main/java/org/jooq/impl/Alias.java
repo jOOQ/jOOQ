@@ -131,7 +131,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
             context.declareAliases(false);
 
-            if (wrapped instanceof Table)
+            if (wrapped instanceof TableImpl)
                 context.scopeMarkStart(wrapping);
 
             SQLDialect family = context.family();
@@ -241,7 +241,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 }
             }
 
-            if (wrapped instanceof Table)
+            if (wrapped instanceof TableImpl)
                 context.scopeMarkEnd(wrapping);
 
             context.declareAliases(true);

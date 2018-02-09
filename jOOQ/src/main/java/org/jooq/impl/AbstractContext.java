@@ -523,25 +523,23 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
-    public final C scopeMarkStart(QueryPart part) {
-        if (scopeLevel >= 0 && scopeMarking == 0)
-            scopeMarkStart0(part);
-
-        scopeMarking++;
-        return (C) this;
-    }
-
-    @Override
     public /* non-final */ C scopeRegister(QueryPart part) {
         return (C) this;
     }
 
     @Override
+    public final C scopeMarkStart(QueryPart part) {
+        if (scopeLevel >= 0 && scopeMarking++ == 0)
+            scopeMarkStart0(part);
+
+        return (C) this;
+    }
+
+    @Override
     public final C scopeMarkEnd(QueryPart part) {
-        if (scopeLevel >= 0 && scopeMarking == 1)
+        if (scopeLevel >= 0 && --scopeMarking == 0)
             scopeMarkEnd0(part);
 
-        scopeMarking--;
         return (C) this;
     }
 

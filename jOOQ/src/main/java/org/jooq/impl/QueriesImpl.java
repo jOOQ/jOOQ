@@ -154,7 +154,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     @Override
     public final void accept(Context<?> ctx) {
         for (Query query : this)
-            ctx.visit(query).sql(';').formatNewLine();
+            ctx.visit(query).sql(';').formatSeparator();
     }
 
     @Override
@@ -180,15 +180,5 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
             return false;
 
         return queries.equals(((QueriesImpl) obj).queries);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (Query query : queries)
-            sb.append(query).append(";\n");
-
-        return sb.toString();
     }
 }

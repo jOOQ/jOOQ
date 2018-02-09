@@ -159,6 +159,16 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
+        // [#7148] If table A references table B only once, then B is the ideal name
+        //         for the implicit JOIN path. Otherwise, fall back to the foreign key name
+        if (definition instanceof ForeignKeyDefinition) {
+            ForeignKeyDefinition fk = (ForeignKeyDefinition) definition;
+            TableDefinition referenced = fk.getReferencedTable();
+
+            if (fk.getKeyTable().getForeignKeys(referenced).size() == 1)
+                return getJavaMethodName(referenced, mode);
+        }
+
         return getJavaClassName0LC(definition, Mode.DEFAULT);
     }
 

@@ -98,6 +98,17 @@ implements TableDefinition {
     }
 
     @Override
+    public final List<ForeignKeyDefinition> getForeignKeys(TableDefinition referenced) {
+        List<ForeignKeyDefinition> result = new ArrayList<ForeignKeyDefinition>();
+
+        for (ForeignKeyDefinition key : getForeignKeys())
+            if (referenced.equals(key.getReferencedTable()))
+                result.add(key);
+
+        return result;
+    }
+
+    @Override
     public final List<CheckConstraintDefinition> getCheckConstraints() {
         return getDatabase().getRelations().getCheckConstraints(this);
     }

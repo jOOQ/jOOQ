@@ -91,6 +91,11 @@ public interface TableDefinition extends Definition {
     List<ForeignKeyDefinition> getForeignKeys();
 
     /**
+     * Get the foreign keys for this table referencing a specific table.
+     */
+    List<ForeignKeyDefinition> getForeignKeys(TableDefinition referenced);
+
+    /**
      * Get the <code>CHECK</code> constraints for this table.
      */
     List<CheckConstraintDefinition> getCheckConstraints();

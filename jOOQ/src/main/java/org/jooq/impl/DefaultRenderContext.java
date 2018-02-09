@@ -208,6 +208,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                         next = new JoinNode(t);
                         childNode.children.put(k, next);
                     }
+
+                    childNode = next;
                 }
             }
         }

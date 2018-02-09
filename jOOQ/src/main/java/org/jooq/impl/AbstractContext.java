@@ -738,7 +738,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             Table<?> result = table;
 
             for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet())
-                result = result.leftJoin(e.getValue().table).onKey(e.getKey());
+                result = result.leftJoin(e.getValue().joinTree()).onKey(e.getKey());
 
             return result;
         }

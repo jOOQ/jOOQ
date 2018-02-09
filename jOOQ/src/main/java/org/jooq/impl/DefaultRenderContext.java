@@ -167,26 +167,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
 
     @Override
-    public RenderContext scopeMarkStart(QueryPart part) {
-        if (scopeLevel >= 0) {
-            ScopeStackElement e = scopeStack.get(part);
-            if (e.positions == null)
-                e.positions = new int[2];
-
-            e.positions[0] = sql.length();
-        }
-
-        return this;
+    void scopeMarkStart0(QueryPart part) {
+        ScopeStackElement e = scopeStack.get(part);
+        e.positions = new int[] { sql.length(), -1 };
     }
 
     @Override
-    public RenderContext scopeMarkEnd(QueryPart part) {
-        if (scopeLevel >= 0) {
-            ScopeStackElement e = scopeStack.get(part);
-            e.positions[1] = sql.length();
-        }
-
-        return this;
+    void scopeMarkEnd0(QueryPart part) {
+        ScopeStackElement e = scopeStack.get(part);
+        e.positions[1] = sql.length();
     }
 
     @Override
@@ -200,7 +189,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 List<Table<?>> tables = new ArrayList<Table<?>>();
 
                 while (root instanceof TableImpl && (child = ((TableImpl<?>) root).child) != null) {
-                    keys.add(((TableImpl<?>) root).path);
+                    keys.add(((TableImpl<?>) root).childPath);
                     tables.add(root);
                     root = child;
                 }
@@ -226,6 +215,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     void scopeEnd0() {
         outer:
@@ -233,7 +223,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (e1.positions == null || e1.joinNode == null)
                 continue outer;
 
-            String replaced = "(" + DSL.using(configuration).render(e1.joinNode.joinTree()) + ")";
+            String replaced = "(" + DSL.using(configuration).renderContext().declareTables(true).render(e1.joinNode.joinTree()) + ")";
             sql.replace(e1.positions[0], e1.positions[1], replaced);
 
             int shift = replaced.length() - (e1.positions[1] - e1.positions[0]);

@@ -80,7 +80,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     protected final Field<?>[]               parameters;
     final Table<?>                           child;
-    final ForeignKey<?, R>                   path;
+    final ForeignKey<?, R>                   childPath;
 
     /**
      * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or
@@ -164,7 +164,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
         this.fields = new Fields<R>();
         this.child = child;
-        this.path = path;
+        this.childPath = path;
 
         if (aliased != null) {
 

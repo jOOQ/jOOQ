@@ -102,6 +102,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     String                                   stringLiteralEscapedApos    = "'";
     int                                      index;
     int                                      scopeLevel                  = -1;
+    int                                      scopeMarking;
     final ScopeStack                         scopeStack;
 
     // [#2665] VisitListener API
@@ -522,7 +523,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
-    public /* non-final */ C scopeMarkStart(QueryPart part) {
+    public final C scopeMarkStart(QueryPart part) {
+        if (scopeLevel >= 0 && scopeMarking == 0)
+            scopeMarkStart0(part);
+
+        scopeMarking++;
         return (C) this;
     }
 
@@ -532,7 +537,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
-    public /* non-final */ C scopeMarkEnd(QueryPart part) {
+    public final C scopeMarkEnd(QueryPart part) {
+        if (scopeLevel >= 0 && scopeMarking == 1)
+            scopeMarkEnd0(part);
+
+        scopeMarking--;
         return (C) this;
     }
 
@@ -546,6 +555,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     void scopeStart0() {}
+    void scopeMarkStart0(QueryPart part) {}
+    void scopeMarkEnd0(QueryPart part) {}
     void scopeEnd0() {}
 
     @Override
@@ -730,6 +741,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 result = result.leftJoin(e.getValue().table).onKey(e.getKey());
 
             return result;
+        }
+
+        @Override
+        public String toString() {
+            return joinTree().toString();
         }
     }
 

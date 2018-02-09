@@ -182,8 +182,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     public RenderContext scopeRegister(QueryPart part) {
         if (scopeLevel >= 0) {
             if (part instanceof TableImpl) {
-                Table<?> table = (Table<?>) part;
-                Table<?> root = table;
+                Table<?> root = (Table<?>) part;
                 Table<?> child = root;
                 List<ForeignKey<?, ?>> keys = new ArrayList<ForeignKey<?, ?>>();
                 List<Table<?>> tables = new ArrayList<Table<?>>();

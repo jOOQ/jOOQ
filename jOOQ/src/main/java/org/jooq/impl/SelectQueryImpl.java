@@ -452,6 +452,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void accept(Context<?> context) {
         context.scopeStart();
+        for (Table<?> table : getFrom())
+            registerTable(context, table);
 
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
@@ -768,6 +770,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         context.scopeEnd();
+    }
+
+    private final void registerTable(Context<?> context, Table<?> table) {
+        if (table instanceof JoinTable) {
+            registerTable(context, ((JoinTable) table).lhs);
+            registerTable(context, ((JoinTable) table).rhs);
+        }
+        else if (table instanceof TableImpl) {
+            context.scopeRegister(table);
+        }
     }
 
     private final void pushWindow(Context<?> context) {
@@ -1786,7 +1798,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return getSelect0();
     }
 
-    private <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
+    private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
 
         // [#109] [#489]: SELECT * is only applied when at least one table
         // from the table source is "unknown", i.e. not generated from a

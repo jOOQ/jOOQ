@@ -142,8 +142,8 @@ implements
     private static final EnumSet<SQLDialect> EMULATE_NATURAL_OUTER_JOIN = EnumSet.of(CUBRID, H2);
     private static final EnumSet<SQLDialect> EMULATE_JOIN_USING         = EnumSet.of(CUBRID, H2);
 
-    private final Table<?>                   lhs;
-    private final Table<?>                   rhs;
+    final Table<?>                           lhs;
+    final Table<?>                           rhs;
 
 
 

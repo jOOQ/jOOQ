@@ -61,11 +61,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Tools.list;
 import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import java.util.EnumSet;
@@ -145,7 +145,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 Select<Record> select =
-                    select(list(field("*"))).from(((Table<?>) wrapped).as(alias));
+                    select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
                 context.sql('(').formatIndentStart().formatNewLine()
                        .visit(select).formatIndentEnd().formatNewLine()
@@ -187,7 +187,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     ? (Select<?>) wrapped
                     : wrapped instanceof DerivedTable
                     ? ((DerivedTable<?>) wrapped).query()
-                    : select(field("*")).from(((Table<?>) wrapped).as(alias))
+                    : select(asterisk()).from(((Table<?>) wrapped).as(alias))
 
                 );
 

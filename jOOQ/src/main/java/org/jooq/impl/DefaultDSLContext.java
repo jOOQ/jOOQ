@@ -65,6 +65,7 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -305,7 +306,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     public DefaultDSLContext(SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
+        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect) {
@@ -313,7 +314,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect) {
@@ -321,7 +322,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect) {
@@ -329,7 +330,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
+        this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, null, null, null, null, null, null,  null,  dialect, settings, null));
     }
 
     public DefaultDSLContext(Configuration configuration) {
@@ -399,7 +400,27 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Meta meta() {
-        return new MetaImpl(configuration());
+        return configuration().metaProvider().provide();
+    }
+
+    @Override
+    public Meta meta(DatabaseMetaData meta) {
+        return new MetaImpl(configuration(), meta);
+    }
+
+    @Override
+    public Meta meta(Catalog... catalogs) {
+        return null;
+    }
+
+    @Override
+    public Meta meta(Schema... schemas) {
+        return null;
+    }
+
+    @Override
+    public Meta meta(Table<?>... tables) {
+        return null;
     }
 
     @Override

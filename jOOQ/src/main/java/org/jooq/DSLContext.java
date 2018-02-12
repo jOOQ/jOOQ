@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.SQLITE;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -250,7 +251,27 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Meta meta();
 
     /**
-     * Access the databse meta data from its serialised form.
+     * Access the database meta data from JDBC {@link DatabaseMetaData}.
+     */
+    Meta meta(DatabaseMetaData meta);
+
+    /**
+     * Access the database meta data from catalog information.
+     */
+    Meta meta(Catalog... catalogs);
+
+    /**
+     * Access the database meta data from schema information.
+     */
+    Meta meta(Schema... schemas);
+
+    /**
+     * Access the database meta data from table information.
+     */
+    Meta meta(Table<?>... tables);
+
+    /**
+     * Access the database meta data from an JAXB-annotated meta model.
      */
     Meta meta(InformationSchema schema);
 

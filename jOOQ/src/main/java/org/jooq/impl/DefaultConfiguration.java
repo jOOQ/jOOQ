@@ -64,6 +64,7 @@ import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.MetaProvider;
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
@@ -109,6 +110,7 @@ public class DefaultConfiguration implements Configuration {
 
     // These objects may be user defined and thus not necessarily serialisable
     private transient ConnectionProvider                connectionProvider;
+    private transient MetaProvider                      metaProvider;
     private transient ExecutorProvider                  executorProvider;
     private transient TransactionProvider               transactionProvider;
     private transient RecordMapperProvider              recordMapperProvider;
@@ -457,6 +459,7 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -511,6 +514,7 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -540,6 +544,7 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
+        MetaProvider metaProvider,
         ExecutorProvider executorProvider,
         TransactionProvider transactionProvider,
         RecordMapperProvider recordMapperProvider,
@@ -558,6 +563,7 @@ public class DefaultConfiguration implements Configuration {
         Map<Object, Object> data)
     {
         set(connectionProvider);
+        set(metaProvider);
         set(executorProvider);
         set(transactionProvider);
         set(recordMapperProvider);
@@ -611,6 +617,31 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
+            metaProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(MetaProvider newMetaProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            newMetaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -639,6 +670,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecutorProvider newExecutorProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             newExecutorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -662,6 +694,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(TransactionProvider newTransactionProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             newTransactionProvider,
             recordMapperProvider,
@@ -690,6 +723,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             newRecordMapperProvider,
@@ -718,6 +752,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -746,6 +781,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -774,6 +810,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -802,6 +839,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -830,6 +868,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -858,6 +897,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -881,6 +921,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConverterProvider newConverterProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -905,6 +946,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Clock newClock) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -927,6 +969,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -950,6 +993,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
             connectionProvider,
+            metaProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -998,6 +1042,12 @@ public class DefaultConfiguration implements Configuration {
             this.connectionProvider = new NoConnectionProvider();
         }
 
+        return this;
+    }
+
+    @Override
+    public final Configuration set(MetaProvider newMetaProvider) {
+        this.metaProvider = newMetaProvider;
         return this;
     }
 
@@ -1269,6 +1319,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final MetaProvider metaProvider() {
+        return metaProvider != null
+             ? metaProvider
+             : new DefaultMetaProvider(this);
+    }
+
+    @Override
     public final ExecutorProvider executorProvider() {
         return executorProvider != null
              ? executorProvider
@@ -1405,6 +1462,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(connectionProvider instanceof Serializable
             ? connectionProvider
             : null);
+        oos.writeObject(metaProvider instanceof Serializable
+            ? metaProvider
+            : null);
         oos.writeObject(transactionProvider instanceof Serializable
             ? transactionProvider
             : null);
@@ -1456,6 +1516,7 @@ public class DefaultConfiguration implements Configuration {
         ois.defaultReadObject();
 
         connectionProvider = (ConnectionProvider) ois.readObject();
+        metaProvider = (MetaProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         recordUnmapperProvider = (RecordUnmapperProvider) ois.readObject();

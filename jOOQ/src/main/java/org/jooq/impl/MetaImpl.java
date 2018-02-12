@@ -119,6 +119,7 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
@@ -142,11 +143,13 @@ final class MetaImpl implements Meta, Serializable {
 
     private final DSLContext                 ctx;
     private final Configuration              configuration;
+    private final DatabaseMetaData           databaseMetaData;
     private final boolean                    inverseSchemaCatalog;
 
-    MetaImpl(Configuration configuration) {
+    MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
         this.ctx = DSL.using(configuration);
         this.configuration = configuration;
+        this.databaseMetaData = databaseMetaData;
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(configuration.family());
     }
 
@@ -155,12 +158,20 @@ final class MetaImpl implements Meta, Serializable {
     }
 
     private final Result<Record> meta(final MetaFunction consumer) {
-        return ctx.connectionResult(new ConnectionCallable<Result<Record>>() {
-            @Override
-            public Result<Record> run(Connection connection) throws SQLException {
-                return consumer.run(connection.getMetaData());
+        if (databaseMetaData == null)
+            return ctx.connectionResult(new ConnectionCallable<Result<Record>>() {
+                @Override
+                public Result<Record> run(Connection connection) throws SQLException {
+                    return consumer.run(connection.getMetaData());
+                }
+            });
+        else
+            try {
+                return consumer.run(databaseMetaData);
             }
-        });
+            catch (SQLException e) {
+                throw new DataAccessException("Error while running MetaFunction", e);
+            }
     }
 
     @Override

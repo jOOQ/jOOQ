@@ -255,6 +255,11 @@ public interface Configuration extends Serializable {
     ConnectionProvider connectionProvider();
 
     /**
+     * Get this configuration's underlying meta provider.
+     */
+    MetaProvider metaProvider();
+
+    /**
      * Get this configuration's underlying executor provider.
      * <p>
      * Asynchronous operations will call back to this SPI to obtain an executor.
@@ -430,6 +435,18 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Change this configuration to hold a new meta provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newMetaProvider The new meta provider to be contained in the
+     *            changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(MetaProvider newMetaProvider);
 
     /**
      * Change this configuration to hold a new executor provider.
@@ -775,6 +792,15 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new meta provider.
+     *
+     * @param newMetaProvider The new meta provider to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(MetaProvider newMetaProvider);
 
     /**
      * Create a derived configuration from this one, with a new executor.

@@ -53,6 +53,7 @@ import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.MetaProvider;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
@@ -122,6 +123,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public ConnectionProvider connectionProvider() {
         return new MockConnectionProvider(delegate.connectionProvider(), provider);
+    }
+
+    @Override
+    public MetaProvider metaProvider() {
+        return delegate.metaProvider();
     }
 
     @Override
@@ -204,6 +210,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration set(ConnectionProvider newConnectionProvider) {
         return delegate.set(newConnectionProvider);
+    }
+
+    @Override
+    public Configuration set(MetaProvider newMetaProvider) {
+        return delegate.set(newMetaProvider);
     }
 
     @Override
@@ -341,6 +352,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(ConnectionProvider newConnectionProvider) {
         return delegate.derive(newConnectionProvider);
+    }
+
+    @Override
+    public Configuration derive(MetaProvider newMetaProvider) {
+        return delegate.derive(newMetaProvider);
     }
 
     @Override

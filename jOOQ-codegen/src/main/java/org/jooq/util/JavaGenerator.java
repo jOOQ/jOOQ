@@ -3647,8 +3647,27 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : %s, aliased : %s[%s], parameters : %s[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, %s.comment(\"%s\"))[[before= with ][separator= with ][%s]] {",
-                    className, Name.class, Table.class, recordType, out.ref("scala.Array"), Field.class, TableImpl.class, recordType, schemaId, DSL.class, escapeString(comment), interfaces);
+            out.println("class %s(", className);
+            out.tab(1).println("alias : %s,", Name.class);
+            out.tab(1).println("child : %s[_ <: %s],", Table.class, Record.class);
+            out.tab(1).println("path : %s[_ <: %s, %s],", ForeignKey.class, Record.class, recordType);
+            out.tab(1).println("aliased : %s[%s],", Table.class, recordType);
+            out.tab(1).println("parameters : %s[ %s[_] ]", out.ref("scala.Array"), Field.class);
+            out.println(")");
+            out.println("extends %s[%s](", TableImpl.class, recordType);
+            out.tab(1).println("alias,");
+            out.tab(1).println("%s,", schemaId);
+            out.tab(1).println("child,");
+            out.tab(1).println("path,");
+            out.tab(1).println("aliased,");
+            out.tab(1).println("parameters,");
+            out.tab(1).println("%s.comment(\"%s\")", DSL.class, escapeString(comment));
+            out.println(")");
+
+            if (!interfaces.isEmpty())
+                out.println("[[before= with ][separator= with ][%s]]", interfaces);
+
+            out.println("{");
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -3688,7 +3707,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("def this() = {");
-            out.tab(2).println("this(%s.name(\"%s\"), null, null)", DSL.class, table.getOutputName());
+            out.tab(2).println("this(%s.name(\"%s\"), null, null, null, null)", DSL.class, table.getOutputName());
             out.tab(1).println("}");
         }
         else {
@@ -3711,12 +3730,12 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("def this(alias : %s) = {", String.class);
-            out.tab(2).println("this(%s.name(alias), %s, null)", DSL.class, tableId);
+            out.tab(2).println("this(%s.name(alias), null, null, %s, null)", DSL.class, tableId);
             out.tab(1).println("}");
 
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("def this(alias : %s) = {", Name.class);
-            out.tab(2).println("this(alias, %s, null)", tableId);
+            out.tab(2).println("this(alias, null, null, %s, null)", tableId);
             out.tab(1).println("}");
         }
 
@@ -3741,9 +3760,9 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).println("private def this(alias : %s, aliased : %s[%s]) = {", Name.class, Table.class, recordType);
             if (table.isTableValuedFunction())
-                out.tab(2).println("this(alias, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, table.getParameters().size());
+                out.tab(2).println("this(alias, null, null, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, table.getParameters().size());
             else
-                out.tab(2).println("this(alias, aliased, null)");
+                out.tab(2).println("this(alias, null, null, aliased, null)");
 
             out.tab(1).println("}");
         }
@@ -3777,8 +3796,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println();
 
                 if (scala) {
-                    out.tab(1).println("def this(child : %s[_], key : %s[_, %s]) = {", Table.class, ForeignKey.class, recordType);
-                    out.tab(2).println("this(child, key, %s)", tableId);
+                    out.tab(1).println("def this(child : %s[_ <: %s], key : %s[_ <: %s, %s]) = {", Table.class, Record.class, ForeignKey.class, Record.class, recordType);
+                    out.tab(2).println("this(TableImpl.pathAlias(child, key), child, key, %s, null)", tableId);
                     out.tab(1).println("}");
                 }
                 else {

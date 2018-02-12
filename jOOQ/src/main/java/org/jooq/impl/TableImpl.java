@@ -155,11 +155,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         this(name, schema, null, null, aliased, parameters, comment);
     }
 
-    public <O extends Record> TableImpl(Table<O> child, ForeignKey<O, R> path, Table<R> parent) {
+    public TableImpl(Table<?> child, ForeignKey<?, R> path, Table<R> parent) {
         this(pathAlias(child, path), null, child, path, parent, null, DSL.comment(parent.getComment()));
     }
 
-    private static final Name pathAlias(Table<?> child, ForeignKey<?, ?> path) {
+    protected static final Name pathAlias(Table<?> child, ForeignKey<?, ?> path) {
         Name name = DSL.name(path.getName());
 
         if (child instanceof TableImpl) {
@@ -174,7 +174,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         return DSL.name("alias_" + Tools.hash(name));
     }
 
-    public <O extends Record> TableImpl(Name name, Schema schema, Table<O> child, ForeignKey<O, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+    public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         super(name, schema, comment);
 
         this.fields = new Fields<R>();

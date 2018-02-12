@@ -282,7 +282,7 @@ final class InformationSchemaMetaImpl implements Meta {
                 continue indexLoop;
             }
 
-            IndexImpl index = (IndexImpl) AbstractKeys.createIndex(i.getIndexName(), table, c.toArray(EMPTY_SORTFIELD), Boolean.TRUE.equals(i.isIsUnique()));
+            IndexImpl index = (IndexImpl) Internal.createIndex(i.getIndexName(), table, c.toArray(EMPTY_SORTFIELD), Boolean.TRUE.equals(i.isIsUnique()));
 
             table.indexes.add(index);
             indexesByName.put(indexName, index);
@@ -351,7 +351,7 @@ final class InformationSchemaMetaImpl implements Meta {
                         continue tableConstraintLoop;
                     }
 
-                    UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) AbstractKeys.createUniqueKey(table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) Internal.createUniqueKey(table, xc.getConstraintName(), c.toArray(new TableField[0]));
 
                     if (xc.getConstraintType() == PRIMARY_KEY) {
                         table.primaryKey = key;
@@ -399,7 +399,7 @@ final class InformationSchemaMetaImpl implements Meta {
                         continue tableConstraintLoop;
                     }
 
-                    ForeignKey<Record, Record> key = AbstractKeys.createForeignKey(uniqueKey, table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    ForeignKey<Record, Record> key = Internal.createForeignKey(uniqueKey, table, xc.getConstraintName(), c.toArray(new TableField[0]));
                     table.foreignKeys.add(key);
                     break;
                 }

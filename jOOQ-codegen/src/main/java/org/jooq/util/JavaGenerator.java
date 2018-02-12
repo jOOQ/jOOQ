@@ -101,13 +101,13 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 // ...
 import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.Internal;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -927,9 +927,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala)
-                out.tab(1).println("private object Indexes%s extends %s {", block, AbstractKeys.class);
+                out.tab(1).println("private object Indexes%s {", block);
             else
-                out.tab(1).println("private static class Indexes%s extends %s {", block, AbstractKeys.class);
+                out.tab(1).println("private static class Indexes%s {", block);
         }
 
         // (Name name, Table<?> table, SortField<?>[] sortFields, boolean unique)
@@ -948,7 +948,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(2).println("val %s : %s = %s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
                 getStrategy().getJavaIdentifier(index),
                 Index.class,
-                AbstractKeys.class,
+                Internal.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
                 OrderField.class,
@@ -956,9 +956,10 @@ public class JavaGenerator extends AbstractGenerator {
                 index.isUnique()
             );
         else
-            out.tab(2).println("public static %s %s = createIndex(\"%s\", %s, new %s[] { %s }, %s);",
+            out.tab(2).println("public static %s %s = %s.createIndex(\"%s\", %s, new %s[] { %s }, %s);",
                 Index.class,
                 getStrategy().getJavaIdentifier(index),
+                Internal.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
                 OrderField.class,
@@ -981,9 +982,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala)
-            	out.tab(1).println("private object Identities%s extends %s {", block, AbstractKeys.class);
+            	out.tab(1).println("private object Identities%s {", block);
             else
-                out.tab(1).println("private static class Identities%s extends %s {", block, AbstractKeys.class);
+                out.tab(1).println("private static class Identities%s {", block);
         }
 
         printDeprecationIfUnknownType(out, identityTypeFull);
@@ -993,15 +994,16 @@ public class JavaGenerator extends AbstractGenerator {
                 Identity.class,
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
                 identityType,
-                AbstractKeys.class,
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
         else
-            out.tab(2).println("public static %s<%s, %s> %s = createIdentity(%s, %s);",
+            out.tab(2).println("public static %s<%s, %s> %s = %s.createIdentity(%s, %s);",
                 Identity.class,
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
                 identityType,
                 getStrategy().getJavaIdentifier(identity),
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
     }
@@ -1018,9 +1020,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala)
-            	out.tab(1).println("private object UniqueKeys%s extends %s {", block, AbstractKeys.class);
+            	out.tab(1).println("private object UniqueKeys%s {", block);
             else
-                out.tab(1).println("private static class UniqueKeys%s extends %s {", block, AbstractKeys.class);
+                out.tab(1).println("private static class UniqueKeys%s {", block);
         }
 
         if (scala)
@@ -1028,15 +1030,16 @@ public class JavaGenerator extends AbstractGenerator {
                 getStrategy().getJavaIdentifier(uniqueKey),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
-                AbstractKeys.class,
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
         else
-            out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, \"%s\", [[%s]]);",
+            out.tab(2).println("public static final %s<%s> %s = %s.createUniqueKey(%s, \"%s\", [[%s]]);",
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(uniqueKey),
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
@@ -1054,9 +1057,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala)
-            	out.tab(1).println("private object ForeignKeys%s extends %s {", block, AbstractKeys.class);
+            	out.tab(1).println("private object ForeignKeys%s {", block);
             else
-                out.tab(1).println("private static class ForeignKeys%s extends %s {", block, AbstractKeys.class);
+                out.tab(1).println("private static class ForeignKeys%s {", block);
         }
 
         if (scala)
@@ -1065,17 +1068,18 @@ public class JavaGenerator extends AbstractGenerator {
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
-                AbstractKeys.class,
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)));
         else
-            out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, \"%s\", [[%s]]);",
+            out.tab(2).println("public static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, \"%s\", [[%s]]);",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(foreignKey),
+                Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 escapeString(foreignKey.getOutputName()),
@@ -3797,7 +3801,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.tab(1).println("def this(child : %s[_ <: %s], key : %s[_ <: %s, %s]) = {", Table.class, Record.class, ForeignKey.class, Record.class, recordType);
-                    out.tab(2).println("this(TableImpl.pathAlias(child, key), child, key, %s, null)", tableId);
+                    out.tab(2).println("this(%s.createPathAlias(child, key), child, key, %s, null)", Internal.class, tableId);
                     out.tab(1).println("}");
                 }
                 else {

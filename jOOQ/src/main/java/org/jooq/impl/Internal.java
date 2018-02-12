@@ -40,6 +40,7 @@ package org.jooq.impl;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -115,6 +116,20 @@ public final class Internal {
         return result;
     }
 
+    public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
+        Name name = DSL.name(path.getName());
+
+        if (child instanceof TableImpl) {
+            Table<?> ancestor = ((TableImpl<?>) child).child;
+
+            if (ancestor != null)
+                name = createPathAlias(ancestor, ((TableImpl<?>) child).childPath).append(name);
+            else
+                name = child.getQualifiedName().append(name);
+        }
+
+        return DSL.name("alias_" + Tools.hash(name));
+    }
 
     private Internal() {}
 }

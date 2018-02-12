@@ -44,6 +44,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
 
 import java.util.Arrays;
@@ -156,22 +157,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Table<?> child, ForeignKey<?, R> path, Table<R> parent) {
-        this(pathAlias(child, path), null, child, path, parent, null, DSL.comment(parent.getComment()));
-    }
-
-    protected static final Name pathAlias(Table<?> child, ForeignKey<?, ?> path) {
-        Name name = DSL.name(path.getName());
-
-        if (child instanceof TableImpl) {
-            Table<?> ancestor = ((TableImpl<?>) child).child;
-
-            if (ancestor != null)
-                name = pathAlias(ancestor, ((TableImpl<?>) child).childPath).append(name);
-            else
-                name = child.getQualifiedName().append(name);
-        }
-
-        return DSL.name("alias_" + Tools.hash(name));
+        this(createPathAlias(child, path), null, child, path, parent, null, DSL.comment(parent.getComment()));
     }
 
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {

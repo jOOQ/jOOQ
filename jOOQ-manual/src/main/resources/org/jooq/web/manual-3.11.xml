@@ -4827,6 +4827,117 @@ WHERE NOT EXISTS (
                                         </html></content>
 									</section>
 
+
+                                    <section id="implicit-join">
+                                        <title>Implicit JOIN</title>
+                                        <content><html>
+                                            <p>
+                                                In SQL, a lot of <reference id="join-clause" title="explicit JOIN clauses"/> are written simply to retrieve a parent table's column from a given child table. For example, we'll write:
+                                            </p>
+
+</html><sql><![CDATA[-- Get all books, their authors, and their respective language
+SELECT
+  a.first_name,
+  a.last_name,
+  b.title,
+  l.cd AS language
+FROM book b
+JOIN author a ON b.author_id = a.id
+JOIN language l ON b.language_id = l.id;
+
+-- Count the number of books by author and language
+SELECT
+  a.first_name,
+  a.last_name,
+  l.cd AS language,
+  COUNT(*)
+FROM book
+JOIN author a ON b.author_id = a.id
+JOIN language l ON b.language_id = l.id
+GROUP BY a.id, a.first_name, a.last_name, l.cd
+ORDER BY a.first_name, a.last_name, l.cd]]></sql><html>
+
+                                            <p>
+                                                There is quite a bit of syntactic ceremony (or we could even call it "noise") to get a relatively simple job done. A much simpler notation would be using implicit joins:
+                                            </p>
+
+</html><sql><![CDATA[-- Get all books, their authors, and their respective language
+SELECT
+  b.author.first_name,
+  b.author.last_name,
+  b.title,
+  b.language.cd AS language
+FROM book b;
+
+-- Count the number of books by author and language
+SELECT
+  b.author.first_name,
+  b.author.last_name,
+  b.language.cd AS language,
+  COUNT(*)
+FROM book
+GROUP BY
+  b.author_id,
+  b.author.first_name,
+  b.author.last_name,
+  b.language.cd
+ORDER BY
+  b.author.first_name,
+  b.author.last_name,
+  b.language.cd]]></sql><html>
+                                            <p>
+                                                Notice how this alternative notation (depending on your taste) may look more tidy and straightforward, as the semantics of accessing a table's parent table (or an entity's parent entity) is straightforward.
+                                            </p>
+
+                                            <p>
+                                                From jOOQ 3.11 onwards, this syntax is supported for to-one relationship navigation. The code generator produces relevant navigation methods on generated tables, which can be used in a type safe way. The navigation method names are:
+                                            </p>
+
+                                            <ul>
+                                                <li>The parent table name, if there is only one foreign key between child table and parent table</li>
+                                                <li>The foreign key name, if there are more than one foreign keys between child table and parent table</li>
+                                            </ul>
+
+                                            <p>
+                                                This default behaviour can be overridden by using a <reference id="codegen-generatorstrategy" title="Code Generator Strategy"/>.
+                                            </p>
+
+                                            <p>
+                                                The jOOQ version of the previous queries looks like this:
+                                            </p>
+
+</html><java><![CDATA[// Get all books, their authors, and their respective language
+create.select(
+          BOOK.author().FIRST_NAME,
+          BOOK.author().LAST_NAME,
+          BOOK.TITLE,
+          BOOK.language().CD.as("language"))
+      .from(BOOK)
+      .fetch();
+
+// Count the number of books by author and language
+create.select(
+          BOOK.author().FIRST_NAME,
+          BOOK.author().LAST_NAME,
+          BOOK.language().CD.as("language"),
+          count())
+      .from(BOOK)
+      .groupBy(
+          BOOK.AUTHOR_ID,
+          BOOK.author().FIRST_NAME,
+          BOOK.author().LAST_NAME,
+          BOOK.language().CD)
+      .orderBy(
+          BOOK.author().FIRST_NAME,
+          BOOK.author().LAST_NAME,
+          BOOK.language().CD)
+      .fetch();]]></java><html>
+                                            <p>
+                                                The generated SQL is almost identical to the original one - there is no performance penalty to this syntax.
+                                            </p>
+                                        </html></content>
+                                    </section>
+
 									<section id="where-clause">
 										<title>The WHERE clause</title>
 										<content><html>

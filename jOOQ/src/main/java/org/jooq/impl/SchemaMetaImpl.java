@@ -46,7 +46,6 @@ import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
-import org.jooq.Meta;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -55,7 +54,9 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-final class SchemaMetaImpl implements Meta {
+final class SchemaMetaImpl extends AbstractMeta {
+
+    private static final long   serialVersionUID = -505810795492145873L;
 
     @SuppressWarnings("unused")
     private final Configuration configuration;

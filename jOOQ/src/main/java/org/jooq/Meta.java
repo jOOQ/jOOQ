@@ -80,13 +80,11 @@ import org.jooq.util.xml.jaxb.InformationSchema;
 public interface Meta {
 
     /**
-     * Get all catalog objects from the underlying {@link DatabaseMetaData}.
+     * Get all catalog objects from the underlying meta data source.
      * <p>
      * For those databases that don't really support JDBC meta data catalogs, a
      * single empty catalog (named <code>""</code>) will be returned. In other
      * words, there is always at least one catalog in a database.
-     * <p>
-     * NOTE: Catalogs are experimental in jOOQ 3.0
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
@@ -95,7 +93,27 @@ public interface Meta {
     List<Catalog> getCatalogs() throws DataAccessException;
 
     /**
-     * Get all schema objects from the underlying {@link DatabaseMetaData}.
+     * Get a catalog object by name from the underlying meta data source, or
+     * <code>null</code> if no such object exists.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    Catalog getCatalog(String name) throws DataAccessException;
+
+    /**
+     * Get a catalog object by name from the underlying meta data source, or
+     * <code>null</code> if no such object exists.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    Catalog getCatalog(Name name) throws DataAccessException;
+
+    /**
+     * Get all schema objects from the underlying meta data source.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
@@ -104,7 +122,25 @@ public interface Meta {
     List<Schema> getSchemas() throws DataAccessException;
 
     /**
-     * Get all table objects from the underlying {@link DatabaseMetaData}.
+     * Get all schema objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<Schema> getSchemas(String name) throws DataAccessException;
+
+    /**
+     * Get all schema objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<Schema> getSchemas(Name name) throws DataAccessException;
+
+    /**
+     * Get all table objects from the underlying meta data source.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
@@ -113,7 +149,25 @@ public interface Meta {
     List<Table<?>> getTables() throws DataAccessException;
 
     /**
-     * Get all sequence objects from the underlying {@link DatabaseMetaData}.
+     * Get all table objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<Table<?>> getTables(String name) throws DataAccessException;
+
+    /**
+     * Get all table objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<Table<?>> getTables(Name name) throws DataAccessException;
+
+    /**
+     * Get all sequence objects from the underlying meta data source.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
@@ -122,7 +176,25 @@ public interface Meta {
     List<Sequence<?>> getSequences() throws DataAccessException;
 
     /**
-     * Get all primary keys from the underlying {@link DatabaseMetaData}.
+     * Get all sequence objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    List<Sequence<?>> getSequences(String name) throws DataAccessException;
+
+    /**
+     * Get all sequence objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    List<Sequence<?>> getSequences(Name name) throws DataAccessException;
+
+    /**
+     * Get all primary keys from the underlying meta data source.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects

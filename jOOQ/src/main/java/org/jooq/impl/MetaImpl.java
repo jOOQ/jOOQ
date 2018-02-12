@@ -131,12 +131,8 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class MetaImpl implements Meta, Serializable {
+final class MetaImpl extends AbstractMeta implements Serializable {
 
-
-    /**
-     * Generated UID
-     */
     private static final long                serialVersionUID                 = 3582980783173033809L;
     private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);

@@ -57,7 +57,6 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
-import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -77,7 +76,9 @@ import org.jooq.util.xml.jaxb.TableConstraint;
 /**
  * @author Lukas Eder
  */
-final class InformationSchemaMetaImpl implements Meta {
+final class InformationSchemaMetaImpl extends AbstractMeta {
+
+    private static final long                               serialVersionUID = -1623783405104005307L;
 
     private final Configuration                             configuration;
     private final InformationSchema                         source;

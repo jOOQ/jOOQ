@@ -153,8 +153,16 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     @Override
     public final void accept(Context<?> ctx) {
-        for (Query query : this)
-            ctx.visit(query).sql(';').formatSeparator();
+        boolean first = true;
+
+        for (Query query : this) {
+            if (first)
+                first = false;
+            else
+                ctx.formatSeparator();
+
+            ctx.visit(query).sql(';');
+        }
     }
 
     @Override

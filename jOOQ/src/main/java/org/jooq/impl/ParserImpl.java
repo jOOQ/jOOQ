@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
+import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.arrayAgg;
@@ -316,6 +318,7 @@ import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeUsingStep;
+import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -365,6 +368,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -373,10 +377,14 @@ import org.jooq.tools.reflect.Reflect;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ParserImpl implements Parser {
 
-    private final DSLContext    dsl;
+    private final DSLContext           dsl;
+    private final ParseWithMetaLookups metaLookups;
+    private final Meta                 meta;
 
     ParserImpl(Configuration configuration) {
         this.dsl = DSL.using(configuration);
+        this.metaLookups = configuration.settings().getParseWithMetaLookups();
+        this.meta = metaLookups == IGNORE_ON_FAILURE || metaLookups == THROW_ON_FAILURE ? dsl.meta() : null;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

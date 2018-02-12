@@ -112,6 +112,9 @@ public class Settings
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeDeleteWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
+    @XmlElement(defaultValue = "IGNORE_ON_FAILURE")
+    @XmlSchemaType(name = "string")
+    protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.IGNORE_ON_FAILURE;
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -992,6 +995,30 @@ public class Settings
         this.executeDeleteWithoutWhere = value;
     }
 
+    /**
+     * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
+     *
+     * @return
+     *     possible object is
+     *     {@link ParseWithMetaLookups }
+     *
+     */
+    public ParseWithMetaLookups getParseWithMetaLookups() {
+        return parseWithMetaLookups;
+    }
+
+    /**
+     * Sets the value of the parseWithMetaLookups property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseWithMetaLookups }
+     *
+     */
+    public void setParseWithMetaLookups(ParseWithMetaLookups value) {
+        this.parseWithMetaLookups = value;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -1164,6 +1191,11 @@ public class Settings
 
     public Settings withExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteDeleteWithoutWhere(value);
+        return this;
+    }
+
+    public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
+        setParseWithMetaLookups(value);
         return this;
     }
 

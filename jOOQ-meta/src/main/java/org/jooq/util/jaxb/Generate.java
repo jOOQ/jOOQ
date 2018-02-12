@@ -206,7 +206,7 @@ public class Generate implements Serializable
     }
 
     /**
-     * Generate implict join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
+     * Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
      *
      * @return
      *     possible object is

@@ -391,6 +391,10 @@ final class ParserImpl implements Parser {
     // Top level parsing
     // -----------------------------------------------------------------------------------------------------------------
 
+    private final ParserContext ctx(String sql, Object... bindings) {
+        return new ParserContext(dsl, meta, metaLookups, sql, bindings);
+    }
+
     @Override
     public final Queries parse(String sql) {
         return parse(sql, new Object[0]);
@@ -398,7 +402,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Queries parse(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         List<Query> result = new ArrayList<Query>();
         Query query;
 
@@ -425,7 +429,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Query parseQuery(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Query result = parseQuery(ctx, false);
 
         ctx.done("Unexpected content after end of query input");
@@ -439,7 +443,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final ResultQuery<?> parseResultQuery(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
 
         ctx.done("Unexpected content after end of query input");
@@ -453,7 +457,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Table<?> parseTable(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Table<?> result = parseTable(ctx);
 
         ctx.done("Unexpected content after end of table input");
@@ -467,7 +471,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Field<?> parseField(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Field<?> result = parseField(ctx);
 
         ctx.done("Unexpected content after end of field input");
@@ -481,7 +485,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Row parseRow(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         RowN result = parseRow(ctx);
 
         ctx.done("Unexpected content after end of row input");
@@ -495,7 +499,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Condition parseCondition(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Condition result = parseCondition(ctx);
 
         ctx.done("Unexpected content after end of condition input");
@@ -509,7 +513,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Name parseName(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Name result = parseName(ctx);
 
         ctx.done("Unexpected content after end of name input");
@@ -7088,16 +7092,26 @@ final class ParserImpl implements Parser {
     }
 
     static final class ParserContext {
-        final DSLContext dsl;
-        final String     sqlString;
-        final char[]     sql;
-        int              position  = 0;
-        final Object[]   bindings;
-        int              bindIndex = 0;
-        String           delimiter = ";";
+        final DSLContext           dsl;
+        final Meta                 meta;
+        final ParseWithMetaLookups metaLookups;
+        final String               sqlString;
+        final char[]               sql;
+        int                        position  = 0;
+        final Object[]             bindings;
+        int                        bindIndex = 0;
+        String                     delimiter = ";";
 
-        ParserContext(DSLContext dsl, String sqlString, Object[] bindings) {
+        ParserContext(
+                DSLContext dsl,
+                Meta meta,
+                ParseWithMetaLookups metaLookups,
+                String sqlString,
+                Object[] bindings
+        ) {
             this.dsl = dsl;
+            this.meta = meta;
+            this.metaLookups = metaLookups;
             this.sqlString = sqlString;
             this.sql = sqlString.toCharArray();
             this.bindings = bindings;

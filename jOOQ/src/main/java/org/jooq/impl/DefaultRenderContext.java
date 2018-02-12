@@ -170,6 +170,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     void scopeMarkStart0(QueryPart part) {
         ScopeStackElement e = scopeStack.get(part);
         e.positions = new int[] { sql.length(), -1 };
+        e.indent = indent;
     }
 
     @Override
@@ -225,9 +226,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 continue outer;
 
             if (!e1.joinNode.children.isEmpty()) {
-                String replaced = "(" + DSL.using(configuration).renderContext().declareTables(true).render(e1.joinNode.joinTree()) + ")";
-                sql.replace(e1.positions[0], e1.positions[1], replaced);
+                String replaced = configuration
+                    .dsl()
+                    .renderContext()
+                    .declareTables(true)
+                    .sql('(')
+                    .formatIndentStart(e1.indent)
+                    .formatIndentStart()
+                    .formatNewLine()
+                    .visit(e1.joinNode.joinTree())
+                    .formatNewLine()
+                    .sql(')')
+                    .render();
 
+                sql.replace(e1.positions[0], e1.positions[1], replaced);
                 int shift = replaced.length() - (e1.positions[1] - e1.positions[0]);
 
                 inner:

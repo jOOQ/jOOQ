@@ -50,6 +50,7 @@
     <xsl:param name="relativePath"/>
     <xsl:param name="root"/>
     <xsl:param name="minorVersion"/>
+    <xsl:param name="currentVersion"/>
     <xsl:param name="bnf"/>
 
     <xsl:variable name="apos">&apos;</xsl:variable>
@@ -65,6 +66,26 @@
 &lt;?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
+</xsl:text>
+        <xsl:if test="$minorVersion != $currentVersion">
+            <xsl:text disable-output-escaping="yes">
+$canonical = true;
+function printCanonical() {
+?&gt;
+</xsl:text>
+    <link rel="canonical">
+        <xsl:attribute name="href">
+            <xsl:text>https://www.jooq.org</xsl:text>
+            <xsl:apply-templates select="/manuals/manual[@version = $currentVersion]//section[@id = $sectionID]" mode="href-latest"/>
+        </xsl:attribute>
+    </link>
+    <xsl:text disable-output-escaping="yes">
+&lt;?php
+}
+</xsl:text>
+        </xsl:if>
+
+        <xsl:text>
 require '</xsl:text>
         <xsl:value-of select="$relativePath"/>
 <xsl:text disable-output-escaping="yes">frame.php';
@@ -203,6 +224,20 @@ function printContent() {
             <xsl:otherwise>
                 <xsl:text>&lt;?=$root?&gt;/</xsl:text>
                 <xsl:value-of select="$root"/>
+            </xsl:otherwise>
+        </xsl:choose>
+
+        <xsl:value-of select="@id"/>
+        <xsl:text>/</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="section" mode="href-latest">
+        <xsl:choose>
+            <xsl:when test="name(../..) = 'section'">
+                <xsl:apply-templates select="../.." mode="href-latest"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>&lt;?=$root?&gt;/doc/latest/</xsl:text>
             </xsl:otherwise>
         </xsl:choose>
 

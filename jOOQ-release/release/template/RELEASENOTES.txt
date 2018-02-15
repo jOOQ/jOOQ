@@ -10,6 +10,25 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.10.5 - February 15, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#7088 - Add support for SET SCHEMA and SET CATALOG
+
+Bug Fixes
+---------
+#7080 - Support PostgreSQL SMALLSERIAL and BIGSERIAL types in parser / DDLDatabase
+#7090 - Parser and DDLDatabase cannot parse certain PostgreSQL types
+#7092 - ParsingStatement is not overriding all methods from DefaultStatement
+#7110 - Compilation error in generated DAOs when primary key is a composite type
+#7128 - NPE while fetching certain indexes during code generation
+#7159 - Add public internal API for use by code generator (to work around Scala issues)
+#7170 - Various parser bugs / missing features
+
 
 Version 3.10.4 - January 16, 2018
 ================================================================================

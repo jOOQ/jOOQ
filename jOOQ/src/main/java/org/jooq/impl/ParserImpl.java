@@ -6046,9 +6046,12 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TIMESTAMP")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
+
                     if (parseKeywordIf(ctx, "WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMESTAMPWITHTIMEZONE : SQLDataType.TIMESTAMPWITHTIMEZONE(precision);
-                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    else
+
+                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIMESTAMP : SQLDataType.TIMESTAMP(precision);
                 }
 
@@ -6058,9 +6061,12 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TIME")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
+
                     if (parseKeywordIf(ctx, "WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
-                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    else
+
+                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
                 }
 

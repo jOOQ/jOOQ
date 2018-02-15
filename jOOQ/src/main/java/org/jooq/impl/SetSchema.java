@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
 import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Keywords.K_SEARCH_PATH;
 import static org.jooq.impl.Keywords.K_SESSION;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_USE;
@@ -77,10 +78,13 @@ final class SetSchema extends AbstractQuery {
                 ctx.visit(K_USE).sql(' ').visit(schema);
                 break;
 
+            case POSTGRES:
+                ctx.visit(K_SET).sql(' ').visit(K_SEARCH_PATH).sql(" = ").visit(schema);
+                break;
+
             case DERBY:
             case H2:
             case HSQLDB:
-            case POSTGRES:
             default:
                 ctx.visit(K_SET).sql(' ').visit(K_SCHEMA).sql(' ').visit(schema);
                 break;

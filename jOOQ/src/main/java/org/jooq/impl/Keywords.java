@@ -240,6 +240,7 @@ final class Keywords {
     static final Keyword K_ROWS_WITH_TIES                   = keyword("rows with ties");
     static final Keyword K_SCHEMA                           = keyword("schema");
     static final Keyword K_SCN                              = keyword("scn");
+    static final Keyword K_SEARCH_PATH                      = keyword("search_path");
     static final Keyword K_SELECT                           = keyword("select");
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");

@@ -141,38 +141,41 @@ public class SQLiteDatabase extends AbstractDatabase {
             final Result<Record> columns = entry.getValue();
 
             final SchemaDefinition tableSchema = getSchemata().get(0);
+            if (tableSchema == null)
+                continue indexLoop;
+
             final String indexName = index.get(fIndexName);
             final String tableName = index.get(SQLiteMaster.NAME);
             final TableDefinition table = getTable(tableSchema, tableName);
+            if (table == null)
+                continue indexLoop;
+
             final boolean unique = index.get(fUnique);
 
-            if (table != null) {
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            for (Record column : columns)
+                if (table.getColumn(column.get(fColumnName)) == null)
+                    continue indexLoop;
 
-                // [#6310] [#6620] Function-based indexes are not yet supported
-                for (Record column : columns)
-                    if (table.getColumn(column.get(fColumnName)) == null)
-                        continue indexLoop;
+            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 
-                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
-                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
-
-                    {
-                        for (Record column : columns) {
-                            indexColumns.add(new DefaultIndexColumnDefinition(
-                                this,
-                                table.getColumn(column.get(fColumnName)),
-                                SortOrder.ASC,
-                                column.get(fSeqno, int.class)
-                            ));
-                        }
+                {
+                    for (Record column : columns) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            table.getColumn(column.get(fColumnName)),
+                            SortOrder.ASC,
+                            column.get(fSeqno, int.class)
+                        ));
                     }
+                }
 
-                    @Override
-                    protected List<IndexColumnDefinition> getIndexColumns0() {
-                        return indexColumns;
-                    }
-                });
-            }
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
         }
 
         return result;

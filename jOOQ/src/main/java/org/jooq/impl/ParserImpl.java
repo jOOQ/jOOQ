@@ -39,7 +39,10 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
+import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.atan;
@@ -49,6 +52,7 @@ import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.bitLength;
 import static org.jooq.impl.DSL.boolOr;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
 import static org.jooq.impl.DSL.charLength;
 import static org.jooq.impl.DSL.check;
@@ -83,6 +87,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.floor;
 import static org.jooq.impl.DSL.foreignKey;
+import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.grouping;
 import static org.jooq.impl.DSL.groupingId;
@@ -100,6 +105,7 @@ import static org.jooq.impl.DSL.least;
 import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.level;
+import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
@@ -180,6 +186,7 @@ import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
 import static org.jooq.impl.DSL.space;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
@@ -192,6 +199,7 @@ import static org.jooq.impl.DSL.tanh;
 import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.varPop;
@@ -211,6 +219,7 @@ import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -236,9 +245,11 @@ import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
+import org.jooq.ArrayAggOrderByStep;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.Catalog;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -286,6 +297,7 @@ import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
+import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -294,11 +306,13 @@ import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
+import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
@@ -314,7 +328,10 @@ import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
+import org.jooq.UpdateFromStep;
 import org.jooq.UpdateReturningStep;
+import org.jooq.UpdateSetFirstStep;
+import org.jooq.UpdateWhereStep;
 // ...
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowIgnoreNullsStep;
@@ -323,14 +340,15 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class ParserImpl implements Parser {
+final class ParserImpl implements Parser {
 
-    private final DSLContext    dsl;
+    private final DSLContext           dsl;
 
     ParserImpl(Configuration configuration) {
         this.dsl = DSL.using(configuration);
@@ -340,6 +358,10 @@ class ParserImpl implements Parser {
     // Top level parsing
     // -----------------------------------------------------------------------------------------------------------------
 
+    private final ParserContext ctx(String sql, Object... bindings) {
+        return new ParserContext(dsl, sql, bindings);
+    }
+
     @Override
     public final Queries parse(String sql) {
         return parse(sql, new Object[0]);
@@ -347,14 +369,21 @@ class ParserImpl implements Parser {
 
     @Override
     public final Queries parse(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         List<Query> result = new ArrayList<Query>();
+        Query query;
+
         do {
-            Query query = parseQuery(ctx, false);
+            parseDelimiterSpecifications(ctx);
+            while (parseDelimiterIf(ctx));
+
+            query = parseQuery(ctx, false);
+            if (query == IGNORE || query == IGNORE_NO_DELIMITER)
+                continue;
             if (query != null)
                 result.add(query);
         }
-        while (parseIf(ctx, ";"));
+        while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
 
         ctx.done("Unexpected content after end of queries input");
         return dsl.queries(result);
@@ -367,7 +396,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final Query parseQuery(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Query result = parseQuery(ctx, false);
 
         ctx.done("Unexpected content after end of query input");
@@ -381,7 +410,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final ResultQuery<?> parseResultQuery(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
 
         ctx.done("Unexpected content after end of query input");
@@ -395,7 +424,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final Table<?> parseTable(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Table<?> result = parseTable(ctx);
 
         ctx.done("Unexpected content after end of table input");
@@ -409,7 +438,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final Field<?> parseField(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Field<?> result = parseField(ctx);
 
         ctx.done("Unexpected content after end of field input");
@@ -423,7 +452,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final Row parseRow(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         RowN result = parseRow(ctx);
 
         ctx.done("Unexpected content after end of row input");
@@ -437,7 +466,7 @@ class ParserImpl implements Parser {
 
     @Override
     public final Condition parseCondition(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Condition result = parseCondition(ctx);
 
         ctx.done("Unexpected content after end of condition input");
@@ -451,11 +480,36 @@ class ParserImpl implements Parser {
 
     @Override
     public final Name parseName(String sql, Object... bindings) {
-        ParserContext ctx = new ParserContext(dsl, sql, bindings);
+        ParserContext ctx = ctx(sql, bindings);
         Name result = parseName(ctx);
 
         ctx.done("Unexpected content after end of name input");
         return result;
+    }
+
+    private static final void parseDelimiterSpecifications(ParserContext ctx) {
+        while (parseKeywordIf(ctx, "DELIMITER")) {
+            if (ctx.character() != ' ')
+                throw ctx.unexpectedToken();
+
+            ctx.delimiter = parseUntilEOL(ctx).trim();
+        }
+    }
+
+    private static final boolean parseDelimiterIf(ParserContext ctx) {
+        if (parseIf(ctx, ctx.delimiter))
+            return true;
+
+        if (parseKeywordIf(ctx, "GO")) {
+            String line = parseUntilEOLIf(ctx);
+
+            if (line != null && !"".equals(line.trim()))
+                throw ctx.unexpectedToken();
+
+            return true;
+        }
+
+        return false;
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
@@ -463,96 +517,100 @@ class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
-        try {
-            switch (ctx.character()) {
-                case 'a':
-                case 'A':
-                    if (!resultQuery && peekKeyword(ctx, "ALTER"))
-                        return parseAlter(ctx);
+        switch (ctx.character()) {
+            case 'a':
+            case 'A':
+                if (!resultQuery && peekKeyword(ctx, "ALTER"))
+                    return parseAlter(ctx);
 
-                    break;
+                break;
 
-                case 'c':
-                case 'C':
-                    if (!resultQuery && peekKeyword(ctx, "CREATE"))
-                        return parseCreate(ctx);
+            case 'c':
+            case 'C':
+                if (!resultQuery && peekKeyword(ctx, "CREATE"))
+                    return parseCreate(ctx);
 
-                    break;
+                break;
 
-                case 'd':
-                case 'D':
-                    if (!resultQuery && peekKeyword(ctx, "DELETE"))
-                        return parseDelete(ctx);
-                    else if (!resultQuery && peekKeyword(ctx, "DROP"))
-                        return parseDrop(ctx);
+            case 'd':
+            case 'D':
+                if (!resultQuery && peekKeyword(ctx, "DELETE"))
+                    return parseDelete(ctx, null);
+                else if (!resultQuery && peekKeyword(ctx, "DROP"))
+                    return parseDrop(ctx);
 
-                    break;
+                break;
 
-                case 'i':
-                case 'I':
-                    if (!resultQuery && peekKeyword(ctx, "INSERT"))
-                        return parseInsert(ctx);
+            case 'e':
+            case 'E':
+                if (!resultQuery && peekKeyword(ctx, "EXEC"))
+                    return parseExec(ctx);
 
-                    break;
+                break;
 
-                case 'm':
-                case 'M':
-                    if (!resultQuery && peekKeyword(ctx, "MERGE"))
-                        return parseMerge(ctx);
+            case 'i':
+            case 'I':
+                if (!resultQuery && peekKeyword(ctx, "INSERT"))
+                    return parseInsert(ctx, null);
 
-                    break;
+                break;
 
-                case 'r':
-                case 'R':
-                    if (!resultQuery && peekKeyword(ctx, "RENAME"))
-                        return parseRename(ctx);
+            case 'm':
+            case 'M':
+                if (!resultQuery && peekKeyword(ctx, "MERGE"))
+                    return parseMerge(ctx, null);
 
-                    break;
+                break;
 
-                case 's':
-                case 'S':
-                    if (peekKeyword(ctx, "SELECT"))
-                        return parseSelect(ctx);
+            case 'r':
+            case 'R':
+                if (!resultQuery && peekKeyword(ctx, "RENAME"))
+                    return parseRename(ctx);
 
-                    break;
+                break;
 
-                case 't':
-                case 'T':
-                    if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
-                        return parseTruncate(ctx);
-
-                    break;
-
-                case 'u':
-                case 'U':
-                    if (!resultQuery && peekKeyword(ctx, "UPDATE"))
-                        return parseUpdate(ctx);
-
-                    break;
-
-                case 'v':
-                case 'V':
-                    if (peekKeyword(ctx, "VALUES"))
-                        return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
-
-                case 'w':
-                case 'W':
-                    if (peekKeyword(ctx, "WITH"))
-                        return parseWith(ctx);
-
-                    break;
-
-                case '(':
-                    // TODO are there other possible statement types?
+            case 's':
+            case 'S':
+                if (peekKeyword(ctx, "SELECT"))
                     return parseSelect(ctx);
-                default:
-                    break;
-            }
-        }
-        finally {
-            parseWhitespaceIf(ctx);
-            if (!ctx.done() && ctx.character() != ';')
-                throw ctx.unexpectedToken();
+                else if (!resultQuery && peekKeyword(ctx, "SET"))
+                    return parseSet(ctx);
+
+                break;
+
+            case 't':
+            case 'T':
+                if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
+                    return parseTruncate(ctx);
+
+                break;
+
+            case 'u':
+            case 'U':
+                if (!resultQuery && peekKeyword(ctx, "UPDATE"))
+                    return parseUpdate(ctx, null);
+                else if (!resultQuery && peekKeyword(ctx, "USE"))
+                    return parseUse(ctx);
+
+                break;
+
+            case 'v':
+            case 'V':
+                if (peekKeyword(ctx, "VALUES"))
+                    return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
+
+            case 'w':
+            case 'W':
+                if (peekKeyword(ctx, "WITH"))
+                    return parseWith(ctx);
+
+                break;
+
+            case '(':
+                // TODO are there other possible statement types?
+                return parseSelect(ctx);
+            default:
+                break;
         }
 
         throw ctx.exception("Unsupported query type");
@@ -587,9 +645,19 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         // TODO Better model API for WITH clause
-        return parseSelect(ctx, null, (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION)));
-
-        // TODO Other statements than SELECT
+        WithImpl with = (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
+        if (peekKeyword(ctx, "DELETE"))
+            return parseDelete(ctx, with);
+        else if (peekKeyword(ctx, "INSERT"))
+            return parseInsert(ctx, with);
+        else if (peekKeyword(ctx, "MERGE"))
+            return parseMerge(ctx, with);
+        else if (peekKeyword(ctx, "SELECT"))
+            return parseSelect(ctx, null, with);
+        else if (peekKeyword(ctx, "UPDATE"))
+            return parseUpdate(ctx, with);
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
@@ -599,14 +667,7 @@ class ParserImpl implements Parser {
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree) {
         return parseSelect(ctx, degree, null);
     }
-/*
- *  QueryPart condition = parseNot(ctx);
 
-        while (parseKeywordIf(ctx, "AND"))
-            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx)));
-
-        return condition;
- */
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with);
 
@@ -663,7 +724,7 @@ class ParserImpl implements Parser {
                 if (!parseKeywordIf(ctx, "FIRST") && !parseKeywordIf(ctx, "NEXT"))
                     throw ctx.unexpectedToken();
 
-                result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)));
+                result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
 
                 if (!parseKeywordIf(ctx, "ROW") && !parseKeywordIf(ctx, "ROWS"))
                     throw ctx.unexpectedToken();
@@ -940,7 +1001,7 @@ class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Delete<?> parseDelete(ParserContext ctx) {
+    private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "DELETE");
         parseKeywordIf(ctx, "FROM");
         Table<?> tableName = parseTableName(ctx);
@@ -950,23 +1011,21 @@ class ParserImpl implements Parser {
         DeleteWhereStep<?> s1;
         DeleteReturningStep<?> s2;
 
-        s1 = ctx.dsl.delete(tableName);
+        s1 = (with == null ? ctx.dsl.delete(tableName) : with.delete(tableName));
         s2 = where
             ? s1.where(condition)
             : s1;
 
         if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return s2.returning();
-            else
-                return s2.returning(parseFields(ctx));
+            return s2.returning(parseSelectList(ctx));
         else
             return s2;
     }
 
-    private static final Insert<?> parseInsert(ParserContext ctx) {
+    private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "INSERT INTO");
         Table<?> tableName = parseTableName(ctx);
+        InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(tableName) : with.insertInto(tableName));
         Field<?>[] fields = null;
 
         if (parseIf(ctx, '(')) {
@@ -980,8 +1039,14 @@ class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "VALUES")) {
             List<List<Field<?>>> allValues = new ArrayList<List<Field<?>>>();
 
+            valuesLoop:
             do {
                 parse(ctx, '(');
+
+                // [#6936] MySQL treats an empty VALUES() clause as the same thing as the standard DEFAULT VALUES
+                if (fields == null && parseIf(ctx, ')'))
+                    break valuesLoop;
+
                 List<Field<?>> values = parseFields(ctx);
 
                 if (fields != null && fields.length != values.size())
@@ -992,33 +1057,37 @@ class ParserImpl implements Parser {
             }
             while (parseIf(ctx, ','));
 
-            InsertSetStep<?> step1 = ctx.dsl.insertInto(tableName);
-            InsertValuesStepN<?> step2 = (fields != null)
-                ? step1.columns(fields)
-                : (InsertValuesStepN<?>) step1;
+            if (allValues.isEmpty()) {
+                returning = onDuplicate = s1.defaultValues();
+            }
+            else {
+                InsertValuesStepN<?> step2 = (fields != null)
+                    ? s1.columns(fields)
+                    : (InsertValuesStepN<?>) s1;
 
-            for (List<Field<?>> values : allValues)
-                step2 = step2.values(values);
+                for (List<Field<?>> values : allValues)
+                    step2 = step2.values(values);
 
-            returning = onDuplicate = step2;
+                returning = onDuplicate = step2;
+            }
         }
         else if (parseKeywordIf(ctx, "SET")) {
             Map<Field<?>, Object> map = parseSetClauseList(ctx);
 
-            returning = onDuplicate =  ctx.dsl.insertInto(tableName).set(map);
+            returning = onDuplicate =  s1.set(map);
         }
         else if (peekKeyword(ctx, "SELECT", false, true, false)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             returning = onDuplicate = (fields == null)
-                ? ctx.dsl.insertInto(tableName).select(select)
-                : ctx.dsl.insertInto(tableName).columns(fields).select(select);
+                ? s1.select(select)
+                : s1.columns(fields).select(select);
         }
         else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
             if (fields != null)
                 throw ctx.notImplemented("DEFAULT VALUES without INSERT field list");
             else
-                returning = onDuplicate = ctx.dsl.insertInto(tableName).defaultValues();
+                returning = onDuplicate = s1.defaultValues();
         }
         else
             throw ctx.unexpectedToken();
@@ -1055,37 +1124,33 @@ class ParserImpl implements Parser {
         }
 
         if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return returning.returning();
-            else
-                return returning.returning(parseFields(ctx));
+            return returning.returning(parseSelectList(ctx));
         else
             return returning;
     }
 
-    private static final Update<?> parseUpdate(ParserContext ctx) {
+    private static final Update<?> parseUpdate(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "UPDATE");
         Table<?> tableName = parseTableName(ctx);
+        UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));
         parseKeyword(ctx, "SET");
 
         // TODO Row value expression updates
         Map<Field<?>, Object> map = parseSetClauseList(ctx);
+        UpdateFromStep<?> s2 = s1.set(map);
+        UpdateWhereStep<?> s3 =
+              parseKeywordIf(ctx, "FROM")
+            ? s2.from(parseTables(ctx))
+            : s2;
 
-        // TODO support FROM
-        Condition condition = parseKeywordIf(ctx, "WHERE") ? parseCondition(ctx) : null;
+        UpdateReturningStep<?> s4 =
+              parseKeywordIf(ctx, "WHERE")
+            ? s3.where(parseCondition(ctx))
+            : s3;
 
-        // TODO support RETURNING
-        UpdateReturningStep<?> returning = condition == null
-            ? ctx.dsl.update(tableName).set(map)
-            : ctx.dsl.update(tableName).set(map).where(condition);
-
-        if (parseKeywordIf(ctx, "RETURNING"))
-            if (parseIf(ctx, '*'))
-                return returning.returning();
-            else
-                return returning.returning(parseFields(ctx));
-        else
-            return returning;
+        return parseKeywordIf(ctx, "RETURNING")
+            ? s4.returning(parseSelectList(ctx))
+            : s4;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {
@@ -1106,16 +1171,29 @@ class ParserImpl implements Parser {
         return map;
     }
 
-    private static final Merge<?> parseMerge(ParserContext ctx) {
+    private static final Merge<?> parseMerge(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "MERGE INTO");
         Table<?> target = parseTableName(ctx);
+
+        if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "USING"))
+            target = target.as(parseIdentifier(ctx));
+
         parseKeyword(ctx, "USING");
-        parse(ctx, '(');
-        Select<?> using = parseSelect(ctx);
-        TableLike<?> usingTable = using;
-        parse(ctx, ')');
-        if (parseKeywordIf(ctx, "AS"))
-            usingTable = DSL.table(using).as(parseIdentifier(ctx));
+        Table<?> table = null;
+        Select<?> using = null;
+
+        if (parseIf(ctx, '(')) {
+            using = parseSelect(ctx);
+            parse(ctx, ')');
+        }
+        else {
+            table = parseTableName(ctx);
+        }
+
+        TableLike<?> usingTable = (table != null ? table : using);
+        if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "ON"))
+            usingTable = (table != null ? table : DSL.table(using)).as(parseIdentifier(ctx));
+
         parseKeyword(ctx, "ON");
         Condition on = parseCondition(ctx);
         boolean update = false;
@@ -1151,11 +1229,63 @@ class ParserImpl implements Parser {
         // TODO support multi clause MERGE
         // TODO support DELETE
 
-        MergeMatchedStep<?> s1 = ctx.dsl.mergeInto(target).using(usingTable).on(on);
-        MergeNotMatchedStep<?> s2 = update ? s1.whenMatchedThenUpdate().set(updateSet) : s1;
-        MergeFinalStep<?> s3 = insert ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s2;
+        MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
+        MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
+        MergeNotMatchedStep<?> s3 = update ? s2.whenMatchedThenUpdate().set(updateSet) : s2;
+        MergeFinalStep<?> s4 = insert ? s3.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s3;
 
-        return s3;
+        return s4;
+    }
+
+    private static final Query parseSet(ParserContext ctx) {
+        parseKeyword(ctx, "SET");
+
+        if (parseKeywordIf(ctx, "CATALOG"))
+            return parseSetCatalog(ctx);
+        else if (parseKeywordIf(ctx, "CURRENT SCHEMA"))
+            return parseSetSchema(ctx);
+        else if (parseKeywordIf(ctx, "CURRENT SQLID"))
+            return parseSetSchema(ctx);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseSetGenerator(ctx);
+        else if (parseKeywordIf(ctx, "SCHEMA"))
+            return parseSetSchema(ctx);
+        else if (parseKeywordIf(ctx, "SEARCH_PATH"))
+            return parseSetSearchPath(ctx);
+
+        // There are many SET commands in programs like sqlplus, which we'll simply ignore
+        parseUntilEOL(ctx);
+        return IGNORE_NO_DELIMITER;
+    }
+
+    private static final Query parseSetCatalog(ParserContext ctx) {
+        return ctx.dsl.setCatalog(parseCatalogName(ctx));
+    }
+
+    private static final Query parseUse(ParserContext ctx) {
+        parseKeyword(ctx, "USE");
+        return ctx.dsl.setCatalog(parseCatalogName(ctx));
+    }
+
+    private static final Query parseSetSchema(ParserContext ctx) {
+        parseIf(ctx, '=');
+        return ctx.dsl.setSchema(parseSchemaName(ctx));
+    }
+
+    private static final Query parseSetSearchPath(ParserContext ctx) {
+        if (!parseIf(ctx, '='))
+            parseKeyword(ctx, "TO");
+
+        Schema schema = null;
+
+        do {
+            Schema s = parseSchemaName(ctx);
+            if (schema == null)
+                schema = s;
+        }
+        while (parseIf(ctx, ','));
+
+        return ctx.dsl.setSchema(schema);
     }
 
     private static final DDLQuery parseCreate(ParserContext ctx) {
@@ -1165,6 +1295,8 @@ class ParserImpl implements Parser {
             return parseCreateTable(ctx, false);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseCreateSequence(ctx);
         else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
@@ -1181,17 +1313,21 @@ class ParserImpl implements Parser {
             throw ctx.unexpectedToken();
     }
 
-    private static final DDLQuery parseAlter(ParserContext ctx) {
+    private static final Query parseAlter(ParserContext ctx) {
         parseKeyword(ctx, "ALTER");
 
-        if (parseKeywordIf(ctx, "TABLE"))
-            return parseAlterTable(ctx);
+        if (parseKeywordIf(ctx, "DOMAIN"))
+            return parseAlterDomain(ctx);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseAlterIndex(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseAlterSchema(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseAlterSequence(ctx);
+        else if (parseKeywordIf(ctx, "SESSION"))
+            return parseAlterSession(ctx);
+        else if (parseKeywordIf(ctx, "TABLE"))
+            return parseAlterTable(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseAlterView(ctx);
         else
@@ -1207,6 +1343,8 @@ class ParserImpl implements Parser {
             return parseDropIndex(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseDropView(ctx);
+        else if (parseKeywordIf(ctx, "GENERATOR"))
+            return parseDropSequence(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseDropSequence(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
@@ -1240,6 +1378,42 @@ class ParserImpl implements Parser {
             : step2;
 
         return step3;
+    }
+
+    private static final Query parseExec(ParserContext ctx) {
+        parseKeyword(ctx, "EXEC");
+
+        if (parseKeywordIf(ctx, "SP_RENAME")) {
+            if (parseKeywordIf(ctx, "@OBJNAME"))
+                parse(ctx, '=');
+            Name oldName = ctx.dsl.parser().parseName(parseStringLiteral(ctx));
+
+            parse(ctx, ',');
+            if (parseKeywordIf(ctx, "@NEWNAME"))
+                parse(ctx, '=');
+            Name newName = ctx.dsl.parser().parseName(parseStringLiteral(ctx));
+
+            String objectType = "TABLE";
+            if (parseIf(ctx, ',')) {
+                if (parseKeywordIf(ctx, "@OBJTYPE"))
+                    parse(ctx, '=');
+
+                if (!parseKeywordIf(ctx, "NULL"))
+                    objectType = parseStringLiteral(ctx);
+            }
+
+            if ("TABLE".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterTable(oldName).renameTo(newName.unqualifiedName());
+            else if ("INDEX".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterIndex(oldName).renameTo(newName.unqualifiedName());
+            else if ("COLUMN".equalsIgnoreCase(objectType))
+                return ctx.dsl.alterTable(oldName.qualifier()).renameColumn(oldName.unqualifiedName()).to(newName.unqualifiedName());
+            else
+                throw ctx.exception("Unsupported object type: " + objectType);
+        }
+        else {
+            throw ctx.unexpectedToken();
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -1320,6 +1494,18 @@ class ParserImpl implements Parser {
             throw ctx.unexpectedToken();
     }
 
+    private static final Query parseAlterSession(ParserContext ctx) {
+        parseKeyword(ctx, "SET CURRENT_SCHEMA");
+        parse(ctx, '=');
+        return ctx.dsl.setSchema(parseSchemaName(ctx));
+    }
+
+    private static final DDLQuery parseSetGenerator(ParserContext ctx) {
+        Sequence<?> sequenceName = parseSequenceName(ctx);
+        parseKeyword(ctx, "TO");
+        return ctx.dsl.alterSequence((Sequence) sequenceName).restartWith(parseUnsignedInteger(ctx));
+    }
+
     private static final DDLQuery parseDropSequence(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName(ctx);
@@ -1331,7 +1517,7 @@ class ParserImpl implements Parser {
 
     private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
         boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
-        Table<?> tableName = parseTableName(ctx);
+        Table<?> tableName = DSL.table(parseTableName(ctx).getQualifiedName());
         CreateTableFinalStep result;
 
         // [#5309] TODO: Move this after the column specification
@@ -1344,8 +1530,7 @@ class ParserImpl implements Parser {
                     ? ctx.dsl.createTemporaryTable(tableName)
                     : ctx.dsl.createTable(tableName);
 
-            CreateTableFinalStep s2 = s1.as(select);
-            result = s2;
+            result = s1.as(select);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -1380,7 +1565,20 @@ class ParserImpl implements Parser {
                     }
 
                     if (!defaultValue) {
-                        if (parseKeywordIf(ctx, "DEFAULT")) {
+                        if (parseKeywordIf(ctx, "IDENTITY")) {
+                            if (parseIf(ctx, '(')) {
+                                parseSignedInteger(ctx);
+                                parse(ctx, ',');
+                                parseSignedInteger(ctx);
+                                parse(ctx, ')');
+                            }
+
+                            type = type.identity(true);
+                            defaultValue = true;
+                            identity = true;
+                            continue;
+                        }
+                        else if (parseKeywordIf(ctx, "DEFAULT")) {
 
                             // TODO: Ignored keyword from Oracle
                             parseKeywordIf(ctx, "ON NULL");
@@ -1487,6 +1685,7 @@ class ParserImpl implements Parser {
                         }
                     }
 
+
                     if (!comment) {
                         if (parseKeywordIf(ctx, "COMMENT")) {
                             parseComment(ctx);
@@ -1565,6 +1764,8 @@ class ParserImpl implements Parser {
             result = s4;
         }
 
+        List<SQL> storage = new ArrayList<SQL>();
+
         storageLoop:
         for (boolean first = true;; first = false) {
             boolean optional = first || !parseIf(ctx, ',');
@@ -1573,31 +1774,31 @@ class ParserImpl implements Parser {
             // MySQL storage clauses (see: https://dev.mysql.com/doc/refman/5.7/en/create-table.html)
             if ((keyword = parseAndGetKeywordIf(ctx, "AUTO_INCREMENT")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "AVG_ROW_LENGTH")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "CHARACTER SET")) != null) {
                 parseIf(ctx, '=');
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null) {
                 parseIf(ctx, '=');
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "CHECKSUM")) != null) {
                 parseIf(ctx, '=');
-                parseZeroOne(ctx);
+                storage.add(sql("{0} {1}", keyword, parseZeroOne(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COLLATE")) != null) {
                 parseIf(ctx, '=');
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT COLLATE")) != null) {
                 parseIf(ctx, '=');
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
                 parseIf(ctx, '=');
@@ -1605,82 +1806,82 @@ class ParserImpl implements Parser {
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "COMPRESSION")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "CONNECTION")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "DATA DIRECTORY")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "INDEX DIRECTORY")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "DELAY_KEY_WRITE")) != null) {
                 parseIf(ctx, '=');
-                parseZeroOne(ctx);
+                storage.add(sql("{0} {1}", keyword, parseZeroOne(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "ENCRYPTION")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "ENGINE")) != null) {
                 parseIf(ctx, '=');
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "INSERT_METHOD")) != null) {
                 parseIf(ctx, '=');
-                parseAndGetKeyword(ctx, "NO", "FIRST", "LAST");
+                storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "NO", "FIRST", "LAST")));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "KEY_BLOCK_SIZE")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "MAX_ROWS")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "MIN_ROWS")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "PACK_KEYS")) != null) {
                 parseIf(ctx, '=');
-                parseZeroOneDefault(ctx);
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "PASSWORD")) != null) {
                 parseIf(ctx, '=');
-                parseStringLiteral(ctx);
+                storage.add(sql("{0} {1}", keyword, parseStringLiteral(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "ROW_FORMAT")) != null) {
                 parseIf(ctx, '=');
-                parseAndGetKeyword(ctx, "DEFAULT", "DYNAMIC", "FIXED", "COMPRESSED", "REDUNDANT", "COMPACT");
+                storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "DEFAULT", "DYNAMIC", "FIXED", "COMPRESSED", "REDUNDANT", "COMPACT")));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_AUTO_RECALC")) != null) {
                 parseIf(ctx, '=');
-                parseZeroOneDefault(ctx);
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_PERSISTENT")) != null) {
                 parseIf(ctx, '=');
-                parseZeroOneDefault(ctx);
+                storage.add(sql("{0} {1}", keyword, parseZeroOneDefault(ctx)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "STATS_SAMPLE_PAGES")) != null) {
                 parseIf(ctx, '=');
-                parseFieldUnsignedNumericLiteral(ctx, Sign.NONE);
+                storage.add(sql("{0} {1}", keyword, parseFieldUnsignedNumericLiteral(ctx, Sign.NONE)));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "TABLESPACE")) != null) {
-                parseIdentifier(ctx);
+                storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
 
                 if ((keyword = parseAndGetKeywordIf(ctx, "STORAGE")) != null)
-                    parseAndGetKeyword(ctx, "DISK", "MEMORY", "DEFAULT");
+                    storage.add(sql("{0} {1}", keyword, parseAndGetKeyword(ctx, "DISK", "MEMORY", "DEFAULT")));
             }
             else if ((keyword = parseAndGetKeywordIf(ctx, "UNION")) != null) {
                 parseIf(ctx, '=');
                 parse(ctx, '(');
-                parseIdentifiers(ctx);
+                storage.add(sql("{0} ({1})", keyword, list(parseIdentifiers(ctx))));
                 parse(ctx, ')');
             }
             else if (optional)
@@ -1895,10 +2096,34 @@ class ParserImpl implements Parser {
             case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
-                    if (parseKeywordIf(ctx, "COLUMN")) {
+                    if (parseKeywordIf(ctx, "CONSTRAINT")) {
+                        Name constraint = parseIdentifier(ctx);
+
+                        return s1.dropConstraint(constraint);
+                    }
+                    else {
+                        parseKeywordIf(ctx, "COLUMN");
+                        boolean parens = parseIf(ctx, '(');
                         Field<?> field = parseFieldName(ctx);
+                        List<Field<?>> fields = null;
+
+                        while (parseIf(ctx, ',')) {
+                            if (fields == null) {
+                                fields = new ArrayList<Field<?>>();
+                                fields.add(field);
+                            }
+
+                            fields.add(parseFieldName(ctx));
+                        }
+
+                        if (parens)
+                            parse(ctx, ')');
+
                         boolean cascade = parseKeywordIf(ctx, "CASCADE");
                         boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
+
+                        if (fields != null)
+                            throw new UnsupportedOperationException("Dropping of several columns not yet supported");
 
                         AlterTableDropStep s2 = s1.dropColumn(field);
                         AlterTableFinalStep s3 =
@@ -1908,11 +2133,6 @@ class ParserImpl implements Parser {
                             ? s2.restrict()
                             : s2;
                         return s3;
-                    }
-                    else if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        Name constraint = parseIdentifier(ctx);
-
-                        return s1.dropConstraint(constraint);
                     }
                 }
 
@@ -1970,6 +2190,8 @@ class ParserImpl implements Parser {
             return s1.alter(field).dropNotNull();
         else if (parseKeywordIf(ctx, "SET NOT NULL"))
             return s1.alter(field).setNotNull();
+        else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO"))
+            return s1.renameColumn(field).to(parseFieldName(ctx));
         else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
             ;
 
@@ -2063,14 +2285,14 @@ class ParserImpl implements Parser {
         DropTableFinalStep s2;
 
         s1 = ifExists
-            ? ctx.dsl.dropTableIfExists(tableName)
-            : ctx.dsl.dropTable(tableName);
+           ? ctx.dsl.dropTableIfExists(tableName)
+           : ctx.dsl.dropTable(tableName);
 
         s2 = cascade
-            ? s1.cascade()
-            : restrict
-            ? s1.restrict()
-            : s1;
+           ? s1.cascade()
+           : restrict
+           ? s1.restrict()
+           : s1;
 
         return s2;
     }
@@ -2087,14 +2309,17 @@ class ParserImpl implements Parser {
     private static final DDLQuery parseAlterSchema(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Schema schemaName = parseSchemaName(ctx);
-        parseKeyword(ctx, "RENAME TO");
-        Schema newName = parseSchemaName(ctx);
-
         AlterSchemaStep s1 = ifExists
             ? ctx.dsl.alterSchemaIfExists(schemaName)
             : ctx.dsl.alterSchema(schemaName);
-        AlterSchemaFinalStep s2 = s1.renameTo(newName);
-        return s2;
+
+        if (parseKeywordIf(ctx, "RENAME TO")) {
+            Schema newName = parseSchemaName(ctx);
+            AlterSchemaFinalStep s2 = s1.renameTo(newName);
+            return s2;
+        }
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final DDLQuery parseDropSchema(ParserContext ctx) {
@@ -2121,7 +2346,7 @@ class ParserImpl implements Parser {
 
     private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
-        Name indexName = parseIndexName(ctx);
+        Name indexName = parseIndexNameIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
         parse(ctx, '(');
@@ -2139,12 +2364,57 @@ class ParserImpl implements Parser {
             : unique
                 ? ctx.dsl.createUniqueIndex(indexName)
                 : ctx.dsl.createIndex(indexName);
+
         CreateIndexWhereStep s2 = s1.on(tableName, fieldNames);
         CreateIndexFinalStep s3 = condition != null
             ? s2.where(condition)
             : s2;
 
         return s3;
+    }
+
+    private static final DDLQuery parseAlterDomain(ParserContext ctx) {
+        parseIdentifier(ctx);
+
+        // Some known PostgreSQL no-arg ALTER DOMAIN statements:
+        // https://www.postgresql.org/docs/current/static/sql-alterdomain.html
+        if (parseAndGetKeywordIf(ctx,
+            "DROP DEFAULT",
+            "DROP NOT NULL",
+            "SET NOT NULL"
+        ) != null)
+            return IGNORE;
+
+        // ALTER DOMAIN statements with arguments:
+        else if (parseKeywordIf(ctx, "SET DEFAULT")) {
+            parseConcat(ctx, null);
+            return IGNORE;
+        }
+        else if (parseKeywordIf(ctx, "DROP CONSTRAINT")) {
+            parseKeywordIf(ctx, "IF EXISTS");
+            parseIdentifier(ctx);
+            if (parseKeywordIf(ctx, "RESTRICT") || parseKeywordIf(ctx, "CASCADE"));
+            return IGNORE;
+        }
+        else if (parseKeywordIf(ctx, "RENAME CONSTRAINT")) {
+            parseIdentifier(ctx);
+            parseKeyword(ctx, "TO");
+            parseIdentifier(ctx);
+            return IGNORE;
+        }
+        else if (parseAndGetKeywordIf(ctx,
+            "OWNER TO",
+            "RENAME TO",
+            "SET SCHEMA",
+            "VALIDATE CONSTRAINT"
+        ) != null) {
+            parseIdentifier(ctx);
+            return IGNORE;
+        }
+
+        // TODO (PostgreSQL): ADD
+        else
+            throw ctx.unexpectedToken();
     }
 
     private static final DDLQuery parseAlterIndex(ParserContext ctx) {
@@ -2276,6 +2546,9 @@ class ParserImpl implements Parser {
                 Field right = toField(ctx, parseConcat(ctx, null));
                 return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
             }
+            else if (!not && parseIf(ctx, "@>")) {
+                return toField(ctx, left).contains((Field) toField(ctx, parseConcat(ctx, null)));
+            }
             else if (parseKeywordIf(ctx, "IN")) {
                 Condition result;
 
@@ -2382,6 +2655,14 @@ class ParserImpl implements Parser {
         else if (parseFunctionNameIf(ctx, "UNNEST")) {
             // TODO
             throw ctx.notImplemented("UNNEST");
+        }
+        else if (parseFunctionNameIf(ctx, "GENERATE_SERIES")) {
+            parse(ctx, '(');
+            Field from = toField(ctx, parseConcat(ctx, Type.N));
+            parse(ctx, ',');
+            Field to = toField(ctx, parseConcat(ctx, Type.N));
+            result = generateSeries(from, to);
+            parse(ctx, ')');
         }
         else if (parseIf(ctx, '(')) {
             if (peekKeyword(ctx, "SELECT")) {
@@ -2646,7 +2927,6 @@ class ParserImpl implements Parser {
         if (parseIf(ctx, '*'))
             return Collections.emptyList();
 
-        // TODO Support qualified asterisk
         List<Field<?>> result = new ArrayList<Field<?>>();
         do {
             if (peekKeyword(ctx, SELECT_KEYWORDS))
@@ -2656,9 +2936,9 @@ class ParserImpl implements Parser {
             Name alias = null;
 
             if (parseKeywordIf(ctx, "AS"))
-                alias = parseIdentifier(ctx);
+                alias = parseIdentifier(ctx, true);
             else if (!peekKeyword(ctx, SELECT_KEYWORDS))
-                alias = parseIdentifierIf(ctx);
+                alias = parseIdentifierIf(ctx, true);
 
             result.add(alias == null ? field : field.as(alias));
         }
@@ -2938,7 +3218,7 @@ class ParserImpl implements Parser {
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
         parseWhitespaceIf(ctx);
 
-        Field<?> field;
+        FieldOrRow field;
         Object value;
 
         switch (ctx.character()) {
@@ -2952,7 +3232,9 @@ class ParserImpl implements Parser {
             case 'a':
             case 'A':
                 if (N.is(type))
-                    if ((field = parseFieldAsciiIf(ctx)) != null)
+                    if (parseFunctionNameIf(ctx, "ABS"))
+                        return abs((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseFieldAsciiIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "ACOS"))
                         return acos((Field) parseFieldSumParenthesised(ctx));
@@ -3029,6 +3311,8 @@ class ParserImpl implements Parser {
                 if (D.is(type))
                     if ((field = parseFieldDateLiteralIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDateTruncIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
@@ -3042,6 +3326,12 @@ class ParserImpl implements Parser {
 
             case 'e':
             case 'E':
+
+                // [#6704] PostgreSQL E'...' escaped string literals
+                if (S.is(type))
+                    if (ctx.character(ctx.position + 1) == '\'')
+                        return inline(parseStringLiteral(ctx));
+
                 if (N.is(type))
                     if ((field = parseFieldExtractIf(ctx)) != null)
                         return field;
@@ -3259,9 +3549,7 @@ class ParserImpl implements Parser {
                         return field;
 
                 if (N.is(type))
-                    if ((field = parseFieldTruncIf(ctx)) != null)
-                        return field;
-                    else if (parseFunctionNameIf(ctx, "TANH"))
+                    if (parseFunctionNameIf(ctx, "TANH"))
                         return tanh((Field) parseFieldSumParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "TAN"))
                         return tan((Field) parseFieldSumParenthesised(ctx));
@@ -3270,6 +3558,10 @@ class ParserImpl implements Parser {
                     if ((field = parseFieldTimestampLiteralIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldTimeLiteralIf(ctx)) != null)
+                        return field;
+
+                if (N.is(type) || D.is(type))
+                    if ((field = parseFieldTruncIf(ctx)) != null)
                         return field;
 
                 break;
@@ -3322,6 +3614,43 @@ class ParserImpl implements Parser {
                         return field;
 
                 break;
+
+            case '{':
+                parse(ctx, '{');
+
+                switch (ctx.character()) {
+                    case 'd':
+                    case 'D':
+                        parseKeyword(ctx, "D");
+                        field = inline(parseDateLiteral(ctx));
+                        break;
+
+                    case 'f':
+                    case 'F':
+                        parseKeyword(ctx, "FN");
+
+                        // TODO: Limit the supported expressions in this context to the ones specified here:
+                        // http://download.oracle.com/otn-pub/jcp/jdbc-4_2-mrel2-eval-spec/jdbc4.2-fr-spec.pdf
+                        field = parseTerm(ctx, type);
+                        break;
+
+                    case 't':
+                    case 'T':
+                        if (parseKeywordIf(ctx, "TS")) {
+                            field = inline(parseTimestampLiteral(ctx));
+                        }
+                        else {
+                            parseKeyword(ctx, "T");
+                            field = inline(parseTimeLiteral(ctx));
+                        }
+                        break;
+
+                    default:
+                        throw ctx.unexpectedToken();
+                }
+
+                parse(ctx, '}');
+                return field;
 
             case '(':
                 parse(ctx, '(');
@@ -3450,11 +3779,37 @@ class ParserImpl implements Parser {
     private static final Field<?> parseFieldTruncIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "TRUNC")) {
             parse(ctx, '(');
-            Field<?> arg1 = toField(ctx, parseSum(ctx, N));
+            Field<?> arg1 = parseField(ctx);
             parse(ctx, ',');
-            Field<?> arg2 = toField(ctx, parseSum(ctx, N));
-            parse(ctx, ')');
-            return DSL.trunc((Field) arg1, (Field) arg2);
+
+            String part;
+            if ((part = parseStringLiteralIf(ctx)) != null) {
+                part = part.toUpperCase();
+
+                DatePart p;
+                if ("YY".equals(part) || "YYYY".equals(part) || "YEAR".equals(part))
+                    p = DatePart.YEAR;
+                else if ("MM".equals(part) || "MONTH".equals(part))
+                    p = DatePart.MONTH;
+                else if ("DD".equals(part))
+                    p = DatePart.DAY;
+                else if ("HH".equals(part))
+                    p = DatePart.HOUR;
+                else if ("MI".equals(part))
+                    p = DatePart.MINUTE;
+                else if ("SS".equals(part))
+                    p = DatePart.SECOND;
+                else
+                    throw ctx.unexpectedToken();
+
+                parse(ctx, ')');
+                return DSL.trunc((Field) arg1, p);
+            }
+            else {
+                Field<?> arg2 = toField(ctx, parseSum(ctx, N));
+                parse(ctx, ')');
+                return DSL.trunc((Field) arg1, (Field) arg2);
+            }
         }
 
         return null;
@@ -3649,6 +4004,21 @@ class ParserImpl implements Parser {
 
         return null;
     }
+
+    private static final Field<?> parseFieldDateTruncIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DATE_TRUNC")) {
+            parse(ctx, '(');
+            DatePart part = DatePart.valueOf(parseStringLiteral(ctx).toUpperCase());
+            parse(ctx, ',');
+            Field<?> field = parseField(ctx, D);
+            parse(ctx, ')');
+
+            return trunc(field, part);
+        }
+
+        return null;
+    }
+
 
     private static final Date parseDateLiteral(ParserContext ctx) {
         try {
@@ -3942,7 +4312,7 @@ class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "LENGTH")) {
+        if (parseFunctionNameIf(ctx, "LENGTH") || parseFunctionNameIf(ctx, "LEN")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
@@ -4257,20 +4627,23 @@ class ParserImpl implements Parser {
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx, boolean basic) {
         AggregateFunction<?> agg;
+        AggregateFilterStep<?> filter;
         WindowBeforeOverStep<?> over;
         Object keep = null;
         Field<?> result;
-        Condition filter;
+        Condition condition;
 
-        keep = over = agg = parseCountIf(ctx);
-        if (agg == null)
-            keep = over = agg = parseGeneralSetFunctionIf(ctx);
-        if (agg == null && !basic)
-            over = agg = parseBinarySetFunctionIf(ctx);
-        if (agg == null && !basic)
-            over = parseOrderedSetFunctionIf(ctx);
+        keep = over = filter = agg = parseCountIf(ctx);
+        if (filter == null)
+            keep = over = filter = agg = parseGeneralSetFunctionIf(ctx);
+        if (filter == null && !basic)
+            over = filter = agg = parseBinarySetFunctionIf(ctx);
+        if (filter == null && !basic)
+            over = filter = parseOrderedSetFunctionIf(ctx);
+        if (filter == null && !basic)
+            over = filter = parseArrayAggFunctionIf(ctx);
 
-        if (agg == null && over == null)
+        if (filter == null && over == null)
             if (!basic)
                 return parseSpecialAggregateFunctionIf(ctx);
             else
@@ -4296,21 +4669,21 @@ class ParserImpl implements Parser {
 
 
 
-        if (agg != null && !basic && parseKeywordIf(ctx, "FILTER")) {
+        if (filter != null && !basic && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
-            filter = parseCondition(ctx);
+            condition = parseCondition(ctx);
             parse(ctx, ')');
 
-            result = over = agg.filterWhere(filter);
+            result = over = filter.filterWhere(condition);
         }
-        else if (agg != null)
-            result = agg;
+        else if (filter != null)
+            result = filter;
         else
             result = over;
 
         if (!basic && parseKeywordIf(ctx, "OVER")) {
-            Object nameOrSpecification = parseWindowNameOrSpecification(ctx, agg != null);
+            Object nameOrSpecification = parseWindowNameOrSpecification(ctx, filter != null);
 
             if (nameOrSpecification instanceof Name)
                 result = over.over((Name) nameOrSpecification);
@@ -4533,8 +4906,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, rank(args));
-            return result;
+            return rank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -4550,8 +4922,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, denseRank(args));
-            return result;
+            return denseRank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -4567,8 +4938,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, percentRank(args));
-            return result;
+            return percentRank(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -4584,8 +4954,7 @@ class ParserImpl implements Parser {
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
-            AggregateFilterStep<?> result = parseWithinGroupN(ctx, cumeDist(args));
-            return result;
+            return cumeDist(args).withinGroupOrderBy(parseWithinGroupN(ctx));
         }
 
         return null;
@@ -4745,7 +5114,7 @@ class ParserImpl implements Parser {
         }
     }
 
-    private static final WindowBeforeOverStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
+    private static final AggregateFilterStep<?> parseOrderedSetFunctionIf(ParserContext ctx) {
         // TODO Listagg set function
         OrderedAggregateFunction<?> orderedN;
         OrderedAggregateFunctionOfDeferredType ordered1;
@@ -4756,29 +5125,52 @@ class ParserImpl implements Parser {
         if (orderedN == null)
             orderedN = parseListaggFunctionIf(ctx);
         if (orderedN != null)
-            return parseWithinGroupN(ctx, orderedN);
+            return orderedN.withinGroupOrderBy(parseWithinGroupN(ctx));
 
         ordered1 = parseModeIf(ctx);
         if (ordered1 != null)
-            return parseWithinGroup1(ctx, ordered1);
+            return ordered1.withinGroupOrderBy(parseWithinGroup1(ctx));
 
         return null;
     }
 
-    private static final AggregateFilterStep<?> parseWithinGroupN(ParserContext ctx, OrderedAggregateFunction<?> ordered) {
+    private static final AggregateFilterStep<?> parseArrayAggFunctionIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ARRAY_AGG")) {
+            parse(ctx, '(');
+
+            boolean distinct = parseKeywordIf(ctx, "DISTINCT");
+            Field<?> a1 = parseField(ctx);
+            List<SortField<?>> sort = null;
+
+            if (parseKeywordIf(ctx, "ORDER BY"))
+                sort = parseSortSpecification(ctx);
+
+            parse(ctx, ')');
+
+            ArrayAggOrderByStep<?> s1 = distinct
+                ? arrayAggDistinct(a1)
+                : arrayAgg(a1);
+
+            return sort == null ? s1 : s1.orderBy(sort);
+        }
+
+        return null;
+    }
+
+    private static final List<SortField<?>> parseWithinGroupN(ParserContext ctx) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
-        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortSpecification(ctx));
+        List<SortField<?>> result = parseSortSpecification(ctx);
         parse(ctx, ')');
         return result;
     }
 
-    private static final AggregateFilterStep<?> parseWithinGroup1(ParserContext ctx, OrderedAggregateFunctionOfDeferredType ordered) {
+    private static final SortField<?> parseWithinGroup1(ParserContext ctx) {
         parseKeyword(ctx, "WITHIN GROUP");
         parse(ctx, '(');
         parseKeyword(ctx, "ORDER BY");
-        AggregateFilterStep<?> result = ordered.withinGroupOrderBy(parseSortField(ctx));
+        SortField<?> result = parseSortField(ctx);
         parse(ctx, ')');
         return result;
     }
@@ -4959,6 +5351,10 @@ class ParserImpl implements Parser {
     // Name parsing
     // -----------------------------------------------------------------------------------------------------------------
 
+    private static final Catalog parseCatalogName(ParserContext ctx) {
+        return catalog(parseName(ctx));
+    }
+
     private static final Schema parseSchemaName(ParserContext ctx) {
         return schema(parseName(ctx));
     }
@@ -5002,7 +5398,19 @@ class ParserImpl implements Parser {
     }
 
     private static final Name parseIndexName(ParserContext ctx) {
-        return parseName(ctx);
+        Name result = parseNameIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final Name parseIndexNameIf(ParserContext ctx) {
+        if (!peekKeyword(ctx, "ON"))
+            return parseNameIf(ctx);
+        else
+            return null;
     }
 
     private static final Name parseName(ParserContext ctx) {
@@ -5041,7 +5449,11 @@ class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifier(ParserContext ctx) {
-        Name result = parseIdentifierIf(ctx);
+        return parseIdentifier(ctx, false);
+    }
+
+    private static final Name parseIdentifier(ParserContext ctx, boolean allowAposQuotes) {
+        Name result = parseIdentifierIf(ctx, allowAposQuotes);
 
         if (result == null)
             throw ctx.expected("Identifier");
@@ -5050,12 +5462,17 @@ class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifierIf(ParserContext ctx) {
+        return parseIdentifierIf(ctx, false);
+    }
+
+    private static final Name parseIdentifierIf(ParserContext ctx, boolean allowAposQuotes) {
         parseWhitespaceIf(ctx);
 
         char quoteEnd =
             parseIf(ctx, '"') ? '"'
           : parseIf(ctx, '`') ? '`'
           : parseIf(ctx, '[') ? ']'
+          : allowAposQuotes && parseIf(ctx, '\'') ? '\''
           : 0;
 
         int start = ctx.position;
@@ -5091,6 +5508,8 @@ class ParserImpl implements Parser {
             case 'B':
                 if (parseKeywordIf(ctx, "BIGINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.BIGINT));
+                else if (parseKeywordIf(ctx, "BIGSERIAL"))
+                    return SQLDataType.BIGINT.identity(true);
                 else if (parseKeywordIf(ctx, "BINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.BINARY);
                 else if (parseKeywordIf(ctx, "BIT"))
@@ -5099,12 +5518,17 @@ class ParserImpl implements Parser {
                     return parseDataTypeLength(ctx, SQLDataType.BLOB);
                 else if (parseKeywordIf(ctx, "BOOLEAN"))
                     return SQLDataType.BOOLEAN;
+                else if (parseKeywordIf(ctx, "BYTEA"))
+                    return SQLDataType.BLOB;
                 else
                     throw ctx.unexpectedToken();
 
             case 'c':
             case 'C':
-                if (parseKeywordIf(ctx, "CHAR"))
+                if (parseKeywordIf(ctx, "CHARACTER VARYING"))
+                    return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
+                else if (parseKeywordIf(ctx, "CHAR") ||
+                         parseKeywordIf(ctx, "CHARACTER"))
                     return parseDataTypeLength(ctx, SQLDataType.CHAR);
                 else if (parseKeywordIf(ctx, "CLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.CLOB);
@@ -5115,6 +5539,8 @@ class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DATE"))
                     return SQLDataType.DATE;
+                else if (parseKeywordIf(ctx, "DATETIME"))
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMP);
                 else if (parseKeywordIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
                 else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
@@ -5140,8 +5566,13 @@ class ParserImpl implements Parser {
             case 'i':
             case 'I':
                 if (parseKeywordIf(ctx, "INTEGER") ||
-                    parseKeywordIf(ctx, "INT"))
+                    parseKeywordIf(ctx, "INT") ||
+                    parseKeywordIf(ctx, "INT4"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
+                else if (parseKeywordIf(ctx, "INT2"))
+                    return SQLDataType.SMALLINT;
+                else if (parseKeywordIf(ctx, "INT8"))
+                    return SQLDataType.BIGINT;
                 else
                     throw ctx.unexpectedToken();
 
@@ -5202,6 +5633,8 @@ class ParserImpl implements Parser {
                     return parseDataTypeEnum(ctx);
                 else if (parseKeywordIf(ctx, "SMALLINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
+                else if (parseKeywordIf(ctx, "SMALLSERIAL"))
+                    return SQLDataType.SMALLINT.identity(true);
                 else
                     throw ctx.unexpectedToken();
 
@@ -5210,19 +5643,29 @@ class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "TEXT"))
                     return parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB);
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP WITH TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMESTAMPTZ"))
-                    return SQLDataType.TIMESTAMPWITHTIMEZONE;
+                else if (parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP"))
-                    return SQLDataType.TIMESTAMP;
+                else if (parseKeywordIf(ctx, "TIMESTAMP")) {
+                    Integer precision = parseDataTypePrecision(ctx);
 
-                else if (parseKeywordIf(ctx, "TIME WITH TIME ZONE") ||
-                         parseKeywordIf(ctx, "TIMETZ"))
-                    return SQLDataType.TIMEWITHTIMEZONE;
+                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                        return SQLDataType.TIMESTAMPWITHTIMEZONE;
+                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                        return SQLDataType.TIMESTAMP;
+                }
 
-                else if (parseKeywordIf(ctx, "TIME"))
-                    return SQLDataType.TIME;
+                else if (parseKeywordIf(ctx, "TIMETZ"))
+                    return parseDataTypePrecision(ctx, SQLDataType.TIMEWITHTIMEZONE);
+
+                else if (parseKeywordIf(ctx, "TIME")) {
+                    Integer precision = parseDataTypePrecision(ctx);
+
+                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                        return SQLDataType.TIMEWITHTIMEZONE;
+                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                        return SQLDataType.TIME;
+                }
 
                 else if (parseKeywordIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
@@ -5243,8 +5686,7 @@ class ParserImpl implements Parser {
             case 'v':
             case 'V':
                 if (parseKeywordIf(ctx, "VARCHAR") ||
-                    parseKeywordIf(ctx, "VARCHAR2") ||
-                    parseKeywordIf(ctx, "CHARACTER VARYING"))
+                    parseKeywordIf(ctx, "VARCHAR2"))
                     return parseDataTypeLength(ctx, SQLDataType.VARCHAR);
                 else if (parseKeywordIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
@@ -5281,7 +5723,8 @@ class ParserImpl implements Parser {
 
     private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
-            result = result.length((int) (long) parseUnsignedInteger(ctx));
+            if (!parseKeywordIf(ctx, "MAX"))
+                result = result.length((int) (long) parseUnsignedInteger(ctx));
             parse(ctx, ')');
         }
 
@@ -5295,6 +5738,27 @@ class ParserImpl implements Parser {
             if (parseIf(ctx, ','))
                 parseUnsignedInteger(ctx);
 
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
+    private static final Integer parseDataTypePrecision(ParserContext ctx) {
+        Integer precision = null;
+
+        if (parseIf(ctx, '(')) {
+            precision = (int) (long) parseUnsignedInteger(ctx);
+            parse(ctx, ')');
+        }
+
+        return precision;
+    }
+
+    private static final DataType<?> parseDataTypePrecision(ParserContext ctx, DataType<?> result) {
+        if (parseIf(ctx, '(')) {
+            int precision = (int) (long) parseUnsignedInteger(ctx);
+            result = result.precision(precision);
             parse(ctx, ')');
         }
 
@@ -5326,6 +5790,8 @@ class ParserImpl implements Parser {
         while (parseIf(ctx, ','));
 
         parse(ctx, ')');
+
+        // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
         return SQLDataType.VARCHAR;
     }
 
@@ -5368,12 +5834,25 @@ class ParserImpl implements Parser {
     }
 
     private static final String parseStringLiteral(ParserContext ctx) {
+        String result = parseStringLiteralIf(ctx);
+
+        if (result == null)
+            throw ctx.unexpectedToken();
+
+        return result;
+    }
+
+    private static final String parseStringLiteralIf(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        if (parseIf(ctx, 'q') || parseIf(ctx, 'Q'))
+        if (parseIf(ctx, 'q', '\'') || parseIf(ctx, 'Q', '\''))
             return parseOracleQuotedStringLiteral(ctx);
+        else if (parseIf(ctx, 'e', '\'') || parseIf(ctx, 'E', '\''))
+            return parseUnquotedStringLiteral(ctx, true);
+        else if (peek(ctx, '\''))
+            return parseUnquotedStringLiteral(ctx, false);
         else
-            return parseUnquotedStringLiteral(ctx);
+            return null;
     }
 
     private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {
@@ -5461,24 +5940,122 @@ class ParserImpl implements Parser {
         throw ctx.exception("Quoted string literal not terminated");
     }
 
-    private static final String parseUnquotedStringLiteral(ParserContext ctx) {
+    private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping) {
         parse(ctx, '\'');
 
         StringBuilder sb = new StringBuilder();
+
+        characterLoop:
         for (int i = ctx.position; i < ctx.sql.length; i++) {
-            char c = ctx.character(i);
+            char c1 = ctx.character(i);
 
             // TODO MySQL string escaping...
-            if (c == '\'')
-                if (ctx.character(i + 1) == '\'') {
-                    i++;
-                }
-                else {
-                    ctx.position = i + 1;
-                    return sb.toString();
-                }
+            switch (c1) {
+                case '\\': {
+                    if (!postgresEscaping)
+                        break;
 
-            sb.append(c);
+                    i++;
+                    char c2 = ctx.character(i);
+                    switch (c2) {
+
+                        // Escaped whitespace characters
+                        case 'b':
+                            c1 = '\b';
+                            break;
+                        case 'n':
+                            c1 = '\n';
+                            break;
+                        case 't':
+                            c1 = '\t';
+                            break;
+                        case 'r':
+                            c1 = '\r';
+                            break;
+                        case 'f':
+                            c1 = '\f';
+                            break;
+
+                        // Hexadecimal byte value
+                        case 'x': {
+                            char c3 = ctx.character(i + 1);
+                            char c4 = ctx.character(i + 2);
+
+                            int d3;
+                            if ((d3 = Character.digit(c3, 16)) != -1) {
+                                i++;
+
+                                int d4;
+                                if ((d4 = Character.digit(c4, 16)) != -1) {
+                                    c1 = (char) (0x10 * d3 + d4);
+                                    i++;
+                                }
+                                else
+                                    c1 = (char) d3;
+                            }
+                            else
+                                throw ctx.exception("Illegal hexadecimal byte value");
+
+                            break;
+                        }
+
+                        // Unicode character value UTF-16
+                        case 'u':
+                            c1 = (char) Integer.parseInt(new String(ctx.sql, i + 1, 4), 16);
+                            i += 4;
+                            break;
+
+                        // Unicode character value UTF-32
+                        case 'U':
+                            sb.appendCodePoint(Integer.parseInt(new String(ctx.sql, i + 1, 8), 16));
+                            i += 8;
+                            continue characterLoop;
+
+                        default:
+
+                            // Octal byte value
+                            if (Character.digit(c2, 8) != -1) {
+                                char c3 = ctx.character(i + 1);
+
+                                if (Character.digit(c3, 8) != -1) {
+                                    i++;
+                                    char c4 = ctx.character(i + 1);
+
+                                    if (Character.digit(c4, 8) != -1) {
+                                        i++;
+                                        c1 = (char) Integer.parseInt("" + c2 + c3 + c4, 8);
+                                    }
+                                    else {
+                                        c1 = (char) Integer.parseInt("" + c2 + c3, 8);
+                                    }
+                                }
+                                else {
+                                    c1 = (char) Integer.parseInt("" + c2, 8);
+                                }
+                            }
+
+                            // All other characters
+                            else {
+                                c1 = c2;
+                            }
+
+                            break;
+                    }
+
+                    break;
+                }
+                case '\'': {
+                    if (ctx.character(i + 1) != '\'') {
+                        ctx.position = i + 1;
+                        return sb.toString();
+                    }
+
+                    i++;
+                    break;
+                }
+            }
+
+            sb.append(c1);
         }
 
         throw ctx.exception("String literal not terminated");
@@ -5499,6 +6076,8 @@ class ParserImpl implements Parser {
     }
 
     private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
+        parseWhitespaceIf(ctx);
+
         StringBuilder sb = new StringBuilder();
         char c;
 
@@ -5798,20 +6377,65 @@ class ParserImpl implements Parser {
     // Other tokens
     // -----------------------------------------------------------------------------------------------------------------
 
-    private static final boolean parseIf(ParserContext ctx, String string) {
-        parseWhitespaceIf(ctx);
-        int length = string.length();
+    private static final String parseUntilEOL(ParserContext ctx) {
+        String result = parseUntilEOLIf(ctx);
 
-        if (ctx.sql.length < ctx.position + length)
-            return false;
+        if (result == null)
+            throw ctx.unexpectedToken();
 
-        for (int i = 0; i < length; i++) {
-            char c = string.charAt(i);
-            if (ctx.sql[ctx.position + i] != c)
-                return false;
+        return result;
+    }
+
+    private static final String parseUntilEOLIf(ParserContext ctx) {
+        int start = ctx.position;
+        int stop = start;
+
+        for (; stop < ctx.sql.length; stop++) {
+            char c = ctx.character(stop);
+
+            if (c == '\r') {
+                if (ctx.character(stop + 1) == '\n')
+                    stop++;
+
+                break;
+            }
+            else if (c == '\n')
+                break;
         }
 
-        ctx.position = ctx.position + length;
+        if (start == stop)
+            return null;
+
+        ctx.position = stop;
+        return new String(ctx.sql, start, stop - start);
+    }
+
+    private static final boolean parseIf(ParserContext ctx, String string) {
+        boolean result = peek(ctx, string);
+
+        if (result)
+            ctx.position = ctx.position + string.length();
+
+        return result;
+    }
+
+    private static final boolean parseIf(ParserContext ctx, String string, String peek) {
+        parseWhitespaceIf(ctx);
+        int l1 = string.length();
+        int l2 = peek.length();
+
+        if (ctx.sql.length < ctx.position + l1 + l2)
+            return false;
+
+        for (int i = 0; i < l1; i++)
+            if (ctx.sql[ctx.position + i] != string.charAt(i))
+                return false;
+
+        for (int i = l1; i < l2; i++)
+            if (ctx.sql[ctx.position + i] != peek.charAt(i))
+                return false;
+
+        ctx.position = ctx.position + l1;
         return true;
     }
 
@@ -5821,9 +6445,21 @@ class ParserImpl implements Parser {
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {
+        boolean result = peek(ctx, c);
+
+        if (result)
+            ctx.position = ctx.position + 1;
+
+        return result;
+    }
+
+    private static final boolean parseIf(ParserContext ctx, char c, char peek) {
         parseWhitespaceIf(ctx);
 
         if (ctx.character() != c)
+            return false;
+
+        if (ctx.character(ctx.position + 1) != peek)
             return false;
 
         ctx.position = ctx.position + 1;
@@ -5834,8 +6470,8 @@ class ParserImpl implements Parser {
         return peekKeyword(ctx, string, true, false, true);
     }
 
-    private static final void parseKeyword(ParserContext ctx, String string) {
-        if (!parseKeywordIf(ctx, string))
+    private static final void parseKeyword(ParserContext ctx, String keyword) {
+        if (!parseKeywordIf(ctx, keyword))
             throw ctx.unexpectedToken();
     }
 
@@ -5874,6 +6510,29 @@ class ParserImpl implements Parser {
             return keyword(keyword.toLowerCase());
 
         return null;
+    }
+
+    private static final boolean peek(ParserContext ctx, char c) {
+        parseWhitespaceIf(ctx);
+
+        if (ctx.character() != c)
+            return false;
+
+        return true;
+    }
+
+    private static final boolean peek(ParserContext ctx, String string) {
+        parseWhitespaceIf(ctx);
+        int length = string.length();
+
+        if (ctx.sql.length < ctx.position + length)
+            return false;
+
+        for (int i = 0; i < length; i++)
+            if (ctx.sql[ctx.position + i] != string.charAt(i))
+                return false;
+
+        return true;
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String... keywords) {
@@ -5922,17 +6581,18 @@ class ParserImpl implements Parser {
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
+            int p = ctx.position + i + skip;
 
             switch (c) {
                 case ' ':
                 case '\t':
                 case '\r':
                 case '\n':
-                    skip = skip + (afterWhitespace(ctx, ctx.position + i + skip) - ctx.position - i - 1);
+                    skip = skip + (afterWhitespace(ctx, p) - p - 1);
                     break;
 
                 default:
-                    if (upper(ctx.sql[ctx.position + i + skip]) != keyword.charAt(i))
+                    if (upper(ctx.sql[p]) != keyword.charAt(i))
                         return false;
 
                     break;
@@ -6027,21 +6687,20 @@ class ParserImpl implements Parser {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
 
-    public static final void main(String[] args) {
-        System.out.println(new ParserImpl(new DefaultConfiguration()).parse(
-            "DROP INDEX   y on a.b.c"
-        ));
-    }
-
     static final class ParserContext {
-        private final DSLContext   dsl;
-        private final String       sqlString;
-        private final char[]       sql;
-        private int                position = 0;
-        private final Object[]     bindings;
-        private int                bindIndex = 0;
+        final DSLContext           dsl;
+        final String               sqlString;
+        final char[]               sql;
+        int                        position  = 0;
+        final Object[]             bindings;
+        int                        bindIndex = 0;
+        String                     delimiter = ";";
 
-        ParserContext(DSLContext dsl, String sqlString, Object[] bindings) {
+        ParserContext(
+                DSLContext dsl,
+                String sqlString,
+                Object[] bindings
+        ) {
             this.dsl = dsl;
             this.sqlString = sqlString;
             this.sql = sqlString.toCharArray();
@@ -6075,6 +6734,30 @@ class ParserImpl implements Parser {
                 return null;
             else
                 throw exception("No binding provided for bind index " + (bindIndex + 1));
+        }
+
+        int[] line() {
+            int line = 1;
+            int column = 1;
+
+            for (int i = 0; i < position; i++) {
+                if (sql[i] == '\r') {
+                    line++;
+                    column = 1;
+
+                    if (i + 1 < sql.length && sql[i + 1] == '\n')
+                        i++;
+                }
+                else if (sql[i] == '\n') {
+                    line++;
+                    column = 1;
+                }
+                else {
+                    column++;
+                }
+            }
+
+            return new int[] { line, column };
         }
 
         char character() {
@@ -6114,7 +6797,8 @@ class ParserImpl implements Parser {
         }
 
         String mark() {
-            return sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
+            int[] line = line();
+            return "[" + line[0] + ":" + line[1] + "] " + sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
         }
 
         @Override
@@ -6163,7 +6847,7 @@ class ParserImpl implements Parser {
         REGR_SXY,
     }
 
-    private static final String[] SELECT_KEYWORDS = {
+    private static final String[] SELECT_KEYWORDS     = {
         "CONNECT",
         "CROSS",
         "EXCEPT",
@@ -6171,6 +6855,7 @@ class ParserImpl implements Parser {
         "FOR",
         "FROM",
         "FULL",
+        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
         "GROUP BY",
         "HAVING",
         "INNER",
@@ -6194,9 +6879,19 @@ class ParserImpl implements Parser {
         "UNION",
         "USING",
         "WHERE",
+        "WITH",
     };
 
-    private static final String[] PIVOT_KEYWORDS = {
+    private static final String[] PIVOT_KEYWORDS      = {
         "FOR"
     };
+
+    private static final Ignore   IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
+    private static final Ignore   IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
+
+    private static interface Ignore
+    extends
+        DDLQuery,
+        ResultQuery<Record>,
+        QueryPartInternal {}
 }

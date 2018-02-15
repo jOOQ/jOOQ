@@ -72,6 +72,7 @@ final class Keywords {
     static final Keyword K_CASCADE                          = keyword("cascade");
     static final Keyword K_CASE                             = keyword("case");
     static final Keyword K_CAST                             = keyword("cast");
+    static final Keyword K_CATALOG                          = keyword("catalog");
     static final Keyword K_CHANGE_COLUMN                    = keyword("change column");
     static final Keyword K_CHECK                            = keyword("check");
     static final Keyword K_COALESCE                         = keyword("coalesce");
@@ -83,6 +84,7 @@ final class Keywords {
     static final Keyword K_CREATE_SCHEMA                    = keyword("create schema");
     static final Keyword K_CREATE_VIEW                      = keyword("create view");
     static final Keyword K_CROSS_JOIN_LATERAL               = keyword("cross join lateral");
+    static final Keyword K_CURRENT_SCHEMA                   = keyword("current_schema");
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
@@ -225,12 +227,14 @@ final class Keywords {
     static final Keyword K_ROWS_FROM                        = keyword("rows from");
     static final Keyword K_ROWS_ONLY                        = keyword("rows only");
     static final Keyword K_ROWS_WITH_TIES                   = keyword("rows with ties");
+    static final Keyword K_SCHEMA                           = keyword("schema");
     static final Keyword K_SCN                              = keyword("scn");
     static final Keyword K_SELECT                           = keyword("select");
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");
     static final Keyword K_SERIAL                           = keyword("serial");
     static final Keyword K_SERIAL8                          = keyword("serial8");
+    static final Keyword K_SESSION                          = keyword("session");
     static final Keyword K_SET                              = keyword("set");
     static final Keyword K_SET_DATA_TYPE                    = keyword("set data type");
     static final Keyword K_SET_DEFAULT                      = keyword("set default");
@@ -262,6 +266,7 @@ final class Keywords {
     static final Keyword K_UNNEST                           = keyword("unnest");
     static final Keyword K_UPDATE                           = keyword("update");
     static final Keyword K_UPSERT                           = keyword("upsert");
+    static final Keyword K_USE                              = keyword("use");
     static final Keyword K_USING                            = keyword("using");
     static final Keyword K_USING_INDEX                      = keyword("using index");
     static final Keyword K_VALUES                           = keyword("values");

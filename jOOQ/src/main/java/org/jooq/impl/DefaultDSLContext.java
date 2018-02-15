@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
@@ -2814,6 +2815,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    @Override
+    public Query setCatalog(String catalog) {
+        return setCatalog(name(catalog));
+    }
+
+    @Override
+    public Query setCatalog(Name catalog) {
+        return setCatalog(catalog(catalog));
+    }
+
+    @Override
+    public Query setCatalog(Catalog catalog) {
+        return new SetCatalog(configuration(), catalog);
+    }
+
+    @Override
+    public Query setSchema(String schema) {
+        return setSchema(name(schema));
+    }
+
+    @Override
+    public Query setSchema(Name schema) {
+        return setSchema(schema(schema));
+    }
+
+    @Override
+    public Query setSchema(Schema schema) {
+        return new SetSchema(configuration(), schema);
+    }
 
     @Override
     public CreateViewAsStep<Record> createView(String view, String... fields) {

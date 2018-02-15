@@ -143,38 +143,41 @@ public class HSQLDBDatabase extends AbstractDatabase {
             final Result<Record> cols = entry.getValue();
 
             final SchemaDefinition tableSchema = getSchema(index.get(SYSTEM_INDEXINFO.TABLE_SCHEM));
+            if (tableSchema == null)
+                continue indexLoop;
+
             final String indexName = index.get(SYSTEM_INDEXINFO.INDEX_NAME);
             final String tableName = index.get(SYSTEM_INDEXINFO.TABLE_NAME);
             final TableDefinition table = getTable(tableSchema, tableName);
+            if (table == null)
+                continue indexLoop;
+
             final boolean unique = !index.get(SYSTEM_INDEXINFO.NON_UNIQUE, boolean.class);
 
-            if (table != null) {
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            for (Record column : cols)
+                if (table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)) == null)
+                    continue indexLoop;
 
-                // [#6310] [#6620] Function-based indexes are not yet supported
-                for (Record column : cols)
-                    if (table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)) == null)
-                        continue indexLoop;
+            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
 
-                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
-                    List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
-
-                    {
-                        for (Record column : cols) {
-                            indexColumns.add(new DefaultIndexColumnDefinition(
-                                this,
-                                table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)),
-                                "D".equals(column.get(SYSTEM_INDEXINFO.ASC_OR_DESC)) ? SortOrder.DESC : SortOrder.ASC,
-                                column.get(SYSTEM_INDEXINFO.ORDINAL_POSITION, int.class)
-                            ));
-                        }
+                {
+                    for (Record column : cols) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)),
+                            "D".equals(column.get(SYSTEM_INDEXINFO.ASC_OR_DESC)) ? SortOrder.DESC : SortOrder.ASC,
+                            column.get(SYSTEM_INDEXINFO.ORDINAL_POSITION, int.class)
+                        ));
                     }
+                }
 
-                    @Override
-                    protected List<IndexColumnDefinition> getIndexColumns0() {
-                        return indexColumns;
-                    }
-                });
-            }
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
         }
 
         return result;

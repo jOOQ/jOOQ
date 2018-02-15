@@ -8352,6 +8352,54 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Queries ddl(Table<?> table, DDLFlag... flags);
 
     // -------------------------------------------------------------------------
+    // XXX Session Statements
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    Query setCatalog(String catalog);
+
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    Query setCatalog(Name catalog);
+
+    /**
+     * Set the current catalog to a new value.
+     */
+    @Support({ MARIADB, MYSQL })
+    Query setCatalog(Catalog catalog);
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Query setSchema(String schema);
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Query setSchema(Name schema);
+
+    /**
+     * Set the current schema to a new value.
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Query setSchema(Schema schema);
+
+    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 

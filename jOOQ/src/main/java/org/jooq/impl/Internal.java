@@ -47,85 +47,74 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 
 /**
- * A base class for generated static references.
+ * A utility class that grants access to internal API, to be used only by
+ * generated code.
  * <p>
  * This type is for JOOQ INTERNAL USE only. Do not reference directly.
  *
  * @author Lukas Eder
- * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
  */
-@Deprecated
-public abstract class AbstractKeys {
+public final class Internal {
 
     /**
      * Factory method for indexes.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
     public static Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
-        return Internal.createIndex(name, table, sortFields, unique);
+        return new IndexImpl(DSL.name(name), table, sortFields, null, unique);
     }
 
     /**
      * Factory method for identities.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
     public static <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
-        return Internal.createIdentity(table, field);
+        return new IdentityImpl<R, T>(table, field);
     }
 
     /**
      * Factory method for unique keys.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
 
     @SafeVarargs
 
     public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
-        return Internal.createUniqueKey(table, fields);
+        return new UniqueKeyImpl<R>(table, fields);
     }
 
     /**
      * Factory method for unique keys.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
 
     @SafeVarargs
 
     public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
-        return Internal.createUniqueKey(table, name, fields);
+        return new UniqueKeyImpl<R>(table, name, fields);
     }
 
     /**
      * Factory method for foreign keys.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
 
     @SafeVarargs
 
     public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
-        return Internal.createForeignKey(key, table, fields);
+        return createForeignKey(key, table, null, fields);
     }
 
     /**
      * Factory method for foreign keys.
-     *
-     * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
-    @Deprecated
 
     @SafeVarargs
 
     public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
-        return Internal.createForeignKey(key, table, name, fields);
+        ForeignKey<R, U> result = new ReferenceImpl<R, U>(key, table, name, fields);
+
+        if (key instanceof UniqueKeyImpl)
+            ((UniqueKeyImpl<U>) key).references.add(result);
+
+        return result;
     }
+
+
+    private Internal() {}
 }

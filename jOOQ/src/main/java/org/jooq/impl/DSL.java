@@ -6501,6 +6501,66 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Session Statements
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(String catalog) {
+        return using(new DefaultConfiguration()).setCatalog(catalog);
+    }
+
+    /**
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#catalog(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(Name catalog) {
+        return using(new DefaultConfiguration()).setCatalog(catalog);
+    }
+
+    /**
+     * Set the current catalog to a new value.
+     */
+    @Support({ MARIADB, MYSQL })
+    public static Query setCatalog(Catalog catalog) {
+        return using(new DefaultConfiguration()).setCatalog(catalog);
+    }
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Query setSchema(String schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    /**
+     * Set the current schema to a new value.
+     *
+     * @see DSL#schema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Query setSchema(Name schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    /**
+     * Set the current schema to a new value.
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Query setSchema(Schema schema) {
+        return using(new DefaultConfiguration()).setSchema(schema);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 

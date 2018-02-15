@@ -8400,12 +8400,12 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #unnest(List)}.
+     * A synonym for {@link #unnest(Collection)}.
      *
-     * @see #unnest(List)
+     * @see #unnest(Collection)
      */
     @Support
-    public static Table<?> table(List<?> list) {
+    public static Table<?> table(Collection<?> list) {
         return table(list.toArray());
     }
 
@@ -8454,7 +8454,7 @@ public class DSL {
      * <code>UNION ALL</code> connected subqueries.
      */
     @Support
-    public static Table<?> unnest(List<?> list) {
+    public static Table<?> unnest(Collection<?> list) {
         return unnest(list.toArray());
     }
 

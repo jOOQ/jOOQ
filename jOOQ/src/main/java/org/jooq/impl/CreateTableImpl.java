@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
@@ -125,6 +126,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK       = EnumSet.of(POSTGRES);
 
 
 
@@ -298,8 +300,22 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         }
     }
 
-
     private final void accept0(Context<?> ctx) {
+        if (comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.family())) {
+            begin(ctx);
+            accept1(ctx);
+
+            ctx.sql(';').formatSeparator()
+               .visit(commentOnTable(table).is(comment)).sql(';');
+
+            end(ctx);
+            return;
+        }
+
+        accept1(ctx);
+    }
+
+    private final void accept1(Context<?> ctx) {
         ctx.start(CREATE_TABLE);
 
         if (select != null) {
@@ -359,7 +375,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             toSQLOnCommit(ctx);
         }
 
-        if (comment != null)
+        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.family()))
             ctx.formatSeparator()
                .visit(K_COMMENT).sql(' ').visit(comment);
 

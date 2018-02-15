@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.impl.DSL.alterTable;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -730,6 +731,15 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
 
+        // [#5319] Compound statements to drop multiple columns in a single statement.
+        if (dropColumns != null && dropColumns.size() > 1) {
+            switch (family) {
+                case POSTGRES:
+                    dropColumnsInBlock(ctx);
+                    return;
+            }
+        }
+
         accept1(ctx);
     }
 
@@ -1203,6 +1213,21 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+    private final void dropColumnsInBlock(Context<?> ctx) {
+        begin(ctx);
+
+        for (int i = 0; i < dropColumns.size(); i++) {
+            Field<?> f = dropColumns.get(i);
+
+            if (i > 0)
+                ctx.formatSeparator();
+
+            ctx.visit(alterTable(table).dropColumn(f)).sql(';');
+        }
+
+        end(ctx);
+    }
 
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
         begin(ctx);

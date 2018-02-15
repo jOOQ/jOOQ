@@ -72,6 +72,7 @@ import org.jooq.Field;
 import org.jooq.Nullability;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -845,6 +846,11 @@ public class DefaultDataType<T> implements DataType<T> {
                 try {
                     if (UDTRecord.class.isAssignableFrom(type)) {
                         return (DataType<T>) ((UDTRecord<?>) type.newInstance()).getUDT().getDataType();
+                    }
+
+                    // [#7174] PostgreSQL table records can be function argument types
+                    else if (TableRecord.class.isAssignableFrom(type)) {
+                        return (DataType<T>) ((TableRecord<?>) type.newInstance()).getTable().getDataType();
                     }
 
 

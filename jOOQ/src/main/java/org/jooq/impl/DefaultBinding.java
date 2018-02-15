@@ -147,6 +147,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
+import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
@@ -2653,8 +2654,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlInline0(BindingSQLContext<U> ctx, Record value) {
-            ctx.render().sql("[UDT]");
+        void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
+            super.sqlBind0(ctx, value);
+
+            if (ctx.family() == POSTGRES && value != null)
+                pgRenderRecordCast(ctx.render(), value);
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
+            if (ctx.family() == POSTGRES) {
+                ctx.render().visit(inline(PostgresUtils.toPGString(value)));
+                pgRenderRecordCast(ctx.render(), value);
+            }
+            else
+                ctx.render().sql("[UDT]");
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -2672,7 +2686,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Record value) throws SQLException {
-            ctx.statement().setObject(ctx.index(), value);
+            if (ctx.family() == POSTGRES && value != null)
+                ctx.statement().setString(ctx.index(), PostgresUtils.toPGString(value));
+            else
+                ctx.statement().setObject(ctx.index(), value);
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -2734,6 +2751,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // official Postgres JDBC driver does not implement SQLData and similar
         // interfaces. Instead, a string representation of a UDT has to be parsed
         // -------------------------------------------------------------------------
+
+        static final void pgRenderRecordCast(RenderContext render, Record value) {
+            if (value instanceof UDTRecord)
+                render.sql("::").visit(((UDTRecord<?>) value).getUDT().getQualifiedName());
+            else if (value instanceof TableRecord)
+                render.sql("::").visit(((TableRecord<?>) value).getTable().getQualifiedName());
+        }
 
         private static final <T> T pgFromString(Class<T> type, String string) {
             return pgFromString(Converters.identity(type), string);

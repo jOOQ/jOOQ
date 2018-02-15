@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import org.jooq.AggregateFilterStep;
+import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 
@@ -46,8 +48,15 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
  */
 final class Mode implements OrderedAggregateFunctionOfDeferredType {
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field) {
-        return new Function<T>("mode", ((SortFieldImpl<T>) field).getField().getDataType()).withinGroupOrderBy(field);
+        DataType<T> type = field instanceof SortFieldImpl
+            ? ((SortFieldImpl<T>) field).getField().getDataType()
+            : field instanceof Field
+            ? ((AbstractField<T>) field).getDataType()
+            : (DataType<T>) SQLDataType.NUMERIC;
+
+        return new Function<T>("mode", type).withinGroupOrderBy(field);
     }
 }

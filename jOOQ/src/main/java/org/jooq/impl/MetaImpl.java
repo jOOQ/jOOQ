@@ -738,7 +738,11 @@ final class MetaImpl extends AbstractMeta implements Serializable {
                     unique = !record.get(3, boolean.class); // NON_UNIQUE
                 }
 
-                Field<?> field = field(record.get(8, String.class)); // COLUMN_NAME
+                String columnName = record.get(8, String.class);
+                Field<?> field = field(columnName); // COLUMN_NAME
+                if (field == null)
+                    field = DSL.field(columnName);
+
                 boolean desc = "D".equalsIgnoreCase(record.get(9, String.class)); // ASC_OR_DESC
                 sortFields.add(desc ? field.desc() : field.asc());
 

@@ -442,14 +442,8 @@ public class IndexColumnUsage implements Serializable
                 return false;
             }
         }
-        if (ordinalPosition == null) {
-            if (other.ordinalPosition!= null) {
-                return false;
-            }
-        } else {
-            if (!ordinalPosition.equals(other.ordinalPosition)) {
-                return false;
-            }
+        if (ordinalPosition!= other.ordinalPosition) {
+            return false;
         }
         if (isDescending == null) {
             if (other.isDescending!= null) {
@@ -474,7 +468,7 @@ public class IndexColumnUsage implements Serializable
         result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
         result = ((prime*result)+((columnName == null)? 0 :columnName.hashCode()));
-        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+ ordinalPosition);
         result = ((prime*result)+((isDescending == null)? 0 :isDescending.hashCode()));
         return result;
     }

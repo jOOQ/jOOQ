@@ -557,14 +557,8 @@ public class Parameter implements Serializable
                 return false;
             }
         }
-        if (ordinalPosition == null) {
-            if (other.ordinalPosition!= null) {
-                return false;
-            }
-        } else {
-            if (!ordinalPosition.equals(other.ordinalPosition)) {
-                return false;
-            }
+        if (ordinalPosition!= other.ordinalPosition) {
+            return false;
         }
         if (parameterMode == null) {
             if (other.parameterMode!= null) {
@@ -649,7 +643,7 @@ public class Parameter implements Serializable
         result = ((prime*result)+((specificSchema == null)? 0 :specificSchema.hashCode()));
         result = ((prime*result)+((specificPackage == null)? 0 :specificPackage.hashCode()));
         result = ((prime*result)+((specificName == null)? 0 :specificName.hashCode()));
-        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+ ordinalPosition);
         result = ((prime*result)+((parameterMode == null)? 0 :parameterMode.hashCode()));
         result = ((prime*result)+((parameterName == null)? 0 :parameterName.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));

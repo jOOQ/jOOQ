@@ -380,14 +380,8 @@ public class KeyColumnUsage implements Serializable
                 return false;
             }
         }
-        if (ordinalPosition == null) {
-            if (other.ordinalPosition!= null) {
-                return false;
-            }
-        } else {
-            if (!ordinalPosition.equals(other.ordinalPosition)) {
-                return false;
-            }
+        if (ordinalPosition!= other.ordinalPosition) {
+            return false;
         }
         if (tableCatalog == null) {
             if (other.tableCatalog!= null) {
@@ -427,7 +421,7 @@ public class KeyColumnUsage implements Serializable
         result = ((prime*result)+((constraintCatalog == null)? 0 :constraintCatalog.hashCode()));
         result = ((prime*result)+((constraintSchema == null)? 0 :constraintSchema.hashCode()));
         result = ((prime*result)+((constraintName == null)? 0 :constraintName.hashCode()));
-        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+ ordinalPosition);
         result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
         result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));

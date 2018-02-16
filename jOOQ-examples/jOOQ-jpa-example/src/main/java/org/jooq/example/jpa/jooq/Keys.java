@@ -17,7 +17,7 @@ import org.jooq.example.jpa.jooq.tables.records.ActorRecord;
 import org.jooq.example.jpa.jooq.tables.records.FilmActorRecord;
 import org.jooq.example.jpa.jooq.tables.records.FilmRecord;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
-import org.jooq.impl.AbstractKeys;
+import org.jooq.impl.Internal;
 
 
 /**
@@ -64,23 +64,23 @@ public class Keys {
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
-    private static class Identities0 extends AbstractKeys {
-        public static Identity<ActorRecord, Integer> IDENTITY_ACTOR = createIdentity(Actor.ACTOR, Actor.ACTOR.ACTORID);
-        public static Identity<FilmRecord, Integer> IDENTITY_FILM = createIdentity(Film.FILM, Film.FILM.FILMID);
-        public static Identity<LanguageRecord, Integer> IDENTITY_LANGUAGE = createIdentity(Language.LANGUAGE, Language.LANGUAGE.LANGUAGEID);
+    private static class Identities0 {
+        public static Identity<ActorRecord, Integer> IDENTITY_ACTOR = Internal.createIdentity(Actor.ACTOR, Actor.ACTOR.ACTORID);
+        public static Identity<FilmRecord, Integer> IDENTITY_FILM = Internal.createIdentity(Film.FILM, Film.FILM.FILMID);
+        public static Identity<LanguageRecord, Integer> IDENTITY_LANGUAGE = Internal.createIdentity(Language.LANGUAGE, Language.LANGUAGE.LANGUAGEID);
     }
 
-    private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<ActorRecord> CONSTRAINT_3 = createUniqueKey(Actor.ACTOR, "CONSTRAINT_3", Actor.ACTOR.ACTORID);
-        public static final UniqueKey<FilmRecord> CONSTRAINT_2 = createUniqueKey(Film.FILM, "CONSTRAINT_2", Film.FILM.FILMID);
-        public static final UniqueKey<FilmActorRecord> CONSTRAINT_7 = createUniqueKey(FilmActor.FILM_ACTOR, "CONSTRAINT_7", FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID);
-        public static final UniqueKey<LanguageRecord> CONSTRAINT_C = createUniqueKey(Language.LANGUAGE, "CONSTRAINT_C", Language.LANGUAGE.LANGUAGEID);
+    private static class UniqueKeys0 {
+        public static final UniqueKey<ActorRecord> CONSTRAINT_3 = Internal.createUniqueKey(Actor.ACTOR, "CONSTRAINT_3", Actor.ACTOR.ACTORID);
+        public static final UniqueKey<FilmRecord> CONSTRAINT_2 = Internal.createUniqueKey(Film.FILM, "CONSTRAINT_2", Film.FILM.FILMID);
+        public static final UniqueKey<FilmActorRecord> CONSTRAINT_7 = Internal.createUniqueKey(FilmActor.FILM_ACTOR, "CONSTRAINT_7", FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID);
+        public static final UniqueKey<LanguageRecord> CONSTRAINT_C = Internal.createUniqueKey(Language.LANGUAGE, "CONSTRAINT_C", Language.LANGUAGE.LANGUAGEID);
     }
 
-    private static class ForeignKeys0 extends AbstractKeys {
-        public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKD2YJC1RU34H1SMWLA3FX7B6NX", Film.FILM.LANGUAGE_LANGUAGEID);
-        public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKN2UB730RPO5B5E9X6U2LWL9FT", Film.FILM.ORIGINALLANGUAGE_LANGUAGEID);
-        public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_2, FilmActor.FILM_ACTOR, "FK3FSUXQ0JJ1XONRE7BHROOPVBX", FilmActor.FILM_ACTOR.FILMS_FILMID);
-        public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_3, FilmActor.FILM_ACTOR, "FK43SD2F45W7YN0GAXQ94EHTWT2", FilmActor.FILM_ACTOR.ACTORS_ACTORID);
+    private static class ForeignKeys0 {
+        public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKD2YJC1RU34H1SMWLA3FX7B6NX", Film.FILM.LANGUAGE_LANGUAGEID);
+        public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKN2UB730RPO5B5E9X6U2LWL9FT", Film.FILM.ORIGINALLANGUAGE_LANGUAGEID);
+        public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_2, FilmActor.FILM_ACTOR, "FK3FSUXQ0JJ1XONRE7BHROOPVBX", FilmActor.FILM_ACTOR.FILMS_FILMID);
+        public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_3, FilmActor.FILM_ACTOR, "FK43SD2F45W7YN0GAXQ94EHTWT2", FilmActor.FILM_ACTOR.ACTORS_ACTORID);
     }
 }

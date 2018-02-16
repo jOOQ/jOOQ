@@ -15,6 +15,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -1484720109;
+    private static final long serialVersionUID = 1814763098;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -114,6 +115,10 @@ public class Film extends TableImpl<FilmRecord> {
         super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
+    <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
+        super(child, key, FILM);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -160,6 +165,14 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public List<ForeignKey<FilmRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<FilmRecord, ?>>asList(Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
+    }
+
+    public Language fkd2yjc1ru34h1smwla3fx7b6nx() {
+        return new Language(this, Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX);
+    }
+
+    public Language fkn2ub730rpo5b5e9x6u2lwl9ft() {
+        return new Language(this, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
     }
 
     /**

@@ -10,9 +10,11 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -38,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = 30719078;
+    private static final long serialVersionUID = -1003312401;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -90,6 +92,10 @@ public class Language extends TableImpl<LanguageRecord> {
 
     private Language(Name alias, Table<LanguageRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    <O extends Record> Language(Table<O> child, ForeignKey<O, LanguageRecord> key) {
+        super(child, key, LANGUAGE);
     }
 
     /**

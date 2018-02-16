@@ -165,4 +165,84 @@ public class Target implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<packageName>");
+        sb.append(packageName);
+        sb.append("</packageName>");
+        sb.append("<directory>");
+        sb.append(directory);
+        sb.append("</directory>");
+        sb.append("<encoding>");
+        sb.append(encoding);
+        sb.append("</encoding>");
+        sb.append("<clean>");
+        sb.append(clean);
+        sb.append("</clean>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Target other = ((Target) that);
+        if (packageName == null) {
+            if (other.packageName!= null) {
+                return false;
+            }
+        } else {
+            if (!packageName.equals(other.packageName)) {
+                return false;
+            }
+        }
+        if (directory == null) {
+            if (other.directory!= null) {
+                return false;
+            }
+        } else {
+            if (!directory.equals(other.directory)) {
+                return false;
+            }
+        }
+        if (encoding == null) {
+            if (other.encoding!= null) {
+                return false;
+            }
+        } else {
+            if (!encoding.equals(other.encoding)) {
+                return false;
+            }
+        }
+        if (clean == null) {
+            if (other.clean!= null) {
+                return false;
+            }
+        } else {
+            if (!clean.equals(other.clean)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((packageName == null)? 0 :packageName.hashCode()));
+        result = ((prime*result)+((directory == null)? 0 :directory.hashCode()));
+        result = ((prime*result)+((encoding == null)? 0 :encoding.hashCode()));
+        result = ((prime*result)+((clean == null)? 0 :clean.hashCode()));
+        return result;
+    }
+
 }

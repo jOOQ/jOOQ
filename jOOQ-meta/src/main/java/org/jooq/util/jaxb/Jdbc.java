@@ -261,4 +261,123 @@ public class Jdbc implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<driver>");
+        sb.append(driver);
+        sb.append("</driver>");
+        sb.append("<url>");
+        sb.append(url);
+        sb.append("</url>");
+        sb.append("<schema>");
+        sb.append(schema);
+        sb.append("</schema>");
+        sb.append("<user>");
+        sb.append(user);
+        sb.append("</user>");
+        sb.append("<username>");
+        sb.append(username);
+        sb.append("</username>");
+        sb.append("<password>");
+        sb.append(password);
+        sb.append("</password>");
+        sb.append("<properties>");
+        sb.append(properties);
+        sb.append("</properties>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Jdbc other = ((Jdbc) that);
+        if (driver == null) {
+            if (other.driver!= null) {
+                return false;
+            }
+        } else {
+            if (!driver.equals(other.driver)) {
+                return false;
+            }
+        }
+        if (url == null) {
+            if (other.url!= null) {
+                return false;
+            }
+        } else {
+            if (!url.equals(other.url)) {
+                return false;
+            }
+        }
+        if (schema == null) {
+            if (other.schema!= null) {
+                return false;
+            }
+        } else {
+            if (!schema.equals(other.schema)) {
+                return false;
+            }
+        }
+        if (user == null) {
+            if (other.user!= null) {
+                return false;
+            }
+        } else {
+            if (!user.equals(other.user)) {
+                return false;
+            }
+        }
+        if (username == null) {
+            if (other.username!= null) {
+                return false;
+            }
+        } else {
+            if (!username.equals(other.username)) {
+                return false;
+            }
+        }
+        if (password == null) {
+            if (other.password!= null) {
+                return false;
+            }
+        } else {
+            if (!password.equals(other.password)) {
+                return false;
+            }
+        }
+        if (properties == null) {
+            if (other.properties!= null) {
+                return false;
+            }
+        } else {
+            if (!properties.equals(other.properties)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((driver == null)? 0 :driver.hashCode()));
+        result = ((prime*result)+((url == null)? 0 :url.hashCode()));
+        result = ((prime*result)+((schema == null)? 0 :schema.hashCode()));
+        result = ((prime*result)+((user == null)? 0 :user.hashCode()));
+        result = ((prime*result)+((username == null)? 0 :username.hashCode()));
+        result = ((prime*result)+((password == null)? 0 :password.hashCode()));
+        result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
+        return result;
+    }
+
 }

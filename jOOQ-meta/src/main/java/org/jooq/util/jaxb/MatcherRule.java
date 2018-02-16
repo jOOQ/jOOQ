@@ -113,4 +113,58 @@ public class MatcherRule implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<transform>");
+        sb.append(transform);
+        sb.append("</transform>");
+        sb.append("<expression>");
+        sb.append(expression);
+        sb.append("</expression>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        MatcherRule other = ((MatcherRule) that);
+        if (transform == null) {
+            if (other.transform!= null) {
+                return false;
+            }
+        } else {
+            if (!transform.equals(other.transform)) {
+                return false;
+            }
+        }
+        if (expression == null) {
+            if (other.expression!= null) {
+                return false;
+            }
+        } else {
+            if (!expression.equals(other.expression)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((transform == null)? 0 :transform.hashCode()));
+        result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
+        return result;
+    }
+
 }

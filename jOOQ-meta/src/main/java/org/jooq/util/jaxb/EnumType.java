@@ -113,4 +113,58 @@ public class EnumType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<name>");
+        sb.append(name);
+        sb.append("</name>");
+        sb.append("<literals>");
+        sb.append(literals);
+        sb.append("</literals>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        EnumType other = ((EnumType) that);
+        if (name == null) {
+            if (other.name!= null) {
+                return false;
+            }
+        } else {
+            if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (literals == null) {
+            if (other.literals!= null) {
+                return false;
+            }
+        } else {
+            if (!literals.equals(other.literals)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((literals == null)? 0 :literals.hashCode()));
+        return result;
+    }
+
 }

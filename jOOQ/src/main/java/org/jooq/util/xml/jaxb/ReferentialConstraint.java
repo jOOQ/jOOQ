@@ -245,4 +245,110 @@ public class ReferentialConstraint implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<constraintCatalog>");
+        sb.append(constraintCatalog);
+        sb.append("</constraintCatalog>");
+        sb.append("<constraintSchema>");
+        sb.append(constraintSchema);
+        sb.append("</constraintSchema>");
+        sb.append("<constraintName>");
+        sb.append(constraintName);
+        sb.append("</constraintName>");
+        sb.append("<uniqueConstraintCatalog>");
+        sb.append(uniqueConstraintCatalog);
+        sb.append("</uniqueConstraintCatalog>");
+        sb.append("<uniqueConstraintSchema>");
+        sb.append(uniqueConstraintSchema);
+        sb.append("</uniqueConstraintSchema>");
+        sb.append("<uniqueConstraintName>");
+        sb.append(uniqueConstraintName);
+        sb.append("</uniqueConstraintName>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        ReferentialConstraint other = ((ReferentialConstraint) that);
+        if (constraintCatalog == null) {
+            if (other.constraintCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!constraintCatalog.equals(other.constraintCatalog)) {
+                return false;
+            }
+        }
+        if (constraintSchema == null) {
+            if (other.constraintSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!constraintSchema.equals(other.constraintSchema)) {
+                return false;
+            }
+        }
+        if (constraintName == null) {
+            if (other.constraintName!= null) {
+                return false;
+            }
+        } else {
+            if (!constraintName.equals(other.constraintName)) {
+                return false;
+            }
+        }
+        if (uniqueConstraintCatalog == null) {
+            if (other.uniqueConstraintCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!uniqueConstraintCatalog.equals(other.uniqueConstraintCatalog)) {
+                return false;
+            }
+        }
+        if (uniqueConstraintSchema == null) {
+            if (other.uniqueConstraintSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!uniqueConstraintSchema.equals(other.uniqueConstraintSchema)) {
+                return false;
+            }
+        }
+        if (uniqueConstraintName == null) {
+            if (other.uniqueConstraintName!= null) {
+                return false;
+            }
+        } else {
+            if (!uniqueConstraintName.equals(other.uniqueConstraintName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((constraintCatalog == null)? 0 :constraintCatalog.hashCode()));
+        result = ((prime*result)+((constraintSchema == null)? 0 :constraintSchema.hashCode()));
+        result = ((prime*result)+((constraintName == null)? 0 :constraintName.hashCode()));
+        result = ((prime*result)+((uniqueConstraintCatalog == null)? 0 :uniqueConstraintCatalog.hashCode()));
+        result = ((prime*result)+((uniqueConstraintSchema == null)? 0 :uniqueConstraintSchema.hashCode()));
+        result = ((prime*result)+((uniqueConstraintName == null)? 0 :uniqueConstraintName.hashCode()));
+        return result;
+    }
+
 }

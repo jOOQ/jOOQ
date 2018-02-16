@@ -483,4 +483,188 @@ public class InformationSchema implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<catalogs>");
+        sb.append(catalogs);
+        sb.append("</catalogs>");
+        sb.append("<schemata>");
+        sb.append(schemata);
+        sb.append("</schemata>");
+        sb.append("<sequences>");
+        sb.append(sequences);
+        sb.append("</sequences>");
+        sb.append("<tables>");
+        sb.append(tables);
+        sb.append("</tables>");
+        sb.append("<columns>");
+        sb.append(columns);
+        sb.append("</columns>");
+        sb.append("<tableConstraints>");
+        sb.append(tableConstraints);
+        sb.append("</tableConstraints>");
+        sb.append("<keyColumnUsages>");
+        sb.append(keyColumnUsages);
+        sb.append("</keyColumnUsages>");
+        sb.append("<referentialConstraints>");
+        sb.append(referentialConstraints);
+        sb.append("</referentialConstraints>");
+        sb.append("<indexes>");
+        sb.append(indexes);
+        sb.append("</indexes>");
+        sb.append("<indexColumnUsages>");
+        sb.append(indexColumnUsages);
+        sb.append("</indexColumnUsages>");
+        sb.append("<routines>");
+        sb.append(routines);
+        sb.append("</routines>");
+        sb.append("<parameters>");
+        sb.append(parameters);
+        sb.append("</parameters>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        InformationSchema other = ((InformationSchema) that);
+        if (catalogs == null) {
+            if (other.catalogs!= null) {
+                return false;
+            }
+        } else {
+            if (!catalogs.equals(other.catalogs)) {
+                return false;
+            }
+        }
+        if (schemata == null) {
+            if (other.schemata!= null) {
+                return false;
+            }
+        } else {
+            if (!schemata.equals(other.schemata)) {
+                return false;
+            }
+        }
+        if (sequences == null) {
+            if (other.sequences!= null) {
+                return false;
+            }
+        } else {
+            if (!sequences.equals(other.sequences)) {
+                return false;
+            }
+        }
+        if (tables == null) {
+            if (other.tables!= null) {
+                return false;
+            }
+        } else {
+            if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (columns == null) {
+            if (other.columns!= null) {
+                return false;
+            }
+        } else {
+            if (!columns.equals(other.columns)) {
+                return false;
+            }
+        }
+        if (tableConstraints == null) {
+            if (other.tableConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!tableConstraints.equals(other.tableConstraints)) {
+                return false;
+            }
+        }
+        if (keyColumnUsages == null) {
+            if (other.keyColumnUsages!= null) {
+                return false;
+            }
+        } else {
+            if (!keyColumnUsages.equals(other.keyColumnUsages)) {
+                return false;
+            }
+        }
+        if (referentialConstraints == null) {
+            if (other.referentialConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!referentialConstraints.equals(other.referentialConstraints)) {
+                return false;
+            }
+        }
+        if (indexes == null) {
+            if (other.indexes!= null) {
+                return false;
+            }
+        } else {
+            if (!indexes.equals(other.indexes)) {
+                return false;
+            }
+        }
+        if (indexColumnUsages == null) {
+            if (other.indexColumnUsages!= null) {
+                return false;
+            }
+        } else {
+            if (!indexColumnUsages.equals(other.indexColumnUsages)) {
+                return false;
+            }
+        }
+        if (routines == null) {
+            if (other.routines!= null) {
+                return false;
+            }
+        } else {
+            if (!routines.equals(other.routines)) {
+                return false;
+            }
+        }
+        if (parameters == null) {
+            if (other.parameters!= null) {
+                return false;
+            }
+        } else {
+            if (!parameters.equals(other.parameters)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
+        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
+        result = ((prime*result)+((tableConstraints == null)? 0 :tableConstraints.hashCode()));
+        result = ((prime*result)+((keyColumnUsages == null)? 0 :keyColumnUsages.hashCode()));
+        result = ((prime*result)+((referentialConstraints == null)? 0 :referentialConstraints.hashCode()));
+        result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
+        result = ((prime*result)+((indexColumnUsages == null)? 0 :indexColumnUsages.hashCode()));
+        result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
+        result = ((prime*result)+((parameters == null)? 0 :parameters.hashCode()));
+        return result;
+    }
+
 }

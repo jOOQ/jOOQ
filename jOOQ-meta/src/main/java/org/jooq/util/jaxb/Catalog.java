@@ -168,4 +168,84 @@ public class Catalog implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<inputCatalog>");
+        sb.append(inputCatalog);
+        sb.append("</inputCatalog>");
+        sb.append("<outputCatalog>");
+        sb.append(outputCatalog);
+        sb.append("</outputCatalog>");
+        sb.append("<outputCatalogToDefault>");
+        sb.append(outputCatalogToDefault);
+        sb.append("</outputCatalogToDefault>");
+        sb.append("<schemata>");
+        sb.append(schemata);
+        sb.append("</schemata>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Catalog other = ((Catalog) that);
+        if (inputCatalog == null) {
+            if (other.inputCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!inputCatalog.equals(other.inputCatalog)) {
+                return false;
+            }
+        }
+        if (outputCatalog == null) {
+            if (other.outputCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!outputCatalog.equals(other.outputCatalog)) {
+                return false;
+            }
+        }
+        if (outputCatalogToDefault == null) {
+            if (other.outputCatalogToDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!outputCatalogToDefault.equals(other.outputCatalogToDefault)) {
+                return false;
+            }
+        }
+        if (schemata == null) {
+            if (other.schemata!= null) {
+                return false;
+            }
+        } else {
+            if (!schemata.equals(other.schemata)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((inputCatalog == null)? 0 :inputCatalog.hashCode()));
+        result = ((prime*result)+((outputCatalog == null)? 0 :outputCatalog.hashCode()));
+        result = ((prime*result)+((outputCatalogToDefault == null)? 0 :outputCatalogToDefault.hashCode()));
+        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        return result;
+    }
+
 }

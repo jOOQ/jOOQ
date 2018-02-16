@@ -185,4 +185,97 @@ public class MatchersFieldType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<expression>");
+        sb.append(expression);
+        sb.append("</expression>");
+        sb.append("<fieldIdentifier>");
+        sb.append(fieldIdentifier);
+        sb.append("</fieldIdentifier>");
+        sb.append("<fieldMember>");
+        sb.append(fieldMember);
+        sb.append("</fieldMember>");
+        sb.append("<fieldSetter>");
+        sb.append(fieldSetter);
+        sb.append("</fieldSetter>");
+        sb.append("<fieldGetter>");
+        sb.append(fieldGetter);
+        sb.append("</fieldGetter>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        MatchersFieldType other = ((MatchersFieldType) that);
+        if (expression == null) {
+            if (other.expression!= null) {
+                return false;
+            }
+        } else {
+            if (!expression.equals(other.expression)) {
+                return false;
+            }
+        }
+        if (fieldIdentifier == null) {
+            if (other.fieldIdentifier!= null) {
+                return false;
+            }
+        } else {
+            if (!fieldIdentifier.equals(other.fieldIdentifier)) {
+                return false;
+            }
+        }
+        if (fieldMember == null) {
+            if (other.fieldMember!= null) {
+                return false;
+            }
+        } else {
+            if (!fieldMember.equals(other.fieldMember)) {
+                return false;
+            }
+        }
+        if (fieldSetter == null) {
+            if (other.fieldSetter!= null) {
+                return false;
+            }
+        } else {
+            if (!fieldSetter.equals(other.fieldSetter)) {
+                return false;
+            }
+        }
+        if (fieldGetter == null) {
+            if (other.fieldGetter!= null) {
+                return false;
+            }
+        } else {
+            if (!fieldGetter.equals(other.fieldGetter)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
+        result = ((prime*result)+((fieldIdentifier == null)? 0 :fieldIdentifier.hashCode()));
+        result = ((prime*result)+((fieldMember == null)? 0 :fieldMember.hashCode()));
+        result = ((prime*result)+((fieldSetter == null)? 0 :fieldSetter.hashCode()));
+        result = ((prime*result)+((fieldGetter == null)? 0 :fieldGetter.hashCode()));
+        return result;
+    }
+
 }

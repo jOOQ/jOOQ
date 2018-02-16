@@ -129,4 +129,71 @@ public class Schema implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<inputSchema>");
+        sb.append(inputSchema);
+        sb.append("</inputSchema>");
+        sb.append("<outputSchema>");
+        sb.append(outputSchema);
+        sb.append("</outputSchema>");
+        sb.append("<outputSchemaToDefault>");
+        sb.append(outputSchemaToDefault);
+        sb.append("</outputSchemaToDefault>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Schema other = ((Schema) that);
+        if (inputSchema == null) {
+            if (other.inputSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!inputSchema.equals(other.inputSchema)) {
+                return false;
+            }
+        }
+        if (outputSchema == null) {
+            if (other.outputSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!outputSchema.equals(other.outputSchema)) {
+                return false;
+            }
+        }
+        if (outputSchemaToDefault == null) {
+            if (other.outputSchemaToDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!outputSchemaToDefault.equals(other.outputSchemaToDefault)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((inputSchema == null)? 0 :inputSchema.hashCode()));
+        result = ((prime*result)+((outputSchema == null)? 0 :outputSchema.hashCode()));
+        result = ((prime*result)+((outputSchemaToDefault == null)? 0 :outputSchemaToDefault.hashCode()));
+        return result;
+    }
+
 }

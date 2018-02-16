@@ -100,4 +100,58 @@ public class Property implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<key>");
+        sb.append(key);
+        sb.append("</key>");
+        sb.append("<value>");
+        sb.append(value);
+        sb.append("</value>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Property other = ((Property) that);
+        if (key == null) {
+            if (other.key!= null) {
+                return false;
+            }
+        } else {
+            if (!key.equals(other.key)) {
+                return false;
+            }
+        }
+        if (value == null) {
+            if (other.value!= null) {
+                return false;
+            }
+        } else {
+            if (!value.equals(other.value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((key == null)? 0 :key.hashCode()));
+        result = ((prime*result)+((value == null)? 0 :value.hashCode()));
+        return result;
+    }
+
 }

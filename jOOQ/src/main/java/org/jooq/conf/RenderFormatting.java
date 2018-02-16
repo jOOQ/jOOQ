@@ -128,4 +128,71 @@ public class RenderFormatting
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<newline>");
+        sb.append(newline);
+        sb.append("</newline>");
+        sb.append("<indentation>");
+        sb.append(indentation);
+        sb.append("</indentation>");
+        sb.append("<printMargin>");
+        sb.append(printMargin);
+        sb.append("</printMargin>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        RenderFormatting other = ((RenderFormatting) that);
+        if (newline == null) {
+            if (other.newline!= null) {
+                return false;
+            }
+        } else {
+            if (!newline.equals(other.newline)) {
+                return false;
+            }
+        }
+        if (indentation == null) {
+            if (other.indentation!= null) {
+                return false;
+            }
+        } else {
+            if (!indentation.equals(other.indentation)) {
+                return false;
+            }
+        }
+        if (printMargin == null) {
+            if (other.printMargin!= null) {
+                return false;
+            }
+        } else {
+            if (!printMargin.equals(other.printMargin)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
+        result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
+        result = ((prime*result)+((printMargin == null)? 0 :printMargin.hashCode()));
+        return result;
+    }
+
 }

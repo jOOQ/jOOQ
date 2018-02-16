@@ -143,4 +143,71 @@ public class Configuration implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<logging>");
+        sb.append(logging);
+        sb.append("</logging>");
+        sb.append("<jdbc>");
+        sb.append(jdbc);
+        sb.append("</jdbc>");
+        sb.append("<generator>");
+        sb.append(generator);
+        sb.append("</generator>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Configuration other = ((Configuration) that);
+        if (logging == null) {
+            if (other.logging!= null) {
+                return false;
+            }
+        } else {
+            if (!logging.equals(other.logging)) {
+                return false;
+            }
+        }
+        if (jdbc == null) {
+            if (other.jdbc!= null) {
+                return false;
+            }
+        } else {
+            if (!jdbc.equals(other.jdbc)) {
+                return false;
+            }
+        }
+        if (generator == null) {
+            if (other.generator!= null) {
+                return false;
+            }
+        } else {
+            if (!generator.equals(other.generator)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((logging == null)? 0 :logging.hashCode()));
+        result = ((prime*result)+((jdbc == null)? 0 :jdbc.hashCode()));
+        result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
+        return result;
+    }
+
 }

@@ -1454,4 +1454,539 @@ public class Database implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<name>");
+        sb.append(name);
+        sb.append("</name>");
+        sb.append("<regexFlags>");
+        sb.append(regexFlags);
+        sb.append("</regexFlags>");
+        sb.append("<includes>");
+        sb.append(includes);
+        sb.append("</includes>");
+        sb.append("<excludes>");
+        sb.append(excludes);
+        sb.append("</excludes>");
+        sb.append("<includeExcludeColumns>");
+        sb.append(includeExcludeColumns);
+        sb.append("</includeExcludeColumns>");
+        sb.append("<includeTables>");
+        sb.append(includeTables);
+        sb.append("</includeTables>");
+        sb.append("<includeRoutines>");
+        sb.append(includeRoutines);
+        sb.append("</includeRoutines>");
+        sb.append("<includeTriggerRoutines>");
+        sb.append(includeTriggerRoutines);
+        sb.append("</includeTriggerRoutines>");
+        sb.append("<includePackages>");
+        sb.append(includePackages);
+        sb.append("</includePackages>");
+        sb.append("<includeUDTs>");
+        sb.append(includeUDTs);
+        sb.append("</includeUDTs>");
+        sb.append("<includeSequences>");
+        sb.append(includeSequences);
+        sb.append("</includeSequences>");
+        sb.append("<includeIndexes>");
+        sb.append(includeIndexes);
+        sb.append("</includeIndexes>");
+        sb.append("<includePrimaryKeys>");
+        sb.append(includePrimaryKeys);
+        sb.append("</includePrimaryKeys>");
+        sb.append("<includeUniqueKeys>");
+        sb.append(includeUniqueKeys);
+        sb.append("</includeUniqueKeys>");
+        sb.append("<includeForeignKeys>");
+        sb.append(includeForeignKeys);
+        sb.append("</includeForeignKeys>");
+        sb.append("<recordVersionFields>");
+        sb.append(recordVersionFields);
+        sb.append("</recordVersionFields>");
+        sb.append("<recordTimestampFields>");
+        sb.append(recordTimestampFields);
+        sb.append("</recordTimestampFields>");
+        sb.append("<syntheticIdentities>");
+        sb.append(syntheticIdentities);
+        sb.append("</syntheticIdentities>");
+        sb.append("<syntheticPrimaryKeys>");
+        sb.append(syntheticPrimaryKeys);
+        sb.append("</syntheticPrimaryKeys>");
+        sb.append("<overridePrimaryKeys>");
+        sb.append(overridePrimaryKeys);
+        sb.append("</overridePrimaryKeys>");
+        sb.append("<dateAsTimestamp>");
+        sb.append(dateAsTimestamp);
+        sb.append("</dateAsTimestamp>");
+        sb.append("<ignoreProcedureReturnValues>");
+        sb.append(ignoreProcedureReturnValues);
+        sb.append("</ignoreProcedureReturnValues>");
+        sb.append("<unsignedTypes>");
+        sb.append(unsignedTypes);
+        sb.append("</unsignedTypes>");
+        sb.append("<inputCatalog>");
+        sb.append(inputCatalog);
+        sb.append("</inputCatalog>");
+        sb.append("<outputCatalog>");
+        sb.append(outputCatalog);
+        sb.append("</outputCatalog>");
+        sb.append("<outputCatalogToDefault>");
+        sb.append(outputCatalogToDefault);
+        sb.append("</outputCatalogToDefault>");
+        sb.append("<inputSchema>");
+        sb.append(inputSchema);
+        sb.append("</inputSchema>");
+        sb.append("<outputSchema>");
+        sb.append(outputSchema);
+        sb.append("</outputSchema>");
+        sb.append("<outputSchemaToDefault>");
+        sb.append(outputSchemaToDefault);
+        sb.append("</outputSchemaToDefault>");
+        sb.append("<schemaVersionProvider>");
+        sb.append(schemaVersionProvider);
+        sb.append("</schemaVersionProvider>");
+        sb.append("<catalogVersionProvider>");
+        sb.append(catalogVersionProvider);
+        sb.append("</catalogVersionProvider>");
+        sb.append("<orderProvider>");
+        sb.append(orderProvider);
+        sb.append("</orderProvider>");
+        sb.append("<tableValuedFunctions>");
+        sb.append(tableValuedFunctions);
+        sb.append("</tableValuedFunctions>");
+        sb.append("<properties>");
+        sb.append(properties);
+        sb.append("</properties>");
+        sb.append("<catalogs>");
+        sb.append(catalogs);
+        sb.append("</catalogs>");
+        sb.append("<schemata>");
+        sb.append(schemata);
+        sb.append("</schemata>");
+        sb.append("<customTypes>");
+        sb.append(customTypes);
+        sb.append("</customTypes>");
+        sb.append("<enumTypes>");
+        sb.append(enumTypes);
+        sb.append("</enumTypes>");
+        sb.append("<forcedTypes>");
+        sb.append(forcedTypes);
+        sb.append("</forcedTypes>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Database other = ((Database) that);
+        if (name == null) {
+            if (other.name!= null) {
+                return false;
+            }
+        } else {
+            if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (regexFlags == null) {
+            if (other.regexFlags!= null) {
+                return false;
+            }
+        } else {
+            if (!regexFlags.equals(other.regexFlags)) {
+                return false;
+            }
+        }
+        if (includes == null) {
+            if (other.includes!= null) {
+                return false;
+            }
+        } else {
+            if (!includes.equals(other.includes)) {
+                return false;
+            }
+        }
+        if (excludes == null) {
+            if (other.excludes!= null) {
+                return false;
+            }
+        } else {
+            if (!excludes.equals(other.excludes)) {
+                return false;
+            }
+        }
+        if (includeExcludeColumns == null) {
+            if (other.includeExcludeColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!includeExcludeColumns.equals(other.includeExcludeColumns)) {
+                return false;
+            }
+        }
+        if (includeTables == null) {
+            if (other.includeTables!= null) {
+                return false;
+            }
+        } else {
+            if (!includeTables.equals(other.includeTables)) {
+                return false;
+            }
+        }
+        if (includeRoutines == null) {
+            if (other.includeRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!includeRoutines.equals(other.includeRoutines)) {
+                return false;
+            }
+        }
+        if (includeTriggerRoutines == null) {
+            if (other.includeTriggerRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!includeTriggerRoutines.equals(other.includeTriggerRoutines)) {
+                return false;
+            }
+        }
+        if (includePackages == null) {
+            if (other.includePackages!= null) {
+                return false;
+            }
+        } else {
+            if (!includePackages.equals(other.includePackages)) {
+                return false;
+            }
+        }
+        if (includeUDTs == null) {
+            if (other.includeUDTs!= null) {
+                return false;
+            }
+        } else {
+            if (!includeUDTs.equals(other.includeUDTs)) {
+                return false;
+            }
+        }
+        if (includeSequences == null) {
+            if (other.includeSequences!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSequences.equals(other.includeSequences)) {
+                return false;
+            }
+        }
+        if (includeIndexes == null) {
+            if (other.includeIndexes!= null) {
+                return false;
+            }
+        } else {
+            if (!includeIndexes.equals(other.includeIndexes)) {
+                return false;
+            }
+        }
+        if (includePrimaryKeys == null) {
+            if (other.includePrimaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!includePrimaryKeys.equals(other.includePrimaryKeys)) {
+                return false;
+            }
+        }
+        if (includeUniqueKeys == null) {
+            if (other.includeUniqueKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!includeUniqueKeys.equals(other.includeUniqueKeys)) {
+                return false;
+            }
+        }
+        if (includeForeignKeys == null) {
+            if (other.includeForeignKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!includeForeignKeys.equals(other.includeForeignKeys)) {
+                return false;
+            }
+        }
+        if (recordVersionFields == null) {
+            if (other.recordVersionFields!= null) {
+                return false;
+            }
+        } else {
+            if (!recordVersionFields.equals(other.recordVersionFields)) {
+                return false;
+            }
+        }
+        if (recordTimestampFields == null) {
+            if (other.recordTimestampFields!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTimestampFields.equals(other.recordTimestampFields)) {
+                return false;
+            }
+        }
+        if (syntheticIdentities == null) {
+            if (other.syntheticIdentities!= null) {
+                return false;
+            }
+        } else {
+            if (!syntheticIdentities.equals(other.syntheticIdentities)) {
+                return false;
+            }
+        }
+        if (syntheticPrimaryKeys == null) {
+            if (other.syntheticPrimaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!syntheticPrimaryKeys.equals(other.syntheticPrimaryKeys)) {
+                return false;
+            }
+        }
+        if (overridePrimaryKeys == null) {
+            if (other.overridePrimaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!overridePrimaryKeys.equals(other.overridePrimaryKeys)) {
+                return false;
+            }
+        }
+        if (dateAsTimestamp == null) {
+            if (other.dateAsTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!dateAsTimestamp.equals(other.dateAsTimestamp)) {
+                return false;
+            }
+        }
+        if (ignoreProcedureReturnValues == null) {
+            if (other.ignoreProcedureReturnValues!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreProcedureReturnValues.equals(other.ignoreProcedureReturnValues)) {
+                return false;
+            }
+        }
+        if (unsignedTypes == null) {
+            if (other.unsignedTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!unsignedTypes.equals(other.unsignedTypes)) {
+                return false;
+            }
+        }
+        if (inputCatalog == null) {
+            if (other.inputCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!inputCatalog.equals(other.inputCatalog)) {
+                return false;
+            }
+        }
+        if (outputCatalog == null) {
+            if (other.outputCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!outputCatalog.equals(other.outputCatalog)) {
+                return false;
+            }
+        }
+        if (outputCatalogToDefault == null) {
+            if (other.outputCatalogToDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!outputCatalogToDefault.equals(other.outputCatalogToDefault)) {
+                return false;
+            }
+        }
+        if (inputSchema == null) {
+            if (other.inputSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!inputSchema.equals(other.inputSchema)) {
+                return false;
+            }
+        }
+        if (outputSchema == null) {
+            if (other.outputSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!outputSchema.equals(other.outputSchema)) {
+                return false;
+            }
+        }
+        if (outputSchemaToDefault == null) {
+            if (other.outputSchemaToDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!outputSchemaToDefault.equals(other.outputSchemaToDefault)) {
+                return false;
+            }
+        }
+        if (schemaVersionProvider == null) {
+            if (other.schemaVersionProvider!= null) {
+                return false;
+            }
+        } else {
+            if (!schemaVersionProvider.equals(other.schemaVersionProvider)) {
+                return false;
+            }
+        }
+        if (catalogVersionProvider == null) {
+            if (other.catalogVersionProvider!= null) {
+                return false;
+            }
+        } else {
+            if (!catalogVersionProvider.equals(other.catalogVersionProvider)) {
+                return false;
+            }
+        }
+        if (orderProvider == null) {
+            if (other.orderProvider!= null) {
+                return false;
+            }
+        } else {
+            if (!orderProvider.equals(other.orderProvider)) {
+                return false;
+            }
+        }
+        if (tableValuedFunctions == null) {
+            if (other.tableValuedFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!tableValuedFunctions.equals(other.tableValuedFunctions)) {
+                return false;
+            }
+        }
+        if (properties == null) {
+            if (other.properties!= null) {
+                return false;
+            }
+        } else {
+            if (!properties.equals(other.properties)) {
+                return false;
+            }
+        }
+        if (catalogs == null) {
+            if (other.catalogs!= null) {
+                return false;
+            }
+        } else {
+            if (!catalogs.equals(other.catalogs)) {
+                return false;
+            }
+        }
+        if (schemata == null) {
+            if (other.schemata!= null) {
+                return false;
+            }
+        } else {
+            if (!schemata.equals(other.schemata)) {
+                return false;
+            }
+        }
+        if (customTypes == null) {
+            if (other.customTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!customTypes.equals(other.customTypes)) {
+                return false;
+            }
+        }
+        if (enumTypes == null) {
+            if (other.enumTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!enumTypes.equals(other.enumTypes)) {
+                return false;
+            }
+        }
+        if (forcedTypes == null) {
+            if (other.forcedTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!forcedTypes.equals(other.forcedTypes)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((regexFlags == null)? 0 :regexFlags.hashCode()));
+        result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
+        result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
+        result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));
+        result = ((prime*result)+((includeTables == null)? 0 :includeTables.hashCode()));
+        result = ((prime*result)+((includeRoutines == null)? 0 :includeRoutines.hashCode()));
+        result = ((prime*result)+((includeTriggerRoutines == null)? 0 :includeTriggerRoutines.hashCode()));
+        result = ((prime*result)+((includePackages == null)? 0 :includePackages.hashCode()));
+        result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
+        result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
+        result = ((prime*result)+((includeIndexes == null)? 0 :includeIndexes.hashCode()));
+        result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));
+        result = ((prime*result)+((includeUniqueKeys == null)? 0 :includeUniqueKeys.hashCode()));
+        result = ((prime*result)+((includeForeignKeys == null)? 0 :includeForeignKeys.hashCode()));
+        result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
+        result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));
+        result = ((prime*result)+((syntheticIdentities == null)? 0 :syntheticIdentities.hashCode()));
+        result = ((prime*result)+((syntheticPrimaryKeys == null)? 0 :syntheticPrimaryKeys.hashCode()));
+        result = ((prime*result)+((overridePrimaryKeys == null)? 0 :overridePrimaryKeys.hashCode()));
+        result = ((prime*result)+((dateAsTimestamp == null)? 0 :dateAsTimestamp.hashCode()));
+        result = ((prime*result)+((ignoreProcedureReturnValues == null)? 0 :ignoreProcedureReturnValues.hashCode()));
+        result = ((prime*result)+((unsignedTypes == null)? 0 :unsignedTypes.hashCode()));
+        result = ((prime*result)+((inputCatalog == null)? 0 :inputCatalog.hashCode()));
+        result = ((prime*result)+((outputCatalog == null)? 0 :outputCatalog.hashCode()));
+        result = ((prime*result)+((outputCatalogToDefault == null)? 0 :outputCatalogToDefault.hashCode()));
+        result = ((prime*result)+((inputSchema == null)? 0 :inputSchema.hashCode()));
+        result = ((prime*result)+((outputSchema == null)? 0 :outputSchema.hashCode()));
+        result = ((prime*result)+((outputSchemaToDefault == null)? 0 :outputSchemaToDefault.hashCode()));
+        result = ((prime*result)+((schemaVersionProvider == null)? 0 :schemaVersionProvider.hashCode()));
+        result = ((prime*result)+((catalogVersionProvider == null)? 0 :catalogVersionProvider.hashCode()));
+        result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
+        result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
+        result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
+        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
+        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+((customTypes == null)? 0 :customTypes.hashCode()));
+        result = ((prime*result)+((enumTypes == null)? 0 :enumTypes.hashCode()));
+        result = ((prime*result)+((forcedTypes == null)? 0 :forcedTypes.hashCode()));
+        return result;
+    }
+
 }

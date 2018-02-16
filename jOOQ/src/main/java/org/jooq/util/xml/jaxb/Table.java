@@ -178,4 +178,84 @@ public class Table implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<tableCatalog>");
+        sb.append(tableCatalog);
+        sb.append("</tableCatalog>");
+        sb.append("<tableSchema>");
+        sb.append(tableSchema);
+        sb.append("</tableSchema>");
+        sb.append("<tableName>");
+        sb.append(tableName);
+        sb.append("</tableName>");
+        sb.append("<comment>");
+        sb.append(comment);
+        sb.append("</comment>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Table other = ((Table) that);
+        if (tableCatalog == null) {
+            if (other.tableCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!tableCatalog.equals(other.tableCatalog)) {
+                return false;
+            }
+        }
+        if (tableSchema == null) {
+            if (other.tableSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!tableSchema.equals(other.tableSchema)) {
+                return false;
+            }
+        }
+        if (tableName == null) {
+            if (other.tableName!= null) {
+                return false;
+            }
+        } else {
+            if (!tableName.equals(other.tableName)) {
+                return false;
+            }
+        }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
+        result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
+        result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        return result;
+    }
+
 }

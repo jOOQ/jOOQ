@@ -1926,4 +1926,812 @@ public class Generate implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<indexes>");
+        sb.append(indexes);
+        sb.append("</indexes>");
+        sb.append("<relations>");
+        sb.append(relations);
+        sb.append("</relations>");
+        sb.append("<implicitJoinPathsToOne>");
+        sb.append(implicitJoinPathsToOne);
+        sb.append("</implicitJoinPathsToOne>");
+        sb.append("<deprecated>");
+        sb.append(deprecated);
+        sb.append("</deprecated>");
+        sb.append("<deprecationOnUnknownTypes>");
+        sb.append(deprecationOnUnknownTypes);
+        sb.append("</deprecationOnUnknownTypes>");
+        sb.append("<instanceFields>");
+        sb.append(instanceFields);
+        sb.append("</instanceFields>");
+        sb.append("<generatedAnnotation>");
+        sb.append(generatedAnnotation);
+        sb.append("</generatedAnnotation>");
+        sb.append("<routines>");
+        sb.append(routines);
+        sb.append("</routines>");
+        sb.append("<sequences>");
+        sb.append(sequences);
+        sb.append("</sequences>");
+        sb.append("<udts>");
+        sb.append(udts);
+        sb.append("</udts>");
+        sb.append("<queues>");
+        sb.append(queues);
+        sb.append("</queues>");
+        sb.append("<links>");
+        sb.append(links);
+        sb.append("</links>");
+        sb.append("<keys>");
+        sb.append(keys);
+        sb.append("</keys>");
+        sb.append("<tables>");
+        sb.append(tables);
+        sb.append("</tables>");
+        sb.append("<records>");
+        sb.append(records);
+        sb.append("</records>");
+        sb.append("<recordsImplementingRecordN>");
+        sb.append(recordsImplementingRecordN);
+        sb.append("</recordsImplementingRecordN>");
+        sb.append("<pojos>");
+        sb.append(pojos);
+        sb.append("</pojos>");
+        sb.append("<pojosEqualsAndHashCode>");
+        sb.append(pojosEqualsAndHashCode);
+        sb.append("</pojosEqualsAndHashCode>");
+        sb.append("<pojosToString>");
+        sb.append(pojosToString);
+        sb.append("</pojosToString>");
+        sb.append("<immutablePojos>");
+        sb.append(immutablePojos);
+        sb.append("</immutablePojos>");
+        sb.append("<interfaces>");
+        sb.append(interfaces);
+        sb.append("</interfaces>");
+        sb.append("<immutableInterfaces>");
+        sb.append(immutableInterfaces);
+        sb.append("</immutableInterfaces>");
+        sb.append("<daos>");
+        sb.append(daos);
+        sb.append("</daos>");
+        sb.append("<jpaAnnotations>");
+        sb.append(jpaAnnotations);
+        sb.append("</jpaAnnotations>");
+        sb.append("<jpaVersion>");
+        sb.append(jpaVersion);
+        sb.append("</jpaVersion>");
+        sb.append("<validationAnnotations>");
+        sb.append(validationAnnotations);
+        sb.append("</validationAnnotations>");
+        sb.append("<springAnnotations>");
+        sb.append(springAnnotations);
+        sb.append("</springAnnotations>");
+        sb.append("<globalObjectReferences>");
+        sb.append(globalObjectReferences);
+        sb.append("</globalObjectReferences>");
+        sb.append("<globalCatalogReferences>");
+        sb.append(globalCatalogReferences);
+        sb.append("</globalCatalogReferences>");
+        sb.append("<globalSchemaReferences>");
+        sb.append(globalSchemaReferences);
+        sb.append("</globalSchemaReferences>");
+        sb.append("<globalTableReferences>");
+        sb.append(globalTableReferences);
+        sb.append("</globalTableReferences>");
+        sb.append("<globalSequenceReferences>");
+        sb.append(globalSequenceReferences);
+        sb.append("</globalSequenceReferences>");
+        sb.append("<globalUDTReferences>");
+        sb.append(globalUDTReferences);
+        sb.append("</globalUDTReferences>");
+        sb.append("<globalRoutineReferences>");
+        sb.append(globalRoutineReferences);
+        sb.append("</globalRoutineReferences>");
+        sb.append("<globalQueueReferences>");
+        sb.append(globalQueueReferences);
+        sb.append("</globalQueueReferences>");
+        sb.append("<globalLinkReferences>");
+        sb.append(globalLinkReferences);
+        sb.append("</globalLinkReferences>");
+        sb.append("<globalKeyReferences>");
+        sb.append(globalKeyReferences);
+        sb.append("</globalKeyReferences>");
+        sb.append("<javadoc>");
+        sb.append(javadoc);
+        sb.append("</javadoc>");
+        sb.append("<comments>");
+        sb.append(comments);
+        sb.append("</comments>");
+        sb.append("<commentsOnCatalogs>");
+        sb.append(commentsOnCatalogs);
+        sb.append("</commentsOnCatalogs>");
+        sb.append("<commentsOnSchemas>");
+        sb.append(commentsOnSchemas);
+        sb.append("</commentsOnSchemas>");
+        sb.append("<commentsOnTables>");
+        sb.append(commentsOnTables);
+        sb.append("</commentsOnTables>");
+        sb.append("<commentsOnColumns>");
+        sb.append(commentsOnColumns);
+        sb.append("</commentsOnColumns>");
+        sb.append("<commentsOnUDTs>");
+        sb.append(commentsOnUDTs);
+        sb.append("</commentsOnUDTs>");
+        sb.append("<commentsOnAttributes>");
+        sb.append(commentsOnAttributes);
+        sb.append("</commentsOnAttributes>");
+        sb.append("<commentsOnPackages>");
+        sb.append(commentsOnPackages);
+        sb.append("</commentsOnPackages>");
+        sb.append("<commentsOnRoutines>");
+        sb.append(commentsOnRoutines);
+        sb.append("</commentsOnRoutines>");
+        sb.append("<commentsOnParameters>");
+        sb.append(commentsOnParameters);
+        sb.append("</commentsOnParameters>");
+        sb.append("<commentsOnSequences>");
+        sb.append(commentsOnSequences);
+        sb.append("</commentsOnSequences>");
+        sb.append("<commentsOnLinks>");
+        sb.append(commentsOnLinks);
+        sb.append("</commentsOnLinks>");
+        sb.append("<commentsOnQueues>");
+        sb.append(commentsOnQueues);
+        sb.append("</commentsOnQueues>");
+        sb.append("<commentsOnKeys>");
+        sb.append(commentsOnKeys);
+        sb.append("</commentsOnKeys>");
+        sb.append("<fluentSetters>");
+        sb.append(fluentSetters);
+        sb.append("</fluentSetters>");
+        sb.append("<javaBeansGettersAndSetters>");
+        sb.append(javaBeansGettersAndSetters);
+        sb.append("</javaBeansGettersAndSetters>");
+        sb.append("<varargSetters>");
+        sb.append(varargSetters);
+        sb.append("</varargSetters>");
+        sb.append("<fullyQualifiedTypes>");
+        sb.append(fullyQualifiedTypes);
+        sb.append("</fullyQualifiedTypes>");
+        sb.append("<emptyCatalogs>");
+        sb.append(emptyCatalogs);
+        sb.append("</emptyCatalogs>");
+        sb.append("<emptySchemas>");
+        sb.append(emptySchemas);
+        sb.append("</emptySchemas>");
+        sb.append("<javaTimeTypes>");
+        sb.append(javaTimeTypes);
+        sb.append("</javaTimeTypes>");
+        sb.append("<primaryKeyTypes>");
+        sb.append(primaryKeyTypes);
+        sb.append("</primaryKeyTypes>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Generate other = ((Generate) that);
+        if (indexes == null) {
+            if (other.indexes!= null) {
+                return false;
+            }
+        } else {
+            if (!indexes.equals(other.indexes)) {
+                return false;
+            }
+        }
+        if (relations == null) {
+            if (other.relations!= null) {
+                return false;
+            }
+        } else {
+            if (!relations.equals(other.relations)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathsToOne == null) {
+            if (other.implicitJoinPathsToOne!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathsToOne.equals(other.implicitJoinPathsToOne)) {
+                return false;
+            }
+        }
+        if (deprecated == null) {
+            if (other.deprecated!= null) {
+                return false;
+            }
+        } else {
+            if (!deprecated.equals(other.deprecated)) {
+                return false;
+            }
+        }
+        if (deprecationOnUnknownTypes == null) {
+            if (other.deprecationOnUnknownTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!deprecationOnUnknownTypes.equals(other.deprecationOnUnknownTypes)) {
+                return false;
+            }
+        }
+        if (instanceFields == null) {
+            if (other.instanceFields!= null) {
+                return false;
+            }
+        } else {
+            if (!instanceFields.equals(other.instanceFields)) {
+                return false;
+            }
+        }
+        if (generatedAnnotation == null) {
+            if (other.generatedAnnotation!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedAnnotation.equals(other.generatedAnnotation)) {
+                return false;
+            }
+        }
+        if (routines == null) {
+            if (other.routines!= null) {
+                return false;
+            }
+        } else {
+            if (!routines.equals(other.routines)) {
+                return false;
+            }
+        }
+        if (sequences == null) {
+            if (other.sequences!= null) {
+                return false;
+            }
+        } else {
+            if (!sequences.equals(other.sequences)) {
+                return false;
+            }
+        }
+        if (udts == null) {
+            if (other.udts!= null) {
+                return false;
+            }
+        } else {
+            if (!udts.equals(other.udts)) {
+                return false;
+            }
+        }
+        if (queues == null) {
+            if (other.queues!= null) {
+                return false;
+            }
+        } else {
+            if (!queues.equals(other.queues)) {
+                return false;
+            }
+        }
+        if (links == null) {
+            if (other.links!= null) {
+                return false;
+            }
+        } else {
+            if (!links.equals(other.links)) {
+                return false;
+            }
+        }
+        if (keys == null) {
+            if (other.keys!= null) {
+                return false;
+            }
+        } else {
+            if (!keys.equals(other.keys)) {
+                return false;
+            }
+        }
+        if (tables == null) {
+            if (other.tables!= null) {
+                return false;
+            }
+        } else {
+            if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (records == null) {
+            if (other.records!= null) {
+                return false;
+            }
+        } else {
+            if (!records.equals(other.records)) {
+                return false;
+            }
+        }
+        if (recordsImplementingRecordN == null) {
+            if (other.recordsImplementingRecordN!= null) {
+                return false;
+            }
+        } else {
+            if (!recordsImplementingRecordN.equals(other.recordsImplementingRecordN)) {
+                return false;
+            }
+        }
+        if (pojos == null) {
+            if (other.pojos!= null) {
+                return false;
+            }
+        } else {
+            if (!pojos.equals(other.pojos)) {
+                return false;
+            }
+        }
+        if (pojosEqualsAndHashCode == null) {
+            if (other.pojosEqualsAndHashCode!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosEqualsAndHashCode.equals(other.pojosEqualsAndHashCode)) {
+                return false;
+            }
+        }
+        if (pojosToString == null) {
+            if (other.pojosToString!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosToString.equals(other.pojosToString)) {
+                return false;
+            }
+        }
+        if (immutablePojos == null) {
+            if (other.immutablePojos!= null) {
+                return false;
+            }
+        } else {
+            if (!immutablePojos.equals(other.immutablePojos)) {
+                return false;
+            }
+        }
+        if (interfaces == null) {
+            if (other.interfaces!= null) {
+                return false;
+            }
+        } else {
+            if (!interfaces.equals(other.interfaces)) {
+                return false;
+            }
+        }
+        if (immutableInterfaces == null) {
+            if (other.immutableInterfaces!= null) {
+                return false;
+            }
+        } else {
+            if (!immutableInterfaces.equals(other.immutableInterfaces)) {
+                return false;
+            }
+        }
+        if (daos == null) {
+            if (other.daos!= null) {
+                return false;
+            }
+        } else {
+            if (!daos.equals(other.daos)) {
+                return false;
+            }
+        }
+        if (jpaAnnotations == null) {
+            if (other.jpaAnnotations!= null) {
+                return false;
+            }
+        } else {
+            if (!jpaAnnotations.equals(other.jpaAnnotations)) {
+                return false;
+            }
+        }
+        if (jpaVersion == null) {
+            if (other.jpaVersion!= null) {
+                return false;
+            }
+        } else {
+            if (!jpaVersion.equals(other.jpaVersion)) {
+                return false;
+            }
+        }
+        if (validationAnnotations == null) {
+            if (other.validationAnnotations!= null) {
+                return false;
+            }
+        } else {
+            if (!validationAnnotations.equals(other.validationAnnotations)) {
+                return false;
+            }
+        }
+        if (springAnnotations == null) {
+            if (other.springAnnotations!= null) {
+                return false;
+            }
+        } else {
+            if (!springAnnotations.equals(other.springAnnotations)) {
+                return false;
+            }
+        }
+        if (globalObjectReferences == null) {
+            if (other.globalObjectReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalObjectReferences.equals(other.globalObjectReferences)) {
+                return false;
+            }
+        }
+        if (globalCatalogReferences == null) {
+            if (other.globalCatalogReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalCatalogReferences.equals(other.globalCatalogReferences)) {
+                return false;
+            }
+        }
+        if (globalSchemaReferences == null) {
+            if (other.globalSchemaReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalSchemaReferences.equals(other.globalSchemaReferences)) {
+                return false;
+            }
+        }
+        if (globalTableReferences == null) {
+            if (other.globalTableReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalTableReferences.equals(other.globalTableReferences)) {
+                return false;
+            }
+        }
+        if (globalSequenceReferences == null) {
+            if (other.globalSequenceReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalSequenceReferences.equals(other.globalSequenceReferences)) {
+                return false;
+            }
+        }
+        if (globalUDTReferences == null) {
+            if (other.globalUDTReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalUDTReferences.equals(other.globalUDTReferences)) {
+                return false;
+            }
+        }
+        if (globalRoutineReferences == null) {
+            if (other.globalRoutineReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalRoutineReferences.equals(other.globalRoutineReferences)) {
+                return false;
+            }
+        }
+        if (globalQueueReferences == null) {
+            if (other.globalQueueReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalQueueReferences.equals(other.globalQueueReferences)) {
+                return false;
+            }
+        }
+        if (globalLinkReferences == null) {
+            if (other.globalLinkReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalLinkReferences.equals(other.globalLinkReferences)) {
+                return false;
+            }
+        }
+        if (globalKeyReferences == null) {
+            if (other.globalKeyReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalKeyReferences.equals(other.globalKeyReferences)) {
+                return false;
+            }
+        }
+        if (javadoc == null) {
+            if (other.javadoc!= null) {
+                return false;
+            }
+        } else {
+            if (!javadoc.equals(other.javadoc)) {
+                return false;
+            }
+        }
+        if (comments == null) {
+            if (other.comments!= null) {
+                return false;
+            }
+        } else {
+            if (!comments.equals(other.comments)) {
+                return false;
+            }
+        }
+        if (commentsOnCatalogs == null) {
+            if (other.commentsOnCatalogs!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnCatalogs.equals(other.commentsOnCatalogs)) {
+                return false;
+            }
+        }
+        if (commentsOnSchemas == null) {
+            if (other.commentsOnSchemas!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnSchemas.equals(other.commentsOnSchemas)) {
+                return false;
+            }
+        }
+        if (commentsOnTables == null) {
+            if (other.commentsOnTables!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnTables.equals(other.commentsOnTables)) {
+                return false;
+            }
+        }
+        if (commentsOnColumns == null) {
+            if (other.commentsOnColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnColumns.equals(other.commentsOnColumns)) {
+                return false;
+            }
+        }
+        if (commentsOnUDTs == null) {
+            if (other.commentsOnUDTs!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnUDTs.equals(other.commentsOnUDTs)) {
+                return false;
+            }
+        }
+        if (commentsOnAttributes == null) {
+            if (other.commentsOnAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnAttributes.equals(other.commentsOnAttributes)) {
+                return false;
+            }
+        }
+        if (commentsOnPackages == null) {
+            if (other.commentsOnPackages!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnPackages.equals(other.commentsOnPackages)) {
+                return false;
+            }
+        }
+        if (commentsOnRoutines == null) {
+            if (other.commentsOnRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnRoutines.equals(other.commentsOnRoutines)) {
+                return false;
+            }
+        }
+        if (commentsOnParameters == null) {
+            if (other.commentsOnParameters!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnParameters.equals(other.commentsOnParameters)) {
+                return false;
+            }
+        }
+        if (commentsOnSequences == null) {
+            if (other.commentsOnSequences!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnSequences.equals(other.commentsOnSequences)) {
+                return false;
+            }
+        }
+        if (commentsOnLinks == null) {
+            if (other.commentsOnLinks!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnLinks.equals(other.commentsOnLinks)) {
+                return false;
+            }
+        }
+        if (commentsOnQueues == null) {
+            if (other.commentsOnQueues!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnQueues.equals(other.commentsOnQueues)) {
+                return false;
+            }
+        }
+        if (commentsOnKeys == null) {
+            if (other.commentsOnKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnKeys.equals(other.commentsOnKeys)) {
+                return false;
+            }
+        }
+        if (fluentSetters == null) {
+            if (other.fluentSetters!= null) {
+                return false;
+            }
+        } else {
+            if (!fluentSetters.equals(other.fluentSetters)) {
+                return false;
+            }
+        }
+        if (javaBeansGettersAndSetters == null) {
+            if (other.javaBeansGettersAndSetters!= null) {
+                return false;
+            }
+        } else {
+            if (!javaBeansGettersAndSetters.equals(other.javaBeansGettersAndSetters)) {
+                return false;
+            }
+        }
+        if (varargSetters == null) {
+            if (other.varargSetters!= null) {
+                return false;
+            }
+        } else {
+            if (!varargSetters.equals(other.varargSetters)) {
+                return false;
+            }
+        }
+        if (fullyQualifiedTypes == null) {
+            if (other.fullyQualifiedTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!fullyQualifiedTypes.equals(other.fullyQualifiedTypes)) {
+                return false;
+            }
+        }
+        if (emptyCatalogs == null) {
+            if (other.emptyCatalogs!= null) {
+                return false;
+            }
+        } else {
+            if (!emptyCatalogs.equals(other.emptyCatalogs)) {
+                return false;
+            }
+        }
+        if (emptySchemas == null) {
+            if (other.emptySchemas!= null) {
+                return false;
+            }
+        } else {
+            if (!emptySchemas.equals(other.emptySchemas)) {
+                return false;
+            }
+        }
+        if (javaTimeTypes == null) {
+            if (other.javaTimeTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!javaTimeTypes.equals(other.javaTimeTypes)) {
+                return false;
+            }
+        }
+        if (primaryKeyTypes == null) {
+            if (other.primaryKeyTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!primaryKeyTypes.equals(other.primaryKeyTypes)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
+        result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
+        result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
+        result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));
+        result = ((prime*result)+((deprecationOnUnknownTypes == null)? 0 :deprecationOnUnknownTypes.hashCode()));
+        result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));
+        result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
+        result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
+        result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
+        result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
+        result = ((prime*result)+((queues == null)? 0 :queues.hashCode()));
+        result = ((prime*result)+((links == null)? 0 :links.hashCode()));
+        result = ((prime*result)+((keys == null)? 0 :keys.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((records == null)? 0 :records.hashCode()));
+        result = ((prime*result)+((recordsImplementingRecordN == null)? 0 :recordsImplementingRecordN.hashCode()));
+        result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
+        result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
+        result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));
+        result = ((prime*result)+((immutablePojos == null)? 0 :immutablePojos.hashCode()));
+        result = ((prime*result)+((interfaces == null)? 0 :interfaces.hashCode()));
+        result = ((prime*result)+((immutableInterfaces == null)? 0 :immutableInterfaces.hashCode()));
+        result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
+        result = ((prime*result)+((jpaAnnotations == null)? 0 :jpaAnnotations.hashCode()));
+        result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));
+        result = ((prime*result)+((validationAnnotations == null)? 0 :validationAnnotations.hashCode()));
+        result = ((prime*result)+((springAnnotations == null)? 0 :springAnnotations.hashCode()));
+        result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
+        result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
+        result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));
+        result = ((prime*result)+((globalTableReferences == null)? 0 :globalTableReferences.hashCode()));
+        result = ((prime*result)+((globalSequenceReferences == null)? 0 :globalSequenceReferences.hashCode()));
+        result = ((prime*result)+((globalUDTReferences == null)? 0 :globalUDTReferences.hashCode()));
+        result = ((prime*result)+((globalRoutineReferences == null)? 0 :globalRoutineReferences.hashCode()));
+        result = ((prime*result)+((globalQueueReferences == null)? 0 :globalQueueReferences.hashCode()));
+        result = ((prime*result)+((globalLinkReferences == null)? 0 :globalLinkReferences.hashCode()));
+        result = ((prime*result)+((globalKeyReferences == null)? 0 :globalKeyReferences.hashCode()));
+        result = ((prime*result)+((javadoc == null)? 0 :javadoc.hashCode()));
+        result = ((prime*result)+((comments == null)? 0 :comments.hashCode()));
+        result = ((prime*result)+((commentsOnCatalogs == null)? 0 :commentsOnCatalogs.hashCode()));
+        result = ((prime*result)+((commentsOnSchemas == null)? 0 :commentsOnSchemas.hashCode()));
+        result = ((prime*result)+((commentsOnTables == null)? 0 :commentsOnTables.hashCode()));
+        result = ((prime*result)+((commentsOnColumns == null)? 0 :commentsOnColumns.hashCode()));
+        result = ((prime*result)+((commentsOnUDTs == null)? 0 :commentsOnUDTs.hashCode()));
+        result = ((prime*result)+((commentsOnAttributes == null)? 0 :commentsOnAttributes.hashCode()));
+        result = ((prime*result)+((commentsOnPackages == null)? 0 :commentsOnPackages.hashCode()));
+        result = ((prime*result)+((commentsOnRoutines == null)? 0 :commentsOnRoutines.hashCode()));
+        result = ((prime*result)+((commentsOnParameters == null)? 0 :commentsOnParameters.hashCode()));
+        result = ((prime*result)+((commentsOnSequences == null)? 0 :commentsOnSequences.hashCode()));
+        result = ((prime*result)+((commentsOnLinks == null)? 0 :commentsOnLinks.hashCode()));
+        result = ((prime*result)+((commentsOnQueues == null)? 0 :commentsOnQueues.hashCode()));
+        result = ((prime*result)+((commentsOnKeys == null)? 0 :commentsOnKeys.hashCode()));
+        result = ((prime*result)+((fluentSetters == null)? 0 :fluentSetters.hashCode()));
+        result = ((prime*result)+((javaBeansGettersAndSetters == null)? 0 :javaBeansGettersAndSetters.hashCode()));
+        result = ((prime*result)+((varargSetters == null)? 0 :varargSetters.hashCode()));
+        result = ((prime*result)+((fullyQualifiedTypes == null)? 0 :fullyQualifiedTypes.hashCode()));
+        result = ((prime*result)+((emptyCatalogs == null)? 0 :emptyCatalogs.hashCode()));
+        result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));
+        result = ((prime*result)+((javaTimeTypes == null)? 0 :javaTimeTypes.hashCode()));
+        result = ((prime*result)+((primaryKeyTypes == null)? 0 :primaryKeyTypes.hashCode()));
+        return result;
+    }
+
 }

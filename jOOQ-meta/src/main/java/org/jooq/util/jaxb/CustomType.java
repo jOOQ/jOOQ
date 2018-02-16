@@ -190,4 +190,97 @@ public class CustomType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<name>");
+        sb.append(name);
+        sb.append("</name>");
+        sb.append("<type>");
+        sb.append(type);
+        sb.append("</type>");
+        sb.append("<converter>");
+        sb.append(converter);
+        sb.append("</converter>");
+        sb.append("<enumConverter>");
+        sb.append(enumConverter);
+        sb.append("</enumConverter>");
+        sb.append("<binding>");
+        sb.append(binding);
+        sb.append("</binding>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        CustomType other = ((CustomType) that);
+        if (name == null) {
+            if (other.name!= null) {
+                return false;
+            }
+        } else {
+            if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (type == null) {
+            if (other.type!= null) {
+                return false;
+            }
+        } else {
+            if (!type.equals(other.type)) {
+                return false;
+            }
+        }
+        if (converter == null) {
+            if (other.converter!= null) {
+                return false;
+            }
+        } else {
+            if (!converter.equals(other.converter)) {
+                return false;
+            }
+        }
+        if (enumConverter == null) {
+            if (other.enumConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!enumConverter.equals(other.enumConverter)) {
+                return false;
+            }
+        }
+        if (binding == null) {
+            if (other.binding!= null) {
+                return false;
+            }
+        } else {
+            if (!binding.equals(other.binding)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((type == null)? 0 :type.hashCode()));
+        result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
+        result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
+        return result;
+    }
+
 }

@@ -334,4 +334,149 @@ public class IndexColumnUsage implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<indexCatalog>");
+        sb.append(indexCatalog);
+        sb.append("</indexCatalog>");
+        sb.append("<indexSchema>");
+        sb.append(indexSchema);
+        sb.append("</indexSchema>");
+        sb.append("<indexName>");
+        sb.append(indexName);
+        sb.append("</indexName>");
+        sb.append("<tableCatalog>");
+        sb.append(tableCatalog);
+        sb.append("</tableCatalog>");
+        sb.append("<tableSchema>");
+        sb.append(tableSchema);
+        sb.append("</tableSchema>");
+        sb.append("<tableName>");
+        sb.append(tableName);
+        sb.append("</tableName>");
+        sb.append("<columnName>");
+        sb.append(columnName);
+        sb.append("</columnName>");
+        sb.append("<ordinalPosition>");
+        sb.append(ordinalPosition);
+        sb.append("</ordinalPosition>");
+        sb.append("<isDescending>");
+        sb.append(isDescending);
+        sb.append("</isDescending>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        IndexColumnUsage other = ((IndexColumnUsage) that);
+        if (indexCatalog == null) {
+            if (other.indexCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!indexCatalog.equals(other.indexCatalog)) {
+                return false;
+            }
+        }
+        if (indexSchema == null) {
+            if (other.indexSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!indexSchema.equals(other.indexSchema)) {
+                return false;
+            }
+        }
+        if (indexName == null) {
+            if (other.indexName!= null) {
+                return false;
+            }
+        } else {
+            if (!indexName.equals(other.indexName)) {
+                return false;
+            }
+        }
+        if (tableCatalog == null) {
+            if (other.tableCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!tableCatalog.equals(other.tableCatalog)) {
+                return false;
+            }
+        }
+        if (tableSchema == null) {
+            if (other.tableSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!tableSchema.equals(other.tableSchema)) {
+                return false;
+            }
+        }
+        if (tableName == null) {
+            if (other.tableName!= null) {
+                return false;
+            }
+        } else {
+            if (!tableName.equals(other.tableName)) {
+                return false;
+            }
+        }
+        if (columnName == null) {
+            if (other.columnName!= null) {
+                return false;
+            }
+        } else {
+            if (!columnName.equals(other.columnName)) {
+                return false;
+            }
+        }
+        if (ordinalPosition == null) {
+            if (other.ordinalPosition!= null) {
+                return false;
+            }
+        } else {
+            if (!ordinalPosition.equals(other.ordinalPosition)) {
+                return false;
+            }
+        }
+        if (isDescending == null) {
+            if (other.isDescending!= null) {
+                return false;
+            }
+        } else {
+            if (!isDescending.equals(other.isDescending)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((indexCatalog == null)? 0 :indexCatalog.hashCode()));
+        result = ((prime*result)+((indexSchema == null)? 0 :indexSchema.hashCode()));
+        result = ((prime*result)+((indexName == null)? 0 :indexName.hashCode()));
+        result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
+        result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
+        result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
+        result = ((prime*result)+((columnName == null)? 0 :columnName.hashCode()));
+        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+((isDescending == null)? 0 :isDescending.hashCode()));
+        return result;
+    }
+
 }

@@ -187,4 +187,97 @@ public class Generator implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<name>");
+        sb.append(name);
+        sb.append("</name>");
+        sb.append("<strategy>");
+        sb.append(strategy);
+        sb.append("</strategy>");
+        sb.append("<database>");
+        sb.append(database);
+        sb.append("</database>");
+        sb.append("<generate>");
+        sb.append(generate);
+        sb.append("</generate>");
+        sb.append("<target>");
+        sb.append(target);
+        sb.append("</target>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Generator other = ((Generator) that);
+        if (name == null) {
+            if (other.name!= null) {
+                return false;
+            }
+        } else {
+            if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (strategy == null) {
+            if (other.strategy!= null) {
+                return false;
+            }
+        } else {
+            if (!strategy.equals(other.strategy)) {
+                return false;
+            }
+        }
+        if (database == null) {
+            if (other.database!= null) {
+                return false;
+            }
+        } else {
+            if (!database.equals(other.database)) {
+                return false;
+            }
+        }
+        if (generate == null) {
+            if (other.generate!= null) {
+                return false;
+            }
+        } else {
+            if (!generate.equals(other.generate)) {
+                return false;
+            }
+        }
+        if (target == null) {
+            if (other.target!= null) {
+                return false;
+            }
+        } else {
+            if (!target.equals(other.target)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((strategy == null)? 0 :strategy.hashCode()));
+        result = ((prime*result)+((database == null)? 0 :database.hashCode()));
+        result = ((prime*result)+((generate == null)? 0 :generate.hashCode()));
+        result = ((prime*result)+((target == null)? 0 :target.hashCode()));
+        return result;
+    }
+
 }

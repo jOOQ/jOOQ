@@ -136,4 +136,71 @@ public class MappedTable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<input>");
+        sb.append(input);
+        sb.append("</input>");
+        sb.append("<inputExpression>");
+        sb.append(inputExpression);
+        sb.append("</inputExpression>");
+        sb.append("<output>");
+        sb.append(output);
+        sb.append("</output>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        MappedTable other = ((MappedTable) that);
+        if (input == null) {
+            if (other.input!= null) {
+                return false;
+            }
+        } else {
+            if (!input.equals(other.input)) {
+                return false;
+            }
+        }
+        if (inputExpression == null) {
+            if (other.inputExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!inputExpression.equals(other.inputExpression)) {
+                return false;
+            }
+        }
+        if (output == null) {
+            if (other.output!= null) {
+                return false;
+            }
+        } else {
+            if (!output.equals(other.output)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((input == null)? 0 :input.hashCode()));
+        result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.hashCode()));
+        result = ((prime*result)+((output == null)? 0 :output.hashCode()));
+        return result;
+    }
+
 }

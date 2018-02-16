@@ -112,4 +112,58 @@ public class Catalog implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<catalogName>");
+        sb.append(catalogName);
+        sb.append("</catalogName>");
+        sb.append("<comment>");
+        sb.append(comment);
+        sb.append("</comment>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Catalog other = ((Catalog) that);
+        if (catalogName == null) {
+            if (other.catalogName!= null) {
+                return false;
+            }
+        } else {
+            if (!catalogName.equals(other.catalogName)) {
+                return false;
+            }
+        }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((catalogName == null)? 0 :catalogName.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        return result;
+    }
+
 }

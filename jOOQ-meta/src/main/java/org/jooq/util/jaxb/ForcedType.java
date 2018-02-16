@@ -321,4 +321,149 @@ public class ForcedType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<name>");
+        sb.append(name);
+        sb.append("</name>");
+        sb.append("<userType>");
+        sb.append(userType);
+        sb.append("</userType>");
+        sb.append("<converter>");
+        sb.append(converter);
+        sb.append("</converter>");
+        sb.append("<enumConverter>");
+        sb.append(enumConverter);
+        sb.append("</enumConverter>");
+        sb.append("<binding>");
+        sb.append(binding);
+        sb.append("</binding>");
+        sb.append("<expression>");
+        sb.append(expression);
+        sb.append("</expression>");
+        sb.append("<expressions>");
+        sb.append(expressions);
+        sb.append("</expressions>");
+        sb.append("<types>");
+        sb.append(types);
+        sb.append("</types>");
+        sb.append("<nullability>");
+        sb.append(nullability);
+        sb.append("</nullability>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        ForcedType other = ((ForcedType) that);
+        if (name == null) {
+            if (other.name!= null) {
+                return false;
+            }
+        } else {
+            if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (userType == null) {
+            if (other.userType!= null) {
+                return false;
+            }
+        } else {
+            if (!userType.equals(other.userType)) {
+                return false;
+            }
+        }
+        if (converter == null) {
+            if (other.converter!= null) {
+                return false;
+            }
+        } else {
+            if (!converter.equals(other.converter)) {
+                return false;
+            }
+        }
+        if (enumConverter == null) {
+            if (other.enumConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!enumConverter.equals(other.enumConverter)) {
+                return false;
+            }
+        }
+        if (binding == null) {
+            if (other.binding!= null) {
+                return false;
+            }
+        } else {
+            if (!binding.equals(other.binding)) {
+                return false;
+            }
+        }
+        if (expression == null) {
+            if (other.expression!= null) {
+                return false;
+            }
+        } else {
+            if (!expression.equals(other.expression)) {
+                return false;
+            }
+        }
+        if (expressions == null) {
+            if (other.expressions!= null) {
+                return false;
+            }
+        } else {
+            if (!expressions.equals(other.expressions)) {
+                return false;
+            }
+        }
+        if (types == null) {
+            if (other.types!= null) {
+                return false;
+            }
+        } else {
+            if (!types.equals(other.types)) {
+                return false;
+            }
+        }
+        if (nullability == null) {
+            if (other.nullability!= null) {
+                return false;
+            }
+        } else {
+            if (!nullability.equals(other.nullability)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
+        result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
+        result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
+        result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
+        result = ((prime*result)+((expressions == null)? 0 :expressions.hashCode()));
+        result = ((prime*result)+((types == null)? 0 :types.hashCode()));
+        result = ((prime*result)+((nullability == null)? 0 :nullability.hashCode()));
+        return result;
+    }
+
 }

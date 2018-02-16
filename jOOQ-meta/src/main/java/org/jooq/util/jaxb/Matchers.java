@@ -216,4 +216,97 @@ public class Matchers implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<schemas>");
+        sb.append(schemas);
+        sb.append("</schemas>");
+        sb.append("<tables>");
+        sb.append(tables);
+        sb.append("</tables>");
+        sb.append("<fields>");
+        sb.append(fields);
+        sb.append("</fields>");
+        sb.append("<routines>");
+        sb.append(routines);
+        sb.append("</routines>");
+        sb.append("<sequences>");
+        sb.append(sequences);
+        sb.append("</sequences>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Matchers other = ((Matchers) that);
+        if (schemas == null) {
+            if (other.schemas!= null) {
+                return false;
+            }
+        } else {
+            if (!schemas.equals(other.schemas)) {
+                return false;
+            }
+        }
+        if (tables == null) {
+            if (other.tables!= null) {
+                return false;
+            }
+        } else {
+            if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (fields == null) {
+            if (other.fields!= null) {
+                return false;
+            }
+        } else {
+            if (!fields.equals(other.fields)) {
+                return false;
+            }
+        }
+        if (routines == null) {
+            if (other.routines!= null) {
+                return false;
+            }
+        } else {
+            if (!routines.equals(other.routines)) {
+                return false;
+            }
+        }
+        if (sequences == null) {
+            if (other.sequences!= null) {
+                return false;
+            }
+        } else {
+            if (!sequences.equals(other.sequences)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
+        result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
+        result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
+        return result;
+    }
+
 }

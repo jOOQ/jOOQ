@@ -307,4 +307,136 @@ public class Sequence implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<sequenceCatalog>");
+        sb.append(sequenceCatalog);
+        sb.append("</sequenceCatalog>");
+        sb.append("<sequenceSchema>");
+        sb.append(sequenceSchema);
+        sb.append("</sequenceSchema>");
+        sb.append("<sequenceName>");
+        sb.append(sequenceName);
+        sb.append("</sequenceName>");
+        sb.append("<dataType>");
+        sb.append(dataType);
+        sb.append("</dataType>");
+        sb.append("<characterMaximumLength>");
+        sb.append(characterMaximumLength);
+        sb.append("</characterMaximumLength>");
+        sb.append("<numericPrecision>");
+        sb.append(numericPrecision);
+        sb.append("</numericPrecision>");
+        sb.append("<numericScale>");
+        sb.append(numericScale);
+        sb.append("</numericScale>");
+        sb.append("<comment>");
+        sb.append(comment);
+        sb.append("</comment>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Sequence other = ((Sequence) that);
+        if (sequenceCatalog == null) {
+            if (other.sequenceCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!sequenceCatalog.equals(other.sequenceCatalog)) {
+                return false;
+            }
+        }
+        if (sequenceSchema == null) {
+            if (other.sequenceSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!sequenceSchema.equals(other.sequenceSchema)) {
+                return false;
+            }
+        }
+        if (sequenceName == null) {
+            if (other.sequenceName!= null) {
+                return false;
+            }
+        } else {
+            if (!sequenceName.equals(other.sequenceName)) {
+                return false;
+            }
+        }
+        if (dataType == null) {
+            if (other.dataType!= null) {
+                return false;
+            }
+        } else {
+            if (!dataType.equals(other.dataType)) {
+                return false;
+            }
+        }
+        if (characterMaximumLength == null) {
+            if (other.characterMaximumLength!= null) {
+                return false;
+            }
+        } else {
+            if (!characterMaximumLength.equals(other.characterMaximumLength)) {
+                return false;
+            }
+        }
+        if (numericPrecision == null) {
+            if (other.numericPrecision!= null) {
+                return false;
+            }
+        } else {
+            if (!numericPrecision.equals(other.numericPrecision)) {
+                return false;
+            }
+        }
+        if (numericScale == null) {
+            if (other.numericScale!= null) {
+                return false;
+            }
+        } else {
+            if (!numericScale.equals(other.numericScale)) {
+                return false;
+            }
+        }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((sequenceCatalog == null)? 0 :sequenceCatalog.hashCode()));
+        result = ((prime*result)+((sequenceSchema == null)? 0 :sequenceSchema.hashCode()));
+        result = ((prime*result)+((sequenceName == null)? 0 :sequenceName.hashCode()));
+        result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
+        result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
+        result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
+        result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        return result;
+    }
+
 }

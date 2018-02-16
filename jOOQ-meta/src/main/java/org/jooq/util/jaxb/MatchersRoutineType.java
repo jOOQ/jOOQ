@@ -156,4 +156,84 @@ public class MatchersRoutineType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<expression>");
+        sb.append(expression);
+        sb.append("</expression>");
+        sb.append("<routineClass>");
+        sb.append(routineClass);
+        sb.append("</routineClass>");
+        sb.append("<routineMethod>");
+        sb.append(routineMethod);
+        sb.append("</routineMethod>");
+        sb.append("<routineImplements>");
+        sb.append(routineImplements);
+        sb.append("</routineImplements>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        MatchersRoutineType other = ((MatchersRoutineType) that);
+        if (expression == null) {
+            if (other.expression!= null) {
+                return false;
+            }
+        } else {
+            if (!expression.equals(other.expression)) {
+                return false;
+            }
+        }
+        if (routineClass == null) {
+            if (other.routineClass!= null) {
+                return false;
+            }
+        } else {
+            if (!routineClass.equals(other.routineClass)) {
+                return false;
+            }
+        }
+        if (routineMethod == null) {
+            if (other.routineMethod!= null) {
+                return false;
+            }
+        } else {
+            if (!routineMethod.equals(other.routineMethod)) {
+                return false;
+            }
+        }
+        if (routineImplements == null) {
+            if (other.routineImplements!= null) {
+                return false;
+            }
+        } else {
+            if (!routineImplements.equals(other.routineImplements)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
+        result = ((prime*result)+((routineClass == null)? 0 :routineClass.hashCode()));
+        result = ((prime*result)+((routineMethod == null)? 0 :routineMethod.hashCode()));
+        result = ((prime*result)+((routineImplements == null)? 0 :routineImplements.hashCode()));
+        return result;
+    }
+
 }

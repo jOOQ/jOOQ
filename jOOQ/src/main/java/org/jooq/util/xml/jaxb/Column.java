@@ -470,4 +470,201 @@ public class Column implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<tableCatalog>");
+        sb.append(tableCatalog);
+        sb.append("</tableCatalog>");
+        sb.append("<tableSchema>");
+        sb.append(tableSchema);
+        sb.append("</tableSchema>");
+        sb.append("<tableName>");
+        sb.append(tableName);
+        sb.append("</tableName>");
+        sb.append("<columnName>");
+        sb.append(columnName);
+        sb.append("</columnName>");
+        sb.append("<dataType>");
+        sb.append(dataType);
+        sb.append("</dataType>");
+        sb.append("<characterMaximumLength>");
+        sb.append(characterMaximumLength);
+        sb.append("</characterMaximumLength>");
+        sb.append("<numericPrecision>");
+        sb.append(numericPrecision);
+        sb.append("</numericPrecision>");
+        sb.append("<numericScale>");
+        sb.append(numericScale);
+        sb.append("</numericScale>");
+        sb.append("<ordinalPosition>");
+        sb.append(ordinalPosition);
+        sb.append("</ordinalPosition>");
+        sb.append("<identityGeneration>");
+        sb.append(identityGeneration);
+        sb.append("</identityGeneration>");
+        sb.append("<isNullable>");
+        sb.append(isNullable);
+        sb.append("</isNullable>");
+        sb.append("<columnDefault>");
+        sb.append(columnDefault);
+        sb.append("</columnDefault>");
+        sb.append("<comment>");
+        sb.append(comment);
+        sb.append("</comment>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Column other = ((Column) that);
+        if (tableCatalog == null) {
+            if (other.tableCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!tableCatalog.equals(other.tableCatalog)) {
+                return false;
+            }
+        }
+        if (tableSchema == null) {
+            if (other.tableSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!tableSchema.equals(other.tableSchema)) {
+                return false;
+            }
+        }
+        if (tableName == null) {
+            if (other.tableName!= null) {
+                return false;
+            }
+        } else {
+            if (!tableName.equals(other.tableName)) {
+                return false;
+            }
+        }
+        if (columnName == null) {
+            if (other.columnName!= null) {
+                return false;
+            }
+        } else {
+            if (!columnName.equals(other.columnName)) {
+                return false;
+            }
+        }
+        if (dataType == null) {
+            if (other.dataType!= null) {
+                return false;
+            }
+        } else {
+            if (!dataType.equals(other.dataType)) {
+                return false;
+            }
+        }
+        if (characterMaximumLength == null) {
+            if (other.characterMaximumLength!= null) {
+                return false;
+            }
+        } else {
+            if (!characterMaximumLength.equals(other.characterMaximumLength)) {
+                return false;
+            }
+        }
+        if (numericPrecision == null) {
+            if (other.numericPrecision!= null) {
+                return false;
+            }
+        } else {
+            if (!numericPrecision.equals(other.numericPrecision)) {
+                return false;
+            }
+        }
+        if (numericScale == null) {
+            if (other.numericScale!= null) {
+                return false;
+            }
+        } else {
+            if (!numericScale.equals(other.numericScale)) {
+                return false;
+            }
+        }
+        if (ordinalPosition == null) {
+            if (other.ordinalPosition!= null) {
+                return false;
+            }
+        } else {
+            if (!ordinalPosition.equals(other.ordinalPosition)) {
+                return false;
+            }
+        }
+        if (identityGeneration == null) {
+            if (other.identityGeneration!= null) {
+                return false;
+            }
+        } else {
+            if (!identityGeneration.equals(other.identityGeneration)) {
+                return false;
+            }
+        }
+        if (isNullable == null) {
+            if (other.isNullable!= null) {
+                return false;
+            }
+        } else {
+            if (!isNullable.equals(other.isNullable)) {
+                return false;
+            }
+        }
+        if (columnDefault == null) {
+            if (other.columnDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!columnDefault.equals(other.columnDefault)) {
+                return false;
+            }
+        }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
+        result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
+        result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
+        result = ((prime*result)+((columnName == null)? 0 :columnName.hashCode()));
+        result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
+        result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
+        result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
+        result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
+        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+((identityGeneration == null)? 0 :identityGeneration.hashCode()));
+        result = ((prime*result)+((isNullable == null)? 0 :isNullable.hashCode()));
+        result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        return result;
+    }
+
 }

@@ -1199,4 +1199,500 @@ public class Settings
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<renderCatalog>");
+        sb.append(renderCatalog);
+        sb.append("</renderCatalog>");
+        sb.append("<renderSchema>");
+        sb.append(renderSchema);
+        sb.append("</renderSchema>");
+        sb.append("<renderMapping>");
+        sb.append(renderMapping);
+        sb.append("</renderMapping>");
+        sb.append("<renderNameStyle>");
+        sb.append(renderNameStyle);
+        sb.append("</renderNameStyle>");
+        sb.append("<renderKeywordStyle>");
+        sb.append(renderKeywordStyle);
+        sb.append("</renderKeywordStyle>");
+        sb.append("<renderFormatted>");
+        sb.append(renderFormatted);
+        sb.append("</renderFormatted>");
+        sb.append("<renderFormatting>");
+        sb.append(renderFormatting);
+        sb.append("</renderFormatting>");
+        sb.append("<renderScalarSubqueriesForStoredFunctions>");
+        sb.append(renderScalarSubqueriesForStoredFunctions);
+        sb.append("</renderScalarSubqueriesForStoredFunctions>");
+        sb.append("<backslashEscaping>");
+        sb.append(backslashEscaping);
+        sb.append("</backslashEscaping>");
+        sb.append("<paramType>");
+        sb.append(paramType);
+        sb.append("</paramType>");
+        sb.append("<paramCastMode>");
+        sb.append(paramCastMode);
+        sb.append("</paramCastMode>");
+        sb.append("<statementType>");
+        sb.append(statementType);
+        sb.append("</statementType>");
+        sb.append("<executeLogging>");
+        sb.append(executeLogging);
+        sb.append("</executeLogging>");
+        sb.append("<executeWithOptimisticLocking>");
+        sb.append(executeWithOptimisticLocking);
+        sb.append("</executeWithOptimisticLocking>");
+        sb.append("<executeWithOptimisticLockingExcludeUnversioned>");
+        sb.append(executeWithOptimisticLockingExcludeUnversioned);
+        sb.append("</executeWithOptimisticLockingExcludeUnversioned>");
+        sb.append("<attachRecords>");
+        sb.append(attachRecords);
+        sb.append("</attachRecords>");
+        sb.append("<updatablePrimaryKeys>");
+        sb.append(updatablePrimaryKeys);
+        sb.append("</updatablePrimaryKeys>");
+        sb.append("<reflectionCaching>");
+        sb.append(reflectionCaching);
+        sb.append("</reflectionCaching>");
+        sb.append("<cacheRecordMappers>");
+        sb.append(cacheRecordMappers);
+        sb.append("</cacheRecordMappers>");
+        sb.append("<throwExceptions>");
+        sb.append(throwExceptions);
+        sb.append("</throwExceptions>");
+        sb.append("<fetchWarnings>");
+        sb.append(fetchWarnings);
+        sb.append("</fetchWarnings>");
+        sb.append("<fetchServerOutputSize>");
+        sb.append(fetchServerOutputSize);
+        sb.append("</fetchServerOutputSize>");
+        sb.append("<returnAllOnUpdatableRecord>");
+        sb.append(returnAllOnUpdatableRecord);
+        sb.append("</returnAllOnUpdatableRecord>");
+        sb.append("<returnRecordToPojo>");
+        sb.append(returnRecordToPojo);
+        sb.append("</returnRecordToPojo>");
+        sb.append("<mapJPAAnnotations>");
+        sb.append(mapJPAAnnotations);
+        sb.append("</mapJPAAnnotations>");
+        sb.append("<mapConstructorParameterNames>");
+        sb.append(mapConstructorParameterNames);
+        sb.append("</mapConstructorParameterNames>");
+        sb.append("<queryTimeout>");
+        sb.append(queryTimeout);
+        sb.append("</queryTimeout>");
+        sb.append("<maxRows>");
+        sb.append(maxRows);
+        sb.append("</maxRows>");
+        sb.append("<fetchSize>");
+        sb.append(fetchSize);
+        sb.append("</fetchSize>");
+        sb.append("<debugInfoOnStackTrace>");
+        sb.append(debugInfoOnStackTrace);
+        sb.append("</debugInfoOnStackTrace>");
+        sb.append("<inListPadding>");
+        sb.append(inListPadding);
+        sb.append("</inListPadding>");
+        sb.append("<inListPadBase>");
+        sb.append(inListPadBase);
+        sb.append("</inListPadBase>");
+        sb.append("<delimiter>");
+        sb.append(delimiter);
+        sb.append("</delimiter>");
+        sb.append("<executeUpdateWithoutWhere>");
+        sb.append(executeUpdateWithoutWhere);
+        sb.append("</executeUpdateWithoutWhere>");
+        sb.append("<executeDeleteWithoutWhere>");
+        sb.append(executeDeleteWithoutWhere);
+        sb.append("</executeDeleteWithoutWhere>");
+        sb.append("<parseWithMetaLookups>");
+        sb.append(parseWithMetaLookups);
+        sb.append("</parseWithMetaLookups>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Settings other = ((Settings) that);
+        if (renderCatalog == null) {
+            if (other.renderCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!renderCatalog.equals(other.renderCatalog)) {
+                return false;
+            }
+        }
+        if (renderSchema == null) {
+            if (other.renderSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!renderSchema.equals(other.renderSchema)) {
+                return false;
+            }
+        }
+        if (renderMapping == null) {
+            if (other.renderMapping!= null) {
+                return false;
+            }
+        } else {
+            if (!renderMapping.equals(other.renderMapping)) {
+                return false;
+            }
+        }
+        if (renderNameStyle == null) {
+            if (other.renderNameStyle!= null) {
+                return false;
+            }
+        } else {
+            if (!renderNameStyle.equals(other.renderNameStyle)) {
+                return false;
+            }
+        }
+        if (renderKeywordStyle == null) {
+            if (other.renderKeywordStyle!= null) {
+                return false;
+            }
+        } else {
+            if (!renderKeywordStyle.equals(other.renderKeywordStyle)) {
+                return false;
+            }
+        }
+        if (renderFormatted == null) {
+            if (other.renderFormatted!= null) {
+                return false;
+            }
+        } else {
+            if (!renderFormatted.equals(other.renderFormatted)) {
+                return false;
+            }
+        }
+        if (renderFormatting == null) {
+            if (other.renderFormatting!= null) {
+                return false;
+            }
+        } else {
+            if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderScalarSubqueriesForStoredFunctions == null) {
+            if (other.renderScalarSubqueriesForStoredFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!renderScalarSubqueriesForStoredFunctions.equals(other.renderScalarSubqueriesForStoredFunctions)) {
+                return false;
+            }
+        }
+        if (backslashEscaping == null) {
+            if (other.backslashEscaping!= null) {
+                return false;
+            }
+        } else {
+            if (!backslashEscaping.equals(other.backslashEscaping)) {
+                return false;
+            }
+        }
+        if (paramType == null) {
+            if (other.paramType!= null) {
+                return false;
+            }
+        } else {
+            if (!paramType.equals(other.paramType)) {
+                return false;
+            }
+        }
+        if (paramCastMode == null) {
+            if (other.paramCastMode!= null) {
+                return false;
+            }
+        } else {
+            if (!paramCastMode.equals(other.paramCastMode)) {
+                return false;
+            }
+        }
+        if (statementType == null) {
+            if (other.statementType!= null) {
+                return false;
+            }
+        } else {
+            if (!statementType.equals(other.statementType)) {
+                return false;
+            }
+        }
+        if (executeLogging == null) {
+            if (other.executeLogging!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLogging.equals(other.executeLogging)) {
+                return false;
+            }
+        }
+        if (executeWithOptimisticLocking == null) {
+            if (other.executeWithOptimisticLocking!= null) {
+                return false;
+            }
+        } else {
+            if (!executeWithOptimisticLocking.equals(other.executeWithOptimisticLocking)) {
+                return false;
+            }
+        }
+        if (executeWithOptimisticLockingExcludeUnversioned == null) {
+            if (other.executeWithOptimisticLockingExcludeUnversioned!= null) {
+                return false;
+            }
+        } else {
+            if (!executeWithOptimisticLockingExcludeUnversioned.equals(other.executeWithOptimisticLockingExcludeUnversioned)) {
+                return false;
+            }
+        }
+        if (attachRecords == null) {
+            if (other.attachRecords!= null) {
+                return false;
+            }
+        } else {
+            if (!attachRecords.equals(other.attachRecords)) {
+                return false;
+            }
+        }
+        if (updatablePrimaryKeys == null) {
+            if (other.updatablePrimaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!updatablePrimaryKeys.equals(other.updatablePrimaryKeys)) {
+                return false;
+            }
+        }
+        if (reflectionCaching == null) {
+            if (other.reflectionCaching!= null) {
+                return false;
+            }
+        } else {
+            if (!reflectionCaching.equals(other.reflectionCaching)) {
+                return false;
+            }
+        }
+        if (cacheRecordMappers == null) {
+            if (other.cacheRecordMappers!= null) {
+                return false;
+            }
+        } else {
+            if (!cacheRecordMappers.equals(other.cacheRecordMappers)) {
+                return false;
+            }
+        }
+        if (throwExceptions == null) {
+            if (other.throwExceptions!= null) {
+                return false;
+            }
+        } else {
+            if (!throwExceptions.equals(other.throwExceptions)) {
+                return false;
+            }
+        }
+        if (fetchWarnings == null) {
+            if (other.fetchWarnings!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchWarnings.equals(other.fetchWarnings)) {
+                return false;
+            }
+        }
+        if (fetchServerOutputSize == null) {
+            if (other.fetchServerOutputSize!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchServerOutputSize.equals(other.fetchServerOutputSize)) {
+                return false;
+            }
+        }
+        if (returnAllOnUpdatableRecord == null) {
+            if (other.returnAllOnUpdatableRecord!= null) {
+                return false;
+            }
+        } else {
+            if (!returnAllOnUpdatableRecord.equals(other.returnAllOnUpdatableRecord)) {
+                return false;
+            }
+        }
+        if (returnRecordToPojo == null) {
+            if (other.returnRecordToPojo!= null) {
+                return false;
+            }
+        } else {
+            if (!returnRecordToPojo.equals(other.returnRecordToPojo)) {
+                return false;
+            }
+        }
+        if (mapJPAAnnotations == null) {
+            if (other.mapJPAAnnotations!= null) {
+                return false;
+            }
+        } else {
+            if (!mapJPAAnnotations.equals(other.mapJPAAnnotations)) {
+                return false;
+            }
+        }
+        if (mapConstructorParameterNames == null) {
+            if (other.mapConstructorParameterNames!= null) {
+                return false;
+            }
+        } else {
+            if (!mapConstructorParameterNames.equals(other.mapConstructorParameterNames)) {
+                return false;
+            }
+        }
+        if (queryTimeout == null) {
+            if (other.queryTimeout!= null) {
+                return false;
+            }
+        } else {
+            if (!queryTimeout.equals(other.queryTimeout)) {
+                return false;
+            }
+        }
+        if (maxRows == null) {
+            if (other.maxRows!= null) {
+                return false;
+            }
+        } else {
+            if (!maxRows.equals(other.maxRows)) {
+                return false;
+            }
+        }
+        if (fetchSize == null) {
+            if (other.fetchSize!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchSize.equals(other.fetchSize)) {
+                return false;
+            }
+        }
+        if (debugInfoOnStackTrace == null) {
+            if (other.debugInfoOnStackTrace!= null) {
+                return false;
+            }
+        } else {
+            if (!debugInfoOnStackTrace.equals(other.debugInfoOnStackTrace)) {
+                return false;
+            }
+        }
+        if (inListPadding == null) {
+            if (other.inListPadding!= null) {
+                return false;
+            }
+        } else {
+            if (!inListPadding.equals(other.inListPadding)) {
+                return false;
+            }
+        }
+        if (inListPadBase == null) {
+            if (other.inListPadBase!= null) {
+                return false;
+            }
+        } else {
+            if (!inListPadBase.equals(other.inListPadBase)) {
+                return false;
+            }
+        }
+        if (delimiter == null) {
+            if (other.delimiter!= null) {
+                return false;
+            }
+        } else {
+            if (!delimiter.equals(other.delimiter)) {
+                return false;
+            }
+        }
+        if (executeUpdateWithoutWhere == null) {
+            if (other.executeUpdateWithoutWhere!= null) {
+                return false;
+            }
+        } else {
+            if (!executeUpdateWithoutWhere.equals(other.executeUpdateWithoutWhere)) {
+                return false;
+            }
+        }
+        if (executeDeleteWithoutWhere == null) {
+            if (other.executeDeleteWithoutWhere!= null) {
+                return false;
+            }
+        } else {
+            if (!executeDeleteWithoutWhere.equals(other.executeDeleteWithoutWhere)) {
+                return false;
+            }
+        }
+        if (parseWithMetaLookups == null) {
+            if (other.parseWithMetaLookups!= null) {
+                return false;
+            }
+        } else {
+            if (!parseWithMetaLookups.equals(other.parseWithMetaLookups)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((renderCatalog == null)? 0 :renderCatalog.hashCode()));
+        result = ((prime*result)+((renderSchema == null)? 0 :renderSchema.hashCode()));
+        result = ((prime*result)+((renderMapping == null)? 0 :renderMapping.hashCode()));
+        result = ((prime*result)+((renderNameStyle == null)? 0 :renderNameStyle.hashCode()));
+        result = ((prime*result)+((renderKeywordStyle == null)? 0 :renderKeywordStyle.hashCode()));
+        result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
+        result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
+        result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
+        result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
+        result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
+        result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));
+        result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
+        result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
+        result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));
+        result = ((prime*result)+((attachRecords == null)? 0 :attachRecords.hashCode()));
+        result = ((prime*result)+((updatablePrimaryKeys == null)? 0 :updatablePrimaryKeys.hashCode()));
+        result = ((prime*result)+((reflectionCaching == null)? 0 :reflectionCaching.hashCode()));
+        result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));
+        result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
+        result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));
+        result = ((prime*result)+((fetchServerOutputSize == null)? 0 :fetchServerOutputSize.hashCode()));
+        result = ((prime*result)+((returnAllOnUpdatableRecord == null)? 0 :returnAllOnUpdatableRecord.hashCode()));
+        result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
+        result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));
+        result = ((prime*result)+((mapConstructorParameterNames == null)? 0 :mapConstructorParameterNames.hashCode()));
+        result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
+        result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));
+        result = ((prime*result)+((fetchSize == null)? 0 :fetchSize.hashCode()));
+        result = ((prime*result)+((debugInfoOnStackTrace == null)? 0 :debugInfoOnStackTrace.hashCode()));
+        result = ((prime*result)+((inListPadding == null)? 0 :inListPadding.hashCode()));
+        result = ((prime*result)+((inListPadBase == null)? 0 :inListPadBase.hashCode()));
+        result = ((prime*result)+((delimiter == null)? 0 :delimiter.hashCode()));
+        result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
+        result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
+        result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
+        return result;
+    }
+
 }

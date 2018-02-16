@@ -106,4 +106,58 @@ public class RenderMapping
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<defaultSchema>");
+        sb.append(defaultSchema);
+        sb.append("</defaultSchema>");
+        sb.append("<schemata>");
+        sb.append(schemata);
+        sb.append("</schemata>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        RenderMapping other = ((RenderMapping) that);
+        if (defaultSchema == null) {
+            if (other.defaultSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!defaultSchema.equals(other.defaultSchema)) {
+                return false;
+            }
+        }
+        if (schemata == null) {
+            if (other.schemata!= null) {
+                return false;
+            }
+        } else {
+            if (!schemata.equals(other.schemata)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((defaultSchema == null)? 0 :defaultSchema.hashCode()));
+        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        return result;
+    }
+
 }

@@ -464,4 +464,201 @@ public class Parameter implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<specificCatalog>");
+        sb.append(specificCatalog);
+        sb.append("</specificCatalog>");
+        sb.append("<specificSchema>");
+        sb.append(specificSchema);
+        sb.append("</specificSchema>");
+        sb.append("<specificPackage>");
+        sb.append(specificPackage);
+        sb.append("</specificPackage>");
+        sb.append("<specificName>");
+        sb.append(specificName);
+        sb.append("</specificName>");
+        sb.append("<ordinalPosition>");
+        sb.append(ordinalPosition);
+        sb.append("</ordinalPosition>");
+        sb.append("<parameterMode>");
+        sb.append(parameterMode);
+        sb.append("</parameterMode>");
+        sb.append("<parameterName>");
+        sb.append(parameterName);
+        sb.append("</parameterName>");
+        sb.append("<dataType>");
+        sb.append(dataType);
+        sb.append("</dataType>");
+        sb.append("<characterMaximumLength>");
+        sb.append(characterMaximumLength);
+        sb.append("</characterMaximumLength>");
+        sb.append("<numericPrecision>");
+        sb.append(numericPrecision);
+        sb.append("</numericPrecision>");
+        sb.append("<numericScale>");
+        sb.append(numericScale);
+        sb.append("</numericScale>");
+        sb.append("<parameterDefault>");
+        sb.append(parameterDefault);
+        sb.append("</parameterDefault>");
+        sb.append("<comment>");
+        sb.append(comment);
+        sb.append("</comment>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        Parameter other = ((Parameter) that);
+        if (specificCatalog == null) {
+            if (other.specificCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!specificCatalog.equals(other.specificCatalog)) {
+                return false;
+            }
+        }
+        if (specificSchema == null) {
+            if (other.specificSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!specificSchema.equals(other.specificSchema)) {
+                return false;
+            }
+        }
+        if (specificPackage == null) {
+            if (other.specificPackage!= null) {
+                return false;
+            }
+        } else {
+            if (!specificPackage.equals(other.specificPackage)) {
+                return false;
+            }
+        }
+        if (specificName == null) {
+            if (other.specificName!= null) {
+                return false;
+            }
+        } else {
+            if (!specificName.equals(other.specificName)) {
+                return false;
+            }
+        }
+        if (ordinalPosition == null) {
+            if (other.ordinalPosition!= null) {
+                return false;
+            }
+        } else {
+            if (!ordinalPosition.equals(other.ordinalPosition)) {
+                return false;
+            }
+        }
+        if (parameterMode == null) {
+            if (other.parameterMode!= null) {
+                return false;
+            }
+        } else {
+            if (!parameterMode.equals(other.parameterMode)) {
+                return false;
+            }
+        }
+        if (parameterName == null) {
+            if (other.parameterName!= null) {
+                return false;
+            }
+        } else {
+            if (!parameterName.equals(other.parameterName)) {
+                return false;
+            }
+        }
+        if (dataType == null) {
+            if (other.dataType!= null) {
+                return false;
+            }
+        } else {
+            if (!dataType.equals(other.dataType)) {
+                return false;
+            }
+        }
+        if (characterMaximumLength == null) {
+            if (other.characterMaximumLength!= null) {
+                return false;
+            }
+        } else {
+            if (!characterMaximumLength.equals(other.characterMaximumLength)) {
+                return false;
+            }
+        }
+        if (numericPrecision == null) {
+            if (other.numericPrecision!= null) {
+                return false;
+            }
+        } else {
+            if (!numericPrecision.equals(other.numericPrecision)) {
+                return false;
+            }
+        }
+        if (numericScale == null) {
+            if (other.numericScale!= null) {
+                return false;
+            }
+        } else {
+            if (!numericScale.equals(other.numericScale)) {
+                return false;
+            }
+        }
+        if (parameterDefault == null) {
+            if (other.parameterDefault!= null) {
+                return false;
+            }
+        } else {
+            if (!parameterDefault.equals(other.parameterDefault)) {
+                return false;
+            }
+        }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((specificCatalog == null)? 0 :specificCatalog.hashCode()));
+        result = ((prime*result)+((specificSchema == null)? 0 :specificSchema.hashCode()));
+        result = ((prime*result)+((specificPackage == null)? 0 :specificPackage.hashCode()));
+        result = ((prime*result)+((specificName == null)? 0 :specificName.hashCode()));
+        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+((parameterMode == null)? 0 :parameterMode.hashCode()));
+        result = ((prime*result)+((parameterName == null)? 0 :parameterName.hashCode()));
+        result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
+        result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
+        result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
+        result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
+        result = ((prime*result)+((parameterDefault == null)? 0 :parameterDefault.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        return result;
+    }
+
 }

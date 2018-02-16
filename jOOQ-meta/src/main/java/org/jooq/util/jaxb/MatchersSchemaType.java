@@ -156,4 +156,84 @@ public class MatchersSchemaType implements Serializable
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<expression>");
+        sb.append(expression);
+        sb.append("</expression>");
+        sb.append("<schemaClass>");
+        sb.append(schemaClass);
+        sb.append("</schemaClass>");
+        sb.append("<schemaIdentifier>");
+        sb.append(schemaIdentifier);
+        sb.append("</schemaIdentifier>");
+        sb.append("<schemaImplements>");
+        sb.append(schemaImplements);
+        sb.append("</schemaImplements>");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass()!= that.getClass()) {
+            return false;
+        }
+        MatchersSchemaType other = ((MatchersSchemaType) that);
+        if (expression == null) {
+            if (other.expression!= null) {
+                return false;
+            }
+        } else {
+            if (!expression.equals(other.expression)) {
+                return false;
+            }
+        }
+        if (schemaClass == null) {
+            if (other.schemaClass!= null) {
+                return false;
+            }
+        } else {
+            if (!schemaClass.equals(other.schemaClass)) {
+                return false;
+            }
+        }
+        if (schemaIdentifier == null) {
+            if (other.schemaIdentifier!= null) {
+                return false;
+            }
+        } else {
+            if (!schemaIdentifier.equals(other.schemaIdentifier)) {
+                return false;
+            }
+        }
+        if (schemaImplements == null) {
+            if (other.schemaImplements!= null) {
+                return false;
+            }
+        } else {
+            if (!schemaImplements.equals(other.schemaImplements)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
+        result = ((prime*result)+((schemaClass == null)? 0 :schemaClass.hashCode()));
+        result = ((prime*result)+((schemaIdentifier == null)? 0 :schemaIdentifier.hashCode()));
+        result = ((prime*result)+((schemaImplements == null)? 0 :schemaImplements.hashCode()));
+        return result;
+    }
+
 }

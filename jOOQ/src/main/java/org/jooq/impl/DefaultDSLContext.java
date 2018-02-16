@@ -4160,6 +4160,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
+    public <T> T fetchValue(Table<? extends Record1<T>> table) {
+        return fetchValue(selectFrom(table));
+    }
+
+    @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
         final Configuration previous = Tools.getConfiguration(query);
 
@@ -4193,6 +4198,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Optional.ofNullable(fetchValue(field));
     }
 
+
+    @Override
+    public <T> List<T> fetchValues(Table<? extends Record1<T>> table) throws DataAccessException {
+        return fetchValues(selectFrom(table));
+    }
 
     @Override
     public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {

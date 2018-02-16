@@ -10681,6 +10681,16 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
+     * Fetch a single value from a single column table.
+     *
+     * @param table The table from which to fetch a value
+     * @return The value or <code>null</code>, if no record was found.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchValue(Table<? extends Record1<T>> table) throws DataAccessException, TooManyRowsException;
+
+    /**
      * Execute a {@link ResultQuery} in the context of this
      * <code>DSLContext</code> and return a single value.
      *
@@ -10739,6 +10749,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
+
+    /**
+     * Fetch all values from a single column table.
+     *
+     * @param table The table from which to fetch values
+     * @return The values. This will never be <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> List<T> fetchValues(Table<? extends Record1<T>> table) throws DataAccessException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this

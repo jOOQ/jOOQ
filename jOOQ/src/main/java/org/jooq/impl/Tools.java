@@ -610,6 +610,7 @@ final class Tools {
 
     private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
 
@@ -4037,8 +4038,8 @@ final class Tools {
 
         if (type.hasLength()) {
 
-            // [#6289] Some databases don't support lengths on binary types
-            if (type.isBinary() && ctx.family() == POSTGRES)
+            // [#6289] [#7191] Some databases don't support lengths on binary types
+            if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.family()))
                 ctx.sql(typeName);
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');

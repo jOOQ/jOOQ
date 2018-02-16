@@ -125,6 +125,7 @@ import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_SERIAL8;
+import static org.jooq.impl.Keywords.K_SQLSTATE;
 import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
@@ -3730,6 +3731,11 @@ final class Tools {
                 break;
             }
 
+            case POSTGRES: {
+                begin(ctx);
+                break;
+            }
+
             default:
                 break;
         }
@@ -3891,6 +3897,14 @@ final class Tools {
 
             case MARIADB: {
                 ctx.sql(';');
+                end(ctx);
+                break;
+            }
+
+            case POSTGRES: {
+                ctx.sql(';').formatIndentEnd().formatSeparator()
+                   .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
+                   .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(" '42P07' ").visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
                 end(ctx);
                 break;
             }

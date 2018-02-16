@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
@@ -88,7 +89,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
      */
     private static final long                                                       serialVersionUID = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES          = { CREATE_VIEW };
-    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD, POSTGRES);
 
     private final boolean                                                           ifNotExists;
     private final Table<?>                                                          view;

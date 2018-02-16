@@ -80,7 +80,7 @@ public class LoggerListener extends DefaultExecuteListener {
      */
     private static final long serialVersionUID = 7399239846062763212L;
 
-    private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
+    protected static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
 
     @Override
     public void renderEnd(ExecuteContext ctx) {
@@ -197,7 +197,11 @@ public class LoggerListener extends DefaultExecuteListener {
         return result;
     }
 
-    private void logMultiline(String comment, String message, Level level) {
+    /**
+     * Prints the given message in multiple logging statements, separated by newline,
+     * and prefixing the first line with the given comment.
+     */
+    protected void logMultiline(String comment, String message, Level level) {
         for (String line : message.split("\n")) {
             if (level == Level.FINE) {
                 log.debug(comment, line);

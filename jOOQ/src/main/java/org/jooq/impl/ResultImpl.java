@@ -879,11 +879,13 @@ final class ResultImpl<R extends Record> implements Result<R> {
                 // no break
             case ALWAYS:
             default:
-                return StringUtils.replace(
+                return format.quoteString()
+                     + StringUtils.replace(
                            StringUtils.replace(
-                               format.quoteString(), "\\", "\\\\"
+                               result, "\\", "\\\\"
                            ), format.quoteString(), format.quoteString() + format.quoteString()
-                       ) + format.quoteString();
+                       )
+                     + format.quoteString();
         }
     }
 

@@ -131,6 +131,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
 
 
+
     private final Table<?>                   table;
     private Select<?>                        select;
     private Boolean                          withData;
@@ -303,10 +304,36 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final void accept0(Context<?> ctx) {
         if (comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.family())) {
             begin(ctx);
+
+
+
+
+
+
             accept1(ctx);
 
-            ctx.sql(';').formatSeparator()
-               .visit(commentOnTable(table).is(comment)).sql(';');
+
+
+
+
+
+            ctx.sql(';');
+
+            ctx.formatSeparator();
+
+
+
+
+
+
+            ctx.visit(commentOnTable(table).is(comment));
+
+
+
+
+
+
+            ctx.sql(';');
 
             end(ctx);
             return;

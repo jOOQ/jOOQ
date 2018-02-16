@@ -75,6 +75,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
@@ -136,6 +137,7 @@ final class MetaImpl extends AbstractMeta implements Serializable {
     private static final long                serialVersionUID                 = 3582980783173033809L;
     private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
+    private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
 
     private final DSLContext                 ctx;
     private final Configuration              configuration;
@@ -779,8 +781,12 @@ final class MetaImpl extends AbstractMeta implements Serializable {
                     // [#6883] Default values may be present
                     if (!StringUtils.isEmpty(defaultValue))
 
+                        // [#7194] Some databases report all default values as expressions, not as values
+                        if (EXPRESSION_COLUMN_DEFAULT.contains(configuration.family()))
+                            type = type.defaultValue(DSL.field(defaultValue, type));
+
                         // [#5574] MySQL mixes constant value expressions with other column expressions here
-                        if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(configuration.family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
+                        else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(configuration.family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
                             type = type.defaultValue(DSL.field(defaultValue, type));
                         else
                             type = type.defaultValue(DSL.inline(defaultValue, type));

@@ -344,6 +344,7 @@ import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -12921,7 +12922,11 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
-        return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
+        return StringUtils.replace(
+                   StringUtils.replace(
+                       StringUtils.replace(value, esc, esc + esc), "%", esc + "%"
+                   ), "_", esc + "_"
+               );
     }
 
     /**

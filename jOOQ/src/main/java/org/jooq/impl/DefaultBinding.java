@@ -2467,7 +2467,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String format = formatISO(val);
 
             // Replace the ISO standard Z character for UTC, as some databases don't like that
-            return (format.substring(0, 10) + ' ' + format.substring(11)).replace("Z", "+00:00");
+            return StringUtils.replace(format.substring(0, 10) + ' ' + format.substring(11), "Z", "+00:00");
         }
 
         private static final String formatISO(OffsetDateTime val) {
@@ -2545,7 +2545,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final String format(OffsetTime val) {
 
             // Replace the ISO standard Z character for UTC, as some databases don't like that
-            return val.format(DateTimeFormatter.ISO_OFFSET_TIME).replace("Z", "+00:00");
+            return StringUtils.replace(val.format(DateTimeFormatter.ISO_OFFSET_TIME), "Z", "+00:00");
         }
     }
 

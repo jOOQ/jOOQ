@@ -725,10 +725,11 @@ public class DefaultDataType<T> implements DataType<T> {
 
 
 
+    @SuppressWarnings("rawtypes")
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         String enumTypeName = Tools.enums(enumDataType)[0].getName();
-        return new DefaultDataType<E>(dialect, enumDataType, enumTypeName, enumTypeName);
+        return new DefaultDataType<E>(dialect, (DataType<E>) null, enumDataType, enumTypeName, enumTypeName, precision, scale, length, nullability, (Field) defaultValue);
     }
 
     @Override

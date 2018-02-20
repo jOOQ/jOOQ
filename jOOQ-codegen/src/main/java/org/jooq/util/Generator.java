@@ -38,6 +38,8 @@
 
 package org.jooq.util;
 
+import java.io.Serializable;
+
 import javax.annotation.Generated;
 
 /**
@@ -230,6 +232,16 @@ public interface Generator {
     void setGenerateImmutablePojos(boolean generateImmutablePojos);
 
     /**
+     * Whether generated POJO's should be {@link Serializable}.
+     */
+    boolean generateSerializablePojos();
+
+    /**
+     * Whether generated POJO's should be {@link Serializable}.
+     */
+    void setGenerateSerializablePojos(boolean generateSerializablePojos);
+
+    /**
      * Whether interfaces should be generated to be implemented by records and
      * POJO's
      */
@@ -250,6 +262,16 @@ public interface Generator {
      * Whether immutable interfaces should be generated in addition to records
      */
     void setGenerateImmutableInterfaces(boolean generateImmutableInterfaces);
+
+    /**
+     * Whether generated interfaces should extend {@link Serializable}.
+     */
+    boolean generateSerializableInterfaces();
+
+    /**
+     * Whether generated interfaces should extend {@link Serializable}.
+     */
+    void setGenerateSerializableInterfaces(boolean generateSerializableInterfaces);
 
     /**
      * Whether DAO's should be generated in addition to pojos

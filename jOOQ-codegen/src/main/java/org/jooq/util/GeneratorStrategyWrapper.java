@@ -289,17 +289,18 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         // [#1243] All generation modes can accept interfaces
         Set<String> result = new LinkedHashSet<String>(delegate.getJavaClassImplements(definition, mode));
 
-        // [#1528] Generated interfaces (implemented by RECORD and POJO) are
-        // always Serializable
-        if (mode == Mode.INTERFACE) {
+        // [#1528] [#7210] Generated interfaces (implemented by RECORD and POJO) are
+        //                 Serializable by default
+        if (mode == Mode.INTERFACE
+                && generator.generateSerializableInterfaces())
             result.add(Serializable.class.getName());
-        }
 
-        // [#1528] POJOs only implement Serializable if they don't inherit
-        // Serializable from INTERFACE already
-        else if (mode == Mode.POJO && !generator.generateInterfaces()) {
+        // [#1528] [#4888] POJOs only implement Serializable by default if they don't inherit
+        //                 Serializable from INTERFACE already
+        else if (mode == Mode.POJO
+                && generator.generateSerializablePojos()
+                && (!generator.generateInterfaces() || !generator.generateSerializableInterfaces()))
             result.add(Serializable.class.getName());
-        }
 
         return new ArrayList<String>(result);
     }

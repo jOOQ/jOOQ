@@ -1727,9 +1727,9 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
 
         if (scala)
-        	out.println("trait %s [[before=extends ][%s]] {", className, interfaces);
+        	out.println("trait %s[[before= extends ][%s]] {", className, interfaces);
         else
-            out.println("public interface %s [[before=extends ][%s]] {", className, interfaces);
+            out.println("public interface %s[[before= extends ][%s]] {", className, interfaces);
 
         List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(tableOrUDT);
         for (int i = 0; i < typedElements.size(); i++) {
@@ -3070,9 +3070,8 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
 
         int maxLength = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
-        }
 
         if (scala) {
             out.println("%sclass %s(", (generateImmutablePojos() ? "case " : ""), className);
@@ -3092,7 +3091,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
-            out.printSerial();
+
+            if (generateSerializablePojos() || generateSerializableInterfaces())
+                out.printSerial();
+
             out.println();
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {

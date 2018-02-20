@@ -74,10 +74,14 @@ public class Generate implements Serializable
     protected Boolean pojosToString = true;
     @XmlElement(defaultValue = "false")
     protected Boolean immutablePojos = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean serializablePojos = true;
     @XmlElement(defaultValue = "false")
     protected Boolean interfaces = false;
     @XmlElement(defaultValue = "false")
     protected Boolean immutableInterfaces = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean serializableInterfaces = true;
     @XmlElement(defaultValue = "false")
     protected Boolean daos = false;
     @XmlElement(defaultValue = "false")
@@ -641,6 +645,30 @@ public class Generate implements Serializable
     }
 
     /**
+     * Generate serializable POJOs.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSerializablePojos() {
+        return serializablePojos;
+    }
+
+    /**
+     * Sets the value of the serializablePojos property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSerializablePojos(Boolean value) {
+        this.serializablePojos = value;
+    }
+
+    /**
      * Generated interfaces to be implemented by records and/or POJOs.
      *
      * @return
@@ -686,6 +714,30 @@ public class Generate implements Serializable
      */
     public void setImmutableInterfaces(Boolean value) {
         this.immutableInterfaces = value;
+    }
+
+    /**
+     * Generate serializable interfaces.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSerializableInterfaces() {
+        return serializableInterfaces;
+    }
+
+    /**
+     * Sets the value of the serializableInterfaces property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSerializableInterfaces(Boolean value) {
+        this.serializableInterfaces = value;
     }
 
     /**
@@ -1726,6 +1778,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withSerializablePojos(Boolean value) {
+        setSerializablePojos(value);
+        return this;
+    }
+
     public Generate withInterfaces(Boolean value) {
         setInterfaces(value);
         return this;
@@ -1733,6 +1790,11 @@ public class Generate implements Serializable
 
     public Generate withImmutableInterfaces(Boolean value) {
         setImmutableInterfaces(value);
+        return this;
+    }
+
+    public Generate withSerializableInterfaces(Boolean value) {
+        setSerializableInterfaces(value);
         return this;
     }
 
@@ -1989,12 +2051,18 @@ public class Generate implements Serializable
         sb.append("<immutablePojos>");
         sb.append(immutablePojos);
         sb.append("</immutablePojos>");
+        sb.append("<serializablePojos>");
+        sb.append(serializablePojos);
+        sb.append("</serializablePojos>");
         sb.append("<interfaces>");
         sb.append(interfaces);
         sb.append("</interfaces>");
         sb.append("<immutableInterfaces>");
         sb.append(immutableInterfaces);
         sb.append("</immutableInterfaces>");
+        sb.append("<serializableInterfaces>");
+        sb.append(serializableInterfaces);
+        sb.append("</serializableInterfaces>");
         sb.append("<daos>");
         sb.append(daos);
         sb.append("</daos>");
@@ -2304,6 +2372,15 @@ public class Generate implements Serializable
                 return false;
             }
         }
+        if (serializablePojos == null) {
+            if (other.serializablePojos!= null) {
+                return false;
+            }
+        } else {
+            if (!serializablePojos.equals(other.serializablePojos)) {
+                return false;
+            }
+        }
         if (interfaces == null) {
             if (other.interfaces!= null) {
                 return false;
@@ -2319,6 +2396,15 @@ public class Generate implements Serializable
             }
         } else {
             if (!immutableInterfaces.equals(other.immutableInterfaces)) {
+                return false;
+            }
+        }
+        if (serializableInterfaces == null) {
+            if (other.serializableInterfaces!= null) {
+                return false;
+            }
+        } else {
+            if (!serializableInterfaces.equals(other.serializableInterfaces)) {
                 return false;
             }
         }
@@ -2691,8 +2777,10 @@ public class Generate implements Serializable
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));
         result = ((prime*result)+((immutablePojos == null)? 0 :immutablePojos.hashCode()));
+        result = ((prime*result)+((serializablePojos == null)? 0 :serializablePojos.hashCode()));
         result = ((prime*result)+((interfaces == null)? 0 :interfaces.hashCode()));
         result = ((prime*result)+((immutableInterfaces == null)? 0 :immutableInterfaces.hashCode()));
+        result = ((prime*result)+((serializableInterfaces == null)? 0 :serializableInterfaces.hashCode()));
         result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
         result = ((prime*result)+((jpaAnnotations == null)? 0 :jpaAnnotations.hashCode()));
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));

@@ -75,8 +75,10 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosEqualsAndHashCode     = false;
     boolean                            generatePojosToString              = true;
     boolean                            generateImmutablePojos             = false;
+    boolean                            generateSerializablePojos          = true;
     boolean                            generateInterfaces                 = false;
     boolean                            generateImmutableInterfaces        = false;
+    boolean                            generateSerializableInterfaces     = true;
     boolean                            generateDaos                       = false;
     boolean                            generateJPAAnnotations             = false;
     String                             generateJPAVersion                 = "";
@@ -384,6 +386,16 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateSerializablePojos() {
+        return generateSerializablePojos && generatePojos();
+    }
+
+    @Override
+    public void setGenerateSerializablePojos(boolean generateSerializablePojos) {
+        this.generateSerializablePojos = generateSerializablePojos;
+    }
+
+    @Override
     public boolean generateInterfaces() {
         return generateInterfaces || generateImmutableInterfaces;
     }
@@ -401,6 +413,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImmutableInterfaces(boolean generateImmutableInterfaces) {
         this.generateImmutableInterfaces = generateImmutableInterfaces;
+    }
+
+    @Override
+    public boolean generateSerializableInterfaces() {
+        return generateSerializableInterfaces && generateInterfaces();
+    }
+
+    @Override
+    public void setGenerateSerializableInterfaces(boolean generateSerializableInterfaces) {
+        this.generateSerializableInterfaces = generateSerializableInterfaces;
     }
 
     @Override

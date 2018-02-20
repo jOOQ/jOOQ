@@ -908,12 +908,20 @@ jOOQ version used for source code]]></jxb:javadoc></jxb:property></appinfo></ann
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate immutable POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="serializablePojos" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate serializable POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generated interfaces to be implemented by records and/or POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="immutableInterfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate immutable interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="serializableInterfaces" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate serializable interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1">

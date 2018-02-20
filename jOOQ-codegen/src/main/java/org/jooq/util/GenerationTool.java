@@ -607,10 +607,14 @@ public class GenerationTool {
                 generator.setGeneratePojos(g.getGenerate().isPojos());
             if (g.getGenerate().isImmutablePojos() != null)
                 generator.setGenerateImmutablePojos(g.getGenerate().isImmutablePojos());
+            if (g.getGenerate().isSerializablePojos() != null)
+                generator.setGenerateSerializablePojos(g.getGenerate().isSerializablePojos());
             if (g.getGenerate().isInterfaces() != null)
                 generator.setGenerateInterfaces(g.getGenerate().isInterfaces());
             if (g.getGenerate().isImmutableInterfaces() != null)
                 generator.setGenerateImmutableInterfaces(g.getGenerate().isImmutableInterfaces());
+            if (g.getGenerate().isSerializableInterfaces() != null)
+                generator.setGenerateSerializableInterfaces(g.getGenerate().isSerializableInterfaces());
             if (g.getGenerate().isDaos() != null)
                 generator.setGenerateDaos(g.getGenerate().isDaos());
             if (g.getGenerate().isJpaAnnotations() != null)

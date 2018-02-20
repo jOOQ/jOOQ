@@ -230,6 +230,7 @@ import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
@@ -2680,7 +2681,7 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
         parse(ctx, '(');
-        Field<?>[] fieldNames = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
+        SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
         Condition condition = parseKeywordIf(ctx, "WHERE")
             ? parseCondition(ctx)
@@ -2699,7 +2700,7 @@ final class ParserImpl implements Parser {
                     ? ctx.dsl.createIndex()
                     : ctx.dsl.createIndex(indexName);
 
-        CreateIndexWhereStep s2 = s1.on(tableName, fieldNames);
+        CreateIndexWhereStep s2 = s1.on(tableName, fields);
         CreateIndexFinalStep s3 = condition != null
             ? s2.where(condition)
             : s2;

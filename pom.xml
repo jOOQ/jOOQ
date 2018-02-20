@@ -95,6 +95,13 @@
 
 
 
+            <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+
 
 
 

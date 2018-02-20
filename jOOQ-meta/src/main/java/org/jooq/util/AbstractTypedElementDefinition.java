@@ -41,13 +41,10 @@ package org.jooq.util;
 import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.xml.bind.JAXB;
 
 import org.jooq.DataType;
 import org.jooq.Name;
@@ -208,7 +205,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             }
 
             if (uType != null) {
-                log.info("Forcing type", child + " to " + AbstractDatabase.toString(forcedType));
+                log.info("Forcing type", child + " to " + forcedType);
 
                 DataType<?> forcedDataType = null;
 
@@ -240,7 +237,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
                     // [#3704] When <forcedType/> matches a custom type AND a data type rewrite, the rewrite was usually accidental.
                     if (customType != null)
-                        log.warn("Custom type conflict", child + " has custom type " + AbstractDatabase.toString(customType) + " forced by " + AbstractDatabase.toString(forcedType) + " but a data type rewrite applies");
+                        log.warn("Custom type conflict", child + " has custom type " + customType + " forced by " + forcedType + " but a data type rewrite applies");
 
                     result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, d, (Name) null, converter, binding);
                 }
@@ -259,9 +256,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 //         matching customType, the user probably malconfigured
                 //         their <forcedTypes/> or <customTypes/>
                 else {
-                    StringWriter writer = new StringWriter();
-                    JAXB.marshal(forcedType, writer);
-                    log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + writer);
+                    log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                 }
             }
         }

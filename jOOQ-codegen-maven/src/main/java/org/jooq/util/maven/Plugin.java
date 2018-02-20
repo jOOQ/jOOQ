@@ -45,12 +45,9 @@ import static org.jooq.util.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-
-import javax.xml.bind.JAXB;
 
 import org.jooq.util.GenerationTool;
 import org.jooq.util.jaxb.Configuration;
@@ -192,10 +189,9 @@ public class Plugin extends AbstractMojo {
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
 
-            StringWriter writer = new StringWriter();
-            JAXB.marshal(configuration, writer);
+            if (getLog().isDebugEnabled())
+                getLog().debug("Using this configuration:\n" + configuration);
 
-            getLog().debug("Using this configuration:\n" + writer.toString());
             GenerationTool.generate(configuration);
         }
         catch (Exception ex) {

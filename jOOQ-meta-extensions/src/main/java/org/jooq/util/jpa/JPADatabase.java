@@ -223,7 +223,7 @@ public class JPADatabase extends H2Database {
                         entry.getValue().getClass().getName()
                     ));
 
-                log.info("AttributeConverter", "Configuring JPA AttributeConverter: " + toString(forcedType));
+                log.info("AttributeConverter", "Configuring JPA AttributeConverter: " + forcedType);
                 getConfiguredForcedTypes().add(forcedType);
             }
         }

@@ -86,6 +86,7 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
@@ -1347,6 +1348,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
         return fetch().intoArray(field, converter);
+    }
+
+    @Override
+    public final <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException {
+        return fetch().intoSet(mapper);
     }
 
     @Override

@@ -343,9 +343,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
     public final List<?> getValues(int fieldIndex) {
         List<Object> result = new ArrayList<Object>(size());
 
-        for (R record : this) {
+        for (R record : this)
             result.add(record.get(fieldIndex));
-        }
 
         return result;
     }
@@ -1750,9 +1749,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
     public final List<Map<String, Object>> intoMaps() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-        for (R record : this) {
+        for (R record : this)
             list.add(record.intoMap());
-        }
 
         return list;
     }
@@ -2568,6 +2566,16 @@ final class ResultImpl<R extends Record> implements Result<R> {
     }
 
     @Override
+    public final <E> Set<E> intoSet(RecordMapper<? super R, E> mapper) {
+        Set<E> result = new LinkedHashSet<E>();
+
+        for (R record : this)
+            result.add(mapper.map(record));
+
+        return result;
+    }
+
+    @Override
     public final Set<?> intoSet(int fieldIndex) {
         return new LinkedHashSet<Object>(getValues(fieldIndex));
     }
@@ -2756,9 +2764,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
         List<E> list = new ArrayList<E>(size());
         RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(fields, type);
 
-        for (R record : this) {
+        for (R record : this)
             list.add(mapper.map(record));
-        }
 
         return list;
     }
@@ -2767,18 +2774,16 @@ final class ResultImpl<R extends Record> implements Result<R> {
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
         Result<Z> list = new ResultImpl<Z>(configuration(), table.fields());
 
-        for (R record : this) {
+        for (R record : this)
             list.add(record.into(table));
-        }
 
         return list;
     }
 
     @Override
     public final <H extends RecordHandler<? super R>> H into(H handler) {
-        for (R record : this) {
+        for (R record : this)
             handler.next(record);
-        }
 
         return handler;
     }
@@ -2792,9 +2797,8 @@ final class ResultImpl<R extends Record> implements Result<R> {
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
         List<E> result = new ArrayList<E>();
 
-        for (R record : this) {
+        for (R record : this)
             result.add(mapper.map(record));
-        }
 
         return result;
     }
@@ -2897,13 +2901,10 @@ final class ResultImpl<R extends Record> implements Result<R> {
 
     @Override
     public final Result<R> intern(int... fieldIndexes) {
-        for (int fieldIndex : fieldIndexes) {
-            if (fields.fields[fieldIndex].getType() == String.class) {
-                for (Record record : this) {
+        for (int fieldIndex : fieldIndexes)
+            if (fields.fields[fieldIndex].getType() == String.class)
+                for (Record record : this)
                     ((AbstractRecord) record).intern0(fieldIndex);
-                }
-            }
-        }
 
         return this;
     }

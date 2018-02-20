@@ -3419,6 +3419,15 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
+     * Fetch results into a custom mapper callback.
+     *
+     * @param mapper The mapper callback
+     * @return The result. This will never be <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
      * Execute the query and return all values for a field index from the
      * generated result.
      *

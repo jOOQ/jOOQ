@@ -2810,6 +2810,14 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         DataTypeException;
 
     /**
+     * Map results into a custom mapper callback.
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped records
+     */
+    <E> Set<E> intoSet(RecordMapper<? super R, E> mapper);
+
+    /**
      * Return all values for a field index from the result.
      *
      * @return The resulting values. This may be an array type more concrete

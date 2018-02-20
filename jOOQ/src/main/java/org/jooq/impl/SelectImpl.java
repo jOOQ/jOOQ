@@ -129,6 +129,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -3593,6 +3594,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchArray(field, converter);
+    }
+
+    @Override
+    public final <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException {
+        return getDelegate().fetchSet(mapper);
     }
 
     @Override

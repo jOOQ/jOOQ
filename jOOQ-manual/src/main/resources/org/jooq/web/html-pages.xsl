@@ -154,23 +154,29 @@ function printContent() {
 
             <div class="row col col-100 col-red">
                 <p>
-                    <xsl:text>All versions: </xsl:text>
+                    <xsl:if test="count(/manuals/manual[.//section[@id = $sectionID]][(@end-of-life = 'false' or not(@end-of-life)) and (@development = 'false' or not(@development))]) &gt; 0">
+                        <xsl:text>All versions: </xsl:text>
 
-                    <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][(@end-of-life = 'false' or not(@end-of-life)) and (@development = 'false' or not(@development))]" mode="version-links">
-                        <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
-                    </xsl:apply-templates>
+                        <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][(@end-of-life = 'false' or not(@end-of-life)) and (@development = 'false' or not(@development))]" mode="version-links">
+                            <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                        </xsl:apply-templates>
 
-                    <xsl:text> | Development versions: </xsl:text>
+                        <xsl:text> | </xsl:text>
+                    </xsl:if>
+
+                    <xsl:text>Development versions: </xsl:text>
 
                     <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][@development = 'true']" mode="version-links">
                         <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
                     </xsl:apply-templates>
 
-                    <xsl:text> | Unsupported versions: </xsl:text>
+                    <xsl:if test="count(/manuals/manual[.//section[@id = $sectionID]][@end-of-life = 'true']) &gt; 0">
+                        <xsl:text> | Unsupported versions: </xsl:text>
 
-                    <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][@end-of-life = 'true']" mode="version-links">
-                        <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
-                    </xsl:apply-templates>
+                        <xsl:apply-templates select="/manuals/manual[.//section[@id = $sectionID]][@end-of-life = 'true']" mode="version-links">
+                            <xsl:sort select="str:replaceAll(string(@version), '^(\d)\.(\d)$', '$1.0$2')" order="descending"/>
+                        </xsl:apply-templates>
+                    </xsl:if>
                 </p>
             </div>
 

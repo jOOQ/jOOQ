@@ -38,6 +38,12 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.POSTGRES;
+
+import java.time.temporal.ChronoField;
+
+import org.jooq.impl.DSL;
+
 /**
  * A date part can be used with SQL functions such as extract(). It describes a
  * part of a date / datetime value
@@ -46,43 +52,135 @@ package org.jooq;
  */
 public enum DatePart {
 
+    // ------------------------------------------------------------------------
+    // XXX: SQL standard date parts
+    // ------------------------------------------------------------------------
+
     /**
-     * The year
+     * The year. Corresponds to {@link ChronoField#YEAR} semantics.
      */
+    @Support
     YEAR("year"),
 
     /**
-     * The month
+     * The month. Corresponds to {@link ChronoField#MONTH_OF_YEAR} semantics.
      */
+    @Support
     MONTH("month"),
 
     /**
-     * The day
+     * The day. Corresponds to {@link ChronoField#DAY_OF_MONTH} semantics.
      */
+    @Support
     DAY("day"),
 
     /**
-     * The hour
+     * The hour. Corresponds to {@link ChronoField#HOUR_OF_DAY} semantics.
      */
+    @Support
     HOUR("hour"),
 
     /**
-     * The minute
+     * The minute. Corresponds to {@link ChronoField#MINUTE_OF_HOUR} semantics.
      */
+    @Support
     MINUTE("minute"),
 
     /**
-     * The second
+     * The second. Corresponds to {@link ChronoField#SECOND_OF_MINUTE} semantics.
      */
-    SECOND("second");
+    @Support
+    SECOND("second"),
 
-    private final String sql;
+    // ------------------------------------------------------------------------
+    // XXX: Vendor-specific date parts
+    // ------------------------------------------------------------------------
+
+    /**
+     * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in
+     * the 3rd.
+     */
+    @Support({ POSTGRES })
+    MILLENNIUM("millennium"),
+
+    /**
+     * The century. The year 2000 is in the 20th century, the year 2001 in the
+     * 21st.
+     */
+    @Support({ POSTGRES })
+    CENTURY("century"),
+
+    /**
+     * The decade. The year divided by 10.
+     */
+    @Support({ POSTGRES })
+    DECADE("decade"),
+
+    /**
+     * The epoch in seconds since 1970-01-01.
+     */
+    @Support({ POSTGRES })
+    EPOCH("epoch"),
+
+    /**
+     * The quarter. Jan-Mar = 1, Apr-Jun = 2, Jul-Sep = 3, Oct-Dec = 4.
+     */
+    @Support({ POSTGRES })
+    QUARTER("quarter"),
+
+    /**
+     * The week of the year.
+     */
+    @Support({ POSTGRES })
+    WEEK("week"),
+
+    /**
+     * The day of the year. Corresponds to {@link ChronoField#DAY_OF_YEAR}.
+     */
+    @Support({ POSTGRES })
+    DAY_OF_YEAR("day_of_year"),
+
+    /**
+     * The ISO day of the week. 1 = Monday, 2 = Tuesday, ..., 7 = Sunday.
+     * Corresponds to {@link ChronoField#DAY_OF_WEEK} .
+     */
+    @Support({ POSTGRES })
+    DAY_OF_WEEK("day_of_week"),
+
+    /**
+     * The timezone offset in seconds. Corresponds to
+     * {@link ChronoField#OFFSET_SECONDS}.
+     */
+    @Support({ POSTGRES })
+    TIMEZONE("timezone"),
+
+    /**
+     * The time zone offset's hour part.
+     */
+    @Support({ POSTGRES })
+    TIMEZONE_HOUR("timezone_hour"),
+
+    /**
+     * The time zone offset's minute part.
+     */
+    @Support({ POSTGRES })
+    TIMEZONE_MINUTE("timezone_minute"),
+
+    ;
+
+    private final String  sql;
+    private final Keyword keyword;
 
     private DatePart(String sql) {
         this.sql = sql;
+        this.keyword = DSL.keyword(sql);
     }
 
-    public String toSQL() {
+    public final String toSQL() {
         return sql;
+    }
+
+    public final Keyword toKeyword() {
+        return keyword;
     }
 }

@@ -187,6 +187,14 @@ final class Extract extends AbstractFunction<Integer> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+                switch (datePart) {
+                    case DAY_OF_WEEK:
+                        return DSL.field("{extract}({isodow from} {0})", SQLDataType.INTEGER, field);
+                    case DAY_OF_YEAR:
+                        return DSL.field("{extract}({doy from} {0})", SQLDataType.INTEGER, field);
+                    default:
+                        // No break
+                }
             case HSQLDB:
             case H2:
 

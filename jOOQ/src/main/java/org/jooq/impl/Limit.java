@@ -48,6 +48,7 @@ import static org.jooq.impl.Keywords.K_FETCH_NEXT;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_OFFSET;
+import static org.jooq.impl.Keywords.K_PERCENT;
 import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_ROWS_ONLY;
 import static org.jooq.impl.Keywords.K_ROWS_WITH_TIES;
@@ -86,12 +87,15 @@ final class Limit extends AbstractQueryPart {
     private boolean                     rendersParams;
     private boolean                     withTies;
 
-    @Override
-    public final void accept(Context<?> context) {
-        ParamType paramType = context.paramType();
-        CastMode castMode = context.castMode();
 
-        switch (context.dialect()) {
+
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ParamType paramType = ctx.paramType();
+        CastMode castMode = ctx.castMode();
+
+        switch (ctx.dialect()) {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
@@ -125,12 +129,12 @@ final class Limit extends AbstractQueryPart {
             // LIMIT [offset], [limit] supported by CUBRID
             // -------------------------------------------
             case CUBRID: {
-                context.castMode(NEVER)
-                       .formatSeparator()
-                       .visit(K_LIMIT)
-                       .sql(' ').visit(offsetOrZero)
-                       .sql(", ").visit(numberOfRowsOrMax)
-                       .castMode(castMode);
+                ctx.castMode(NEVER)
+                   .formatSeparator()
+                   .visit(K_LIMIT)
+                   .sql(' ').visit(offsetOrZero)
+                   .sql(", ").visit(numberOfRowsOrMax)
+                   .castMode(castMode);
 
                 break;
             }
@@ -140,13 +144,13 @@ final class Limit extends AbstractQueryPart {
             case FIREBIRD:
             case FIREBIRD_2_5:
             case FIREBIRD_3_0: {
-                context.castMode(NEVER)
-                       .formatSeparator()
-                       .visit(K_ROWS)
-                       .sql(' ').visit(getLowerRownum().add(inline(1, SQLDataType.INTEGER)))
-                       .sql(' ').visit(K_TO)
-                       .sql(' ').visit(getUpperRownum())
-                       .castMode(castMode);
+                ctx.castMode(NEVER)
+                   .formatSeparator()
+                   .visit(K_ROWS)
+                   .sql(' ').visit(getLowerRownum().add(inline(1, SQLDataType.INTEGER)))
+                   .sql(' ').visit(K_TO)
+                   .sql(' ').visit(getUpperRownum())
+                   .castMode(castMode);
 
                 break;
             }
@@ -171,24 +175,27 @@ final class Limit extends AbstractQueryPart {
             case DERBY: {
 
                 // Casts are not supported here...
-                context.castMode(NEVER)
-                       .formatSeparator()
-                       .visit(K_OFFSET)
-                       .sql(' ').visit(offsetOrZero)
-                       .sql(' ').visit(K_ROWS);
+                ctx.castMode(NEVER)
+                   .formatSeparator()
+                   .visit(K_OFFSET)
+                   .sql(' ').visit(offsetOrZero)
+                   .sql(' ').visit(K_ROWS);
 
-                if (!limitZero())
-                    context.sql(' ').visit(K_FETCH_NEXT)
-                           .sql(' ').visit(numberOfRows)
-                           .sql(' ').visit(withTies ? K_ROWS_WITH_TIES : K_ROWS_ONLY);
+                if (!limitZero()) {
+                    ctx.sql(' ').visit(K_FETCH_NEXT)
+                       .sql(' ').visit(numberOfRows);
 
-                context.castMode(castMode);
 
+
+
+
+
+                    ctx.sql(' ').visit(withTies ? K_ROWS_WITH_TIES : K_ROWS_ONLY);
+                }
+
+                ctx.castMode(castMode);
                 break;
             }
-
-
-
 
 
 
@@ -279,17 +286,17 @@ final class Limit extends AbstractQueryPart {
             case MYSQL_8_0:
             case MYSQL:
             case SQLITE: {
-                context.castMode(NEVER)
+                ctx.castMode(NEVER)
                        .formatSeparator()
                        .visit(K_LIMIT)
                        .sql(' ').visit(numberOfRowsOrMax);
 
                 if (!offsetZero())
-                    context.formatSeparator()
+                    ctx.formatSeparator()
                            .visit(K_OFFSET)
                            .sql(' ').visit(offsetOrZero);
 
-                context.castMode(castMode);
+                ctx.castMode(castMode);
 
                 break;
             }
@@ -305,23 +312,26 @@ final class Limit extends AbstractQueryPart {
 
             // A default implementation is necessary for hashCode() and toString()
             default: {
-                context.castMode(NEVER);
+                ctx.castMode(NEVER);
 
                 if (!limitZero())
-                    context.formatSeparator()
+                    ctx.formatSeparator()
                            .visit(K_LIMIT)
                            .sql(' ').visit(numberOfRows);
 
                 if (!offsetZero())
-                    context.formatSeparator()
+                    ctx.formatSeparator()
                            .visit(K_OFFSET)
                            .sql(' ').visit(offsetOrZero);
 
-                context.castMode(castMode);
+                ctx.castMode(castMode);
                 break;
             }
         }
     }
+
+
+
 
 
 
@@ -413,6 +423,18 @@ final class Limit extends AbstractQueryPart {
         this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams = true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     final void setWithTies(boolean withTies) {
         this.withTies = withTies;

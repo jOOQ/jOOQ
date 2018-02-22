@@ -37,20 +37,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-// ...
 // ...
 // ...
 
@@ -96,31 +82,15 @@ import static org.jooq.SQLDialect.SQLITE;
  *
  * @author Lukas Eder
  */
-public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForUpdateStep<R> {
+public interface SelectLimitPercentAfterOffsetStep<R extends Record> extends SelectWithTiesAfterOffsetStep<R> {
 
-    /**
-     * Add a <code>LIMIT</code> clause to the query
-     * <p>
-     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
-     * function and nested <code>SELECT</code> statements.
-     */
-    @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(int numberOfRows);
 
-    /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
-     * <p>
-     * Note that some dialects do not support bind values at all in
-     * <code>LIMIT</code> or <code>TOP</code> clauses!
-     * <p>
-     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, this may be emulated with a
-     * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
-     * statements.
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> numberOfRows);
+
+
+
+
+
+
+
 
 }

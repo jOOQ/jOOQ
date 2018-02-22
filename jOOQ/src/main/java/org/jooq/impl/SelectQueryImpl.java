@@ -1695,6 +1695,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         getLimit().setNumberOfRows(numberOfRows);
     }
 
+
+
+
+
+
+
+
+
+
     @Override
     public final void setWithTies(boolean withTies) {
         getLimit().setWithTies(withTies);

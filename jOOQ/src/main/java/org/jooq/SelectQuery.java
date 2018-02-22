@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
@@ -707,6 +708,16 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.

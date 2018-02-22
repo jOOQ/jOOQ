@@ -110,7 +110,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support
-    SelectWithTiesStep<R> limit(int numberOfRows);
+    SelectLimitPercentStep<R> limit(int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -128,7 +128,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectWithTiesStep<R> limit(Param<Integer> numberOfRows);
+    SelectLimitPercentStep<R> limit(Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -157,7 +157,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectWithTiesAfterOffsetStep<R> limit(int offset, Param<Integer> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -172,7 +172,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectWithTiesAfterOffsetStep<R> limit(Param<Integer> offset, int numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -187,7 +187,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectWithTiesAfterOffsetStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
      * Add an <code>OFFSET</code> clause to the query

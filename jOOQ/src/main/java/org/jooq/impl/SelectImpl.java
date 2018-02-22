@@ -94,6 +94,8 @@ import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectLimitAfterOffsetStep;
+import org.jooq.SelectLimitPercentAfterOffsetStep;
+import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectOnStep;
 import org.jooq.SelectOptionalOnStep;
@@ -123,8 +125,6 @@ import org.jooq.SelectSeekStep8;
 import org.jooq.SelectSeekStep9;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SelectSelectStep;
-import org.jooq.SelectWithTiesAfterOffsetStep;
-import org.jooq.SelectWithTiesStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -175,9 +175,9 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 // [jooq-tools] END [implements-select-seek-step]
     SelectSeekStepN<R>,
     SelectSeekLimitStep<R>,
-    SelectWithTiesStep<R>,
+    SelectLimitPercentStep<R>,
     SelectLimitAfterOffsetStep<R>,
-    SelectWithTiesAfterOffsetStep<R>,
+    SelectLimitPercentAfterOffsetStep<R>,
     SelectForUpdateOfStep<R> {
 
     /**
@@ -1783,6 +1783,16 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
         return this;
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final SelectImpl withTies() {

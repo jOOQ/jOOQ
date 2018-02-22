@@ -760,6 +760,9 @@ final class ParserImpl implements Parser {
                 if (offsetPostgres) {
                     result.addLimit(limit);
 
+                    if (parseKeywordIf(ctx, "PERCENT"))
+                        result.setLimitPercent(true);
+
                     if (parseKeywordIf(ctx, "WITH TIES"))
                         result.setWithTies(true);
                 }
@@ -767,6 +770,9 @@ final class ParserImpl implements Parser {
                     result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
                 }
                 else {
+                    if (parseKeywordIf(ctx, "PERCENT"))
+                        result.setLimitPercent(true);
+
                     if (parseKeywordIf(ctx, "WITH TIES"))
                         result.setWithTies(true);
 
@@ -781,6 +787,9 @@ final class ParserImpl implements Parser {
                     throw ctx.unexpectedToken();
 
                 result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
+
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 if (!parseKeywordIf(ctx, "ROW") && !parseKeywordIf(ctx, "ROWS"))
                     throw ctx.unexpectedToken();
@@ -904,11 +913,14 @@ final class ParserImpl implements Parser {
 
         Long limit = null;
         Long offset = null;
+        boolean percent = false;
         boolean withTies = false;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
             limit = parseUnsignedInteger(ctx);
+
+            percent = parseKeywordIf(ctx, "PERCENT");
 
             if (parseKeywordIf(ctx, "START AT"))
                 offset = parseUnsignedInteger(ctx);
@@ -1061,6 +1073,9 @@ final class ParserImpl implements Parser {
                 result.addLimit((int) (long) offset, (int) (long) limit);
             else
                 result.addLimit((int) (long) limit);
+
+        if (percent)
+            result.setLimitPercent(percent);
 
         if (withTies)
             result.setWithTies(true);

@@ -335,7 +335,7 @@ distinct = ( 'DISTINCT' | 'UNIQUE' ) [ 'ON' '(' fields ')' ] | 'ALL'
 ;
 
 top =
-  'TOP' unsignedInteger [ 'START AT' unsignedInteger | 'WITH TIES' ]
+  'TOP' unsignedInteger [ 'PERCENT' ] [ 'START AT' unsignedInteger | 'WITH TIES' ]
 | 'SKIP' unsignedInteger [ 'FIRST' unsignedInteger ]
 ;
 
@@ -380,10 +380,10 @@ orderBy =
 offsetFetch =
   'OFFSET' unsignedInteger
   [
-    [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) [ unsignedInteger ] ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
-  | [ 'LIMIT' unsignedInteger [ 'WITH TIES' ] ]
+    [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) [ unsignedInteger ] [ 'PERCENT' ] ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
+  | [ 'LIMIT' unsignedInteger [ 'PERCENT' ] [ 'WITH TIES' ] ]
   ]
-| 'LIMIT' unsignedInteger
+| 'LIMIT' unsignedInteger [ 'PERCENT' ]
   (
     [ 'WITH TIES' ] [ 'OFFSET' unsignedInteger ]
   | [ ',' unsignedInteger ]

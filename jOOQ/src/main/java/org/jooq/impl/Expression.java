@@ -304,16 +304,16 @@ final class Expression<T> extends AbstractFunction<T> {
                         interval = interval.neg();
 
                     if (rhs.get(0).getType() == YearToMonth.class)
-                        return DSL.field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, String.class));
+                        return DSL.field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, SQLDataType.VARCHAR));
                     else if (dialect == CUBRID)
-                        return DSL.field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, String.class));
+                        return DSL.field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, SQLDataType.VARCHAR));
 
                     // [#6820] Workaround for bugs:
                     //         https://bugs.mysql.com/bug.php?id=88573
                     //         https://jira.mariadb.org/browse/MDEV-14452
                     else
                         return DSL.field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs,
-                            Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), String.class)
+                            Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), SQLDataType.VARCHAR)
                         );
                 }
 

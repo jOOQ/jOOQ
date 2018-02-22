@@ -1283,17 +1283,15 @@ final class Tools {
     static final <T> Field<T> field(Object value, Field<T> field) {
 
         // Fields can be mixed with constant values
-        if (value instanceof Field<?>) {
+        if (value instanceof Field<?>)
             return (Field<T>) value;
-        }
 
         // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart) {
+        else if (value instanceof QueryPart)
             throw fieldExpected(value);
-        }
-        else {
+
+        else
             return val(value, field);
-        }
     }
 
     /**
@@ -1308,17 +1306,15 @@ final class Tools {
     static final <T> Field<T> field(Object value, Class<T> type) {
 
         // Fields can be mixed with constant values
-        if (value instanceof Field<?>) {
+        if (value instanceof Field<?>)
             return (Field<T>) value;
-        }
 
         // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart) {
+        else if (value instanceof QueryPart)
             throw fieldExpected(value);
-        }
-        else {
+
+        else
             return val(value, type);
-        }
     }
 
     /**
@@ -1333,17 +1329,15 @@ final class Tools {
     static final <T> Field<T> field(Object value, DataType<T> type) {
 
         // Fields can be mixed with constant values
-        if (value instanceof Field<?>) {
+        if (value instanceof Field<?>)
             return (Field<T>) value;
-        }
 
         // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart) {
+        else if (value instanceof QueryPart)
             throw fieldExpected(value);
-        }
-        else {
+
+        else
             return val(value, type);
-        }
     }
 
     /**

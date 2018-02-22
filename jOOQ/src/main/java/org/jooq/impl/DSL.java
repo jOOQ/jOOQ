@@ -10830,7 +10830,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(Boolean value) {
-        return condition(Tools.field(value, Boolean.class));
+        return condition(Tools.field(value));
     }
 
     /**
@@ -11069,7 +11069,7 @@ public class DSL {
     @Deprecated
     @Support
     public static Field<Boolean> not(Boolean value) {
-        return not(Tools.field(value, Boolean.class));
+        return not(Tools.field(value));
     }
 
     /**
@@ -12372,7 +12372,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return nvl0(Tools.field(value), nullSafe(defaultValue));
+        return nvl0(Tools.field(value, defaultValue), nullSafe(defaultValue));
     }
 
     /**
@@ -12382,7 +12382,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return nvl0(nullSafe(value), Tools.field(defaultValue));
+        return nvl0(nullSafe(value), Tools.field(defaultValue, value));
     }
 
     /**
@@ -12481,7 +12481,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
-        return nvl20(nullSafe(value), Tools.field(valueIfNotNull), nullSafe(valueIfNull));
+        return nvl20(nullSafe(value), Tools.field(valueIfNotNull, valueIfNull), nullSafe(valueIfNull));
     }
 
     /**
@@ -12491,7 +12491,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
-        return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Tools.field(valueIfNull));
+        return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Tools.field(valueIfNull, valueIfNotNull));
     }
 
     /**
@@ -12534,7 +12534,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
-        return nullif0(Tools.field(value), nullSafe(other));
+        return nullif0(Tools.field(value, other), nullSafe(other));
     }
 
     /**
@@ -12544,7 +12544,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
-        return nullif0(nullSafe(value), Tools.field(other));
+        return nullif0(nullSafe(value), Tools.field(other, value));
     }
 
     /**
@@ -12600,7 +12600,7 @@ public class DSL {
      */
     @Support
     public static Field<String> lower(String value) {
-        return lower(Tools.field(value, String.class));
+        return lower(Tools.field(value));
     }
 
     /**
@@ -12621,7 +12621,7 @@ public class DSL {
      */
     @Support
     public static Field<String> trim(String value) {
-        return trim(Tools.field(value, String.class));
+        return trim(Tools.field(value));
     }
 
     /**
@@ -12664,7 +12664,7 @@ public class DSL {
      */
     @Support
     public static Field<String> ltrim(String value) {
-        return ltrim(Tools.field(value, String.class));
+        return ltrim(Tools.field(value));
     }
 
     /**
@@ -12719,7 +12719,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
-        return rpad(nullSafe(field), Tools.field(length), Tools.field(character, String.class));
+        return rpad(nullSafe(field), Tools.field(length), Tools.field(character));
     }
 
     /**
@@ -12780,7 +12780,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
-        return lpad(nullSafe(field), Tools.field(length), Tools.field(character, String.class));
+        return lpad(nullSafe(field), Tools.field(length), Tools.field(character));
     }
 
     /**
@@ -12825,7 +12825,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, int count) {
-        return repeat(Tools.field(field, String.class), Tools.field(count));
+        return repeat(Tools.field(field), Tools.field(count));
     }
 
     /**
@@ -12835,7 +12835,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(Tools.field(field, String.class), nullSafe(count));
+        return repeat(Tools.field(field), nullSafe(count));
     }
 
     /**
@@ -12957,7 +12957,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
-        return replace(nullSafe(field), Tools.field(search, String.class));
+        return replace(nullSafe(field), Tools.field(search));
     }
 
     /**
@@ -12981,7 +12981,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
-        return replace(nullSafe(field), Tools.field(search, String.class), Tools.field(replace, String.class));
+        return replace(nullSafe(field), Tools.field(search), Tools.field(replace));
     }
 
     /**
@@ -13003,7 +13003,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, String search) {
-        return position(Tools.field(in, String.class), Tools.field(search, String.class));
+        return position(Tools.field(in), Tools.field(search));
     }
 
     /**
@@ -13013,7 +13013,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, Field<String> search) {
-        return position(Tools.field(in, String.class), nullSafe(search));
+        return position(Tools.field(in), nullSafe(search));
     }
 
     /**
@@ -13023,7 +13023,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, String search) {
-        return position(nullSafe(in), Tools.field(search, String.class));
+        return position(nullSafe(in), Tools.field(search));
     }
 
     /**
@@ -13048,7 +13048,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, String search, int startIndex) {
-        return position(Tools.field(in, String.class), Tools.field(search, String.class), Tools.field(startIndex));
+        return position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
 
     /**
@@ -13058,7 +13058,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, Field<String> search, int startIndex) {
-        return position(Tools.field(in, String.class), nullSafe(search), Tools.field(startIndex));
+        return position(Tools.field(in), nullSafe(search), Tools.field(startIndex));
     }
 
     /**
@@ -13068,7 +13068,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, String search, int startIndex) {
-        return position(nullSafe(in), Tools.field(search, String.class), Tools.field(startIndex));
+        return position(nullSafe(in), Tools.field(search), Tools.field(startIndex));
     }
 
     /**
@@ -13093,7 +13093,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
-        return position(Tools.field(in, String.class), Tools.field(search, String.class), nullSafe(startIndex));
+        return position(Tools.field(in), Tools.field(search), nullSafe(startIndex));
     }
 
     /**
@@ -13103,7 +13103,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
-        return position(Tools.field(in, String.class), nullSafe(search), nullSafe(startIndex));
+        return position(Tools.field(in), nullSafe(search), nullSafe(startIndex));
     }
 
     /**
@@ -13113,7 +13113,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
-        return position(nullSafe(in), Tools.field(search, String.class), nullSafe(startIndex));
+        return position(nullSafe(in), Tools.field(search), nullSafe(startIndex));
     }
 
     /**
@@ -13138,7 +13138,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(String field) {
-        return ascii(Tools.field(field, String.class));
+        return ascii(Tools.field(field));
     }
 
     /**
@@ -13159,7 +13159,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(Field<String> field, String value) {
-        return concat(nullSafe(field), Tools.field(value, String.class));
+        return concat(nullSafe(field), Tools.field(value));
     }
 
     /**
@@ -13169,7 +13169,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(String value, Field<String> field) {
-        return concat(Tools.field(value, String.class), nullSafe(field));
+        return concat(Tools.field(value), nullSafe(field));
     }
 
     /**
@@ -13375,7 +13375,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> length(String value) {
-        return length(Tools.field(value, String.class));
+        return length(Tools.field(value));
     }
 
     /**
@@ -13436,7 +13436,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> octetLength(String value) {
-        return octetLength(Tools.field(value, String.class));
+        return octetLength(Tools.field(value));
     }
 
     /**
@@ -14550,7 +14550,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(String value) {
-        return Tools.field(Convert.convert(value, Date.class), SQLDataType.DATE);
+        return Tools.field(Convert.convert(value, Date.class));
     }
 
     /**
@@ -14558,7 +14558,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
-        return Tools.field(Convert.convert(value, Date.class), SQLDataType.DATE);
+        return Tools.field(Convert.convert(value, Date.class));
     }
 
     /**
@@ -14574,7 +14574,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(String value) {
-        return Tools.field(Convert.convert(value, Time.class), SQLDataType.TIME);
+        return Tools.field(Convert.convert(value, Time.class));
     }
 
     /**
@@ -14582,7 +14582,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
-        return Tools.field(Convert.convert(value, Time.class), SQLDataType.TIME);
+        return Tools.field(Convert.convert(value, Time.class));
     }
 
     /**
@@ -14598,7 +14598,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(String value) {
-        return Tools.field(Convert.convert(value, Timestamp.class), SQLDataType.TIMESTAMP);
+        return Tools.field(Convert.convert(value, Timestamp.class));
     }
 
     /**
@@ -14606,7 +14606,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
-        return Tools.field(Convert.convert(value, Timestamp.class), SQLDataType.TIMESTAMP);
+        return Tools.field(Convert.convert(value, Timestamp.class));
     }
 
     /**
@@ -14623,7 +14623,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(String value) {
-        return Tools.field(Convert.convert(value, LocalDate.class), SQLDataType.LOCALDATE);
+        return Tools.field(Convert.convert(value, LocalDate.class));
     }
 
     /**
@@ -14647,7 +14647,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(String value) {
-        return Tools.field(Convert.convert(value, LocalTime.class), SQLDataType.LOCALTIME);
+        return Tools.field(Convert.convert(value, LocalTime.class));
     }
 
     /**
@@ -14671,7 +14671,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(String value) {
-        return Tools.field(Convert.convert(value, LocalDateTime.class), SQLDataType.LOCALDATETIME);
+        return Tools.field(Convert.convert(value, LocalDateTime.class));
     }
 
     /**
@@ -14701,7 +14701,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<OffsetTime> offsetTime(String value) {
-        return Tools.field(Convert.convert(value, OffsetTime.class), SQLDataType.OFFSETTIME);
+        return Tools.field(Convert.convert(value, OffsetTime.class));
     }
 
     /**
@@ -14743,7 +14743,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
-        return Tools.field(Convert.convert(value, OffsetDateTime.class), SQLDataType.OFFSETDATETIME);
+        return Tools.field(Convert.convert(value, OffsetDateTime.class));
     }
 
     /**
@@ -14783,7 +14783,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, String format) {
-        return toDate(Tools.field(value, SQLDataType.VARCHAR), Tools.field(format, SQLDataType.VARCHAR));
+        return toDate(Tools.field(value), Tools.field(format));
     }
 
     /**
@@ -14794,7 +14794,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, Field<String> format) {
-        return toDate(Tools.field(value, SQLDataType.VARCHAR), nullSafe(format));
+        return toDate(Tools.field(value), nullSafe(format));
     }
 
     /**
@@ -14805,7 +14805,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, String format) {
-        return toDate(nullSafe(value), Tools.field(format, SQLDataType.VARCHAR));
+        return toDate(nullSafe(value), Tools.field(format));
     }
 
     /**
@@ -14827,7 +14827,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, String format) {
-        return toTimestamp(Tools.field(value, SQLDataType.VARCHAR), Tools.field(format, SQLDataType.VARCHAR));
+        return toTimestamp(Tools.field(value), Tools.field(format));
     }
 
     /**
@@ -14838,7 +14838,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, Field<String> format) {
-        return toTimestamp(Tools.field(value, SQLDataType.VARCHAR), nullSafe(format));
+        return toTimestamp(Tools.field(value), nullSafe(format));
     }
 
     /**
@@ -14849,7 +14849,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, String format) {
-        return toTimestamp(nullSafe(value), Tools.field(format, SQLDataType.VARCHAR));
+        return toTimestamp(nullSafe(value), Tools.field(format));
     }
 
     /**
@@ -15273,7 +15273,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
-        return bitAnd(Tools.field(value1), nullSafe(value2));
+        return bitAnd(Tools.field(value1, value2), nullSafe(value2));
     }
 
     /**
@@ -15283,7 +15283,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
-        return bitAnd(nullSafe(value1), Tools.field(value2));
+        return bitAnd(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -15320,7 +15320,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
-        return bitNand(Tools.field(value1), nullSafe(value2));
+        return bitNand(Tools.field(value1, value2), nullSafe(value2));
     }
 
     /**
@@ -15331,7 +15331,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
-        return bitNand(nullSafe(value1), Tools.field(value2));
+        return bitNand(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -15368,7 +15368,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
-        return bitOr(Tools.field(value1), nullSafe(value2));
+        return bitOr(Tools.field(value1, value2), nullSafe(value2));
     }
 
     /**
@@ -15378,7 +15378,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
-        return bitOr(nullSafe(value1), Tools.field(value2));
+        return bitOr(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -15414,7 +15414,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
-        return bitNor(Tools.field(value1), nullSafe(value2));
+        return bitNor(Tools.field(value1, value2), nullSafe(value2));
     }
     /**
      * The bitwise not or operator.
@@ -15424,7 +15424,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
-        return bitNor(nullSafe(value1), Tools.field(value2));
+        return bitNor(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -15461,7 +15461,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
-        return bitXor(Tools.field(value1), nullSafe(value2));
+        return bitXor(Tools.field(value1, value2), nullSafe(value2));
     }
 
     /**
@@ -15471,7 +15471,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
-        return bitXor(nullSafe(value1), Tools.field(value2));
+        return bitXor(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -15508,7 +15508,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
-        return bitXNor(Tools.field(value1), nullSafe(value2));
+        return bitXNor(Tools.field(value1, value2), nullSafe(value2));
     }
 
     /**
@@ -15519,7 +15519,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
-        return bitXNor(nullSafe(value1), Tools.field(value2));
+        return bitXNor(nullSafe(value1), Tools.field(value2, value1));
     }
 
     /**
@@ -17566,7 +17566,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
-        return lead(nullSafe(field), offset, Tools.field(defaultValue));
+        return lead(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
 
     /**
@@ -17602,7 +17602,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
-        return lag(nullSafe(field), offset, Tools.field(defaultValue));
+        return lag(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
 
     /**
@@ -21074,7 +21074,7 @@ public class DSL {
 
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return widthBucket(field, Tools.field(low, field.getDataType()), Tools.field(high, field.getDataType()), Tools.field(buckets));
+        return widthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
     }
 
     @Support

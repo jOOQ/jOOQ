@@ -739,12 +739,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final LikeEscapeStep like(String value) {
-        return like(Tools.field(value, String.class));
+        return like(Tools.field(value));
     }
 
     @Override
     public final Condition like(String value, char escape) {
-        return like(Tools.field(value, String.class), escape);
+        return like(Tools.field(value), escape);
     }
 
     @Override
@@ -759,12 +759,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final LikeEscapeStep likeIgnoreCase(String value) {
-        return likeIgnoreCase(Tools.field(value, String.class));
+        return likeIgnoreCase(Tools.field(value));
     }
 
     @Override
     public final Condition likeIgnoreCase(String value, char escape) {
-        return likeIgnoreCase(Tools.field(value, String.class), escape);
+        return likeIgnoreCase(Tools.field(value), escape);
     }
 
     @Override
@@ -779,7 +779,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition likeRegex(String pattern) {
-        return likeRegex(Tools.field(pattern, String.class));
+        return likeRegex(Tools.field(pattern));
     }
 
     @Override
@@ -789,12 +789,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final LikeEscapeStep notLike(String value) {
-        return notLike(Tools.field(value, String.class));
+        return notLike(Tools.field(value));
     }
 
     @Override
     public final Condition notLike(String value, char escape) {
-        return notLike(Tools.field(value, String.class), escape);
+        return notLike(Tools.field(value), escape);
     }
 
     @Override
@@ -809,12 +809,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final LikeEscapeStep notLikeIgnoreCase(String value) {
-        return notLikeIgnoreCase(Tools.field(value, String.class));
+        return notLikeIgnoreCase(Tools.field(value));
     }
 
     @Override
     public final Condition notLikeIgnoreCase(String value, char escape) {
-        return notLikeIgnoreCase(Tools.field(value, String.class), escape);
+        return notLikeIgnoreCase(Tools.field(value), escape);
     }
 
     @Override
@@ -1217,7 +1217,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition equalIgnoreCase(String value) {
-        return equalIgnoreCase(Tools.field(value, String.class));
+        return equalIgnoreCase(Tools.field(value));
     }
 
     @Override
@@ -1247,7 +1247,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition notEqualIgnoreCase(String value) {
-        return notEqualIgnoreCase(Tools.field(value, String.class));
+        return notEqualIgnoreCase(Tools.field(value));
     }
 
     @Override
@@ -2052,13 +2052,25 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(T search, Z result) {
-        return DSL.decode(this, search, result);
+        return DSL.decode(this, Tools.field(search, this), Tools.field(result));
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(T search, Z result, Object... more) {
-        return DSL.decode(this, search, result, more);
+        Field<Z> r = Tools.field(result);
+        DataType<?>[] types = new DataType[more.length];
+
+        for (int i = 0; i < types.length - 1; i = i + 2) {
+            types[i]     = getDataType();
+            types[i + 1] = r.getDataType();
+        }
+
+        if (types.length % 2 == 1) {
+            types[types.length - 1] = r.getDataType();
+        }
+
+        return DSL.decode(this, Tools.field(search, this), r, Tools.fieldArray(Tools.fields(more, types)));
     }
 
     @Override
@@ -2079,7 +2091,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     @SafeVarargs
 
     public final Field<T> coalesce(T option, T... options) {
-        return DSL.coalesce(this, Tools.combine(Tools.field(option), Tools.fields(options).toArray(EMPTY_FIELD)));
+        return DSL.coalesce(this, Tools.combine(Tools.field(option, this), Tools.fields(options, this).toArray(EMPTY_FIELD)));
     }
 
     @Override

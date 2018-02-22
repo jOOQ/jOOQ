@@ -114,12 +114,12 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(Tools.field(compareValue), Tools.field(result));
+        return when(Tools.field(compareValue, value), Tools.field(result));
     }
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(Tools.field(compareValue), result);
+        return when(Tools.field(compareValue, value), result);
     }
 
     @Override

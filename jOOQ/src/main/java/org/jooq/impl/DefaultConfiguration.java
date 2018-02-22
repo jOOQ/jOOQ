@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.sql.Connection;
 import java.time.Clock;
 import java.util.Map;
@@ -53,7 +52,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
-import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
@@ -1439,15 +1437,12 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public String toString() {
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(settings, writer);
-
         return "DefaultConfiguration " +
             "[\n\tconnected=" + (connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)) +
             ",\n\ttransactional=" + (transactionProvider != null && !(transactionProvider instanceof NoTransactionProvider)) +
             ",\n\tdialect=" + dialect +
             ",\n\tdata=" + data +
-            ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
+            ",\n\tsettings=\n\t\t" + settings +
             "\n]";
     }
 

@@ -12,7 +12,7 @@ import org.jooq.example.db.h2.tables.Author;
 import org.jooq.example.db.h2.tables.Book;
 import org.jooq.example.db.h2.tables.BookStore;
 import org.jooq.example.db.h2.tables.BookToBookStore;
-import org.jooq.impl.AbstractKeys;
+import org.jooq.impl.Internal;
 
 
 /**
@@ -44,13 +44,13 @@ public class Indexes {
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
-    private static class Indexes0 extends AbstractKeys {
-        public static Index PRIMARY_KEY_7 = createIndex("PRIMARY_KEY_7", Author.AUTHOR, new OrderField[] { Author.AUTHOR.ID }, true);
-        public static Index FK_T_BOOK_AUTHOR_ID_INDEX_1 = createIndex("FK_T_BOOK_AUTHOR_ID_INDEX_1", Book.BOOK, new OrderField[] { Book.BOOK.AUTHOR_ID }, false);
-        public static Index FK_T_BOOK_CO_AUTHOR_ID_INDEX_1 = createIndex("FK_T_BOOK_CO_AUTHOR_ID_INDEX_1", Book.BOOK, new OrderField[] { Book.BOOK.CO_AUTHOR_ID }, false);
-        public static Index PRIMARY_KEY_1 = createIndex("PRIMARY_KEY_1", Book.BOOK, new OrderField[] { Book.BOOK.ID }, true);
-        public static Index PRIMARY_KEY_F = createIndex("PRIMARY_KEY_F", BookStore.BOOK_STORE, new OrderField[] { BookStore.BOOK_STORE.NAME }, true);
-        public static Index FK_B2BS_B_ID_INDEX_2 = createIndex("FK_B2BS_B_ID_INDEX_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, false);
-        public static Index PRIMARY_KEY_2 = createIndex("PRIMARY_KEY_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
+    private static class Indexes0 {
+        public static Index PRIMARY_KEY_7 = Internal.createIndex("PRIMARY_KEY_7", Author.AUTHOR, new OrderField[] { Author.AUTHOR.ID }, true);
+        public static Index FK_T_BOOK_AUTHOR_ID_INDEX_1 = Internal.createIndex("FK_T_BOOK_AUTHOR_ID_INDEX_1", Book.BOOK, new OrderField[] { Book.BOOK.AUTHOR_ID }, false);
+        public static Index FK_T_BOOK_CO_AUTHOR_ID_INDEX_1 = Internal.createIndex("FK_T_BOOK_CO_AUTHOR_ID_INDEX_1", Book.BOOK, new OrderField[] { Book.BOOK.CO_AUTHOR_ID }, false);
+        public static Index PRIMARY_KEY_1 = Internal.createIndex("PRIMARY_KEY_1", Book.BOOK, new OrderField[] { Book.BOOK.ID }, true);
+        public static Index PRIMARY_KEY_F = Internal.createIndex("PRIMARY_KEY_F", BookStore.BOOK_STORE, new OrderField[] { BookStore.BOOK_STORE.NAME }, true);
+        public static Index FK_B2BS_B_ID_INDEX_2 = Internal.createIndex("FK_B2BS_B_ID_INDEX_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, false);
+        public static Index PRIMARY_KEY_2 = Internal.createIndex("PRIMARY_KEY_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
     }
 }

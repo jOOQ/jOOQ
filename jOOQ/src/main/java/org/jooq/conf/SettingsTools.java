@@ -67,25 +67,21 @@ public final class SettingsTools {
 
             // Check classpath first
             InputStream in = SettingsTools.class.getResourceAsStream(property);
-            if (in != null) {
+            if (in != null)
                 settings = JAXB.unmarshal(in, Settings.class);
-            }
-            else {
+            else
                 settings = JAXB.unmarshal(new File(property), Settings.class);
-            }
         }
 
         if (settings == null) {
             InputStream in = SettingsTools.class.getResourceAsStream("/jooq-settings.xml");
 
-            if (in != null) {
+            if (in != null)
                 settings = JAXB.unmarshal(in, Settings.class);
-            }
         }
 
-        if (settings == null) {
+        if (settings == null)
             settings = new Settings();
-        }
 
         DEFAULT_SETTINGS = settings;
     }
@@ -104,9 +100,8 @@ public final class SettingsTools {
         else if (settings != null) {
             ParamType result = settings.getParamType();
 
-            if (result != null) {
+            if (result != null)
                 return result;
-            }
         }
 
         return INDEXED;
@@ -119,9 +114,8 @@ public final class SettingsTools {
         if (settings != null) {
             StatementType result = settings.getStatementType();
 
-            if (result != null) {
+            if (result != null)
                 return result;
-            }
         }
 
         return PREPARED_STATEMENT;
@@ -134,9 +128,8 @@ public final class SettingsTools {
         if (settings != null) {
             BackslashEscaping result = settings.getBackslashEscaping();
 
-            if (result != null) {
+            if (result != null)
                 return result;
-            }
         }
 
         return BackslashEscaping.DEFAULT;
@@ -174,9 +167,8 @@ public final class SettingsTools {
      * Lazy access to {@link RenderMapping}.
      */
     public static final RenderMapping getRenderMapping(Settings settings) {
-        if (settings.getRenderMapping() == null) {
+        if (settings.getRenderMapping() == null)
             settings.setRenderMapping(new RenderMapping());
-        }
 
         return settings.getRenderMapping();
     }

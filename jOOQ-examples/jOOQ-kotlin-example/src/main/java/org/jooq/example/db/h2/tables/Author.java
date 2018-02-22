@@ -11,9 +11,11 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -39,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -1556820779;
+    private static final long serialVersionUID = -33303089;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -111,6 +113,10 @@ public class Author extends TableImpl<AuthorRecord> {
 
     private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {
+        super(child, key, AUTHOR);
     }
 
     /**

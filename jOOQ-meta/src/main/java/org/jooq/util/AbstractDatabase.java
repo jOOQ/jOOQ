@@ -43,7 +43,6 @@ import static org.jooq.util.AbstractTypedElementDefinition.customType;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -58,8 +57,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
-
-import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -940,15 +937,7 @@ public abstract class AbstractDatabase implements Database {
             CustomType type = it1.next();
 
             if (type == null || (type.getName() == null && type.getType() == null)) {
-                try {
-                    StringWriter writer = new StringWriter();
-                    JAXB.marshal(type, writer);
-                    log.warn("Invalid custom type encountered: " + writer.toString());
-                }
-                catch (Exception e) {
-                    log.warn("Invalid custom type encountered: " + type);
-                }
-
+                log.warn("Invalid custom type encountered: " + type);
                 it1.remove();
                 continue;
             }

@@ -42,15 +42,12 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.JAXB;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
@@ -611,8 +608,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     @Override
     public String toString() {
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(source, writer);
-        return writer.toString();
+        return "" + source;
     }
 }

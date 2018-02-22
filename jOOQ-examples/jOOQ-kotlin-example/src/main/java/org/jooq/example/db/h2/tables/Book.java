@@ -15,6 +15,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = 478921322;
+    private static final long serialVersionUID = 412161267;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -108,7 +109,7 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
      */
-    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP.precision(23), this, "");
 
     /**
      * Create a <code>PUBLIC.BOOK</code> table reference
@@ -137,6 +138,10 @@ public class Book extends TableImpl<BookRecord> {
 
     private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    <O extends Record> Book(Table<O> child, ForeignKey<O, BookRecord> key) {
+        super(child, key, BOOK);
     }
 
     /**
@@ -185,6 +190,14 @@ public class Book extends TableImpl<BookRecord> {
     @Override
     public List<ForeignKey<BookRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<BookRecord, ?>>asList(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID);
+    }
+
+    public Author fkTBookAuthorId() {
+        return new Author(this, Keys.FK_T_BOOK_AUTHOR_ID);
+    }
+
+    public Author fkTBookCoAuthorId() {
+        return new Author(this, Keys.FK_T_BOOK_CO_AUTHOR_ID);
     }
 
     /**

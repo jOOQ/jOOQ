@@ -102,6 +102,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+
 
 
 

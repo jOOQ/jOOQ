@@ -40,12 +40,9 @@ package org.jooq;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.xml.bind.JAXB;
 
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
@@ -471,8 +468,6 @@ public class SchemaMapping implements Serializable {
 
     @Override
     public String toString() {
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(mapping(), writer);
-        return writer.toString();
+        return "" + mapping();
     }
 }

@@ -10,8 +10,10 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -37,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = 143732572;
+    private static final long serialVersionUID = -15217694;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -84,6 +86,10 @@ public class BookStore extends TableImpl<BookStoreRecord> {
 
     private BookStore(Name alias, Table<BookStoreRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    <O extends Record> BookStore(Table<O> child, ForeignKey<O, BookStoreRecord> key) {
+        super(child, key, BOOK_STORE);
     }
 
     /**

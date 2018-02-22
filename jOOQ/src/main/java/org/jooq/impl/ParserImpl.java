@@ -888,6 +888,7 @@ final class ParserImpl implements Parser {
         }
 
         parseKeyword(ctx, "SELECT");
+        String hints = parseHints(ctx);
         boolean distinct = parseKeywordIf(ctx, "DISTINCT") || parseKeywordIf(ctx, "UNIQUE");
         List<Field<?>> distinctOn = null;
 
@@ -1019,6 +1020,9 @@ final class ParserImpl implements Parser {
         // TODO support WINDOW
 
         SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
+        if (hints != null)
+            result.addHint(hints);
+
         if (distinct)
             result.setDistinct(distinct);
 
@@ -3408,6 +3412,41 @@ final class ParserImpl implements Parser {
             return toField(ctx, parseOr(ctx));
         else
             return toField(ctx, parseConcat(ctx, type));
+    }
+
+    private static final String parseHints(ParserContext ctx) {
+        ctx.ignoreHints = false;
+        StringBuilder sb = new StringBuilder();
+
+        while (parseWhitespaceIf(ctx)) {
+            int position = ctx.position;
+            if (parseIf(ctx, '/')) {
+                parse(ctx, '*');
+
+                int i = ctx.position;
+
+                loop:
+                while (i < ctx.sql.length) {
+                    switch (ctx.sql[i]) {
+                        case '*':
+                            if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/')
+                                break loop;
+                    }
+
+                    i++;
+                }
+
+                ctx.position = i + 2;
+
+                if (sb.length() > 0)
+                    sb.append(' ');
+
+                sb.append(new String(ctx.sql, position, ctx.position - position));
+            }
+        }
+
+        ctx.ignoreHints = true;
+        return sb.length() > 0 ? sb.toString() : null;
     }
 
     private static final Condition toCondition(ParserContext ctx, QueryPart part) {
@@ -7046,16 +7085,22 @@ final class ParserImpl implements Parser {
 
                         while (i < ctx.sql.length) {
                             switch (ctx.sql[i]) {
+                                case '+':
+                                    if (!ctx.ignoreHints && i + 1 < ctx.sql.length && Character.isAlphabetic(ctx.sql[i + 1]))
+                                        break loop;
+
+                                    break;
+
                                 case '*':
                                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
                                         position = i = i + 1;
                                         continue loop;
                                     }
 
-                                    // No break
-                                default:
-                                    i++;
+                                    break;
                             }
+
+                            i++;
                         }
                     }
 
@@ -7104,7 +7149,8 @@ final class ParserImpl implements Parser {
         final ParseWithMetaLookups metaLookups;
         final String               sqlString;
         final char[]               sql;
-        int                        position  = 0;
+        int                        position    = 0;
+        boolean                    ignoreHints = true;
         final Object[]             bindings;
         int                        bindIndex = 0;
         String                     delimiter = ";";

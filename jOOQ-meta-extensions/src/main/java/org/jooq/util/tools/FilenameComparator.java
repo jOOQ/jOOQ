@@ -92,6 +92,6 @@ public final class FilenameComparator implements Comparator<String> {
                 return cmp;
         }
 
-        return 0;
+        return split1.length - split2.length;
     }
 }

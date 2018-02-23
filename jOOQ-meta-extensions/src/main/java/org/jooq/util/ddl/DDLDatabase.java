@@ -47,6 +47,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -65,6 +66,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
+import org.jooq.util.tools.FileComparator;
 
 import org.h2.api.ErrorCode;
 
@@ -164,8 +166,14 @@ public class DDLDatabase extends H2Database {
         else if (file.isDirectory()) {
             log.info("Reading from: " + file);
 
-            for (File f : file.listFiles())
-                load(encoding, f, pattern);
+            File[] files = file.listFiles();
+
+            if (files != null) {
+                Arrays.sort(files, FileComparator.INSTANCE);
+
+                for (File f : files)
+                    load(encoding, f, pattern);
+            }
         }
     }
 

@@ -47,11 +47,11 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -151,7 +151,10 @@ public class XMLDatabase extends AbstractDatabase {
                     RandomAccessFile f = null;
 
                     try {
-                        f = new RandomAccessFile(new File(xml), "r");
+                        URL url = XMLDatabase.class.getResource(xml);
+                        File file = url != null ? new File(url.toURI()) : new File(xml);
+
+                        f = new RandomAccessFile(file, "r");
                         byte[] bytes = new byte[(int) f.length()];
                         f.readFully(bytes);
                         content = new String(bytes);
@@ -217,7 +220,7 @@ public class XMLDatabase extends AbstractDatabase {
 
                 info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
             }
-            catch (IOException e) {
+            catch (Exception e) {
                 throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);
             }
         }

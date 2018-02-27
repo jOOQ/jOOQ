@@ -67,8 +67,6 @@ final class ExistsCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean subquery = ctx.subquery();
-
         ctx.visit(exists ? K_EXISTS : K_NOT_EXISTS)
            .sql(" (")
            .subquery(true)
@@ -77,7 +75,7 @@ final class ExistsCondition extends AbstractCondition {
            .visit(query)
            .formatIndentEnd()
            .formatNewLine()
-           .subquery(subquery)
+           .subquery(false)
            .sql(')');
     }
 

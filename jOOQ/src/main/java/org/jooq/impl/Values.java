@@ -110,8 +110,6 @@ final class Values<R extends Record> extends AbstractTable<R> {
             case MARIADB:
             case MYSQL: {
                 Select<Record> selects = null;
-                boolean subquery = ctx.subquery();
-
                 for (Row row : rows) {
                     Select<Record> select = create().select(row.fields());
 
@@ -127,7 +125,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
                    .formatNewLine()
                    .subquery(true)
                    .visit(selects)
-                   .subquery(subquery)
+                   .subquery(false)
                    .formatIndentEnd()
                    .formatNewLine();
                 break;

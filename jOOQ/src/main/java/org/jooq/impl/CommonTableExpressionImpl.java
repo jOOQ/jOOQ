@@ -93,9 +93,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareCTE()) {
-            boolean subquery = ctx.subquery();
-
+        if (ctx.declareCTE())
             ctx.visit(name)
                .sql(' ')
                .visit(K_AS)
@@ -106,12 +104,10 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                .visit(select)
                .formatIndentEnd()
                .formatNewLine()
-               .subquery(subquery)
+               .subquery(false)
                .sql(')');
-        }
-        else {
+        else
             ctx.visit(DSL.name(name.name));
-        }
     }
 
     @Override

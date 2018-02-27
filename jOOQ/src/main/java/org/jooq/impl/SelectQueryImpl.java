@@ -120,11 +120,13 @@ import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_LOCK;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
@@ -876,8 +878,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // v1 as ID, v2 as ID, v3 as TITLE
         final Field<?>[] unaliasedFields = Tools.aliasedFields(Tools.fields(originalFields.length), originalNames);
 
-        boolean subquery = ctx.subquery();
-
         ctx.visit(K_SELECT).sql(' ')
            .declareFields(true)
            .visit(new SelectFieldList<Field<?>>(unaliasedFields))
@@ -890,7 +890,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         toSQLReference0(ctx, originalFields, alternativeFields);
 
-        ctx.subquery(subquery)
+        ctx.subquery(false)
            .formatIndentEnd()
            .formatNewLine()
            .sql(") ")
@@ -1017,6 +1017,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SQLDialect family = dialect.family();
 
         int unionOpSize = unionOp.size();
+        boolean unionOpNesting = false;
 
         // The SQL standard specifies:
         //
@@ -1038,10 +1039,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-        // [#2995] Prevent the generation of wrapping parentheses around the
-        //         INSERT .. SELECT statement's SELECT because they would be
-        //         interpreted as the (missing) INSERT column list's parens.
-         || (context.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null && unionOpSize > 0);
+//        // [#2995] Prevent the generation of wrapping parentheses around the
+//        //         INSERT .. SELECT statement's SELECT because they would be
+//        //         interpreted as the (missing) INSERT column list's parens.
+//         || (context.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null && unionOpSize > 0)
+         ;
 
         if (wrapQueryExpressionInDerivedTable)
             context.visit(K_SELECT).sql(" *")
@@ -1087,6 +1089,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
         // all databases, we need to wrap relevant subqueries in parentheses.
         if (unionOpSize > 0) {
+            if (!TRUE.equals(context.data(DATA_NESTED_SET_OPERATIONS)))
+                context.data(DATA_NESTED_SET_OPERATIONS, unionOpNesting = unionOpNesting());
+
             for (int i = unionOpSize - 1; i >= 0; i--) {
                 switch (unionOp.get(i)) {
                     case EXCEPT:        context.start(SELECT_EXCEPT);        break;
@@ -1097,7 +1102,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     case UNION_ALL:     context.start(SELECT_UNION_ALL);     break;
                 }
 
-                unionParenthesis(context, "(");
+                unionParenthesis(context, '(', getSelect().toArray(EMPTY_FIELD));
             }
         }
 
@@ -1376,7 +1381,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
-            unionParenthesis(context, ")");
+            unionParenthesis(context, ')', null);
 
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
@@ -1386,14 +1391,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                            .visit(op.toKeyword(dialect))
                            .sql(' ');
 
-                    unionParenthesis(context, "(");
+                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD));
                     context.visit(other);
-                    unionParenthesis(context, ")");
+                    unionParenthesis(context, ')', null);
                 }
 
                 // [#1658] Close parentheses opened previously
                 if (i < unionOpSize - 1)
-                    unionParenthesis(context, ")");
+                    unionParenthesis(context, ')', null);
 
                 switch (unionOp.get(i)) {
                     case EXCEPT:        context.end(SELECT_EXCEPT);        break;
@@ -1404,6 +1409,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     case UNION_ALL:     context.end(SELECT_UNION_ALL);     break;
                 }
             }
+
+            if (unionOpNesting)
+                context.data().remove(DATA_NESTED_SET_OPERATIONS);
         }
 
 
@@ -1575,21 +1583,55 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS = EnumSet.of(DERBY, MARIADB, MYSQL, SQLITE);
 
-    private final void unionParenthesis(Context<?> ctx, String parenthesis) {
-        if (")".equals(parenthesis)) {
+    private final boolean unionOpNesting() {
+        if (unionOp.size() > 1)
+            return true;
+
+        for (QueryPartList<Select<?>> s1 : union)
+            for (Select<?> s2 : s1)
+                if (s2 instanceof SelectQueryImpl
+                        && ((SelectQueryImpl<?>) s2).unionOp.size() > 0)
+                    return true;
+                else if (s2 instanceof SelectImpl
+                        && ((SelectImpl) s2).getDelegate() instanceof SelectQueryImpl
+                        && ((SelectQueryImpl<?>) ((SelectImpl) s2).getDelegate()).unionOp.size() > 0)
+                    return true;
+
+        return false;
+    }
+
+    private final void unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields) {
+        boolean derivedTable =
+            (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.family()))
+
+            || ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null
+
+            // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
+            || (ctx.family() == DERBY && ctx.subquery());
+
+        if (')' == parenthesis) {
             ctx.formatIndentEnd()
                .formatNewLine();
         }
 
         // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
-        else if ("(".equals(parenthesis)) {
-            if (UNION_PARENTHESIS.contains(ctx.family()))
+        // [#7222] Do this only in the presence of actual nested set operators
+        else if ('(' == parenthesis) {
+            if (derivedTable) {
                 ctx.formatNewLine()
-                   .visit(K_SELECT)
-                   .sql(" *")
-                   .formatSeparator()
+                   .visit(K_SELECT).sql(' ');
+
+                // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
+                if (ctx.family() == DERBY)
+                    ctx.visit(new SelectFieldList<Field<?>>(Tools.unqualified(fields)));
+                else
+                    ctx.sql('*');
+
+
+                ctx.formatSeparator()
                    .visit(K_FROM)
                    .sql(' ');
+            }
         }
 
         // [#3579] ... but don't use derived tables to emulate nested set operators for Firebird, as that
@@ -1607,13 +1649,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 break;
         }
 
-        if ("(".equals(parenthesis)) {
+        if ('(' == parenthesis) {
             ctx.formatIndentStart()
                .formatNewLine();
         }
 
-        else if (")".equals(parenthesis)) {
-            if (UNION_PARENTHESIS.contains(ctx.family()))
+        else if (')'== parenthesis) {
+            if (derivedTable)
                 ctx.sql(" x");
         }
     }

@@ -211,8 +211,6 @@ final class RowSubqueryCondition extends AbstractCondition {
 
         @Override
         public final void accept(Context<?> ctx) {
-            boolean subquery = ctx.subquery();
-
             ctx.visit(left)
                .sql(' ')
                .visit(comparator.toKeyword())
@@ -235,7 +233,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                    .visit(right)
                    .formatIndentEnd()
                    .formatNewLine()
-                   .subquery(subquery);
+                   .subquery(false);
                 ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
                 ctx.sql(extraParentheses ? "))" : ")");
             }
@@ -245,7 +243,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
                 ctx.subquery(true)
                    .visit(rightQuantified)
-                   .subquery(subquery);
+                   .subquery(false);
                 ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
             }
         }

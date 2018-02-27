@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
@@ -44,11 +45,13 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumSet;
@@ -97,7 +100,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     boolean                                  declareAliases;
     boolean                                  declareWindows;
     boolean                                  declareCTE;
-    boolean                                  subquery;
+    int                                      subquery;
+    BitSet                                   subqueryScopedNestedSetOperations;
     int                                      stringLiteral;
     String                                   stringLiteralEscapedApos    = "'";
     int                                      index;
@@ -505,12 +509,35 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean subquery() {
-        return subquery;
+        return subquery > 0;
     }
 
     @Override
     public final C subquery(boolean s) {
-        this.subquery = s;
+        if (s) {
+            subquery++;
+
+            // [#7222] If present the nested set operations flag needs to be reset whenever we're
+            //         entering a subquery (and restored when leaving it).
+            // [#2791] This works differently from the scope marking mechanism, which wraps a
+            // [#7152] naming scope for aliases and other object names.
+            if (TRUE.equals(data(DATA_NESTED_SET_OPERATIONS))) {
+                data().remove(DATA_NESTED_SET_OPERATIONS);
+
+                if (subqueryScopedNestedSetOperations == null)
+                    subqueryScopedNestedSetOperations = new BitSet();
+
+                subqueryScopedNestedSetOperations.set(subquery);
+            }
+        }
+        else {
+            if (subqueryScopedNestedSetOperations != null &&
+                subqueryScopedNestedSetOperations.get(subquery))
+                data(DATA_NESTED_SET_OPERATIONS, true);
+
+            subquery--;
+        }
+
         return (C) this;
     }
 

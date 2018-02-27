@@ -473,6 +473,12 @@ final class Tools {
          * The level of anonymous block nesting, in case we're generating a block.
          */
         DATA_BLOCK_NESTING,
+
+        /**
+         * [#3579] [#6431] [#7222] There are nested set operations in the current
+         * {@link Select} scope.
+         */
+        DATA_NESTED_SET_OPERATIONS
     }
 
     /**
@@ -1020,6 +1026,30 @@ final class Tools {
 
         for (int i = 0; i < length; i++)
             result[i] = DSL.field(name(names[i]), type);
+
+        return result;
+    }
+
+    static final Field<?>[] unqualified(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = DSL.field(fields[i].getUnqualifiedName(), fields[i].getDataType());
+
+        return result;
+    }
+
+    static final Name[] unqualifiedNames(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        Name[] result = new Name[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getUnqualifiedName();
 
         return result;
     }

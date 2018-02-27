@@ -86,15 +86,13 @@ final class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean subquery = ctx.subquery();
-
         ctx.subquery(true)
            .formatIndentStart()
            .formatNewLine()
            .visit(query)
            .formatIndentEnd()
            .formatNewLine()
-           .subquery(subquery);
+           .subquery(false);
     }
 
     @Override

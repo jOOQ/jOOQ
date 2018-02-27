@@ -114,11 +114,13 @@ final class IsDistinctFrom<T> extends AbstractCondition {
      */
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // [#3511] These dialects need to emulate the IS DISTINCT FROM predicate, optimally using INTERSECT...
+        // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
+        //                 optimally using INTERSECT...
+        // [#7222] [#7224] Make sure the columns are aliased
         if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
             return (comparator == IS_DISTINCT_FROM)
-                ? (QueryPartInternal) notExists(select(lhs).intersect(select(rhs)))
-                : (QueryPartInternal) exists(select(lhs).intersect(select(rhs)));
+                ? (QueryPartInternal) notExists(select(lhs.as("x")).intersect(select(rhs.as("x"))))
+                : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x"))));
         }
 
         // MySQL knows the <=> operator

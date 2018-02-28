@@ -1851,8 +1851,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
 
-        // [#109] [#489]: SELECT * is only applied when at least one table
-        // from the table source is "unknown", i.e. not generated from a
+        // [#109] [#489] [#7231]: SELECT * is only applied when at least one
+        // table from the table source is "unknown", i.e. not generated from a
         // physical table. Otherwise, the fields are selected explicitly
         if (knownTableSource())
             for (TableLike<?> table : getFrom())
@@ -1876,7 +1876,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean knownTable(Table<?> table) {
-        return table.fieldsRow().size() > 0;
+        if (table instanceof JoinTable)
+            return knownTable(((JoinTable) table).lhs) && knownTable(((JoinTable) table).rhs);
+        else
+            return table.fieldsRow().size() > 0;
     }
 
     @SuppressWarnings("unchecked")

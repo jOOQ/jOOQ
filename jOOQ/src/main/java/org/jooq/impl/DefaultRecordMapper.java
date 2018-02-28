@@ -421,9 +421,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
     }
 
+
     private List<String> collectParameterNames(Parameter[] parameters) {
         return Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList());
     }
+
 
     @Override
     public final E map(R record) {

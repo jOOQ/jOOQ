@@ -1314,6 +1314,8 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         super.updateNClob(columnLabel, reader);
     }
 
+
+
     @Override
     public void updateObject(int columnIndex, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
         checkPrimitive();
@@ -1337,4 +1339,6 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         checkPrimitive();
         super.updateObject(columnLabel, x, targetSqlType);
     }
+
+
 }

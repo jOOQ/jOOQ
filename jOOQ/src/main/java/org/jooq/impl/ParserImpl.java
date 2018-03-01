@@ -5975,6 +5975,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseDataType(ParserContext ctx) {
+        DataType<?> result = parseDataTypePrefix(ctx);
+
+        if (parseIf(ctx, '[') && parse(ctx, ']'))
+            result = result.getArrayDataType();
+
+        return result;
+    }
+
+    private static final DataType<?> parseDataTypePrefix(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
         switch (ctx.character()) {

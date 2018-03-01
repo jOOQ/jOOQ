@@ -3025,27 +3025,25 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
         }
         else if (parseIf(ctx, '(')) {
+
+            // A table factor parenthesis can mark the beginning of any of:
+            // - A derived table:                     E.g. (select 1)
+            // - A derived table with nested set ops: E.g. ((select 1) union (select 2))
+            // - A values derived table:              E.g. (values (1))
+            // - A joined table:                      E.g. ((a join b on p) right join c on q)
+            // - A combination of the above:          E.g. ((a join (select 1) on p) right join (((select 1)) union (select 2)) on q)
             if (peekKeyword(ctx, "SELECT")) {
-                result = table(parseSelect(ctx));
+                SelectQueryImpl<Record> select = parseSelect(ctx);
                 parse(ctx, ')');
+                result = table(parseQueryExpressionBody(ctx, null, null, select));
             }
             else if (peekKeyword(ctx, "VALUES")) {
                 result = parseTableValueConstructor(ctx);
                 parse(ctx, ')');
             }
             else {
-                int parens = 0;
-
-                while (parseIf(ctx, '('))
-                    parens++;
-
                 result = parseJoinedTable(ctx);
-
-                while (parens --> 0)
-                    parse(ctx, ')');
-
                 parse(ctx, ')');
-                return result;
             }
         }
         else {
@@ -3219,13 +3217,11 @@ final class ParserImpl implements Parser {
     private static final Table<?> parseJoinedTable(ParserContext ctx) {
         Table<?> result = parseTableFactor(ctx);
 
-        for (int i = 0;; i++) {
+        for (;;) {
             Table<?> joined = parseJoinedTableIf(ctx, result);
+
             if (joined == null)
-                if (i == 0)
-                    ctx.unexpectedToken();
-                else
-                    return result;
+                return result;
             else
                 result = joined;
         }

@@ -13550,6 +13550,14 @@ public class DSL {
         return new CurrentTimestamp<Timestamp>(SQLDataType.TIMESTAMP);
     }
 
+    /**
+     * Synonym for {@link #currentTimestamp()}.
+     */
+    @Support
+    public static Field<Timestamp> now() {
+        return currentTimestamp();
+    }
+
 
     /**
      * Get the current_date() function returning a SQL standard

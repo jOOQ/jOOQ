@@ -125,6 +125,7 @@ import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.month;
+import static org.jooq.impl.DSL.now;
 import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.nullif;
@@ -3706,11 +3707,11 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (D.is(type))
-                    if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP"))
+                    if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTimestamp();
-                    else if (parseKeywordIf(ctx, "CURRENT_TIME"))
+                    else if (parseKeywordIf(ctx, "CURRENT_TIME") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTime();
-                    else if (parseKeywordIf(ctx, "CURRENT_DATE"))
+                    else if (parseKeywordIf(ctx, "CURRENT_DATE") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentDate();
 
                 if ((field = parseFieldCaseIf(ctx)) != null)
@@ -3869,6 +3870,8 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.NEXTVAL)) != null)
                     return field;
+                else if (parseFunctionNameIf(ctx, "NOW") && parse(ctx, '(') && parse(ctx, ')'))
+                    return now();
 
                 break;
 
@@ -6917,9 +6920,11 @@ final class ParserImpl implements Parser {
         return true;
     }
 
-    private static final void parse(ParserContext ctx, char c) {
+    private static final boolean parse(ParserContext ctx, char c) {
         if (!parseIf(ctx, c))
             throw ctx.unexpectedToken();
+
+        return true;
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {

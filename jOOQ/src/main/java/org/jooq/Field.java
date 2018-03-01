@@ -79,7 +79,14 @@ import org.jooq.types.Interval;
  * @param <T> The field type
  * @author Lukas Eder
  */
-public interface Field<T> extends SelectField<T>, GroupField, OrderField<T>, FieldOrRow, Named {
+public interface Field<T>
+extends
+    SelectField<T>,
+    GroupField,
+    OrderField<T>,
+    FieldOrRow,
+    FieldOrConstraint,
+    Named {
 
     // ------------------------------------------------------------------------
     // API

@@ -230,6 +230,22 @@ public interface AlterTableStep {
     AlterTableFinalStep add(Field<?> field);
 
     /**
+     * Add an <code>ADD</code> clause with multiple columns or constraints to
+     * the <code>ALTER TABLE</code> statement.
+     */
+    // @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2 })
+    AlterTableFinalStep add(FieldOrConstraint... fields);
+
+    /**
+     * Add an <code>ADD</code> clause with multiple columns or constraints to
+     * the <code>ALTER TABLE</code> statement.
+     */
+    // @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2 })
+    AlterTableFinalStep add(Collection<? extends FieldOrConstraint> fields);
+
+    /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>

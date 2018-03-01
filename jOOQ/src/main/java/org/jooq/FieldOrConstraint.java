@@ -38,10 +38,13 @@
 package org.jooq;
 
 /**
- * A DDL constraint.
+ * A common base type for {@link Field} and {@link Constraint} where DSL API accepts
+ * both types alike.
+ * <p>
+ * This is useful for DDL statements.
  *
  * @author Lukas Eder
  */
-public interface Constraint extends FieldOrConstraint {
+public interface FieldOrConstraint extends QueryPart {
 
 }

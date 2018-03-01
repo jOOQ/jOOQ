@@ -144,6 +144,7 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.FieldOrConstraint;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Nullability;
@@ -192,6 +193,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private Index                            renameIndexTo;
     private Constraint                       renameConstraint;
     private Constraint                       renameConstraintTo;
+    private QueryPartList<FieldOrConstraint> add;
     private Field<?>                         addColumn;
     private DataType<?>                      addColumnType;
     private Constraint                       addConstraint;
@@ -347,6 +349,17 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl add(Field<?> field) {
         return addColumn(field);
+    }
+
+    @Override
+    public final AlterTableImpl add(FieldOrConstraint... fields) {
+        return add(Arrays.asList(fields));
+    }
+
+    @Override
+    public final AlterTableImpl add(Collection<? extends FieldOrConstraint> fields) {
+        add = new QueryPartList<FieldOrConstraint>(fields);
+        return this;
     }
 
     @Override
@@ -866,6 +879,41 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
+        }
+        else if (add != null) {
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_ADD)
+               .visit(K_ADD)
+               .qualify(false)
+               .sql(" (");
+
+            boolean indent = add.size() > 1;
+
+            if (indent)
+                ctx.formatIndentStart()
+                   .formatNewLine();
+
+            for (int i = 0; i < add.size(); i++) {
+                if (i > 0)
+                    ctx.sql(',').formatSeparator();
+
+                FieldOrConstraint part = add.get(i);
+                ctx.visit(part);
+
+                if (part instanceof Field) {
+                    ctx.sql(' ');
+                    toSQLDDLTypeDeclarationForAddition(ctx, ((Field<?>) part).getDataType());
+                }
+            }
+
+            if (indent)
+                ctx.formatIndentEnd()
+                   .formatNewLine();
+
+            ctx.sql(')')
+               .qualify(qualify)
+               .end(ALTER_TABLE_ADD);
         }
         else if (addColumn != null) {
             boolean qualify = ctx.qualify();

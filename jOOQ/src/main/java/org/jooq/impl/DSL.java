@@ -9256,6 +9256,9 @@ public class DSL {
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      */
     @Support
     public static Table<Record> table(Name name) {
@@ -9278,6 +9281,9 @@ public class DSL {
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      */
     @Support
     public static Table<Record> table(Name name, Comment comment) {
@@ -10081,6 +10087,9 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
      * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -10108,6 +10117,9 @@ public class DSL {
      * <code><pre>
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -10140,6 +10152,9 @@ public class DSL {
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
      * </pre></code>
      * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -10169,6 +10184,9 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

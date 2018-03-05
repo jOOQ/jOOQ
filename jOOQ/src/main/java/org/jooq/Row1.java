@@ -424,6 +424,66 @@ public interface Row1<T1> extends Row {
     Condition ne(QuantifiedSelect<? extends Record1<T1>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Row1<T1> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Record1<T1> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(T1 t1);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Field<T1> t1);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Row1<T1> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Record1<T1> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(T1 t1);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<T1> t1);
+
+    // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 

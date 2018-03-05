@@ -439,6 +439,66 @@ public interface Row4<T1, T2, T3, T4> extends Row {
     Condition ne(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Row4<T1, T2, T3, T4> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Record4<T1, T2, T3, T4> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Row4<T1, T2, T3, T4> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Record4<T1, T2, T3, T4> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
+
+    // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 

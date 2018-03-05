@@ -434,6 +434,66 @@ public interface Row3<T1, T2, T3> extends Row {
     Condition ne(QuantifiedSelect<? extends Record3<T1, T2, T3>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Row3<T1, T2, T3> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Record3<T1, T2, T3> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(T1 t1, T2 t2, T3 t3);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Row3<T1, T2, T3> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Record3<T1, T2, T3> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3);
+
+    // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 

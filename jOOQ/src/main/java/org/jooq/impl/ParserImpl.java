@@ -2898,13 +2898,14 @@ final class ParserImpl implements Parser {
                             : ((RowN) left).isNotNull();
 
                 parseKeyword(ctx, "DISTINCT FROM");
-
-                // TODO: Support this for ROW as well
-                if (((Field) left) == null)
-                    throw ctx.notImplemented("DISTINCT predicate for rows");
-
-                Field right = toField(ctx, parseConcat(ctx, null, null));
-                return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
+                if (left instanceof Field) {
+                    Field right = toField(ctx, parseConcat(ctx, null, null));
+                    return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
+                }
+                else {
+                    RowN right = parseRow(ctx, ((RowN) left).size(), true);
+                    return not ? ((RowN) left).isNotDistinctFrom(right) : ((RowN) left).isDistinctFrom(right);
+                }
             }
             else if (!not && parseIf(ctx, "@>")) {
                 return toField(ctx, left).contains((Field) toField(ctx, parseConcat(ctx, null, null)));

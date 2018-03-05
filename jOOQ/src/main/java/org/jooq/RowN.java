@@ -415,6 +415,66 @@ public interface RowN extends Row {
     Condition ne(QuantifiedSelect<? extends Record> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(RowN row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Field<?>... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(RowN row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<?>... values);
+
+    // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 

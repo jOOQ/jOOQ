@@ -499,6 +499,66 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ne(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16);
+
+    // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 

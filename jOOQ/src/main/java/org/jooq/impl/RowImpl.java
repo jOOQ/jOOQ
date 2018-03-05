@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.FIELD_ROW;
 // ...
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.Keywords.K_ROW;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,7 +47,16 @@ import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
+import org.jooq.BetweenAndStepN;
 import org.jooq.BetweenAndStep1;
+import org.jooq.BetweenAndStep2;
+import org.jooq.BetweenAndStep3;
+import org.jooq.BetweenAndStep4;
+import org.jooq.BetweenAndStep5;
+import org.jooq.BetweenAndStep6;
+import org.jooq.BetweenAndStep7;
+import org.jooq.BetweenAndStep8;
+import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStep10;
 import org.jooq.BetweenAndStep11;
 import org.jooq.BetweenAndStep12;
@@ -59,18 +67,9 @@ import org.jooq.BetweenAndStep16;
 import org.jooq.BetweenAndStep17;
 import org.jooq.BetweenAndStep18;
 import org.jooq.BetweenAndStep19;
-import org.jooq.BetweenAndStep2;
 import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
-import org.jooq.BetweenAndStep3;
-import org.jooq.BetweenAndStep4;
-import org.jooq.BetweenAndStep5;
-import org.jooq.BetweenAndStep6;
-import org.jooq.BetweenAndStep7;
-import org.jooq.BetweenAndStep8;
-import org.jooq.BetweenAndStep9;
-import org.jooq.BetweenAndStepN;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -81,6 +80,14 @@ import org.jooq.Name;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -91,20 +98,20 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
-import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
-import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowN;
 import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -115,18 +122,10 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
-import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
-import org.jooq.RowN;
+import org.jooq.Result;
 import org.jooq.Select;
 
 /**
@@ -9255,6 +9254,926 @@ implements
     // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition isNotDistinctFrom(RowN row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row1<T1> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row2<T1, T2> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row3<T1, T2, T3> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row4<T1, T2, T3, T4> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record1<T1> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record2<T1, T2> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record3<T1, T2, T3> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record4<T1, T2, T3, T4> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record5<T1, T2, T3, T4, T5> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return isNotDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Object... values) {
+        return isNotDistinctFrom(row(values));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1) {
+        return isNotDistinctFrom(row(t1));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2) {
+        return isNotDistinctFrom(row(t1, t2));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3) {
+        return isNotDistinctFrom(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<?>... values) {
+        return isNotDistinctFrom(row(values));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1) {
+        return isNotDistinctFrom(row(t1));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2) {
+        return isNotDistinctFrom(row(t1, t2));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return isNotDistinctFrom(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return isNotDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(RowN row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row1<T1> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row2<T1, T2> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row3<T1, T2, T3> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row4<T1, T2, T3, T4> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowIsDistinctFrom(this, row, Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record1<T1> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record2<T1, T2> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record3<T1, T2, T3> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record4<T1, T2, T3, T4> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record5<T1, T2, T3, T4, T5> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return isDistinctFrom(record.valuesRow());
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Object... values) {
+        return isDistinctFrom(row(values));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1) {
+        return isDistinctFrom(row(t1));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2) {
+        return isDistinctFrom(row(t1, t2));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3) {
+        return isDistinctFrom(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return isDistinctFrom(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<?>... values) {
+        return isDistinctFrom(row(values));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1) {
+        return isDistinctFrom(row(t1));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2) {
+        return isDistinctFrom(row(t1, t2));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return isDistinctFrom(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return isDistinctFrom(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return isDistinctFrom(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
 
     // ------------------------------------------------------------------------
     // [NOT] IN predicates

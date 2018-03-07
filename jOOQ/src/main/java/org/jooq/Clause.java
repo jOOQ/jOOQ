@@ -42,7 +42,15 @@ package org.jooq;
  * <p>
  * <h3>Disclaimer</h3> This SPI is still <strong>experimental</strong>! Some SPI
  * elements and/or behavioural elements may change in future minor releases.
+ * <p>
+ *
+ * @deprecated - 3.11.0 - [#7258] - This part of the {@link VisitListener} SPI
+ *             is deprecated. There are currently no plans of replacing it.
+ *             Please get in touch if you think this functionality needs to be
+ *             kept in one way or another: <a href=
+ *             "https://github.com/jOOQ/jOOQ/issues/7258">https://github.com/jOOQ/jOOQ/issues/7258</a>
  */
+@Deprecated
 public enum Clause {
 
     // -------------------------------------------------------------------------

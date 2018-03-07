@@ -250,7 +250,15 @@ public abstract class AbstractDatabase implements Database {
                     // [#4974] Prevent any class loading effects from impacting below
                     //         SQLPerformanceWarning.
                     if (!initialised) {
-                        DSL.using(configuration).selectOne().fetch();
+                        try {
+                            DSL.using(configuration).selectOne().fetch();
+                        }
+
+                        // [#7248] Unsupported dialects might not be able to run queries on the DUAL table
+                        catch (DataAccessException ignore) {
+                            log.debug("Error while running init query", ignore);
+                        }
+
                         initialised = true;
                     }
                 }

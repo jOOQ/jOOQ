@@ -2393,23 +2393,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
 
             // [#7126] Postgresql can return Special Date/Time Inputs such as "epoch", "infinity", "now", ...
-            if ("epoch".equals(string)) {
+            if ("epoch".equals(formatted)) {
                 return "1970-01-01T00:00Z";
-            } else if ("infinity".equals(string)) {
+            } else if ("infinity".equals(formatted)) {
                 // DATE_POSITIVE_INFINITY taken from org.postgresql.PGStatement
                 return "+292278994-08-16T23:00Z";
-            } else if ("-infinity".equals(string)) {
+            } else if ("-infinity".equals(formatted)) {
                 // DATE_NEGATIVE_INFINITY taken from org.postgresql.PGStatement
                 return "-292275055-05-16T23:00Z";
-            } else if ("now".equals(string)) {
+            } else if ("now".equals(formatted)) {
                 return OffsetDateTime.now().toString();
-            } else if ("today".equals(string)) {
+            } else if ("today".equals(formatted)) {
                 return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault()).toString();
-            } else if ("tomorrow".equals(string)) {
+            } else if ("tomorrow".equals(formatted)) {
                 return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plus(1, ChronoUnit.DAYS).toInstant(), ZoneId.systemDefault()).toString();
-            } else if ("yesterday".equals(string)) {
+            } else if ("yesterday".equals(formatted)) {
                 return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).minus(1, ChronoUnit.DAYS).toInstant(), ZoneId.systemDefault()).toString();
-            } else if ("allballs".equals(string)) {
+            } else if ("allballs".equals(formatted)) {
                 // This only for time, not for date/timestamp
                 // We should return a time for midnight but it is not applicable for OffsetDateTime 
             }

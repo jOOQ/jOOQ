@@ -113,6 +113,8 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -2389,6 +2391,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         // Probably a bug, let OffsetDateTime or OffsetTime report it
         else {
+
+            // [#7126] Postgresql can return Special Date/Time Inputs such as "epoch", "infinity", "now", ...
+            if ("epoch".equals(string)) {
+                return "1970-01-01T00:00Z";
+            } else if ("infinity".equals(string)) {
+                // DATE_POSITIVE_INFINITY taken from org.postgresql.PGStatement
+                return "+292278994-08-16T23:00Z";
+            } else if ("-infinity".equals(string)) {
+                // DATE_NEGATIVE_INFINITY taken from org.postgresql.PGStatement
+                return "-292275055-05-16T23:00Z";
+            } else if ("now".equals(string)) {
+                return OffsetDateTime.now().toString();
+            } else if ("today".equals(string)) {
+                return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault()).toString();
+            } else if ("tomorrow".equals(string)) {
+                return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plus(1, ChronoUnit.DAYS).toInstant(), ZoneId.systemDefault()).toString();
+            } else if ("yesterday".equals(string)) {
+                return OffsetDateTime.ofInstant(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).minus(1, ChronoUnit.DAYS).toInstant(), ZoneId.systemDefault()).toString();
+            } else if ("allballs".equals(string)) {
+                // This only for time, not for date/timestamp
+                // We should return a time for midnight but it is not applicable for OffsetDateTime 
+            }
+
             return formatted;
         }
     }

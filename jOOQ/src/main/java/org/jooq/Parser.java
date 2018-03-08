@@ -113,6 +113,27 @@ public interface Parser {
     ResultQuery<?> parseResultQuery(String sql, Object... bindings) throws ParserException;
 
     /**
+     * Parse a SQL string to a select statement.
+     *
+     * @param sql The SQL string
+     * @throws ParserException If the SQL string could not be parsed.
+     */
+    @Support
+    @PlainSQL
+    Select<?> parseSelect(String sql) throws ParserException;
+
+    /**
+     * Parse a SQL string to a select statement.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
+     * @throws ParserException If the SQL string could not be parsed.
+     */
+    @Support
+    @PlainSQL
+    Select<?> parseSelect(String sql, Object... bindings) throws ParserException;
+
+    /**
      * Parse a SQL string to a table.
      *
      * @param sql The SQL string

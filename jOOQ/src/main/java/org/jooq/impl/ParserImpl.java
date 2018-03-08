@@ -412,7 +412,7 @@ final class ParserImpl implements Parser {
             parseDelimiterSpecifications(ctx);
             while (parseDelimiterIf(ctx));
 
-            query = parseQuery(ctx, false);
+            query = parseQuery(ctx, false, false);
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
                 continue;
             if (query != null)
@@ -432,7 +432,7 @@ final class ParserImpl implements Parser {
     @Override
     public final Query parseQuery(String sql, Object... bindings) {
         ParserContext ctx = ctx(sql, bindings);
-        Query result = parseQuery(ctx, false);
+        Query result = parseQuery(ctx, false, false);
 
         ctx.done("Unexpected content after end of query input");
         return result;
@@ -446,7 +446,21 @@ final class ParserImpl implements Parser {
     @Override
     public final ResultQuery<?> parseResultQuery(String sql, Object... bindings) {
         ParserContext ctx = ctx(sql, bindings);
-        ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true);
+        ResultQuery<?> result = (ResultQuery<?>) parseQuery(ctx, true, false);
+
+        ctx.done("Unexpected content after end of query input");
+        return result;
+    }
+
+    @Override
+    public final Select<?> parseSelect(String sql) {
+        return parseSelect(sql, new Object[0]);
+    }
+
+    @Override
+    public final Select<?> parseSelect(String sql, Object... bindings) {
+        ParserContext ctx = ctx(sql, bindings);
+        Select<?> result = (Select<?>) parseQuery(ctx, true, true);
 
         ctx.done("Unexpected content after end of query input");
         return result;
@@ -547,7 +561,7 @@ final class ParserImpl implements Parser {
         return false;
     }
 
-    private static final Query parseQuery(ParserContext ctx, boolean resultQuery) {
+    private static final Query parseQuery(ParserContext ctx, boolean parseResultQuery, boolean parseSelect) {
         parseWhitespaceIf(ctx);
         if (ctx.done())
             return null;
@@ -555,73 +569,73 @@ final class ParserImpl implements Parser {
         switch (ctx.character()) {
             case 'a':
             case 'A':
-                if (!resultQuery && peekKeyword(ctx, "ALTER"))
+                if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
                     return parseAlter(ctx);
 
                 break;
 
             case 'b':
             case 'B':
-                if (!resultQuery && peekKeyword(ctx, "BEGIN"))
+                if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
                     return parseBlock(ctx);
 
                 break;
 
             case 'c':
             case 'C':
-                if (!resultQuery && peekKeyword(ctx, "CREATE"))
+                if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
                     return parseCreate(ctx);
-                else if (!resultQuery && peekKeyword(ctx, "COMMENT ON"))
+                else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
                     return parseCommentOn(ctx);
 
                 break;
 
             case 'd':
             case 'D':
-                if (!resultQuery && peekKeyword(ctx, "DELETE"))
+                if (!parseResultQuery && peekKeyword(ctx, "DELETE"))
                     return parseDelete(ctx, null);
-                else if (!resultQuery && peekKeyword(ctx, "DROP"))
+                else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
                     return parseDrop(ctx);
-                else if (!resultQuery && peekKeyword(ctx, "DO"))
+                else if (!parseResultQuery && peekKeyword(ctx, "DO"))
                     return parseDo(ctx);
 
                 break;
 
             case 'e':
             case 'E':
-                if (!resultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
+                if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
                     return parseBlock(ctx);
-                else if (!resultQuery && peekKeyword(ctx, "EXEC"))
+                else if (!parseResultQuery && peekKeyword(ctx, "EXEC"))
                     return parseExec(ctx);
 
                 break;
 
             case 'g':
             case 'G':
-                if (!resultQuery && peekKeyword(ctx, "GRANT"))
+                if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
                     return parseGrant(ctx);
 
                 break;
 
             case 'i':
             case 'I':
-                if (!resultQuery && peekKeyword(ctx, "INSERT"))
+                if (!parseResultQuery && peekKeyword(ctx, "INSERT"))
                     return parseInsert(ctx, null);
 
                 break;
 
             case 'm':
             case 'M':
-                if (!resultQuery && peekKeyword(ctx, "MERGE"))
+                if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
                     return parseMerge(ctx, null);
 
                 break;
 
             case 'r':
             case 'R':
-                if (!resultQuery && peekKeyword(ctx, "RENAME"))
+                if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
                     return parseRename(ctx);
-                else if (!resultQuery && peekKeyword(ctx, "REVOKE"))
+                else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
                     return parseRevoke(ctx);
 
                 break;
@@ -630,36 +644,36 @@ final class ParserImpl implements Parser {
             case 'S':
                 if (peekKeyword(ctx, "SELECT"))
                     return parseSelect(ctx);
-                else if (!resultQuery && peekKeyword(ctx, "SET"))
+                else if (!parseResultQuery && peekKeyword(ctx, "SET"))
                     return parseSet(ctx);
 
                 break;
 
             case 't':
             case 'T':
-                if (!resultQuery && peekKeyword(ctx, "TRUNCATE"))
+                if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
                     return parseTruncate(ctx);
 
                 break;
 
             case 'u':
             case 'U':
-                if (!resultQuery && peekKeyword(ctx, "UPDATE"))
+                if (!parseResultQuery && peekKeyword(ctx, "UPDATE"))
                     return parseUpdate(ctx, null);
-                else if (!resultQuery && peekKeyword(ctx, "USE"))
+                else if (!parseResultQuery && peekKeyword(ctx, "USE"))
                     return parseUse(ctx);
 
                 break;
 
             case 'v':
             case 'V':
-                if (peekKeyword(ctx, "VALUES"))
+                if (!parseSelect && peekKeyword(ctx, "VALUES"))
                     return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
 
             case 'w':
             case 'W':
                 if (peekKeyword(ctx, "WITH"))
-                    return parseWith(ctx);
+                    return parseWith(ctx, parseSelect);
 
                 break;
 
@@ -677,7 +691,7 @@ final class ParserImpl implements Parser {
     // Statement parsing
     // -----------------------------------------------------------------------------------------------------------------
 
-    private static final Query parseWith(ParserContext ctx) {
+    private static final Query parseWith(ParserContext ctx, boolean parseSelect) {
         parseKeyword(ctx, "WITH");
         boolean recursive = parseKeywordIf(ctx, "RECURSIVE");
 
@@ -703,15 +717,15 @@ final class ParserImpl implements Parser {
 
         // TODO Better model API for WITH clause
         WithImpl with = (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
-        if (peekKeyword(ctx, "DELETE"))
+        if (!parseSelect && peekKeyword(ctx, "DELETE"))
             return parseDelete(ctx, with);
-        else if (peekKeyword(ctx, "INSERT"))
+        else if (!parseSelect && peekKeyword(ctx, "INSERT"))
             return parseInsert(ctx, with);
-        else if (peekKeyword(ctx, "MERGE"))
+        else if (!parseSelect && peekKeyword(ctx, "MERGE"))
             return parseMerge(ctx, with);
         else if (peekKeyword(ctx, "SELECT"))
             return parseSelect(ctx, null, with);
-        else if (peekKeyword(ctx, "UPDATE"))
+        else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
             return parseUpdate(ctx, with);
         else
             throw ctx.unexpectedToken();
@@ -1712,7 +1726,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        return parseQuery(ctx, false);
+        return parseQuery(ctx, false, false);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

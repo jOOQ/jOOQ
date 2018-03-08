@@ -71,8 +71,8 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     DefaultDiagnosticsContext(String actualStatement, String normalisedStatement, Set<String> duplicateStatements, List<String> repeatedStatements) {
         this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;
-        this.duplicateStatements = duplicateStatements == null ? Collections.emptySet() : duplicateStatements;
-        this.repeatedStatements = repeatedStatements == null ? Collections.emptyList() : repeatedStatements;
+        this.duplicateStatements = duplicateStatements == null ? Collections.<String>emptySet() : duplicateStatements;
+        this.repeatedStatements = repeatedStatements == null ? Collections.<String>emptyList() : repeatedStatements;
     }
 
     @Override

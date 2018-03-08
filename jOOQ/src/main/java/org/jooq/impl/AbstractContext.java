@@ -851,7 +851,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             int size = scopeLevel + 1;
             if (list.size() < size)
-                list.addAll(Collections.nCopies(size - list.size(), null));
+                list.addAll(Collections.<ScopeStackElement>nCopies(size - list.size(), null));
 
             ScopeStackElement result = null;
             for (int i = scopeLevel; i >= 0 && result == null; i--)

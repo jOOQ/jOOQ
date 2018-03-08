@@ -7135,7 +7135,7 @@ final class ParserImpl implements Parser {
                         while (i < ctx.sql.length) {
                             switch (ctx.sql[i]) {
                                 case '+':
-                                    if (!ctx.ignoreHints && i + 1 < ctx.sql.length && Character.isAlphabetic(ctx.sql[i + 1]))
+                                    if (!ctx.ignoreHints && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z')))
                                         break loop;
 
                                     break;

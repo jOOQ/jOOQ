@@ -3489,6 +3489,10 @@ final class ParserImpl implements Parser {
         else if (part instanceof Field)
             if (((Field) part).getDataType().getType() == Boolean.class)
                 return condition((Field) part);
+
+            // [#7266] Support parsing column references as predicates
+            else if (part instanceof QualifiedField)
+                return condition((Field) part);
             else
                 throw ctx.expected("Boolean field");
         else

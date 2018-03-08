@@ -513,7 +513,7 @@ factor = exp { ( '*' | '/' | '%' ) exp }
 exp = unaryOps { '^' unaryOps }
 ;
 
-unaryOps = { '+' | '-' } term { '::' dataType }
+unaryOps = { '+' | '-' } term [ '(+)' ] { '::' dataType }
 ;
 
 term =

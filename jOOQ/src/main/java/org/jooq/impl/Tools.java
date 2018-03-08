@@ -2492,7 +2492,8 @@ final class Tools {
 
 
 
-    private static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+    static final DSLContext CTX    = DSL.using(new DefaultConfiguration());
+    static final ParserImpl PARSER = (ParserImpl) CTX.parser();
 
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into

@@ -3602,8 +3602,10 @@ final class ParserImpl implements Parser {
         else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, Sign.MINUS)) == null)
             r = toField(ctx, parseTerm(ctx, type, prefix)).neg();
 
-        if (parseIf(ctx, "(+)"))
-            r = toField(ctx, r).plus();
+
+
+
+
 
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));

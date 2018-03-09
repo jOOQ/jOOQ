@@ -467,45 +467,69 @@ public class Parameter implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<specificCatalog>");
-        sb.append(specificCatalog);
-        sb.append("</specificCatalog>");
-        sb.append("<specificSchema>");
-        sb.append(specificSchema);
-        sb.append("</specificSchema>");
-        sb.append("<specificPackage>");
-        sb.append(specificPackage);
-        sb.append("</specificPackage>");
-        sb.append("<specificName>");
-        sb.append(specificName);
-        sb.append("</specificName>");
+        if (specificCatalog!= null) {
+            sb.append("<specificCatalog>");
+            sb.append(specificCatalog);
+            sb.append("</specificCatalog>");
+        }
+        if (specificSchema!= null) {
+            sb.append("<specificSchema>");
+            sb.append(specificSchema);
+            sb.append("</specificSchema>");
+        }
+        if (specificPackage!= null) {
+            sb.append("<specificPackage>");
+            sb.append(specificPackage);
+            sb.append("</specificPackage>");
+        }
+        if (specificName!= null) {
+            sb.append("<specificName>");
+            sb.append(specificName);
+            sb.append("</specificName>");
+        }
         sb.append("<ordinalPosition>");
         sb.append(ordinalPosition);
         sb.append("</ordinalPosition>");
-        sb.append("<parameterMode>");
-        sb.append(parameterMode);
-        sb.append("</parameterMode>");
-        sb.append("<parameterName>");
-        sb.append(parameterName);
-        sb.append("</parameterName>");
-        sb.append("<dataType>");
-        sb.append(dataType);
-        sb.append("</dataType>");
-        sb.append("<characterMaximumLength>");
-        sb.append(characterMaximumLength);
-        sb.append("</characterMaximumLength>");
-        sb.append("<numericPrecision>");
-        sb.append(numericPrecision);
-        sb.append("</numericPrecision>");
-        sb.append("<numericScale>");
-        sb.append(numericScale);
-        sb.append("</numericScale>");
-        sb.append("<parameterDefault>");
-        sb.append(parameterDefault);
-        sb.append("</parameterDefault>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (parameterMode!= null) {
+            sb.append("<parameterMode>");
+            sb.append(parameterMode);
+            sb.append("</parameterMode>");
+        }
+        if (parameterName!= null) {
+            sb.append("<parameterName>");
+            sb.append(parameterName);
+            sb.append("</parameterName>");
+        }
+        if (dataType!= null) {
+            sb.append("<dataType>");
+            sb.append(dataType);
+            sb.append("</dataType>");
+        }
+        if (characterMaximumLength!= null) {
+            sb.append("<characterMaximumLength>");
+            sb.append(characterMaximumLength);
+            sb.append("</characterMaximumLength>");
+        }
+        if (numericPrecision!= null) {
+            sb.append("<numericPrecision>");
+            sb.append(numericPrecision);
+            sb.append("</numericPrecision>");
+        }
+        if (numericScale!= null) {
+            sb.append("<numericScale>");
+            sb.append(numericScale);
+            sb.append("</numericScale>");
+        }
+        if (parameterDefault!= null) {
+            sb.append("<parameterDefault>");
+            sb.append(parameterDefault);
+            sb.append("</parameterDefault>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

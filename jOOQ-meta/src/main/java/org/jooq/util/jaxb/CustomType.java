@@ -193,21 +193,31 @@ public class CustomType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(name);
-        sb.append("</name>");
-        sb.append("<type>");
-        sb.append(type);
-        sb.append("</type>");
-        sb.append("<converter>");
-        sb.append(converter);
-        sb.append("</converter>");
-        sb.append("<enumConverter>");
-        sb.append(enumConverter);
-        sb.append("</enumConverter>");
-        sb.append("<binding>");
-        sb.append(binding);
-        sb.append("</binding>");
+        if (name!= null) {
+            sb.append("<name>");
+            sb.append(name);
+            sb.append("</name>");
+        }
+        if (type!= null) {
+            sb.append("<type>");
+            sb.append(type);
+            sb.append("</type>");
+        }
+        if (converter!= null) {
+            sb.append("<converter>");
+            sb.append(converter);
+            sb.append("</converter>");
+        }
+        if (enumConverter!= null) {
+            sb.append("<enumConverter>");
+            sb.append(enumConverter);
+            sb.append("</enumConverter>");
+        }
+        if (binding!= null) {
+            sb.append("<binding>");
+            sb.append(binding);
+            sb.append("</binding>");
+        }
         return sb.toString();
     }
 

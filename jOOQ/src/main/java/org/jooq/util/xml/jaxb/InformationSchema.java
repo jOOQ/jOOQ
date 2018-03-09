@@ -486,42 +486,66 @@ public class InformationSchema implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<catalogs>");
-        sb.append(catalogs);
-        sb.append("</catalogs>");
-        sb.append("<schemata>");
-        sb.append(schemata);
-        sb.append("</schemata>");
-        sb.append("<sequences>");
-        sb.append(sequences);
-        sb.append("</sequences>");
-        sb.append("<tables>");
-        sb.append(tables);
-        sb.append("</tables>");
-        sb.append("<columns>");
-        sb.append(columns);
-        sb.append("</columns>");
-        sb.append("<tableConstraints>");
-        sb.append(tableConstraints);
-        sb.append("</tableConstraints>");
-        sb.append("<keyColumnUsages>");
-        sb.append(keyColumnUsages);
-        sb.append("</keyColumnUsages>");
-        sb.append("<referentialConstraints>");
-        sb.append(referentialConstraints);
-        sb.append("</referentialConstraints>");
-        sb.append("<indexes>");
-        sb.append(indexes);
-        sb.append("</indexes>");
-        sb.append("<indexColumnUsages>");
-        sb.append(indexColumnUsages);
-        sb.append("</indexColumnUsages>");
-        sb.append("<routines>");
-        sb.append(routines);
-        sb.append("</routines>");
-        sb.append("<parameters>");
-        sb.append(parameters);
-        sb.append("</parameters>");
+        if (catalogs!= null) {
+            sb.append("<catalogs>");
+            sb.append(catalogs);
+            sb.append("</catalogs>");
+        }
+        if (schemata!= null) {
+            sb.append("<schemata>");
+            sb.append(schemata);
+            sb.append("</schemata>");
+        }
+        if (sequences!= null) {
+            sb.append("<sequences>");
+            sb.append(sequences);
+            sb.append("</sequences>");
+        }
+        if (tables!= null) {
+            sb.append("<tables>");
+            sb.append(tables);
+            sb.append("</tables>");
+        }
+        if (columns!= null) {
+            sb.append("<columns>");
+            sb.append(columns);
+            sb.append("</columns>");
+        }
+        if (tableConstraints!= null) {
+            sb.append("<tableConstraints>");
+            sb.append(tableConstraints);
+            sb.append("</tableConstraints>");
+        }
+        if (keyColumnUsages!= null) {
+            sb.append("<keyColumnUsages>");
+            sb.append(keyColumnUsages);
+            sb.append("</keyColumnUsages>");
+        }
+        if (referentialConstraints!= null) {
+            sb.append("<referentialConstraints>");
+            sb.append(referentialConstraints);
+            sb.append("</referentialConstraints>");
+        }
+        if (indexes!= null) {
+            sb.append("<indexes>");
+            sb.append(indexes);
+            sb.append("</indexes>");
+        }
+        if (indexColumnUsages!= null) {
+            sb.append("<indexColumnUsages>");
+            sb.append(indexColumnUsages);
+            sb.append("</indexColumnUsages>");
+        }
+        if (routines!= null) {
+            sb.append("<routines>");
+            sb.append(routines);
+            sb.append("</routines>");
+        }
+        if (parameters!= null) {
+            sb.append("<parameters>");
+            sb.append(parameters);
+            sb.append("</parameters>");
+        }
         return sb.toString();
     }
 

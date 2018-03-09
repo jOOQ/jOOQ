@@ -1991,192 +1991,316 @@ public class Generate implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<indexes>");
-        sb.append(indexes);
-        sb.append("</indexes>");
-        sb.append("<relations>");
-        sb.append(relations);
-        sb.append("</relations>");
-        sb.append("<implicitJoinPathsToOne>");
-        sb.append(implicitJoinPathsToOne);
-        sb.append("</implicitJoinPathsToOne>");
-        sb.append("<deprecated>");
-        sb.append(deprecated);
-        sb.append("</deprecated>");
-        sb.append("<deprecationOnUnknownTypes>");
-        sb.append(deprecationOnUnknownTypes);
-        sb.append("</deprecationOnUnknownTypes>");
-        sb.append("<instanceFields>");
-        sb.append(instanceFields);
-        sb.append("</instanceFields>");
-        sb.append("<generatedAnnotation>");
-        sb.append(generatedAnnotation);
-        sb.append("</generatedAnnotation>");
-        sb.append("<routines>");
-        sb.append(routines);
-        sb.append("</routines>");
-        sb.append("<sequences>");
-        sb.append(sequences);
-        sb.append("</sequences>");
-        sb.append("<udts>");
-        sb.append(udts);
-        sb.append("</udts>");
-        sb.append("<queues>");
-        sb.append(queues);
-        sb.append("</queues>");
-        sb.append("<links>");
-        sb.append(links);
-        sb.append("</links>");
-        sb.append("<keys>");
-        sb.append(keys);
-        sb.append("</keys>");
-        sb.append("<tables>");
-        sb.append(tables);
-        sb.append("</tables>");
-        sb.append("<records>");
-        sb.append(records);
-        sb.append("</records>");
-        sb.append("<recordsImplementingRecordN>");
-        sb.append(recordsImplementingRecordN);
-        sb.append("</recordsImplementingRecordN>");
-        sb.append("<pojos>");
-        sb.append(pojos);
-        sb.append("</pojos>");
-        sb.append("<pojosEqualsAndHashCode>");
-        sb.append(pojosEqualsAndHashCode);
-        sb.append("</pojosEqualsAndHashCode>");
-        sb.append("<pojosToString>");
-        sb.append(pojosToString);
-        sb.append("</pojosToString>");
-        sb.append("<immutablePojos>");
-        sb.append(immutablePojos);
-        sb.append("</immutablePojos>");
-        sb.append("<serializablePojos>");
-        sb.append(serializablePojos);
-        sb.append("</serializablePojos>");
-        sb.append("<interfaces>");
-        sb.append(interfaces);
-        sb.append("</interfaces>");
-        sb.append("<immutableInterfaces>");
-        sb.append(immutableInterfaces);
-        sb.append("</immutableInterfaces>");
-        sb.append("<serializableInterfaces>");
-        sb.append(serializableInterfaces);
-        sb.append("</serializableInterfaces>");
-        sb.append("<daos>");
-        sb.append(daos);
-        sb.append("</daos>");
-        sb.append("<jpaAnnotations>");
-        sb.append(jpaAnnotations);
-        sb.append("</jpaAnnotations>");
-        sb.append("<jpaVersion>");
-        sb.append(jpaVersion);
-        sb.append("</jpaVersion>");
-        sb.append("<validationAnnotations>");
-        sb.append(validationAnnotations);
-        sb.append("</validationAnnotations>");
-        sb.append("<springAnnotations>");
-        sb.append(springAnnotations);
-        sb.append("</springAnnotations>");
-        sb.append("<globalObjectReferences>");
-        sb.append(globalObjectReferences);
-        sb.append("</globalObjectReferences>");
-        sb.append("<globalCatalogReferences>");
-        sb.append(globalCatalogReferences);
-        sb.append("</globalCatalogReferences>");
-        sb.append("<globalSchemaReferences>");
-        sb.append(globalSchemaReferences);
-        sb.append("</globalSchemaReferences>");
-        sb.append("<globalTableReferences>");
-        sb.append(globalTableReferences);
-        sb.append("</globalTableReferences>");
-        sb.append("<globalSequenceReferences>");
-        sb.append(globalSequenceReferences);
-        sb.append("</globalSequenceReferences>");
-        sb.append("<globalUDTReferences>");
-        sb.append(globalUDTReferences);
-        sb.append("</globalUDTReferences>");
-        sb.append("<globalRoutineReferences>");
-        sb.append(globalRoutineReferences);
-        sb.append("</globalRoutineReferences>");
-        sb.append("<globalQueueReferences>");
-        sb.append(globalQueueReferences);
-        sb.append("</globalQueueReferences>");
-        sb.append("<globalLinkReferences>");
-        sb.append(globalLinkReferences);
-        sb.append("</globalLinkReferences>");
-        sb.append("<globalKeyReferences>");
-        sb.append(globalKeyReferences);
-        sb.append("</globalKeyReferences>");
-        sb.append("<javadoc>");
-        sb.append(javadoc);
-        sb.append("</javadoc>");
-        sb.append("<comments>");
-        sb.append(comments);
-        sb.append("</comments>");
-        sb.append("<commentsOnCatalogs>");
-        sb.append(commentsOnCatalogs);
-        sb.append("</commentsOnCatalogs>");
-        sb.append("<commentsOnSchemas>");
-        sb.append(commentsOnSchemas);
-        sb.append("</commentsOnSchemas>");
-        sb.append("<commentsOnTables>");
-        sb.append(commentsOnTables);
-        sb.append("</commentsOnTables>");
-        sb.append("<commentsOnColumns>");
-        sb.append(commentsOnColumns);
-        sb.append("</commentsOnColumns>");
-        sb.append("<commentsOnUDTs>");
-        sb.append(commentsOnUDTs);
-        sb.append("</commentsOnUDTs>");
-        sb.append("<commentsOnAttributes>");
-        sb.append(commentsOnAttributes);
-        sb.append("</commentsOnAttributes>");
-        sb.append("<commentsOnPackages>");
-        sb.append(commentsOnPackages);
-        sb.append("</commentsOnPackages>");
-        sb.append("<commentsOnRoutines>");
-        sb.append(commentsOnRoutines);
-        sb.append("</commentsOnRoutines>");
-        sb.append("<commentsOnParameters>");
-        sb.append(commentsOnParameters);
-        sb.append("</commentsOnParameters>");
-        sb.append("<commentsOnSequences>");
-        sb.append(commentsOnSequences);
-        sb.append("</commentsOnSequences>");
-        sb.append("<commentsOnLinks>");
-        sb.append(commentsOnLinks);
-        sb.append("</commentsOnLinks>");
-        sb.append("<commentsOnQueues>");
-        sb.append(commentsOnQueues);
-        sb.append("</commentsOnQueues>");
-        sb.append("<commentsOnKeys>");
-        sb.append(commentsOnKeys);
-        sb.append("</commentsOnKeys>");
-        sb.append("<fluentSetters>");
-        sb.append(fluentSetters);
-        sb.append("</fluentSetters>");
-        sb.append("<javaBeansGettersAndSetters>");
-        sb.append(javaBeansGettersAndSetters);
-        sb.append("</javaBeansGettersAndSetters>");
-        sb.append("<varargSetters>");
-        sb.append(varargSetters);
-        sb.append("</varargSetters>");
-        sb.append("<fullyQualifiedTypes>");
-        sb.append(fullyQualifiedTypes);
-        sb.append("</fullyQualifiedTypes>");
-        sb.append("<emptyCatalogs>");
-        sb.append(emptyCatalogs);
-        sb.append("</emptyCatalogs>");
-        sb.append("<emptySchemas>");
-        sb.append(emptySchemas);
-        sb.append("</emptySchemas>");
-        sb.append("<javaTimeTypes>");
-        sb.append(javaTimeTypes);
-        sb.append("</javaTimeTypes>");
-        sb.append("<primaryKeyTypes>");
-        sb.append(primaryKeyTypes);
-        sb.append("</primaryKeyTypes>");
+        if (indexes!= null) {
+            sb.append("<indexes>");
+            sb.append(indexes);
+            sb.append("</indexes>");
+        }
+        if (relations!= null) {
+            sb.append("<relations>");
+            sb.append(relations);
+            sb.append("</relations>");
+        }
+        if (implicitJoinPathsToOne!= null) {
+            sb.append("<implicitJoinPathsToOne>");
+            sb.append(implicitJoinPathsToOne);
+            sb.append("</implicitJoinPathsToOne>");
+        }
+        if (deprecated!= null) {
+            sb.append("<deprecated>");
+            sb.append(deprecated);
+            sb.append("</deprecated>");
+        }
+        if (deprecationOnUnknownTypes!= null) {
+            sb.append("<deprecationOnUnknownTypes>");
+            sb.append(deprecationOnUnknownTypes);
+            sb.append("</deprecationOnUnknownTypes>");
+        }
+        if (instanceFields!= null) {
+            sb.append("<instanceFields>");
+            sb.append(instanceFields);
+            sb.append("</instanceFields>");
+        }
+        if (generatedAnnotation!= null) {
+            sb.append("<generatedAnnotation>");
+            sb.append(generatedAnnotation);
+            sb.append("</generatedAnnotation>");
+        }
+        if (routines!= null) {
+            sb.append("<routines>");
+            sb.append(routines);
+            sb.append("</routines>");
+        }
+        if (sequences!= null) {
+            sb.append("<sequences>");
+            sb.append(sequences);
+            sb.append("</sequences>");
+        }
+        if (udts!= null) {
+            sb.append("<udts>");
+            sb.append(udts);
+            sb.append("</udts>");
+        }
+        if (queues!= null) {
+            sb.append("<queues>");
+            sb.append(queues);
+            sb.append("</queues>");
+        }
+        if (links!= null) {
+            sb.append("<links>");
+            sb.append(links);
+            sb.append("</links>");
+        }
+        if (keys!= null) {
+            sb.append("<keys>");
+            sb.append(keys);
+            sb.append("</keys>");
+        }
+        if (tables!= null) {
+            sb.append("<tables>");
+            sb.append(tables);
+            sb.append("</tables>");
+        }
+        if (records!= null) {
+            sb.append("<records>");
+            sb.append(records);
+            sb.append("</records>");
+        }
+        if (recordsImplementingRecordN!= null) {
+            sb.append("<recordsImplementingRecordN>");
+            sb.append(recordsImplementingRecordN);
+            sb.append("</recordsImplementingRecordN>");
+        }
+        if (pojos!= null) {
+            sb.append("<pojos>");
+            sb.append(pojos);
+            sb.append("</pojos>");
+        }
+        if (pojosEqualsAndHashCode!= null) {
+            sb.append("<pojosEqualsAndHashCode>");
+            sb.append(pojosEqualsAndHashCode);
+            sb.append("</pojosEqualsAndHashCode>");
+        }
+        if (pojosToString!= null) {
+            sb.append("<pojosToString>");
+            sb.append(pojosToString);
+            sb.append("</pojosToString>");
+        }
+        if (immutablePojos!= null) {
+            sb.append("<immutablePojos>");
+            sb.append(immutablePojos);
+            sb.append("</immutablePojos>");
+        }
+        if (serializablePojos!= null) {
+            sb.append("<serializablePojos>");
+            sb.append(serializablePojos);
+            sb.append("</serializablePojos>");
+        }
+        if (interfaces!= null) {
+            sb.append("<interfaces>");
+            sb.append(interfaces);
+            sb.append("</interfaces>");
+        }
+        if (immutableInterfaces!= null) {
+            sb.append("<immutableInterfaces>");
+            sb.append(immutableInterfaces);
+            sb.append("</immutableInterfaces>");
+        }
+        if (serializableInterfaces!= null) {
+            sb.append("<serializableInterfaces>");
+            sb.append(serializableInterfaces);
+            sb.append("</serializableInterfaces>");
+        }
+        if (daos!= null) {
+            sb.append("<daos>");
+            sb.append(daos);
+            sb.append("</daos>");
+        }
+        if (jpaAnnotations!= null) {
+            sb.append("<jpaAnnotations>");
+            sb.append(jpaAnnotations);
+            sb.append("</jpaAnnotations>");
+        }
+        if (jpaVersion!= null) {
+            sb.append("<jpaVersion>");
+            sb.append(jpaVersion);
+            sb.append("</jpaVersion>");
+        }
+        if (validationAnnotations!= null) {
+            sb.append("<validationAnnotations>");
+            sb.append(validationAnnotations);
+            sb.append("</validationAnnotations>");
+        }
+        if (springAnnotations!= null) {
+            sb.append("<springAnnotations>");
+            sb.append(springAnnotations);
+            sb.append("</springAnnotations>");
+        }
+        if (globalObjectReferences!= null) {
+            sb.append("<globalObjectReferences>");
+            sb.append(globalObjectReferences);
+            sb.append("</globalObjectReferences>");
+        }
+        if (globalCatalogReferences!= null) {
+            sb.append("<globalCatalogReferences>");
+            sb.append(globalCatalogReferences);
+            sb.append("</globalCatalogReferences>");
+        }
+        if (globalSchemaReferences!= null) {
+            sb.append("<globalSchemaReferences>");
+            sb.append(globalSchemaReferences);
+            sb.append("</globalSchemaReferences>");
+        }
+        if (globalTableReferences!= null) {
+            sb.append("<globalTableReferences>");
+            sb.append(globalTableReferences);
+            sb.append("</globalTableReferences>");
+        }
+        if (globalSequenceReferences!= null) {
+            sb.append("<globalSequenceReferences>");
+            sb.append(globalSequenceReferences);
+            sb.append("</globalSequenceReferences>");
+        }
+        if (globalUDTReferences!= null) {
+            sb.append("<globalUDTReferences>");
+            sb.append(globalUDTReferences);
+            sb.append("</globalUDTReferences>");
+        }
+        if (globalRoutineReferences!= null) {
+            sb.append("<globalRoutineReferences>");
+            sb.append(globalRoutineReferences);
+            sb.append("</globalRoutineReferences>");
+        }
+        if (globalQueueReferences!= null) {
+            sb.append("<globalQueueReferences>");
+            sb.append(globalQueueReferences);
+            sb.append("</globalQueueReferences>");
+        }
+        if (globalLinkReferences!= null) {
+            sb.append("<globalLinkReferences>");
+            sb.append(globalLinkReferences);
+            sb.append("</globalLinkReferences>");
+        }
+        if (globalKeyReferences!= null) {
+            sb.append("<globalKeyReferences>");
+            sb.append(globalKeyReferences);
+            sb.append("</globalKeyReferences>");
+        }
+        if (javadoc!= null) {
+            sb.append("<javadoc>");
+            sb.append(javadoc);
+            sb.append("</javadoc>");
+        }
+        if (comments!= null) {
+            sb.append("<comments>");
+            sb.append(comments);
+            sb.append("</comments>");
+        }
+        if (commentsOnCatalogs!= null) {
+            sb.append("<commentsOnCatalogs>");
+            sb.append(commentsOnCatalogs);
+            sb.append("</commentsOnCatalogs>");
+        }
+        if (commentsOnSchemas!= null) {
+            sb.append("<commentsOnSchemas>");
+            sb.append(commentsOnSchemas);
+            sb.append("</commentsOnSchemas>");
+        }
+        if (commentsOnTables!= null) {
+            sb.append("<commentsOnTables>");
+            sb.append(commentsOnTables);
+            sb.append("</commentsOnTables>");
+        }
+        if (commentsOnColumns!= null) {
+            sb.append("<commentsOnColumns>");
+            sb.append(commentsOnColumns);
+            sb.append("</commentsOnColumns>");
+        }
+        if (commentsOnUDTs!= null) {
+            sb.append("<commentsOnUDTs>");
+            sb.append(commentsOnUDTs);
+            sb.append("</commentsOnUDTs>");
+        }
+        if (commentsOnAttributes!= null) {
+            sb.append("<commentsOnAttributes>");
+            sb.append(commentsOnAttributes);
+            sb.append("</commentsOnAttributes>");
+        }
+        if (commentsOnPackages!= null) {
+            sb.append("<commentsOnPackages>");
+            sb.append(commentsOnPackages);
+            sb.append("</commentsOnPackages>");
+        }
+        if (commentsOnRoutines!= null) {
+            sb.append("<commentsOnRoutines>");
+            sb.append(commentsOnRoutines);
+            sb.append("</commentsOnRoutines>");
+        }
+        if (commentsOnParameters!= null) {
+            sb.append("<commentsOnParameters>");
+            sb.append(commentsOnParameters);
+            sb.append("</commentsOnParameters>");
+        }
+        if (commentsOnSequences!= null) {
+            sb.append("<commentsOnSequences>");
+            sb.append(commentsOnSequences);
+            sb.append("</commentsOnSequences>");
+        }
+        if (commentsOnLinks!= null) {
+            sb.append("<commentsOnLinks>");
+            sb.append(commentsOnLinks);
+            sb.append("</commentsOnLinks>");
+        }
+        if (commentsOnQueues!= null) {
+            sb.append("<commentsOnQueues>");
+            sb.append(commentsOnQueues);
+            sb.append("</commentsOnQueues>");
+        }
+        if (commentsOnKeys!= null) {
+            sb.append("<commentsOnKeys>");
+            sb.append(commentsOnKeys);
+            sb.append("</commentsOnKeys>");
+        }
+        if (fluentSetters!= null) {
+            sb.append("<fluentSetters>");
+            sb.append(fluentSetters);
+            sb.append("</fluentSetters>");
+        }
+        if (javaBeansGettersAndSetters!= null) {
+            sb.append("<javaBeansGettersAndSetters>");
+            sb.append(javaBeansGettersAndSetters);
+            sb.append("</javaBeansGettersAndSetters>");
+        }
+        if (varargSetters!= null) {
+            sb.append("<varargSetters>");
+            sb.append(varargSetters);
+            sb.append("</varargSetters>");
+        }
+        if (fullyQualifiedTypes!= null) {
+            sb.append("<fullyQualifiedTypes>");
+            sb.append(fullyQualifiedTypes);
+            sb.append("</fullyQualifiedTypes>");
+        }
+        if (emptyCatalogs!= null) {
+            sb.append("<emptyCatalogs>");
+            sb.append(emptyCatalogs);
+            sb.append("</emptyCatalogs>");
+        }
+        if (emptySchemas!= null) {
+            sb.append("<emptySchemas>");
+            sb.append(emptySchemas);
+            sb.append("</emptySchemas>");
+        }
+        if (javaTimeTypes!= null) {
+            sb.append("<javaTimeTypes>");
+            sb.append(javaTimeTypes);
+            sb.append("</javaTimeTypes>");
+        }
+        if (primaryKeyTypes!= null) {
+            sb.append("<primaryKeyTypes>");
+            sb.append(primaryKeyTypes);
+            sb.append("</primaryKeyTypes>");
+        }
         return sb.toString();
     }
 

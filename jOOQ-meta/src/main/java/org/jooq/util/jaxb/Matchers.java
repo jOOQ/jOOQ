@@ -219,21 +219,31 @@ public class Matchers implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<schemas>");
-        sb.append(schemas);
-        sb.append("</schemas>");
-        sb.append("<tables>");
-        sb.append(tables);
-        sb.append("</tables>");
-        sb.append("<fields>");
-        sb.append(fields);
-        sb.append("</fields>");
-        sb.append("<routines>");
-        sb.append(routines);
-        sb.append("</routines>");
-        sb.append("<sequences>");
-        sb.append(sequences);
-        sb.append("</sequences>");
+        if (schemas!= null) {
+            sb.append("<schemas>");
+            sb.append(schemas);
+            sb.append("</schemas>");
+        }
+        if (tables!= null) {
+            sb.append("<tables>");
+            sb.append(tables);
+            sb.append("</tables>");
+        }
+        if (fields!= null) {
+            sb.append("<fields>");
+            sb.append(fields);
+            sb.append("</fields>");
+        }
+        if (routines!= null) {
+            sb.append("<routines>");
+            sb.append(routines);
+            sb.append("</routines>");
+        }
+        if (sequences!= null) {
+            sb.append("<sequences>");
+            sb.append(sequences);
+            sb.append("</sequences>");
+        }
         return sb.toString();
     }
 

@@ -188,21 +188,31 @@ public class MatchersFieldType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<fieldIdentifier>");
-        sb.append(fieldIdentifier);
-        sb.append("</fieldIdentifier>");
-        sb.append("<fieldMember>");
-        sb.append(fieldMember);
-        sb.append("</fieldMember>");
-        sb.append("<fieldSetter>");
-        sb.append(fieldSetter);
-        sb.append("</fieldSetter>");
-        sb.append("<fieldGetter>");
-        sb.append(fieldGetter);
-        sb.append("</fieldGetter>");
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (fieldIdentifier!= null) {
+            sb.append("<fieldIdentifier>");
+            sb.append(fieldIdentifier);
+            sb.append("</fieldIdentifier>");
+        }
+        if (fieldMember!= null) {
+            sb.append("<fieldMember>");
+            sb.append(fieldMember);
+            sb.append("</fieldMember>");
+        }
+        if (fieldSetter!= null) {
+            sb.append("<fieldSetter>");
+            sb.append(fieldSetter);
+            sb.append("</fieldSetter>");
+        }
+        if (fieldGetter!= null) {
+            sb.append("<fieldGetter>");
+            sb.append(fieldGetter);
+            sb.append("</fieldGetter>");
+        }
         return sb.toString();
     }
 

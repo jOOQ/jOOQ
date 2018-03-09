@@ -109,12 +109,16 @@ public class RenderMapping
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<defaultSchema>");
-        sb.append(defaultSchema);
-        sb.append("</defaultSchema>");
-        sb.append("<schemata>");
-        sb.append(schemata);
-        sb.append("</schemata>");
+        if (defaultSchema!= null) {
+            sb.append("<defaultSchema>");
+            sb.append(defaultSchema);
+            sb.append("</defaultSchema>");
+        }
+        if (schemata!= null) {
+            sb.append("<schemata>");
+            sb.append(schemata);
+            sb.append("</schemata>");
+        }
         return sb.toString();
     }
 

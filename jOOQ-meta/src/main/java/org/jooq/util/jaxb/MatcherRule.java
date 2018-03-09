@@ -116,12 +116,16 @@ public class MatcherRule implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<transform>");
-        sb.append(transform);
-        sb.append("</transform>");
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
+        if (transform!= null) {
+            sb.append("<transform>");
+            sb.append(transform);
+            sb.append("</transform>");
+        }
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
         return sb.toString();
     }
 

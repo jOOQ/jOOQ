@@ -131,15 +131,21 @@ public class RenderFormatting
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<newline>");
-        sb.append(newline);
-        sb.append("</newline>");
-        sb.append("<indentation>");
-        sb.append(indentation);
-        sb.append("</indentation>");
-        sb.append("<printMargin>");
-        sb.append(printMargin);
-        sb.append("</printMargin>");
+        if (newline!= null) {
+            sb.append("<newline>");
+            sb.append(newline);
+            sb.append("</newline>");
+        }
+        if (indentation!= null) {
+            sb.append("<indentation>");
+            sb.append(indentation);
+            sb.append("</indentation>");
+        }
+        if (printMargin!= null) {
+            sb.append("<printMargin>");
+            sb.append(printMargin);
+            sb.append("</printMargin>");
+        }
         return sb.toString();
     }
 

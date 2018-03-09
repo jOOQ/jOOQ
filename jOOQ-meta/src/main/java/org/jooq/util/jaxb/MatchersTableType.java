@@ -434,45 +434,71 @@ public class MatchersTableType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<tableClass>");
-        sb.append(tableClass);
-        sb.append("</tableClass>");
-        sb.append("<tableIdentifier>");
-        sb.append(tableIdentifier);
-        sb.append("</tableIdentifier>");
-        sb.append("<tableImplements>");
-        sb.append(tableImplements);
-        sb.append("</tableImplements>");
-        sb.append("<recordClass>");
-        sb.append(recordClass);
-        sb.append("</recordClass>");
-        sb.append("<recordImplements>");
-        sb.append(recordImplements);
-        sb.append("</recordImplements>");
-        sb.append("<interfaceClass>");
-        sb.append(interfaceClass);
-        sb.append("</interfaceClass>");
-        sb.append("<interfaceImplements>");
-        sb.append(interfaceImplements);
-        sb.append("</interfaceImplements>");
-        sb.append("<daoClass>");
-        sb.append(daoClass);
-        sb.append("</daoClass>");
-        sb.append("<daoImplements>");
-        sb.append(daoImplements);
-        sb.append("</daoImplements>");
-        sb.append("<pojoClass>");
-        sb.append(pojoClass);
-        sb.append("</pojoClass>");
-        sb.append("<pojoExtends>");
-        sb.append(pojoExtends);
-        sb.append("</pojoExtends>");
-        sb.append("<pojoImplements>");
-        sb.append(pojoImplements);
-        sb.append("</pojoImplements>");
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (tableClass!= null) {
+            sb.append("<tableClass>");
+            sb.append(tableClass);
+            sb.append("</tableClass>");
+        }
+        if (tableIdentifier!= null) {
+            sb.append("<tableIdentifier>");
+            sb.append(tableIdentifier);
+            sb.append("</tableIdentifier>");
+        }
+        if (tableImplements!= null) {
+            sb.append("<tableImplements>");
+            sb.append(tableImplements);
+            sb.append("</tableImplements>");
+        }
+        if (recordClass!= null) {
+            sb.append("<recordClass>");
+            sb.append(recordClass);
+            sb.append("</recordClass>");
+        }
+        if (recordImplements!= null) {
+            sb.append("<recordImplements>");
+            sb.append(recordImplements);
+            sb.append("</recordImplements>");
+        }
+        if (interfaceClass!= null) {
+            sb.append("<interfaceClass>");
+            sb.append(interfaceClass);
+            sb.append("</interfaceClass>");
+        }
+        if (interfaceImplements!= null) {
+            sb.append("<interfaceImplements>");
+            sb.append(interfaceImplements);
+            sb.append("</interfaceImplements>");
+        }
+        if (daoClass!= null) {
+            sb.append("<daoClass>");
+            sb.append(daoClass);
+            sb.append("</daoClass>");
+        }
+        if (daoImplements!= null) {
+            sb.append("<daoImplements>");
+            sb.append(daoImplements);
+            sb.append("</daoImplements>");
+        }
+        if (pojoClass!= null) {
+            sb.append("<pojoClass>");
+            sb.append(pojoClass);
+            sb.append("</pojoClass>");
+        }
+        if (pojoExtends!= null) {
+            sb.append("<pojoExtends>");
+            sb.append(pojoExtends);
+            sb.append("</pojoExtends>");
+        }
+        if (pojoImplements!= null) {
+            sb.append("<pojoImplements>");
+            sb.append(pojoImplements);
+            sb.append("</pojoImplements>");
+        }
         return sb.toString();
     }
 

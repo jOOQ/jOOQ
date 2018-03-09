@@ -115,12 +115,16 @@ public class Catalog implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<catalogName>");
-        sb.append(catalogName);
-        sb.append("</catalogName>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (catalogName!= null) {
+            sb.append("<catalogName>");
+            sb.append(catalogName);
+            sb.append("</catalogName>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

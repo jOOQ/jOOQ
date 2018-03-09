@@ -159,18 +159,26 @@ public class MatchersSchemaType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<schemaClass>");
-        sb.append(schemaClass);
-        sb.append("</schemaClass>");
-        sb.append("<schemaIdentifier>");
-        sb.append(schemaIdentifier);
-        sb.append("</schemaIdentifier>");
-        sb.append("<schemaImplements>");
-        sb.append(schemaImplements);
-        sb.append("</schemaImplements>");
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (schemaClass!= null) {
+            sb.append("<schemaClass>");
+            sb.append(schemaClass);
+            sb.append("</schemaClass>");
+        }
+        if (schemaIdentifier!= null) {
+            sb.append("<schemaIdentifier>");
+            sb.append(schemaIdentifier);
+            sb.append("</schemaIdentifier>");
+        }
+        if (schemaImplements!= null) {
+            sb.append("<schemaImplements>");
+            sb.append(schemaImplements);
+            sb.append("</schemaImplements>");
+        }
         return sb.toString();
     }
 

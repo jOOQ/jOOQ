@@ -312,30 +312,46 @@ public class Index implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<indexCatalog>");
-        sb.append(indexCatalog);
-        sb.append("</indexCatalog>");
-        sb.append("<indexSchema>");
-        sb.append(indexSchema);
-        sb.append("</indexSchema>");
-        sb.append("<indexName>");
-        sb.append(indexName);
-        sb.append("</indexName>");
-        sb.append("<tableCatalog>");
-        sb.append(tableCatalog);
-        sb.append("</tableCatalog>");
-        sb.append("<tableSchema>");
-        sb.append(tableSchema);
-        sb.append("</tableSchema>");
-        sb.append("<tableName>");
-        sb.append(tableName);
-        sb.append("</tableName>");
-        sb.append("<isUnique>");
-        sb.append(isUnique);
-        sb.append("</isUnique>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (indexCatalog!= null) {
+            sb.append("<indexCatalog>");
+            sb.append(indexCatalog);
+            sb.append("</indexCatalog>");
+        }
+        if (indexSchema!= null) {
+            sb.append("<indexSchema>");
+            sb.append(indexSchema);
+            sb.append("</indexSchema>");
+        }
+        if (indexName!= null) {
+            sb.append("<indexName>");
+            sb.append(indexName);
+            sb.append("</indexName>");
+        }
+        if (tableCatalog!= null) {
+            sb.append("<tableCatalog>");
+            sb.append(tableCatalog);
+            sb.append("</tableCatalog>");
+        }
+        if (tableSchema!= null) {
+            sb.append("<tableSchema>");
+            sb.append(tableSchema);
+            sb.append("</tableSchema>");
+        }
+        if (tableName!= null) {
+            sb.append("<tableName>");
+            sb.append(tableName);
+            sb.append("</tableName>");
+        }
+        if (isUnique!= null) {
+            sb.append("<isUnique>");
+            sb.append(isUnique);
+            sb.append("</isUnique>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

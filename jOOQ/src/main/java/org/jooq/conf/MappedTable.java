@@ -139,15 +139,21 @@ public class MappedTable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<input>");
-        sb.append(input);
-        sb.append("</input>");
-        sb.append("<inputExpression>");
-        sb.append(inputExpression);
-        sb.append("</inputExpression>");
-        sb.append("<output>");
-        sb.append(output);
-        sb.append("</output>");
+        if (input!= null) {
+            sb.append("<input>");
+            sb.append(input);
+            sb.append("</input>");
+        }
+        if (inputExpression!= null) {
+            sb.append("<inputExpression>");
+            sb.append(inputExpression);
+            sb.append("</inputExpression>");
+        }
+        if (output!= null) {
+            sb.append("<output>");
+            sb.append(output);
+            sb.append("</output>");
+        }
         return sb.toString();
     }
 

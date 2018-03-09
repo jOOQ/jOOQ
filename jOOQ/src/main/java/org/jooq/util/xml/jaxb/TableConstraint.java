@@ -314,30 +314,46 @@ public class TableConstraint implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<constraintCatalog>");
-        sb.append(constraintCatalog);
-        sb.append("</constraintCatalog>");
-        sb.append("<constraintSchema>");
-        sb.append(constraintSchema);
-        sb.append("</constraintSchema>");
-        sb.append("<constraintName>");
-        sb.append(constraintName);
-        sb.append("</constraintName>");
-        sb.append("<constraintType>");
-        sb.append(constraintType);
-        sb.append("</constraintType>");
-        sb.append("<tableCatalog>");
-        sb.append(tableCatalog);
-        sb.append("</tableCatalog>");
-        sb.append("<tableSchema>");
-        sb.append(tableSchema);
-        sb.append("</tableSchema>");
-        sb.append("<tableName>");
-        sb.append(tableName);
-        sb.append("</tableName>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (constraintCatalog!= null) {
+            sb.append("<constraintCatalog>");
+            sb.append(constraintCatalog);
+            sb.append("</constraintCatalog>");
+        }
+        if (constraintSchema!= null) {
+            sb.append("<constraintSchema>");
+            sb.append(constraintSchema);
+            sb.append("</constraintSchema>");
+        }
+        if (constraintName!= null) {
+            sb.append("<constraintName>");
+            sb.append(constraintName);
+            sb.append("</constraintName>");
+        }
+        if (constraintType!= null) {
+            sb.append("<constraintType>");
+            sb.append(constraintType);
+            sb.append("</constraintType>");
+        }
+        if (tableCatalog!= null) {
+            sb.append("<tableCatalog>");
+            sb.append(tableCatalog);
+            sb.append("</tableCatalog>");
+        }
+        if (tableSchema!= null) {
+            sb.append("<tableSchema>");
+            sb.append(tableSchema);
+            sb.append("</tableSchema>");
+        }
+        if (tableName!= null) {
+            sb.append("<tableName>");
+            sb.append(tableName);
+            sb.append("</tableName>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

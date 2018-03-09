@@ -248,24 +248,36 @@ public class ReferentialConstraint implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<constraintCatalog>");
-        sb.append(constraintCatalog);
-        sb.append("</constraintCatalog>");
-        sb.append("<constraintSchema>");
-        sb.append(constraintSchema);
-        sb.append("</constraintSchema>");
-        sb.append("<constraintName>");
-        sb.append(constraintName);
-        sb.append("</constraintName>");
-        sb.append("<uniqueConstraintCatalog>");
-        sb.append(uniqueConstraintCatalog);
-        sb.append("</uniqueConstraintCatalog>");
-        sb.append("<uniqueConstraintSchema>");
-        sb.append(uniqueConstraintSchema);
-        sb.append("</uniqueConstraintSchema>");
-        sb.append("<uniqueConstraintName>");
-        sb.append(uniqueConstraintName);
-        sb.append("</uniqueConstraintName>");
+        if (constraintCatalog!= null) {
+            sb.append("<constraintCatalog>");
+            sb.append(constraintCatalog);
+            sb.append("</constraintCatalog>");
+        }
+        if (constraintSchema!= null) {
+            sb.append("<constraintSchema>");
+            sb.append(constraintSchema);
+            sb.append("</constraintSchema>");
+        }
+        if (constraintName!= null) {
+            sb.append("<constraintName>");
+            sb.append(constraintName);
+            sb.append("</constraintName>");
+        }
+        if (uniqueConstraintCatalog!= null) {
+            sb.append("<uniqueConstraintCatalog>");
+            sb.append(uniqueConstraintCatalog);
+            sb.append("</uniqueConstraintCatalog>");
+        }
+        if (uniqueConstraintSchema!= null) {
+            sb.append("<uniqueConstraintSchema>");
+            sb.append(uniqueConstraintSchema);
+            sb.append("</uniqueConstraintSchema>");
+        }
+        if (uniqueConstraintName!= null) {
+            sb.append("<uniqueConstraintName>");
+            sb.append(uniqueConstraintName);
+            sb.append("</uniqueConstraintName>");
+        }
         return sb.toString();
     }
 

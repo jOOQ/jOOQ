@@ -310,30 +310,46 @@ public class Sequence implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<sequenceCatalog>");
-        sb.append(sequenceCatalog);
-        sb.append("</sequenceCatalog>");
-        sb.append("<sequenceSchema>");
-        sb.append(sequenceSchema);
-        sb.append("</sequenceSchema>");
-        sb.append("<sequenceName>");
-        sb.append(sequenceName);
-        sb.append("</sequenceName>");
-        sb.append("<dataType>");
-        sb.append(dataType);
-        sb.append("</dataType>");
-        sb.append("<characterMaximumLength>");
-        sb.append(characterMaximumLength);
-        sb.append("</characterMaximumLength>");
-        sb.append("<numericPrecision>");
-        sb.append(numericPrecision);
-        sb.append("</numericPrecision>");
-        sb.append("<numericScale>");
-        sb.append(numericScale);
-        sb.append("</numericScale>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (sequenceCatalog!= null) {
+            sb.append("<sequenceCatalog>");
+            sb.append(sequenceCatalog);
+            sb.append("</sequenceCatalog>");
+        }
+        if (sequenceSchema!= null) {
+            sb.append("<sequenceSchema>");
+            sb.append(sequenceSchema);
+            sb.append("</sequenceSchema>");
+        }
+        if (sequenceName!= null) {
+            sb.append("<sequenceName>");
+            sb.append(sequenceName);
+            sb.append("</sequenceName>");
+        }
+        if (dataType!= null) {
+            sb.append("<dataType>");
+            sb.append(dataType);
+            sb.append("</dataType>");
+        }
+        if (characterMaximumLength!= null) {
+            sb.append("<characterMaximumLength>");
+            sb.append(characterMaximumLength);
+            sb.append("</characterMaximumLength>");
+        }
+        if (numericPrecision!= null) {
+            sb.append("<numericPrecision>");
+            sb.append(numericPrecision);
+            sb.append("</numericPrecision>");
+        }
+        if (numericScale!= null) {
+            sb.append("<numericScale>");
+            sb.append(numericScale);
+            sb.append("</numericScale>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

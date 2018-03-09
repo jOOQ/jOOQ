@@ -146,15 +146,21 @@ public class Configuration implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<logging>");
-        sb.append(logging);
-        sb.append("</logging>");
-        sb.append("<jdbc>");
-        sb.append(jdbc);
-        sb.append("</jdbc>");
-        sb.append("<generator>");
-        sb.append(generator);
-        sb.append("</generator>");
+        if (logging!= null) {
+            sb.append("<logging>");
+            sb.append(logging);
+            sb.append("</logging>");
+        }
+        if (jdbc!= null) {
+            sb.append("<jdbc>");
+            sb.append(jdbc);
+            sb.append("</jdbc>");
+        }
+        if (generator!= null) {
+            sb.append("<generator>");
+            sb.append(generator);
+            sb.append("</generator>");
+        }
         return sb.toString();
     }
 

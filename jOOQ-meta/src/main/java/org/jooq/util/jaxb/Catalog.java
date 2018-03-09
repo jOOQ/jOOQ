@@ -171,18 +171,26 @@ public class Catalog implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<inputCatalog>");
-        sb.append(inputCatalog);
-        sb.append("</inputCatalog>");
-        sb.append("<outputCatalog>");
-        sb.append(outputCatalog);
-        sb.append("</outputCatalog>");
-        sb.append("<outputCatalogToDefault>");
-        sb.append(outputCatalogToDefault);
-        sb.append("</outputCatalogToDefault>");
-        sb.append("<schemata>");
-        sb.append(schemata);
-        sb.append("</schemata>");
+        if (inputCatalog!= null) {
+            sb.append("<inputCatalog>");
+            sb.append(inputCatalog);
+            sb.append("</inputCatalog>");
+        }
+        if (outputCatalog!= null) {
+            sb.append("<outputCatalog>");
+            sb.append(outputCatalog);
+            sb.append("</outputCatalog>");
+        }
+        if (outputCatalogToDefault!= null) {
+            sb.append("<outputCatalogToDefault>");
+            sb.append(outputCatalogToDefault);
+            sb.append("</outputCatalogToDefault>");
+        }
+        if (schemata!= null) {
+            sb.append("<schemata>");
+            sb.append(schemata);
+            sb.append("</schemata>");
+        }
         return sb.toString();
     }
 

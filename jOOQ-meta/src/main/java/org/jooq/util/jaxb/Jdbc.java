@@ -264,27 +264,41 @@ public class Jdbc implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<driver>");
-        sb.append(driver);
-        sb.append("</driver>");
-        sb.append("<url>");
-        sb.append(url);
-        sb.append("</url>");
-        sb.append("<schema>");
-        sb.append(schema);
-        sb.append("</schema>");
-        sb.append("<user>");
-        sb.append(user);
-        sb.append("</user>");
-        sb.append("<username>");
-        sb.append(username);
-        sb.append("</username>");
-        sb.append("<password>");
-        sb.append(password);
-        sb.append("</password>");
-        sb.append("<properties>");
-        sb.append(properties);
-        sb.append("</properties>");
+        if (driver!= null) {
+            sb.append("<driver>");
+            sb.append(driver);
+            sb.append("</driver>");
+        }
+        if (url!= null) {
+            sb.append("<url>");
+            sb.append(url);
+            sb.append("</url>");
+        }
+        if (schema!= null) {
+            sb.append("<schema>");
+            sb.append(schema);
+            sb.append("</schema>");
+        }
+        if (user!= null) {
+            sb.append("<user>");
+            sb.append(user);
+            sb.append("</user>");
+        }
+        if (username!= null) {
+            sb.append("<username>");
+            sb.append(username);
+            sb.append("</username>");
+        }
+        if (password!= null) {
+            sb.append("<password>");
+            sb.append(password);
+            sb.append("</password>");
+        }
+        if (properties!= null) {
+            sb.append("<properties>");
+            sb.append(properties);
+            sb.append("</properties>");
+        }
         return sb.toString();
     }
 

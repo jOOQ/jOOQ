@@ -305,30 +305,44 @@ public class KeyColumnUsage implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<columnName>");
-        sb.append(columnName);
-        sb.append("</columnName>");
-        sb.append("<constraintCatalog>");
-        sb.append(constraintCatalog);
-        sb.append("</constraintCatalog>");
-        sb.append("<constraintSchema>");
-        sb.append(constraintSchema);
-        sb.append("</constraintSchema>");
-        sb.append("<constraintName>");
-        sb.append(constraintName);
-        sb.append("</constraintName>");
+        if (columnName!= null) {
+            sb.append("<columnName>");
+            sb.append(columnName);
+            sb.append("</columnName>");
+        }
+        if (constraintCatalog!= null) {
+            sb.append("<constraintCatalog>");
+            sb.append(constraintCatalog);
+            sb.append("</constraintCatalog>");
+        }
+        if (constraintSchema!= null) {
+            sb.append("<constraintSchema>");
+            sb.append(constraintSchema);
+            sb.append("</constraintSchema>");
+        }
+        if (constraintName!= null) {
+            sb.append("<constraintName>");
+            sb.append(constraintName);
+            sb.append("</constraintName>");
+        }
         sb.append("<ordinalPosition>");
         sb.append(ordinalPosition);
         sb.append("</ordinalPosition>");
-        sb.append("<tableCatalog>");
-        sb.append(tableCatalog);
-        sb.append("</tableCatalog>");
-        sb.append("<tableSchema>");
-        sb.append(tableSchema);
-        sb.append("</tableSchema>");
-        sb.append("<tableName>");
-        sb.append(tableName);
-        sb.append("</tableName>");
+        if (tableCatalog!= null) {
+            sb.append("<tableCatalog>");
+            sb.append(tableCatalog);
+            sb.append("</tableCatalog>");
+        }
+        if (tableSchema!= null) {
+            sb.append("<tableSchema>");
+            sb.append(tableSchema);
+            sb.append("</tableSchema>");
+        }
+        if (tableName!= null) {
+            sb.append("<tableName>");
+            sb.append(tableName);
+            sb.append("</tableName>");
+        }
         return sb.toString();
     }
 

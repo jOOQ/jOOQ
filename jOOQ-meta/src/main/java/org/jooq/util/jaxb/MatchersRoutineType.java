@@ -159,18 +159,26 @@ public class MatchersRoutineType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<routineClass>");
-        sb.append(routineClass);
-        sb.append("</routineClass>");
-        sb.append("<routineMethod>");
-        sb.append(routineMethod);
-        sb.append("</routineMethod>");
-        sb.append("<routineImplements>");
-        sb.append(routineImplements);
-        sb.append("</routineImplements>");
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (routineClass!= null) {
+            sb.append("<routineClass>");
+            sb.append(routineClass);
+            sb.append("</routineClass>");
+        }
+        if (routineMethod!= null) {
+            sb.append("<routineMethod>");
+            sb.append(routineMethod);
+            sb.append("</routineMethod>");
+        }
+        if (routineImplements!= null) {
+            sb.append("<routineImplements>");
+            sb.append(routineImplements);
+            sb.append("</routineImplements>");
+        }
         return sb.toString();
     }
 

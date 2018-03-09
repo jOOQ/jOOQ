@@ -473,45 +473,71 @@ public class Column implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<tableCatalog>");
-        sb.append(tableCatalog);
-        sb.append("</tableCatalog>");
-        sb.append("<tableSchema>");
-        sb.append(tableSchema);
-        sb.append("</tableSchema>");
-        sb.append("<tableName>");
-        sb.append(tableName);
-        sb.append("</tableName>");
-        sb.append("<columnName>");
-        sb.append(columnName);
-        sb.append("</columnName>");
-        sb.append("<dataType>");
-        sb.append(dataType);
-        sb.append("</dataType>");
-        sb.append("<characterMaximumLength>");
-        sb.append(characterMaximumLength);
-        sb.append("</characterMaximumLength>");
-        sb.append("<numericPrecision>");
-        sb.append(numericPrecision);
-        sb.append("</numericPrecision>");
-        sb.append("<numericScale>");
-        sb.append(numericScale);
-        sb.append("</numericScale>");
-        sb.append("<ordinalPosition>");
-        sb.append(ordinalPosition);
-        sb.append("</ordinalPosition>");
-        sb.append("<identityGeneration>");
-        sb.append(identityGeneration);
-        sb.append("</identityGeneration>");
-        sb.append("<isNullable>");
-        sb.append(isNullable);
-        sb.append("</isNullable>");
-        sb.append("<columnDefault>");
-        sb.append(columnDefault);
-        sb.append("</columnDefault>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (tableCatalog!= null) {
+            sb.append("<tableCatalog>");
+            sb.append(tableCatalog);
+            sb.append("</tableCatalog>");
+        }
+        if (tableSchema!= null) {
+            sb.append("<tableSchema>");
+            sb.append(tableSchema);
+            sb.append("</tableSchema>");
+        }
+        if (tableName!= null) {
+            sb.append("<tableName>");
+            sb.append(tableName);
+            sb.append("</tableName>");
+        }
+        if (columnName!= null) {
+            sb.append("<columnName>");
+            sb.append(columnName);
+            sb.append("</columnName>");
+        }
+        if (dataType!= null) {
+            sb.append("<dataType>");
+            sb.append(dataType);
+            sb.append("</dataType>");
+        }
+        if (characterMaximumLength!= null) {
+            sb.append("<characterMaximumLength>");
+            sb.append(characterMaximumLength);
+            sb.append("</characterMaximumLength>");
+        }
+        if (numericPrecision!= null) {
+            sb.append("<numericPrecision>");
+            sb.append(numericPrecision);
+            sb.append("</numericPrecision>");
+        }
+        if (numericScale!= null) {
+            sb.append("<numericScale>");
+            sb.append(numericScale);
+            sb.append("</numericScale>");
+        }
+        if (ordinalPosition!= null) {
+            sb.append("<ordinalPosition>");
+            sb.append(ordinalPosition);
+            sb.append("</ordinalPosition>");
+        }
+        if (identityGeneration!= null) {
+            sb.append("<identityGeneration>");
+            sb.append(identityGeneration);
+            sb.append("</identityGeneration>");
+        }
+        if (isNullable!= null) {
+            sb.append("<isNullable>");
+            sb.append(isNullable);
+            sb.append("</isNullable>");
+        }
+        if (columnDefault!= null) {
+            sb.append("<columnDefault>");
+            sb.append(columnDefault);
+            sb.append("</columnDefault>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

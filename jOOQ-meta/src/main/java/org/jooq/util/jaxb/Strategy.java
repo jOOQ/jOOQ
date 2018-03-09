@@ -101,12 +101,16 @@ public class Strategy implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(name);
-        sb.append("</name>");
-        sb.append("<matchers>");
-        sb.append(matchers);
-        sb.append("</matchers>");
+        if (name!= null) {
+            sb.append("<name>");
+            sb.append(name);
+            sb.append("</name>");
+        }
+        if (matchers!= null) {
+            sb.append("<matchers>");
+            sb.append(matchers);
+            sb.append("</matchers>");
+        }
         return sb.toString();
     }
 

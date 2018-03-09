@@ -1202,114 +1202,186 @@ public class Settings
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<renderCatalog>");
-        sb.append(renderCatalog);
-        sb.append("</renderCatalog>");
-        sb.append("<renderSchema>");
-        sb.append(renderSchema);
-        sb.append("</renderSchema>");
-        sb.append("<renderMapping>");
-        sb.append(renderMapping);
-        sb.append("</renderMapping>");
-        sb.append("<renderNameStyle>");
-        sb.append(renderNameStyle);
-        sb.append("</renderNameStyle>");
-        sb.append("<renderKeywordStyle>");
-        sb.append(renderKeywordStyle);
-        sb.append("</renderKeywordStyle>");
-        sb.append("<renderFormatted>");
-        sb.append(renderFormatted);
-        sb.append("</renderFormatted>");
-        sb.append("<renderFormatting>");
-        sb.append(renderFormatting);
-        sb.append("</renderFormatting>");
-        sb.append("<renderScalarSubqueriesForStoredFunctions>");
-        sb.append(renderScalarSubqueriesForStoredFunctions);
-        sb.append("</renderScalarSubqueriesForStoredFunctions>");
-        sb.append("<backslashEscaping>");
-        sb.append(backslashEscaping);
-        sb.append("</backslashEscaping>");
-        sb.append("<paramType>");
-        sb.append(paramType);
-        sb.append("</paramType>");
-        sb.append("<paramCastMode>");
-        sb.append(paramCastMode);
-        sb.append("</paramCastMode>");
-        sb.append("<statementType>");
-        sb.append(statementType);
-        sb.append("</statementType>");
-        sb.append("<executeLogging>");
-        sb.append(executeLogging);
-        sb.append("</executeLogging>");
-        sb.append("<executeWithOptimisticLocking>");
-        sb.append(executeWithOptimisticLocking);
-        sb.append("</executeWithOptimisticLocking>");
-        sb.append("<executeWithOptimisticLockingExcludeUnversioned>");
-        sb.append(executeWithOptimisticLockingExcludeUnversioned);
-        sb.append("</executeWithOptimisticLockingExcludeUnversioned>");
-        sb.append("<attachRecords>");
-        sb.append(attachRecords);
-        sb.append("</attachRecords>");
-        sb.append("<updatablePrimaryKeys>");
-        sb.append(updatablePrimaryKeys);
-        sb.append("</updatablePrimaryKeys>");
-        sb.append("<reflectionCaching>");
-        sb.append(reflectionCaching);
-        sb.append("</reflectionCaching>");
-        sb.append("<cacheRecordMappers>");
-        sb.append(cacheRecordMappers);
-        sb.append("</cacheRecordMappers>");
-        sb.append("<throwExceptions>");
-        sb.append(throwExceptions);
-        sb.append("</throwExceptions>");
-        sb.append("<fetchWarnings>");
-        sb.append(fetchWarnings);
-        sb.append("</fetchWarnings>");
-        sb.append("<fetchServerOutputSize>");
-        sb.append(fetchServerOutputSize);
-        sb.append("</fetchServerOutputSize>");
-        sb.append("<returnAllOnUpdatableRecord>");
-        sb.append(returnAllOnUpdatableRecord);
-        sb.append("</returnAllOnUpdatableRecord>");
-        sb.append("<returnRecordToPojo>");
-        sb.append(returnRecordToPojo);
-        sb.append("</returnRecordToPojo>");
-        sb.append("<mapJPAAnnotations>");
-        sb.append(mapJPAAnnotations);
-        sb.append("</mapJPAAnnotations>");
-        sb.append("<mapConstructorParameterNames>");
-        sb.append(mapConstructorParameterNames);
-        sb.append("</mapConstructorParameterNames>");
-        sb.append("<queryTimeout>");
-        sb.append(queryTimeout);
-        sb.append("</queryTimeout>");
-        sb.append("<maxRows>");
-        sb.append(maxRows);
-        sb.append("</maxRows>");
-        sb.append("<fetchSize>");
-        sb.append(fetchSize);
-        sb.append("</fetchSize>");
-        sb.append("<debugInfoOnStackTrace>");
-        sb.append(debugInfoOnStackTrace);
-        sb.append("</debugInfoOnStackTrace>");
-        sb.append("<inListPadding>");
-        sb.append(inListPadding);
-        sb.append("</inListPadding>");
-        sb.append("<inListPadBase>");
-        sb.append(inListPadBase);
-        sb.append("</inListPadBase>");
-        sb.append("<delimiter>");
-        sb.append(delimiter);
-        sb.append("</delimiter>");
-        sb.append("<executeUpdateWithoutWhere>");
-        sb.append(executeUpdateWithoutWhere);
-        sb.append("</executeUpdateWithoutWhere>");
-        sb.append("<executeDeleteWithoutWhere>");
-        sb.append(executeDeleteWithoutWhere);
-        sb.append("</executeDeleteWithoutWhere>");
-        sb.append("<parseWithMetaLookups>");
-        sb.append(parseWithMetaLookups);
-        sb.append("</parseWithMetaLookups>");
+        if (renderCatalog!= null) {
+            sb.append("<renderCatalog>");
+            sb.append(renderCatalog);
+            sb.append("</renderCatalog>");
+        }
+        if (renderSchema!= null) {
+            sb.append("<renderSchema>");
+            sb.append(renderSchema);
+            sb.append("</renderSchema>");
+        }
+        if (renderMapping!= null) {
+            sb.append("<renderMapping>");
+            sb.append(renderMapping);
+            sb.append("</renderMapping>");
+        }
+        if (renderNameStyle!= null) {
+            sb.append("<renderNameStyle>");
+            sb.append(renderNameStyle);
+            sb.append("</renderNameStyle>");
+        }
+        if (renderKeywordStyle!= null) {
+            sb.append("<renderKeywordStyle>");
+            sb.append(renderKeywordStyle);
+            sb.append("</renderKeywordStyle>");
+        }
+        if (renderFormatted!= null) {
+            sb.append("<renderFormatted>");
+            sb.append(renderFormatted);
+            sb.append("</renderFormatted>");
+        }
+        if (renderFormatting!= null) {
+            sb.append("<renderFormatting>");
+            sb.append(renderFormatting);
+            sb.append("</renderFormatting>");
+        }
+        if (renderScalarSubqueriesForStoredFunctions!= null) {
+            sb.append("<renderScalarSubqueriesForStoredFunctions>");
+            sb.append(renderScalarSubqueriesForStoredFunctions);
+            sb.append("</renderScalarSubqueriesForStoredFunctions>");
+        }
+        if (backslashEscaping!= null) {
+            sb.append("<backslashEscaping>");
+            sb.append(backslashEscaping);
+            sb.append("</backslashEscaping>");
+        }
+        if (paramType!= null) {
+            sb.append("<paramType>");
+            sb.append(paramType);
+            sb.append("</paramType>");
+        }
+        if (paramCastMode!= null) {
+            sb.append("<paramCastMode>");
+            sb.append(paramCastMode);
+            sb.append("</paramCastMode>");
+        }
+        if (statementType!= null) {
+            sb.append("<statementType>");
+            sb.append(statementType);
+            sb.append("</statementType>");
+        }
+        if (executeLogging!= null) {
+            sb.append("<executeLogging>");
+            sb.append(executeLogging);
+            sb.append("</executeLogging>");
+        }
+        if (executeWithOptimisticLocking!= null) {
+            sb.append("<executeWithOptimisticLocking>");
+            sb.append(executeWithOptimisticLocking);
+            sb.append("</executeWithOptimisticLocking>");
+        }
+        if (executeWithOptimisticLockingExcludeUnversioned!= null) {
+            sb.append("<executeWithOptimisticLockingExcludeUnversioned>");
+            sb.append(executeWithOptimisticLockingExcludeUnversioned);
+            sb.append("</executeWithOptimisticLockingExcludeUnversioned>");
+        }
+        if (attachRecords!= null) {
+            sb.append("<attachRecords>");
+            sb.append(attachRecords);
+            sb.append("</attachRecords>");
+        }
+        if (updatablePrimaryKeys!= null) {
+            sb.append("<updatablePrimaryKeys>");
+            sb.append(updatablePrimaryKeys);
+            sb.append("</updatablePrimaryKeys>");
+        }
+        if (reflectionCaching!= null) {
+            sb.append("<reflectionCaching>");
+            sb.append(reflectionCaching);
+            sb.append("</reflectionCaching>");
+        }
+        if (cacheRecordMappers!= null) {
+            sb.append("<cacheRecordMappers>");
+            sb.append(cacheRecordMappers);
+            sb.append("</cacheRecordMappers>");
+        }
+        if (throwExceptions!= null) {
+            sb.append("<throwExceptions>");
+            sb.append(throwExceptions);
+            sb.append("</throwExceptions>");
+        }
+        if (fetchWarnings!= null) {
+            sb.append("<fetchWarnings>");
+            sb.append(fetchWarnings);
+            sb.append("</fetchWarnings>");
+        }
+        if (fetchServerOutputSize!= null) {
+            sb.append("<fetchServerOutputSize>");
+            sb.append(fetchServerOutputSize);
+            sb.append("</fetchServerOutputSize>");
+        }
+        if (returnAllOnUpdatableRecord!= null) {
+            sb.append("<returnAllOnUpdatableRecord>");
+            sb.append(returnAllOnUpdatableRecord);
+            sb.append("</returnAllOnUpdatableRecord>");
+        }
+        if (returnRecordToPojo!= null) {
+            sb.append("<returnRecordToPojo>");
+            sb.append(returnRecordToPojo);
+            sb.append("</returnRecordToPojo>");
+        }
+        if (mapJPAAnnotations!= null) {
+            sb.append("<mapJPAAnnotations>");
+            sb.append(mapJPAAnnotations);
+            sb.append("</mapJPAAnnotations>");
+        }
+        if (mapConstructorParameterNames!= null) {
+            sb.append("<mapConstructorParameterNames>");
+            sb.append(mapConstructorParameterNames);
+            sb.append("</mapConstructorParameterNames>");
+        }
+        if (queryTimeout!= null) {
+            sb.append("<queryTimeout>");
+            sb.append(queryTimeout);
+            sb.append("</queryTimeout>");
+        }
+        if (maxRows!= null) {
+            sb.append("<maxRows>");
+            sb.append(maxRows);
+            sb.append("</maxRows>");
+        }
+        if (fetchSize!= null) {
+            sb.append("<fetchSize>");
+            sb.append(fetchSize);
+            sb.append("</fetchSize>");
+        }
+        if (debugInfoOnStackTrace!= null) {
+            sb.append("<debugInfoOnStackTrace>");
+            sb.append(debugInfoOnStackTrace);
+            sb.append("</debugInfoOnStackTrace>");
+        }
+        if (inListPadding!= null) {
+            sb.append("<inListPadding>");
+            sb.append(inListPadding);
+            sb.append("</inListPadding>");
+        }
+        if (inListPadBase!= null) {
+            sb.append("<inListPadBase>");
+            sb.append(inListPadBase);
+            sb.append("</inListPadBase>");
+        }
+        if (delimiter!= null) {
+            sb.append("<delimiter>");
+            sb.append(delimiter);
+            sb.append("</delimiter>");
+        }
+        if (executeUpdateWithoutWhere!= null) {
+            sb.append("<executeUpdateWithoutWhere>");
+            sb.append(executeUpdateWithoutWhere);
+            sb.append("</executeUpdateWithoutWhere>");
+        }
+        if (executeDeleteWithoutWhere!= null) {
+            sb.append("<executeDeleteWithoutWhere>");
+            sb.append(executeDeleteWithoutWhere);
+            sb.append("</executeDeleteWithoutWhere>");
+        }
+        if (parseWithMetaLookups!= null) {
+            sb.append("<parseWithMetaLookups>");
+            sb.append(parseWithMetaLookups);
+            sb.append("</parseWithMetaLookups>");
+        }
         return sb.toString();
     }
 

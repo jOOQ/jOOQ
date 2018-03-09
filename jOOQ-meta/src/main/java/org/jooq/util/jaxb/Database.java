@@ -1457,123 +1457,201 @@ public class Database implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(name);
-        sb.append("</name>");
-        sb.append("<regexFlags>");
-        sb.append(regexFlags);
-        sb.append("</regexFlags>");
-        sb.append("<includes>");
-        sb.append(includes);
-        sb.append("</includes>");
-        sb.append("<excludes>");
-        sb.append(excludes);
-        sb.append("</excludes>");
-        sb.append("<includeExcludeColumns>");
-        sb.append(includeExcludeColumns);
-        sb.append("</includeExcludeColumns>");
-        sb.append("<includeTables>");
-        sb.append(includeTables);
-        sb.append("</includeTables>");
-        sb.append("<includeRoutines>");
-        sb.append(includeRoutines);
-        sb.append("</includeRoutines>");
-        sb.append("<includeTriggerRoutines>");
-        sb.append(includeTriggerRoutines);
-        sb.append("</includeTriggerRoutines>");
-        sb.append("<includePackages>");
-        sb.append(includePackages);
-        sb.append("</includePackages>");
-        sb.append("<includeUDTs>");
-        sb.append(includeUDTs);
-        sb.append("</includeUDTs>");
-        sb.append("<includeSequences>");
-        sb.append(includeSequences);
-        sb.append("</includeSequences>");
-        sb.append("<includeIndexes>");
-        sb.append(includeIndexes);
-        sb.append("</includeIndexes>");
-        sb.append("<includePrimaryKeys>");
-        sb.append(includePrimaryKeys);
-        sb.append("</includePrimaryKeys>");
-        sb.append("<includeUniqueKeys>");
-        sb.append(includeUniqueKeys);
-        sb.append("</includeUniqueKeys>");
-        sb.append("<includeForeignKeys>");
-        sb.append(includeForeignKeys);
-        sb.append("</includeForeignKeys>");
-        sb.append("<recordVersionFields>");
-        sb.append(recordVersionFields);
-        sb.append("</recordVersionFields>");
-        sb.append("<recordTimestampFields>");
-        sb.append(recordTimestampFields);
-        sb.append("</recordTimestampFields>");
-        sb.append("<syntheticIdentities>");
-        sb.append(syntheticIdentities);
-        sb.append("</syntheticIdentities>");
-        sb.append("<syntheticPrimaryKeys>");
-        sb.append(syntheticPrimaryKeys);
-        sb.append("</syntheticPrimaryKeys>");
-        sb.append("<overridePrimaryKeys>");
-        sb.append(overridePrimaryKeys);
-        sb.append("</overridePrimaryKeys>");
-        sb.append("<dateAsTimestamp>");
-        sb.append(dateAsTimestamp);
-        sb.append("</dateAsTimestamp>");
-        sb.append("<ignoreProcedureReturnValues>");
-        sb.append(ignoreProcedureReturnValues);
-        sb.append("</ignoreProcedureReturnValues>");
-        sb.append("<unsignedTypes>");
-        sb.append(unsignedTypes);
-        sb.append("</unsignedTypes>");
-        sb.append("<inputCatalog>");
-        sb.append(inputCatalog);
-        sb.append("</inputCatalog>");
-        sb.append("<outputCatalog>");
-        sb.append(outputCatalog);
-        sb.append("</outputCatalog>");
-        sb.append("<outputCatalogToDefault>");
-        sb.append(outputCatalogToDefault);
-        sb.append("</outputCatalogToDefault>");
-        sb.append("<inputSchema>");
-        sb.append(inputSchema);
-        sb.append("</inputSchema>");
-        sb.append("<outputSchema>");
-        sb.append(outputSchema);
-        sb.append("</outputSchema>");
-        sb.append("<outputSchemaToDefault>");
-        sb.append(outputSchemaToDefault);
-        sb.append("</outputSchemaToDefault>");
-        sb.append("<schemaVersionProvider>");
-        sb.append(schemaVersionProvider);
-        sb.append("</schemaVersionProvider>");
-        sb.append("<catalogVersionProvider>");
-        sb.append(catalogVersionProvider);
-        sb.append("</catalogVersionProvider>");
-        sb.append("<orderProvider>");
-        sb.append(orderProvider);
-        sb.append("</orderProvider>");
-        sb.append("<tableValuedFunctions>");
-        sb.append(tableValuedFunctions);
-        sb.append("</tableValuedFunctions>");
-        sb.append("<properties>");
-        sb.append(properties);
-        sb.append("</properties>");
-        sb.append("<catalogs>");
-        sb.append(catalogs);
-        sb.append("</catalogs>");
-        sb.append("<schemata>");
-        sb.append(schemata);
-        sb.append("</schemata>");
-        sb.append("<customTypes>");
-        sb.append(customTypes);
-        sb.append("</customTypes>");
-        sb.append("<enumTypes>");
-        sb.append(enumTypes);
-        sb.append("</enumTypes>");
-        sb.append("<forcedTypes>");
-        sb.append(forcedTypes);
-        sb.append("</forcedTypes>");
+        if (name!= null) {
+            sb.append("<name>");
+            sb.append(name);
+            sb.append("</name>");
+        }
+        if (regexFlags!= null) {
+            sb.append("<regexFlags>");
+            sb.append(regexFlags);
+            sb.append("</regexFlags>");
+        }
+        if (includes!= null) {
+            sb.append("<includes>");
+            sb.append(includes);
+            sb.append("</includes>");
+        }
+        if (excludes!= null) {
+            sb.append("<excludes>");
+            sb.append(excludes);
+            sb.append("</excludes>");
+        }
+        if (includeExcludeColumns!= null) {
+            sb.append("<includeExcludeColumns>");
+            sb.append(includeExcludeColumns);
+            sb.append("</includeExcludeColumns>");
+        }
+        if (includeTables!= null) {
+            sb.append("<includeTables>");
+            sb.append(includeTables);
+            sb.append("</includeTables>");
+        }
+        if (includeRoutines!= null) {
+            sb.append("<includeRoutines>");
+            sb.append(includeRoutines);
+            sb.append("</includeRoutines>");
+        }
+        if (includeTriggerRoutines!= null) {
+            sb.append("<includeTriggerRoutines>");
+            sb.append(includeTriggerRoutines);
+            sb.append("</includeTriggerRoutines>");
+        }
+        if (includePackages!= null) {
+            sb.append("<includePackages>");
+            sb.append(includePackages);
+            sb.append("</includePackages>");
+        }
+        if (includeUDTs!= null) {
+            sb.append("<includeUDTs>");
+            sb.append(includeUDTs);
+            sb.append("</includeUDTs>");
+        }
+        if (includeSequences!= null) {
+            sb.append("<includeSequences>");
+            sb.append(includeSequences);
+            sb.append("</includeSequences>");
+        }
+        if (includeIndexes!= null) {
+            sb.append("<includeIndexes>");
+            sb.append(includeIndexes);
+            sb.append("</includeIndexes>");
+        }
+        if (includePrimaryKeys!= null) {
+            sb.append("<includePrimaryKeys>");
+            sb.append(includePrimaryKeys);
+            sb.append("</includePrimaryKeys>");
+        }
+        if (includeUniqueKeys!= null) {
+            sb.append("<includeUniqueKeys>");
+            sb.append(includeUniqueKeys);
+            sb.append("</includeUniqueKeys>");
+        }
+        if (includeForeignKeys!= null) {
+            sb.append("<includeForeignKeys>");
+            sb.append(includeForeignKeys);
+            sb.append("</includeForeignKeys>");
+        }
+        if (recordVersionFields!= null) {
+            sb.append("<recordVersionFields>");
+            sb.append(recordVersionFields);
+            sb.append("</recordVersionFields>");
+        }
+        if (recordTimestampFields!= null) {
+            sb.append("<recordTimestampFields>");
+            sb.append(recordTimestampFields);
+            sb.append("</recordTimestampFields>");
+        }
+        if (syntheticIdentities!= null) {
+            sb.append("<syntheticIdentities>");
+            sb.append(syntheticIdentities);
+            sb.append("</syntheticIdentities>");
+        }
+        if (syntheticPrimaryKeys!= null) {
+            sb.append("<syntheticPrimaryKeys>");
+            sb.append(syntheticPrimaryKeys);
+            sb.append("</syntheticPrimaryKeys>");
+        }
+        if (overridePrimaryKeys!= null) {
+            sb.append("<overridePrimaryKeys>");
+            sb.append(overridePrimaryKeys);
+            sb.append("</overridePrimaryKeys>");
+        }
+        if (dateAsTimestamp!= null) {
+            sb.append("<dateAsTimestamp>");
+            sb.append(dateAsTimestamp);
+            sb.append("</dateAsTimestamp>");
+        }
+        if (ignoreProcedureReturnValues!= null) {
+            sb.append("<ignoreProcedureReturnValues>");
+            sb.append(ignoreProcedureReturnValues);
+            sb.append("</ignoreProcedureReturnValues>");
+        }
+        if (unsignedTypes!= null) {
+            sb.append("<unsignedTypes>");
+            sb.append(unsignedTypes);
+            sb.append("</unsignedTypes>");
+        }
+        if (inputCatalog!= null) {
+            sb.append("<inputCatalog>");
+            sb.append(inputCatalog);
+            sb.append("</inputCatalog>");
+        }
+        if (outputCatalog!= null) {
+            sb.append("<outputCatalog>");
+            sb.append(outputCatalog);
+            sb.append("</outputCatalog>");
+        }
+        if (outputCatalogToDefault!= null) {
+            sb.append("<outputCatalogToDefault>");
+            sb.append(outputCatalogToDefault);
+            sb.append("</outputCatalogToDefault>");
+        }
+        if (inputSchema!= null) {
+            sb.append("<inputSchema>");
+            sb.append(inputSchema);
+            sb.append("</inputSchema>");
+        }
+        if (outputSchema!= null) {
+            sb.append("<outputSchema>");
+            sb.append(outputSchema);
+            sb.append("</outputSchema>");
+        }
+        if (outputSchemaToDefault!= null) {
+            sb.append("<outputSchemaToDefault>");
+            sb.append(outputSchemaToDefault);
+            sb.append("</outputSchemaToDefault>");
+        }
+        if (schemaVersionProvider!= null) {
+            sb.append("<schemaVersionProvider>");
+            sb.append(schemaVersionProvider);
+            sb.append("</schemaVersionProvider>");
+        }
+        if (catalogVersionProvider!= null) {
+            sb.append("<catalogVersionProvider>");
+            sb.append(catalogVersionProvider);
+            sb.append("</catalogVersionProvider>");
+        }
+        if (orderProvider!= null) {
+            sb.append("<orderProvider>");
+            sb.append(orderProvider);
+            sb.append("</orderProvider>");
+        }
+        if (tableValuedFunctions!= null) {
+            sb.append("<tableValuedFunctions>");
+            sb.append(tableValuedFunctions);
+            sb.append("</tableValuedFunctions>");
+        }
+        if (properties!= null) {
+            sb.append("<properties>");
+            sb.append(properties);
+            sb.append("</properties>");
+        }
+        if (catalogs!= null) {
+            sb.append("<catalogs>");
+            sb.append(catalogs);
+            sb.append("</catalogs>");
+        }
+        if (schemata!= null) {
+            sb.append("<schemata>");
+            sb.append(schemata);
+            sb.append("</schemata>");
+        }
+        if (customTypes!= null) {
+            sb.append("<customTypes>");
+            sb.append(customTypes);
+            sb.append("</customTypes>");
+        }
+        if (enumTypes!= null) {
+            sb.append("<enumTypes>");
+            sb.append(enumTypes);
+            sb.append("</enumTypes>");
+        }
+        if (forcedTypes!= null) {
+            sb.append("<forcedTypes>");
+            sb.append(forcedTypes);
+            sb.append("</forcedTypes>");
+        }
         return sb.toString();
     }
 

@@ -190,21 +190,31 @@ public class Generator implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(name);
-        sb.append("</name>");
-        sb.append("<strategy>");
-        sb.append(strategy);
-        sb.append("</strategy>");
-        sb.append("<database>");
-        sb.append(database);
-        sb.append("</database>");
-        sb.append("<generate>");
-        sb.append(generate);
-        sb.append("</generate>");
-        sb.append("<target>");
-        sb.append(target);
-        sb.append("</target>");
+        if (name!= null) {
+            sb.append("<name>");
+            sb.append(name);
+            sb.append("</name>");
+        }
+        if (strategy!= null) {
+            sb.append("<strategy>");
+            sb.append(strategy);
+            sb.append("</strategy>");
+        }
+        if (database!= null) {
+            sb.append("<database>");
+            sb.append(database);
+            sb.append("</database>");
+        }
+        if (generate!= null) {
+            sb.append("<generate>");
+            sb.append(generate);
+            sb.append("</generate>");
+        }
+        if (target!= null) {
+            sb.append("<target>");
+            sb.append(target);
+            sb.append("</target>");
+        }
         return sb.toString();
     }
 

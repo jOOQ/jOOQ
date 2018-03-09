@@ -509,48 +509,76 @@ public class Routine implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<specificCatalog>");
-        sb.append(specificCatalog);
-        sb.append("</specificCatalog>");
-        sb.append("<specificSchema>");
-        sb.append(specificSchema);
-        sb.append("</specificSchema>");
-        sb.append("<specificPackage>");
-        sb.append(specificPackage);
-        sb.append("</specificPackage>");
-        sb.append("<specificName>");
-        sb.append(specificName);
-        sb.append("</specificName>");
-        sb.append("<routineCatalog>");
-        sb.append(routineCatalog);
-        sb.append("</routineCatalog>");
-        sb.append("<routineSchema>");
-        sb.append(routineSchema);
-        sb.append("</routineSchema>");
-        sb.append("<routinePackage>");
-        sb.append(routinePackage);
-        sb.append("</routinePackage>");
-        sb.append("<routineName>");
-        sb.append(routineName);
-        sb.append("</routineName>");
-        sb.append("<routineType>");
-        sb.append(routineType);
-        sb.append("</routineType>");
-        sb.append("<dataType>");
-        sb.append(dataType);
-        sb.append("</dataType>");
-        sb.append("<characterMaximumLength>");
-        sb.append(characterMaximumLength);
-        sb.append("</characterMaximumLength>");
-        sb.append("<numericPrecision>");
-        sb.append(numericPrecision);
-        sb.append("</numericPrecision>");
-        sb.append("<numericScale>");
-        sb.append(numericScale);
-        sb.append("</numericScale>");
-        sb.append("<comment>");
-        sb.append(comment);
-        sb.append("</comment>");
+        if (specificCatalog!= null) {
+            sb.append("<specificCatalog>");
+            sb.append(specificCatalog);
+            sb.append("</specificCatalog>");
+        }
+        if (specificSchema!= null) {
+            sb.append("<specificSchema>");
+            sb.append(specificSchema);
+            sb.append("</specificSchema>");
+        }
+        if (specificPackage!= null) {
+            sb.append("<specificPackage>");
+            sb.append(specificPackage);
+            sb.append("</specificPackage>");
+        }
+        if (specificName!= null) {
+            sb.append("<specificName>");
+            sb.append(specificName);
+            sb.append("</specificName>");
+        }
+        if (routineCatalog!= null) {
+            sb.append("<routineCatalog>");
+            sb.append(routineCatalog);
+            sb.append("</routineCatalog>");
+        }
+        if (routineSchema!= null) {
+            sb.append("<routineSchema>");
+            sb.append(routineSchema);
+            sb.append("</routineSchema>");
+        }
+        if (routinePackage!= null) {
+            sb.append("<routinePackage>");
+            sb.append(routinePackage);
+            sb.append("</routinePackage>");
+        }
+        if (routineName!= null) {
+            sb.append("<routineName>");
+            sb.append(routineName);
+            sb.append("</routineName>");
+        }
+        if (routineType!= null) {
+            sb.append("<routineType>");
+            sb.append(routineType);
+            sb.append("</routineType>");
+        }
+        if (dataType!= null) {
+            sb.append("<dataType>");
+            sb.append(dataType);
+            sb.append("</dataType>");
+        }
+        if (characterMaximumLength!= null) {
+            sb.append("<characterMaximumLength>");
+            sb.append(characterMaximumLength);
+            sb.append("</characterMaximumLength>");
+        }
+        if (numericPrecision!= null) {
+            sb.append("<numericPrecision>");
+            sb.append(numericPrecision);
+            sb.append("</numericPrecision>");
+        }
+        if (numericScale!= null) {
+            sb.append("<numericScale>");
+            sb.append(numericScale);
+            sb.append("</numericScale>");
+        }
+        if (comment!= null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
         return sb.toString();
     }
 

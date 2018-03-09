@@ -98,12 +98,16 @@ public class MatchersSequenceType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<sequenceIdentifier>");
-        sb.append(sequenceIdentifier);
-        sb.append("</sequenceIdentifier>");
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (sequenceIdentifier!= null) {
+            sb.append("<sequenceIdentifier>");
+            sb.append(sequenceIdentifier);
+            sb.append("</sequenceIdentifier>");
+        }
         return sb.toString();
     }
 

@@ -324,33 +324,51 @@ public class ForcedType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(name);
-        sb.append("</name>");
-        sb.append("<userType>");
-        sb.append(userType);
-        sb.append("</userType>");
-        sb.append("<converter>");
-        sb.append(converter);
-        sb.append("</converter>");
-        sb.append("<enumConverter>");
-        sb.append(enumConverter);
-        sb.append("</enumConverter>");
-        sb.append("<binding>");
-        sb.append(binding);
-        sb.append("</binding>");
-        sb.append("<expression>");
-        sb.append(expression);
-        sb.append("</expression>");
-        sb.append("<expressions>");
-        sb.append(expressions);
-        sb.append("</expressions>");
-        sb.append("<types>");
-        sb.append(types);
-        sb.append("</types>");
-        sb.append("<nullability>");
-        sb.append(nullability);
-        sb.append("</nullability>");
+        if (name!= null) {
+            sb.append("<name>");
+            sb.append(name);
+            sb.append("</name>");
+        }
+        if (userType!= null) {
+            sb.append("<userType>");
+            sb.append(userType);
+            sb.append("</userType>");
+        }
+        if (converter!= null) {
+            sb.append("<converter>");
+            sb.append(converter);
+            sb.append("</converter>");
+        }
+        if (enumConverter!= null) {
+            sb.append("<enumConverter>");
+            sb.append(enumConverter);
+            sb.append("</enumConverter>");
+        }
+        if (binding!= null) {
+            sb.append("<binding>");
+            sb.append(binding);
+            sb.append("</binding>");
+        }
+        if (expression!= null) {
+            sb.append("<expression>");
+            sb.append(expression);
+            sb.append("</expression>");
+        }
+        if (expressions!= null) {
+            sb.append("<expressions>");
+            sb.append(expressions);
+            sb.append("</expressions>");
+        }
+        if (types!= null) {
+            sb.append("<types>");
+            sb.append(types);
+            sb.append("</types>");
+        }
+        if (nullability!= null) {
+            sb.append("<nullability>");
+            sb.append(nullability);
+            sb.append("</nullability>");
+        }
         return sb.toString();
     }
 

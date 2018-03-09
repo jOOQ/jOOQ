@@ -3167,7 +3167,7 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "AS"))
             alias = parseIdentifier(ctx);
-        else if (!peekKeyword(ctx, SELECT_KEYWORDS))
+        else if (!peekKeyword(ctx, KEYWORDS_IN_FROM))
             alias = parseIdentifierIf(ctx);
 
         if (alias != null) {
@@ -3373,7 +3373,7 @@ final class ParserImpl implements Parser {
 
         List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
         do {
-            if (peekKeyword(ctx, SELECT_KEYWORDS))
+            if (peekKeyword(ctx, KEYWORDS_IN_SELECT))
                 throw ctx.exception("Select keywords must be quoted");
 
             QualifiedAsterisk qa;
@@ -3389,7 +3389,7 @@ final class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "AS"))
                     alias = parseIdentifier(ctx, true);
-                else if (!peekKeyword(ctx, SELECT_KEYWORDS))
+                else if (!peekKeyword(ctx, KEYWORDS_IN_SELECT))
                     alias = parseIdentifierIf(ctx, true);
 
                 result.add(alias == null ? field : field.as(alias));
@@ -7562,7 +7562,32 @@ final class ParserImpl implements Parser {
         REGR_SXY,
     }
 
-    private static final String[] SELECT_KEYWORDS     = {
+    private static final String[] KEYWORDS_IN_SELECT  = {
+        "CONNECT",
+        "EXCEPT",
+        "FETCH",
+        "FOR",
+        "FROM",
+        "FULL",
+        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
+        "GROUP BY",
+        "HAVING",
+        "INTERSECT",
+        "INTO",
+        "LIMIT",
+        "MINUS",
+        "OFFSET",
+        "ORDER BY",
+        "PARTITION",
+        "RETURNING",
+        "SELECT",
+        "START",
+        "UNION",
+        "WHERE",
+        "WITH",
+    };
+
+    private static final String[] KEYWORDS_IN_FROM    = {
         "CONNECT",
         "CROSS",
         "EXCEPT",

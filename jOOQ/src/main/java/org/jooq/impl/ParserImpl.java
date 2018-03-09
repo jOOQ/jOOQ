@@ -7338,7 +7338,12 @@ final class ParserImpl implements Parser {
 
         String mark() {
             int[] line = line();
-            return "[" + line[0] + ":" + line[1] + "] " + sqlString.substring(Math.max(0, position - 50), position) + "[*]" + sqlString.substring(position, Math.min(sqlString.length(), position + 80));
+            return "[" + line[0] + ":" + line[1] + "] "
+                  + (position > 50 ? "..." : "")
+                  + sqlString.substring(Math.max(0, position - 50), position)
+                  + "[*]"
+                  + sqlString.substring(position, Math.min(sqlString.length(), position + 80))
+                  + (sqlString.length() > position + 80 ? "..." : "");
         }
 
         @Override

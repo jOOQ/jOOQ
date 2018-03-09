@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.exception.SQLStateSubclass.C42000_NO_SUBCLASS;
-
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLStateSubclass;
@@ -65,7 +63,7 @@ public final class ParserException extends DataAccessException {
     }
 
     public ParserException(String sql, String message) {
-        this(sql, message, C42000_NO_SUBCLASS);
+        this(sql, message, null);
     }
 
     public ParserException(String sql, String message, SQLStateSubclass state) {
@@ -73,7 +71,11 @@ public final class ParserException extends DataAccessException {
     }
 
     public ParserException(String sql, String message, SQLStateSubclass state, Throwable cause) {
-        super(state + ": " + (message == null ? "" : message + ": ") + sql, cause);
+        super(
+            (state == null ? "" : state + ": ")
+          + (message == null ? "" : message + ": ")
+          + sql, cause
+        );
 
         this.sql = sql;
     }

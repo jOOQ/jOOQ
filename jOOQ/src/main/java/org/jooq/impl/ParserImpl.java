@@ -669,7 +669,7 @@ final class ParserImpl implements Parser {
             case 'v':
             case 'V':
                 if (!parseSelect && peekKeyword(ctx, "VALUES"))
-                    return ctx.dsl.selectFrom(parseTableValueConstructor(ctx));
+                    return parseSelect(ctx);
 
             case 'w':
             case 'W':
@@ -910,6 +910,9 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
             return result;
         }
+
+        if (peekKeyword(ctx, "VALUES"))
+            return (SelectQueryImpl<Record>) ctx.dsl.selectQuery(parseTableValueConstructor(ctx));
 
         parseKeyword(ctx, "SELECT");
         String hints = parseHints(ctx);

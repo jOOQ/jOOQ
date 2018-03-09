@@ -192,7 +192,7 @@ revokeStatement = 'REVOKE'
   'FROM' ( userName | roleName | 'PUBLIC')
 ;
 
-selectStatement = select | values [ correlationName ]
+selectStatement = select
 ;
 
 insertStatement = [ with ] 'INSERT INTO' tableName
@@ -305,6 +305,7 @@ select =
   [ orderBy ]
   [ offsetFetch ]
   [ forUpdate ]
+| values
 ;
 
 queryExpressionBody =

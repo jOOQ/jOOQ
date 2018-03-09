@@ -4075,6 +4075,8 @@ final class ParserImpl implements Parser {
                         return tanh((Field) parseFieldSumParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "TAN"))
                         return tan((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseFieldToNumberIf(ctx)) != null)
+                        return field;
 
                 if (D.is(type))
                     if ((field = parseFieldTimestampLiteralIf(ctx)) != null)
@@ -4781,6 +4783,17 @@ final class ParserImpl implements Parser {
             Field<String> f3 = (Field) parseField(ctx, S);
             parse(ctx, ')');
             return translate(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldToNumberIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TO_NUMBER")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parse(ctx, ')');
+            return cast(f1, SQLDataType.NUMERIC);
         }
 
         return null;

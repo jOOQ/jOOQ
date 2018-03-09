@@ -97,6 +97,7 @@ import static org.jooq.impl.DSL.groupingId;
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.ifnull;
+import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.keyword;
@@ -3933,6 +3934,8 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseFieldIsnullIf(ctx)) != null)
                     return field;
+                else if ((field = parseFieldIifIf(ctx)) != null)
+                    return field;
                 else
                     break;
 
@@ -5093,6 +5096,22 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return isnull(f1, f2);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldIifIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "IIF")) {
+            parse(ctx, '(');
+            Condition c = parseCondition(ctx);
+            parse(ctx, ',');
+            Field<?> f1 = parseField(ctx);
+            parse(ctx, ',');
+            Field<?> f2 = parseField(ctx);
+            parse(ctx, ')');
+
+            return iif(c, f1, f2);
         }
 
         return null;

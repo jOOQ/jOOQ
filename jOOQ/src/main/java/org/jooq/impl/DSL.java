@@ -12586,6 +12586,50 @@ public class DSL {
         return new NullIf<T>(nullSafe(value), nullSafe(other));
     }
 
+    /**
+     * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
+     *
+     * @see #iif(Condition, Field, Field)
+     */
+    @Support
+    public static <T> Field<T> iif(Condition condition, T ifTrue, T ifFalse) {
+        return iif0(condition, Tools.field(ifTrue), Tools.field(ifFalse));
+    }
+
+    /**
+     * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
+     *
+     * @see #iif(Condition, Field, Field)
+     */
+    @Support
+    public static <T> Field<T> iif(Condition condition, T ifTrue, Field<T> ifFalse) {
+        return iif0(condition, Tools.field(ifTrue, ifFalse), nullSafe(ifFalse));
+    }
+
+    /**
+     * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
+     *
+     * @see #iif(Condition, Field, Field)
+     */
+    @Support
+    public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, T ifFalse) {
+        return iif0(condition, nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
+    }
+
+    /**
+     * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
+     */
+    @Support
+    public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+        return iif0(condition, ifTrue, ifFalse);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T> iif0(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+        return new Iif<T>(condition, nullSafe(ifTrue), nullSafe(ifFalse));
+    }
+
     // -------------------------------------------------------------------------
     // XXX String function factory
     // -------------------------------------------------------------------------

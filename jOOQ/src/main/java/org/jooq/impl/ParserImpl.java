@@ -3350,19 +3350,18 @@ final class ParserImpl implements Parser {
             case STRAIGHT_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                boolean on = parseKeywordIf(ctx, "ON");
-
-                if (on) {
+                if (parseKeywordIf(ctx, "ON")) {
                     return s2.on(parseCondition(ctx));
                 }
-                else {
-                    parseKeyword(ctx, "USING");
+                else if (parseKeywordIf(ctx, "USING")) {
                     parse(ctx, '(');
                     Table result = s2.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
                     parse(ctx, ')');
 
                     return result;
                 }
+                else
+                    throw ctx.expected("ON", "USING");
 
             default:
                 return s0;

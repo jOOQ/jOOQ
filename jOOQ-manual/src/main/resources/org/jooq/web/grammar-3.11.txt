@@ -58,13 +58,9 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 (
   'ADD CONSTRAINT' constraintName constraint
 | 'ADD' constraint
-| 'ADD' [ 'COLUMN' ] identifier dataType
-  {
-    (
-      [ 'NOT' ] 'NULL'
-    | 'DEFAULT' concat
-    )
-  }
+| 'ADD' [ 'COLUMN' ] column
+| 'ADD' '(' ( 'CONSTRAINT' constraintName constraint | constraint | column )
+      { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
 | ( 'ALTER' | 'MODIFY' ) [ 'COLUMN' ] identifier
   (
     [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
@@ -117,10 +113,8 @@ createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT E
 ( break )
 (
   'AS' select
-| '('
-  column { ',' column }
-  { ',' constraint }
-  ')'
+| '('   ( 'CONSTRAINT' constraintName constraint | constraint | column )
+  { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
 )
 break
 [ 'ON COMMIT' ( 'DELETE ROWS' | 'DROP' | 'PRESERVE ROWS' ) ]

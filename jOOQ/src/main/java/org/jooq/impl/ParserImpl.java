@@ -3059,6 +3059,16 @@ final class ParserImpl implements Parser {
         }
         else {
             result = parseTableName(ctx);
+
+
+
+
+
+
+
+
+
+
             // TODO Sample clause
         }
 
@@ -3178,6 +3188,69 @@ final class ParserImpl implements Parser {
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final Table<?> parseTableValueConstructor(ParserContext ctx) {
         parseKeyword(ctx, "VALUES");
@@ -7235,6 +7308,10 @@ final class ParserImpl implements Parser {
             this.sqlString = sqlString;
             this.sql = sqlString.toCharArray();
             this.bindings = bindings;
+        }
+
+        String substring(int startPosition, int endPosition) {
+            return new String(sql, startPosition, endPosition - startPosition);
         }
 
         ParserException internalError() {

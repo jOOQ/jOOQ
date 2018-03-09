@@ -3060,15 +3060,6 @@ final class ParserImpl implements Parser {
         else {
             result = parseTableName(ctx);
 
-            if (parseKeywordIf(ctx, "WITH") && ctx.requireProEdition()) {
-
-
-
-
-
-
-
-            }
             // TODO Sample clause
         }
 
@@ -3186,6 +3177,16 @@ final class ParserImpl implements Parser {
                 result = result.as(alias, columnAliases.toArray(EMPTY_NAME));
             else
                 result = result.as(alias);
+        }
+
+        if (parseKeywordIf(ctx, "WITH") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
         }
 
         return result;

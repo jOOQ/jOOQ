@@ -431,7 +431,7 @@ tableFactor =
   'LATERAL' '(' select ')' [ correlationName ]
 | '(' select ')' [ correlationName ]
 | values [ correlationName ]
-| tableName [ tableHints ] [ versions ] [ correlationName ]
+| tableName [ versions ] [ correlationName ] [ tableHints ]
 | '(' table ')' [ correlationName ]
 ;
 

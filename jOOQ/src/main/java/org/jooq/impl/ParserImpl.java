@@ -539,7 +539,7 @@ final class ParserImpl implements Parser {
     private static final void parseDelimiterSpecifications(ParserContext ctx) {
         while (parseKeywordIf(ctx, "DELIMITER")) {
             if (ctx.character() != ' ')
-                throw ctx.unexpectedToken();
+                throw ctx.exception("Whitespace expected");
 
             ctx.delimiter = parseUntilEOL(ctx).trim();
         }
@@ -553,7 +553,7 @@ final class ParserImpl implements Parser {
             String line = parseUntilEOLIf(ctx);
 
             if (line != null && !"".equals(line.trim()))
-                throw ctx.unexpectedToken();
+                throw ctx.exception("GO must be only token on line");
 
             return true;
         }
@@ -728,7 +728,7 @@ final class ParserImpl implements Parser {
         else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
             return parseUpdate(ctx, with);
         else
-            throw ctx.unexpectedToken();
+            throw ctx.exception("Unsupported statement after WITH");
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
@@ -750,7 +750,7 @@ final class ParserImpl implements Parser {
             else if (parseKeywordIf(ctx, "BY"))
                 result.addOrderBy(parseSortSpecification(ctx));
             else
-                throw ctx.unexpectedToken();
+                throw ctx.expected("SIBLINGS BY", "BY");
 
         if (!result.getLimit().isApplicable()) {
             boolean offsetStandard = false;
@@ -803,9 +803,7 @@ final class ParserImpl implements Parser {
                 }
             }
             else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
-                if (!parseKeywordIf(ctx, "FIRST") && !parseKeywordIf(ctx, "NEXT"))
-                    throw ctx.unexpectedToken();
-
+                parseAndGetKeyword(ctx, "FIRST", "NEXT");
                 result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
 
 
@@ -813,9 +811,7 @@ final class ParserImpl implements Parser {
 
 
 
-                if (!parseKeywordIf(ctx, "ROW") && !parseKeywordIf(ctx, "ROWS"))
-                    throw ctx.unexpectedToken();
-
+                parseAndGetKeyword(ctx, "ROW", "ROWS");
                 if (parseKeywordIf(ctx, "WITH TIES"))
                     result.setWithTies(true);
                 else
@@ -843,7 +839,7 @@ final class ParserImpl implements Parser {
                     result.setForUpdateSkipLocked();
             }
             else
-                throw ctx.unexpectedToken();
+                throw ctx.expected("SHARE", "UPDATE");
         }
 
         return result;
@@ -871,7 +867,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryTerm(ctx, degree, null, null));
                     break;
                 default:
-                    ctx.unexpectedToken();
+                    ctx.internalError();
                     break;
             }
         }
@@ -895,7 +891,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree, null));
                     break;
                 default:
-                    ctx.unexpectedToken();
+                    ctx.internalError();
                     break;
             }
         }
@@ -1192,7 +1188,7 @@ final class ParserImpl implements Parser {
                 returning = onDuplicate = s1.defaultValues();
         }
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("DEFAULT VALUES", "SELECT", "SET", "VALUES");
 
         if (parseKeywordIf(ctx, "ON")) {
             if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE SET")) {
@@ -1226,10 +1222,10 @@ final class ParserImpl implements Parser {
                         returning = where;
                 }
                 else
-                    throw ctx.unexpectedToken();
+                    throw ctx.expected("NOTHING", "UPDATE");
             }
             else
-                throw ctx.unexpectedToken();
+                throw ctx.expected("CONFLICT", "DUPLICATE");
         }
 
         if (parseKeywordIf(ctx, "RETURNING"))
@@ -1488,7 +1484,7 @@ final class ParserImpl implements Parser {
             return IGNORE;
         }
         else
-            throw ctx.unexpectedToken();
+            throw ctx.unsupportedClause();
 
         parseKeyword(ctx, "IS");
         return s1.is(parseStringLiteral(ctx));
@@ -1516,7 +1512,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseCreateView(ctx);
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("GENERATOR", "GLOBAL TEMPORARY TABLE", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "UNIQUE INDEX", "VIEW");
     }
 
     private static final Query parseAlter(ParserContext ctx) {
@@ -1537,7 +1533,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseAlterView(ctx);
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("DOMAIN", "INDEX", "SCHEMA", "SEQUENCE", "SESSION", "TABLE", "VIEW");
     }
 
     private static final DDLQuery parseDrop(ParserContext ctx) {
@@ -1558,7 +1554,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseDropSchema(ctx);
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "VIEW");
     }
 
     private static final Truncate<?> parseTruncate(ParserContext ctx) {
@@ -1684,7 +1680,7 @@ final class ParserImpl implements Parser {
                 throw ctx.exception("Unsupported object type: " + objectType);
         }
         else {
-            throw ctx.unexpectedToken();
+            throw ctx.unsupportedClause();
         }
     }
 
@@ -1752,7 +1748,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "DELETE"))
             return privilege(K_DELETE);
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("DELETE", "INSERT", "SELECT", "UPDATE");
     }
 
     private static final User parseUser(ParserContext ctx) {
@@ -1830,7 +1826,7 @@ final class ParserImpl implements Parser {
             else
                 return s1.restart();
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("RENAME TO", "RESTART");
     }
 
     private static final Query parseAlterSession(ParserContext ctx) {
@@ -1979,7 +1975,7 @@ final class ParserImpl implements Parser {
                                     if (identityOption)
                                         break;
                                     else
-                                        throw ctx.unexpectedToken();
+                                        throw ctx.unsupportedClause();
                                 }
 
                                 parse(ctx, ')');
@@ -2080,7 +2076,7 @@ final class ParserImpl implements Parser {
                     else if (parseKeywordIf(ctx, "CHECK"))
                         constraints.add(parseCheckSpecification(ctx, constraint));
                     else
-                        throw ctx.unexpectedToken();
+                        throw ctx.expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
                 }
                 while (parseIf(ctx, ','));
             }
@@ -2106,7 +2102,7 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "PRESERVE ROWS"))
                     s4 = s3.onCommitPreserveRows();
                 else
-                    throw ctx.unexpectedToken();
+                    throw ctx.unsupportedClause();
             }
 
             storageStep = commentStep = s4;
@@ -2313,7 +2309,7 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "SET NULL"))
                     e = e.onDeleteSetNull();
                 else
-                    throw ctx.unexpectedToken();
+                    throw ctx.expected("CASCADE", "NO ACTION", "RESTRICT", "SET DEFAULT", "SET NULL");
             }
             else if (!onUpdate && parseKeywordIf(ctx, "UPDATE")) {
                 onUpdate = true;
@@ -2329,10 +2325,10 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "SET NULL"))
                     e = e.onUpdateSetNull();
                 else
-                    throw ctx.unexpectedToken();
+                    throw ctx.expected("CASCADE", "NO ACTION", "RESTRICT", "SET DEFAULT", "SET NULL");
             }
             else
-                throw ctx.unexpectedToken();
+                throw ctx.expected("DELETE", "UPDATE");
         }
 
         return e;
@@ -2369,7 +2365,7 @@ final class ParserImpl implements Parser {
                     else if (parseKeywordIf(ctx, "CHECK"))
                         return s1.add(parseCheckSpecification(ctx, constraint));
                     else if (constraint != null)
-                        throw ctx.unexpectedToken();
+                        throw ctx.expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
                     else {
                         parseKeywordIf(ctx, "COLUMN");
 
@@ -2422,12 +2418,12 @@ final class ParserImpl implements Parser {
 
                             if (!unique)
                                 if (parseKeywordIf(ctx, "PRIMARY KEY"))
-                                    throw ctx.unexpectedToken();
+                                    throw ctx.notImplemented("Inline primary key specification");
                                 else if (parseKeywordIf(ctx, "UNIQUE"))
-                                    throw ctx.unexpectedToken();
+                                    throw ctx.notImplemented("Inline unique key specification");
 
                             if (parseKeywordIf(ctx, "CHECK"))
-                                throw ctx.unexpectedToken();
+                                throw ctx.notImplemented("Inline check constraint specification");
 
                             if (!comment) {
                                 if (parseKeywordIf(ctx, "COMMENT")) {
@@ -2544,7 +2540,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        throw ctx.unexpectedToken();
+        throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME");
     }
 
     private static final DDLQuery parseAlterTableAlterColumn(ParserContext ctx, AlterTableStep s1) {
@@ -2689,7 +2685,7 @@ final class ParserImpl implements Parser {
             return IGNORE;
         }
         else
-            throw ctx.unexpectedToken();
+            throw ctx.expected("OWNER TO", "RENAME TO");
     }
 
     private static final DDLQuery parseDropSchema(ParserContext ctx) {
@@ -2788,7 +2784,7 @@ final class ParserImpl implements Parser {
 
         // TODO (PostgreSQL): ADD
         else
-            throw ctx.unexpectedToken();
+            throw ctx.unsupportedClause();
     }
 
     private static final DDLQuery parseAlterIndex(ParserContext ctx) {
@@ -3298,7 +3294,7 @@ final class ParserImpl implements Parser {
         List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
         do {
             if (peekKeyword(ctx, SELECT_KEYWORDS))
-                throw ctx.unexpectedToken();
+                throw ctx.exception("Select keywords must be quoted");
 
             QualifiedAsterisk qa;
             if (parseIf(ctx, '*')) {
@@ -4089,7 +4085,7 @@ final class ParserImpl implements Parser {
                         break;
 
                     default:
-                        throw ctx.unexpectedToken();
+                        throw ctx.exception("Unsupported JDBC escape literal");
                 }
 
                 parse(ctx, '}');
@@ -4253,7 +4249,7 @@ final class ParserImpl implements Parser {
                 else if ("SS".equals(part))
                     p = DatePart.SECOND;
                 else
-                    throw ctx.unexpectedToken();
+                    throw ctx.exception("Unsupported date part");
 
                 parse(ctx, ')');
                 return DSL.trunc((Field) arg1, p);
@@ -4501,7 +4497,7 @@ final class ParserImpl implements Parser {
             if (parseKeywordIf(ctx, part.name()))
                 return part;
 
-        throw ctx.unexpectedToken();
+        throw ctx.exception("Unsupported date part");
     }
 
     private static final Field<?> parseFieldAsciiIf(ParserContext ctx) {
@@ -5778,7 +5774,7 @@ final class ParserImpl implements Parser {
                 return varSamp(arg);
 
             default:
-                throw ctx.unexpectedToken();
+                throw ctx.exception("Unsupported computational operation");
         }
     }
 
@@ -5869,7 +5865,7 @@ final class ParserImpl implements Parser {
         Name result = parseNameIf(ctx);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Identifier");
 
         return result;
     }
@@ -5889,7 +5885,7 @@ final class ParserImpl implements Parser {
         Name result = parseNameIf(ctx);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Identifier");
 
         return result;
     }
@@ -6027,8 +6023,8 @@ final class ParserImpl implements Parser {
                     return SQLDataType.BOOLEAN;
                 else if (parseKeywordIf(ctx, "BYTEA"))
                     return SQLDataType.BLOB;
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'c':
             case 'C':
@@ -6039,8 +6035,8 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CHAR));
                 else if (parseKeywordIf(ctx, "CLOB"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CLOB));
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'd':
             case 'D':
@@ -6053,22 +6049,22 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
                          parseKeywordIf(ctx, "DOUBLE"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.DOUBLE);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'e':
             case 'E':
                 if (parseKeywordIf(ctx, "ENUM"))
                     return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'f':
             case 'F':
                 if (parseKeywordIf(ctx, "FLOAT"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.FLOAT);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'i':
             case 'I':
@@ -6080,8 +6076,8 @@ final class ParserImpl implements Parser {
                     return SQLDataType.SMALLINT;
                 else if (parseKeywordIf(ctx, "INT8"))
                     return SQLDataType.BIGINT;
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'l':
             case 'L':
@@ -6095,8 +6091,8 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARBINARY));
                 else if (parseKeywordIf(ctx, "LONG VARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARCHAR));
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'm':
             case 'M':
@@ -6106,8 +6102,8 @@ final class ParserImpl implements Parser {
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
                 else if (parseKeywordIf(ctx, "MEDIUMTEXT"))
                     return parseDataTypeCollation(ctx, SQLDataType.CLOB);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'n':
             case 'N':
@@ -6120,15 +6116,15 @@ final class ParserImpl implements Parser {
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
                 else if (parseKeywordIf(ctx, "NVARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'r':
             case 'R':
                 if (parseKeywordIf(ctx, "REAL"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.REAL);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 's':
             case 'S':
@@ -6142,8 +6138,8 @@ final class ParserImpl implements Parser {
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
                 else if (parseKeywordIf(ctx, "SMALLSERIAL"))
                     return SQLDataType.SMALLINT.identity(true);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 't':
             case 'T':
@@ -6186,15 +6182,15 @@ final class ParserImpl implements Parser {
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.TINYINT));
                 else if (parseKeywordIf(ctx, "TINYTEXT"))
                     return parseDataTypeCollation(ctx, SQLDataType.CLOB);
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'u':
             case 'U':
                 if (parseKeywordIf(ctx, "UUID"))
                     return SQLDataType.UUID;
-                else
-                    throw ctx.unexpectedToken();
+
+                break;
 
             case 'v':
             case 'V':
@@ -6203,12 +6199,11 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
                 else if (parseKeywordIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
-                else
-                    throw ctx.unexpectedToken();
 
+                break;
         }
 
-        throw ctx.unexpectedToken();
+        throw ctx.exception("Unknown data type");
     }
 
     private static final DataType<?> parseUnsigned(ParserContext ctx, DataType result) {
@@ -6357,7 +6352,7 @@ final class ParserImpl implements Parser {
         String result = parseStringLiteralIf(ctx);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("String literal");
 
         return result;
     }
@@ -6401,7 +6396,7 @@ final class ParserImpl implements Parser {
                 if (c1 == '\'')
                     break;
                 if (c2 == '\'')
-                    throw ctx.unexpectedToken();
+                    throw ctx.exception("Unexpected token: \"'\"");
 
                 try {
                     buffer.write(Integer.parseInt("" + c1 + c2, 16));
@@ -6585,7 +6580,7 @@ final class ParserImpl implements Parser {
         Field<Number> result = parseFieldUnsignedNumericLiteralIf(ctx, sign);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Unsigned numeric literal");
 
         return result;
     }
@@ -6901,7 +6896,7 @@ final class ParserImpl implements Parser {
         String result = parseUntilEOLIf(ctx);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Content before EOL");
 
         return result;
     }
@@ -6961,7 +6956,7 @@ final class ParserImpl implements Parser {
 
     private static final boolean parse(ParserContext ctx, char c) {
         if (!parseIf(ctx, c))
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Token '" + c + "'");
 
         return true;
     }
@@ -6994,7 +6989,7 @@ final class ParserImpl implements Parser {
 
     private static final void parseKeyword(ParserContext ctx, String keyword) {
         if (!parseKeywordIf(ctx, keyword))
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Keyword '" + keyword + "'");
     }
 
     private static final boolean parseKeywordIf(ParserContext ctx, String keyword) {
@@ -7005,7 +7000,7 @@ final class ParserImpl implements Parser {
         Keyword result = parseAndGetKeywordIf(ctx, keywords);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected(keywords);
 
         return result;
     }
@@ -7014,7 +7009,7 @@ final class ParserImpl implements Parser {
         Keyword result = parseAndGetKeywordIf(ctx, keyword);
 
         if (result == null)
-            throw ctx.unexpectedToken();
+            throw ctx.expected("Keyword '" + keyword + "'");
 
         return result;
     }
@@ -7250,16 +7245,30 @@ final class ParserImpl implements Parser {
             return new ParserException(mark(), object + " expected");
         }
 
+        ParserException expected(String... objects) {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < objects.length; i++)
+                if (i == 0)
+                    sb.append(objects[i]);
+                else if (i == objects.length - 1)
+                    sb.append(", or ").append(objects[i]);
+                else
+                    sb.append(", ").append(objects[i]);
+
+            return new ParserException(mark(), sb.toString() + " expected");
+        }
+
         ParserException notImplemented(String feature) {
             return new ParserException(mark(), feature + " not yet implemented");
         }
 
-        ParserException exception(String message) {
-            return new ParserException(mark(), message);
+        ParserException unsupportedClause() {
+            return new ParserException(mark(), "Unsupported clause");
         }
 
-        ParserException unexpectedToken() {
-            return init(new ParserException(mark()));
+        ParserException exception(String message) {
+            return new ParserException(mark(), message);
         }
 
         ParserException init(ParserException e) {

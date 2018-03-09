@@ -431,8 +431,11 @@ tableFactor =
   'LATERAL' '(' select ')' [ correlationName ]
 | '(' select ')' [ correlationName ]
 | values [ correlationName ]
-| tableName [ versions ] [ correlationName ]
+| tableName [ tableHints ] [ versions ] [ correlationName ]
 | '(' table ')' [ correlationName ]
+;
+
+tableHints = 'WITH' '(' tableHint { ',' tableHint } ')'
 ;
 
 pivot = todo

@@ -775,10 +775,11 @@ final class ParserImpl implements Parser {
                 if (offsetPostgres) {
                     result.addLimit(limit);
 
+                    if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
 
 
 
-
+                        ;
 
                     if (parseKeywordIf(ctx, "WITH TIES"))
                         result.setWithTies(true);
@@ -788,10 +789,11 @@ final class ParserImpl implements Parser {
                 }
                 else {
 
+                    if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
 
 
 
-
+                        ;
 
                     if (parseKeywordIf(ctx, "WITH TIES"))
                         result.setWithTies(true);
@@ -806,10 +808,11 @@ final class ParserImpl implements Parser {
                 parseAndGetKeyword(ctx, "FIRST", "NEXT");
                 result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
 
+                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
 
 
 
-
+                    ;
 
                 parseAndGetKeyword(ctx, "ROW", "ROWS");
                 if (parseKeywordIf(ctx, "WITH TIES"))
@@ -831,10 +834,11 @@ final class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "NOWAIT"))
                     result.setForUpdateNoWait();
+                else if (parseKeywordIf(ctx, "WAIT") && ctx.requireProEdition())
 
 
 
-
+                    ;
                 else if (parseKeywordIf(ctx, "SKIP LOCKED"))
                     result.setForUpdateSkipLocked();
             }
@@ -923,18 +927,13 @@ final class ParserImpl implements Parser {
 
         Long limit = null;
         Long offset = null;
-
-
-
+        boolean percent = false;
         boolean withTies = false;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
             limit = parseUnsignedInteger(ctx);
-
-
-
-
+            percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
 
             if (parseKeywordIf(ctx, "START AT"))
                 offset = parseUnsignedInteger(ctx);
@@ -1088,10 +1087,11 @@ final class ParserImpl implements Parser {
             else
                 result.addLimit((int) (long) limit);
 
+        if (percent)
 
 
 
-
+            ;
 
         if (withTies)
             result.setWithTies(true);
@@ -3060,6 +3060,7 @@ final class ParserImpl implements Parser {
         else {
             result = parseTableName(ctx);
 
+            if (parseKeywordIf(ctx, "WITH") && ctx.requireProEdition()) {
 
 
 
@@ -3067,11 +3068,11 @@ final class ParserImpl implements Parser {
 
 
 
-
-
+            }
             // TODO Sample clause
         }
 
+        if (parseKeywordIf(ctx, "VERSIONS") && ctx.requireProEdition()) {
 
 
 
@@ -3101,6 +3102,8 @@ final class ParserImpl implements Parser {
 
 
 
+        }
+        else if (parseKeywordIf(ctx, "AS OF") && ctx.requireProEdition()) {
 
 
 
@@ -3111,7 +3114,9 @@ final class ParserImpl implements Parser {
 
 
 
+        }
 
+        if (parseKeywordIf(ctx, "PIVOT") && ctx.requireProEdition()) {
 
 
 
@@ -3159,12 +3164,9 @@ final class ParserImpl implements Parser {
 
 
 
-
+        }
 
         // TODO UNPIVOT
-//        else if (parseKeywordIf(ctx, "UNPIVOT")) {
-//
-//        }
 
         Name alias = null;
         List<Name> columnAliases = null;
@@ -3328,15 +3330,17 @@ final class ParserImpl implements Parser {
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
+                if (parseKeywordIf(ctx, "PARTITION BY")) {
+                    ctx.requireProEdition();
 
 
 
 
 
 
+                }
 
-
-
+                // No break
 
             case JOIN:
             case STRAIGHT_JOIN:
@@ -3675,10 +3679,11 @@ final class ParserImpl implements Parser {
         else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, Sign.MINUS)) == null)
             r = toField(ctx, parseTerm(ctx, type, prefix)).neg();
 
+        if (parseIf(ctx, "(+)") && ctx.requireProEdition())
 
 
 
-
+            ;
 
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));
@@ -3863,10 +3868,8 @@ final class ParserImpl implements Parser {
             case 'G':
                 if ((field = parseFieldGreatestIf(ctx)) != null)
                     return field;
-
-
-
-
+                else if (N.is(type) && (field = parseFieldGroupIdIf(ctx)) != null)
+                    return field;
                 else if (N.is(type) && (field = parseFieldGroupingIdIf(ctx)) != null)
                     return field;
                 else if (N.is(type) && (field = parseFieldGroupingIf(ctx)) != null)
@@ -4433,6 +4436,9 @@ final class ParserImpl implements Parser {
         return null;
     }
 
+    private static final Field<?> parseFieldGroupIdIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "GROUP_ID")) {
+            ctx.requireProEdition();
 
 
 
@@ -4440,11 +4446,10 @@ final class ParserImpl implements Parser {
 
 
 
+        }
 
-
-
-
-
+        return null;
+    }
 
     private static final Field<?> parseFieldGroupingIdIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "GROUPING_ID")) {
@@ -5186,6 +5191,8 @@ final class ParserImpl implements Parser {
             else
                 return null;
 
+        if (keep != null && filter != null && !basic && parseKeywordIf(ctx, "KEEP")) {
+            ctx.requireProEdition();
 
 
 
@@ -5204,9 +5211,8 @@ final class ParserImpl implements Parser {
 
 
 
-
-
-        if (filter != null && !basic && parseKeywordIf(ctx, "FILTER")) {
+        }
+        else if (filter != null && !basic && parseKeywordIf(ctx, "FILTER")) {
             parse(ctx, '(');
             parseKeyword(ctx, "WHERE");
             condition = parseCondition(ctx);
@@ -5590,13 +5596,17 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseWindowFunction(ParserContext ctx, WindowIgnoreNullsStep s1, WindowOverStep<?> s2) {
         if (s1 != null) {
 
+            if (parseKeywordIf(ctx, "RESPECT NULLS") && ctx.requireProEdition())
 
 
 
+                ;
+            else if (parseKeywordIf(ctx, "IGNORE NULLS") && ctx.requireProEdition())
 
 
 
-
+                ;
+            else
                 s2 = s1;
         }
 
@@ -7310,6 +7320,13 @@ final class ParserImpl implements Parser {
             this.bindings = bindings;
         }
 
+        boolean requireProEdition() {
+            if (!PRO_EDITION)
+                throw exception("Feature only supported in pro edition");
+
+            return true;
+        }
+
         String substring(int startPosition, int endPosition) {
             return new String(sql, startPosition, endPosition - startPosition);
         }
@@ -7319,7 +7336,7 @@ final class ParserImpl implements Parser {
         }
 
         ParserException expected(String object) {
-            return new ParserException(mark(), object + " expected");
+            return init(new ParserException(mark(), object + " expected"));
         }
 
         ParserException expected(String... objects) {
@@ -7333,19 +7350,19 @@ final class ParserImpl implements Parser {
                 else
                     sb.append(", ").append(objects[i]);
 
-            return new ParserException(mark(), sb.toString() + " expected");
+            return init(new ParserException(mark(), sb.toString() + " expected"));
         }
 
         ParserException notImplemented(String feature) {
-            return new ParserException(mark(), feature + " not yet implemented");
+            return init(new ParserException(mark(), feature + " not yet implemented"));
         }
 
         ParserException unsupportedClause() {
-            return new ParserException(mark(), "Unsupported clause");
+            return init(new ParserException(mark(), "Unsupported clause"));
         }
 
         ParserException exception(String message) {
-            return new ParserException(mark(), message);
+            return init(new ParserException(mark(), message));
         }
 
         ParserException init(ParserException e) {
@@ -7519,6 +7536,7 @@ final class ParserImpl implements Parser {
 
     private static final Ignore   IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
     private static final Ignore   IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
+    private static final boolean  PRO_EDITION         = false                                 ;
 
     private static interface Ignore
     extends

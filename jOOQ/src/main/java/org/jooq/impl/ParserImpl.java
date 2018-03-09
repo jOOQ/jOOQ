@@ -5196,12 +5196,12 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseAggregateFunctionIf(ParserContext ctx, boolean basic) {
-        AggregateFunction<?> agg;
-        AggregateFilterStep<?> filter;
-        WindowBeforeOverStep<?> over;
+        AggregateFunction<?> agg = null;
+        AggregateFilterStep<?> filter = null;
+        WindowBeforeOverStep<?> over = null;
         Object keep = null;
-        Field<?> result;
-        Condition condition;
+        Field<?> result = null;
+        Condition condition = null;
 
         keep = over = filter = agg = parseCountIf(ctx);
         if (filter == null)

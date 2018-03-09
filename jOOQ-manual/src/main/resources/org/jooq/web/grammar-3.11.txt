@@ -555,6 +555,7 @@ term =
 | dateLiteral
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
+| 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' ) '(' sum ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
@@ -562,6 +563,7 @@ term =
 | 'EVERY' '(' field ')' [ filter ] [ over ]
 | 'FLOOR' '(' sum ')'
 | 'FIRST_VALUE' '(' field ')' over
+| 'GETDATE' '(' ')'
 | 'GREATEST' '(' fields ')'
 | 'GROUP_CONCAT' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] [ 'SEPARATOR' stringLiteral ] ')'
 | 'GROUP_ID' '(' ')'

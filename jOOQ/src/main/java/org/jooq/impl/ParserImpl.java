@@ -3835,6 +3835,9 @@ final class ParserImpl implements Parser {
                     else if (parseFunctionNameIf(ctx, "DEGREE") || parseFunctionNameIf(ctx, "DEG"))
                         return deg((Field) parseFieldSumParenthesised(ctx));
 
+                if ((field = parseFieldDecodeIf(ctx)) != null)
+                    return field;
+
                 break;
 
             case 'e':
@@ -4918,6 +4921,27 @@ final class ParserImpl implements Parser {
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
             return DSL.upper(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDecodeIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DECODE")) {
+            parse(ctx, '(');
+            List<Field<?>> fields = parseFields(ctx);
+            int size = fields.size();
+            if (size < 3)
+                throw ctx.expected("At least three arguments to DECODE()");
+
+            parse(ctx, ')');
+            return DSL.decode(
+                (Field<Object>)   fields.get(0),
+                (Field<Object>)   fields.get(1),
+                (Field<Object>)   fields.get(2),
+                (Field<Object>[]) (size == 3 ? EMPTY_FIELD : fields.subList(3, size).toArray(EMPTY_FIELD))
+            );
+
         }
 
         return null;

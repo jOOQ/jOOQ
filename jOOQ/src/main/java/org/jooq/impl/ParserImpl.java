@@ -7478,11 +7478,18 @@ final class ParserImpl implements Parser {
         }
 
         boolean isIdentifierPart() {
-            return Character.isJavaIdentifierPart(character());
+            return isIdentifierPart(character());
         }
 
         boolean isIdentifierPart(int pos) {
-            return Character.isJavaIdentifierPart(character(pos));
+            return isIdentifierPart(character(pos));
+        }
+
+        boolean isIdentifierPart(char character) {
+            return Character.isJavaIdentifierPart(character)
+               || ((character == '@'
+               ||   character == '#')
+               &&   character != delimiter.charAt(0));
         }
 
         boolean done() {

@@ -3866,6 +3866,10 @@ final class ParserImpl implements Parser {
 
             case 'g':
             case 'G':
+                if (D.is(type))
+                    if (parseKeywordIf(ctx, "GETDATE") && parse(ctx, '(') && parse(ctx, ')'))
+                        return currentTimestamp();
+
                 if ((field = parseFieldGreatestIf(ctx)) != null)
                     return field;
                 else if (N.is(type) && (field = parseFieldGroupIdIf(ctx)) != null)

@@ -1279,7 +1279,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Merge<?> parseMerge(ParserContext ctx, WithImpl with) {
-        parseKeyword(ctx, "MERGE INTO");
+        parseKeyword(ctx, "MERGE");
+        parseKeywordIf(ctx, "INTO");
         Table<?> target = parseTableName(ctx);
 
         if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "USING"))

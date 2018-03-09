@@ -533,25 +533,26 @@ term =
 | 'ARRAY' '[' [ fields ] ']'
 | 'AVG' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'BIT_LENGTH' '(' field ')'
-| 'CONCAT' '(' fields ')'
-| 'CURRENT_SCHEMA'
-| 'CURRENT_USER'
-| 'CHARINDEX' '(' field ',' field ')'
-| 'CHAR_LENGTH' '(' field ')'
-| ( 'CEIL' | 'CEILING' ) '(' sum ')'
-| 'COSH' '(' sum ')'
-| 'COS' '(' sum ')'
-| 'COTH' '(' sum ')'
-| 'COT' '(' sum ')'
-| 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
-| 'CURRVAL' '(' ( name | stringLiteral ) ')'
-| 'CURRENT_TIMESTAMP'
-| 'CURRENT_TIME'
-| 'CURRENT_DATE'
 | case
 | 'CAST' '(' field 'AS' dataType ')'
+| 'CONVERT' '(' dataType ',' field ')'
+| ( 'CEIL' | 'CEILING' ) '(' sum ')'
+| 'CHARINDEX' '(' field ',' field ')'
+| 'CHAR_LENGTH' '(' field ')'
 | 'COALESCE' '(' fields ')'
+| 'CONCAT' '(' fields ')'
+| 'COS' '(' sum ')'
+| 'COSH' '(' sum ')'
+| 'COT' '(' sum ')'
+| 'COTH' '(' sum ')'
+| 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
+| 'CURRVAL' '(' ( name | stringLiteral ) ')'
+| 'CURRENT_DATE'
+| 'CURRENT_SCHEMA'
+| 'CURRENT_TIME'
+| 'CURRENT_TIMESTAMP'
+| 'CURRENT_USER'
 | dateLiteral
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
@@ -647,6 +648,7 @@ term =
 | 'TANH' '(' sum ')'
 | timeLiteral
 | timestampLiteral
+| 'TO_NUMBER' '(' field ')'
 | 'TRANSLATE' '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
 | 'TRUNC' '(' field ',' stringLiteral ')'

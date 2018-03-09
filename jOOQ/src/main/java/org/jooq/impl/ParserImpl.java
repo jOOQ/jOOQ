@@ -3810,11 +3810,13 @@ final class ParserImpl implements Parser {
 
                 if ((field = parseFieldCaseIf(ctx)) != null)
                     return field;
-                else if ((field = parseCastIf(ctx)) != null)
+                else if ((field = parseFieldCastIf(ctx)) != null)
                     return field;
                 else if ((field = parseFieldCoalesceIf(ctx)) != null)
                     return field;
                 else if ((field = parseFieldCumeDistIf(ctx)) != null)
+                    return field;
+                else if ((field = parseFieldConvertIf(ctx)) != null)
                     return field;
 
                 break;
@@ -5171,12 +5173,26 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final Field<?> parseCastIf(ParserContext ctx) {
+    private static final Field<?> parseFieldCastIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "CAST")) {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
             parseKeyword(ctx, "AS");
             DataType<?> type = parseDataType(ctx);
+            parse(ctx, ')');
+
+            return cast(field, type);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldConvertIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "CONVERT")) {
+            parse(ctx, '(');
+            DataType<?> type = parseDataType(ctx);
+            parse(ctx, ',');
+            Field<?> field = parseField(ctx);
             parse(ctx, ')');
 
             return cast(field, type);

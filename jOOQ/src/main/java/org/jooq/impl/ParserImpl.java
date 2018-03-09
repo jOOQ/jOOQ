@@ -1203,13 +1203,15 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "ON CONSTRAINT")) {
                     doUpdate = onDuplicate.onConflictOnConstraint(parseName(ctx));
                 }
-                else {
-                    parse(ctx, '(');
+                else if (parseIf(ctx, '(')) {
                     doUpdate = onDuplicate.onConflict(parseFieldNames(ctx));
                     parse(ctx, ')');
                 }
-                parseKeyword(ctx, "DO");
+                else {
+                    doUpdate = onDuplicate.onConflict();
+                }
 
+                parseKeyword(ctx, "DO");
                 if (parseKeywordIf(ctx, "NOTHING")) {
                     returning = doUpdate.doNothing();
                 }

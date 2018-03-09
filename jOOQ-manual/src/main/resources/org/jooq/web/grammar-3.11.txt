@@ -238,7 +238,7 @@ setClause = fieldName '=' field
 deleteStatement = [ with ] 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
 ;
 
-mergeStatement = [ with ] 'MERGE INTO' tableName [ [ 'AS' ] identifier ]
+mergeStatement = [ with ] 'MERGE' [ 'INTO' ] tableName [ [ 'AS' ] identifier ]
   'USING' '(' select ')' [ [ 'AS' ] identifier ]
   'ON' condition break
   {

@@ -680,8 +680,13 @@ final class ParserImpl implements Parser {
                 break;
 
             case '(':
+
                 // TODO are there other possible statement types?
-                return parseSelect(ctx);
+                if (peekKeyword(ctx, "WITH", false, true, false))
+                    return parseWith(ctx, true);
+                else
+                    return parseSelect(ctx);
+
             default:
                 break;
         }
@@ -694,6 +699,10 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     private static final Query parseWith(ParserContext ctx, boolean parseSelect) {
+        int parens = 0;
+        while (parseIf(ctx, '('))
+            parens++;
+
         parseKeyword(ctx, "WITH");
         boolean recursive = parseKeywordIf(ctx, "RECURSIVE");
 
@@ -719,18 +728,24 @@ final class ParserImpl implements Parser {
 
         // TODO Better model API for WITH clause
         WithImpl with = (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
+        Query result;
         if (!parseSelect && peekKeyword(ctx, "DELETE"))
-            return parseDelete(ctx, with);
+            result = parseDelete(ctx, with);
         else if (!parseSelect && peekKeyword(ctx, "INSERT"))
-            return parseInsert(ctx, with);
+            result = parseInsert(ctx, with);
         else if (!parseSelect && peekKeyword(ctx, "MERGE"))
-            return parseMerge(ctx, with);
+            result = parseMerge(ctx, with);
         else if (peekKeyword(ctx, "SELECT"))
-            return parseSelect(ctx, null, with);
+            result = parseSelect(ctx, null, with);
         else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
-            return parseUpdate(ctx, with);
+            result = parseUpdate(ctx, with);
         else
             throw ctx.exception("Unsupported statement after WITH");
+
+        while (parens --> 0)
+            parse(ctx, ')');
+
+        return result;
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
@@ -1866,7 +1881,7 @@ final class ParserImpl implements Parser {
 
         // [#5309] TODO: Move this after the column specification
         if (parseKeywordIf(ctx, "AS")) {
-            Select<?> select = parseSelect(ctx);
+            Select<?> select = (Select<?>) parseQuery(ctx, true, true);
 
             CreateTableAsStep<Record> s1 = ifNotExists
                 ? ctx.dsl.createTableIfNotExists(tableName)

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.RenderContext.CastMode.NEVER;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
@@ -175,15 +176,19 @@ final class Limit extends AbstractQueryPart {
             case DERBY: {
 
                 // Casts are not supported here...
-                ctx.castMode(NEVER)
-                   .formatSeparator()
-                   .visit(K_OFFSET)
-                   .sql(' ').visit(offsetOrZero)
-                   .sql(' ').visit(K_ROWS);
+                ctx.castMode(NEVER);
+
+
+
+
+                    ctx.formatSeparator()
+                       .visit(K_OFFSET)
+                       .sql(' ').visit(offsetOrZero)
+                       .sql(' ').visit(K_ROWS);
 
                 if (!limitZero()) {
-                    ctx.sql(' ').visit(K_FETCH_NEXT)
-                       .sql(' ').visit(numberOfRows);
+                    ctx.formatSeparator()
+                       .visit(K_FETCH_NEXT).sql(' ').visit(numberOfRows);
 
 
 

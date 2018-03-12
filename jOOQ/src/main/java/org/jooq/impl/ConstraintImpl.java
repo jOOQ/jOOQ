@@ -53,6 +53,7 @@ import static org.jooq.impl.Keywords.K_ON_UPDATE;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_REFERENCES;
 import static org.jooq.impl.Keywords.K_UNIQUE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
@@ -203,12 +204,14 @@ implements
                    .formatSeparator()
                    .visit(K_REFERENCES)
                    .sql(' ')
-                   .visit(referencesTable)
-                   .sql(" (")
-                   .qualify(false)
-                   .visit(new QueryPartList<Field<?>>(references))
-                   .qualify(qualify)
-                   .sql(')');
+                   .visit(referencesTable);
+
+                if (references.length > 0)
+                    ctx.sql(" (")
+                       .qualify(false)
+                       .visit(new QueryPartList<Field<?>>(references))
+                       .qualify(qualify)
+                       .sql(')');
 
                 if (onDelete != null)
                     ctx.sql(' ').visit(K_ON_DELETE)
@@ -287,13 +290,28 @@ implements
     }
 
     @Override
+    public final ConstraintImpl references(String table) {
+        return references(table(name(table)), EMPTY_FIELD);
+    }
+
+    @Override
     public final ConstraintImpl references(String table, String... fields) {
         return references(table(name(table)), fieldsByName(fields));
     }
 
     @Override
+    public final ConstraintImpl references(Name table) {
+        return references(table(table), EMPTY_FIELD);
+    }
+
+    @Override
     public final ConstraintImpl references(Name table, Name... fields) {
         return references(table(table), fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl references(Table table) {
+        return references(table, EMPTY_FIELD);
     }
 
     @Override

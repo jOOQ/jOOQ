@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
  * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>
@@ -48,17 +47,38 @@ package org.jooq;
 public interface ConstraintForeignKeyReferencesStepN {
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(String table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     ConstraintForeignKeyOnStep references(String table, String... fields);
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(Name table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     ConstraintForeignKeyOnStep references(Name table, Name... fields);
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(Table<?> table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     ConstraintForeignKeyOnStep references(Table<?> table, Field<?>... fields);
 }

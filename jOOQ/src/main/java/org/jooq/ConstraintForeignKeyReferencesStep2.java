@@ -50,19 +50,40 @@ import javax.annotation.Generated;
 public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(String table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     @Support
     ConstraintForeignKeyOnStep references(String table, String field1, String field2);
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(Name table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     @Support
     ConstraintForeignKeyOnStep references(Name table, Name field1, Name field2);
 
     /**
-     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * implicitly referencing the primary key.
+     */
+    ConstraintForeignKeyOnStep references(Table<?> table);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
      */
     @Support
     ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1, Field<T2> field2);

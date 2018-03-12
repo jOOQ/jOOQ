@@ -255,6 +255,7 @@ column =
     | 'PRIMARY KEY'
     | 'UNIQUE' [ 'KEY' | 'INDEX' ]
     | 'CHECK' '(' condition ')'
+    | 'REFERENCES' constraintReferenceSpecification
     | 'AUTO_INCREMENT'
     | 'AUTOINCREMENT'
     | 'IDENTITY' [ '(' signedInteger ',' signedInteger ')' ]
@@ -267,7 +268,11 @@ column =
 constraint =
   'PRIMARY KEY' '(' fieldNames ')'
 | 'UNIQUE' [ 'KEY' | 'INDEX' ] '(' fieldNames ')'
-| 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCS' '(' fieldNames ')'
+| 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCES' constraintReferenceSpecification
+| 'CHECK' '(' condition ')'
+;
+
+constraintReferenceSpecification = tableName '(' fieldNames ')'
   {
     'ON' ( 'DELETE' | 'UPDATE' )
     (
@@ -278,7 +283,6 @@ constraint =
     | 'SET NULL'
     )
   }
-| 'CHECK' '(' condition ')'
 ;
 
 identity =

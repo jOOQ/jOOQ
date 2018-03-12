@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="AS_IS"/&gt;
  *     &lt;enumeration value="LOWER"/&gt;
  *     &lt;enumeration value="UPPER"/&gt;
+ *     &lt;enumeration value="PASCAL"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -34,7 +35,8 @@ public enum RenderKeywordStyle {
 
     AS_IS,
     LOWER,
-    UPPER;
+    UPPER,
+    PASCAL;
 
     public String value() {
         return name();

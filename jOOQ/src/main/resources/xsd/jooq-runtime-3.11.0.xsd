@@ -377,6 +377,10 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <!-- Keywords are rendered in upper case. For instance:
            SELECT .. FROM .. WHERE .. -->
       <enumeration value="UPPER"/>
+
+      <!-- Keywords are rendered in Pascal Case. For instance:
+           Select .. From .. Where .. -->
+      <enumeration value="PASCAL"/>
     </restriction>
   </simpleType>
 

@@ -57,11 +57,15 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
     private final String      asIs;
     private final String      upper;
     private final String      lower;
+    private final String      pascal;
 
     KeywordImpl(String keyword) {
         this.asIs = keyword;
         this.upper = keyword.toUpperCase();
         this.lower = keyword.toLowerCase();
+        this.pascal = keyword.length() > 0
+                    ? keyword.substring(0, 1).toUpperCase() + keyword.substring(1, keyword.length()).toLowerCase()
+                    : keyword;
     }
 
     @Override
@@ -72,6 +76,8 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
             ctx.sql(asIs, true);
         else if (RenderKeywordStyle.UPPER == style)
             ctx.sql(upper, true);
+        else if (RenderKeywordStyle.PASCAL == style)
+            ctx.sql(pascal, true);
         else
             ctx.sql(lower, true);
     }

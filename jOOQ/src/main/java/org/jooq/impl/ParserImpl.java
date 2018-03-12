@@ -2043,6 +2043,11 @@ final class ParserImpl implements Parser {
                         continue;
                     }
 
+                    if (parseKeywordIf(ctx, "REFERENCES")) {
+                        constraints.add(parseForeignKeyReferenceSpecification(ctx, null, new Field[] { field(fieldName) }));
+                        continue;
+                    }
+
                     if (!identity) {
                         if (parseKeywordIf(ctx, "AUTO_INCREMENT") ||
                             parseKeywordIf(ctx, "AUTOINCREMENT")) {
@@ -2303,13 +2308,21 @@ final class ParserImpl implements Parser {
         Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
         parseKeyword(ctx, "REFERENCES");
-        Table<?> referencedTable = parseTableName(ctx);
-        parse(ctx, '(');
-        Field<?>[] referencedFields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-        parse(ctx, ')');
 
-        if (referencing.length != referencedFields.length)
-            throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
+        return parseForeignKeyReferenceSpecification(ctx, constraint, referencing);
+    }
+
+    private static final Constraint parseForeignKeyReferenceSpecification(ParserContext ctx, ConstraintTypeStep constraint, Field<?>[] referencing) {
+        Table<?> referencedTable = parseTableName(ctx);
+        Field<?>[] referencedFields = EMPTY_FIELD;
+
+        if (parseIf(ctx, '(')) {
+            referencedFields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
+            parse(ctx, ')');
+
+            if (referencing.length != referencedFields.length)
+                throw ctx.exception("Number of referencing columns (" + referencing.length + ") must match number of referenced columns (" + referencedFields.length + ")");
+        }
 
         ConstraintForeignKeyOnStep e = constraint == null
             ? foreignKey(referencing).references(referencedTable, referencedFields)

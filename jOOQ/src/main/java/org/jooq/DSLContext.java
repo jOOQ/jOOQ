@@ -3776,6 +3776,38 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    WithAsStep with(Name alias);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    WithAsStep with(Name alias, Name... fieldAliases);
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4604,9 +4636,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String)} for strictly non-recursive CTE
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias);
@@ -4623,12 +4652,41 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithAsStep withRecursive(String alias, String... fieldAliases);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    WithAsStep withRecursive(Name alias);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    WithAsStep withRecursive(Name alias, Name... fieldAliases);
 
 
     /**
@@ -4643,9 +4701,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      * <p>
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
@@ -4666,9 +4721,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      * <p>
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
@@ -4692,9 +4744,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4712,9 +4761,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4732,9 +4778,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4752,9 +4795,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4772,9 +4812,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4792,9 +4829,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4812,9 +4846,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4832,9 +4863,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4852,9 +4880,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4872,9 +4897,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4892,9 +4914,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4912,9 +4931,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4932,9 +4948,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4952,9 +4965,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4972,9 +4982,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -4992,9 +4999,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5012,9 +5016,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5032,9 +5033,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5052,9 +5050,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5072,9 +5067,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5092,9 +5084,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5112,9 +5101,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5132,9 +5118,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5152,9 +5135,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5172,9 +5152,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5192,9 +5169,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5212,9 +5186,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5232,9 +5203,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5252,9 +5220,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5272,9 +5237,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5292,9 +5254,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5312,9 +5271,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5332,9 +5288,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5352,9 +5305,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5372,9 +5322,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5392,9 +5339,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5412,9 +5356,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5432,9 +5373,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5452,9 +5390,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5472,9 +5407,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5492,9 +5424,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5512,9 +5441,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5532,9 +5458,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5552,9 +5475,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(String, String...)} for strictly non-recursive CTE
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
@@ -5582,9 +5502,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
-     * <p>
-     * Note that the {@link SQLDialect#H2} database only supports single-table,
-     * <code>RECURSIVE</code> common table expression lists.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
     WithStep withRecursive(CommonTableExpression<?>... tables);

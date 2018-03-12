@@ -720,6 +720,42 @@ public class DSL {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep with(Name alias) {
+        return new WithImpl(null, false).with(alias);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep with(Name alias, Name... fieldAliases) {
+        return new WithImpl(null, false).with(alias, fieldAliases);
+    }
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -1648,6 +1684,45 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
+        return new WithImpl(null, true).with(alias, fieldAliases);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep withRecursive(Name alias) {
+        return new WithImpl(null, true).with(alias);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep withRecursive(Name alias, Name... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
 

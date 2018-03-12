@@ -6152,12 +6152,7 @@ final class ParserImpl implements Parser {
     private static final Name parseIdentifierIf(ParserContext ctx, boolean allowAposQuotes) {
         parseWhitespaceIf(ctx);
 
-        char quoteEnd =
-            parseIf(ctx, '"') ? '"'
-          : parseIf(ctx, '`') ? '`'
-          : parseIf(ctx, '[') ? ']'
-          : allowAposQuotes && parseIf(ctx, '\'') ? '\''
-          : 0;
+        char quoteEnd = parseQuote(ctx, allowAposQuotes);
 
         int start = ctx.position;
         if (quoteEnd != 0)
@@ -6184,6 +6179,14 @@ final class ParserImpl implements Parser {
             return DSL.unquotedName(result);
     }
 
+    private static final char parseQuote(ParserContext ctx, boolean allowAposQuotes) {
+        return parseIf(ctx, '"') ? '"'
+             : parseIf(ctx, '`') ? '`'
+             : parseIf(ctx, '[') ? ']'
+             : allowAposQuotes && parseIf(ctx, '\'') ? '\''
+             : 0;
+    }
+
     private static final DataType<?> parseDataType(ParserContext ctx) {
         DataType<?> result = parseDataTypePrefix(ctx);
 
@@ -6196,204 +6199,222 @@ final class ParserImpl implements Parser {
     private static final DataType<?> parseDataTypePrefix(ParserContext ctx) {
         parseWhitespaceIf(ctx);
 
-        switch (ctx.character()) {
+        char character = ctx.character();
+
+        if (character == '[' || character == '"' || character == '`')
+            character = ctx.character(ctx.position + 1);
+
+        switch (character) {
             case 'b':
             case 'B':
-                if (parseKeywordIf(ctx, "BIGINT"))
+                if (parseKeywordOrIdentifierIf(ctx, "BIGINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.BIGINT));
-                else if (parseKeywordIf(ctx, "BIGSERIAL"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BIGSERIAL"))
                     return SQLDataType.BIGINT.identity(true);
-                else if (parseKeywordIf(ctx, "BINARY"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.BINARY);
-                else if (parseKeywordIf(ctx, "BIT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BIT"))
                     return parseDataTypeLength(ctx, SQLDataType.BIT);
-                else if (parseKeywordIf(ctx, "BLOB"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.BLOB);
-                else if (parseKeywordIf(ctx, "BOOLEAN"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BOOLEAN"))
                     return SQLDataType.BOOLEAN;
-                else if (parseKeywordIf(ctx, "BYTEA"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BYTEA"))
                     return SQLDataType.BLOB;
 
                 break;
 
             case 'c':
             case 'C':
-                if (parseKeywordIf(ctx, "CHARACTER VARYING"))
+                if (parseKeywordOrIdentifierIf(ctx, "CHARACTER VARYING"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
-                else if (parseKeywordIf(ctx, "CHAR") ||
-                         parseKeywordIf(ctx, "CHARACTER"))
+                else if (parseKeywordOrIdentifierIf(ctx, "CHAR") ||
+                         parseKeywordOrIdentifierIf(ctx, "CHARACTER"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CHAR));
-                else if (parseKeywordIf(ctx, "CLOB"))
+                else if (parseKeywordOrIdentifierIf(ctx, "CLOB"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CLOB));
 
                 break;
 
             case 'd':
             case 'D':
-                if (parseKeywordIf(ctx, "DATE"))
+                if (parseKeywordOrIdentifierIf(ctx, "DATE"))
                     return SQLDataType.DATE;
-                else if (parseKeywordIf(ctx, "DATETIME"))
+                else if (parseKeywordOrIdentifierIf(ctx, "DATETIME"))
                     return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMP);
-                else if (parseKeywordIf(ctx, "DECIMAL"))
+                else if (parseKeywordOrIdentifierIf(ctx, "DECIMAL"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
-                else if (parseKeywordIf(ctx, "DOUBLE PRECISION") ||
-                         parseKeywordIf(ctx, "DOUBLE"))
+                else if (parseKeywordOrIdentifierIf(ctx, "DOUBLE PRECISION") ||
+                         parseKeywordOrIdentifierIf(ctx, "DOUBLE"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.DOUBLE);
 
                 break;
 
             case 'e':
             case 'E':
-                if (parseKeywordIf(ctx, "ENUM"))
+                if (parseKeywordOrIdentifierIf(ctx, "ENUM"))
                     return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
 
                 break;
 
             case 'f':
             case 'F':
-                if (parseKeywordIf(ctx, "FLOAT"))
+                if (parseKeywordOrIdentifierIf(ctx, "FLOAT"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.FLOAT);
 
                 break;
 
             case 'i':
             case 'I':
-                if (parseKeywordIf(ctx, "INTEGER") ||
-                    parseKeywordIf(ctx, "INT") ||
-                    parseKeywordIf(ctx, "INT4"))
+                if (parseKeywordOrIdentifierIf(ctx, "INTEGER") ||
+                    parseKeywordOrIdentifierIf(ctx, "INT") ||
+                    parseKeywordOrIdentifierIf(ctx, "INT4"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
-                else if (parseKeywordIf(ctx, "INT2"))
+                else if (parseKeywordOrIdentifierIf(ctx, "INT2"))
                     return SQLDataType.SMALLINT;
-                else if (parseKeywordIf(ctx, "INT8"))
+                else if (parseKeywordOrIdentifierIf(ctx, "INT8"))
                     return SQLDataType.BIGINT;
 
                 break;
 
             case 'l':
             case 'L':
-                if (parseKeywordIf(ctx, "LONGBLOB"))
+                if (parseKeywordOrIdentifierIf(ctx, "LONGBLOB"))
                     return SQLDataType.BLOB;
-                else if (parseKeywordIf(ctx, "LONGTEXT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "LONGTEXT"))
                     return parseDataTypeCollation(ctx, SQLDataType.CLOB);
-                else if (parseKeywordIf(ctx, "LONG NVARCHAR"))
+                else if (parseKeywordOrIdentifierIf(ctx, "LONG NVARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGNVARCHAR));
-                else if (parseKeywordIf(ctx, "LONG VARBINARY"))
+                else if (parseKeywordOrIdentifierIf(ctx, "LONG VARBINARY"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARBINARY));
-                else if (parseKeywordIf(ctx, "LONG VARCHAR"))
+                else if (parseKeywordOrIdentifierIf(ctx, "LONG VARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.LONGVARCHAR));
 
                 break;
 
             case 'm':
             case 'M':
-                if (parseKeywordIf(ctx, "MEDIUMBLOB"))
+                if (parseKeywordOrIdentifierIf(ctx, "MEDIUMBLOB"))
                     return SQLDataType.BLOB;
-                else if (parseKeywordIf(ctx, "MEDIUMINT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "MEDIUMINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.INTEGER));
-                else if (parseKeywordIf(ctx, "MEDIUMTEXT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "MEDIUMTEXT"))
                     return parseDataTypeCollation(ctx, SQLDataType.CLOB);
 
                 break;
 
             case 'n':
             case 'N':
-                if (parseKeywordIf(ctx, "NCHAR"))
+                if (parseKeywordOrIdentifierIf(ctx, "NCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NCHAR));
-                else if (parseKeywordIf(ctx, "NCLOB"))
+                else if (parseKeywordOrIdentifierIf(ctx, "NCLOB"))
                     return parseDataTypeCollation(ctx, SQLDataType.NCLOB);
-                else if (parseKeywordIf(ctx, "NUMBER") ||
-                         parseKeywordIf(ctx, "NUMERIC"))
+                else if (parseKeywordOrIdentifierIf(ctx, "NUMBER") ||
+                         parseKeywordOrIdentifierIf(ctx, "NUMERIC"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
-                else if (parseKeywordIf(ctx, "NVARCHAR"))
+                else if (parseKeywordOrIdentifierIf(ctx, "NVARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
 
                 break;
 
             case 'r':
             case 'R':
-                if (parseKeywordIf(ctx, "REAL"))
+                if (parseKeywordOrIdentifierIf(ctx, "REAL"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.REAL);
 
                 break;
 
             case 's':
             case 'S':
-                if (parseKeywordIf(ctx, "SERIAL4") || parseKeywordIf(ctx, "SERIAL"))
+                if (parseKeywordOrIdentifierIf(ctx, "SERIAL4") || parseKeywordOrIdentifierIf(ctx, "SERIAL"))
                     return SQLDataType.INTEGER.identity(true);
-                else if (parseKeywordIf(ctx, "SERIAL8"))
+                else if (parseKeywordOrIdentifierIf(ctx, "SERIAL8"))
                     return SQLDataType.BIGINT.identity(true);
-                else if (parseKeywordIf(ctx, "SET"))
+                else if (parseKeywordOrIdentifierIf(ctx, "SET"))
                     return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
-                else if (parseKeywordIf(ctx, "SMALLINT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "SMALLINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
-                else if (parseKeywordIf(ctx, "SMALLSERIAL"))
+                else if (parseKeywordOrIdentifierIf(ctx, "SMALLSERIAL"))
                     return SQLDataType.SMALLINT.identity(true);
 
                 break;
 
             case 't':
             case 'T':
-                if (parseKeywordIf(ctx, "TEXT"))
+                if (parseKeywordOrIdentifierIf(ctx, "TEXT"))
                     return parseDataTypeCollation(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB));
 
-                else if (parseKeywordIf(ctx, "TIMESTAMPTZ"))
+                else if (parseKeywordOrIdentifierIf(ctx, "TIMESTAMPTZ"))
                     return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
 
-                else if (parseKeywordIf(ctx, "TIMESTAMP")) {
+                else if (parseKeywordOrIdentifierIf(ctx, "TIMESTAMP")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
 
-                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                    if (parseKeywordOrIdentifierIf(ctx, "WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMESTAMPWITHTIMEZONE : SQLDataType.TIMESTAMPWITHTIMEZONE(precision);
                     else
 
-                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    if (parseKeywordOrIdentifierIf(ctx, "WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIMESTAMP : SQLDataType.TIMESTAMP(precision);
                 }
 
-                else if (parseKeywordIf(ctx, "TIMETZ"))
+                else if (parseKeywordOrIdentifierIf(ctx, "TIMETZ"))
                     return parseDataTypePrecision(ctx, SQLDataType.TIMEWITHTIMEZONE);
 
-                else if (parseKeywordIf(ctx, "TIME")) {
+                else if (parseKeywordOrIdentifierIf(ctx, "TIME")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
 
-                    if (parseKeywordIf(ctx, "WITH TIME ZONE"))
+                    if (parseKeywordOrIdentifierIf(ctx, "WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
                     else
 
-                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    if (parseKeywordOrIdentifierIf(ctx, "WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
                 }
 
-                else if (parseKeywordIf(ctx, "TINYBLOB"))
+                else if (parseKeywordOrIdentifierIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
-                else if (parseKeywordIf(ctx, "TINYINT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "TINYINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.TINYINT));
-                else if (parseKeywordIf(ctx, "TINYTEXT"))
+                else if (parseKeywordOrIdentifierIf(ctx, "TINYTEXT"))
                     return parseDataTypeCollation(ctx, SQLDataType.CLOB);
 
                 break;
 
             case 'u':
             case 'U':
-                if (parseKeywordIf(ctx, "UUID"))
+                if (parseKeywordOrIdentifierIf(ctx, "UUID"))
                     return SQLDataType.UUID;
 
                 break;
 
             case 'v':
             case 'V':
-                if (parseKeywordIf(ctx, "VARCHAR") ||
-                    parseKeywordIf(ctx, "VARCHAR2"))
+                if (parseKeywordOrIdentifierIf(ctx, "VARCHAR") ||
+                    parseKeywordOrIdentifierIf(ctx, "VARCHAR2"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
-                else if (parseKeywordIf(ctx, "VARBINARY"))
+                else if (parseKeywordOrIdentifierIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
 
                 break;
         }
 
         throw ctx.exception("Unknown data type");
+    }
+
+    private static final boolean parseKeywordOrIdentifierIf(ParserContext ctx, String keyword) {
+        int position = ctx.position;
+        char quoteEnd = parseQuote(ctx, false);
+        boolean result = parseKeywordIf(ctx, keyword);
+
+        if (!result)
+            ctx.position = position;
+        else if (quoteEnd != 0)
+            parse(ctx, quoteEnd);
+
+        return result;
     }
 
     private static final DataType<?> parseUnsigned(ParserContext ctx, DataType result) {

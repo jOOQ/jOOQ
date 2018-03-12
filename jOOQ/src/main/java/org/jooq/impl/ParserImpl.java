@@ -7201,6 +7201,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {
+        parseWhitespaceIf(ctx);
         boolean result = peek(ctx, c);
 
         if (result)
@@ -7399,7 +7400,7 @@ final class ParserImpl implements Parser {
 
                                 case '*':
                                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
-                                        position = i = i + 1;
+                                        position = (i = i + 1) + 1;
                                         continue loop;
                                     }
 
@@ -7427,6 +7428,8 @@ final class ParserImpl implements Parser {
                                     i++;
                             }
                         }
+
+                        position = i;
                     }
 
                     break loop;

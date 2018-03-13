@@ -12046,6 +12046,28 @@ public class DSL {
         return decode().value(value);
     }
 
+    @Support
+    public static <T> Field<T> choose(int index, T... values) {
+        return choose(val(index), (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
+    }
+
+    @Support
+    @SafeVarargs
+    public static <T> Field<T> choose(int index, Field<T>... values) {
+        return choose(val(index), values);
+    }
+
+    @Support
+    public static <T> Field<T> choose(Field<Integer> index, T... values) {
+        return choose(index, (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
+    }
+
+    @Support
+    @SafeVarargs
+    public static <T> Field<T> choose(Field<Integer> index, Field<T>... values) {
+        return new Choose<T>(index, values);
+    }
+
     /**
      * Initialise a {@link Case} statement.
      * <p>

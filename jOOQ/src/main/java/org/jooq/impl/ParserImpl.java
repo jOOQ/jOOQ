@@ -3886,6 +3886,8 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseFieldConvertIf(ctx)) != null)
                     return field;
+                else if ((field = parseFieldChooseIf(ctx)) != null)
+                    return field;
 
                 break;
 
@@ -5026,7 +5028,20 @@ final class ParserImpl implements Parser {
                 (Field<Object>)   fields.get(2),
                 (Field<Object>[]) (size == 3 ? EMPTY_FIELD : fields.subList(3, size).toArray(EMPTY_FIELD))
             );
+        }
 
+        return null;
+    }
+
+    private static final Field<?> parseFieldChooseIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "CHOOSE")) {
+            parse(ctx, '(');
+            Field<Integer> index = (Field<Integer>) parseField(ctx, Type.N);
+            parse(ctx, ',');
+            List<Field<?>> fields = parseFields(ctx);
+            parse(ctx, ')');
+
+            return DSL.choose(index, fields.toArray(EMPTY_FIELD));
         }
 
         return null;

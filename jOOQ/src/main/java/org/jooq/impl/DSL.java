@@ -16623,6 +16623,14 @@ public class DSL {
     }
 
     /**
+     * Get the count(field) function.
+     */
+    @Support
+    public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
+        return new org.jooq.impl.Function<Integer>("count", SQLDataType.INTEGER, field("{0}", field));
+    }
+
+    /**
      * Get the count(table) function.
      * <p>
      * If this is not supported by a given database (i.e. non
@@ -16640,6 +16648,14 @@ public class DSL {
     @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
+    }
+
+    /**
+     * Get the count(distinct field) function.
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
+        return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**

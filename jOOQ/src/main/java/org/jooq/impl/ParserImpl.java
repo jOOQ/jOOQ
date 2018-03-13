@@ -5999,22 +5999,31 @@ final class ParserImpl implements Parser {
     private static final AggregateFunction<?> parseCountIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "COUNT")) {
             parse(ctx, '(');
-            if (parseIf(ctx, '*')) {
-                parse(ctx, ')');
-                return count();
-            }
-
             boolean distinct = parseSetQuantifier(ctx);
-            List<Field<?>> fields = distinct
-                ? parseFields(ctx)
-                : Collections.<Field<?>>singletonList(parseField(ctx));
+
+            if (parseIf(ctx, '*') && parse(ctx, ')'))
+                if (distinct)
+                    return countDistinct();
+                else
+                    return count();
+
+            QualifiedAsterisk asterisk = parseQualifiedAsteriskIf(ctx);
+            List<Field<?>> fields = (asterisk == null)
+                ? distinct
+                    ? parseFields(ctx)
+                    : Collections.<Field<?>>singletonList(parseField(ctx))
+                : null;
             parse(ctx, ')');
 
             if (distinct)
-                if (fields.size() > 0)
+                if (fields == null)
+                    return countDistinct(asterisk);
+                else if (fields.size() > 0)
                     return countDistinct(fields.toArray(EMPTY_FIELD));
                 else
                     return countDistinct(fields.get(0));
+            else if (fields == null)
+                return count(asterisk);
             else
                 return count(fields.get(0));
         }

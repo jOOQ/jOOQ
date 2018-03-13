@@ -87,7 +87,6 @@ final class Keywords {
     static final Keyword K_CONTINUE_IDENTITY                = keyword("continue identity");
     static final Keyword K_CREATE                           = keyword("create");
     static final Keyword K_CREATE_SCHEMA                    = keyword("create schema");
-    static final Keyword K_CREATE_VIEW                      = keyword("create view");
     static final Keyword K_CROSS_JOIN_LATERAL               = keyword("cross join lateral");
     static final Keyword K_CURRENT_SCHEMA                   = keyword("current_schema");
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
@@ -225,6 +224,7 @@ final class Keywords {
     static final Keyword K_RENAME_INDEX                     = keyword("rename index");
     static final Keyword K_RENAME_TABLE                     = keyword("rename table");
     static final Keyword K_RENAME_TO                        = keyword("rename to");
+    static final Keyword K_REPLACE                          = keyword("replace");
     static final Keyword K_RESPECT_NULLS                    = keyword("respect nulls");
     static final Keyword K_RESTART                          = keyword("restart");
     static final Keyword K_RESTART_IDENTITY                 = keyword("restart identity");

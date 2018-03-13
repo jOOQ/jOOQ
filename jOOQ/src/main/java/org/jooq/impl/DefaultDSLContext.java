@@ -2995,7 +2995,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields, false);
+        return new CreateViewImpl<Record>(configuration(), view, fields, false, false);
     }
 
 
@@ -3026,7 +3026,54 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false);
+        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false, false);
+    }
+
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(String view, String... fields) {
+        return createOrReplaceView(table(name(view)), Tools.fieldsByName(view, fields));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
+        return createOrReplaceView(table(view), Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl<Record>(configuration(), view, fields, false, true);
+    }
+
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return createOrReplaceView(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f))));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
+        return createOrReplaceView(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f, i))));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+        return createOrReplaceView(table(view), (f, i) -> field(fieldNameFunction.apply(f)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction) {
+        return createOrReplaceView(table(view), (f, i) -> field(fieldNameFunction.apply(f, i)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+        return createOrReplaceView(view, (f, i) -> fieldNameFunction.apply(f));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
+        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false, true);
     }
 
 
@@ -3042,7 +3089,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields, true);
+        return new CreateViewImpl<Record>(configuration(), view, fields, true, false);
     }
 
 
@@ -3073,7 +3120,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, true);
+        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, true, false);
     }
 
 

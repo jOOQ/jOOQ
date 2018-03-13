@@ -45,6 +45,7 @@ import static org.jooq.Clause.CREATE_VIEW_NAME;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -54,9 +55,13 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CREATE_VIEW;
+import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.Keywords.K_REPLACE;
+import static org.jooq.impl.Keywords.K_VIEW;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -87,11 +92,13 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long                                                       serialVersionUID = 8904572826501186329L;
-    private static final Clause[]                                                   CLAUSES          = { CREATE_VIEW };
+    private static final long                                                       serialVersionUID         = 8904572826501186329L;
+    private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
     private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD, POSTGRES);
+    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_OR_REPLACE    = EnumSet.of(H2);
 
     private final boolean                                                           ifNotExists;
+    private final boolean                                                           orReplace;
     private final Table<?>                                                          view;
 
     private final BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction;
@@ -99,7 +106,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private Field<?>[]                                                              fields;
     private Select<?>                                                               select;
 
-    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists) {
+    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists, boolean orReplace) {
         super(configuration);
 
         this.view = view;
@@ -108,16 +115,18 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         this.fieldNameFunction = null;
 
         this.ifNotExists = ifNotExists;
+        this.orReplace = orReplace;
     }
 
 
-    CreateViewImpl(Configuration configuration, Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction, boolean ifNotExists) {
+    CreateViewImpl(Configuration configuration, Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction, boolean ifNotExists, boolean orReplace) {
         super(configuration);
 
         this.view = view;
         this.fields = null;
         this.fieldNameFunction = fieldNameFunction;
         this.ifNotExists = ifNotExists;
+        this.orReplace = orReplace;
     }
 
 
@@ -171,7 +180,25 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         ParamType paramType = ctx.paramType();
 
         ctx.start(CREATE_VIEW_NAME)
-           .visit(K_CREATE_VIEW)
+           .visit(K_CREATE);
+
+        if (orReplace && !NO_SUPPORT_OR_REPLACE.contains(ctx.family())) {
+            ctx.sql(' ').visit(K_OR);
+
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    ctx.sql(' ').visit(K_REPLACE);
+                    break;
+            }
+        }
+
+        ctx.sql(' ').visit(K_VIEW)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))

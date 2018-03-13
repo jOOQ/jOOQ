@@ -7010,6 +7010,80 @@ public class DSL {
 
 
     /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSLContext#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSLContext#createOrReplaceView(Name, Name...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSLContext#createOrReplaceView(Table, Field...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSLContext#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return dsl().createOrReplaceView(view, fieldNameFunction);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSLContext#createOrReplaceView(Name, Name...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+        return dsl().createOrReplaceView(view, fieldNameFunction);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSLContext#createOrReplaceView(Table, Field...)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+        return dsl().createOrReplaceView(view, fieldNameFunction);
+    }
+
+
+    /**
      * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
      *
      * @see DSLContext#createViewIfNotExists(String, String...)

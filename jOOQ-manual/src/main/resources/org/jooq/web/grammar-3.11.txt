@@ -132,7 +132,7 @@ createSchemaStatement = 'CREATE SCHEMA' [ 'IF NOT EXISTS' ] schemaName
 createSequenceStatement = 'CREATE' ( 'SEQUENCE' | 'GENERATOR' ) [ 'IF NOT EXISTS' ] sequenceName
 ;
 
-createViewStatement = 'CREATE VIEW' [ 'IF NOT EXISTS' ] tableName
+createViewStatement = 'CREATE' [ 'OR' ( 'ALTER' | 'REPLACE') ] 'VIEW' [ 'IF NOT EXISTS' ] tableName
   [ '(' fieldNames ')' ] 'AS' select
 ;
 

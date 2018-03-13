@@ -8776,6 +8776,104 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Name, Name...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Table, Field...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
+
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createOrReplaceView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @Support({ H2, POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
+
+
+    /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *
      * @see DSL#createViewIfNotExists(String, String...)

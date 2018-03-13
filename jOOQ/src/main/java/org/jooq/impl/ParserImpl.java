@@ -739,6 +739,8 @@ final class ParserImpl implements Parser {
             result = parseSelect(ctx, null, with);
         else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
             result = parseUpdate(ctx, with);
+        else if ((parseWhitespaceIf(ctx) || true) && ctx.done())
+            throw ctx.exception("Missing statement after WITH");
         else
             throw ctx.exception("Unsupported statement after WITH");
 
@@ -1532,10 +1534,14 @@ final class ParserImpl implements Parser {
             return parseCreateSchema(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseCreateSequence(ctx);
+        else if (parseKeywordIf(ctx, "OR REPLACE VIEW"))
+            return parseCreateView(ctx, true);
+        else if (parseKeywordIf(ctx, "OR ALTER VIEW"))
+            return parseCreateView(ctx, true);
         else if (parseKeywordIf(ctx, "VIEW"))
-            return parseCreateView(ctx);
+            return parseCreateView(ctx, false);
         else
-            throw ctx.expected("GENERATOR", "GLOBAL TEMPORARY TABLE", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "UNIQUE INDEX", "VIEW");
+            throw ctx.expected("GENERATOR", "GLOBAL TEMPORARY TABLE", "INDEX", "OR ALTER VIEW", "OR REPLACE VIEW", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "UNIQUE INDEX", "VIEW");
     }
 
     private static final Query parseAlter(ParserContext ctx) {
@@ -1778,8 +1784,8 @@ final class ParserImpl implements Parser {
         return user(parseName(ctx));
     }
 
-    private static final DDLQuery parseCreateView(ParserContext ctx) {
-        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+    private static final DDLQuery parseCreateView(ParserContext ctx, boolean orReplace) {
+        boolean ifNotExists = !orReplace && parseKeywordIf(ctx, "IF NOT EXISTS");
         Table<?> view = parseTableName(ctx);
         Field<?>[] fields = EMPTY_FIELD;
 
@@ -1797,6 +1803,8 @@ final class ParserImpl implements Parser {
 
         return ifNotExists
             ? ctx.dsl.createViewIfNotExists(view, fields).as(select)
+            : orReplace
+            ? ctx.dsl.createOrReplaceView(view, fields).as(select)
             : ctx.dsl.createView(view, fields).as(select);
     }
 

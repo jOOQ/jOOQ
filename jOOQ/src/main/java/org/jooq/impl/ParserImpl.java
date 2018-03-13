@@ -3753,6 +3753,9 @@ final class ParserImpl implements Parser {
 
             ;
 
+        if (parseIf(ctx, '('))
+            throw ctx.exception("Unknown function");
+
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));
 

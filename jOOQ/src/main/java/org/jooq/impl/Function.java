@@ -137,8 +137,8 @@ class Function<T> extends AbstractField<T> implements
     // Other attributes
     private final QueryPartList<QueryPart>   arguments;
     private final boolean                    distinct;
-    private final SortFieldList              withinGroupOrderBy;
-    private final SortFieldList              keepDenseRankOrderBy;
+    private SortFieldList                    withinGroupOrderBy;
+    private SortFieldList                    keepDenseRankOrderBy;
     private Condition                        filter;
     private WindowSpecificationImpl          windowSpecification;
     private WindowDefinitionImpl             windowDefinition;
@@ -171,8 +171,6 @@ class Function<T> extends AbstractField<T> implements
         this.name = null;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
-        this.keepDenseRankOrderBy = new SortFieldList();
-        this.withinGroupOrderBy = new SortFieldList();
     }
 
     Function(Term term, boolean distinct, DataType<T> type, QueryPart... arguments) {
@@ -182,8 +180,6 @@ class Function<T> extends AbstractField<T> implements
         this.name = null;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
-        this.keepDenseRankOrderBy = new SortFieldList();
-        this.withinGroupOrderBy = new SortFieldList();
     }
 
     Function(Name name, boolean distinct, DataType<T> type, QueryPart... arguments) {
@@ -193,8 +189,6 @@ class Function<T> extends AbstractField<T> implements
         this.name = name;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
-        this.keepDenseRankOrderBy = new SortFieldList();
-        this.withinGroupOrderBy = new SortFieldList();
     }
 
     // -------------------------------------------------------------------------
@@ -300,7 +294,7 @@ class Function<T> extends AbstractField<T> implements
         else
             ctx.sql(", ''");
 
-        if (!withinGroupOrderBy.isEmpty())
+        if (!Tools.isEmpty(withinGroupOrderBy))
             ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
                .visit(withinGroupOrderBy);
 
@@ -315,7 +309,7 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql('(');
         toSQLArguments1(ctx, new QueryPartList<QueryPart>(Arrays.asList(arguments.get(0))));
 
-        if (!withinGroupOrderBy.isEmpty())
+        if (!Tools.isEmpty(withinGroupOrderBy))
             ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
                .visit(withinGroupOrderBy);
 
@@ -395,7 +389,7 @@ class Function<T> extends AbstractField<T> implements
      * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {...})</code> clause
      */
     final void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
-        if (!keepDenseRankOrderBy.isEmpty()) {
+        if (!Tools.isEmpty(keepDenseRankOrderBy)) {
             ctx.sql(' ').visit(K_KEEP)
                .sql(" (").visit(K_DENSE_RANK)
                .sql(' ').visit(first ? K_FIRST : K_LAST)
@@ -409,15 +403,17 @@ class Function<T> extends AbstractField<T> implements
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
     final void toSQLWithinGroupClause(Context<?> ctx) {
-        ctx.sql(' ').visit(K_WITHIN_GROUP)
-           .sql(" (").visit(K_ORDER_BY).sql(' ');
+        if (withinGroupOrderBy != null) {
+            ctx.sql(' ').visit(K_WITHIN_GROUP)
+               .sql(" (").visit(K_ORDER_BY).sql(' ');
 
-        if (withinGroupOrderBy.isEmpty())
-            ctx.visit(K_NULL);
-        else
-            ctx.visit(withinGroupOrderBy);
+            if (withinGroupOrderBy.isEmpty())
+                ctx.visit(K_NULL);
+            else
+                ctx.visit(withinGroupOrderBy);
 
-        ctx.sql(')');
+            ctx.sql(')');
+        }
     }
 
     /**
@@ -507,9 +503,18 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields) {
+        if (withinGroupOrderBy == null)
+            withinGroupOrderBy = new SortFieldList();
+
         withinGroupOrderBy.addAll(Tools.sortFields(fields));
         return this;
     }
+
+
+
+
+
+
 
 
 

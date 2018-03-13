@@ -2461,7 +2461,7 @@ final class ParserImpl implements Parser {
             case 'R':
                 if (parseKeywordIf(ctx, "RENAME")) {
                     if (parseKeywordIf(ctx, "TO")) {
-                        Name newName = parseIdentifier(ctx);
+                        Table<?> newName = parseTableName(ctx);
 
                         return s1.renameTo(newName);
                     }

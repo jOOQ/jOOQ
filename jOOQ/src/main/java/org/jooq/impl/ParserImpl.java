@@ -6363,7 +6363,8 @@ final class ParserImpl implements Parser {
 
             case 's':
             case 'S':
-                if (parseKeywordOrIdentifierIf(ctx, "SERIAL4") || parseKeywordOrIdentifierIf(ctx, "SERIAL"))
+                if (parseKeywordOrIdentifierIf(ctx, "SERIAL4") ||
+                    parseKeywordOrIdentifierIf(ctx, "SERIAL"))
                     return SQLDataType.INTEGER.identity(true);
                 else if (parseKeywordOrIdentifierIf(ctx, "SERIAL8"))
                     return SQLDataType.BIGINT.identity(true);
@@ -6371,7 +6372,8 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
                 else if (parseKeywordOrIdentifierIf(ctx, "SMALLINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.SMALLINT));
-                else if (parseKeywordOrIdentifierIf(ctx, "SMALLSERIAL"))
+                else if (parseKeywordOrIdentifierIf(ctx, "SMALLSERIAL") ||
+                         parseKeywordOrIdentifierIf(ctx, "SERIAL2"))
                     return SQLDataType.SMALLINT.identity(true);
 
                 break;

@@ -326,7 +326,6 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
-import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Privilege;
 import org.jooq.QualifiedAsterisk;
@@ -776,7 +775,7 @@ final class ParserImpl implements Parser {
             boolean offsetPostgres = false;
 
             if (parseKeywordIf(ctx, "OFFSET")) {
-                result.addOffset(inline((int) (long) parseUnsignedInteger(ctx)));
+                result.addOffset((int) (long) parseUnsignedInteger(ctx));
 
                 if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
                     offsetStandard = true;
@@ -789,7 +788,7 @@ final class ParserImpl implements Parser {
             }
 
             if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
-                Param<Integer> limit = inline((int) (long) parseUnsignedInteger(ctx));
+                int limit = (int) (long) parseUnsignedInteger(ctx);
 
                 if (offsetPostgres) {
                     result.addLimit(limit);
@@ -804,7 +803,7 @@ final class ParserImpl implements Parser {
                         result.setWithTies(true);
                 }
                 else if (parseIf(ctx, ',')) {
-                    result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
+                    result.addLimit(limit, (int) (long) parseUnsignedInteger(ctx));
                 }
                 else {
 
@@ -818,14 +817,14 @@ final class ParserImpl implements Parser {
                         result.setWithTies(true);
 
                     if (parseKeywordIf(ctx, "OFFSET"))
-                        result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
+                        result.addLimit((int) (long) parseUnsignedInteger(ctx), limit);
                     else
                         result.addLimit(limit);
                 }
             }
             else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
                 parseAndGetKeyword(ctx, "FIRST", "NEXT");
-                result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
+                result.addLimit((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L));
 
                 if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
 

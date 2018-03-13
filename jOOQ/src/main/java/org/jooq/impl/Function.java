@@ -59,6 +59,7 @@ import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
 import static org.jooq.impl.Keywords.K_KEEP;
 import static org.jooq.impl.Keywords.K_LAST;
+import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_OVER;
 import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
@@ -408,12 +409,15 @@ class Function<T> extends AbstractField<T> implements
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
     final void toSQLWithinGroupClause(Context<?> ctx) {
-        if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(' ').visit(K_WITHIN_GROUP)
-               .sql(" (").visit(K_ORDER_BY)
-               .sql(' ').visit(withinGroupOrderBy)
-               .sql(')');
-        }
+        ctx.sql(' ').visit(K_WITHIN_GROUP)
+           .sql(" (").visit(K_ORDER_BY).sql(' ');
+
+        if (withinGroupOrderBy.isEmpty())
+            ctx.visit(K_NULL);
+        else
+            ctx.visit(withinGroupOrderBy);
+
+        ctx.sql(')');
     }
 
     /**

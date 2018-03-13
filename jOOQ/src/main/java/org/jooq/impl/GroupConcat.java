@@ -89,13 +89,10 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
     final Field<String> getFunction0(Configuration configuration) {
         Function<String> result;
 
-        if (separator == null) {
-            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field);
-        }
-        else {
-            Field<String> literal = inline(separator);
-            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, literal);
-        }
+        if (separator == null)
+            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(","));
+        else
+            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
 
         return result.withinGroupOrderBy(orderBy);
     }

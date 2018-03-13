@@ -145,6 +145,8 @@ public class PostgresDatabase extends AbstractDatabase {
     private static Boolean is84;
     private static Boolean is94;
     private static Boolean canCastToEnumType;
+    private static Boolean canCombineArrays;
+    private static Boolean canUseTupleInPredicates;
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
@@ -375,15 +377,17 @@ public class PostgresDatabase extends AbstractDatabase {
 
                     // To stay on the safe side, if the INFORMATION_SCHEMA ever
                     // includs materialised views, let's exclude them from here
-                    .and(row(TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME).notIn(
-                        select(
-                            PG_NAMESPACE.NSPNAME,
-                            PG_CLASS.RELNAME)
-                        .from(PG_CLASS)
-                        .join(PG_NAMESPACE)
-                            .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
-                        .where(PG_CLASS.RELKIND.eq(inline("m")))
-                    ))
+                    .and(canUseTupleInPredicates()
+                        ? row(TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME).notIn(
+                            select(
+                                PG_NAMESPACE.NSPNAME,
+                                PG_CLASS.RELNAME)
+                            .from(PG_CLASS)
+                            .join(PG_NAMESPACE)
+                                .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                            .where(PG_CLASS.RELKIND.eq(inline("m"))))
+                        : noCondition()
+                    )
 
                 // [#3254] Materialised views are reported only in PG_CLASS, not
                 //         in INFORMATION_SCHEMA.TABLES
@@ -746,8 +750,10 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.SPECIFIC_NAME,
 
                 // Ignore the data type when there is at least one out parameter
-                when(condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES), inline("void"))
-                    .otherwise(r1.DATA_TYPE).as("data_type"),
+                canCombineArrays()
+                    ? when(condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES), inline("void"))
+                     .otherwise(r1.DATA_TYPE).as("data_type")
+                    : r1.DATA_TYPE.as("data_type"),
 
                 r1.CHARACTER_MAXIMUM_LENGTH,
                 r1.NUMERIC_PRECISION,
@@ -837,6 +843,40 @@ public class PostgresDatabase extends AbstractDatabase {
         }
 
         return is94;
+    }
+
+    boolean canCombineArrays() {
+        if (canCombineArrays == null) {
+
+            // [#7270] The ARRAY && ARRAY operator is not implemented in all PostgreSQL
+            //         style databases, e.g. CockroachDB
+            try {
+                create(true).select(field("array[1, 2] && array[2, 3]")).fetch();
+                canCombineArrays = true;
+            }
+            catch (DataAccessException e) {
+                canCombineArrays = false;
+            }
+        }
+
+        return canCombineArrays;
+    }
+
+    boolean canUseTupleInPredicates() {
+        if (canUseTupleInPredicates == null) {
+
+            // [#7270] The tuple in predicate is not implemented in all PostgreSQL
+            //         style databases, e.g. CockroachDB
+            try {
+                create(true).select(field("(1, 2) in (select 1, 2)")).fetch();
+                canUseTupleInPredicates = true;
+            }
+            catch (DataAccessException e) {
+                canUseTupleInPredicates = false;
+            }
+        }
+
+        return canUseTupleInPredicates;
     }
 
     private List<String> enumLabels(String nspname, String typname) {

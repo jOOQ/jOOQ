@@ -6535,10 +6535,17 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> result) {
+    private static final DataType<?> parseDataTypeLength(ParserContext ctx, DataType<?> in) {
+        DataType<?> result = in;
+
         if (parseIf(ctx, '(')) {
             if (!parseKeywordIf(ctx, "MAX"))
                 result = result.length((int) (long) parseUnsignedInteger(ctx));
+
+            if (in == SQLDataType.VARCHAR || in == SQLDataType.CHAR)
+                if (!parseKeywordIf(ctx, "BYTE"))
+                    parseKeywordIf(ctx, "CHAR");
+
             parse(ctx, ')');
         }
 

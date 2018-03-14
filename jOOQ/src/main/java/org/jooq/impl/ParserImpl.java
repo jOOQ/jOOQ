@@ -3228,10 +3228,12 @@ final class ParserImpl implements Parser {
 
     private static final List<Table<?>> parseTables(ParserContext ctx) {
         List<Table<?>> result = new ArrayList<Table<?>>();
+
         do {
             result.add(parseTable(ctx));
         }
         while (parseIf(ctx, ','));
+
         return result;
     }
 
@@ -3601,6 +3603,7 @@ final class ParserImpl implements Parser {
 
     private static final List<SelectFieldOrAsterisk> parseSelectList(ParserContext ctx) {
         List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
+
         do {
             if (peekKeyword(ctx, KEYWORDS_IN_SELECT))
                 throw ctx.exception("Select keywords must be quoted");
@@ -3625,6 +3628,7 @@ final class ParserImpl implements Parser {
             }
         }
         while (parseIf(ctx, ','));
+
         return result;
     }
 
@@ -6165,33 +6169,47 @@ final class ParserImpl implements Parser {
         if (identifier == null)
             return null;
 
-        List<Name> result = new ArrayList<Name>();
-        result.add(identifier);
+        if (parseIf(ctx, '.')) {
+            List<Name> result = new ArrayList<Name>();
+            result.add(identifier);
 
-        while (parseIf(ctx, '.'))
-            result.add(parseIdentifier(ctx));
+            do {
+                result.add(parseIdentifier(ctx));
+            }
+            while (parseIf(ctx, '.'));
 
-        return result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME));
+            return DSL.name(result.toArray(EMPTY_NAME));
+        }
+        else
+            return identifier;
     }
 
     private static final QualifiedAsterisk parseQualifiedAsteriskIf(ParserContext ctx) {
         int position = ctx.position();
-        Name identifier = parseIdentifierIf(ctx);
+        Name i1 = parseIdentifierIf(ctx);
 
-        if (identifier == null)
+        if (i1 == null)
             return null;
 
-        List<Name> result = new ArrayList<Name>();
-        result.add(identifier);
+        if (parseIf(ctx, '.')) {
+            List<Name> result = null;
+            Name i2;
 
-        while (parseIf(ctx, '.')) {
-            if ((identifier = parseIdentifierIf(ctx)) != null) {
-                result.add(identifier);
+            do {
+                if ((i2 = parseIdentifierIf(ctx)) != null) {
+                    if (result == null) {
+                        result = new ArrayList<Name>();
+                        result.add(i1);
+                    }
+
+                    result.add(i2);
+                }
+                else {
+                    parse(ctx, '*');
+                    return table(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+                }
             }
-            else {
-                parse(ctx, '*');
-                return table(result.size() == 1 ? result.get(0) : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
-            }
+            while (parseIf(ctx, '.'));
         }
 
         ctx.position(position);
@@ -6879,13 +6897,12 @@ final class ParserImpl implements Parser {
     }
 
     private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
-        StringBuilder sb = new StringBuilder();
+        int position = ctx.position();
         char c;
 
         for (;;) {
             c = ctx.character();
             if (c >= '0' && c <= '9') {
-                sb.append(c);
                 ctx.positionInc();
             }
             else
@@ -6893,43 +6910,43 @@ final class ParserImpl implements Parser {
         }
 
         if (c == '.') {
-            sb.append(c);
             ctx.positionInc();
         }
         else {
-            if (sb.length() == 0)
+            if (position == ctx.position())
                 return null;
 
+            String s = ctx.substring(position, ctx.position());
             parseWhitespaceIf(ctx);
             try {
                 return sign == Sign.MINUS
-                    ? -Long.valueOf(sb.toString())
-                    : Long.valueOf(sb.toString());
+                    ? -Long.valueOf(s)
+                    : Long.valueOf(s);
             }
             catch (Exception e1) {
                 return sign == Sign.MINUS
-                    ? new BigInteger(sb.toString()).negate()
-                    : new BigInteger(sb.toString());
+                    ? new BigInteger(s).negate()
+                    : new BigInteger(s);
             }
         }
 
         for (;;) {
             c = ctx.character();
             if (c >= '0' && c <= '9') {
-                sb.append(c);
                 ctx.positionInc();
             }
             else
                 break;
         }
 
-        if (sb.length() == 0)
+        if (position == ctx.position())
             return null;
 
+        String s = ctx.substring(position, ctx.position());
         parseWhitespaceIf(ctx);
         return sign == Sign.MINUS
-            ? new BigDecimal(sb.toString()).negate()
-            : new BigDecimal(sb.toString());
+            ? new BigDecimal(s).negate()
+            : new BigDecimal(s);
         // TODO add floating point support
     }
 
@@ -6988,24 +7005,23 @@ final class ParserImpl implements Parser {
     }
 
     private static final Long parseUnsignedIntegerIf(ParserContext ctx) {
-        StringBuilder sb = new StringBuilder();
-        char c;
+        int position = ctx.position();
 
         for (;;) {
-            c = ctx.character();
-            if (c >= '0' && c <= '9') {
-                sb.append(c);
+            char c = ctx.character();
+
+            if (c >= '0' && c <= '9')
                 ctx.positionInc();
-            }
             else
                 break;
         }
 
-        if (sb.length() == 0)
+        if (position == ctx.position())
             return null;
 
+        String s = ctx.substring(position, ctx.position());
         parseWhitespaceIf(ctx);
-        return Long.valueOf(sb.toString());
+        return Long.valueOf(s);
     }
 
     private static final JoinType parseJoinTypeIf(ParserContext ctx) {
@@ -7334,14 +7350,14 @@ final class ParserImpl implements Parser {
     private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
         int length = keyword.length();
         int skip;
+        int position = ctx.position();
 
-        if (ctx.sql.length < ctx.position() + length)
+        if (ctx.sql.length < position + length)
             return false;
 
-        // TODO is this correct?
         skipLoop:
-        for (skip = 0; ctx.position() + skip < ctx.sql.length; skip++) {
-            char c = ctx.character(ctx.position() + skip);
+        for (skip = 0; position + skip < ctx.sql.length; skip++) {
+            char c = ctx.sql[position + skip];
 
             switch (c) {
                 case ' ':
@@ -7364,29 +7380,26 @@ final class ParserImpl implements Parser {
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
-            int p = ctx.position() + i + skip;
+            int p = position + i + skip;
 
             switch (c) {
                 case ' ':
-                case '\t':
-                case '\r':
-                case '\n':
                     skip = skip + (afterWhitespace(ctx, p) - p - 1);
                     break;
 
                 default:
-                    if (upper(ctx.sql[p]) != keyword.charAt(i))
+                    if (upper(ctx.sql[p]) != c)
                         return false;
 
                     break;
             }
         }
 
-        if (ctx.isIdentifierPart(ctx.position() + length + skip))
+        if (ctx.isIdentifierPart(position + length + skip))
             return false;
 
         if (requireFunction)
-            if (ctx.character(afterWhitespace(ctx, ctx.position() + length + skip)) != '(')
+            if (ctx.character(afterWhitespace(ctx, position + length + skip)) != '(')
                 return false;
 
         if (updatePosition) {
@@ -7399,7 +7412,7 @@ final class ParserImpl implements Parser {
 
     private static final boolean parseWhitespaceIf(ParserContext ctx) {
         int position = ctx.position();
-        ctx.position(afterWhitespace(ctx, ctx.position()));
+        ctx.position(afterWhitespace(ctx, position));
         return position != ctx.position();
     }
 
@@ -7465,8 +7478,6 @@ final class ParserImpl implements Parser {
                     // TODO MySQL comments require a whitespace after --. Should we deal with this?
                     // TODO Some databases also support # as a single line comment character.
 
-
-                // TODO support Oracle-style hints
                 default:
                     position = i;
                     break loop;

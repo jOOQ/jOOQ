@@ -127,6 +127,14 @@ public interface Name extends QueryPart {
     String[] getName();
 
     /**
+     * Create an empty {@link WindowDefinition} from this name.
+     *
+     * @see #as(WindowSpecification)
+     */
+    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    WindowDefinition as();
+
+    /**
      * Create a {@link WindowDefinition} from this name.
      * <p>
      * This creates a window definition that can be

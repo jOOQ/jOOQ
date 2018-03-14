@@ -72,13 +72,17 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     public final void accept(Context<?> ctx) {
 
         // In the WINDOW clause, always declare window definitions
-        if (ctx.declareWindows())
+        if (ctx.declareWindows()) {
             ctx.visit(name)
                .sql(' ')
                .visit(K_AS)
-               .sql(" (")
-               .visit(window)
-               .sql(')');
+               .sql(" (");
+
+            if (window != null);
+                ctx.visit(window);
+
+            ctx.sql(')');
+        }
 
         // Outside the WINDOW clause, only few dialects actually support
         // referencing WINDOW definitions
@@ -86,7 +90,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
             ctx.visit(name);
 
         // When emulating, just repeat the window specification
-        else
+        else if (window != null)
             ctx.visit(window);
     }
 

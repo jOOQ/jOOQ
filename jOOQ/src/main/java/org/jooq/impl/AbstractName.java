@@ -86,6 +86,11 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
     }
 
     @Override
+    public final WindowDefinition as() {
+        return new WindowDefinitionImpl(this, null);
+    }
+
+    @Override
     public final WindowDefinition as(WindowSpecification window) {
         return new WindowDefinitionImpl(this, window);
     }

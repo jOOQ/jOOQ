@@ -396,7 +396,9 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     private final ParserContext ctx(String sql, Object... bindings) {
-        return new ParserContext(dsl, meta, metaLookups, sql, bindings);
+        ParserContext ctx = new ParserContext(dsl, meta, metaLookups, sql, bindings);
+        parseWhitespaceIf(ctx);
+        return ctx;
     }
 
     @Override
@@ -539,24 +541,22 @@ final class ParserImpl implements Parser {
     }
 
     private static final void parseDelimiterSpecifications(ParserContext ctx) {
-        while (parseKeywordIf(ctx, "DELIMITER")) {
-            if (ctx.character() != ' ')
-                throw ctx.exception("Whitespace expected");
-
-            ctx.delimiter = parseUntilEOL(ctx).trim();
-        }
+        while (parseKeywordIf(ctx, "DELIMITER"))
+            ctx.delimiter(parseUntilEOL(ctx).trim());
     }
 
     private static final boolean parseDelimiterIf(ParserContext ctx) {
-        if (parseIf(ctx, ctx.delimiter))
+        if (parseIf(ctx, ctx.delimiter()))
             return true;
 
-        if (parseKeywordIf(ctx, "GO")) {
+        if (peekKeyword(ctx, "GO")) {
+            ctx.positionInc(2);
             String line = parseUntilEOLIf(ctx);
 
             if (line != null && !"".equals(line.trim()))
                 throw ctx.exception("GO must be only token on line");
 
+            parseWhitespaceIf(ctx);
             return true;
         }
 
@@ -564,7 +564,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean parseResultQuery, boolean parseSelect) {
-        parseWhitespaceIf(ctx);
         if (ctx.done())
             return null;
 
@@ -932,6 +931,7 @@ final class ParserImpl implements Parser {
         if (peekKeyword(ctx, "VALUES"))
             return (SelectQueryImpl<Record>) ctx.dsl.selectQuery(parseTableValueConstructor(ctx));
 
+        ctx.ignoreHints(false);
         parseKeyword(ctx, "SELECT");
         String hints = parseHints(ctx);
         boolean distinct = parseKeywordIf(ctx, "DISTINCT") || parseKeywordIf(ctx, "UNIQUE");
@@ -1912,8 +1912,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Statement parseStatement(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         switch (ctx.character()) {
             case 'n':
             case 'N':
@@ -2553,7 +2551,6 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterTable(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> tableName = parseTableName(ctx);
-        parseWhitespaceIf(ctx);
 
         AlterTableStep s1 = ifExists
             ? ctx.dsl.alterTableIfExists(tableName)
@@ -2807,7 +2804,6 @@ final class ParserImpl implements Parser {
 
     private static final DDLQuery parseRename(ParserContext ctx) {
         parseKeyword(ctx, "RENAME");
-        parseWhitespaceIf(ctx);
 
         switch (ctx.character()) {
             case 'c':
@@ -3231,8 +3227,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Table<?>> parseTables(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         List<Table<?>> result = new ArrayList<Table<?>>();
         do {
             result.add(parseTable(ctx));
@@ -3606,8 +3600,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<SelectFieldOrAsterisk> parseSelectList(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
         do {
             if (peekKeyword(ctx, KEYWORDS_IN_SELECT))
@@ -3666,8 +3658,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Field<?>> parseFields(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         List<Field<?>> result = new ArrayList<Field<?>>();
         do {
             result.add(parseField(ctx));
@@ -3677,8 +3667,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<FieldOrRow> parseFieldsOrRows(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         List<FieldOrRow> result = new ArrayList<FieldOrRow>();
         do {
             result.add(parseFieldOrRow(ctx));
@@ -3760,15 +3748,14 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseHints(ParserContext ctx) {
-        ctx.ignoreHints = false;
         StringBuilder sb = new StringBuilder();
 
-        while (parseWhitespaceIf(ctx)) {
-            int position = ctx.position;
-            if (parseIf(ctx, '/')) {
-                parse(ctx, '*');
+        do {
+            int position = ctx.position();
+            if (parseIf(ctx, '/', false)) {
+                parse(ctx, '*', false);
 
-                int i = ctx.position;
+                int i = ctx.position();
 
                 loop:
                 while (i < ctx.sql.length) {
@@ -3781,16 +3768,17 @@ final class ParserImpl implements Parser {
                     i++;
                 }
 
-                ctx.position = i + 2;
+                ctx.position(i + 2);
 
                 if (sb.length() > 0)
                     sb.append(' ');
 
-                sb.append(new String(ctx.sql, position, ctx.position - position));
+                sb.append(ctx.substring(position, ctx.position()));
             }
         }
+        while (parseWhitespaceIf(ctx));
 
-        ctx.ignoreHints = true;
+        ctx.ignoreHints(true);
         return sb.length() > 0 ? sb.toString() : null;
     }
 
@@ -3964,8 +3952,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
-        parseWhitespaceIf(ctx);
-
         FieldOrRow field;
         Object value;
 
@@ -4084,7 +4070,7 @@ final class ParserImpl implements Parser {
 
                 // [#6704] PostgreSQL E'...' escaped string literals
                 if (S.is(type))
-                    if (ctx.character(ctx.position + 1) == '\'')
+                    if (ctx.characterNext() == '\'')
                         return inline(parseStringLiteral(ctx));
 
                 if (N.is(type))
@@ -4241,7 +4227,7 @@ final class ParserImpl implements Parser {
             case 'q':
             case 'Q':
                 if (S.is(type))
-                    if (ctx.character(ctx.position + 1) == '\'')
+                    if (ctx.characterNext() == '\'')
                         return inline(parseStringLiteral(ctx));
 
             case 'r':
@@ -4383,7 +4369,7 @@ final class ParserImpl implements Parser {
                 break;
 
             case '{':
-                parse(ctx, '{');
+                parse(ctx, '{', false);
 
                 switch (ctx.character()) {
                     case 'd':
@@ -4427,7 +4413,7 @@ final class ParserImpl implements Parser {
                 // - A correlated subquery:                     E.g. (select 1)
                 // - A correlated subquery with nested set ops: E.g. ((select 1) except (select 2))
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
-                int position = ctx.position;
+                int position = ctx.position();
                 try {
                     if (peekKeyword(ctx, "SELECT", false, true, false)) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
@@ -4442,7 +4428,7 @@ final class ParserImpl implements Parser {
 
                     // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
                     if (e.getMessage().contains("Token ')' expected"))
-                        ctx.position = position;
+                        ctx.position(position);
                     else
                         throw e;
                 }
@@ -6189,9 +6175,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final QualifiedAsterisk parseQualifiedAsteriskIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
-        int position = ctx.position;
+        int position = ctx.position();
         Name identifier = parseIdentifierIf(ctx);
 
         if (identifier == null)
@@ -6210,7 +6194,7 @@ final class ParserImpl implements Parser {
             }
         }
 
-        ctx.position = position;
+        ctx.position(position);
         return null;
     }
 
@@ -6243,40 +6227,40 @@ final class ParserImpl implements Parser {
     }
 
     private static final Name parseIdentifierIf(ParserContext ctx, boolean allowAposQuotes) {
-        parseWhitespaceIf(ctx);
-
         char quoteEnd = parseQuote(ctx, allowAposQuotes);
 
-        int start = ctx.position;
+        int start = ctx.position();
         if (quoteEnd != 0)
-            while (ctx.character() != quoteEnd && ctx.position < ctx.sql.length)
-                ctx.position = ctx.position + 1;
+            while (ctx.character() != quoteEnd && ctx.hasMore())
+                ctx.positionInc();
         else
-            while (ctx.isIdentifierPart() && ctx.position < ctx.sql.length)
-                ctx.position = ctx.position + 1;
+            while (ctx.isIdentifierPart() && ctx.hasMore())
+                ctx.positionInc();
 
-
-        if (ctx.position == start)
+        if (ctx.position() == start)
             return null;
 
-        String result = new String(ctx.sql, start, ctx.position - start);
+        String result = ctx.substring(start, ctx.position());
 
         if (quoteEnd != 0) {
             if (ctx.character() != quoteEnd)
                 throw ctx.exception("Quoted identifier must terminate in " + quoteEnd);
 
-            ctx.position = ctx.position + 1;
+            ctx.positionInc();
+            parseWhitespaceIf(ctx);
             return DSL.quotedName(result);
         }
-        else
+        else {
+            parseWhitespaceIf(ctx);
             return DSL.unquotedName(result);
+        }
     }
 
     private static final char parseQuote(ParserContext ctx, boolean allowAposQuotes) {
-        return parseIf(ctx, '"') ? '"'
-             : parseIf(ctx, '`') ? '`'
-             : parseIf(ctx, '[') ? ']'
-             : allowAposQuotes && parseIf(ctx, '\'') ? '\''
+        return parseIf(ctx, '"', false) ? '"'
+             : parseIf(ctx, '`', false) ? '`'
+             : parseIf(ctx, '[', false) ? ']'
+             : allowAposQuotes && parseIf(ctx, '\'', false) ? '\''
              : 0;
     }
 
@@ -6290,12 +6274,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseDataTypePrefix(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         char character = ctx.character();
 
         if (character == '[' || character == '"' || character == '`')
-            character = ctx.character(ctx.position + 1);
+            character = ctx.characterNext();
 
         switch (character) {
             case 'b':
@@ -6500,12 +6482,12 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean parseKeywordOrIdentifierIf(ParserContext ctx, String keyword) {
-        int position = ctx.position;
+        int position = ctx.position();
         char quoteEnd = parseQuote(ctx, false);
         boolean result = parseKeywordIf(ctx, keyword);
 
         if (!result)
-            ctx.position = position;
+            ctx.position(position);
         else if (quoteEnd != 0)
             parse(ctx, quoteEnd);
 
@@ -6621,16 +6603,15 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     private static final char parseCharacterLiteral(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-        parse(ctx, '\'');
+        parse(ctx, '\'', false);
 
         char c = ctx.character();
 
         // TODO MySQL string escaping...
         if (c == '\'')
-            parse(ctx, '\'');
+            parse(ctx, '\'', false);
 
-        ctx.position = ctx.position + 1;
+        ctx.positionInc();
         parse(ctx, '\'');
         return c;
     }
@@ -6642,7 +6623,7 @@ final class ParserImpl implements Parser {
                 return DSL.val(ctx.nextBinding(), Object.class);
 
             case ':':
-                parse(ctx, ':');
+                parse(ctx, ':', false);
                 return DSL.param(parseIdentifier(ctx).last(), ctx.nextBinding());
 
             default:
@@ -6664,11 +6645,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseStringLiteralIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
-        if (parseIf(ctx, 'q', '\'') || parseIf(ctx, 'Q', '\''))
+        if (parseIf(ctx, 'q', '\'', false) || parseIf(ctx, 'Q', '\'', false))
             return parseOracleQuotedStringLiteral(ctx);
-        else if (parseIf(ctx, 'e', '\'') || parseIf(ctx, 'E', '\''))
+        else if (parseIf(ctx, 'e', '\'', false) || parseIf(ctx, 'E', '\'', false))
             return parseUnquotedStringLiteral(ctx, true);
         else if (peek(ctx, '\''))
             return parseUnquotedStringLiteral(ctx, false);
@@ -6677,9 +6656,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
-        if (parseIf(ctx, "X'") || parseIf(ctx, "x'")) {
+        if (parseIf(ctx, "X'", false) || parseIf(ctx, "x'", false)) {
             if (parseIf(ctx, '\''))
                 return EMPTY_BYTE;
 
@@ -6688,16 +6665,16 @@ final class ParserImpl implements Parser {
             char c2 = 0;
 
             do {
-                while (ctx.position < ctx.sql.length) {
-                    c1 = ctx.character(ctx.position);
+                while (ctx.hasMore()) {
+                    c1 = ctx.character();
 
                     if (c1 == ' ')
-                        ctx.position = ctx.position + 1;
+                        ctx.positionInc();
                     else
                         break;
                 }
 
-                c2 = ctx.character(ctx.position + 1);
+                c2 = ctx.characterNext();
 
                 if (c1 == '\'')
                     break;
@@ -6710,11 +6687,14 @@ final class ParserImpl implements Parser {
                 catch (NumberFormatException e) {
                     throw ctx.exception("Illegal character for binary literal");
                 }
+
+                ctx.positionInc(2);
             }
-            while ((ctx.position = ctx.position + 2) < ctx.sql.length);
+            while (ctx.hasMore());
 
             if (c1 == '\'') {
-                ctx.position = ctx.position + 1;
+                ctx.positionInc();
+                parseWhitespaceIf(ctx);
                 return buffer.toByteArray();
             }
 
@@ -6725,30 +6705,31 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseOracleQuotedStringLiteral(ParserContext ctx) {
-        parse(ctx, '\'');
+        parse(ctx, '\'', false);
 
         char start = ctx.character();
         char end;
 
         switch (start) {
-            case '[' : end = ']'; ctx.position = ctx.position + 1; break;
-            case '{' : end = '}'; ctx.position = ctx.position + 1; break;
-            case '(' : end = ')'; ctx.position = ctx.position + 1; break;
-            case '<' : end = '>'; ctx.position = ctx.position + 1; break;
+            case '[' : end = ']'; ctx.positionInc(); break;
+            case '{' : end = '}'; ctx.positionInc(); break;
+            case '(' : end = ')'; ctx.positionInc(); break;
+            case '<' : end = '>'; ctx.positionInc(); break;
             case ' ' :
             case '\t':
             case '\r':
             case '\n': throw ctx.exception("Illegal quote string character");
-            default  : end = start; ctx.position = ctx.position + 1; break;
+            default  : end = start; ctx.positionInc(); break;
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = ctx.position; i < ctx.sql.length; i++) {
+        for (int i = ctx.position(); i < ctx.sql.length; i++) {
             char c = ctx.character(i);
 
             if (c == end)
                 if (ctx.character(i + 1) == '\'') {
-                    ctx.position = i + 2;
+                    ctx.position(i + 2);
+                    parseWhitespaceIf(ctx);
                     return sb.toString();
                 }
                 else {
@@ -6762,12 +6743,12 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping) {
-        parse(ctx, '\'');
+        parse(ctx, '\'', false);
 
         StringBuilder sb = new StringBuilder();
 
         characterLoop:
-        for (int i = ctx.position; i < ctx.sql.length; i++) {
+        for (int i = ctx.position(); i < ctx.sql.length; i++) {
             char c1 = ctx.character(i);
 
             // TODO MySQL string escaping...
@@ -6867,7 +6848,8 @@ final class ParserImpl implements Parser {
                 }
                 case '\'': {
                     if (ctx.character(i + 1) != '\'') {
-                        ctx.position = i + 1;
+                        ctx.position(i + 1);
+                        parseWhitespaceIf(ctx);
                         return sb.toString();
                     }
 
@@ -6897,8 +6879,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Number parseUnsignedNumericLiteralIf(ParserContext ctx, Sign sign) {
-        parseWhitespaceIf(ctx);
-
         StringBuilder sb = new StringBuilder();
         char c;
 
@@ -6906,7 +6886,7 @@ final class ParserImpl implements Parser {
             c = ctx.character();
             if (c >= '0' && c <= '9') {
                 sb.append(c);
-                ctx.position = ctx.position + 1;
+                ctx.positionInc();
             }
             else
                 break;
@@ -6914,12 +6894,13 @@ final class ParserImpl implements Parser {
 
         if (c == '.') {
             sb.append(c);
-            ctx.position = ctx.position + 1;
+            ctx.positionInc();
         }
         else {
             if (sb.length() == 0)
                 return null;
 
+            parseWhitespaceIf(ctx);
             try {
                 return sign == Sign.MINUS
                     ? -Long.valueOf(sb.toString())
@@ -6936,7 +6917,7 @@ final class ParserImpl implements Parser {
             c = ctx.character();
             if (c >= '0' && c <= '9') {
                 sb.append(c);
-                ctx.position = ctx.position + 1;
+                ctx.positionInc();
             }
             else
                 break;
@@ -6945,6 +6926,7 @@ final class ParserImpl implements Parser {
         if (sb.length() == 0)
             return null;
 
+        parseWhitespaceIf(ctx);
         return sign == Sign.MINUS
             ? new BigDecimal(sb.toString()).negate()
             : new BigDecimal(sb.toString());
@@ -6981,8 +6963,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Long parseSignedIntegerIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         Sign sign = parseSign(ctx);
         Long unsigned;
 
@@ -7008,8 +6988,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Long parseUnsignedIntegerIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         StringBuilder sb = new StringBuilder();
         char c;
 
@@ -7017,7 +6995,7 @@ final class ParserImpl implements Parser {
             c = ctx.character();
             if (c >= '0' && c <= '9') {
                 sb.append(c);
-                ctx.position = ctx.position + 1;
+                ctx.positionInc();
             }
             else
                 break;
@@ -7026,6 +7004,7 @@ final class ParserImpl implements Parser {
         if (sb.length() == 0)
             return null;
 
+        parseWhitespaceIf(ctx);
         return Long.valueOf(sb.toString());
     }
 
@@ -7091,8 +7070,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final TruthValue parseTruthValueIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         if (parseKeywordIf(ctx, "TRUE"))
             return TruthValue.TRUE;
         else if (parseKeywordIf(ctx, "FALSE"))
@@ -7104,8 +7081,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final CombineOperator parseCombineOperatorIf(ParserContext ctx, boolean intersectOnly) {
-        parseWhitespaceIf(ctx);
-
         if (!intersectOnly && parseKeywordIf(ctx, "UNION"))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.UNION_ALL;
@@ -7132,8 +7107,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final ComputationalOperation parseComputationalOperationIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         if (parseFunctionNameIf(ctx, "AVG"))
             return ComputationalOperation.AVG;
         else if (parseFunctionNameIf(ctx, "MAX"))
@@ -7161,7 +7134,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final BinarySetFunctionType parseBinarySetFunctionTypeIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
 
         // TODO speed this up
         for (BinarySetFunctionType type : BinarySetFunctionType.values())
@@ -7172,8 +7144,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final Comparator parseComparatorIf(ParserContext ctx) {
-        parseWhitespaceIf(ctx);
-
         if (parseIf(ctx, "="))
             return Comparator.EQUALS;
         else if (parseIf(ctx, "!=") || parseIf(ctx, "<>"))
@@ -7208,7 +7178,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final String parseUntilEOLIf(ParserContext ctx) {
-        int start = ctx.position;
+        int start = ctx.position();
         int stop = start;
 
         for (; stop < ctx.sql.length; stop++) {
@@ -7227,66 +7197,68 @@ final class ParserImpl implements Parser {
         if (start == stop)
             return null;
 
-        ctx.position = stop;
-        return new String(ctx.sql, start, stop - start);
+        ctx.position(stop);
+        parseWhitespaceIf(ctx);
+        return ctx.substring(start, stop);
     }
 
     private static final boolean parseIf(ParserContext ctx, String string) {
+        return parseIf(ctx, string, true);
+    }
+
+    private static final boolean parseIf(ParserContext ctx, String string, boolean skipAfterWhitespace) {
         boolean result = peek(ctx, string);
 
-        if (result)
-            ctx.position = ctx.position + string.length();
+        if (result) {
+            ctx.positionInc(string.length());
+
+            if (skipAfterWhitespace)
+                parseWhitespaceIf(ctx);
+        }
 
         return result;
     }
 
-    private static final boolean parseIf(ParserContext ctx, String string, String peek) {
-        parseWhitespaceIf(ctx);
-        int l1 = string.length();
-        int l2 = peek.length();
-
-        if (ctx.sql.length < ctx.position + l1 + l2)
-            return false;
-
-        for (int i = 0; i < l1; i++)
-            if (ctx.sql[ctx.position + i] != string.charAt(i))
-                return false;
-
-        for (int i = l1; i < l2; i++)
-            if (ctx.sql[ctx.position + i] != peek.charAt(i))
-                return false;
-
-        ctx.position = ctx.position + l1;
-        return true;
+    private static final boolean parse(ParserContext ctx, char c) {
+        return parse(ctx, c, true);
     }
 
-    private static final boolean parse(ParserContext ctx, char c) {
-        if (!parseIf(ctx, c))
+    private static final boolean parse(ParserContext ctx, char c, boolean skipAfterWhitespace) {
+        if (!parseIf(ctx, c, skipAfterWhitespace))
             throw ctx.expected("Token '" + c + "'");
 
         return true;
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {
-        parseWhitespaceIf(ctx);
+        return parseIf(ctx, c, true);
+    }
+
+    private static final boolean parseIf(ParserContext ctx, char c, boolean skipAfterWhitespace) {
         boolean result = peek(ctx, c);
 
-        if (result)
-            ctx.position = ctx.position + 1;
+        if (result) {
+            ctx.positionInc();
+
+            if (skipAfterWhitespace)
+                parseWhitespaceIf(ctx);
+        }
 
         return result;
     }
 
-    private static final boolean parseIf(ParserContext ctx, char c, char peek) {
-        parseWhitespaceIf(ctx);
-
+    private static final boolean parseIf(ParserContext ctx, char c, char peek, boolean skipAfterWhitespace) {
         if (ctx.character() != c)
             return false;
 
-        if (ctx.character(ctx.position + 1) != peek)
+        if (ctx.characterNext() != peek)
             return false;
 
-        ctx.position = ctx.position + 1;
+        ctx.positionInc();
+
+        if (skipAfterWhitespace)
+            parseWhitespaceIf(ctx);
+
         return true;
     }
 
@@ -7312,15 +7284,6 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Keyword parseAndGetKeyword(ParserContext ctx, String keyword) {
-        Keyword result = parseAndGetKeywordIf(ctx, keyword);
-
-        if (result == null)
-            throw ctx.expected("Keyword '" + keyword + "'");
-
-        return result;
-    }
-
     private static final Keyword parseAndGetKeywordIf(ParserContext ctx, String... keywords) {
         for (String keyword : keywords)
             if (parseKeywordIf(ctx, keyword))
@@ -7337,8 +7300,6 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean peek(ParserContext ctx, char c) {
-        parseWhitespaceIf(ctx);
-
         if (ctx.character() != c)
             return false;
 
@@ -7346,14 +7307,13 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean peek(ParserContext ctx, String string) {
-        parseWhitespaceIf(ctx);
         int length = string.length();
 
-        if (ctx.sql.length < ctx.position + length)
+        if (ctx.sql.length < ctx.position() + length)
             return false;
 
         for (int i = 0; i < length; i++)
-            if (ctx.sql[ctx.position + i] != string.charAt(i))
+            if (ctx.sql[ctx.position() + i] != string.charAt(i))
                 return false;
 
         return true;
@@ -7372,17 +7332,16 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
-        parseWhitespaceIf(ctx);
         int length = keyword.length();
         int skip;
 
-        if (ctx.sql.length < ctx.position + length)
+        if (ctx.sql.length < ctx.position() + length)
             return false;
 
         // TODO is this correct?
         skipLoop:
-        for (skip = 0; ctx.position + skip < ctx.sql.length; skip++) {
-            char c = ctx.character(ctx.position + skip);
+        for (skip = 0; ctx.position() + skip < ctx.sql.length; skip++) {
+            char c = ctx.character(ctx.position() + skip);
 
             switch (c) {
                 case ' ':
@@ -7405,7 +7364,7 @@ final class ParserImpl implements Parser {
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
-            int p = ctx.position + i + skip;
+            int p = ctx.position() + i + skip;
 
             switch (c) {
                 case ' ':
@@ -7423,23 +7382,25 @@ final class ParserImpl implements Parser {
             }
         }
 
-        if (ctx.isIdentifierPart(ctx.position + length + skip))
+        if (ctx.isIdentifierPart(ctx.position() + length + skip))
             return false;
 
         if (requireFunction)
-            if (ctx.character(afterWhitespace(ctx, ctx.position + length + skip)) != '(')
+            if (ctx.character(afterWhitespace(ctx, ctx.position() + length + skip)) != '(')
                 return false;
 
-        if (updatePosition)
-            ctx.position = ctx.position + length + skip;
+        if (updatePosition) {
+            ctx.positionInc(length + skip);
+            parseWhitespaceIf(ctx);
+        }
 
         return true;
     }
 
     private static final boolean parseWhitespaceIf(ParserContext ctx) {
-        int position = ctx.position;
-        ctx.position = afterWhitespace(ctx, ctx.position);
-        return position != ctx.position;
+        int position = ctx.position();
+        ctx.position(afterWhitespace(ctx, ctx.position()));
+        return position != ctx.position();
     }
 
     private static final int afterWhitespace(ParserContext ctx, int position) {
@@ -7460,7 +7421,7 @@ final class ParserImpl implements Parser {
                         while (i < ctx.sql.length) {
                             switch (ctx.sql[i]) {
                                 case '+':
-                                    if (!ctx.ignoreHints && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z')))
+                                    if (!ctx.ignoreHints() && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z')))
                                         break loop;
 
                                     break;
@@ -7519,175 +7480,6 @@ final class ParserImpl implements Parser {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
 
-    static final class ParserContext {
-        final DSLContext           dsl;
-        final Meta                 meta;
-        final ParseWithMetaLookups metaLookups;
-        final String               sqlString;
-        final char[]               sql;
-        int                        position    = 0;
-        boolean                    ignoreHints = true;
-        final Object[]             bindings;
-        int                        bindIndex = 0;
-        String                     delimiter = ";";
-
-        ParserContext(
-                DSLContext dsl,
-                Meta meta,
-                ParseWithMetaLookups metaLookups,
-                String sqlString,
-                Object[] bindings
-        ) {
-            this.dsl = dsl;
-            this.meta = meta;
-            this.metaLookups = metaLookups;
-            this.sqlString = sqlString;
-            this.sql = sqlString.toCharArray();
-            this.bindings = bindings;
-        }
-
-        boolean requireProEdition() {
-            if (!PRO_EDITION)
-                throw exception("Feature only supported in pro edition");
-
-            return true;
-        }
-
-        String substring(int startPosition, int endPosition) {
-            return new String(sql, startPosition, endPosition - startPosition);
-        }
-
-        ParserException internalError() {
-            return exception("Internal Error");
-        }
-
-        ParserException expected(String object) {
-            return init(new ParserException(mark(), object + " expected"));
-        }
-
-        ParserException expected(String... objects) {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < objects.length; i++)
-                if (i == 0)
-                    sb.append(objects[i]);
-                else if (i == objects.length - 1)
-                    sb.append(", or ").append(objects[i]);
-                else
-                    sb.append(", ").append(objects[i]);
-
-            return init(new ParserException(mark(), sb.toString() + " expected"));
-        }
-
-        ParserException notImplemented(String feature) {
-            return init(new ParserException(mark(), feature + " not yet implemented"));
-        }
-
-        ParserException unsupportedClause() {
-            return init(new ParserException(mark(), "Unsupported clause"));
-        }
-
-        ParserException exception(String message) {
-            return init(new ParserException(mark(), message));
-        }
-
-        ParserException init(ParserException e) {
-            int[] line = line();
-            return e.position(position).line(line[0]).column(line[1]);
-        }
-
-        Object nextBinding() {
-            if (bindIndex < bindings.length)
-                return bindings[bindIndex++];
-            else if (bindings.length == 0)
-                return null;
-            else
-                throw exception("No binding provided for bind index " + (bindIndex + 1));
-        }
-
-        int[] line() {
-            int line = 1;
-            int column = 1;
-
-            for (int i = 0; i < position; i++) {
-                if (sql[i] == '\r') {
-                    line++;
-                    column = 1;
-
-                    if (i + 1 < sql.length && sql[i + 1] == '\n')
-                        i++;
-                }
-                else if (sql[i] == '\n') {
-                    line++;
-                    column = 1;
-                }
-                else {
-                    column++;
-                }
-            }
-
-            return new int[] { line, column };
-        }
-
-        char character() {
-            return character(position);
-        }
-
-        char character(int pos) {
-            return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
-        }
-
-        boolean isWhitespace() {
-            return Character.isWhitespace(character());
-        }
-
-        boolean isWhitespace(int pos) {
-            return Character.isWhitespace(character(pos));
-        }
-
-        boolean isIdentifierPart() {
-            return isIdentifierPart(character());
-        }
-
-        boolean isIdentifierPart(int pos) {
-            return isIdentifierPart(character(pos));
-        }
-
-        boolean isIdentifierPart(char character) {
-            return Character.isJavaIdentifierPart(character)
-               || ((character == '@'
-               ||   character == '#')
-               &&   character != delimiter.charAt(0));
-        }
-
-        boolean done() {
-            return position >= sql.length && (bindings.length == 0 || bindings.length == bindIndex);
-        }
-
-        boolean done(String message) {
-            if (done())
-                return true;
-            else
-                throw exception(message);
-
-        }
-
-        String mark() {
-            int[] line = line();
-            return "[" + line[0] + ":" + line[1] + "] "
-                  + (position > 50 ? "..." : "")
-                  + sqlString.substring(Math.max(0, position - 50), position)
-                  + "[*]"
-                  + sqlString.substring(position, Math.min(sqlString.length(), position + 80))
-                  + (sqlString.length() > position + 80 ? "..." : "");
-        }
-
-        @Override
-        public String toString() {
-            return mark();
-        }
-    }
-
     private static enum TruthValue {
         TRUE,
         FALSE,
@@ -7729,12 +7521,12 @@ final class ParserImpl implements Parser {
     }
 
     private static final String[] KEYWORDS_IN_SELECT  = {
-        "CONNECT",
+        "CONNECT BY",
         "EXCEPT",
-        "FETCH",
-        "FOR",
+        "FETCH FIRST",
+        "FETCH NEXT",
+        "FOR UPDATE",
         "FROM",
-        "FULL",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
         "GROUP BY",
         "HAVING",
@@ -7744,10 +7536,9 @@ final class ParserImpl implements Parser {
         "MINUS",
         "OFFSET",
         "ORDER BY",
-        "PARTITION",
+        "PARTITION BY",
         "RETURNING",
-        "SELECT",
-        "START",
+        "START WITH",
         "UNION",
         "WHERE",
         "WINDOW",
@@ -7755,33 +7546,49 @@ final class ParserImpl implements Parser {
     };
 
     private static final String[] KEYWORDS_IN_FROM    = {
-        "CONNECT",
-        "CROSS",
+        "CONNECT BY",
+        "CROSS APPLY",
+        "CROSS JOIN",
         "EXCEPT",
-        "FETCH",
-        "FOR",
-        "FROM",
-        "FULL",
+        "FETCH FIRST",
+        "FETCH NEXT",
+        "FOR SHARE",
+        "FOR UPDATE",
+        "FULL JOIN",
+        "FULL OUTER JOIN",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
         "GROUP BY",
         "HAVING",
-        "INNER",
+        "INNER JOIN",
         "INTERSECT",
         "INTO",
         "JOIN",
-        "LEFT",
+        "LEFT ANTI JOIN",
+        "LEFT JOIN",
+        "LEFT OUTER JOIN",
+        "LEFT SEMI JOIN",
         "LIMIT",
         "MINUS",
-        "NATURAL",
+        "NATURAL JOIN",
+        "NATURAL INNER JOIN",
+        "NATURAL LEFT JOIN",
+        "NATURAL LEFT OUTER JOIN",
+        "NATURAL RIGHT JOIN",
+        "NATURAL RIGHT OUTER JOIN",
+        "NATURAL FULL JOIN",
+        "NATURAL FULL OUTER JOIN",
         "OFFSET",
         "ON",
         "ORDER BY",
-        "OUTER",
-        "PARTITION",
+        "OUTER APPLY",
+        "PARTITION BY",
         "RETURNING",
-        "RIGHT",
+        "RIGHT ANTI JOIN",
+        "RIGHT JOIN",
+        "RIGHT OUTER JOIN",
+        "RIGHT SEMI JOIN",
         "SELECT",
-        "START",
+        "START WITH",
         "STRAIGHT_JOIN",
         "UNION",
         "USING",
@@ -7796,11 +7603,220 @@ final class ParserImpl implements Parser {
 
     private static final Ignore   IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
     private static final Ignore   IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Ignore.class);
-    private static final boolean  PRO_EDITION         = false                                 ;
 
     private static interface Ignore
     extends
         DDLQuery,
         ResultQuery<Record>,
         QueryPartInternal {}
+}
+
+final class ParserContext {
+    private static final boolean PRO_EDITION = false                                 ;
+
+    final DSLContext             dsl;
+    final Meta                   meta;
+    final ParseWithMetaLookups   metaLookups;
+    final String                 sqlString;
+    final char[]                 sql;
+    private int                  position    = 0;
+    private boolean              ignoreHints = true;
+    private final Object[]       bindings;
+    private int                  bindIndex   = 0;
+    private String               delimiter   = ";";
+
+    ParserContext(
+        DSLContext dsl,
+        Meta meta,
+        ParseWithMetaLookups metaLookups,
+        String sqlString,
+        Object[] bindings
+    ) {
+        this.dsl = dsl;
+        this.meta = meta;
+        this.metaLookups = metaLookups;
+        this.sqlString = sqlString;
+        this.sql = sqlString.toCharArray();
+        this.bindings = bindings;
+    }
+
+    boolean requireProEdition() {
+        if (!PRO_EDITION)
+            throw exception("Feature only supported in pro edition");
+
+        return true;
+    }
+
+    String substring(int startPosition, int endPosition) {
+        return new String(sql, startPosition, endPosition - startPosition);
+    }
+
+    ParserException internalError() {
+        return exception("Internal Error");
+    }
+
+    ParserException expected(String object) {
+        return init(new ParserException(mark(), object + " expected"));
+    }
+
+    ParserException expected(String... objects) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < objects.length; i++)
+            if (i == 0)
+                sb.append(objects[i]);
+            else if (i == objects.length - 1)
+                sb.append(", or ").append(objects[i]);
+            else
+                sb.append(", ").append(objects[i]);
+
+        return init(new ParserException(mark(), sb.toString() + " expected"));
+    }
+
+    ParserException notImplemented(String feature) {
+        return init(new ParserException(mark(), feature + " not yet implemented"));
+    }
+
+    ParserException unsupportedClause() {
+        return init(new ParserException(mark(), "Unsupported clause"));
+    }
+
+    ParserException exception(String message) {
+        return init(new ParserException(mark(), message));
+    }
+
+    ParserException init(ParserException e) {
+        int[] line = line();
+        return e.position(position).line(line[0]).column(line[1]);
+    }
+
+    Object nextBinding() {
+        if (bindIndex < bindings.length)
+            return bindings[bindIndex++];
+        else if (bindings.length == 0)
+            return null;
+        else
+            throw exception("No binding provided for bind index " + (bindIndex + 1));
+    }
+
+    int[] line() {
+        int line = 1;
+        int column = 1;
+
+        for (int i = 0; i < position; i++) {
+            if (sql[i] == '\r') {
+                line++;
+                column = 1;
+
+                if (i + 1 < sql.length && sql[i + 1] == '\n')
+                    i++;
+            }
+            else if (sql[i] == '\n') {
+                line++;
+                column = 1;
+            }
+            else {
+                column++;
+            }
+        }
+
+        return new int[] { line, column };
+    }
+
+    char character() {
+        return character(position);
+    }
+
+    char character(int pos) {
+        return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
+    }
+
+    char characterNext() {
+        return character(position + 1);
+    }
+
+    int position() {
+        return position;
+    }
+
+    void position(int newPosition) {
+        position = newPosition;
+    }
+
+    void positionInc() {
+        positionInc(1);
+    }
+
+    void positionInc(int inc) {
+        position(position + inc);
+    }
+
+    String delimiter() {
+        return delimiter;
+    }
+
+    void delimiter(String newDelimiter) {
+        delimiter = newDelimiter;
+    }
+
+    boolean ignoreHints() {
+        return ignoreHints;
+    }
+
+    void ignoreHints(boolean newIgnoreHints) {
+        ignoreHints = newIgnoreHints;
+    }
+
+    boolean isWhitespace() {
+        return Character.isWhitespace(character());
+    }
+
+    boolean isWhitespace(int pos) {
+        return Character.isWhitespace(character(pos));
+    }
+
+    boolean isIdentifierPart() {
+        return isIdentifierPart(character());
+    }
+
+    boolean isIdentifierPart(int pos) {
+        return isIdentifierPart(character(pos));
+    }
+
+    boolean isIdentifierPart(char character) {
+        return Character.isJavaIdentifierPart(character)
+           || ((character == '@'
+           ||   character == '#')
+           &&   character != delimiter.charAt(0));
+    }
+
+    boolean hasMore() {
+        return position < sql.length;
+    }
+
+    boolean done() {
+        return position >= sql.length && (bindings.length == 0 || bindings.length == bindIndex);
+    }
+
+    boolean done(String message) {
+        if (done())
+            return true;
+        else
+            throw exception(message);
+    }
+
+    String mark() {
+        int[] line = line();
+        return "[" + line[0] + ":" + line[1] + "] "
+              + (position > 50 ? "..." : "")
+              + sqlString.substring(Math.max(0, position - 50), position)
+              + "[*]"
+              + sqlString.substring(position, Math.min(sqlString.length(), position + 80))
+              + (sqlString.length() > position + 80 ? "..." : "");
+    }
+
+    @Override
+    public String toString() {
+        return mark();
+    }
 }

@@ -365,6 +365,7 @@ import org.jooq.UpdateWhereStep;
 import org.jooq.User;
 // ...
 import org.jooq.WindowBeforeOverStep;
+import org.jooq.WindowDefinition;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowSpecification;
@@ -435,7 +436,7 @@ final class ParserImpl implements Parser {
         ParserContext ctx = ctx(sql, bindings);
         Query result = parseQuery(ctx, false, false);
 
-        ctx.done("Unexpected content after end of query input");
+        ctx.done("Unexpected clause");
         return result;
     }
 
@@ -992,6 +993,7 @@ final class ParserImpl implements Parser {
         Condition where = null;
         List<GroupField> groupBy = null;
         Condition having = null;
+        List<WindowDefinition> windows = null;
 
         if (parseKeywordIf(ctx, "INTO"))
             into = parseTableName(ctx);
@@ -1063,7 +1065,8 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "HAVING"))
             having = parseCondition(ctx);
 
-        // TODO support WINDOW
+        if (parseKeywordIf(ctx, "WINDOW"))
+            windows = parseWindowDefinitions(ctx);
 
         SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
         if (hints != null)
@@ -1075,7 +1078,7 @@ final class ParserImpl implements Parser {
         if (distinctOn != null)
             result.addDistinctOn(distinctOn);
 
-        if (select.size() > 0)
+        if (!select.isEmpty())
             result.addSelect(select);
 
         if (into != null)
@@ -1102,6 +1105,9 @@ final class ParserImpl implements Parser {
         if (having != null)
             result.addHaving(having);
 
+        if (windows != null)
+            result.addWindow(windows);
+
         if (limit != null)
             if (offset != null)
                 result.addLimit((int) (long) offset, (int) (long) limit);
@@ -1118,6 +1124,173 @@ final class ParserImpl implements Parser {
             result.setWithTies(true);
 
         return result;
+    }
+
+    private static final List<WindowDefinition> parseWindowDefinitions(ParserContext ctx) {
+        List<WindowDefinition> result = new ArrayList<WindowDefinition>();
+
+        do {
+            Name name = parseIdentifier(ctx);
+            parseKeyword(ctx, "AS");
+            parse(ctx, '(');
+            result.add(name.as(parseWindowSpecificationIf(ctx, true)));
+            parse(ctx, ')');
+        }
+        while (parseIf(ctx, ','));
+
+        return result;
+    }
+
+    private static final WindowSpecification parseWindowSpecificationIf(ParserContext ctx, boolean orderByAllowed) {
+        final WindowSpecificationOrderByStep s1;
+        final WindowSpecificationRowsStep s2;
+        final WindowSpecificationRowsAndStep s3;
+
+        s1 = parseKeywordIf(ctx, "PARTITION BY")
+            ? partitionBy(parseFields(ctx))
+            : null;
+
+        if (parseKeywordIf(ctx, "ORDER BY"))
+            if (orderByAllowed)
+                s2 = s1 == null
+                    ? orderBy(parseSortSpecification(ctx))
+                    : s1.orderBy(parseSortSpecification(ctx));
+            else
+                throw ctx.exception("ORDER BY not allowed");
+        else
+            s2 = s1;
+
+        boolean rows = parseKeywordIf(ctx, "ROWS");
+        boolean range = !rows && parseKeywordIf(ctx, "RANGE");
+
+        if ((rows || range) &&!orderByAllowed)
+            throw ctx.exception("ROWS or RANGE not allowed");
+
+        if (rows || range) {
+            Long n;
+
+            if (parseKeywordIf(ctx, "BETWEEN")) {
+                if (parseKeywordIf(ctx, "UNBOUNDED"))
+                    if (parseKeywordIf(ctx, "PRECEDING"))
+                        s3 = s2 == null
+                            ? rows
+                                ? rowsBetweenUnboundedPreceding()
+                                : rangeBetweenUnboundedPreceding()
+                            : rows
+                                ? s2.rowsBetweenUnboundedPreceding()
+                                : s2.rangeBetweenUnboundedPreceding();
+                    else if (parseKeywordIf(ctx, "FOLLOWING"))
+                        s3 = s2 == null
+                            ? rows
+                                ? rowsBetweenUnboundedFollowing()
+                                : rangeBetweenUnboundedFollowing()
+                            : rows
+                                ? s2.rowsBetweenUnboundedFollowing()
+                                : s2.rangeBetweenUnboundedFollowing();
+                    else
+                        throw ctx.expected("FOLLOWING", "PRECEDING");
+                else if (parseKeywordIf(ctx, "CURRENT ROW"))
+                    s3 = s2 == null
+                        ? rows
+                            ? rowsBetweenCurrentRow()
+                            : rangeBetweenCurrentRow()
+                        : rows
+                            ? s2.rowsBetweenCurrentRow()
+                            : s2.rangeBetweenCurrentRow();
+                else if ((n = parseUnsignedIntegerIf(ctx)) != null)
+                    if (parseKeywordIf(ctx, "PRECEDING"))
+                        s3 = s2 == null
+                            ? rows
+                                ? rowsBetweenPreceding(n.intValue())
+                                : rangeBetweenPreceding(n.intValue())
+                            : rows
+                                ? s2.rowsBetweenPreceding(n.intValue())
+                                : s2.rangeBetweenPreceding(n.intValue());
+                    else if (parseKeywordIf(ctx, "FOLLOWING"))
+                        s3 = s2 == null
+                            ? rows
+                                ? rowsBetweenFollowing(n.intValue())
+                                : rangeBetweenFollowing(n.intValue())
+                            : rows
+                                ? s2.rowsBetweenFollowing(n.intValue())
+                                : s2.rangeBetweenFollowing(n.intValue());
+                    else
+                        throw ctx.expected("FOLLOWING", "PRECEDING");
+                else
+                    throw ctx.expected("CURRENT ROW", "UNBOUNDED", "integer literal");
+
+                parseKeyword(ctx, "AND");
+
+                if (parseKeywordIf(ctx, "UNBOUNDED"))
+                    if (parseKeywordIf(ctx, "PRECEDING"))
+                        return s3.andUnboundedPreceding();
+                    else if (parseKeywordIf(ctx, "FOLLOWING"))
+                        return s3.andUnboundedFollowing();
+                    else
+                        throw ctx.expected("FOLLOWING", "PRECEDING");
+                else if (parseKeywordIf(ctx, "CURRENT ROW"))
+                    return s3.andCurrentRow();
+                else if ((n = parseUnsignedInteger(ctx)) != null)
+                    if (parseKeywordIf(ctx, "PRECEDING"))
+                        return s3.andPreceding(n.intValue());
+                    else if (parseKeywordIf(ctx, "FOLLOWING"))
+                        return s3.andFollowing(n.intValue());
+                    else
+                        throw ctx.expected("FOLLOWING", "PRECEDING");
+                else
+                    throw ctx.expected("CURRENT ROW", "UNBOUNDED", "integer literal");
+            }
+            else if (parseKeywordIf(ctx, "UNBOUNDED"))
+                if (parseKeywordIf(ctx, "PRECEDING"))
+                    return s2 == null
+                        ? rows
+                            ? rowsUnboundedPreceding()
+                            : rangeUnboundedPreceding()
+                        : rows
+                            ? s2.rowsUnboundedPreceding()
+                            : s2.rangeUnboundedPreceding();
+                else if (parseKeywordIf(ctx, "FOLLOWING"))
+                    return s2 == null
+                        ? rows
+                            ? rowsUnboundedFollowing()
+                            : rangeUnboundedFollowing()
+                        : rows
+                            ? s2.rowsUnboundedFollowing()
+                            : s2.rangeUnboundedFollowing();
+                else
+                    throw ctx.expected("FOLLOWING", "PRECEDING");
+            else if (parseKeywordIf(ctx, "CURRENT ROW"))
+                return s2 == null
+                    ? rows
+                        ? rowsCurrentRow()
+                        : rangeCurrentRow()
+                    : rows
+                        ? s2.rowsCurrentRow()
+                        : s2.rangeCurrentRow();
+            else if ((n = parseUnsignedInteger(ctx)) != null)
+                if (parseKeywordIf(ctx, "PRECEDING"))
+                    return s2 == null
+                        ? rows
+                            ? rowsPreceding(n.intValue())
+                            : rangePreceding(n.intValue())
+                        : rows
+                            ? s2.rowsPreceding(n.intValue())
+                            : s2.rangePreceding(n.intValue());
+                else if (parseKeywordIf(ctx, "FOLLOWING"))
+                    return s2 == null
+                        ? rows
+                            ? rowsFollowing(n.intValue())
+                            : rangeFollowing(n.intValue())
+                        : rows
+                            ? s2.rowsFollowing(n.intValue())
+                            : s2.rangeFollowing(n.intValue());
+                else
+                    throw ctx.expected("FOLLOWING", "PRECEDING");
+            else
+                throw ctx.expected("BETWEEN", "CURRENT ROW", "UNBOUNDED", "integer literal");
+        }
+        else
+            return s2;
     }
 
     private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
@@ -5433,162 +5606,10 @@ final class ParserImpl implements Parser {
         Object result;
 
         if (parseIf(ctx, '(')) {
-            WindowSpecificationOrderByStep s1 = null;
-            WindowSpecificationRowsStep s2 = null;
-            WindowSpecificationRowsAndStep s3 = null;
+            result = parseWindowSpecificationIf(ctx, orderByAllowed);
 
-            s1 = parseKeywordIf(ctx, "PARTITION BY")
-                ? partitionBy(parseFields(ctx))
-                : null;
-
-            s2 = orderByAllowed && parseKeywordIf(ctx, "ORDER BY")
-                ? s1 == null
-                    ? orderBy(parseSortSpecification(ctx))
-                    : s1.orderBy(parseSortSpecification(ctx))
-                : s1;
-
-            boolean rows = orderByAllowed && parseKeywordIf(ctx, "ROWS");
-            if (rows || (orderByAllowed && parseKeywordIf(ctx, "RANGE"))) {
-                if (parseKeywordIf(ctx, "BETWEEN")) {
-                    if (parseKeywordIf(ctx, "UNBOUNDED")) {
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            s3 = s2 == null
-                                ? rows
-                                    ? rowsBetweenUnboundedPreceding()
-                                    : rangeBetweenUnboundedPreceding()
-                                : rows
-                                    ? s2.rowsBetweenUnboundedPreceding()
-                                    : s2.rangeBetweenUnboundedPreceding();
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            s3 = s2 == null
-                                ? rows
-                                    ? rowsBetweenUnboundedFollowing()
-                                    : rangeBetweenUnboundedFollowing()
-                                : rows
-                                    ? s2.rowsBetweenUnboundedFollowing()
-                                    : s2.rangeBetweenUnboundedFollowing();
-                        }
-                    }
-                    else if (parseKeywordIf(ctx, "CURRENT ROW")) {
-                        s3 = s2 == null
-                            ? rows
-                                ? rowsBetweenCurrentRow()
-                                : rangeBetweenCurrentRow()
-                            : rows
-                                ? s2.rowsBetweenCurrentRow()
-                                : s2.rangeBetweenCurrentRow();
-                    }
-                    else {
-                        int number = (int) (long) parseUnsignedInteger(ctx);
-
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            s3 = s2 == null
-                                ? rows
-                                    ? rowsBetweenPreceding(number)
-                                    : rangeBetweenPreceding(number)
-                                : rows
-                                    ? s2.rowsBetweenPreceding(number)
-                                    : s2.rangeBetweenPreceding(number);
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            s3 = s2 == null
-                                ? rows
-                                    ? rowsBetweenFollowing(number)
-                                    : rangeBetweenFollowing(number)
-                                : rows
-                                    ? s2.rowsBetweenFollowing(number)
-                                    : s2.rangeBetweenFollowing(number);
-                        }
-                    }
-
-                    parseKeyword(ctx, "AND");
-
-                    if (parseKeywordIf(ctx, "UNBOUNDED")) {
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            result = s3.andUnboundedPreceding();
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            result = s3.andUnboundedFollowing();
-                        }
-                    }
-                    else if (parseKeywordIf(ctx, "CURRENT ROW")) {
-                        result = s3.andCurrentRow();
-                    }
-                    else {
-                        int number = (int) (long) parseUnsignedInteger(ctx);
-
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            result = s3.andPreceding(number);
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            result = s3.andFollowing(number);
-                        }
-                    }
-                }
-                else {
-                    if (parseKeywordIf(ctx, "UNBOUNDED")) {
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            result = s2 == null
-                                ? rows
-                                    ? rowsUnboundedPreceding()
-                                    : rangeUnboundedPreceding()
-                                : rows
-                                    ? s2.rowsUnboundedPreceding()
-                                    : s2.rangeUnboundedPreceding();
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            result = s2 == null
-                                ? rows
-                                    ? rowsUnboundedFollowing()
-                                    : rangeUnboundedFollowing()
-                                : rows
-                                    ? s2.rowsUnboundedFollowing()
-                                    : s2.rangeUnboundedFollowing();
-                        }
-                    }
-                    else if (parseKeywordIf(ctx, "CURRENT ROW")) {
-                        result = s2 == null
-                            ? rows
-                                ? rowsCurrentRow()
-                                : rangeCurrentRow()
-                            : rows
-                                ? s2.rowsCurrentRow()
-                                : s2.rangeCurrentRow();
-                    }
-                    else {
-                        int number = (int) (long) parseUnsignedInteger(ctx);
-
-                        if (parseKeywordIf(ctx, "PRECEDING")) {
-                            result = s2 == null
-                                ? rows
-                                    ? rowsPreceding(number)
-                                    : rangePreceding(number)
-                                : rows
-                                    ? s2.rowsPreceding(number)
-                                    : s2.rangePreceding(number);
-                        }
-                        else {
-                            parseKeyword(ctx, "FOLLOWING");
-                            result = s2 == null
-                                ? rows
-                                    ? rowsFollowing(number)
-                                    : rangeFollowing(number)
-                                : rows
-                                    ? s2.rowsFollowing(number)
-                                    : s2.rangeFollowing(number);
-                        }
-                    }
-                }
-            }
-            else {
-                result = s2;
-            }
+            if (result == null)
+                result = parseIdentifierIf(ctx);
 
             parse(ctx, ')');
         }
@@ -7719,6 +7740,7 @@ final class ParserImpl implements Parser {
         "START",
         "UNION",
         "WHERE",
+        "WINDOW",
         "WITH",
     };
 
@@ -7754,6 +7776,7 @@ final class ParserImpl implements Parser {
         "UNION",
         "USING",
         "WHERE",
+        "WINDOW",
         "WITH",
     };
 

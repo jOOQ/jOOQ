@@ -352,6 +352,7 @@ tableExpression =
   [ 'WHERE' condition ]
   [ groupBy ]
   [ 'HAVING' condition ]
+  [ 'WINDOW' windows ]
 ;
 
 connectBy =
@@ -370,6 +371,19 @@ groupBy = 'GROUP BY'
 ;
 
 groupingSet = '(' [ fields ] ')'
+;
+
+windows = window { ',' window }
+;
+
+window = identifier 'AS' '(' windowSpecification ')'
+;
+
+windowSpecification =
+  [ 'PARTITION BY' fields ]
+  [ 'ORDER BY' sortFields ]
+  [ ( 'ROWS' | 'RANGE' )
+    ( 'BETWEEN' rangeBound 'AND' rangeBound | rangeBound) ]
 ;
 
 orderBy =
@@ -686,13 +700,7 @@ over = [ 'RESPECT NULLS' | 'IGNORE NULLS' ]
   'OVER'
   (
     identifier
-  | '('
-    [ 'PARTITION BY' fields ]
-    [ 'ORDER BY' sortFields ]
-    [ ( 'ROWS' | 'RANGE' )
-      ( 'BETWEEN' rangeBound 'AND' rangeBound | rangeBound)
-    ]
-    ')'
+  | '(' windowSpecification ')'
   )
 ;
 

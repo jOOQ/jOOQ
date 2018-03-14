@@ -4310,6 +4310,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldTranslateIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldToCharIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "TANH"))
@@ -5029,6 +5031,17 @@ final class ParserImpl implements Parser {
             Field<String> f3 = (Field) parseField(ctx, S);
             parse(ctx, ')');
             return translate(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldToCharIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TO_CHAR")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx);
+            parse(ctx, ')');
+            return cast(f1, SQLDataType.VARCHAR);
         }
 
         return null;

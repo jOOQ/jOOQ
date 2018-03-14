@@ -475,10 +475,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal, true);
         }
         else {
-            String[][] quotes = QUOTES.get(family);
+            char[][][] quotes = QUOTES.get(family);
 
-            char start = quotes[QUOTE_START_DELIMITER][0].charAt(0);
-            char end = quotes[QUOTE_END_DELIMITER][0].charAt(0);
+            char start = quotes[QUOTE_START_DELIMITER][0][0];
+            char end = quotes[QUOTE_END_DELIMITER][0][0];
 
             sql(start);
 
@@ -486,7 +486,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             //         effect as the replace call can be avoided in almost all
             //         situations
             if (literal.indexOf(end) > -1)
-                sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]), true);
+                sql(StringUtils.replace(literal, new String(quotes[QUOTE_END_DELIMITER][0]), new String(quotes[QUOTE_END_DELIMITER_ESCAPED][0])), true);
             else
                 sql(literal, true);
 

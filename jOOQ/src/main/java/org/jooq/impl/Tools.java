@@ -552,17 +552,24 @@ final class Tools {
      * processing, it is probably safe to ignore most of those alternative
      * Unicode whitespaces.
      */
-    private static final String   WHITESPACE                                  = " \t\n\u000B\f\r";
+    private static final char[]              WHITESPACE_CHARACTERS          = " \t\n\u000B\f\r".toCharArray();
 
     /**
      * Acceptable prefixes for JDBC escape syntax.
      */
-    private static final String[] JDBC_ESCAPE_PREFIXES                        = {
-        "{fn ",
-        "{d ",
-        "{t ",
-        "{ts "
+    private static final char[][]            JDBC_ESCAPE_PREFIXES           = {
+        "{fn ".toCharArray(),
+        "{d ".toCharArray(),
+        "{t ".toCharArray(),
+        "{ts ".toCharArray()
     };
+
+    private static final char[]              TOKEN_SINGLE_LINE_COMMENT      = { '-', '-' };
+    private static final char[]              TOKEN_HASH                     = { '#' };
+    private static final char[]              TOKEN_MULTI_LINE_COMMENT_OPEN  = { '/', '*' };
+    private static final char[]              TOKEN_MULTI_LINE_COMMENT_CLOSE = { '*', '/' };
+    private static final char[]              TOKEN_APOS                     = { '\'' };
+    private static final char[]              TOKEN_ESCAPED_APOS             = { '\'', '\'' };
 
     /**
      * "Suffixes" that are placed behind a "?" character to form an operator,
@@ -597,15 +604,15 @@ final class Tools {
      * <li>?|</li>
      * </ul>
      */
-    private static final String[] NON_BIND_VARIABLE_SUFFIXES                   = {
-        "?",
-        "|",
-        "&",
-        "@",
-        "<",
-        "~",
-        "#",
-        "-"
+    private static final char[][]            NON_BIND_VARIABLE_SUFFIXES     = {
+        { '?' },
+        { '|' },
+        { '&' },
+        { '@' },
+        { '<' },
+        { '~' },
+        { '#' },
+        { '-' }
     };
 
     /**
@@ -1785,7 +1792,7 @@ final class Tools {
         SQLDialect dialect = render.dialect();
         SQLDialect family = dialect.family();
         boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(family);
-        String[][] quotes = QUOTES.get(family);
+        char[][][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
         boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
@@ -1797,13 +1804,13 @@ final class Tools {
             // select 1 x -- what's this ?'?
             // from t_book -- what's that ?'?
             // where id = ?
-            if (peek(sqlChars, i, "--") ||
+            if (peek(sqlChars, i, TOKEN_SINGLE_LINE_COMMENT) ||
 
             // [#4182] MySQL also supports # as a comment character, and requires
             // -- to be followed by a whitespace, although the latter is also not
             // handled correctly by the MySQL JDBC driver (yet). See
     		// http://bugs.mysql.com/bug.php?id=76623
-                (mysql && peek(sqlChars, i, "#"))) {
+                (mysql && peek(sqlChars, i, TOKEN_HASH))) {
 
                 // Consume the complete comment
                 for (; i < sqlChars.length && sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
@@ -1816,10 +1823,10 @@ final class Tools {
             // select 1 x /* what's this ?'?
             // I don't know ?'? */
             // from t_book where id = ?
-            else if (peek(sqlChars, i, "/*")) {
+            else if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_OPEN)) {
 
                 // Consume the complete comment
-                for (; !peek(sqlChars, i, "*/"); render.sql(sqlChars[i++]));
+                for (; !peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_CLOSE); render.sql(sqlChars[i++]));
 
                 // Consume the comment delimiter
                 render.sql(sqlChars[i++]);
@@ -1841,11 +1848,11 @@ final class Tools {
                         render.sql(sqlChars[i++]);
 
                     // Consume an escaped apostrophe
-                    else if (peek(sqlChars, i, "''"))
+                    else if (peek(sqlChars, i, TOKEN_ESCAPED_APOS))
                         render.sql(sqlChars[i++]);
 
                     // Break on the terminal string literal delimiter
-                    else if (peek(sqlChars, i, "'"))
+                    else if (peek(sqlChars, i, TOKEN_APOS))
                         break;
 
                     // Consume string literal content
@@ -1874,11 +1881,11 @@ final class Tools {
                         render.sql(sqlChars[i++]);
 
                     // Consume an escaped apostrophe
-                    else if (peek(sqlChars, i, "''"))
+                    else if (peek(sqlChars, i, TOKEN_ESCAPED_APOS))
                         render.sql(sqlChars[i++]);
 
                     // Break on the terminal string literal delimiter
-                    else if (peek(sqlChars, i, "'"))
+                    else if (peek(sqlChars, i, TOKEN_APOS))
                         break;
 
                     // Consume string literal content
@@ -1944,7 +1951,7 @@ final class Tools {
                 }
 
                 // Consume the initial identifier delimiter
-                for (int d = 0; d < quotes[QUOTE_START_DELIMITER][delimiter].length(); d++)
+                for (int d = 0; d < quotes[QUOTE_START_DELIMITER][delimiter].length; d++)
                     render.sql(sqlChars[i++]);
 
                 // Consume the whole identifier
@@ -1952,7 +1959,7 @@ final class Tools {
 
                     // Consume an escaped quote
                     if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter]))
-                        for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length(); d++)
+                        for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length; d++)
                             render.sql(sqlChars[i++]);
 
                     // Break on the terminal identifier delimiter
@@ -1964,7 +1971,7 @@ final class Tools {
                 }
 
                 // Consume the terminal identifier delimiter
-                for (int d = 0; d < quotes[QUOTE_END_DELIMITER][delimiter].length(); d++) {
+                for (int d = 0; d < quotes[QUOTE_END_DELIMITER][delimiter].length; d++) {
                     if (d > 0)
                         i++;
 
@@ -1984,9 +1991,9 @@ final class Tools {
 
                 // [#5307] Consume PostgreSQL style operators. These aren't bind variables!
                 if (sqlChars[i] == '?' && i + 1 < sqlChars.length) {
-                    for (String suffix : NON_BIND_VARIABLE_SUFFIXES) {
+                    for (char[] suffix : NON_BIND_VARIABLE_SUFFIXES) {
                         if (peek(sqlChars, i + 1, suffix)) {
-                            for (int j = i; i - j <= suffix.length(); i++)
+                            for (int j = i; i - j <= suffix.length; i++)
                                 render.sql(sqlChars[i]);
 
                             render.sql(sqlChars[i]);
@@ -2071,7 +2078,7 @@ final class Tools {
      * @param index The index within the char array to peek for a string
      * @param peek The string to peek for
      */
-    static final boolean peek(char[] sqlChars, int index, String peek) {
+    static final boolean peek(char[] sqlChars, int index, char[] peek) {
         return peek(sqlChars, index, peek, false);
     }
 
@@ -2083,26 +2090,22 @@ final class Tools {
      * @param peek The string to peek for
      * @param anyWhitespace A whitespace character in <code>peekAny</code>
      *            represents "any" whitespace character as defined in
-     *            {@link #WHITESPACE}, or in Java Regex "\s".
+     *            {@link #WHITESPACE_CHARACTERS}, or in Java Regex "\s".
      */
-    static final boolean peek(char[] sqlChars, int index, String peek, boolean anyWhitespace) {
-        char[] peekArray = peek.toCharArray();
+    static final boolean peek(char[] sqlChars, int index, char[] peek, boolean anyWhitespace) {
 
         peekArrayLoop:
-        for (int i = 0; i < peekArray.length; i++) {
-            if (index + i >= sqlChars.length) {
+        for (int i = 0; i < peek.length; i++) {
+            if (index + i >= sqlChars.length)
                 return false;
-            }
-            if (sqlChars[index + i] != peekArray[i]) {
+
+            if (sqlChars[index + i] != peek[i]) {
 
                 // [#3430] In some cases, we don't care about the type of whitespace.
-                if (anyWhitespace && peekArray[i] == ' ') {
-                    for (int j = 0; j < WHITESPACE.length(); j++) {
-                        if (sqlChars[index + i] == WHITESPACE.charAt(j)) {
+                if (anyWhitespace && peek[i] == ' ')
+                    for (int j = 0; j < WHITESPACE_CHARACTERS.length; j++)
+                        if (sqlChars[index + i] == WHITESPACE_CHARACTERS[j])
                             continue peekArrayLoop;
-                        }
-                    }
-                }
 
                 return false;
             }
@@ -2118,7 +2121,7 @@ final class Tools {
      * @param index The index within the char array to peek for a string
      * @param peekAny The strings to peek for
      */
-    static final boolean peekAny(char[] sqlChars, int index, String[] peekAny) {
+    static final boolean peekAny(char[] sqlChars, int index, char[][] peekAny) {
         return peekAny(sqlChars, index, peekAny, false);
     }
 
@@ -2131,10 +2134,10 @@ final class Tools {
      * @param peekAny The strings to peek for
      * @param anyWhitespace A whitespace character in <code>peekAny</code>
      *            represents "any" whitespace character as defined in
-     *            {@link #WHITESPACE}, or in Java Regex "\s".
+     *            {@link #WHITESPACE_CHARACTERS}, or in Java Regex "\s".
      */
-    static final boolean peekAny(char[] sqlChars, int index, String[] peekAny, boolean anyWhitespace) {
-        for (String peek : peekAny)
+    static final boolean peekAny(char[] sqlChars, int index, char[][] peekAny, boolean anyWhitespace) {
+        for (char[] peek : peekAny)
             if (peek(sqlChars, index, peek, anyWhitespace))
                 return true;
 

@@ -60,13 +60,13 @@ final class Identifiers {
      * }
      * </pre>
      */
-    static final EnumMap<SQLDialect, String[][]> QUOTES;
+    static final EnumMap<SQLDialect, char[][][]> QUOTES;
     static final int                             QUOTE_START_DELIMITER       = 0;
     static final int                             QUOTE_END_DELIMITER         = 1;
     static final int                             QUOTE_END_DELIMITER_ESCAPED = 2;
 
     static {
-        QUOTES = new EnumMap<SQLDialect, String[][]>(SQLDialect.class);
+        QUOTES = new EnumMap<SQLDialect, char[][][]>(SQLDialect.class);
 
         for (SQLDialect family : SQLDialect.families()) {
             switch (family) {
@@ -74,10 +74,10 @@ final class Identifiers {
                 // MySQL supports backticks and double quotes
                 case MARIADB:
                 case MYSQL:
-                    QUOTES.put(family, new String[][] {
-                        { "`" , "\""},
-                        { "`" , "\""},
-                        { "``", "\"\"" }
+                    QUOTES.put(family, new char[][][] {
+                        { { '`'      }, { '"'      } },
+                        { { '`'      }, { '"'      } },
+                        { { '`', '`' }, { '"', '"' } }
                     });
                     break;
 
@@ -111,10 +111,10 @@ final class Identifiers {
                 case POSTGRES:
                 case SQLITE:
                 default:
-                    QUOTES.put(family, new String[][] {
-                        { "\""},
-                        { "\""},
-                        { "\"\"" }
+                    QUOTES.put(family, new char[][][] {
+                        { { '"'      } },
+                        { { '"'      } },
+                        { { '"', '"' } }
                     });
                     break;
             }

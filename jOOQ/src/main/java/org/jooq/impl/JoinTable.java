@@ -408,7 +408,7 @@ implements
                 context.formatSeparator()
                        .start(TABLE_JOIN_USING)
                        .visit(K_USING)
-                       .sql('(');
+                       .sql(" (");
                 Tools.fieldNames(context, using);
                 context.sql(')')
                        .end(TABLE_JOIN_USING);

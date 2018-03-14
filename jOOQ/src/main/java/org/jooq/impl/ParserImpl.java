@@ -2130,7 +2130,7 @@ final class ParserImpl implements Parser {
                             // TODO: Ignored keyword from Oracle
                             parseKeywordIf(ctx, "ON NULL");
 
-                            type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null, null)));
+                            type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null)));
                             defaultValue = true;
                             identity = true;
                             continue;
@@ -2195,7 +2195,7 @@ final class ParserImpl implements Parser {
                         if (parseKeywordIf(ctx, "ON UPDATE")) {
 
                             // [#6132] TODO: Support this feature in the jOOQ DDL API
-                            parseConcat(ctx, null, null);
+                            parseConcat(ctx, null);
                             onUpdate = true;
                             continue;
                         }
@@ -2744,7 +2744,7 @@ final class ParserImpl implements Parser {
 
                 if (!defaultValue) {
                     if (parseKeywordIf(ctx, "DEFAULT")) {
-                        type = type.defaultValue(toField(ctx, parseConcat(ctx, null, null)));
+                        type = type.defaultValue(toField(ctx, parseConcat(ctx, null)));
                         defaultValue = true;
                         continue;
                     }
@@ -2754,7 +2754,7 @@ final class ParserImpl implements Parser {
                     if (parseKeywordIf(ctx, "ON UPDATE")) {
 
                         // [#6132] TODO: Support this feature in the jOOQ DDL API
-                        parseConcat(ctx, null, null);
+                        parseConcat(ctx, null);
                         onUpdate = true;
                         continue;
                     }
@@ -2997,7 +2997,7 @@ final class ParserImpl implements Parser {
 
         // ALTER DOMAIN statements with arguments:
         else if (parseKeywordIf(ctx, "SET DEFAULT")) {
-            parseConcat(ctx, null, null);
+            parseConcat(ctx, null);
             return IGNORE;
         }
         else if (parseKeywordIf(ctx, "DROP CONSTRAINT")) {
@@ -3066,35 +3066,35 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
 
     private static final Condition parseCondition(ParserContext ctx) {
-        return toCondition(ctx, parseOr(ctx, null));
+        return toCondition(ctx, parseOr(ctx));
     }
 
-    private static final QueryPart parseOr(ParserContext ctx, QueryPart prefix) {
-        QueryPart condition = parseAnd(ctx, prefix);
+    private static final QueryPart parseOr(ParserContext ctx) {
+        QueryPart condition = parseAnd(ctx);
 
         while (parseKeywordIf(ctx, "OR"))
-            condition = toCondition(ctx, condition).or(toCondition(ctx, parseAnd(ctx, null)));
+            condition = toCondition(ctx, condition).or(toCondition(ctx, parseAnd(ctx)));
 
         return condition;
     }
 
-    private static final QueryPart parseAnd(ParserContext ctx, QueryPart prefix) {
-        QueryPart condition = parseNot(ctx, prefix);
+    private static final QueryPart parseAnd(ParserContext ctx) {
+        QueryPart condition = parseNot(ctx);
 
         while (parseKeywordIf(ctx, "AND"))
-            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx, null)));
+            condition = toCondition(ctx, condition).and(toCondition(ctx, parseNot(ctx)));
 
         return condition;
     }
 
-    private static final QueryPart parseNot(ParserContext ctx, QueryPart prefix) {
+    private static final QueryPart parseNot(ParserContext ctx) {
         boolean not = parseKeywordIf(ctx, "NOT");
-        QueryPart condition = parsePredicate(ctx, not ? null : prefix);
+        QueryPart condition = parsePredicate(ctx);
         return not ? toCondition(ctx, condition).not() : condition;
     }
 
-    private static final QueryPart parsePredicate(ParserContext ctx, QueryPart prefix) {
-        if (prefix == null && parseKeywordIf(ctx, "EXISTS")) {
+    private static final QueryPart parsePredicate(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "EXISTS")) {
             parse(ctx, '(');
             Select<?> select = parseSelect(ctx);
             parse(ctx, ')');
@@ -3107,7 +3107,7 @@ final class ParserImpl implements Parser {
             Comparator comp;
             boolean not;
 
-            left = parseConcat(ctx, null, prefix);
+            left = parseConcat(ctx, null);
             not = parseKeywordIf(ctx, "NOT");
 
             if (!not && (comp = parseComparatorIf(ctx)) != null) {
@@ -3127,7 +3127,7 @@ final class ParserImpl implements Parser {
                         ? ((Field) left).compare(comp, DSL.any(parseSelect(ctx, 1)))
                         : ((RowN) left).compare(comp, DSL.any(parseSelect(ctx, ((RowN) left).size())))
                     : left instanceof Field
-                        ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null, null)))
+                        ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null)))
                         : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size(), true));
 
                 if (all || any)
@@ -3149,7 +3149,7 @@ final class ParserImpl implements Parser {
 
                 parseKeyword(ctx, "DISTINCT FROM");
                 if (left instanceof Field) {
-                    Field right = toField(ctx, parseConcat(ctx, null, null));
+                    Field right = toField(ctx, parseConcat(ctx, null));
                     return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
                 }
                 else {
@@ -3158,7 +3158,7 @@ final class ParserImpl implements Parser {
                 }
             }
             else if (!not && parseIf(ctx, "@>")) {
-                return toField(ctx, left).contains((Field) toField(ctx, parseConcat(ctx, null, null)));
+                return toField(ctx, left).contains((Field) toField(ctx, parseConcat(ctx, null)));
             }
             else if (parseKeywordIf(ctx, "IN")) {
                 Condition result;
@@ -3187,11 +3187,11 @@ final class ParserImpl implements Parser {
             else if (parseKeywordIf(ctx, "BETWEEN")) {
                 boolean symmetric = parseKeywordIf(ctx, "SYMMETRIC");
                 FieldOrRow r1 = left instanceof Field
-                    ? parseConcat(ctx, null, null)
+                    ? parseConcat(ctx, null)
                     : parseRow(ctx, ((RowN) left).size());
                 parseKeyword(ctx, "AND");
                 FieldOrRow r2 = left instanceof Field
-                    ? parseConcat(ctx, null, null)
+                    ? parseConcat(ctx, null)
                     : parseRow(ctx, ((RowN) left).size());
 
                 return symmetric
@@ -3211,7 +3211,7 @@ final class ParserImpl implements Parser {
                             : ((RowN) left).between((RowN) r1, (RowN) r2);
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
-                Field right = toField(ctx, parseConcat(ctx, null, null));
+                Field right = toField(ctx, parseConcat(ctx, null));
                 boolean escape = parseKeywordIf(ctx, "ESCAPE");
                 char character = escape ? parseCharacterLiteral(ctx) : ' ';
                 return escape
@@ -3269,9 +3269,9 @@ final class ParserImpl implements Parser {
         }
         else if (parseFunctionNameIf(ctx, "GENERATE_SERIES")) {
             parse(ctx, '(');
-            Field from = toField(ctx, parseConcat(ctx, Type.N, null));
+            Field from = toField(ctx, parseConcat(ctx, Type.N));
             parse(ctx, ',');
-            Field to = toField(ctx, parseConcat(ctx, Type.N, null));
+            Field to = toField(ctx, parseConcat(ctx, Type.N));
             result = generateSeries(from, to);
             parse(ctx, ')');
         }
@@ -3692,7 +3692,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseFieldOrRow(ParserContext ctx) {
-        return parseFieldOrRow(ctx, null, null);
+        return parseFieldOrRow(ctx, null);
     }
 
     private static final RowN parseRow(ParserContext ctx) {
@@ -3745,18 +3745,18 @@ final class ParserImpl implements Parser {
         }
     }
 
-    private static final FieldOrRow parseFieldOrRow(ParserContext ctx, Type type, QueryPart prefix) {
+    private static final FieldOrRow parseFieldOrRow(ParserContext ctx, Type type) {
         if (B.is(type))
-            return toFieldOrRow(ctx, parseOr(ctx, prefix));
+            return toFieldOrRow(ctx, parseOr(ctx));
         else
-            return parseConcat(ctx, type, prefix);
+            return parseConcat(ctx, type);
     }
 
     private static final Field<?> parseField(ParserContext ctx, Type type) {
         if (B.is(type))
-            return toField(ctx, parseOr(ctx, null));
+            return toField(ctx, parseOr(ctx));
         else
-            return toField(ctx, parseConcat(ctx, type, null));
+            return toField(ctx, parseConcat(ctx, type));
     }
 
     private static final String parseHints(ParserContext ctx) {
@@ -3836,18 +3836,18 @@ final class ParserImpl implements Parser {
             throw ctx.expected("Field");
     }
 
-    private static final FieldOrRow parseConcat(ParserContext ctx, Type type, QueryPart prefix) {
-        FieldOrRow r = parseCollated(ctx, type, prefix);
+    private static final FieldOrRow parseConcat(ParserContext ctx, Type type) {
+        FieldOrRow r = parseCollated(ctx, type);
 
         if (S.is(type) && r instanceof Field)
             while (parseIf(ctx, "||"))
-                r = concat((Field) r, toField(ctx, parseCollated(ctx, type, null)));
+                r = concat((Field) r, toField(ctx, parseCollated(ctx, type)));
 
         return r;
     }
 
-    private static final FieldOrRow parseCollated(ParserContext ctx, Type type, QueryPart prefix) {
-        FieldOrRow r = parseSum(ctx, type, prefix);
+    private static final FieldOrRow parseCollated(ParserContext ctx, Type type) {
+        FieldOrRow r = parseSum(ctx, type);
 
         if (S.is(type) && r instanceof Field)
             if (parseKeywordIf(ctx, "COLLATE"))
@@ -3858,66 +3858,66 @@ final class ParserImpl implements Parser {
 
     private static final Field<?> parseFieldSumParenthesised(ParserContext ctx) {
         parse(ctx, '(');
-        Field<?> r = toField(ctx, parseSum(ctx, N, null));
+        Field<?> r = toField(ctx, parseSum(ctx, N));
         parse(ctx, ')');
         return r;
     }
 
-    private static final FieldOrRow parseSum(ParserContext ctx, Type type, QueryPart prefix) {
-        FieldOrRow r = parseFactor(ctx, type, prefix);
+    private static final FieldOrRow parseSum(ParserContext ctx, Type type) {
+        FieldOrRow r = parseFactor(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '+'))
-                    r = ((Field) r).add((Field) parseFactor(ctx, type, null));
+                    r = ((Field) r).add((Field) parseFactor(ctx, type));
                 else if (parseIf(ctx, '-'))
-                    r = ((Field) r).sub((Field) parseFactor(ctx, type, null));
+                    r = ((Field) r).sub((Field) parseFactor(ctx, type));
                 else
                     break;
 
         return r;
     }
 
-    private static final FieldOrRow parseFactor(ParserContext ctx, Type type, QueryPart prefix) {
-        FieldOrRow r = parseExp(ctx, type, prefix);
+    private static final FieldOrRow parseFactor(ParserContext ctx, Type type) {
+        FieldOrRow r = parseExp(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '*'))
-                    r = ((Field) r).mul((Field) parseExp(ctx, type, null));
+                    r = ((Field) r).mul((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '/'))
-                    r = ((Field) r).div((Field) parseExp(ctx, type, null));
+                    r = ((Field) r).div((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '%'))
-                    r = ((Field) r).mod((Field) parseExp(ctx, type, null));
+                    r = ((Field) r).mod((Field) parseExp(ctx, type));
                 else
                     break;
 
         return r;
     }
 
-    private static final FieldOrRow parseExp(ParserContext ctx, Type type, QueryPart prefix) {
-        FieldOrRow r = parseUnaryOps(ctx, type, prefix);
+    private static final FieldOrRow parseExp(ParserContext ctx, Type type) {
+        FieldOrRow r = parseUnaryOps(ctx, type);
 
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '^'))
-                    r = ((Field) r).pow(toField(ctx, parseUnaryOps(ctx, type, null)));
+                    r = ((Field) r).pow(toField(ctx, parseUnaryOps(ctx, type)));
                 else
                     break;
 
         return r;
     }
 
-    private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type, QueryPart prefix) {
+    private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type) {
         FieldOrRow r;
-        Sign sign = prefix != null ? Sign.NONE : parseSign(ctx);
+        Sign sign = parseSign(ctx);
 
         if (sign == Sign.NONE)
-            r = parseTerm(ctx, type, prefix);
+            r = parseTerm(ctx, type);
         else if (sign == Sign.PLUS)
-            r = toField(ctx, parseTerm(ctx, type, prefix));
+            r = toField(ctx, parseTerm(ctx, type));
         else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, Sign.MINUS)) == null)
-            r = toField(ctx, parseTerm(ctx, type, prefix)).neg();
+            r = toField(ctx, parseTerm(ctx, type)).neg();
 
         if (parseIf(ctx, "(+)") && ctx.requireProEdition())
 
@@ -3963,19 +3963,11 @@ final class ParserImpl implements Parser {
         }
     }
 
-    private static final FieldOrRow parseTerm(ParserContext ctx, Type type, QueryPart prefix) {
+    private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
         parseWhitespaceIf(ctx);
 
         FieldOrRow field;
         Object value;
-
-        if (prefix != null)
-            if (prefix instanceof SelectQueryImpl)
-                return DSL.field((Select) parseQueryExpressionBody(ctx, null, null, (SelectQueryImpl) prefix));
-            else if (prefix instanceof SelectImpl)
-                return DSL.field((Select) parseQueryExpressionBody(ctx, null, null, (SelectQueryImpl) ((SelectImpl) prefix).getQuery()));
-            else
-                throw ctx.internalError();
 
         switch (ctx.character()) {
             case ':':
@@ -4242,7 +4234,7 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (parseKeywordIf(ctx, "PRIOR"))
-                    return prior(toField(ctx, parseConcat(ctx, type, null)));
+                    return prior(toField(ctx, parseConcat(ctx, type)));
 
                 break;
 
@@ -4404,7 +4396,7 @@ final class ParserImpl implements Parser {
 
                         // TODO: Limit the supported expressions in this context to the ones specified here:
                         // http://download.oracle.com/otn-pub/jcp/jdbc-4_2-mrel2-eval-spec/jdbc4.2-fr-spec.pdf
-                        field = parseTerm(ctx, type, null);
+                        field = parseTerm(ctx, type);
                         break;
 
                     case 't':
@@ -4433,38 +4425,43 @@ final class ParserImpl implements Parser {
                 // - A correlated subquery:                     E.g. (select 1)
                 // - A correlated subquery with nested set ops: E.g. ((select 1) except (select 2))
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
-                parse(ctx, '(');
-                QueryPart newPrefix = null;
+                int position = ctx.position;
+                try {
+                    if (peekKeyword(ctx, "SELECT", false, true, false)) {
+                        SelectQueryImpl<Record> select = parseSelect(ctx);
+                        if (select.getSelect().size() > 1)
+                            throw ctx.exception("Select list must contain at most one column");
 
-                if (peekKeyword(ctx, "SELECT")) {
-                    SelectQueryImpl<Record> select = parseSelect(ctx);
-                    if (select.getSelect().size() > 1)
-                        throw ctx.exception("Select list must contain at most one column");
+                        field = field((Select) select);
+                        return field;
+                    }
+                }
+                catch (ParserException e) {
 
-                    field = field((Select) select);
-                    parse(ctx, ')');
-                    newPrefix = select;
+                    // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
+                    if (e.getMessage().contains("Token ')' expected"))
+                        ctx.position = position;
+                    else
+                        throw e;
                 }
 
-                FieldOrRow r = parseFieldOrRow(ctx, type, newPrefix);
+                parse(ctx, '(');
+                FieldOrRow r = parseFieldOrRow(ctx, type);
                 List<Field<?>> list = null;
 
-                if (newPrefix == null) {
-                    if (r instanceof Field) {
-                        while (parseIf(ctx, ',')) {
-                            if (list == null) {
-                                list = new ArrayList<Field<?>>();
-                                list.add((Field) r);
-                            }
-
-                            // TODO Allow for nesting ROWs
-                            list.add(parseField(ctx, type));
+                if (r instanceof Field) {
+                    while (parseIf(ctx, ',')) {
+                        if (list == null) {
+                            list = new ArrayList<Field<?>>();
+                            list.add((Field) r);
                         }
-                    }
 
-                    parse(ctx, ')');
+                        // TODO Allow for nesting ROWs
+                        list.add(parseField(ctx, type));
+                    }
                 }
 
+                parse(ctx, ')');
                 return list != null ? row(list) : r;
         }
 
@@ -4535,9 +4532,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldAtan2If(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "ATN2") || parseFunctionNameIf(ctx, "ATAN2")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N, null));
+            Field<?> x = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N, null));
+            Field<?> y = toField(ctx, parseSum(ctx, N));
             parse(ctx, ')');
 
             return atan2((Field) x, (Field) y);
@@ -4549,7 +4546,7 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldLogIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
-            Field<?> arg1 = toField(ctx, parseSum(ctx, N, null));
+            Field<?> arg1 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
             long arg2 = parseUnsignedInteger(ctx);
             parse(ctx, ')');
@@ -4589,7 +4586,7 @@ final class ParserImpl implements Parser {
                 return DSL.trunc((Field) arg1, p);
             }
             else {
-                Field<?> arg2 = toField(ctx, parseSum(ctx, N, null));
+                Field<?> arg2 = toField(ctx, parseSum(ctx, N));
                 parse(ctx, ')');
                 return DSL.trunc((Field) arg1, (Field) arg2);
             }
@@ -4604,7 +4601,7 @@ final class ParserImpl implements Parser {
             Integer arg2 = null;
 
             parse(ctx, '(');
-            arg1 = toField(ctx, parseSum(ctx, N, null));
+            arg1 = toField(ctx, parseSum(ctx, N));
             if (parseIf(ctx, ','))
                 arg2 = (int) (long) parseUnsignedInteger(ctx);
 
@@ -4618,9 +4615,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldPowerIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "POWER") || parseFunctionNameIf(ctx, "POW")) {
             parse(ctx, '(');
-            Field arg1 = toField(ctx, parseSum(ctx, N, null));
+            Field arg1 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ',');
-            Field arg2 = toField(ctx, parseSum(ctx, N, null));
+            Field arg2 = toField(ctx, parseSum(ctx, N));
             parse(ctx, ')');
             return DSL.power(arg1, arg2);
         }
@@ -4996,10 +4993,10 @@ final class ParserImpl implements Parser {
             Field<String> f1 = (Field) parseField(ctx, S);
             if (substr || !(keywords = parseKeywordIf(ctx, "FROM")))
                 parse(ctx, ',');
-            Field f2 = toField(ctx, parseSum(ctx, N, null));
+            Field f2 = toField(ctx, parseSum(ctx, N));
             Field f3 =
                     ((keywords && parseKeywordIf(ctx, "FOR")) || (!keywords && parseIf(ctx, ',')))
-                ? (Field) toField(ctx, parseSum(ctx, N, null))
+                ? (Field) toField(ctx, parseSum(ctx, N))
                 : null;
             parse(ctx, ')');
 
@@ -5813,9 +5810,9 @@ final class ParserImpl implements Parser {
             return null;
 
         parse(ctx, '(');
-        arg1 = (Field) toField(ctx, parseSum(ctx, N, null));
+        arg1 = (Field) toField(ctx, parseSum(ctx, N));
         parse(ctx, ',');
-        arg2 = (Field) toField(ctx, parseSum(ctx, N, null));
+        arg2 = (Field) toField(ctx, parseSum(ctx, N));
         parse(ctx, ')');
 
         switch (type) {

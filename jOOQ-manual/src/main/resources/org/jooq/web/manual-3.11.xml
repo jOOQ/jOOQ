@@ -9715,6 +9715,19 @@ from (
                                 </html></content>
                             </section>
 
+                            <section id="sql-parser-cli">
+                                <title>SQL Parser CLI</title>
+                                <content><html>
+                                    <p>
+                                        The Parser API can be used as a translator between source and target dialects programmatically, as we've seen in the <reference id="sql-parser-api" title="previous section about the parser API"/>. This functionality can also usefully be accessed on the command line as shown below:
+                                    </p>
+
+                                    <p>
+                                        Another way to use this API is the <a href="https://www.jooq.org/translate">https://www.jooq.org/translate</a> website.
+                                    </p>
+                                </html></content>
+                            </section>
+
                             <section id="sql-parser-grammar">
                                 <title>SQL Parser Grammar</title>
                                 <content><html>

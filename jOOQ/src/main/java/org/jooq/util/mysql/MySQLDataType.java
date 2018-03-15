@@ -89,6 +89,7 @@ public class MySQLDataType {
     public static final DataType<BigDecimal> DEC                = new DefaultDataType<BigDecimal>(SQLDialect.MYSQL, SQLDataType.DECIMAL, "dec", "decimal");
     public static final DataType<String>     VARCHAR            = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "varchar", "char");
     public static final DataType<String>     CHAR               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CHAR, "char", "char");
+    public static final DataType<String>     TEXT               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "text", "char");
     public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BLOB, "blob", "binary");
     public static final DataType<byte[]>     BINARY             = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BINARY, "binary", "binary");
     public static final DataType<byte[]>     VARBINARY          = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.VARBINARY, "varbinary", "binary");
@@ -122,7 +123,6 @@ public class MySQLDataType {
 
     public static final DataType<String>     TINYTEXT           = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "tinytext", "char");
     public static final DataType<String>     MEDIUMTEXT         = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "mediumtext", "char");
-    public static final DataType<String>     TEXT               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "text", "char");
     public static final DataType<String>     LONGTEXT           = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "longtext", "char");
     public static final DataType<String>     ENUM               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "enum", "char");
     public static final DataType<String>     SET                = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "set", "char");

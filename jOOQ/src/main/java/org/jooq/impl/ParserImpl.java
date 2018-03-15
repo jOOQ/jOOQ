@@ -759,85 +759,38 @@ final class ParserImpl implements Parser {
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with, null);
+        List<SortField<?>> orderBy = null;
 
-        if (parseKeywordIf(ctx, "ORDER"))
+        if (parseKeywordIf(ctx, "ORDER")) {
             if (parseKeywordIf(ctx, "SIBLINGS BY")) {
                 result.addOrderBy(parseSortSpecification(ctx));
                 result.setOrderBySiblings(true);
             }
             else if (parseKeywordIf(ctx, "BY"))
-                result.addOrderBy(parseSortSpecification(ctx));
+                result.addOrderBy(orderBy = parseSortSpecification(ctx));
             else
                 throw ctx.expected("SIBLINGS BY", "BY");
+        }
 
-        if (!result.getLimit().isApplicable()) {
-            boolean offsetStandard = false;
-            boolean offsetPostgres = false;
+        if (orderBy != null && parseKeywordIf(ctx, "SEEK")) {
+            boolean before = parseKeywordIf(ctx, "BEFORE");
+            if (!before)
+                parseKeywordIf(ctx, "AFTER");
 
-            if (parseKeywordIf(ctx, "OFFSET")) {
-                result.addOffset((int) (long) parseUnsignedInteger(ctx));
+            List<Field<?>> seek = parseFields(ctx);
+            if (seek.size() != orderBy.size())
+                throw ctx.exception("ORDER BY size (" + orderBy.size() + ") and SEEK size (" + seek.size() + ") must match");
 
-                if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
-                    offsetStandard = true;
+            if (before)
+                result.addSeekBefore(seek);
+            else
+                result.addSeekAfter(seek);
 
-                // Ingres doesn't have a ROWS keyword after offset
-                else if (peekKeyword(ctx, "FETCH"))
-                    offsetStandard = true;
-                else
-                    offsetPostgres = true;
-            }
-
-            if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
-                int limit = (int) (long) parseUnsignedInteger(ctx);
-
-                if (offsetPostgres) {
-                    result.addLimit(limit);
-
-                    if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                        ;
-
-                    if (parseKeywordIf(ctx, "WITH TIES"))
-                        result.setWithTies(true);
-                }
-                else if (parseIf(ctx, ',')) {
-                    result.addLimit(limit, (int) (long) parseUnsignedInteger(ctx));
-                }
-                else {
-
-                    if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                        ;
-
-                    if (parseKeywordIf(ctx, "WITH TIES"))
-                        result.setWithTies(true);
-
-                    if (parseKeywordIf(ctx, "OFFSET"))
-                        result.addLimit((int) (long) parseUnsignedInteger(ctx), limit);
-                    else
-                        result.addLimit(limit);
-                }
-            }
-            else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
-                parseAndGetKeyword(ctx, "FIRST", "NEXT");
-                result.addLimit((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L));
-
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
-
-                parseAndGetKeyword(ctx, "ROW", "ROWS");
-                if (parseKeywordIf(ctx, "WITH TIES"))
-                    result.setWithTies(true);
-                else
-                    parseKeyword(ctx, "ONLY");
-            }
+            if (!result.getLimit().isApplicable())
+                parseLimit(ctx, result, false);
+        }
+        else if (!result.getLimit().isApplicable()) {
+            parseLimit(ctx, result, true);
         }
 
         if (parseKeywordIf(ctx, "FOR")) {
@@ -865,6 +818,75 @@ final class ParserImpl implements Parser {
         }
 
         return result;
+    }
+
+    private static void parseLimit(ParserContext ctx, SelectQueryImpl<Record> result, boolean offset) {
+        boolean offsetStandard = false;
+        boolean offsetPostgres = false;
+
+        if (offset && parseKeywordIf(ctx, "OFFSET")) {
+            result.addOffset((int) (long) parseUnsignedInteger(ctx));
+
+            if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
+                offsetStandard = true;
+
+            // Ingres doesn't have a ROWS keyword after offset
+            else if (peekKeyword(ctx, "FETCH"))
+                offsetStandard = true;
+            else
+                offsetPostgres = true;
+        }
+
+        if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
+            int limit = (int) (long) parseUnsignedInteger(ctx);
+
+            if (offsetPostgres) {
+                result.addLimit(limit);
+
+                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
+
+
+
+                    ;
+
+                if (parseKeywordIf(ctx, "WITH TIES"))
+                    result.setWithTies(true);
+            }
+            else if (offset && parseIf(ctx, ',')) {
+                result.addLimit(limit, (int) (long) parseUnsignedInteger(ctx));
+            }
+            else {
+                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
+
+
+
+                    ;
+
+                if (parseKeywordIf(ctx, "WITH TIES"))
+                    result.setWithTies(true);
+
+                if (offset && parseKeywordIf(ctx, "OFFSET"))
+                    result.addLimit((int) (long) parseUnsignedInteger(ctx), limit);
+                else
+                    result.addLimit(limit);
+            }
+        }
+        else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
+            parseAndGetKeyword(ctx, "FIRST", "NEXT");
+            result.addLimit((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L));
+
+            if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
+
+
+
+                ;
+
+            parseAndGetKeyword(ctx, "ROW", "ROWS");
+            if (parseKeywordIf(ctx, "WITH TIES"))
+                result.setWithTies(true);
+            else
+                parseKeyword(ctx, "ONLY");
+        }
     }
 
     private static final SelectQueryImpl<Record> parseQueryExpressionBody(ParserContext ctx, Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {

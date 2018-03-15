@@ -307,7 +307,7 @@ select =
   [ with ]
   queryExpressionBody
   [ orderBy ]
-  [ offsetFetch ]
+  [ seekFetch | offsetFetch ]
   [ forUpdate ]
 | values
 ;
@@ -390,18 +390,26 @@ orderBy =
   'ORDER' [ 'SIBLINGS' ] 'BY' sortFields
 ;
 
+seekFetch =
+  'SEEK' field { ',' field }
+  [
+    'FETCH' ( 'FIRST' | 'NEXT' ) [ unsignedInteger ] [ 'PERCENT' ] ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
+  | [ 'LIMIT' unsignedInteger [ 'PERCENT' ] [ 'WITH TIES' ] ]
+  ]
+;
+
 offsetFetch =
   'OFFSET' unsignedInteger
   [
     [ 'ROW' | 'ROWS' ] 'FETCH' ( 'FIRST' | 'NEXT' ) [ unsignedInteger ] [ 'PERCENT' ] ( 'ROW' | 'ROWS' ) ( 'ONLY' | 'WITH TIES' )
-  | [ 'LIMIT' unsignedInteger [ 'PERCENT' ] [ 'WITH TIES' ] ]
+  | 'LIMIT' unsignedInteger [ 'PERCENT' ] [ 'WITH TIES' ]
   ]
 | 'LIMIT' unsignedInteger [ 'PERCENT' ]
   (
     [ 'WITH TIES' ] [ 'OFFSET' unsignedInteger ]
   | [ ',' unsignedInteger ]
   )
-  ;
+;
 
 forUpdate =
   'FOR SHARE'

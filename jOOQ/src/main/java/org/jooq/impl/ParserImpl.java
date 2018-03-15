@@ -424,7 +424,7 @@ final class ParserImpl implements Parser {
         }
         while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
 
-        ctx.done("Unexpected content after end of queries input");
+        ctx.done("Unexpected token or missing query delimiter");
         return dsl.queries(result);
     }
 

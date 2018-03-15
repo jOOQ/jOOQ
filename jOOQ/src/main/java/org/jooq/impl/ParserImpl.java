@@ -3101,12 +3101,30 @@ final class ParserImpl implements Parser {
         else {
             FieldOrRow left;
             Comparator comp;
+            TSQLOuterJoinComparator outer;
             boolean not;
 
             left = parseConcat(ctx, null);
             not = parseKeywordIf(ctx, "NOT");
 
-            if (!not && (comp = parseComparatorIf(ctx)) != null) {
+
+            if (!not && ((outer = parseTSQLOuterJoinComparatorIf(ctx)) != null) && ctx.requireProEdition()) {
+                Condition result = null;
+
+
+
+
+
+
+
+
+
+
+
+
+                return result;
+            }
+            else if (!not && (comp = parseComparatorIf(ctx)) != null) {
                 boolean all = parseKeywordIf(ctx, "ALL");
                 boolean any = !all && (parseKeywordIf(ctx, "ANY") || parseKeywordIf(ctx, "SOME"));
                 if (all || any)
@@ -3875,7 +3893,7 @@ final class ParserImpl implements Parser {
 
         if (N.is(type) && r instanceof Field)
             for (;;)
-                if (parseIf(ctx, '*'))
+                if (!peek(ctx, "*=") && parseIf(ctx, '*'))
                     r = ((Field) r).mul((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '/'))
                     r = ((Field) r).div((Field) parseExp(ctx, type));
@@ -7185,6 +7203,19 @@ final class ParserImpl implements Parser {
             return Comparator.LESS;
 
         return null;
+    }
+
+    private static enum TSQLOuterJoinComparator {
+        LEFT, RIGHT
+    }
+
+    private static final TSQLOuterJoinComparator parseTSQLOuterJoinComparatorIf(ParserContext ctx) {
+        if (parseIf(ctx, "*="))
+            return TSQLOuterJoinComparator.LEFT;
+        else if (parseIf(ctx, "=*"))
+            return TSQLOuterJoinComparator.RIGHT;
+        else
+            return null;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

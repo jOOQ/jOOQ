@@ -508,6 +508,8 @@ predicate =
   | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
   | '@>' concat
   ]
+| concat '*=' concat
+| concat '=*' concat
 | row2 'OVERLAPS' row2
 ;
 
@@ -663,6 +665,7 @@ term =
 | 'TANH' '(' sum ')'
 | timeLiteral
 | timestampLiteral
+| 'TO_CHAR' '(' field ')'
 | 'TO_NUMBER' '(' field ')'
 | 'TRANSLATE' '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
@@ -734,8 +737,8 @@ dataType =
 | 'BIT' [ '(' unsignedInteger ')' ]
 | 'BLOB' [ '(' unsignedInteger ')' ]
 | 'BOOLEAN'
-| 'CHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
-| 'CHARACTER' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'CHAR' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
+| 'CHARACTER' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'CLOB' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'DATE'
 | 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
@@ -772,9 +775,9 @@ dataType =
 | 'TINYINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'TINYTEXT' [ 'COLLATE' collationName ]
 | 'UUID'
-| 'VARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
-| 'VARCHAR2' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
-| 'CHARACTER VARYING' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'VARCHAR' [ '(' unsignedInteger [ 'BYTE' | 'CHAR' ] ')' ] [ 'COLLATE' collationName ]
+| 'VARCHAR2' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
+| 'CHARACTER VARYING' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'VARBINARY' [ '(' unsignedInteger ')' ]
 ;
 

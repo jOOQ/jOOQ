@@ -78,7 +78,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
                .visit(K_AS)
                .sql(" (");
 
-            if (window != null);
+            if (window != null)
                 ctx.visit(window);
 
             ctx.sql(')');

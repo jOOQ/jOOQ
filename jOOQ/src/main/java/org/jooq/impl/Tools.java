@@ -1799,6 +1799,8 @@ final class Tools {
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
         boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
+
+        // [#5873] [#7314] This setting governs how quotes are escaped within string literals
         boolean quotesNeedsBackslashEscaping = quotesNeedsBackslashEscaping(ctx.configuration());
 
         characterLoop:

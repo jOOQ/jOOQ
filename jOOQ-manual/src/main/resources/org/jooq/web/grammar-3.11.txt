@@ -674,7 +674,9 @@ term =
 | timeLiteral
 | timestampLiteral
 | 'TO_CHAR' '(' field ')'
+| 'TO_DATE' '(' field ',' field ')'
 | 'TO_NUMBER' '(' field ')'
+| 'TO_TIMESTAMP' '(' field ',' field ')'
 | 'TRANSLATE' '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
 | 'TRUNC' '(' field ',' stringLiteral ')'

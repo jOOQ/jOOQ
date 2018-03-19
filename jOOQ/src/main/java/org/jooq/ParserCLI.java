@@ -41,6 +41,7 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 
 /**
  * A command line interface to the Parser API, which works in a similar way as
@@ -76,7 +77,23 @@ public final class ParserCLI {
             settings.setRenderNameStyle(a.name);
 
         DSLContext ctx = DSL.using(a.toDialect, settings);
-        System.out.println(ctx.render(ctx.parser().parse(a.sql)));
+        try {
+            System.out.println(ctx.render(ctx.parser().parse(a.sql)));
+        }
+        catch (ParserException e1) {
+            ParserException e = e1;
+
+            if (!a.sql.trim().matches("^(?is:(ALTER|BEGIN|COMMENT|CREATE|DECLARE|DELETE|DESCRIBE|DROP|GRANT|INSERT|MERGE|RENAME|REVOKE|SELECT|SET|SHOW|TRUNCATE|UPDATE|USE).*)$")) {
+                try {
+                    System.out.println(ctx.render(ctx.parser().parseField(a.sql)));
+                }
+                catch (ParserException e2) {
+                    e = e1.position() >= e2.position() ? e1 : e2;
+                }
+            }
+
+            System.err.println(e.getMessage());
+        }
     }
 
     private static final Args parse(String[] args) {
@@ -170,7 +187,7 @@ public final class ParserCLI {
         System.out.println("  -s / --sql        <String>              Specify the input SQL string");
     }
 
-    static final class Args {
+    public static final class Args {
         String             sql;
         RenderKeywordStyle keywords;
         RenderNameStyle    name;

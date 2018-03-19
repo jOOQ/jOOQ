@@ -417,14 +417,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // If that fails, try reading a formatted date
         catch (NumberFormatException e) {
 
+            // [#7325] In SQLite dates could be stored in both ISO standard formats:
+            //         With T (default standard), or without T (optional standard, JDBC standard)
+            date = StringUtils.replace(date, "T", " ");
+
             if (type == Timestamp.class)
                 return Timestamp.valueOf(date).getTime();
 
             // Dates may come with " 00:00:00". This is safely trimming time information
-            if (type == Date.class)
+            else if (type == Date.class)
                 return Date.valueOf(date.split(" ")[0]).getTime();
 
-            if (type == Time.class)
+            else if (type == Time.class)
                 return Time.valueOf(date).getTime();
 
             throw new SQLException("Could not parse date " + date, e);

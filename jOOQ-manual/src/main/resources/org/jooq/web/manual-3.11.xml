@@ -9722,6 +9722,18 @@ from (
                                         The Parser API can be used as a translator between source and target dialects programmatically, as we've seen in the <reference id="sql-parser-api" title="previous section about the parser API"/>. This functionality can also usefully be accessed on the command line as shown below:
                                     </p>
 
+</html><text><![CDATA[$ java -jar jooq-{jooq-version}.jar org.jooq.ParserCLI -h
+Usage:
+  -f / --formatted                        Format output SQL
+  -h / --help                             Display this help
+  -k / --keyword    <RenderKeywordStyle>  Specify the output keyword style (org.jooq.conf.RenderKeywordStyle)
+  -i / --identifier <RenderNameStyle>     Specify the output identifier style (org.jooq.conf.RenderNameStyle)
+  -t / --to-dialect <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)
+  -s / --sql        <String>              Specify the input SQL string
+
+$ java -jar jooq-{jooq-version}.jar org.jooq.ParserCLI -t ORACLE -s "SELECT substring('abcde', 2, 3)"
+select substr('abcde', 2, 3) from dual;]]></text><html>
+
                                     <p>
                                         Another way to use this API is the <a href="https://www.jooq.org/translate">https://www.jooq.org/translate</a> website.
                                     </p>

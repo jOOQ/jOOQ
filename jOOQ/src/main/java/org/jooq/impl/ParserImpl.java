@@ -204,6 +204,8 @@ import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
 import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
+import static org.jooq.impl.DSL.toDate;
+import static org.jooq.impl.DSL.toTimestamp;
 import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
@@ -4356,6 +4358,10 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldTimeLiteralIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldToDateIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldToTimestampIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type) || D.is(type))
                     if ((field = parseFieldTruncIf(ctx)) != null)
@@ -5083,6 +5089,34 @@ final class ParserImpl implements Parser {
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ')');
             return cast(f1, SQLDataType.NUMERIC);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldToDateIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TO_DATE")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parse(ctx, ',');
+            Field<String> f2 = (Field) parseField(ctx, S);
+            parse(ctx, ')');
+
+            return toDate(f1, f2);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldToTimestampIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TO_TIMESTAMP")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parse(ctx, ',');
+            Field<String> f2 = (Field) parseField(ctx, S);
+            parse(ctx, ')');
+
+            return toTimestamp(f1, f2);
         }
 
         return null;

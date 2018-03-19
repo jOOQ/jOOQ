@@ -87,6 +87,7 @@ import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
+import static org.jooq.impl.Tools.quotesNeedsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -715,7 +716,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (needsBackslashEscaping(context.configuration()))
                 result = StringUtils.replace(result, "\\", "\\\\");
 
-            return StringUtils.replace(result, "'", "''");
+            if (quotesNeedsBackslashEscaping(context.configuration()))
+                result = StringUtils.replace(result, "'", "\\'");
+            else
+                result = StringUtils.replace(result, "'", "''");
+
+            return result;
         }
 
         @Override

@@ -54,6 +54,9 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected QuoteEscaping quoteEscaping = QuoteEscaping.DEFAULT;
     @XmlElement(defaultValue = "INDEXED")
     @XmlSchemaType(name = "string")
     protected ParamType paramType = ParamType.INDEXED;
@@ -345,6 +348,30 @@ public class Settings
      */
     public void setBackslashEscaping(BackslashEscaping value) {
         this.backslashEscaping = value;
+    }
+
+    /**
+     * Whether string literals should be escaped with backslash.
+     *
+     * @return
+     *     possible object is
+     *     {@link QuoteEscaping }
+     *
+     */
+    public QuoteEscaping getQuoteEscaping() {
+        return quoteEscaping;
+    }
+
+    /**
+     * Sets the value of the quoteEscaping property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link QuoteEscaping }
+     *
+     */
+    public void setQuoteEscaping(QuoteEscaping value) {
+        this.quoteEscaping = value;
     }
 
     /**
@@ -1061,6 +1088,11 @@ public class Settings
 
     public Settings withBackslashEscaping(BackslashEscaping value) {
         setBackslashEscaping(value);
+        return this;
+    }
+
+    public Settings withQuoteEscaping(QuoteEscaping value) {
+        setQuoteEscaping(value);
         return this;
     }
 

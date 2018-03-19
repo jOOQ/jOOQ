@@ -54,9 +54,6 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
-    @XmlElement(defaultValue = "DEFAULT")
-    @XmlSchemaType(name = "string")
-    protected QuoteEscaping quoteEscaping = QuoteEscaping.DEFAULT;
     @XmlElement(defaultValue = "INDEXED")
     @XmlSchemaType(name = "string")
     protected ParamType paramType = ParamType.INDEXED;
@@ -348,30 +345,6 @@ public class Settings
      */
     public void setBackslashEscaping(BackslashEscaping value) {
         this.backslashEscaping = value;
-    }
-
-    /**
-     * Whether quotes in strings literals should be escaped with quote repeating or backslash.
-     *
-     * @return
-     *     possible object is
-     *     {@link QuoteEscaping }
-     *
-     */
-    public QuoteEscaping getQuoteEscaping() {
-        return quoteEscaping;
-    }
-
-    /**
-     * Sets the value of the quoteEscaping property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link QuoteEscaping }
-     *
-     */
-    public void setQuoteEscaping(QuoteEscaping value) {
-        this.quoteEscaping = value;
     }
 
     /**
@@ -1091,11 +1064,6 @@ public class Settings
         return this;
     }
 
-    public Settings withQuoteEscaping(QuoteEscaping value) {
-        setQuoteEscaping(value);
-        return this;
-    }
-
     public Settings withParamType(ParamType value) {
         setParamType(value);
         return this;
@@ -1278,11 +1246,6 @@ public class Settings
             sb.append("<backslashEscaping>");
             sb.append(backslashEscaping);
             sb.append("</backslashEscaping>");
-        }
-        if (quoteEscaping!= null) {
-            sb.append("<quoteEscaping>");
-            sb.append(quoteEscaping);
-            sb.append("</quoteEscaping>");
         }
         if (paramType!= null) {
             sb.append("<paramType>");
@@ -1512,15 +1475,6 @@ public class Settings
             }
         } else {
             if (!backslashEscaping.equals(other.backslashEscaping)) {
-                return false;
-            }
-        }
-        if (quoteEscaping == null) {
-            if (other.quoteEscaping!= null) {
-                return false;
-            }
-        } else {
-            if (!quoteEscaping.equals(other.quoteEscaping)) {
                 return false;
             }
         }
@@ -1783,7 +1737,6 @@ public class Settings
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
-        result = ((prime*result)+((quoteEscaping == null)? 0 :quoteEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
         result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));

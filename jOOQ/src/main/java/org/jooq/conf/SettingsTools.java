@@ -136,20 +136,6 @@ public final class SettingsTools {
     }
 
     /**
-     * Get the value QuoteEscaping value.
-     */
-    public static final QuoteEscaping getQuoteEscaping(Settings settings) {
-        if (settings != null) {
-            QuoteEscaping result = settings.getQuoteEscaping();
-
-            if (result != null)
-                return result;
-        }
-
-        return QuoteEscaping.DEFAULT;
-    }
-
-    /**
      * Whether a {@link PreparedStatement} should be executed.
      */
     public static final boolean executePreparedStatements(Settings settings) {

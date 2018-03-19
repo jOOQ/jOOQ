@@ -58,7 +58,6 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
-import static org.jooq.conf.SettingsTools.getQuoteEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
@@ -227,7 +226,6 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
-import org.jooq.conf.QuoteEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
@@ -572,7 +570,6 @@ final class Tools {
     private static final char[]              TOKEN_MULTI_LINE_COMMENT_CLOSE = { '*', '/' };
     private static final char[]              TOKEN_APOS                     = { '\'' };
     private static final char[]              TOKEN_ESCAPED_APOS             = { '\'', '\'' };
-    private static final char[]              TOKEN_BACKSLASH_ESCAPED_APOS   = { '\\', '\'' };
 
     /**
      * "Suffixes" that are placed behind a "?" character to form an operator,
@@ -1800,9 +1797,6 @@ final class Tools {
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
         boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
 
-        // [#5873] [#7314] This setting governs how quotes are escaped within string literals
-        boolean quotesNeedsBackslashEscaping = quotesNeedsBackslashEscaping(ctx.configuration());
-
         characterLoop:
         for (int i = 0; i < sqlChars.length; i++) {
 
@@ -1854,10 +1848,7 @@ final class Tools {
                         render.sql(sqlChars[i++]);
 
                     // Consume an escaped apostrophe
-                    else if (!quotesNeedsBackslashEscaping && peek(sqlChars, i, TOKEN_ESCAPED_APOS))
-                        render.sql(sqlChars[i++]);
-
-                    else if (quotesNeedsBackslashEscaping && peek(sqlChars, i, TOKEN_BACKSLASH_ESCAPED_APOS))
+                    else if (peek(sqlChars, i, TOKEN_ESCAPED_APOS))
                         render.sql(sqlChars[i++]);
 
                     // Break on the terminal string literal delimiter
@@ -2078,14 +2069,6 @@ final class Tools {
     static final boolean needsBackslashEscaping(Configuration configuration) {
         BackslashEscaping escaping = getBackslashEscaping(configuration.settings());
         return escaping == ON || (escaping == DEFAULT && REQUIRES_BACKSLASH_ESCAPING.contains(configuration.family()));
-    }
-
-    /**
-     * Whether quotes escaping with backslashes is needed.
-     */
-    static final boolean quotesNeedsBackslashEscaping(Configuration configuration) {
-        QuoteEscaping escaping = getQuoteEscaping(configuration.settings());
-        return escaping == QuoteEscaping.BACKSLASH;
     }
 
     /**

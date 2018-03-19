@@ -63,10 +63,6 @@ set to true, users can automatically profit from this feature in all SQL stateme
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether string literals should be escaped with backslash.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="quoteEscaping" type="jooq-runtime:QuoteEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether quotes in strings literals should be escaped with quote repeating or backslash.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-
       <element name="paramType" type="jooq-runtime:ParamType" minOccurs="0" maxOccurs="1" default="INDEXED">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify how bind variables are to be rendered.
 <p>
@@ -424,20 +420,6 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Never escape backslashes. -->
       <enumeration value="OFF"/>
-    </restriction>
-  </simpleType>
-
-  <simpleType name="QuoteEscaping">
-    <restriction base="string">
-
-      <!-- Use the database's most sensible default value -->
-      <enumeration value="DEFAULT"/>
-
-      <!-- Escape with quote repeat. -->
-      <enumeration value="QUOTE"/>
-
-      <!-- Escape with backslash. -->
-      <enumeration value="BACKSLASH"/>
     </restriction>
   </simpleType>
 

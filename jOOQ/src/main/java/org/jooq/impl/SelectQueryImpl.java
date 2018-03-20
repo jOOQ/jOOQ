@@ -1581,7 +1581,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final EnumSet<SQLDialect> UNION_PARENTHESIS = EnumSet.of(DERBY, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = EnumSet.of(SQLITE);
+    private static final EnumSet<SQLDialect> UNION_PARENTHESIS            = EnumSet.of(DERBY, MARIADB, MYSQL);
 
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)
@@ -1602,8 +1603,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final void unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields) {
         boolean derivedTable =
-            (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.family()))
 
+            // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
+            //                         because they do not allow wrapping set op subqueries in parentheses
+            NO_SUPPORT_UNION_PARENTHESES.contains(ctx.family())
+
+            // [#3579] [#6431] [#7222] Nested set operations aren't supported, but parenthesised
+            //                         set op subqueries are.
+            || (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.family()))
+
+            // [#2995] Ambiguity may need to be resolved when parentheses could mean both:
+            //         Set op subqueries or insert column lists
             || ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null
 
             // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6984

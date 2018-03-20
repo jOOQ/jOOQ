@@ -54,15 +54,8 @@ import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.beans.ConstructorProperties;
 import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.reflect.*;
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Executable;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,6 +85,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types.
@@ -372,6 +366,38 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 delegate = new ImmutablePOJOMapperWithParameterNames(constructor, Arrays.asList(properties.value()));
                 return;
             }
+        }
+
+
+        // [#7324] Map immutable Kotlin classes by parameter names if kotlin-reflect is on the classpath
+        try {
+            Reflect JvmClassMappingKt = Reflect.on("kotlin.jvm.JvmClassMappingKt");
+            Object klass = JvmClassMappingKt.call("getKotlinClass", type).get();
+
+            Reflect KClasses = Reflect.on("kotlin.reflect.full.KClasses");
+            Reflect primaryConstructor = KClasses.call("getPrimaryConstructor", klass);
+
+            if (primaryConstructor.get() != null) {
+                // it is a Kotlin class
+                List parameters = primaryConstructor.call("getParameters").get();
+                Class<?> klassType = Reflect.on("kotlin.reflect.KClass").type();
+                Method getJavaClass = JvmClassMappingKt.type().getMethod("getJavaClass", klassType);
+
+                List<String> parameterNames = new ArrayList<>();
+                Class[] parameterTypes = new Class[parameters.size()];
+                for (int i = 0; i < parameters.size(); i++) {
+                    Reflect parameter = Reflect.on(parameters.get(i));
+                    parameterNames.add(parameter.call("getName").get());
+                    Object typeClassifier = parameter.call("getType").call("getClassifier").get();
+                    parameterTypes[i] = (Class) getJavaClass.invoke(JvmClassMappingKt.get(), typeClassifier);
+                }
+
+                Constructor<E> javaConstructor = (Constructor<E>) this.type.getConstructor(parameterTypes);
+                delegate = new ImmutablePOJOMapperWithParameterNames(javaConstructor, parameterNames);
+                return;
+            }
+        } catch (ReflectException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            // do nothing
         }
 
 

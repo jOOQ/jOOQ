@@ -136,8 +136,8 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private List<Catalog>                                                    configuredCatalogs;
-    private List<Schema>                                                     configuredSchemata;
+    private List<Catalog>                                                    configuredCatalogs       = new ArrayList<Catalog>();
+    private List<Schema>                                                     configuredSchemata       = new ArrayList<Schema>();
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
@@ -261,7 +261,15 @@ public abstract class AbstractDatabase implements Database {
                     // [#4974] Prevent any class loading effects from impacting below
                     //         SQLPerformanceWarning.
                     if (!initialised) {
-                        DSL.using(configuration).selectOne().fetch();
+                        try {
+                            DSL.using(configuration).selectOne().fetch();
+                        }
+
+                        // [#7248] Unsupported dialects might not be able to run queries on the DUAL table
+                        catch (DataAccessException ignore) {
+                            log.debug("Error while running init query", ignore);
+                        }
+
                         initialised = true;
                     }
                 }

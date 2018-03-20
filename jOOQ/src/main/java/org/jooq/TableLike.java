@@ -50,19 +50,22 @@ import java.util.stream.Stream;
 public interface TableLike<R extends Record> extends QueryPart {
 
     /**
-     * Get this table's fields as a {@link Row}.
+     * Get this table's fields as a {@link Row}, if this table knows its field
+     * references.
      */
     Row fieldsRow();
 
 
     /**
-     * Get this table's fields as a {@link Stream}.
+     * Get this table's fields as a {@link Stream}, if this table knows its
+     * field references.
      */
     Stream<Field<?>> fieldStream();
 
 
     /**
-     * Get a specific field from this table.
+     * Get a specific field from this table, if this table knows its field
+     * references.
      * <p>
      * This will return:
      * <ul>
@@ -83,14 +86,16 @@ public interface TableLike<R extends Record> extends QueryPart {
     <T> Field<T> field(Field<T> field);
 
     /**
-     * Get a specific field from this table.
+     * Get a specific field from this table, if this table knows its field
+     * references.
      *
      * @see Row#field(String)
      */
     Field<?> field(String name);
 
     /**
-     * Get a specific field from this table and coerce it to <code>type</code>.
+     * Get a specific field from this table and coerce it to <code>type</code>,
+     * if this table knows its field references.
      *
      * @see Row#field(String, Class)
      */
@@ -98,21 +103,23 @@ public interface TableLike<R extends Record> extends QueryPart {
 
     /**
      * Get a specific field from this table and coerce it to
-     * <code>dataType</code>.
+     * <code>dataType</code>, if this table knows its field references.
      *
      * @see Row#field(String, DataType)
      */
     <T> Field<T> field(String name, DataType<T> dataType);
 
     /**
-     * Get a specific field from this table.
+     * Get a specific field from this table, if this table knows its field
+     * references.
      *
      * @see Row#field(Name)
      */
     Field<?> field(Name name);
 
     /**
-     * Get a specific field from this table and coerce it to <code>type</code>.
+     * Get a specific field from this table and coerce it to <code>type</code>,
+     * if this table knows its field references.
      *
      * @see Row#field(Name, Class)
      */
@@ -120,21 +127,23 @@ public interface TableLike<R extends Record> extends QueryPart {
 
     /**
      * Get a specific field from this table and coerce it to
-     * <code>dataType</code>.
+     * <code>dataType</code>, if this table knows its field references.
      *
      * @see Row#field(Name, DataType)
      */
     <T> Field<T> field(Name name, DataType<T> dataType);
 
     /**
-     * Get a specific field from this table.
+     * Get a specific field from this table, if this table knows its field
+     * references.
      *
      * @see Row#field(int)
      */
     Field<?> field(int index);
 
     /**
-     * Get a specific field from this table and coerce it to <code>type</code>.
+     * Get a specific field from this table and coerce it to <code>type</code>,
+     * if this table knows its field references.
      *
      * @see Row#field(int, Class)
      */
@@ -142,21 +151,23 @@ public interface TableLike<R extends Record> extends QueryPart {
 
     /**
      * Get a specific field from this table and coerce it to
-     * <code>dataType</code>.
+     * <code>dataType</code>, if this table knows its field references.
      *
      * @see Row#field(int, DataType)
      */
     <T> Field<T> field(int index, DataType<T> dataType);
 
     /**
-     * Get all fields from this table.
+     * Get all fields from this table, if this table knows its field references,
+     * or an empty array otherwise.
      *
      * @see Row#fields()
      */
     Field<?>[] fields();
 
     /**
-     * Get all fields from this table, providing some fields.
+     * Get all fields from this table, providing some fields, if this table
+     * knows its field references.
      *
      * @return All available fields
      * @see Row#fields(Field...)
@@ -164,7 +175,8 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(Field<?>... fields);
 
     /**
-     * Get all fields from this table, providing some field names.
+     * Get all fields from this table, providing some field names, if this table
+     * knows its field references.
      *
      * @return All available fields
      * @see Row#fields(String...)
@@ -172,7 +184,8 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(String... fieldNames);
 
     /**
-     * Get all fields from this table, providing some field names.
+     * Get all fields from this table, providing some field names, if this table
+     * knows its field references.
      *
      * @return All available fields
      * @see Row#fields(Name...)
@@ -180,7 +193,8 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(Name... fieldNames);
 
     /**
-     * Get all fields from this table, providing some field indexes.
+     * Get all fields from this table, providing some field indexes, if this
+     * table knows its field references.
      *
      * @return All available fields
      * @see Row#fields(int...)

@@ -1746,7 +1746,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final String replaceZ(String format) {
 
         // Replace the ISO standard Z character for UTC, as some databases don't like that
-        return format.replace("Z", "+00:00");
+        return StringUtils.replace(format, "Z", "+00:00");
     }
 
     private static final String format(OffsetTime val) {

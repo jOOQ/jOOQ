@@ -37,6 +37,9 @@
  */
 package org.jooq.util.h2;
 
+import static org.jooq.impl.DSL.choose;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 
@@ -44,6 +47,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -69,13 +73,21 @@ public class H2TableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
+        // [#7206] H2 defaults to these precision/scale values when a DECIMAL/NUMERIC type
+        //         does not have any precision/scale. What works in H2 works in almost no
+        //         other database, which is relevant when using the DDLDatabase for instance,
+        //         which is based on the H2Database
+        Param<Integer> maxP = inline(65535);
+        Param<Integer> maxS = inline(32767);
+
         for (Record record : create().select(
                 Columns.COLUMN_NAME,
                 Columns.ORDINAL_POSITION,
                 Columns.TYPE_NAME,
-                Columns.CHARACTER_MAXIMUM_LENGTH,
-                Columns.NUMERIC_PRECISION,
-                Columns.NUMERIC_SCALE,
+                choose().when(Columns.NUMERIC_PRECISION.eq(maxP).and(Columns.NUMERIC_SCALE.eq(maxS)), zero())
+                        .otherwise(Columns.CHARACTER_MAXIMUM_LENGTH).as(Columns.CHARACTER_MAXIMUM_LENGTH),
+                Columns.NUMERIC_PRECISION.decode(maxP, zero(), Columns.NUMERIC_PRECISION).as(Columns.NUMERIC_PRECISION),
+                Columns.NUMERIC_SCALE.decode(maxS, zero(), Columns.NUMERIC_SCALE).as(Columns.NUMERIC_SCALE),
                 Columns.IS_NULLABLE,
                 Columns.COLUMN_DEFAULT,
                 Columns.REMARKS,

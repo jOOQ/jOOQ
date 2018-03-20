@@ -526,10 +526,14 @@ final class ResultImpl<R extends Record> implements Result<R> {
                 writer.append("\n|");
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    String value = format0(getValue(i, index), get(i).changed(index), true)
-                        .replace("\n", "{lf}")
-                        .replace("\r", "{cr}")
-                        .replace("\t", "{tab}");
+                    String value =
+                        StringUtils.replace(
+                            StringUtils.replace(
+                                StringUtils.replace(
+                                    format0(getValue(i, index), get(i).changed(index), true), "\n", "{lf}"
+                                ), "\r", "{cr}"
+                            ), "\t", "{tab}"
+                        );
 
                     String padded;
                     if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
@@ -818,9 +822,12 @@ final class ResultImpl<R extends Record> implements Result<R> {
             case ALWAYS:
             default:
                 return format.quoteString()
-                     + result.replace("\\", "\\\\")
-                             .replace(format.quoteString(), format.quoteString() + format.quoteString())
-                     + format.quoteString();
+                    + StringUtils.replace(
+                          StringUtils.replace(
+                              result, "\\", "\\\\"
+                          ), format.quoteString(), format.quoteString() + format.quoteString()
+                      )
+                    + format.quoteString();
         }
     }
 

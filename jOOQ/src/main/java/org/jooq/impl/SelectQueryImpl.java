@@ -1790,7 +1790,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean knownTable(Table<?> table) {
-        return table.fieldsRow().size() > 0;
+        if (table instanceof JoinTable)
+            return knownTable(((JoinTable) table).lhs) && knownTable(((JoinTable) table).rhs);
+        else
+            return table.fieldsRow().size() > 0;
     }
 
     @SuppressWarnings("unchecked")

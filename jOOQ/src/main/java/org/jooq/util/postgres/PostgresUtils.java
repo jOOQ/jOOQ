@@ -53,6 +53,7 @@ import java.util.List;
 import org.jooq.Converter;
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -445,7 +446,7 @@ public class PostgresUtils {
                 sb.append(toPGString((byte[]) o));
             else
                 sb.append("\"")
-                  .append(toPGString(o).replace("\\", "\\\\").replace("\"", "\\\""))
+                  .append(StringUtils.replace(StringUtils.replace(toPGString(o), "\\", "\\\\"), "\"", "\\\""))
                   .append("\"");
 
             separator = ",";
@@ -492,7 +493,7 @@ public class PostgresUtils {
                     sb.append(toPGString((byte[]) a));
                 else
                     sb.append("\"")
-                      .append(toPGString(a).replace("\\", "\\\\").replace("\"", "\\\""))
+                      .append(StringUtils.replace(StringUtils.replace(toPGString(a), "\\", "\\\\"), "\"", "\\\""))
                       .append("\"");
             }
 

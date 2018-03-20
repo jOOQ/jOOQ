@@ -327,6 +327,7 @@ public class PostgresDatabase extends AbstractDatabase {
                 .join(cc)
                 .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
+                .orderBy(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME)
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
@@ -513,6 +514,7 @@ public class PostgresDatabase extends AbstractDatabase {
         for (String name : create()
                 .select(PG_NAMESPACE.NSPNAME)
                 .from(PG_NAMESPACE)
+                .orderBy(PG_NAMESPACE.NSPNAME)
                 .fetch(PG_NAMESPACE.NSPNAME)) {
 
             result.add(new SchemaDefinition(this, name, ""));
@@ -668,7 +670,8 @@ public class PostgresDatabase extends AbstractDatabase {
                     .join(n)
                         .on(oid(n).eq(d.TYPNAMESPACE))
                     .where(d.TYPTYPE.eq("d"))
-                    .and(n.NSPNAME.in(getInputSchemata()))) {
+                    .and(n.NSPNAME.in(getInputSchemata()))
+                    .orderBy(n.NSPNAME, d.TYPNAME)) {
 
                 SchemaDefinition schema = getSchema(record.get(n.NSPNAME));
 

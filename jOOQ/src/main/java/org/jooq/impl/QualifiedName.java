@@ -64,7 +64,7 @@ final class QualifiedName extends AbstractName {
     }
 
     QualifiedName(Name[] qualifiedName) {
-        this.qualifiedName = last(qualifiedName);
+        this.qualifiedName = last(nonEmpty(qualifiedName));
     }
 
     private QualifiedName(UnqualifiedName[] qualifiedName) {
@@ -119,6 +119,30 @@ final class QualifiedName extends AbstractName {
         }
         else {
             result = qualifiedName;
+        }
+
+        return result;
+    }
+
+    private static final Name[] nonEmpty(Name[] names) {
+        Name[] result;
+        int nulls = 0;
+
+        for (int i = 0; i < names.length; i++)
+            if (names[i] == null)
+                nulls++;
+
+        if (nulls > 0) {
+            result = new Name[names.length - nulls];
+
+            for (int i = names.length - 1; i >= 0; i--)
+                if (names[i] == null)
+                    nulls--;
+                else
+                    result[i - nulls] = names[i];
+        }
+        else {
+            result = names;
         }
 
         return result;

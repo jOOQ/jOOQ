@@ -328,6 +328,7 @@ import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -700,6 +701,42 @@ public class DSL {
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static WithAsStep with(String alias, String... fieldAliases) {
+        return new WithImpl(null, false).with(alias, fieldAliases);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep with(Name alias) {
+        return new WithImpl(null, false).with(alias);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep with(Name alias, Name... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
 
@@ -1631,6 +1668,45 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
+        return new WithImpl(null, true).with(alias, fieldAliases);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep withRecursive(Name alias) {
+        return new WithImpl(null, true).with(alias);
+    }
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static WithAsStep withRecursive(Name alias, Name... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
 
@@ -8831,6 +8907,9 @@ public class DSL {
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      */
     @Support
     public static Table<Record> table(Name name) {
@@ -9583,6 +9662,9 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
      * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -9610,6 +9692,9 @@ public class DSL {
      * <code><pre>
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -9642,6 +9727,9 @@ public class DSL {
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
      * </pre></code>
      * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -9671,6 +9759,9 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
      * </pre></code>
+     * <p>
+     * The returned table does not know its field references, i.e.
+     * {@link Table#fields()} returns an empty array.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -12375,7 +12466,11 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
-        return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
+        return StringUtils.replace(
+                   StringUtils.replace(
+                       StringUtils.replace(value, esc, esc + esc), "%", esc + "%"
+                   ), "_", esc + "_"
+               );
     }
 
     /**
@@ -12997,6 +13092,14 @@ public class DSL {
     @Support
     public static Field<Timestamp> currentTimestamp() {
         return new CurrentTimestamp<Timestamp>(SQLDataType.TIMESTAMP);
+    }
+
+    /**
+     * Synonym for {@link #currentTimestamp()}.
+     */
+    @Support
+    public static Field<Timestamp> now() {
+        return currentTimestamp();
     }
 
 

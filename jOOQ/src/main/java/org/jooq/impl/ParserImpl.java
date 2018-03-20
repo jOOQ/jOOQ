@@ -122,6 +122,7 @@ import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.month;
+import static org.jooq.impl.DSL.now;
 import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.nullif;
@@ -219,6 +220,7 @@ import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
@@ -2350,7 +2352,7 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
         parse(ctx, '(');
-        Field<?>[] fieldNames = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
+        SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
         Condition condition = parseKeywordIf(ctx, "WHERE")
             ? parseCondition(ctx)
@@ -2365,7 +2367,7 @@ final class ParserImpl implements Parser {
                 ? ctx.dsl.createUniqueIndex(indexName)
                 : ctx.dsl.createIndex(indexName);
 
-        CreateIndexWhereStep s2 = s1.on(tableName, fieldNames);
+        CreateIndexWhereStep s2 = s1.on(tableName, fields);
         CreateIndexFinalStep s3 = condition != null
             ? s2.where(condition)
             : s2;
@@ -3288,11 +3290,11 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (D.is(type))
-                    if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP"))
+                    if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTimestamp();
-                    else if (parseKeywordIf(ctx, "CURRENT_TIME"))
+                    else if (parseKeywordIf(ctx, "CURRENT_TIME") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTime();
-                    else if (parseKeywordIf(ctx, "CURRENT_DATE"))
+                    else if (parseKeywordIf(ctx, "CURRENT_DATE") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentDate();
 
                 if ((field = parseFieldCaseIf(ctx)) != null)
@@ -3451,6 +3453,8 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.NEXTVAL)) != null)
                     return field;
+                else if (parseFunctionNameIf(ctx, "NOW") && parse(ctx, '(') && parse(ctx, ')'))
+                    return now();
 
                 break;
 
@@ -5649,9 +5653,12 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TIMESTAMP")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
+
                     if (parseKeywordIf(ctx, "WITH TIME ZONE"))
                         return SQLDataType.TIMESTAMPWITHTIMEZONE;
-                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    else
+
+                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
                         return SQLDataType.TIMESTAMP;
                 }
 
@@ -5661,9 +5668,12 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordIf(ctx, "TIME")) {
                     Integer precision = parseDataTypePrecision(ctx);
 
+
                     if (parseKeywordIf(ctx, "WITH TIME ZONE"))
                         return SQLDataType.TIMEWITHTIMEZONE;
-                    else if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
+                    else
+
+                    if (parseKeywordIf(ctx, "WITHOUT TIME ZONE") || true)
                         return SQLDataType.TIME;
                 }
 
@@ -6439,9 +6449,11 @@ final class ParserImpl implements Parser {
         return true;
     }
 
-    private static final void parse(ParserContext ctx, char c) {
+    private static final boolean parse(ParserContext ctx, char c) {
         if (!parseIf(ctx, c))
             throw ctx.unexpectedToken();
+
+        return true;
     }
 
     private static final boolean parseIf(ParserContext ctx, char c) {

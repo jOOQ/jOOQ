@@ -137,8 +137,8 @@ implements
     private static final long             serialVersionUID = 8377996833996498178L;
     private static final Clause[]         CLAUSES          = { TABLE, TABLE_JOIN };
 
-    private final Table<?>                lhs;
-    private final Table<?>                rhs;
+    final Table<?>                        lhs;
+    final Table<?>                        rhs;
 
 
 

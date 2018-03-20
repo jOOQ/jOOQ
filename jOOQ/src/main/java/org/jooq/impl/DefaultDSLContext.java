@@ -1454,6 +1454,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new WithImpl(configuration(), false).with(alias, fieldAliases);
     }
 
+    @Override
+    public WithAsStep with(Name alias) {
+        return new WithImpl(configuration(), false).with(alias);
+    }
+
+    @Override
+    public WithAsStep with(Name alias, Name... fieldAliases) {
+        return new WithImpl(configuration(), false).with(alias, fieldAliases);
+    }
+
 
     @Override
     public WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -1746,6 +1756,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public WithAsStep withRecursive(String alias, String... fieldAliases) {
+        return new WithImpl(configuration(), true).with(alias, fieldAliases);
+    }
+
+    @Override
+    public WithAsStep withRecursive(Name alias) {
+        return new WithImpl(configuration(), true).with(alias);
+    }
+
+    @Override
+    public WithAsStep withRecursive(Name alias, Name... fieldAliases) {
         return new WithImpl(configuration(), true).with(alias, fieldAliases);
     }
 

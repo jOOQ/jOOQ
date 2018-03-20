@@ -5790,12 +5790,9 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".getDataType()");
         }
         else if (db.getEnum(schema, u) != null) {
-            sb.append("org.jooq.util.");
-            sb.append(db.getDialect().getName().toLowerCase());
-            sb.append(".");
-            sb.append(db.getDialect().getName());
-            sb.append("DataType.");
-            sb.append(DefaultDataType.normalise(DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName()));
+            sb.append(getJavaTypeReference(db, new DefaultDataTypeDefinition(
+                db, schema, DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(), l, p, s, n, d, (Name) null
+            )));
             sb.append(".asEnumDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u))));
             sb.append(")");

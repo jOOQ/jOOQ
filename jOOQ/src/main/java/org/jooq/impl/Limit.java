@@ -415,7 +415,7 @@ final class Limit extends AbstractQueryPart {
     final void setOffset(Param<Integer> offset) {
         this.offset = offset;
         this.offsetOrZero = offset;
-        this.rendersParams = true;
+        this.rendersParams = rendersParams |= offset.isInline();
     }
 
     final void setNumberOfRows(int numberOfRows) {
@@ -426,7 +426,7 @@ final class Limit extends AbstractQueryPart {
     final void setNumberOfRows(Param<Integer> numberOfRows) {
         this.numberOfRows = numberOfRows;
         this.numberOfRowsOrMax = numberOfRows;
-        this.rendersParams = true;
+        this.rendersParams |= numberOfRows.isInline();
     }
 
 

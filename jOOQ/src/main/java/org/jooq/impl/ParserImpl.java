@@ -869,7 +869,7 @@ final class ParserImpl implements Parser {
                     result.setWithTies(true);
 
                 if (offset && parseKeywordIf(ctx, "OFFSET"))
-                    result.addLimit(inline((int) (long) parseUnsignedInteger(ctx), limit));
+                    result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
                 else
                     result.addLimit(limit);
             }

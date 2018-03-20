@@ -185,7 +185,9 @@ public class H2Database extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
+
+        // Workaround for https://github.com/h2database/h2database/issues/1000
+        for (Record record : fetchKeys("PRIMARY KEY", "PRIMARY_KEY")) {
             SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
 
             if (schema != null) {
@@ -219,7 +221,7 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String... constraintTypes) {
         return create().select(
                     Constraints.TABLE_SCHEMA,
                     Constraints.TABLE_NAME,
@@ -231,7 +233,7 @@ public class H2Database extends AbstractDatabase {
                 .and(Constraints.TABLE_NAME.eq(Indexes.TABLE_NAME))
                 .and(Constraints.UNIQUE_INDEX_NAME.eq(Indexes.INDEX_NAME))
                 .where(Constraints.TABLE_SCHEMA.in(getInputSchemata()))
-                .and(Constraints.CONSTRAINT_TYPE.equal(constraintType))
+                .and(Constraints.CONSTRAINT_TYPE.in(constraintTypes))
                 .orderBy(
                     Constraints.TABLE_SCHEMA,
                     Constraints.CONSTRAINT_NAME,
@@ -254,7 +256,9 @@ public class H2Database extends AbstractDatabase {
                 .and(CrossReferences.PKTABLE_NAME.equal(Constraints.TABLE_NAME))
                 .and(CrossReferences.PKTABLE_SCHEMA.equal(Constraints.TABLE_SCHEMA))
                 .where(CrossReferences.FKTABLE_SCHEMA.in(getInputSchemata()))
-                .and(Constraints.CONSTRAINT_TYPE.in("PRIMARY KEY", "UNIQUE"))
+
+                // Workaround for https://github.com/h2database/h2database/issues/1000
+                .and(Constraints.CONSTRAINT_TYPE.in("PRIMARY KEY", "PRIMARY_KEY", "UNIQUE"))
                 .orderBy(
                     CrossReferences.FKTABLE_SCHEMA.asc(),
                     CrossReferences.FK_NAME.asc(),

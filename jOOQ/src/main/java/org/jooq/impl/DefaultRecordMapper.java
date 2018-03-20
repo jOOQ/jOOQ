@@ -50,7 +50,6 @@ import static org.jooq.impl.Tools.getMatchingMembers;
 import static org.jooq.impl.Tools.getMatchingSetters;
 import static org.jooq.impl.Tools.getPropertyName;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
-import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.beans.ConstructorProperties;
@@ -80,11 +79,6 @@ import java.util.stream.Stream;
 
 import javax.persistence.Column;
 
-import kotlin.jvm.JvmClassMappingKt;
-import kotlin.reflect.KClass;
-import kotlin.reflect.KFunction;
-import kotlin.reflect.KParameter;
-import kotlin.reflect.full.KClasses;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -346,33 +340,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         // [#2989] [#2836] Records are mapped
         if (AbstractRecord.class.isAssignableFrom(type)) {
             delegate = (RecordMapper<R, E>) new RecordToRecordMapper();
-            return;
-        }
-
-        // [#7324] Map Kotlin data classes
-        KClass<? extends E> kotlinClass = JvmClassMappingKt.getKotlinClass(type);
-        if (kotlinClass.isData()) {
-            KFunction<? extends E> primaryConstructor = KClasses.getPrimaryConstructor(kotlinClass);
-            List<KParameter> parameters = primaryConstructor.getParameters();
-
-            if (parameters.size() != fields.length) {
-                throw new MappingException("Primary constructor of Kotlin data class " + type + " did not match row type " + rowType);
-            }
-
-            for (String fieldName : fieldNameStrings(fields)) {
-                String name = StringUtils.toCamelCaseLC(fieldName);
-                boolean found = false;
-                for (KParameter kParameter : parameters) {
-                    String parameterName = kParameter.getName();
-                    if (name.equals(parameterName)) {
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    throw new MappingException("Primary constructor of Kotlin data class " + type + " did not match row type " + rowType);
-                }
-            }
-            delegate = new KotlinDataClassMapper(primaryConstructor);
             return;
         }
 
@@ -1011,44 +978,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             catch (Exception e) {
                 throw new MappingException("An error ocurred when mapping record to " + type, e);
             }
-        }
-    }
-
-    private class KotlinDataClassMapper implements RecordMapper<R, E> {
-
-        private final KFunction<? extends E> constructor;
-        private final List<String> parameterNames;
-        private final Class[] parameterTypes;
-        private final Object[] parameterValues;
-
-        KotlinDataClassMapper(KFunction<? extends E> constructor) {
-            this.constructor = constructor;
-            int n = constructor.getParameters().size();
-            this.parameterNames = new ArrayList<>(n);
-            this.parameterValues = new Object[n];
-            this.parameterTypes = new Class[n];
-
-            List<KParameter> parameters = constructor.getParameters();
-            for (int i = 0; i < parameters.size(); i++) {
-                KParameter kParam = parameters.get(i);
-                parameterNames.add(kParam.getName());
-                parameterTypes[i] = JvmClassMappingKt.getJavaClass(((KClass<?>) kParam.getType().getClassifier()));
-            }
-        }
-
-        @Override
-        public E map(R record) {
-            for (int i = 0; i < fields.length; i++) {
-                String name = StringUtils.toCamelCaseLC(fields[i].getName());
-                int index = parameterNames.indexOf(name);
-                if (index < 0) {
-                    throw new MappingException("An error ocurred when mapping record to " + type);
-                }
-                parameterValues[index] = record.get(i);
-            }
-
-            Object[] converted = Convert.convert(parameterValues, parameterTypes);
-            return constructor.call(converted);
         }
     }
 

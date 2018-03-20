@@ -94,7 +94,10 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
         else
             result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
 
-        return result.withinGroupOrderBy(orderBy);
+        if (orderBy.isEmpty())
+            return result;
+        else
+            return result.withinGroupOrderBy(orderBy);
     }
 
 

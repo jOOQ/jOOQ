@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
@@ -124,7 +125,7 @@ class Function<T> extends AbstractField<T> implements
 
     private static final long                serialVersionUID      = 347252741712134044L;
     private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG     = EnumSet.of(HSQLDB, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT  = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT  = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG    = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_WINDOW_CLAUSE = EnumSet.of(MYSQL, POSTGRES);
 
@@ -314,8 +315,11 @@ class Function<T> extends AbstractField<T> implements
                .visit(withinGroupOrderBy);
 
         if (arguments.size() > 1)
-            ctx.sql(' ').visit(K_SEPARATOR).sql(' ')
-               .visit(arguments.get(1));
+            if (ctx.family() == SQLITE)
+                ctx.sql(", ").visit(arguments.get(1));
+            else
+                ctx.sql(' ').visit(K_SEPARATOR).sql(' ')
+                   .visit(arguments.get(1));
 
         ctx.sql(')');
     }

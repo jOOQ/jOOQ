@@ -48,6 +48,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -89,12 +90,26 @@ public class DDLDatabase extends H2Database {
 
     private Connection              connection;
     private DSLContext              ctx;
+    private Comparator<File>        fileComparator;
 
     @Override
     protected DSLContext create0() {
         if (connection == null) {
             String scripts = getProperties().getProperty("scripts");
             String encoding = getProperties().getProperty("encoding", "UTF-8");
+            String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
+
+            if ("alphanumeric".equals(sort))
+                fileComparator = new Comparator<File>() {
+                    @Override
+                    public int compare(File o1, File o2) {
+                        return o1.compareTo(o2);
+                    }
+                };
+            else if ("none".equals(sort))
+                fileComparator = null;
+            else
+                fileComparator = FileComparator.INSTANCE;
 
             if (isBlank(scripts)) {
                 scripts = "";
@@ -169,7 +184,8 @@ public class DDLDatabase extends H2Database {
             File[] files = file.listFiles();
 
             if (files != null) {
-                Arrays.sort(files, FileComparator.INSTANCE);
+                if (fileComparator != null)
+                    Arrays.sort(files, fileComparator);
 
                 for (File f : files)
                     load(encoding, f, pattern);

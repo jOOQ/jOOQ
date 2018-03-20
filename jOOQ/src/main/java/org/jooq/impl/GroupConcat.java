@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.inline;
 
 import java.util.Arrays;
@@ -93,6 +94,12 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
             result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(","));
         else
             result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
+
+
+
+
+
+
 
         if (orderBy.isEmpty())
             return result;

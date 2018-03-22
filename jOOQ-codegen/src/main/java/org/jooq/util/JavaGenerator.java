@@ -4737,7 +4737,8 @@ public class JavaGenerator extends AbstractGenerator {
                 !column.getType(resolver()).isIdentity())
                 out.tab(1).println("@%s", out.ref("javax.validation.constraints.NotNull"));
 
-            if ("java.lang.String".equals(getJavaType(type))) {
+            String javaType = getJavaType(type);
+            if ("java.lang.String".equals(javaType) || "byte[]".equals(javaType)) {
                 int length = type.getLength();
 
                 if (length > 0)

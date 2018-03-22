@@ -528,10 +528,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 }
             }
 
-            // [#6608] Propagating errors directly
-            catch (Error error) {
-                throw error;
-            }
+            // [#6608] [#7167] Errors are no longer handled differently
             catch (Throwable cause) {
                 if (cause instanceof Exception)
                     ctx.cause((Exception) cause);
@@ -551,12 +548,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 }
                 listeners.rollbackEnd(ctx);
 
-                if (cause instanceof RuntimeException) {
+                // [#6608] [#7167] Errors are no longer handled differently
+                if (cause instanceof RuntimeException)
                     throw (RuntimeException) cause;
-                }
-                else {
+                else if (cause instanceof Error)
+                    throw (Error) cause;
+                else
                     throw new DataAccessException("Rollback caused", cause);
-                }
             }
 
             return result;

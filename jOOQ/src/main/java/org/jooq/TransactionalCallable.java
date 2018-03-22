@@ -59,8 +59,8 @@ public interface TransactionalCallable<T> {
      * <p>
      * If this method completes normally, and this is not a nested transaction,
      * then the transaction will be committed. If this method completes with an
-     * exception, then the transaction is rolled back to the beginning of this
-     * <code>TransactionalCallable</code>.
+     * exception (any {@link Throwable}), then the transaction is rolled back to
+     * the beginning of this <code>TransactionalCallable</code>.
      *
      * @param configuration The <code>Configuration</code> in whose context the
      *            transaction is run.

@@ -62,8 +62,8 @@ public interface ContextTransactionalCallable<T> {
      * <p>
      * If this method completes normally, and this is not a nested transaction,
      * then the transaction will be committed. If this method completes with an
-     * exception, then the transaction is rolled back to the beginning of this
-     * <code>ContextTransactionalCallable</code>.
+     * exception (any {@link Throwable}), then the transaction is rolled back to
+     * the beginning of this <code>ContextTransactionalCallable</code>.
      *
      * @return The outcome of the transaction.
      * @throws Throwable Any exception that will cause a rollback of the code

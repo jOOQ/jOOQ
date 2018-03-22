@@ -111,6 +111,9 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeRoutines          = true;
     private boolean                                                          includeTriggerRoutines   = false;
     private boolean                                                          includePackages          = true;
+    private boolean                                                          includePackageRoutines   = true;
+    private boolean                                                          includePackageUDTs       = true;
+    private boolean                                                          includePackageConstants  = true;
     private boolean                                                          includeUDTs              = true;
     private boolean                                                          includeSequences         = true;
     private boolean                                                          includeIndexes           = true;
@@ -757,6 +760,36 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setIncludePackages(boolean includePackages) {
         this.includePackages = includePackages;
+    }
+
+    @Override
+    public final boolean getIncludePackageRoutines() {
+        return includePackageRoutines;
+    }
+
+    @Override
+    public final void setIncludePackageRoutines(boolean includePackageRoutines) {
+        this.includePackageRoutines = includePackageRoutines;
+    }
+
+    @Override
+    public final boolean getIncludePackageUDTs() {
+        return includePackageUDTs;
+    }
+
+    @Override
+    public final void setIncludePackageUDTs(boolean includePackageUDTs) {
+        this.includePackageUDTs = includePackageUDTs;
+    }
+
+    @Override
+    public final boolean getIncludePackageConstants() {
+        return includePackageConstants;
+    }
+
+    @Override
+    public final void setIncludePackageConstants(boolean includePackageConstants) {
+        this.includePackageConstants = includePackageConstants;
     }
 
     @Override

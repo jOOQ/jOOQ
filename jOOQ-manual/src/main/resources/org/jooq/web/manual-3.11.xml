@@ -15230,6 +15230,9 @@ result.forEach((Object[] entities) -> {
       <includeTables>true</includeTables>
       <includeRoutines>true</includeRoutines>
       <includePackages>true</includePackages>
+      <includePackageRoutines>true</includePackageRoutines>
+      <includePackageUDTs>true</includePackageUDTs>
+      <includePackageConstants>true</includePackageConstants>
       <includeUDTs>true</includeUDTs>
       <includeSequences>false</includeSequences>
       <includePrimaryKeys>false</includePrimaryKeys>
@@ -15249,6 +15252,9 @@ result.forEach((Object[] entities) -> {
       .withIncludeTables(true)
       .withIncludeRoutines(true)
       .withIncludePackages(true)
+      .withIncludePackageRoutines(true)
+      .withIncludePackageUDTs(true)
+      .withIncludePackageConstants(true)
       .withIncludeUDTs(true)
       .withIncludeSequences(false)
       .withIncludePrimaryKeys(false)
@@ -15265,6 +15271,9 @@ result.forEach((Object[] entities) -> {
       includeTables = true
       includeRoutines = true
       includePackages = true
+      includePackageRoutines = true
+      includePackageUDTs = true
+      includePackageConstants = true
       includeUDTs = true
       includeSequences = false
       includePrimaryKeys = false

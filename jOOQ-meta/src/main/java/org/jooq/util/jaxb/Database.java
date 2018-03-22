@@ -63,6 +63,12 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean includePackages = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includePackageRoutines = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean includePackageUDTs = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean includePackageConstants = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeUDTs = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeSequences = true;
@@ -413,6 +419,78 @@ public class Database implements Serializable
      */
     public void setIncludePackages(Boolean value) {
         this.includePackages = value;
+    }
+
+    /**
+     * This flag indicates whether routines contained in packages should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludePackageRoutines() {
+        return includePackageRoutines;
+    }
+
+    /**
+     * Sets the value of the includePackageRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludePackageRoutines(Boolean value) {
+        this.includePackageRoutines = value;
+    }
+
+    /**
+     * This flag indicates whether UDTs contained in packages should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludePackageUDTs() {
+        return includePackageUDTs;
+    }
+
+    /**
+     * Sets the value of the includePackageUDTs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludePackageUDTs(Boolean value) {
+        this.includePackageUDTs = value;
+    }
+
+    /**
+     * This flag indicates whether constants contained in packages should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludePackageConstants() {
+        return includePackageConstants;
+    }
+
+    /**
+     * Sets the value of the includePackageConstants property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludePackageConstants(Boolean value) {
+        this.includePackageConstants = value;
     }
 
     /**
@@ -1208,6 +1286,21 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withIncludePackageRoutines(Boolean value) {
+        setIncludePackageRoutines(value);
+        return this;
+    }
+
+    public Database withIncludePackageUDTs(Boolean value) {
+        setIncludePackageUDTs(value);
+        return this;
+    }
+
+    public Database withIncludePackageConstants(Boolean value) {
+        setIncludePackageConstants(value);
+        return this;
+    }
+
     public Database withIncludeUDTs(Boolean value) {
         setIncludeUDTs(value);
         return this;
@@ -1502,6 +1595,21 @@ public class Database implements Serializable
             sb.append(includePackages);
             sb.append("</includePackages>");
         }
+        if (includePackageRoutines!= null) {
+            sb.append("<includePackageRoutines>");
+            sb.append(includePackageRoutines);
+            sb.append("</includePackageRoutines>");
+        }
+        if (includePackageUDTs!= null) {
+            sb.append("<includePackageUDTs>");
+            sb.append(includePackageUDTs);
+            sb.append("</includePackageUDTs>");
+        }
+        if (includePackageConstants!= null) {
+            sb.append("<includePackageConstants>");
+            sb.append(includePackageConstants);
+            sb.append("</includePackageConstants>");
+        }
         if (includeUDTs!= null) {
             sb.append("<includeUDTs>");
             sb.append(includeUDTs);
@@ -1745,6 +1853,33 @@ public class Database implements Serializable
             }
         } else {
             if (!includePackages.equals(other.includePackages)) {
+                return false;
+            }
+        }
+        if (includePackageRoutines == null) {
+            if (other.includePackageRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!includePackageRoutines.equals(other.includePackageRoutines)) {
+                return false;
+            }
+        }
+        if (includePackageUDTs == null) {
+            if (other.includePackageUDTs!= null) {
+                return false;
+            }
+        } else {
+            if (!includePackageUDTs.equals(other.includePackageUDTs)) {
+                return false;
+            }
+        }
+        if (includePackageConstants == null) {
+            if (other.includePackageConstants!= null) {
+                return false;
+            }
+        } else {
+            if (!includePackageConstants.equals(other.includePackageConstants)) {
                 return false;
             }
         }
@@ -2034,6 +2169,9 @@ public class Database implements Serializable
         result = ((prime*result)+((includeRoutines == null)? 0 :includeRoutines.hashCode()));
         result = ((prime*result)+((includeTriggerRoutines == null)? 0 :includeTriggerRoutines.hashCode()));
         result = ((prime*result)+((includePackages == null)? 0 :includePackages.hashCode()));
+        result = ((prime*result)+((includePackageRoutines == null)? 0 :includePackageRoutines.hashCode()));
+        result = ((prime*result)+((includePackageUDTs == null)? 0 :includePackageUDTs.hashCode()));
+        result = ((prime*result)+((includePackageConstants == null)? 0 :includePackageConstants.hashCode()));
         result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
         result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
         result = ((prime*result)+((includeIndexes == null)? 0 :includeIndexes.hashCode()));

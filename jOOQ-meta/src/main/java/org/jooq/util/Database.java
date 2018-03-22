@@ -452,6 +452,36 @@ public interface Database  extends AutoCloseable  {
     boolean getIncludePackages();
 
     /**
+     * whether package routines should be included.
+     */
+    void setIncludePackageRoutines(boolean includePackageRoutines);
+
+    /**
+     * whether package routines should be included.
+     */
+    boolean getIncludePackageRoutines();
+
+    /**
+     * whether package UDTs should be included.
+     */
+    void setIncludePackageUDTs(boolean includePackageUDTs);
+
+    /**
+     * whether package UDTs should be included.
+     */
+    boolean getIncludePackageUDTs();
+
+    /**
+     * whether package constants should be included.
+     */
+    void setIncludePackageConstants(boolean includePackageConstants);
+
+    /**
+     * whether package constants should be included.
+     */
+    boolean getIncludePackageConstants();
+
+    /**
      * whether routines should be included.
      */
     void setIncludeRoutines(boolean includeRoutines);

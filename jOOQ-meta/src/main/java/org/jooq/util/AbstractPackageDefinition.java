@@ -72,11 +72,13 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();
 
-            try {
-                routines = getRoutines0();
-            }
-            catch (Exception e) {
-                log.error("Error while initialising package", e);
+            if (getDatabase().getIncludePackageRoutines()) {
+                try {
+                    routines = getRoutines0();
+                }
+                catch (Exception e) {
+                    log.error("Error while initialising package", e);
+                }
             }
         }
 
@@ -90,11 +92,13 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         if (constants == null) {
             constants = new ArrayList<AttributeDefinition>();
 
-            try {
-                constants = getConstants0();
-            }
-            catch (Exception e) {
-                log.error("Error while initialising package", e);
+            if (getDatabase().getIncludePackageConstants()) {
+                try {
+                    constants = getConstants0();
+                }
+                catch (Exception e) {
+                    log.error("Error while initialising package", e);
+                }
             }
         }
 

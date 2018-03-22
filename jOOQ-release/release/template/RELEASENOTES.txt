@@ -10,6 +10,40 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+
+Version 3.10.6 - March 20, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#7178 - Flawed implementation of SET SCHEMA for PostgreSQL
+#7212 - Upgrade Scala 2.10 dependency to 2.10.7
+#7220 - XMLDatabase should be lenient about XML namespace
+#7239 - Add DSL.now() as a synonym for DSL.currentTimestamp()
+#7249 - Add Javadoc to DSL.table(String) and Table.field(String) explaining the lack of field references in plain SQL tables
+#7278 - Add DSL.with(Name) and DSL.withRecursive(Name)
+#7281 - Add ConstraintForeignKeyReferencesStep[N].references(Table<?>)
+
+Bug Fixes
+---------
+#7181 - PostgresUtils.toPGXYZString() methods (and others) should avoid using String.replace() pre JDK 9
+#7184 - Cannot ORDER BY null in PostgreSQL, when Field.sortAsc() has no parameters
+#7190 - NullPointerException when DSL.name(Name...) contains a null Name argument
+#7192 - Using VARBINARY type with length on Oracle fails in DDL statements
+#7199 - DataType.nullable() and defaultValue() are not generated for enum types
+#7205 - DDLDatabase fails with order in Index statements
+#7207 - DDLDatabase reports DECIMAL(65535, 32767) for precision/scale-less decimals
+#7233 - Not all columns are fetched when plain SQL tables are mixed with generated ones
+#7244 - Vertica generated sequences are of type Byte instead of Long
+#7254 - Error when running "SELECT 1" query from AbstractDatabase in unsupported SQLDialect
+#7272 - Generator doesn't select appropriate DataType for Columns using an enum from another schema
+#7307 - Nondeterministic ordering in generated schemas in PostgreSQL
+#7316 - SQLDataType.CLOB translates to TINYTEXT rather than TEXT in MySQL
+#7332 - Workaround for regression in H2 generator where primary keys are no longer found
+
+
 Version 3.10.5 - February 15, 2018
 ================================================================================
 

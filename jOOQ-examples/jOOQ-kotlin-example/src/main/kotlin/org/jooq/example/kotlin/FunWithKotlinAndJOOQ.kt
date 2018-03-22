@@ -170,6 +170,16 @@ fun main(args: Array<String>) {
                println("Actor ID ${id - 3}: $first $last wrote ${-count} books")
            }
 
+        // jOOQ can fetch into Kotlin data classes by attribute name
+        header("Data classes")
+        ctx.select(b.TITLE, a.FIRST_NAME.concat(" ").concat(a.LAST_NAME).`as`("author"), one().`as`("dummy"))
+           .from(a)
+           .join(b).on(a.ID.eq(b.AUTHOR_ID))
+           .fetchInto(Book::class.java)
+           .forEach {
+               println("$it")
+           }
+
         // Don't we wish for multiline strings in Java?
         header("Using multiline strings with the plain SQL API")
         ctx.resultQuery("""
@@ -234,48 +244,5 @@ inline fun <F : Field<String>> F.ilike(field : Field<String>): Condition {
     return condition("{0} ilike {1}", this, field);
 }
 
-// Destructuring records into sets of local variables
-// Will be supported by jOOQ out-of-the-box:
-//   https://github.com/jOOQ/jOOQ/issues/6245
-// --------------------------------------------------
-operator fun <T, R : Record1<T>> R.component1() : T {
-    return this.value1();
-}
-
-operator fun <T, R : Record2<T, *>> R.component1() : T {
-    return this.value1();
-}
-
-operator fun <T, R : Record2<*, T>> R.component2() : T {
-    return this.value2();
-}
-
-operator fun <T, R : Record3<T, *, *>> R.component1() : T {
-    return this.value1();
-}
-
-operator fun <T, R : Record3<*, T, *>> R.component2() : T {
-    return this.value2();
-}
-
-operator fun <T, R : Record3<*, *, T>> R.component3() : T {
-    return this.value3();
-}
-
-operator fun <T, R : Record4<T, *, *, *>> R.component1() : T {
-    return this.value1();
-}
-
-operator fun <T, R : Record4<*, T, *, *>> R.component2() : T {
-    return this.value2();
-}
-
-operator fun <T, R : Record4<*, *, T, *>> R.component3() : T {
-    return this.value3();
-}
-
-operator fun <T, R : Record4<*, *, *, T>> R.component4() : T {
-    return this.value4();
-}
-
-// ... more methods ...
+// Kotlin data classes can be used with DefaultRecordMapper
+data class Book(val author: String, val title: String)

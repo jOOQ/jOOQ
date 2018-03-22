@@ -238,6 +238,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -513,36 +514,49 @@ final class Tools {
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char            ESCAPE                                       = '!';
+    static final char                        ESCAPE                         = '!';
+
+    /**
+     * A lock for the initialisation of other static members
+     */
+    private static final Object              initLock                       = new Object();
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static Boolean       isJPAAvailable;
+    private static volatile Boolean          isJPAAvailable;
+
+    /**
+     * Indicating whether Kotlin (<code>kotlin.*</code>) is on the classpath.
+     */
+    private static volatile Boolean          isKotlinAvailable;
+    private static volatile Reflect          ktJvmClassMapping;
+    private static volatile Reflect          ktKClasses;
+    private static volatile Reflect          ktKClass;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    private static int           maxConsumedExceptions                        = 256;
-    private static int           maxConsumedResults                           = 65536;
+    private static int                       maxConsumedExceptions          = 256;
+    private static int                       maxConsumedResults             = 65536;
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");
+    private static final Pattern             DASH_PATTERN                   = Pattern.compile("(-+)");
 
     /**
      * A pattern for the pipe line syntax
      */
-    private static final Pattern PIPE_PATTERN                                 = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
+    private static final Pattern             PIPE_PATTERN                   = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");
+    private static final Pattern             PLUS_PATTERN                   = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
      * All characters that are matched by Java's interpretation of \s.
@@ -2825,18 +2839,95 @@ final class Tools {
     /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
-    private static final boolean isJPAAvailable() {
+    static final boolean isJPAAvailable() {
         if (isJPAAvailable == null) {
-            try {
-                Class.forName(Column.class.getName());
-                isJPAAvailable = true;
-            }
-            catch (Throwable e) {
-                isJPAAvailable = false;
+            synchronized (initLock) {
+                if (isJPAAvailable == null) {
+                    try {
+                        Class.forName(Column.class.getName());
+                        isJPAAvailable = true;
+                    }
+                    catch (Throwable e) {
+                        isJPAAvailable = false;
+                    }
+                }
             }
         }
 
         return isJPAAvailable;
+    }
+
+    static final boolean isKotlinAvailable() {
+        if (isKotlinAvailable == null) {
+            synchronized (initLock) {
+                if (isKotlinAvailable == null) {
+                    try {
+                        if (ktJvmClassMapping() != null) {
+                            if (ktKClasses() != null) {
+                                isKotlinAvailable = true;
+                            }
+                            else {
+                                isKotlinAvailable = false;
+                                log.info("Kotlin is available, but not kotlin-reflect. Add the kotlin-reflect dependency to better use Kotlin features like data classes");
+                            }
+                        }
+                        else {
+                            isKotlinAvailable = false;
+                        }
+                    }
+                    catch (ReflectException e) {
+                        isKotlinAvailable = false;
+                    }
+                }
+            }
+        }
+
+        return isKotlinAvailable;
+    }
+
+    static final Reflect ktJvmClassMapping() {
+        if (ktJvmClassMapping == null) {
+            synchronized (initLock) {
+                if (ktJvmClassMapping == null) {
+                    try {
+                        ktJvmClassMapping = Reflect.on("kotlin.jvm.JvmClassMappingKt");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktJvmClassMapping;
+    }
+
+    static final Reflect ktKClasses() {
+        if (ktKClasses == null) {
+            synchronized (initLock) {
+                if (ktKClasses == null) {
+                    try {
+                        ktKClasses = Reflect.on("kotlin.reflect.full.KClasses");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktKClasses;
+    }
+
+    static final Reflect ktKClass() {
+        if (ktKClass == null) {
+            synchronized (initLock) {
+                if (ktKClass == null) {
+                    try {
+                        ktKClass = Reflect.on("kotlin.reflect.KClass");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktKClass;
     }
 
     /**

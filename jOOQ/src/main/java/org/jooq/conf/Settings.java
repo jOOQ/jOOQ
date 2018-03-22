@@ -115,6 +115,9 @@ public class Settings
     @XmlElement(defaultValue = "IGNORE_ON_FAILURE")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.IGNORE_ON_FAILURE;
+    @XmlElement(defaultValue = "FAIL")
+    @XmlSchemaType(name = "string")
+    protected ParseUnknownFunctions parseUnknownFunctions = ParseUnknownFunctions.FAIL;
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -1019,6 +1022,30 @@ public class Settings
         this.parseWithMetaLookups = value;
     }
 
+    /**
+     * [#7344] Whether the parser should accept unknown functions.
+     *
+     * @return
+     *     possible object is
+     *     {@link ParseUnknownFunctions }
+     *
+     */
+    public ParseUnknownFunctions getParseUnknownFunctions() {
+        return parseUnknownFunctions;
+    }
+
+    /**
+     * Sets the value of the parseUnknownFunctions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseUnknownFunctions }
+     *
+     */
+    public void setParseUnknownFunctions(ParseUnknownFunctions value) {
+        this.parseUnknownFunctions = value;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -1196,6 +1223,11 @@ public class Settings
 
     public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
         setParseWithMetaLookups(value);
+        return this;
+    }
+
+    public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
+        setParseUnknownFunctions(value);
         return this;
     }
 
@@ -1381,6 +1413,11 @@ public class Settings
             sb.append("<parseWithMetaLookups>");
             sb.append(parseWithMetaLookups);
             sb.append("</parseWithMetaLookups>");
+        }
+        if (parseUnknownFunctions!= null) {
+            sb.append("<parseUnknownFunctions>");
+            sb.append(parseUnknownFunctions);
+            sb.append("</parseUnknownFunctions>");
         }
         return sb.toString();
     }
@@ -1721,6 +1758,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseUnknownFunctions == null) {
+            if (other.parseUnknownFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!parseUnknownFunctions.equals(other.parseUnknownFunctions)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -1764,6 +1810,7 @@ public class Settings
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
+        result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));
         return result;
     }
 

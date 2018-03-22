@@ -194,6 +194,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="IGNORE_ON_FAILURE">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="parseUnknownFunctions" type="jooq-runtime:ParseUnknownFunctions" minOccurs="0" maxOccurs="1" default="FAIL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7344] Whether the parser should accept unknown functions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -468,6 +472,17 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Meta lookups are active in parser and throw exceptions on failure -->
       <enumeration value="THROW_ON_FAILURE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseUnknownFunctions">
+    <restriction base="string">
+
+      <!-- Functions have to be known by the parser, or by the catalog -->
+      <enumeration value="FAIL"/>
+
+      <!-- Unknown functions (parser or catalog) will be passed on as plain SQL -->
+      <enumeration value="IGNORE"/>
     </restriction>
   </simpleType>
 </schema>

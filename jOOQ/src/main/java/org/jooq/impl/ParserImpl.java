@@ -90,6 +90,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.floor;
 import static org.jooq.impl.DSL.foreignKey;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.grouping;
@@ -375,6 +376,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.tools.reflect.Reflect;
 
@@ -6187,7 +6189,20 @@ final class ParserImpl implements Parser {
                 return sequence(name.qualifier()).currval();
         }
 
-        return field(name);
+        if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && parseIf(ctx, '(')) {
+            List<Field<?>> arguments = new ArrayList<Field<?>>();
+
+            do {
+                arguments.add(parseField(ctx));
+            }
+            while (parseIf(ctx, ','));
+
+            parse(ctx, ')');
+            return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
+        }
+        else {
+            return field(name);
+        }
     }
 
     private static final TableField<?, ?> parseFieldName(ParserContext ctx) {

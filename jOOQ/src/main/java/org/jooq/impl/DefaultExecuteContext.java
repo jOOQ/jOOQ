@@ -103,6 +103,7 @@ class DefaultExecuteContext implements ExecuteContext {
     // Transient attributes (created afresh per execution)
     private transient ConnectionProvider           connectionProvider;
     private transient Connection                   connection;
+    private transient SettingsEnabledConnection    wrappedConnection;
     private transient PreparedStatement            statement;
     private transient int                          statementExecutionCount;
     private transient ResultSet                    resultSet;
@@ -399,7 +400,11 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     private DefaultExecuteContext(Configuration configuration, Query query, Query[] batchQueries, Routine<?> routine) {
-        this.configuration = configuration;
+
+        // [#4277] The ExecuteContext's Configuration will always return the same Connection,
+        //         e.g. when running statements from sub-ExecuteContexts
+        this.connectionProvider = configuration.connectionProvider();
+        this.configuration = configuration.derive(new ExecuteContextConnectionProvider());
         this.data = new DataMap();
         this.query = query;
         this.routine = routine;
@@ -591,7 +596,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final DSLContext dsl() {
-        return configuration.dsl();
+        return configuration().dsl();
     }
 
     @Override
@@ -620,13 +625,10 @@ class DefaultExecuteContext implements ExecuteContext {
         // single method. It can thus be guaranteed, that every connection is
         // wrapped by a ConnectionProxy, transparently, in order to implement
         // Settings.getStatementType() correctly.
+        if (wrappedConnection == null && connectionProvider != null)
+            connection(connectionProvider, connectionProvider.acquire());
 
-        ConnectionProvider provider = connectionProvider != null ? connectionProvider : configuration.connectionProvider();
-        if (connection == null && provider != null) {
-            connection(provider, provider.acquire());
-        }
-
-        return connection;
+        return wrappedConnection;
     }
 
     /**
@@ -639,8 +641,13 @@ class DefaultExecuteContext implements ExecuteContext {
     final void connection(ConnectionProvider provider, Connection c) {
         if (c != null) {
             LOCAL_CONNECTION.set(c);
-            connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
+            connection = c;
+            wrappedConnection = wrapConnection(provider, c);
         }
+    }
+
+    private final SettingsEnabledConnection wrapConnection(ConnectionProvider provider, Connection c) {
+        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
     }
 
     final void incrementStatementExecutionCount() {
@@ -748,5 +755,23 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final void serverOutput(String[] output) {
         this.serverOutput = output;
+    }
+
+    private final class ExecuteContextConnectionProvider implements ConnectionProvider {
+
+        @Override
+        public final Connection acquire() {
+
+            // [#4277] Connections are acquired lazily in parent ExecuteContext. A child ExecuteContext
+            // may well need a Connection earlier than the parent, in case of which acquisition is
+            //  forced in the parent as well.
+            if (connection == null)
+                DefaultExecuteContext.this.connection();
+
+            return wrapConnection(this, connection);
+        }
+
+        @Override
+        public final void release(Connection c) {}
     }
 }

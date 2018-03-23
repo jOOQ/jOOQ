@@ -739,7 +739,7 @@ final class ParserImpl implements Parser {
             result = parseInsert(ctx, with);
         else if (!parseSelect && peekKeyword(ctx, "MERGE"))
             result = parseMerge(ctx, with);
-        else if (peekKeyword(ctx, "SELECT"))
+        else if (peekKeyword(ctx, "SELECT", false, true, false))
             result = parseSelect(ctx, null, with);
         else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
             result = parseUpdate(ctx, with);

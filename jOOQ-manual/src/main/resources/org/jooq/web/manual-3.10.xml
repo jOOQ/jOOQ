@@ -16348,7 +16348,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                     <li><reference class="javax.persistence.Table"/></li>
                                                     <li><reference class="javax.persistence.UniqueConstraint"/></li>
                                                 </ul>
-                                                While jOOQ generated code cannot really be used as full-fledged entities (use e.g. Hibernate or EclipseLink to generate such entities), this meta information can still be useful as documentation on your generated code. Some of the annotations (e.g. <code>@Column</code></code>) can be used by the <reference class="org.jooq.impl.DefaultRecordMapper"/> for mapping records to POJOs.</li>
+                                                While jOOQ generated code cannot really be used as full-fledged entities (use e.g. Hibernate or EclipseLink to generate such entities), this meta information can still be useful as documentation on your generated code. Some of the annotations (e.g. <code>@Column</code>) can be used by the <reference class="org.jooq.impl.DefaultRecordMapper"/> for mapping records to POJOs.</li>
                                                 <li><strong>Validation annotations:</strong> A set of Bean Validation API annotations can be added to the generated code to convey type information. They include:
                                                 <ul>
                                                     <li><reference class="javax.validation.constraints.NotNull"/></li>

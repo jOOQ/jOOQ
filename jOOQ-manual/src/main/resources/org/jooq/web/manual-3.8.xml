@@ -2892,7 +2892,7 @@ fun main(args: Array<String>) {
 						With this philosophy in mind, SQL building is the main feature of jOOQ. All other features (such as <reference id="sql-execution" title="SQL execution"/> and <reference id="code-generation" title="code generation"/>) are mere convenience built on top of jOOQ's SQL building capabilities.
 					</p>
 					<p>
-						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's sections about <reference id="dsl-mapping-rules" title="SQL to DSL mapping rules"/> as well as <reference id="reference-bnf-notation" title="jOOQ's BNF notation"/>
+						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's sections about <reference id="dsl-mapping-rules" title="SQL to DSL mapping rules"/>.
 					</p>
 				</html></content>
 
@@ -4090,7 +4090,7 @@ create.select()
 
 									<h3>jOOQ as an internal domain specific language in Java (a.k.a. the DSL API)</h3>
 									<p>
-										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
+										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <a href="https://blog.jooq.org/2012/01/05/the-java-fluent-api-designer-crash-course/">BNF notation</a> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
 									</p>
 
 </html><java><![CDATA[DSLContext create = DSL.using(connection, dialect);
@@ -16911,14 +16911,7 @@ FROM t</sql><html>
                         </html></content>
                     </section>
 
-					<section id="reference-bnf-notation">
-						<title>jOOQ's BNF pseudo-notation</title>
-						<content><html>
-							<p>
-								This chapter will soon contain an overview over jOOQ's API using a pseudo BNF notation.
-							</p>
-						</html></content>
-					</section>
+                    <redirect id="reference-bnf-notation" redirect-to="manual"/>
 
 					<section id="quality-assurance">
 						<title>Quality Assurance</title>

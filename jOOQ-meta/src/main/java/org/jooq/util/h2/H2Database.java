@@ -48,6 +48,7 @@ import static org.jooq.util.h2.information_schema.tables.Sequences.SEQUENCES;
 import static org.jooq.util.h2.information_schema.tables.Tables.TABLES;
 import static org.jooq.util.h2.information_schema.tables.TypeInfo.TYPE_INFO;
 
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
+import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.AbstractIndexDefinition;
 import org.jooq.util.ArrayDefinition;
@@ -69,6 +71,7 @@ import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultIndexColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -463,6 +466,61 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+
+        Result<Record4<String, String, String, String>> records = create()
+            .select(
+                Columns.TABLE_SCHEMA,
+                Columns.TABLE_NAME,
+                Columns.COLUMN_NAME,
+                Columns.COLUMN_TYPE)
+            .from(COLUMNS)
+            .where(
+                Columns.COLUMN_TYPE.like("ENUM(%)%").and(
+                Columns.TABLE_SCHEMA.in(getInputSchemata())))
+            .orderBy(
+                Columns.TABLE_SCHEMA.asc(),
+                Columns.TABLE_NAME.asc(),
+                Columns.COLUMN_NAME.asc())
+            .fetch();
+
+        for (Record record : records) {
+            SchemaDefinition schema = getSchema(record.get(Columns.TABLE_SCHEMA));
+
+            String table = record.get(Columns.TABLE_NAME);
+            String column = record.get(Columns.COLUMN_NAME);
+            String name = table + "_" + column;
+            String columnType = record.get(Columns.COLUMN_TYPE);
+
+            // [#1237] Don't generate enum classes for columns in MySQL tables
+            // that are excluded from code generation
+            TableDefinition tableDefinition = getTable(schema, table);
+            if (tableDefinition != null) {
+                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
+
+                if (columnDefinition != null) {
+
+                    // [#1137] Avoid generating enum classes for enum types that
+                    // are explicitly forced to another type
+                    if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
+
+                        CSVReader reader = new CSVReader(
+                            new StringReader(columnType.replaceAll("(^enum\\()|(\\).*$)", ""))
+                           ,','  // Separator
+                           ,'\'' // Quote character
+                           ,true // Strict quotes
+                        );
+
+                        for (String string : reader.next()) {
+                            definition.addLiteral(string);
+                        }
+
+                        result.add(definition);
+                    }
+                }
+            }
+        }
+
         return result;
     }
 

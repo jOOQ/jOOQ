@@ -41,6 +41,8 @@ package org.jooq.util;
 import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -80,7 +82,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         this.definedType = definedType;
     }
 
-    private static String protectName(Definition container, String name, int position) {
+    private static final String protectName(Definition container, String name, int position) {
         if (name == null) {
 
             // [#6654] Specific error messages per type
@@ -139,8 +141,19 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         return definedType;
     }
 
+    static final DataType<?> getDataType(Database db, String t, int p, int s) {
+        if (db.getForceIntegerTypesOnZeroScaleDecimals())
+            return DefaultDataType.getDataType(db.getDialect(), t, p, s);
+
+        DataType<?> result = DefaultDataType.getDataType(db.getDialect(), t);
+        if (result.getType() == BigDecimal.class && s == 0)
+            DefaultDataType.getDataType(db.getDialect(), BigInteger.class);
+
+        return result;
+    }
+
     @SuppressWarnings("deprecation")
-    static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
+    static final DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
 
@@ -151,14 +164,14 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             DataType<?> dataType = null;
 
             try {
-                dataType = DefaultDataType.getDataType(db.getDialect(), result.getType(), 0, 0);
+                dataType = getDataType(db, result.getType(), 0, 0);
             } catch (SQLDialectNotSupportedException ignore) {}
 
             if (dataType != null) {
 
                 // [#5239] [#5762] [#6453] Don't rely on getSQLType()
                 if (SQLDataType.DATE.equals(dataType.getSQLDataType())) {
-                    DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
+                    DataType<?> forcedDataType = getDataType(db, SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
                     result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.getDefaultValue(), (Name) null, null, DateAsTimestampBinding.class.getName());
                 }
             }
@@ -187,8 +200,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                         tType = resolver.resolve(definedType);
                     else
                         try {
-                            tType = DefaultDataType
-                                .getDataType(db.getDialect(), definedType.getType(), definedType.getPrecision(), definedType.getScale())
+                            tType = getDataType(db, definedType.getType(), definedType.getPrecision(), definedType.getScale())
                                 .getType()
                                 .getName();
                         }
@@ -229,7 +241,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 }
 
                 try {
-                    forcedDataType = DefaultDataType.getDataType(db.getDialect(), uType, p, s);
+                    forcedDataType = getDataType(db, uType, p, s);
                 } catch (SQLDialectNotSupportedException ignore) {}
 
                 // [#677] SQLDataType matches are actual type-rewrites
@@ -265,7 +277,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     }
 
     @SuppressWarnings("deprecation")
-    static CustomType customType(Database db, ForcedType forcedType) {
+    static final CustomType customType(Database db, ForcedType forcedType) {
         String name = forcedType.getName();
 
         // [#4598] Legacy use-case where a <forcedType/> referes to a <customType/>

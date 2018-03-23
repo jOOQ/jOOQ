@@ -672,6 +672,10 @@ This comparator can be used to influence the order of any object that is produce
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure type overrides for generated fields, attributes, sequences, parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="forceIntegerTypesOnZeroScaleDecimals" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether table valued functions should be reported as tables.
 <p>

@@ -46,6 +46,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
 import static org.jooq.util.AbstractGenerator.Language.SCALA;
+import static org.jooq.util.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.util.GenerationUtil.convertToIdentifier;
 
 import java.io.File;
@@ -5937,7 +5938,7 @@ public class JavaGenerator extends AbstractGenerator {
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
-                Class<?> clazz = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).getType();
+                Class<?> clazz = mapJavaTimeTypes(getDataType(db, t, p, s)).getType();
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
                 else
@@ -5999,7 +6000,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).nullable(n).identity(i);
+                dataType = mapJavaTimeTypes(getDataType(db, t, p, s)).nullable(n).identity(i);
 
                 if (d != null)
                     dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
@@ -6102,7 +6103,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     sb.append(typeName);
                     if (!type1.equals(type2)) {
-                        Class<?> clazz = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).getType();
+                        Class<?> clazz = mapJavaTimeTypes(getDataType(db, t, p, s)).getType();
 
                         sb.append(".asNumberDataType(");
                         sb.append(classOf(clazz.getCanonicalName()));

@@ -16649,6 +16649,60 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
                                         </html></content>
                                     </section>
+
+                                    <section id="codegen-generate-zero-scale-decimals">
+                                        <title>Zero Scale Decimal Types</title>
+                                        <content><html>
+                                            <p>
+                                                A zero-scale decimal, such as <code>DECIMAL(10)</code> or <code>NUMBER(10, 0)</code> is really an integer type with a decimal precision rather than a binary / bitwise precision. Some databases (e.g. Oracle) do not support actual integer types at all, only decimal types. Historically, jOOQ generates the most appropriate integer wrapper type instead of <code>BigDecimal</code> or <code>BigInteger</code>:
+                                            </p>
+
+                                            <ul>
+                                                <li><code>NUMBER(2, 0)</code> and less: <reference class="java.lang.Byte"/></li>
+                                                <li><code>NUMBER(4, 0)</code> and less: <reference class="java.lang.Short"/></li>
+                                                <li><code>NUMBER(9, 0)</code> and less: <reference class="java.lang.Integer"/></li>
+                                                <li><code>NUMBER(19, 0)</code> and less: <reference class="java.lang.Long"/></li>
+                                            </ul>
+
+                                            <p>
+                                                If this is not a desireable default, it can be deactivated either explicitly on a per-column basis using <reference id="codegen-database-forced-types" title="forced types"/>, or globally using the following flag:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <generate>
+      <forceIntegerTypesOnZeroScaleDecimals>true</forceIntegerTypesOnZeroScaleDecimals>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+      .withForceIntegerTypesOnZeroScaleDecimals(true))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    generate {
+      forceIntegerTypesOnZeroScaleDecimals = true
+    }
+  }
+}]]></java><html>
+
+                                        </html></content>
+                                    </section>
                                 </sections>
                             </section>
 

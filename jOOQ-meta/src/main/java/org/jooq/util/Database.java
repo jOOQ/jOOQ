@@ -507,6 +507,18 @@ public interface Database  extends AutoCloseable  {
     void setIncludeTables(boolean includeTables);
 
     /**
+     * Whether zero-scale decimal types should be treated as their most
+     * appropriate, corresponding integer type.
+     */
+    void setForceIntegerTypesOnZeroScaleDecimals(boolean forceIntegerTypesOnZeroScaleDecimals);
+
+    /**
+     * Whether zero-scale decimal types should be treated as their most
+     * appropriate, corresponding integer type.
+     */
+    boolean getForceIntegerTypesOnZeroScaleDecimals();
+
+    /**
      * Whether tables (and views) should be included.
      */
     boolean getIncludeTables();

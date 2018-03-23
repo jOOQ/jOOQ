@@ -355,20 +355,15 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     private static final int precision0(Class<?> type, int precision) {
-        if (precision == 0) {
-            if (type == Long.class || type == ULong.class) {
+        if (precision == 0)
+            if (type == Long.class || type == ULong.class)
                 precision = LONG_PRECISION;
-            }
-            else if (type == Integer.class  || type == UInteger.class) {
+            else if (type == Integer.class  || type == UInteger.class)
                 precision = INTEGER_PRECISION;
-            }
-            else if (type == Short.class || type == UShort.class) {
+            else if (type == Short.class || type == UShort.class)
                 precision = SHORT_PRECISION;
-            }
-            else if (type == Byte.class || type == UByte.class) {
+            else if (type == Byte.class || type == UByte.class)
                 precision = BYTE_PRECISION;
-            }
-        }
 
         return precision;
     }
@@ -779,15 +774,15 @@ public class DefaultDataType<T> implements DataType<T> {
         return Convert.convert(objects, uType);
     }
 
-    public static DataType<Object> getDefaultDataType(String typeName) {
+    public static final DataType<Object> getDefaultDataType(String typeName) {
         return new DefaultDataType<Object>(SQLDialect.DEFAULT, Object.class, typeName, typeName);
     }
 
-    public static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
+    public static final DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
         return new DefaultDataType<Object>(dialect, Object.class, typeName, typeName);
     }
 
-    public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
+    public static final DataType<?> getDataType(SQLDialect dialect, String typeName) {
         int ordinal = dialect.ordinal();
         String upper = typeName.toUpperCase();
         String normalised = typeName;
@@ -819,11 +814,11 @@ public class DefaultDataType<T> implements DataType<T> {
         return result;
     }
 
-    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
+    public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
         return getDataType(dialect, type, null);
     }
 
-    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
+    public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
 
         // Treat primitive types the same way as their respective wrapper types
         type = (Class<T>) wrapper(type);
@@ -1008,19 +1003,18 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * @return The type name without all special characters and white spaces
      */
-    public static String normalise(String typeName) {
+    public static final String normalise(String typeName) {
         return NORMALISE_PATTERN.matcher(typeName.toUpperCase()).replaceAll("");
     }
 
     /**
      * Convert a type name (using precision and scale) into a Java class
      */
-    public static DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+    public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
         DataType<?> result = DefaultDataType.getDataType(dialect, t);
 
-        if (result.getType() == BigDecimal.class) {
+        if (result.getType() == BigDecimal.class)
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
-        }
 
         return result;
     }
@@ -1028,45 +1022,40 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * Convert a type name (using precision and scale) into a Java class
      */
-    public static Class<?> getType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+    public static final Class<?> getType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
         return getDataType(dialect, t, p, s).getType();
     }
 
     /**
      * Get the most suitable Java class for a given precision and scale
      */
-    private static Class<?> getNumericClass(int precision, int scale) {
+    private static final Class<?> getNumericClass(int precision, int scale) {
 
         // Integer numbers
-        if (scale == 0 && precision != 0) {
-            if (precision < BYTE_PRECISION) {
+        if (scale == 0 && precision != 0)
+            if (precision < BYTE_PRECISION)
                 return Byte.class;
-            }
-            if (precision < SHORT_PRECISION) {
+            else if (precision < SHORT_PRECISION)
                 return Short.class;
-            }
-            if (precision < INTEGER_PRECISION) {
+            else if (precision < INTEGER_PRECISION)
                 return Integer.class;
-            }
-            if (precision < LONG_PRECISION) {
+            else if (precision < LONG_PRECISION)
                 return Long.class;
-            }
 
             // Default integer number
-            return BigInteger.class;
-        }
+            else
+                return BigInteger.class;
 
         // Real numbers should not be represented as float or double
-        else {
+        else
             return BigDecimal.class;
-        }
     }
 
-    static Collection<Class<?>> types() {
+    static final Collection<Class<?>> types() {
         return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.keySet());
     }
 
-    static Collection<DataType<?>> dataTypes() {
+    static final Collection<DataType<?>> dataTypes() {
         return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.values());
     }
 }

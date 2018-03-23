@@ -479,6 +479,7 @@ public class GenerationTool {
             database.setIncludeTriggerRoutines(TRUE.equals(d.isIncludeTriggerRoutines()));
             database.setIncludeUDTs(!FALSE.equals(d.isIncludeUDTs()));
             database.setIncludeUniqueKeys(!FALSE.equals(d.isIncludeUniqueKeys()));
+            database.setForceIntegerTypesOnZeroScaleDecimals(!FALSE.equals(d.isForceIntegerTypesOnZeroScaleDecimals()));
             database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
             database.setSyntheticPrimaryKeys(new String[] { defaultString(d.getSyntheticPrimaryKeys()) });

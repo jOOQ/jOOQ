@@ -105,21 +105,22 @@ public abstract class AbstractDatabase implements Database {
     private List<RegexFlag>                                                  regexFlags;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
-    private String[]                                                         includes                 = { ".*" };
+    private String[]                                                         includes                             = { ".*" };
     private boolean                                                          includeExcludeColumns;
-    private boolean                                                          includeTables            = true;
-    private boolean                                                          includeRoutines          = true;
-    private boolean                                                          includeTriggerRoutines   = false;
-    private boolean                                                          includePackages          = true;
-    private boolean                                                          includePackageRoutines   = true;
-    private boolean                                                          includePackageUDTs       = true;
-    private boolean                                                          includePackageConstants  = true;
-    private boolean                                                          includeUDTs              = true;
-    private boolean                                                          includeSequences         = true;
-    private boolean                                                          includeIndexes           = true;
-    private boolean                                                          includePrimaryKeys       = true;
-    private boolean                                                          includeUniqueKeys        = true;
-    private boolean                                                          includeForeignKeys       = true;
+    private boolean                                                          includeTables                        = true;
+    private boolean                                                          includeRoutines                      = true;
+    private boolean                                                          includeTriggerRoutines               = false;
+    private boolean                                                          includePackages                      = true;
+    private boolean                                                          includePackageRoutines               = true;
+    private boolean                                                          includePackageUDTs                   = true;
+    private boolean                                                          includePackageConstants              = true;
+    private boolean                                                          includeUDTs                          = true;
+    private boolean                                                          includeSequences                     = true;
+    private boolean                                                          includeIndexes                       = true;
+    private boolean                                                          includePrimaryKeys                   = true;
+    private boolean                                                          includeUniqueKeys                    = true;
+    private boolean                                                          includeForeignKeys                   = true;
+    private boolean                                                          forceIntegerTypesOnZeroScaleDecimals = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private String[]                                                         syntheticPrimaryKeys;
@@ -128,8 +129,8 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private List<Catalog>                                                    configuredCatalogs       = new ArrayList<Catalog>();
-    private List<Schema>                                                     configuredSchemata       = new ArrayList<Schema>();
+    private List<Catalog>                                                    configuredCatalogs                   = new ArrayList<Catalog>();
+    private List<Schema>                                                     configuredSchemata                   = new ArrayList<Schema>();
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
@@ -160,8 +161,8 @@ public abstract class AbstractDatabase implements Database {
     private List<RoutineDefinition>                                          routines;
     private List<PackageDefinition>                                          packages;
     private Relations                                                        relations;
-    private boolean                                                          includeRelations     = true;
-    private boolean                                                          tableValuedFunctions = true;
+    private boolean                                                          includeRelations                     = true;
+    private boolean                                                          tableValuedFunctions                 = true;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
@@ -1125,6 +1126,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean includeRelations() {
         return includeRelations;
+    }
+
+    @Override
+    public void setForceIntegerTypesOnZeroScaleDecimals(boolean forceIntegerTypesOnZeroScaleDecimals) {
+        this.forceIntegerTypesOnZeroScaleDecimals = forceIntegerTypesOnZeroScaleDecimals;
+    }
+
+    @Override
+    public boolean getForceIntegerTypesOnZeroScaleDecimals() {
+        return forceIntegerTypesOnZeroScaleDecimals;
     }
 
     @Override

@@ -124,6 +124,8 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String orderProvider = "";
+    @XmlElement(defaultValue = "true")
+    protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
@@ -1133,6 +1135,30 @@ public class Database implements Serializable
     }
 
     /**
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isForceIntegerTypesOnZeroScaleDecimals() {
+        return forceIntegerTypesOnZeroScaleDecimals;
+    }
+
+    /**
+     * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
+        this.forceIntegerTypesOnZeroScaleDecimals = value;
+    }
+
+    /**
      * Whether table valued functions should be reported as tables.
      * <p>
      * If this is deactivated, such functions are not generated as tables, but
@@ -1413,6 +1439,11 @@ public class Database implements Serializable
 
     public Database withOrderProvider(String value) {
         setOrderProvider(value);
+        return this;
+    }
+
+    public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
+        setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
     }
 
@@ -1724,6 +1755,11 @@ public class Database implements Serializable
             sb.append("<orderProvider>");
             sb.append(orderProvider);
             sb.append("</orderProvider>");
+        }
+        if (forceIntegerTypesOnZeroScaleDecimals!= null) {
+            sb.append("<forceIntegerTypesOnZeroScaleDecimals>");
+            sb.append(forceIntegerTypesOnZeroScaleDecimals);
+            sb.append("</forceIntegerTypesOnZeroScaleDecimals>");
         }
         if (tableValuedFunctions!= null) {
             sb.append("<tableValuedFunctions>");
@@ -2090,6 +2126,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (forceIntegerTypesOnZeroScaleDecimals == null) {
+            if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
+                return false;
+            }
+        } else {
+            if (!forceIntegerTypesOnZeroScaleDecimals.equals(other.forceIntegerTypesOnZeroScaleDecimals)) {
+                return false;
+            }
+        }
         if (tableValuedFunctions == null) {
             if (other.tableValuedFunctions!= null) {
                 return false;
@@ -2195,6 +2240,7 @@ public class Database implements Serializable
         result = ((prime*result)+((schemaVersionProvider == null)? 0 :schemaVersionProvider.hashCode()));
         result = ((prime*result)+((catalogVersionProvider == null)? 0 :catalogVersionProvider.hashCode()));
         result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
+        result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));

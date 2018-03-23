@@ -17222,7 +17222,7 @@ implements IBook {
 								<li><strong>relations</strong>: This is needed as a prerequisite for navigation methods</li>
 								<li><strong>daos</strong>: Records are a pre-requisite for DAOs. If DAOs are generated, records are generated as well</li>
 								<li><strong>interfaces</strong>: If interfaces are generated, records will implement them</li>
-								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
+								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records (<reference id="codegen-generate-annotations" title="details here"/>)</li>
 							</ul>
 
 							<h3>Flags controlling record generation</h3>
@@ -17284,8 +17284,8 @@ public class Book implements java.io.Serializable
 								<li><strong>interfaces</strong>: If interfaces are generated, POJOs will implement them</li>
 								<li><strong>immutablePojos</strong>: Immutable POJOs have final members and no setters. All members must be passed to the constructor</li>
 								<li><strong>daos</strong>: POJOs are a pre-requisite for DAOs. If DAOs are generated, POJOs are generated as well</li>
-								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
-								<li><strong>validationAnnotations</strong>: JSR-303 validation annotations are used on generated records</li>
+								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records (<reference id="codegen-generate-annotations" title="details here"/>)</li>
+								<li><strong>validationAnnotations</strong>: JSR-303 validation annotations are used on generated records (<reference id="codegen-generate-annotations" title="details here"/>)</li>
 							</ul>
 
 							<h3>Flags controlling POJO generation</h3>

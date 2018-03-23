@@ -16433,7 +16433,86 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                 </html></content>
 
                                 <sections>
-                                    <section id="javaTimeTypes">
+                                    <section id="codegen-generate-globals">
+                                        <title>Global Artefacts</title>
+                                        <content><html>
+                                            <p>
+                                                For convenience, jOOQ generates a set of <reference id="codegen-globals" title="global artefacts"/>, which group static constants of the same type in a well-known class. The following set of flags allows for turning off the generation of these artefacts, individually:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <generate>
+      <!-- This overrides all the other individual flags -->
+      <globalObjectReferences>true</globalObjectReferences>
+
+      <!-- Individual flags for each object type -->
+      <globalCatalogReferences>true</globalCatalogReferences>
+      <globalSchemaReferences>true</globalSchemaReferences>
+      <globalTableReferences>true</globalTableReferences>
+      <globalSequenceReferences>true</globalSequenceReferences>
+      <globalUDTReferences>true</globalUDTReferences>
+      <globalRoutineReferences>true</globalRoutineReferences>
+      <globalQueueReferences>true</globalQueueReferences>
+      <globalLinkReferences>true</globalLinkReferences>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+
+      // This overrides all the other individual flags
+      .withGlobalObjectReferences(true)
+
+      // Individual flags for each object type
+      .withGlobalCatalogReferences(true)
+      .withGlobalSchemaReferences(true)
+      .withGlobalTableReferences(true)
+      .withGlobalSequenceReferences(true)
+      .withGlobalUDTReferences(true)
+      .withGlobalRoutineReferences(true)
+      .withGlobalQueueReferences(true)
+      .withGlobalLinkReferences(true))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    generate {
+
+      // This overrides all the other individual flags
+      globalObjectReferences = true
+
+      // Individual flags for each object type
+      globalCatalogReferences = true
+      globalSchemaReferences = true
+      globalTableReferences = true
+      globalSequenceReferences = true
+      globalUDTReferences = true
+      globalRoutineReferences = true
+      globalQueueReferences = true
+      globalLinkReferences = true
+    }
+  }
+}]]></java><html>
+
+                                        </html></content>
+                                    </section>
+
+                                    <section id="codegen-generate-java-time-types">
+                                        <title>Java Time Types</title>
                                         <content><html>
                                             <p>
                                                 With jOOQ 3.9, support for JSR-310 <code>java.time</code> types has been added to the jOOQ API and to the code generator. Users of Java 8 can now specify that the jOOQ code generator should prefer JSR 310 types over their equivalent JDBC types. This includes:
@@ -17128,6 +17207,12 @@ create.insertInto(MY_TABLE)
 // as a more concise form of this:
 create.insertInto(com.example.generated.Tables.MY_TABLE)
       .values(com.example.generated.Sequences.MY_SEQUENCE.nextval(), com.example.generated.Routines.myFunction())]]></java>
+
+                            <h3>Configuring these artefacts</h3>
+
+                            <p>
+                                The generation of these artefacts can be turned off. For details, see the <reference id="codegen-generate-globals" title="relevant section in the manual"/>.
+                            </p>
 						</content>
 					</section>
 

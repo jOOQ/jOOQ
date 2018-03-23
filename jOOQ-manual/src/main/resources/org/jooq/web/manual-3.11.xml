@@ -16511,6 +16511,88 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                         </html></content>
                                     </section>
 
+                                    <section id="codegen-generate-annotations">
+                                        <title>Annotations</title>
+                                        <content><html>
+                                            <p>
+                                                The code generator supports a set of annotations on generated code, which can be turned on using the following flags. These annotations include:
+                                            </p>
+
+                                            <ul>
+                                                <li><strong>JPA annotations:</strong> A minimal set of JPA annotations can be generated on POJOs and other artefacts to convey type and metadata information that is available to the code generator. These annotations include:
+                                                <ul>
+                                                    <li><reference class="javax.persistence.Column"/></li>
+                                                    <li><reference class="javax.persistence.Entity"/></li>
+                                                    <li><reference class="javax.persistence.GeneratedValue"/></li>
+                                                    <li><reference class="javax.persistence.GenerationType"/></li>
+                                                    <li><reference class="javax.persistence.Id"/></li>
+                                                    <li><reference class="javax.persistence.Index"/> (JPA 2.1 and later)</li>
+                                                    <li><reference class="javax.persistence.Table"/></li>
+                                                    <li><reference class="javax.persistence.UniqueConstraint"/></li>
+                                                </ul>
+                                                While jOOQ generated code cannot really be used as full-fledged entities (use e.g. Hibernate or EclipseLink to generate such entities), this meta information can still be useful as documentation on your generated code. Some of the annotations (e.g. <code>@Column</code></code>) can be used by the <reference class="org.jooq.impl.DefaultRecordMapper"/> for mapping records to POJOs.</li>
+                                                <li><strong>Validation annotations:</strong> A set of Bean Validation API annotations can be added to the generated code to convey type information. They include:
+                                                <ul>
+                                                    <li><reference class="javax.validation.constraints.NotNull"/></li>
+                                                    <li><reference class="javax.validation.constraints.Size"/></li>
+                                                </ul>
+                                                jOOQ does implement the validation spec, nor does it validate your data, but you can use third-party tools to read the jOOQ-generated validation annotations.</li>
+                                                <li><strong>Spring annotations:</strong> Some useful Spring annotations can be generated on <reference id="codegen-daos" title="DAOs"/> for better Spring integration. These include:
+                                                <ul>
+                                                    <li><code>org.springframework.beans.factory.annotation.Autowired</code></li>
+                                                    <li><code>org.springframework.stereotype.Repository</code></li>
+                                                </ul></li>
+                                            </ul>
+
+                                            <p>
+                                                The flags governing the generation of these annotations are:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <generate>
+      <jpaAnnotations>true</jpaAnnotations>
+      <jpaVersion>2.2</jpaVersion>
+      <validationAnnotations>true</validationAnnotations>
+      <springAnnotations>true</springAnnotations>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+      .withJpaAnnotations(true)
+      .withJpaVersion("2.2")
+      .withValidationAnnotations(true)
+      .withSpringAnnotations(true))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    generate {
+      jpaAnnotations = true
+      jpaVersion = '2.2'
+      validationAnnotations = true
+      springAnnotations = true
+    }
+  }
+}]]></java><html>
+
+                                        </html></content>
+                                    </section>
+
                                     <section id="codegen-generate-java-time-types">
                                         <title>Java Time Types</title>
                                         <content><html>
@@ -17206,14 +17288,14 @@ create.insertInto(MY_TABLE)
 
 // as a more concise form of this:
 create.insertInto(com.example.generated.Tables.MY_TABLE)
-      .values(com.example.generated.Sequences.MY_SEQUENCE.nextval(), com.example.generated.Routines.myFunction())]]></java>
+      .values(com.example.generated.Sequences.MY_SEQUENCE.nextval(), com.example.generated.Routines.myFunction())]]></java><html>
 
                             <h3>Configuring these artefacts</h3>
 
                             <p>
                                 The generation of these artefacts can be turned off. For details, see the <reference id="codegen-generate-globals" title="relevant section in the manual"/>.
                             </p>
-						</content>
+						</html></content>
 					</section>
 
 				    <section id="codegen-tables">

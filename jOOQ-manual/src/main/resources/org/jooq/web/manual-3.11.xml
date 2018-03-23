@@ -14933,19 +14933,32 @@ result.forEach((Object[] entities) -> {
                             </section>
 
                             <section id="codegen-config-database">
-                                <title>Database, name, and properties</title>
+                                <title>Database</title>
                                 <content><html>
                                     <p>
                                         This element wraps all the configuration elements that are used for the jooq-meta module, which reads the configured database meta data. In its simplest form, it can be left empty, when meaningful defaults will apply.
                                     </p>
 
                                     <p>
-                                        The two main elements in the <code>&lt;database/></code> element are <code>&lt;name/></code> and <code>&lt;properties></code>, which specify the class to implement the database meta data source, and an optional list of key/value parameters:
+                                        The two main elements in the <code>&lt;database/></code> element are <code>&lt;name/></code> and <code>&lt;properties></code>, which specify the class to implement the database meta data source, and an optional list of key/value parameters, which are described in the <reference id="codegen-database-name" title="next chapter"/>
                                     </p>
 
                                     <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
+                                        Subsequent elements are:
                                     </p>
+                                </html></content>
+
+                                <sections>
+                                    <section id="codegen-database-name">
+                                        <title>Database name and properties</title>
+                                        <content><html>
+                                            <p>
+                                                The two main elements in the <code>&lt;database/></code> element are <code>&lt;name/></code> and <code>&lt;properties></code>, which specify the class to implement the database meta data source, and an optional list of key/value parameters:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -14965,9 +14978,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -14977,9 +14990,9 @@ result.forEach((Object[] entities) -> {
         new Property().withKey("dialect").withValue("MYSQL"),
         new Property().withKey("xml-file").withValue("/path/to/database.xml")))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -14999,69 +15012,69 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        The default <code>&lt;name/></code> if no name is supplied will be derived from the JDBC connection. If you want to specifically specify your SQL dialect's database name, any of these values will be supported by jOOQ, out of the box:
-                                    </p>
+                                            <p>
+                                                The default <code>&lt;name/></code> if no name is supplied will be derived from the JDBC connection. If you want to specifically specify your SQL dialect's database name, any of these values will be supported by jOOQ, out of the box:
+                                            </p>
 
-                                    <ul>
-                                        <li><code>org.jooq.util.ase.ASEDatabase</code></li>
-                                        <li><code>org.jooq.util.cubrid.CUBRIDDatabase</code></li>
-                                        <li><code>org.jooq.util.db2.DB2Database</code></li>
-                                        <li><code>org.jooq.util.derby.DerbyDatabase</code></li>
-                                        <li><code>org.jooq.util.firebird.FirebirdDatabase</code></li>
-                                        <li><code>org.jooq.util.h2.H2Database</code></li>
-                                        <li><code>org.jooq.util.hana.HanaDatabse</code></li>
-                                        <li><code>org.jooq.util.hsqldb.HSQLDBDatabase</code></li>
-                                        <li><code>org.jooq.util.informix.InformixDatabase</code></li>
-                                        <li><code>org.jooq.util.ingres.IngresDatabase</code></li>
-                                        <li><code>org.jooq.util.mariadb.MariaDBDatabase</code></li>
-                                        <li><code>org.jooq.util.mysql.MySQLDatabase</code></li>
-                                        <li><code>org.jooq.util.oracle.OracleDatabase</code></li>
-                                        <li><code>org.jooq.util.postgres.PostgresDatabase</code></li>
-                                        <li><code>org.jooq.util.redshift.RedshiftDatabase</code></li>
-                                        <li><code>org.jooq.util.sqlite.SQLiteDatabaes</code></li>
-                                        <li><code>org.jooq.util.sqlserver.SQLServerDatabase</code></li>
-                                        <li><code>org.jooq.util.sybase.SybaseDatabase</code></li>
-                                        <li><code>org.jooq.util.vertica.VerticaDatabase</code></li>
-                                    </ul>
+                                            <ul>
+                                                <li><code>org.jooq.util.ase.ASEDatabase</code></li>
+                                                <li><code>org.jooq.util.cubrid.CUBRIDDatabase</code></li>
+                                                <li><code>org.jooq.util.db2.DB2Database</code></li>
+                                                <li><code>org.jooq.util.derby.DerbyDatabase</code></li>
+                                                <li><code>org.jooq.util.firebird.FirebirdDatabase</code></li>
+                                                <li><code>org.jooq.util.h2.H2Database</code></li>
+                                                <li><code>org.jooq.util.hana.HanaDatabse</code></li>
+                                                <li><code>org.jooq.util.hsqldb.HSQLDBDatabase</code></li>
+                                                <li><code>org.jooq.util.informix.InformixDatabase</code></li>
+                                                <li><code>org.jooq.util.ingres.IngresDatabase</code></li>
+                                                <li><code>org.jooq.util.mariadb.MariaDBDatabase</code></li>
+                                                <li><code>org.jooq.util.mysql.MySQLDatabase</code></li>
+                                                <li><code>org.jooq.util.oracle.OracleDatabase</code></li>
+                                                <li><code>org.jooq.util.postgres.PostgresDatabase</code></li>
+                                                <li><code>org.jooq.util.redshift.RedshiftDatabase</code></li>
+                                                <li><code>org.jooq.util.sqlite.SQLiteDatabaes</code></li>
+                                                <li><code>org.jooq.util.sqlserver.SQLServerDatabase</code></li>
+                                                <li><code>org.jooq.util.sybase.SybaseDatabase</code></li>
+                                                <li><code>org.jooq.util.vertica.VerticaDatabase</code></li>
+                                            </ul>
 
-                                    <p>
-                                        Alternatively, you can also specify the following database if you want to reverse-engineer a generic JDBC <reference class="java.sql.DatabaseMetaData"/> source for an unsupported database version / dialect / etc:
-                                    </p>
+                                            <p>
+                                                Alternatively, you can also specify the following database if you want to reverse-engineer a generic JDBC <reference class="java.sql.DatabaseMetaData"/> source for an unsupported database version / dialect / etc:
+                                            </p>
 
-                                    <ul>
-                                        <li><code>org.jooq.util.jdbc.JDBCDatabase</code></li>
-                                    </ul>
+                                            <ul>
+                                                <li><code>org.jooq.util.jdbc.JDBCDatabase</code></li>
+                                            </ul>
 
-                                    <p>
-                                        Furthermore, there are two out-of-the-box database meta data sources, that do not rely on a JDBC connection: the <reference id="codegen-jpa" title="JPADatabase"/> (to reverse engineer JPA annotated entities) and the <reference id="codegen-xml" title="XMLDatabase"/> (to reverse engineer an XML file). Please refer to the respective sections for more details.
-                                    </p>
+                                            <p>
+                                                Furthermore, there are two out-of-the-box database meta data sources, that do not rely on a JDBC connection: the <reference id="codegen-jpa" title="JPADatabase"/> (to reverse engineer JPA annotated entities) and the <reference id="codegen-xml" title="XMLDatabase"/> (to reverse engineer an XML file). Please refer to the respective sections for more details.
+                                            </p>
 
-                                    <p>
-                                        Last, but not least, you can of course implement your own by implementing <code>org.jooq.util.Database</code> from the jooq-meta module.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                Last, but not least, you can of course implement your own by implementing <code>org.jooq.util.Database</code> from the jooq-meta module.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-regex-flags">
-                                <title>RegexFlags</title>
-                                <content><html>
-                                    <p>
-                                        A lot of configuration elements rely on regular expressions. The most prominent examples are the useful <reference id="codegen-config-includes-excludes" title="includes and excludes"/> elements. All of these regular expressions use the Java <reference class="java.util.regex.Pattern"/> API, with all of its features. The <code>Pattern</code> API allows for specifying flags and for your configuration convenience, the applied flags are, by default:
-                                    </p>
+                                    <section id="codegen-database-regex-flags">
+                                        <title>RegexFlags</title>
+                                        <content><html>
+                                            <p>
+                                                A lot of configuration elements rely on regular expressions. The most prominent examples are the useful <reference id="codegen-database-includes-excludes" title="includes and excludes"/> elements. All of these regular expressions use the Java <reference class="java.util.regex.Pattern"/> API, with all of its features. The <code>Pattern</code> API allows for specifying flags and for your configuration convenience, the applied flags are, by default:
+                                            </p>
 
-                                    <ul>
-                                        <li><code>COMMENTS</code>: This allows for embedding comments (and, as a side-effect: meaningless whitespace) in regular expressions, which makes them much more readable.</li>
-                                        <li><code>CASE_INSENSITIVE</code>: Most schemas are case insensitive, so case-sensitive regular expressions are a bit of a pain, especially in multi-vendor setups, where databases like PostgreSQL (mostly lower case) and Oracle (mostly UPPER CASE) need to be supported simultaneously.</li>
-                                    </ul>
+                                            <ul>
+                                                <li><code>COMMENTS</code>: This allows for embedding comments (and, as a side-effect: meaningless whitespace) in regular expressions, which makes them much more readable.</li>
+                                                <li><code>CASE_INSENSITIVE</code>: Most schemas are case insensitive, so case-sensitive regular expressions are a bit of a pain, especially in multi-vendor setups, where databases like PostgreSQL (mostly lower case) and Oracle (mostly UPPER CASE) need to be supported simultaneously.</li>
+                                            </ul>
 
-                                    <p>
-                                        But of course, this default setting may get in your way, for instance if you rely on case sensitive identifiers and whitespace in identifiers a lot, it might be better for you to turn off the above defaults:
-                                    </p>
+                                            <p>
+                                                But of course, this default setting may get in your way, for instance if you rely on case sensitive identifiers and whitespace in identifiers a lot, it might be better for you to turn off the above defaults:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15071,18 +15084,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withRegexFlags("COMMENTS DOTALL"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15092,43 +15105,43 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        All the flags available from <reference class="java.util.regex.Pattern"/> are available as a whitespace-separated list.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                All the flags available from <reference class="java.util.regex.Pattern"/> are available as a whitespace-separated list.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-includes-excludes">
-                                <title>Includes and Excludes</title>
-                                <content><html>
-                                    <p>
-                                        Perhaps the most important elements of the code generation configuration are used for the inclusion and exclusion of content as reported by your <reference id="codegen-config-database" title="database meta data configuration"/>
-                                    </p>
+                                    <section id="codegen-database-includes-excludes">
+                                        <title>Includes and Excludes</title>
+                                        <content><html>
+                                            <p>
+                                                Perhaps the most important elements of the code generation configuration are used for the inclusion and exclusion of content as reported by your <reference id="codegen-config-database" title="database meta data configuration"/>
+                                            </p>
 
-                                    <p>
-                                        These expressions match any of the following object types, either by their fully qualified names (<code>catalog.schema.object_name</code>), or by their names only (<code>object_name</code>):
-                                    </p>
+                                            <p>
+                                                These expressions match any of the following object types, either by their fully qualified names (<code>catalog.schema.object_name</code>), or by their names only (<code>object_name</code>):
+                                            </p>
 
-                                    <ul>
-                                        <li>Array types</li>
-                                        <li>Domains</li>
-                                        <li>Enums</li>
-                                        <li>Links</li>
-                                        <li>Packages</li>
-                                        <li>Queues</li>
-                                        <li>Routiens</li>
-                                        <li>Sequences</li>
-                                        <li>Tables</li>
-                                        <li>UDTs</li>
-                                    </ul>
+                                            <ul>
+                                                <li>Array types</li>
+                                                <li>Domains</li>
+                                                <li>Enums</li>
+                                                <li>Links</li>
+                                                <li>Packages</li>
+                                                <li>Queues</li>
+                                                <li>Routiens</li>
+                                                <li>Sequences</li>
+                                                <li>Tables</li>
+                                                <li>UDTs</li>
+                                            </ul>
 
-                                    <p>
-                                        Excludes match <em>before</em> includes, meaning that something that has been excluded cannot be included again. Remember, these expressions are <reference id="codegen-config-regex-flags" title="regular expressions with default flags"/>, so multiple names need to be separated with the pipe symbol <code>"|"</code>, not with commas, etc. For example:
-                                    </p>
+                                            <p>
+                                                Excludes match <em>before</em> includes, meaning that something that has been excluded cannot be included again. Remember, these expressions are <reference id="codegen-database-regex-flags" title="regular expressions with default flags"/>, so multiple names need to be separated with the pipe symbol <code>"|"</code>, not with commas, etc. For example:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15144,9 +15157,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15154,9 +15167,9 @@ result.forEach((Object[] entities) -> {
       .withIncludes(".*")
       .withExcludes("UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA\\.SECRET_TABLE|SECRET_ROUTINE"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15167,13 +15180,13 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        A special, additional option allows for specifying whether the above two regular expressions should also match table columns. The following example will hide an <code>INVISIBLE_COL</code> in any table (and also tables called this way, of course):
-                                    </p>
+                                            <p>
+                                                A special, additional option allows for specifying whether the above two regular expressions should also match table columns. The following example will hide an <code>INVISIBLE_COL</code> in any table (and also tables called this way, of course):
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15185,9 +15198,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15196,9 +15209,9 @@ result.forEach((Object[] entities) -> {
       .withExcludes("INVISIBLE_COL")
       .withIncludeExcludeColumns(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15210,19 +15223,19 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                </html></content>
-                            </section>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-include-object-types">
-                                <title>Include object types</title>
-                                <content><html>
-                                    <p>
-                                        Sometimes, you want to generate only tables. Or only routines. Or you want to exclude them from being generated. Whatever the use-case, there's a way to do this with the following, additional includes flags:
-                                    </p>
+                                    <section id="codegen-database-include-object-types">
+                                        <title>Include object types</title>
+                                        <content><html>
+                                            <p>
+                                                Sometimes, you want to generate only tables. Or only routines. Or you want to exclude them from being generated. Whatever the use-case, there's a way to do this with the following, additional includes flags:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15242,9 +15255,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15261,9 +15274,9 @@ result.forEach((Object[] entities) -> {
       .withIncludeUniqueKeys(false)
       .withIncludeForeignKeys(false))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15282,22 +15295,22 @@ result.forEach((Object[] entities) -> {
     }
   }
 }]]></java><html>
-                                    <p>
-                                        By default, all these flags are set to true.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                By default, all these flags are set to true.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-record-version-timestamp-fields">
-                                <title>Record Version and Timestamp Fields</title>
-                                <content><html>
-                                    <p>
-                                        jOOQ's <reference class="org.jooq.UpdatableRecord"/> supports an <reference id="optimistic-locking" title="optimistic locking feature"/>, which can be enabled in the code generator by specifying a regular expression that defines such a record's version and/or timestamp fields. These regular expressions should match at most one column per table, again either by their fully qualified names (catalog.schema.table.column_name) or by their names only (column_name):
-                                    </p>
+                                    <section id="codegen-database-record-version-timestamp-fields">
+                                        <title>Record Version and Timestamp Fields</title>
+                                        <content><html>
+                                            <p>
+                                                jOOQ's <reference class="org.jooq.UpdatableRecord"/> supports an <reference id="optimistic-locking" title="optimistic locking feature"/>, which can be enabled in the code generator by specifying a regular expression that defines such a record's version and/or timestamp fields. These regular expressions should match at most one column per table, again either by their fully qualified names (catalog.schema.table.column_name) or by their names only (column_name):
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15308,9 +15321,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15318,9 +15331,9 @@ result.forEach((Object[] entities) -> {
       .withRecordVersionFields("REC_VERSION")
       .withRecordTimestampFields("REC_TIMESTAMP"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15331,22 +15344,22 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        Note again that these expressions are <reference id="codegen-config-regex-flags" title="regular expressions with default flags"/>
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                Note again that these expressions are <reference id="codegen-database-regex-flags" title="regular expressions with default flags"/>
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-synthetic-identities">
-                                <title>Synthetic identities</title>
-                                <content><html>
-                                    <p>
-                                        jOOQ's code generator recognises identity columns if they are reported as such by the database. Some databases do not support "real" identity columns, but allow for emulating them, e.g. through triggers and sequences (e.g. Oracle prior to 12c). If a column is a known "identity" without formally being one, users can specify a regular expression that matches all columns (one column per table), which will be treated as if they were formal identities. For example:
-                                    </p>
+                                    <section id="codegen-database-synthetic-identities">
+                                        <title>Synthetic identities</title>
+                                        <content><html>
+                                            <p>
+                                                jOOQ's code generator recognises identity columns if they are reported as such by the database. Some databases do not support "real" identity columns, but allow for emulating them, e.g. through triggers and sequences (e.g. Oracle prior to 12c). If a column is a known "identity" without formally being one, users can specify a regular expression that matches all columns (one column per table), which will be treated as if they were formal identities. For example:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15356,18 +15369,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withSyntheticIdentities("SCHEMA\.TABLE\.ID"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15377,22 +15390,22 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        Note again that these expressions are <reference id="codegen-config-regex-flags" title="regular expressions with default flags"/>
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                Note again that these expressions are <reference id="codegen-database-regex-flags" title="regular expressions with default flags"/>
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-synthetic-primary-keys">
-                                <title>Synthetic primary keys</title>
-                                <content><html>
-                                    <p>
-                                        jOOQ's code generator recognises primary keys that are declared and reported as such by the database. But some databases don't report all keys, or some tables don't have them enabled, or sometimes, a view is a 1:1 representation of an underlying table, but it doesn't expose the key information. In these cases, this regular expression can match all columns that users wish to "pretend" are part of such a primary key. If a composite synthetic primary key is desired, the regular expression should match all columns of that table that are part of the primary key. For example, a composite synthetic primary key consists of <code>(COLUMN1, COLUMN2)</code> in table <code>SCHEMA.TABLE</code>:
-                                    </p>
+                                    <section id="codegen-database-synthetic-primary-keys">
+                                        <title>Synthetic primary keys</title>
+                                        <content><html>
+                                            <p>
+                                                jOOQ's code generator recognises primary keys that are declared and reported as such by the database. But some databases don't report all keys, or some tables don't have them enabled, or sometimes, a view is a 1:1 representation of an underlying table, but it doesn't expose the key information. In these cases, this regular expression can match all columns that users wish to "pretend" are part of such a primary key. If a composite synthetic primary key is desired, the regular expression should match all columns of that table that are part of the primary key. For example, a composite synthetic primary key consists of <code>(COLUMN1, COLUMN2)</code> in table <code>SCHEMA.TABLE</code>:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15402,18 +15415,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withSyntheticPrimaryKeys("SCHEMA\.TABLE\.COLUMN(1|2)"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15423,26 +15436,26 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        If the regular expression matches column in a table that already has an existing primary key, that existing primary key will be replaced by the synthetic one. It will still be reported as a unique key, though.
-                                    </p>
+                                            <p>
+                                                If the regular expression matches column in a table that already has an existing primary key, that existing primary key will be replaced by the synthetic one. It will still be reported as a unique key, though.
+                                            </p>
 
-                                    <p>
-                                        Note again that these expressions are <reference id="codegen-config-regex-flags" title="regular expressions with default flags"/>
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                Note again that these expressions are <reference id="codegen-database-regex-flags" title="regular expressions with default flags"/>
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-override-primary-keys">
-                                <title>Override primary keys</title>
-                                <content><html>
-                                    <p>
-                                        In some legacy contexts, there might not be any primary key, only a bunch of unique keys, defined in a table. jOOQ cannot pick one of those as the "primary key", and the table won't be generated as a <reference class="org.jooq.UpdatableRecord"/>. Users can, however, use this regular expression to match all UNIQUE key names that should be used as a table's primary key.
-                                    </p>
+                                    <section id="codegen-database-override-primary-keys">
+                                        <title>Override primary keys</title>
+                                        <content><html>
+                                            <p>
+                                                In some legacy contexts, there might not be any primary key, only a bunch of unique keys, defined in a table. jOOQ cannot pick one of those as the "primary key", and the table won't be generated as a <reference class="org.jooq.UpdatableRecord"/>. Users can, however, use this regular expression to match all UNIQUE key names that should be used as a table's primary key.
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15452,18 +15465,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withOverridePrimaryKeys("MY_UNIQUE_KEY_NAME"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15473,30 +15486,30 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        If several keys match, a warning is emitted and the first one encountered will be used. This flag will also replace <reference id="codegen-config-synthetic-primary-keys" title="synthetic primary keys"/>, if it matches.
-                                    </p>
+                                            <p>
+                                                If several keys match, a warning is emitted and the first one encountered will be used. This flag will also replace <reference id="codegen-database-synthetic-primary-keys" title="synthetic primary keys"/>, if it matches.
+                                            </p>
 
-                                    <p>
-                                        Note again that these expressions are <reference id="codegen-config-regex-flags" title="regular expressions with default flags"/>
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                Note again that these expressions are <reference id="codegen-database-regex-flags" title="regular expressions with default flags"/>
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-date-as-timestamp">
-                                <title>Date as timestamp</title>
-                                <content><html>
-                                    <p>
-                                        The Oracle database doesn't know a SQL standard <code>DATE</code> type (<code>YYYY-MM-DD</code>). It's vendor-specific <code>DATE</code> type is really a <code>TIMESTAMP(0)</code>, i.e. a <code>TIMESTAMP</code> with zero fractional seconds precision (<code>YYYY-MM-DD HH24:MI:SS</code>). For historic reasons, many legacy Oracle databases do not use the <code>TIMESTAMP</code> data type, but the <code>DATE</code> data type for timestamps, in case of which client applications also need to treat these columns as timestamps.
-                                    </p>
+                                    <section id="codegen-database-date-as-timestamp">
+                                        <title>Date as timestamp</title>
+                                        <content><html>
+                                            <p>
+                                                The Oracle database doesn't know a SQL standard <code>DATE</code> type (<code>YYYY-MM-DD</code>). It's vendor-specific <code>DATE</code> type is really a <code>TIMESTAMP(0)</code>, i.e. a <code>TIMESTAMP</code> with zero fractional seconds precision (<code>YYYY-MM-DD HH24:MI:SS</code>). For historic reasons, many legacy Oracle databases do not use the <code>TIMESTAMP</code> data type, but the <code>DATE</code> data type for timestamps, in case of which client applications also need to treat these columns as timestamps.
+                                            </p>
 
-                                    <p>
-                                        If upgrading the schema to proper <code>TIMESTAMP</code> usage isn't an option, and neither is using <reference id="data-type-rewrites" title="data type rewrites"/> on a per-column basis, then this flag is the right one to activate. It will remove the <code>DATE</code> type from the Oracle type system (at least as far as the jOOQ code generator is concerned), and pretend all such columns are really <code>TIMESTAMP</code> typed. This is how to activate the flag:
-                                    </p>
+                                            <p>
+                                                If upgrading the schema to proper <code>TIMESTAMP</code> usage isn't an option, and neither is using <reference id="data-type-rewrites" title="data type rewrites"/> on a per-column basis, then this flag is the right one to activate. It will remove the <code>DATE</code> type from the Oracle type system (at least as far as the jOOQ code generator is concerned), and pretend all such columns are really <code>TIMESTAMP</code> typed. This is how to activate the flag:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15506,18 +15519,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withDateAsTimestamp(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15527,26 +15540,26 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        This flag will apply before any other data type related flags are applied, including <reference id="codegen-config-forced-types" title="forced types"/>.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                This flag will apply before any other data type related flags are applied, including <reference id="codegen-database-forced-types" title="forced types"/>.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-ignore-procedure-return-values">
-                                <title>Ignore procedure return values (deprecated)</title>
-                                <content><html>
-                                    <p>
-                                        In jOOQ 3.6.0, <a href="https://github.com/jOOQ/jOOQ/issues/4106">#4106</a> was implemented to support Transact-SQL's optional return values from stored procedures. This turns all procedures into <code>Routine&lt;Integer></code> (instead of <code>Routine&lt;Void></code>). For backwards-compatibility reasons, users can suppress this change in jOOQ 3.x
-                                    </p>
+                                    <section id="codegen-database-ignore-procedure-return-values">
+                                        <title>Ignore procedure return values (deprecated)</title>
+                                        <content><html>
+                                            <p>
+                                                In jOOQ 3.6.0, <a href="https://github.com/jOOQ/jOOQ/issues/4106">#4106</a> was implemented to support Transact-SQL's optional return values from stored procedures. This turns all procedures into <code>Routine&lt;Integer></code> (instead of <code>Routine&lt;Void></code>). For backwards-compatibility reasons, users can suppress this change in jOOQ 3.x
+                                            </p>
 
-                                    <p>
-                                        This feature is deprecated as of jOOQ 3.6.0 and will be removed again in jOOQ 4.0.
-                                    </p>
+                                            <p>
+                                                This feature is deprecated as of jOOQ 3.6.0 and will be removed again in jOOQ 4.0.
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15556,18 +15569,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withIgnoreProcedureReturnValues(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15576,30 +15589,30 @@ result.forEach((Object[] entities) -> {
     }
   }
 }]]></java><html>
-                                </html></content>
-                            </section>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-unsigned-types">
-                                <title>Unsigned types</title>
-                                <content><html>
-                                    <p>
-                                        The JDBC and Java type system don't know any unsigned integer data types, but some databases do, most importantly MySQL. This flag allows for overriding the default mapping from unsigned to signed integers and generates jOOU types instead:
-                                    </p>
+                                    <section id="codegen-database-unsigned-types">
+                                        <title>Unsigned types</title>
+                                        <content><html>
+                                            <p>
+                                                The JDBC and Java type system don't know any unsigned integer data types, but some databases do, most importantly MySQL. This flag allows for overriding the default mapping from unsigned to signed integers and generates jOOU types instead:
+                                            </p>
 
-                                    <ul>
-                                        <li><reference class="org.jooq.types.UByte"/></li>
-                                        <li><reference class="org.jooq.types.UShort"/></li>
-                                        <li><reference class="org.jooq.types.UInteger"/></li>
-                                        <li><reference class="org.jooq.types.ULong"/></li>
-                                    </ul>
+                                            <ul>
+                                                <li><reference class="org.jooq.types.UByte"/></li>
+                                                <li><reference class="org.jooq.types.UShort"/></li>
+                                                <li><reference class="org.jooq.types.UInteger"/></li>
+                                                <li><reference class="org.jooq.types.ULong"/></li>
+                                            </ul>
 
-                                    <p>
-                                        Those types work just like ordinary <reference class="java.lang.Number"/> wrapper types, except that there is no primitive version of them. The configuration looks like follows:
-                                    </p>
+                                            <p>
+                                                Those types work just like ordinary <reference class="java.lang.Number"/> wrapper types, except that there is no primitive version of them. The configuration looks like follows:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15609,18 +15622,18 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withUnsignedTypes(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15629,34 +15642,34 @@ result.forEach((Object[] entities) -> {
     }
   }
 }]]></java><html>
-                                </html></content>
-                            </section>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-catalog-and-schema-mapping">
-                                <title>Catalog and schema mapping</title>
-                                <content><html>
-                                    <p>
-                                        These configuration elements combine two features in one:
-                                    </p>
+                                    <section id="codegen-database-catalog-and-schema-mapping">
+                                        <title>Catalog and schema mapping</title>
+                                        <content><html>
+                                            <p>
+                                                These configuration elements combine two features in one:
+                                            </p>
 
-                                    <ol>
-                                        <li>They allow for specifying one or more catalogs (default: all catalogs) as well as one or more schemas (default: all schemas) for inclusion in the code generator. This works in a similar fashion as <reference id="codegen-config-includes-excludes" title="the includes and excludes elements"/>, but it is applied on an earlier stage.</li>
-                                        <li>Once all "input" catalogs and schemas are specified, they can each be associated with a matching "output" catalog or schema, in case of which the "input" will be mapped to the "output" by the code generator. For more details about this, please refer to the <reference id="schema-mapping" title="manual section about schema mapping"/>.</li>
-                                    </ol>
+                                            <ol>
+                                                <li>They allow for specifying one or more catalogs (default: all catalogs) as well as one or more schemas (default: all schemas) for inclusion in the code generator. This works in a similar fashion as <reference id="codegen-database-includes-excludes" title="the includes and excludes elements"/>, but it is applied on an earlier stage.</li>
+                                                <li>Once all "input" catalogs and schemas are specified, they can each be associated with a matching "output" catalog or schema, in case of which the "input" will be mapped to the "output" by the code generator. For more details about this, please refer to the <reference id="schema-mapping" title="manual section about schema mapping"/>.</li>
+                                            </ol>
 
-                                    <p>
-                                        There are two ways to operate "input" and "output" catalogs and schemas configurations: "top level" and "nested". Note that catalogs are only supported in very few databases, so usually, users will only use the "input" and "output" schema feature.
-                                    </p>
+                                            <p>
+                                                There are two ways to operate "input" and "output" catalogs and schemas configurations: "top level" and "nested". Note that catalogs are only supported in very few databases, so usually, users will only use the "input" and "output" schema feature.
+                                            </p>
 
-                                    <h3>Top level configurations</h3>
+                                            <h3>Top level configurations</h3>
 
-                                    <p>
-                                        This mode is preferrable for small projects or quick tutorials, where only a single catalog and a/or a single schema need to be generated. In this case, the following "top level" configuration elements can be applied:
-                                    </p>
+                                            <p>
+                                                This mode is preferrable for small projects or quick tutorials, where only a single catalog and a/or a single schema need to be generated. In this case, the following "top level" configuration elements can be applied:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<!-- Read only a single schema (from all catalogs, but in most databases, there is only one "default catalog") -->
 <configuration>
@@ -15686,9 +15699,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15696,9 +15709,9 @@ result.forEach((Object[] entities) -> {
       .withInputCatalog("my_catalog")
       .withInputSchema("my_schema"))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -15709,15 +15722,15 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
-                                    <h3>Nested configurations</h3>
+                                            <h3>Nested configurations</h3>
 
-                                    <p>
-                                        This mode is preferrable for larger projects where several catalogs and/or schemas need to be included. The following examples show different possible configurations:
-                                    </p>
+                                            <p>
+                                                This mode is preferrable for larger projects where several catalogs and/or schemas need to be included. The following examples show different possible configurations:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<!-- Read two schemas (from all catalogs, but in most databases, there is only one "default catalog") -->
 <configuration>
@@ -15772,9 +15785,9 @@ result.forEach((Object[] entities) -> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[// Two schemas from any catalog
 configuration
@@ -15804,9 +15817,9 @@ configuration
 
 ]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[// Two schemas from any catalog
 configuration {
@@ -15861,15 +15874,15 @@ configuration {
   }
 }]]></java><html>
 
-                                    <h3>Catalog and schema mapping</h3>
+                                            <h3>Catalog and schema mapping</h3>
 
-                                    <p>
-                                        Wherever you can place an <code>inputCatalog</code> or <code>inputSchema</code> element (top level or nested), you can also put a matching mapping instruction, if you wish to profit from the <reference id="schema-mapping" title="catalog and schema mapping feature"/>. The following configurations are possible:
-                                    </p>
+                                            <p>
+                                                Wherever you can place an <code>inputCatalog</code> or <code>inputSchema</code> element (top level or nested), you can also put a matching mapping instruction, if you wish to profit from the <reference id="schema-mapping" title="catalog and schema mapping feature"/>. The following configurations are possible:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<!-- Map input names to a concrete output name: -->
 <configuration>
@@ -15895,9 +15908,9 @@ configuration {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[// Map input names to a concrete output name:
 configuration
@@ -15917,9 +15930,9 @@ configuration
       .withInputSchema("my_input_schema")
       .withOutputSchemaToDefault(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[// Map input names to a concrete output name:
 configuration {
@@ -15945,40 +15958,40 @@ configuration {
   }
 }]]></java><html>
 
-                                    <p>
-                                        For more information about the catalog and schema mapping feature, <reference id="schema-mapping" title="please refer to the relevant section of the manual"/>.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                For more information about the catalog and schema mapping feature, <reference id="schema-mapping" title="please refer to the relevant section of the manual"/>.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-version-providers">
-                                <title>Catalog and schema version providers</title>
-                                <content><html>
-                                    <p>
-                                        For continuous integration reasons, users often like to version their database schemas, e.g. with tools like <reference id="jooq-with-flyway" title="Flyway"/>. In these cases, it is usually beneficial if the catalog and/or schema version can be placed with generated jOOQ code for documentation purposes and to prevent unnecessary re-generation of a catalog and/or schema.
-                                    </p>
+                                    <section id="codegen-database-version-providers">
+                                        <title>Catalog and schema version providers</title>
+                                        <content><html>
+                                            <p>
+                                                For continuous integration reasons, users often like to version their database schemas, e.g. with tools like <reference id="jooq-with-flyway" title="Flyway"/>. In these cases, it is usually beneficial if the catalog and/or schema version can be placed with generated jOOQ code for documentation purposes and to prevent unnecessary re-generation of a catalog and/or schema.
+                                            </p>
 
-                                    <p>
-                                        For this reason, jOOQ allows for implementing a simple code generation SPI which tells jOOQ what the user-defined version of any given catalog or schema is.
-                                    </p>
+                                            <p>
+                                                For this reason, jOOQ allows for implementing a simple code generation SPI which tells jOOQ what the user-defined version of any given catalog or schema is.
+                                            </p>
 
-                                    <p>
-                                        There are three possible ways to implement this SPI:
-                                    </p>
+                                            <p>
+                                                There are three possible ways to implement this SPI:
+                                            </p>
 
-                                    <ul>
-                                        <li>By providing a fully qualified class name that implements any of <code>org.jooq.util.CatalogVersionProvider</code> or <code>org.jooq.util.SchemaVersionProvider</code> respectively for programmatic version providing.</li>
-                                        <li>By providing a <code>SELECT</code> statement returning one row with one column containing the version string. The <code>SELECT</code> statement may contain a named variable called <code>:catalog_name</code> or <code>:schema_name</code> respectively.</li>
-                                        <li>By providing a constant, such as a Maven property, for instance.</li>
-                                    </ul>
+                                            <ul>
+                                                <li>By providing a fully qualified class name that implements any of <code>org.jooq.util.CatalogVersionProvider</code> or <code>org.jooq.util.SchemaVersionProvider</code> respectively for programmatic version providing.</li>
+                                                <li>By providing a <code>SELECT</code> statement returning one row with one column containing the version string. The <code>SELECT</code> statement may contain a named variable called <code>:catalog_name</code> or <code>:schema_name</code> respectively.</li>
+                                                <li>By providing a constant, such as a Maven property, for instance.</li>
+                                            </ul>
 
-                                    <p>
-                                        These schema versions will be generated into the <code>javax.annotation.Generated</code> annotation on generated artefacts.
-                                    </p>
+                                            <p>
+                                                These schema versions will be generated into the <code>javax.annotation.Generated</code> annotation on generated artefacts.
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -15989,9 +16002,9 @@ configuration {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -15999,9 +16012,9 @@ configuration {
       .withCatalogVersionProvider("SELECT :catalog_name || '_' || MAX(\"version\") FROM \"schema_version\"")
       .withSchemaVersionProvider("SELECT :schema_name || '_' || MAX(\"version\") FROM \"schema_version\""))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16012,28 +16025,28 @@ configuration {
   }
 }]]></java><html>
 
-                                </html></content>
-                            </section>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-order-provider">
-                                <title>Custom ordering of generated code</title>
-                                <content><html>
-                                    <p>
-                                        By default, the jOOQ code generator maintains the following ordering of objects:
-                                    </p>
+                                    <section id="codegen-database-order-provider">
+                                        <title>Custom ordering of generated code</title>
+                                        <content><html>
+                                            <p>
+                                                By default, the jOOQ code generator maintains the following ordering of objects:
+                                            </p>
 
-                                    <ul>
-                                        <li>Catalogs, schemas, tables, user-defined types, packages, routines, sequences, constraints are ordered alphabetically</li>
-                                        <li>Table columns, user-defined type attributes, routine parameters are ordered in their order of definition</li>
-                                    </ul>
+                                            <ul>
+                                                <li>Catalogs, schemas, tables, user-defined types, packages, routines, sequences, constraints are ordered alphabetically</li>
+                                                <li>Table columns, user-defined type attributes, routine parameters are ordered in their order of definition</li>
+                                            </ul>
 
-                                    <p>
-                                        Sometimes, it may be desireable to override this default ordering to a custom ordering. In particular, the default ordering may be case-sensitive, when case-insensitive ordering is really more desireable at times. Users may define an order provider by specifying a fully qualified class on the code generator's class path, which must implement <reference class="java.util.Comparator" title="java.util.Comparator&lt;org.jooq.util.Definition&gt;"/> as follows:
-                                    </p>
+                                            <p>
+                                                Sometimes, it may be desireable to override this default ordering to a custom ordering. In particular, the default ordering may be case-sensitive, when case-insensitive ordering is really more desireable at times. Users may define an order provider by specifying a fully qualified class on the code generator's class path, which must implement <reference class="java.util.Comparator" title="java.util.Comparator&lt;org.jooq.util.Definition&gt;"/> as follows:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -16043,18 +16056,18 @@ configuration {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withOrderProvider("com.example.CaseInsensitiveOrderProvider");]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16064,9 +16077,9 @@ configuration {
   }
 }]]></java><html>
 
-                                    <p>
-                                        This order provider may then look as follows:
-                                    </p>
+                                            <p>
+                                                This order provider may then look as follows:
+                                            </p>
 
 </html><java><![CDATA[package com.example;
 
@@ -16080,9 +16093,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
         return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
     }
 }]]></java><html>
-                                    <p>
-                                        While changing the order of "top level types" (like tables) is irrelevant to the jOOQ runtime, there may be some side-effects to changing the order of table columns, user-defined type attributes, routine parameters, as the database might expect the exact same order as is defined in the database. In order to only change the ordering for tables, the following order provider can be implemented instead:
-                                    </p>
+                                            <p>
+                                                While changing the order of "top level types" (like tables) is irrelevant to the jOOQ runtime, there may be some side-effects to changing the order of table columns, user-defined type attributes, routine parameters, as the database might expect the exact same order as is defined in the database. In order to only change the ordering for tables, the following order provider can be implemented instead:
+                                            </p>
 
 </html><java><![CDATA[package com.example;
 
@@ -16100,31 +16113,31 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
             return 0; // Retain input ordering
     }
 }]]></java><html>
-                                </html></content>
-                            </section>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-forced-types">
-                                <title>Forced types</title>
-                                <content><html>
-                                    <p>
-                                        The code generator allows users to override column data types in three different ways:
-                                    </p>
+                                    <section id="codegen-database-forced-types">
+                                        <title>Forced types</title>
+                                        <content><html>
+                                            <p>
+                                                The code generator allows users to override column data types in three different ways:
+                                            </p>
 
-                                    <ul>
-                                        <li>By rewriting them to some other data type using the <reference id="data-type-rewrites" title="data type rewriting feature"/>.</li>
-                                        <li>By mapping them to some user type using the <reference id="custom-data-types" title="data type converter feature"/> and a custom <reference class="org.jooq.Converter"/>.</li>
-                                        <li>By mapping them to some user type using the <reference id="custom-data-type-bindings" title="data type binding feature"/> and a custom <reference class="org.jooq.Binding"/>.</li>
-                                    </ul>
+                                            <ul>
+                                                <li>By rewriting them to some other data type using the <reference id="data-type-rewrites" title="data type rewriting feature"/>.</li>
+                                                <li>By mapping them to some user type using the <reference id="custom-data-types" title="data type converter feature"/> and a custom <reference class="org.jooq.Converter"/>.</li>
+                                                <li>By mapping them to some user type using the <reference id="custom-data-type-bindings" title="data type binding feature"/> and a custom <reference class="org.jooq.Binding"/>.</li>
+                                            </ul>
 
-                                    <p>
-                                        All of this can be done using forced types.
-                                    </p>
+                                            <p>
+                                                All of this can be done using forced types.
+                                            </p>
 
-                                    <h3>Data type rewriting</h3>
+                                            <h3>Data type rewriting</h3>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -16161,9 +16174,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -16175,9 +16188,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
         .withTypes(".*")
         .withNullability(Nullability.ALL)))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16195,15 +16208,15 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   }
 }]]></java><html>
 
-                                    <h3>Mapping to user type with a converter</h3>
+                                            <h3>Mapping to user type with a converter</h3>
 
-                                    <p>
-                                        Both user type mappings work the same way, regardless if you're using a <reference class="org.jooq.Converter"/> or a <reference class="org.jooq.Binding"/>.
-                                    </p>
+                                            <p>
+                                                Both user type mappings work the same way, regardless if you're using a <reference class="org.jooq.Converter"/> or a <reference class="org.jooq.Binding"/>.
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -16227,9 +16240,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -16241,9 +16254,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
         .withExpression(".*\.DATE_OF_.*")
         .withTypes(".*")))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16261,19 +16274,19 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        For more information about using converters, <reference id="custom-data-types" title="please refer to the manual's section about custom data type conversion"/>.
-                                    </p>
+                                            <p>
+                                                For more information about using converters, <reference id="custom-data-types" title="please refer to the manual's section about custom data type conversion"/>.
+                                            </p>
 
-                                    <h3>Mapping to user type with a binding</h3>
+                                            <h3>Mapping to user type with a binding</h3>
 
-                                    <p>
-                                        Just switch the converter configuration to a binding configuration.
-                                    </p>
+                                            <p>
+                                                Just switch the converter configuration to a binding configuration.
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -16297,9 +16310,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
@@ -16311,9 +16324,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
         .withExpression(".*\.DATE_OF_.*")
         .withTypes(".*")))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16331,31 +16344,31 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   }
 }]]></java><html>
 
-                                    <p>
-                                        For more information about using converters, <reference id="custom-data-type-bindings" title="please refer to the manual's section about custom data type bindings"/>.
-                                    </p>
-                                </html></content>
-                            </section>
+                                            <p>
+                                                For more information about using converters, <reference id="custom-data-type-bindings" title="please refer to the manual's section about custom data type bindings"/>.
+                                            </p>
+                                        </html></content>
+                                    </section>
 
-                            <section id="codegen-config-table-valued-functions">
-                                <title>Table valued functions</title>
-                                <content><html>
-                                    <p>
-                                        jOOQ supports table valued functions in many databases, including Oracle, PostgreSQL, SQL Server. By default, table valued functions are treated as:
-                                    </p>
+                                    <section id="codegen-database-table-valued-functions">
+                                        <title>Table valued functions</title>
+                                        <content><html>
+                                            <p>
+                                                jOOQ supports table valued functions in many databases, including Oracle, PostgreSQL, SQL Server. By default, table valued functions are treated as:
+                                            </p>
 
-                                    <ul>
-                                        <li>ordinary tables in most databases including PostgreSQL, SQL Server - because that's what they are. They're intended for use in <reference id="from-clause" title="FROM clauses of SELECT statements"/>, not as standalone routines.</li>
-                                        <li>ordinary routines in some databases including Oracle - for historic reasons. While Oracle also allows for embedding (pipelined) table functions in <reference id="from-clause" title="FROM clauses of SELECT statements"/>, it is not uncommon to call these as standalone routines in Oracle.</li>
-                                    </ul>
+                                            <ul>
+                                                <li>ordinary tables in most databases including PostgreSQL, SQL Server - because that's what they are. They're intended for use in <reference id="from-clause" title="FROM clauses of SELECT statements"/>, not as standalone routines.</li>
+                                                <li>ordinary routines in some databases including Oracle - for historic reasons. While Oracle also allows for embedding (pipelined) table functions in <reference id="from-clause" title="FROM clauses of SELECT statements"/>, it is not uncommon to call these as standalone routines in Oracle.</li>
+                                            </ul>
 
-                                    <p>
-                                        The <code>&lt;tableValuedFunctions/></code> flag is thus set to <code>false</code> by default on Oracle, and <code>true</code> otherwise. Here's how to explicitly change this behaviour:
-                                    </p>
+                                            <p>
+                                                The <code>&lt;tableValuedFunctions/></code> flag is thus set to <code>false</code> by default on Oracle, and <code>true</code> otherwise. Here's how to explicitly change this behaviour:
+                                            </p>
 
-                                    <p>
-                                        <strong>XML configuration (standalone and Maven)</strong>
-                                    </p>
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
 
 </html><xml><![CDATA[<configuration>
   <generator>
@@ -16365,18 +16378,18 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   </generator>
 </configuration>]]></xml><html>
 
-                                    <p>
-                                        <strong>Programmatic configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
       .withTableValuedFunctions(true))));]]></java><html>
 
-                                    <p>
-                                        <strong>Gradle configuration</strong>
-                                    </p>
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
 
 </html><java><![CDATA[configuration {
   generator {
@@ -16386,7 +16399,96 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   }
 }]]></java><html>
 
+                                        </html></content>
+                                    </section>
+                                </sections>
+                            </section>
+
+                            <redirect id="codegen-config-regex-flags" redirect-to="codegen-database-regex-flags"/>
+                            <redirect id="codegen-config-includes-excludes" redirect-to="codegen-database-includes-excludes"/>
+                            <redirect id="codegen-config-include-object-types" redirect-to="codegen-database-include-object-types"/>
+                            <redirect id="codegen-config-record-version-timestamp-fields" redirect-to="codegen-database-record-version-timestamp-fields"/>
+                            <redirect id="codegen-config-synthetic-identities" redirect-to="codegen-database-synthetic-identities"/>
+                            <redirect id="codegen-config-synthetic-primary-keys" redirect-to="codegen-database-synthetic-primary-keys"/>
+                            <redirect id="codegen-config-override-primary-keys" redirect-to="codegen-database-override-primary-keys"/>
+                            <redirect id="codegen-config-date-as-timestamp" redirect-to="codegen-database-date-as-timestamp"/>
+                            <redirect id="codegen-config-ignore-procedure-return-values" redirect-to="codegen-database-ignore-procedure-return-values"/>
+                            <redirect id="codegen-config-unsigned-types" redirect-to="codegen-database-unsigned-types"/>
+                            <redirect id="codegen-config-catalog-and-schema-mapping" redirect-to="codegen-database-catalog-and-schema-mapping"/>
+                            <redirect id="codegen-config-version-providers" redirect-to="codegen-database-version-providers"/>
+                            <redirect id="codegen-config-order-provider" redirect-to="codegen-database-order-provider"/>
+                            <redirect id="codegen-config-forced-types" redirect-to="codegen-database-forced-types"/>
+                            <redirect id="codegen-config-table-valued-functions" redirect-to="codegen-database-table-valued-functions"/>
+
+                            <section id="codegen-config-generate">
+                                <title>Generate</title>
+                                <content><html>
+                                    <p>
+                                        This element wraps all the configuration elements that are used for the jooq-codegen module, which generates Java or Scala code, or XML from your <reference id="codegen-config-database" title="database"/>.
+                                    </p>
+
+                                    <p>
+                                        Contained elements are:
+                                    </p>
                                 </html></content>
+
+                                <sections>
+                                    <section id="javaTimeTypes">
+                                        <content><html>
+                                            <p>
+                                                With jOOQ 3.9, support for JSR-310 <code>java.time</code> types has been added to the jOOQ API and to the code generator. Users of Java 8 can now specify that the jOOQ code generator should prefer JSR 310 types over their equivalent JDBC types. This includes:
+                                            </p>
+
+                                            <ul>
+                                                <li><reference class="java.time.LocalDate"/> instead of <reference class="java.sql.Date"/></li>
+                                                <li><reference class="java.time.LocalTime"/> instead of <reference class="java.sql.Time"/></li>
+                                                <li><reference class="java.time.LocalDateTime"/> instead of <reference class="java.sql.Timestamp"/></li>
+                                            </ul>
+
+                                            <p>
+                                                Semantically, the above types are exactly equivalent, although the new types do away with the many flaws of the JDBC types.
+                                            </p>
+
+                                            <p>
+                                                In order to activate the generation of these types, use:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <generate>
+      <javaTimeTypes>true</javaTimeTypes>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+      .withJavaTimeTypes(true))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    generate {
+      javaTimeTypes = true
+    }
+  }
+}]]></java><html>
+
+                                        </html></content>
+                                    </section>
+                                </sections>
                             </section>
 
                             <section id="codegen-config-target">

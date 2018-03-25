@@ -8,6 +8,8 @@
 
 package org.jooq.conf;
 
+import org.jooq.Log;
+
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -65,6 +67,22 @@ public class Settings
     protected StatementType statementType = StatementType.PREPARED_STATEMENT;
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
+    @XmlElement(defaultValue = "DEBUG")
+    protected Log.Level executeLoggingBindVariables = Log.Level.DEBUG;
+    @XmlElement(defaultValue = "false")
+    protected Boolean executeLoggingAbbreviatedBindVariables = false;
+    @XmlElement(defaultValue = "DEBUG")
+    protected Log.Level executeLoggingSqlString = Log.Level.DEBUG;
+    @XmlElement(defaultValue = "DEBUG")
+    protected Log.Level executeLoggingResult = Log.Level.DEBUG;
+    @XmlElement(defaultValue = "5")
+    protected Integer executeLoggingResultNumberOfRows = 5;
+    @XmlElement(defaultValue = "50")
+    protected Integer executeLoggingResultNumberOfColumns = 50;
+    @XmlElement(defaultValue = "DEBUG")
+    protected Log.Level executeLoggingRoutine = Log.Level.DEBUG;
+    @XmlElement(defaultValue = "DEBUG")
+    protected Log.Level executeLoggingException = Log.Level.DEBUG;
     @XmlElement(defaultValue = "false")
     protected Boolean executeWithOptimisticLocking = false;
     @XmlElement(defaultValue = "false")
@@ -451,6 +469,70 @@ public class Settings
      */
     public void setExecuteLogging(Boolean value) {
         this.executeLogging = value;
+    }
+
+    public Log.Level getExecuteLoggingBindVariables() {
+        return executeLoggingBindVariables;
+    }
+
+    public void setExecuteLoggingBindVariables(final Log.Level executeLoggingBindVariables) {
+        this.executeLoggingBindVariables = executeLoggingBindVariables;
+    }
+
+    public Boolean isExecuteLoggingAbbreviatedBindVariables() {
+        return executeLoggingAbbreviatedBindVariables;
+    }
+
+    public void setExecuteLoggingAbbreviatedBindVariables(final Boolean executeLoggingAbbreviatedBindVariables) {
+        this.executeLoggingAbbreviatedBindVariables = executeLoggingAbbreviatedBindVariables;
+    }
+
+    public Log.Level getExecuteLoggingSqlString() {
+        return executeLoggingSqlString;
+    }
+
+    public void setExecuteLoggingSqlString(final Log.Level executeLoggingSqlString) {
+        this.executeLoggingSqlString = executeLoggingSqlString;
+    }
+
+    public Log.Level getExecuteLoggingResult() {
+        return executeLoggingResult;
+    }
+
+    public void setExecuteLoggingResult(final Log.Level executeLoggingResult) {
+        this.executeLoggingResult = executeLoggingResult;
+    }
+
+    public Integer getExecuteLoggingResultNumberOfRows() {
+        return executeLoggingResultNumberOfRows;
+    }
+
+    public void setExecuteLoggingResultNumberOfRows(final Integer executeLoggingResultNumberOfRows) {
+        this.executeLoggingResultNumberOfRows = executeLoggingResultNumberOfRows;
+    }
+
+    public Integer getExecuteLoggingResultNumberOfColumns() {
+        return executeLoggingResultNumberOfColumns;
+    }
+
+    public void setExecuteLoggingResultNumberOfColumns(final Integer executeLoggingResultNumberOfColumns) {
+        this.executeLoggingResultNumberOfColumns = executeLoggingResultNumberOfColumns;
+    }
+
+    public Log.Level getExecuteLoggingRoutine() {
+        return executeLoggingRoutine;
+    }
+
+    public void setExecuteLoggingRoutine(final Log.Level executeLoggingRoutine) {
+        this.executeLoggingRoutine = executeLoggingRoutine;
+    }
+
+    public Log.Level getExecuteLoggingException() {
+        return executeLoggingException;
+    }
+
+    public void setExecuteLoggingException(final Log.Level executeLoggingException) {
+        this.executeLoggingException = executeLoggingException;
     }
 
     /**
@@ -1084,6 +1166,55 @@ public class Settings
         return this;
     }
 
+    public Settings withExecuteLoggingBindVariables(Log.Level value) {
+        setExecuteLoggingBindVariables(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingAbbreviatedBindVariables(Boolean value) {
+        setExecuteLoggingAbbreviatedBindVariables(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingSqlString(Log.Level value) {
+        setExecuteLoggingSqlString(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingResult(Log.Level value) {
+        setExecuteLoggingResult(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingResultNumberOfRows(Integer value) {
+        setExecuteLoggingResultNumberOfRows(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingResultNumberOfColumns(Integer value) {
+        setExecuteLoggingResultNumberOfColumns(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingRoutine(Log.Level value) {
+        setExecuteLoggingRoutine(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingException(Log.Level value) {
+        setExecuteLoggingException(value);
+        return this;
+    }
+
+    public Settings withExecuteLoggingOverallLevel(Log.Level value) {
+        setExecuteLoggingBindVariables(value);
+        setExecuteLoggingSqlString(value);
+        setExecuteLoggingResult(value);
+        setExecuteLoggingRoutine(value);
+        setExecuteLoggingException(value);
+        return this;
+    }
+
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
@@ -1266,6 +1397,46 @@ public class Settings
             sb.append("<executeLogging>");
             sb.append(executeLogging);
             sb.append("</executeLogging>");
+        }
+        if (executeLoggingBindVariables!= null) {
+            sb.append("<executeLoggingBindVariables>");
+            sb.append(executeLoggingBindVariables);
+            sb.append("</executeLoggingBindVariables>");
+        }
+        if (executeLoggingAbbreviatedBindVariables!= null) {
+            sb.append("<executeLoggingAbbreviatedBindVariables>");
+            sb.append(executeLoggingAbbreviatedBindVariables);
+            sb.append("</executeLoggingAbbreviatedBindVariables>");
+        }
+        if (executeLoggingSqlString!= null) {
+            sb.append("<executeLoggingSqlString>");
+            sb.append(executeLoggingSqlString);
+            sb.append("</executeLoggingSqlString>");
+        }
+        if (executeLoggingResult!= null) {
+            sb.append("<executeLoggingResult>");
+            sb.append(executeLoggingResult);
+            sb.append("</executeLoggingResult>");
+        }
+        if (executeLoggingResultNumberOfRows!= null) {
+            sb.append("<executeLoggingResultNumberOfRows>");
+            sb.append(executeLoggingResultNumberOfRows);
+            sb.append("</executeLoggingResultNumberOfRows>");
+        }
+        if (executeLoggingResultNumberOfColumns!= null) {
+            sb.append("<executeLoggingResultNumberOfColumns>");
+            sb.append(executeLoggingResultNumberOfColumns);
+            sb.append("</executeLoggingResultNumberOfColumns>");
+        }
+        if (executeLoggingRoutine!= null) {
+            sb.append("<executeLoggingRoutine>");
+            sb.append(executeLoggingRoutine);
+            sb.append("</executeLoggingRoutine>");
+        }
+        if (executeLoggingException!= null) {
+            sb.append("<executeLoggingException>");
+            sb.append(executeLoggingException);
+            sb.append("</executeLoggingException>");
         }
         if (executeWithOptimisticLocking!= null) {
             sb.append("<executeWithOptimisticLocking>");
@@ -1514,6 +1685,78 @@ public class Settings
                 return false;
             }
         }
+        if (executeLoggingBindVariables == null) {
+            if (other.executeLoggingBindVariables!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingBindVariables.equals(other.executeLoggingBindVariables)) {
+                return false;
+            }
+        }
+        if (executeLoggingAbbreviatedBindVariables == null) {
+            if (other.executeLoggingAbbreviatedBindVariables!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingAbbreviatedBindVariables.equals(other.executeLoggingAbbreviatedBindVariables)) {
+                return false;
+            }
+        }
+        if (executeLoggingSqlString == null) {
+            if (other.executeLoggingSqlString!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingSqlString.equals(other.executeLoggingSqlString)) {
+                return false;
+            }
+        }
+        if (executeLoggingResult == null) {
+            if (other.executeLoggingResult!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingResult.equals(other.executeLoggingResult)) {
+                return false;
+            }
+        }
+        if (executeLoggingResultNumberOfRows == null) {
+            if (other.executeLoggingResultNumberOfRows!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingResultNumberOfRows.equals(other.executeLoggingResultNumberOfRows)) {
+                return false;
+            }
+        }
+        if (executeLoggingResultNumberOfColumns == null) {
+            if (other.executeLoggingResultNumberOfColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingResultNumberOfColumns.equals(other.executeLoggingResultNumberOfColumns)) {
+                return false;
+            }
+        }
+        if (executeLoggingRoutine == null) {
+            if (other.executeLoggingRoutine!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingRoutine.equals(other.executeLoggingRoutine)) {
+                return false;
+            }
+        }
+        if (executeLoggingException == null) {
+            if (other.executeLoggingException!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingException.equals(other.executeLoggingException)) {
+                return false;
+            }
+        }
         if (executeWithOptimisticLocking == null) {
             if (other.executeWithOptimisticLocking!= null) {
                 return false;
@@ -1741,6 +1984,14 @@ public class Settings
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
         result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
+        result = ((prime*result)+((executeLoggingBindVariables == null)? 0 :executeLoggingBindVariables.hashCode()));
+        result = ((prime*result)+((executeLoggingAbbreviatedBindVariables == null)? 0 :executeLoggingAbbreviatedBindVariables.hashCode()));
+        result = ((prime*result)+((executeLoggingSqlString == null)? 0 :executeLoggingSqlString.hashCode()));
+        result = ((prime*result)+((executeLoggingResult == null)? 0 :executeLoggingResult.hashCode()));
+        result = ((prime*result)+((executeLoggingResultNumberOfRows == null)? 0 :executeLoggingResultNumberOfRows.hashCode()));
+        result = ((prime*result)+((executeLoggingResultNumberOfColumns == null)? 0 :executeLoggingResultNumberOfColumns.hashCode()));
+        result = ((prime*result)+((executeLoggingRoutine == null)? 0 :executeLoggingRoutine.hashCode()));
+        result = ((prime*result)+((executeLoggingException == null)? 0 :executeLoggingException.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));
         result = ((prime*result)+((attachRecords == null)? 0 :attachRecords.hashCode()));

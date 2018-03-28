@@ -39,6 +39,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -123,9 +124,9 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * {@link DSLContext#mergeInto(Table)}).</li>
      * </ul>
      * <p>
-     * These are the dialects that fulfill the above requirements:
+     * H2 supports this clause in MySQL mode.
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**

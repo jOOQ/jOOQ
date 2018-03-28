@@ -44,6 +44,7 @@ import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -256,15 +257,26 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
+                case H2:
                 case MARIADB:
                 case MYSQL: {
+
+                    // [#2508] In H2, this syntax is supported in MySQL MODE (we're assuming users will
+                    //         set this mode in order to profit from this functionality). Up until
+                    //         H2 1.4.197, qualification of columns in the ON DUPLICATE KEY UPDATE clause
+                    //         wasn't supported (see https://github.com/h2database/h2database/issues/1027)
+                    boolean oldQualify = ctx.qualify();
+                    boolean newQualify = ctx.family() == H2 ? false : oldQualify;
+
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .formatIndentStart()
                        .formatSeparator()
+                       .qualify(newQualify)
                        .visit(updateMap)
+                       .qualify(oldQualify)
                        .formatIndentEnd()
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
@@ -328,11 +340,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     ctx.end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
-                }
-
-                // Some dialects can't really handle this clause. Emulation should be done in two steps
-                case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement

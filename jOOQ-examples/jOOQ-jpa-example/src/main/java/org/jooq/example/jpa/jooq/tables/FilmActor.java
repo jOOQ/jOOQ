@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -1413935489;
+    private static final long serialVersionUID = -1548297183;
 
     /**
      * The reference instance of <code>PUBLIC.FILM_ACTOR</code>
@@ -105,7 +105,7 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7, Indexes.PRIMARY_KEY_7);
+        return Arrays.<Index>asList(Indexes.FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7, Indexes.FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7, Indexes.PRIMARY_KEY_7);
     }
 
     /**

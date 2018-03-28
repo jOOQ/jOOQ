@@ -36,6 +36,7 @@ public class Indexes {
     public static final Index FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2 = Indexes0.FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2;
     public static final Index FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2 = Indexes0.FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2;
     public static final Index PRIMARY_KEY_2 = Indexes0.PRIMARY_KEY_2;
+    public static final Index FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7 = Indexes0.FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7;
     public static final Index FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7 = Indexes0.FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7;
     public static final Index PRIMARY_KEY_7 = Indexes0.PRIMARY_KEY_7;
     public static final Index PRIMARY_KEY_C = Indexes0.PRIMARY_KEY_C;
@@ -49,6 +50,7 @@ public class Indexes {
         public static Index FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2 = Internal.createIndex("FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2", Film.FILM, new OrderField[] { Film.FILM.LANGUAGE_LANGUAGEID }, false);
         public static Index FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2 = Internal.createIndex("FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2", Film.FILM, new OrderField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, false);
         public static Index PRIMARY_KEY_2 = Internal.createIndex("PRIMARY_KEY_2", Film.FILM, new OrderField[] { Film.FILM.FILMID }, true);
+        public static Index FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7 = Internal.createIndex("FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7", FilmActor.FILM_ACTOR, new OrderField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, false);
         public static Index FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7 = Internal.createIndex("FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7", FilmActor.FILM_ACTOR, new OrderField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, false);
         public static Index PRIMARY_KEY_7 = Internal.createIndex("PRIMARY_KEY_7", FilmActor.FILM_ACTOR, new OrderField[] { FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
         public static Index PRIMARY_KEY_C = Internal.createIndex("PRIMARY_KEY_C", Language.LANGUAGE, new OrderField[] { Language.LANGUAGE.LANGUAGEID }, true);

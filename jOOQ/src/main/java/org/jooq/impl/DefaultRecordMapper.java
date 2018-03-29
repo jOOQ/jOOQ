@@ -396,7 +396,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Reflect parameter = Reflect.on(parameters.get(i));
-                        parameterNames.add(parameter.call("getName").get());
+                        parameterNames.add(parameter.call("getName").<String>get());
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
                         parameterTypes[i] = (Class<?>) getJavaClass.invoke(jvmClassMappingKt.get(), typeClassifier);
                     }

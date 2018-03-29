@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.commentOnTable;
+import static org.jooq.impl.DSL.createIndex;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
@@ -125,7 +126,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final long                serialVersionUID               = 8904572826501186329L;
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_INDEXES             = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK       = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
@@ -323,7 +324,10 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        if (comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.family())) {
+        boolean c = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.family());
+        boolean i = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.family());
+
+        if (c || i) {
             begin(ctx);
 
 
@@ -340,21 +344,43 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             ctx.sql(';');
 
-            ctx.formatSeparator();
+            if (c) {
+                ctx.formatSeparator();
 
 
 
 
 
 
-            ctx.visit(commentOnTable(table).is(comment));
+                ctx.visit(commentOnTable(table).is(comment));
 
 
 
 
 
 
-            ctx.sql(';');
+                ctx.sql(';');
+            }
+
+            if (i) {
+                for (Index index : indexes) {
+                    ctx.formatSeparator();
+
+
+
+
+
+
+                    ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
+
+
+
+
+
+
+                    ctx.sql(';');
+                }
+            }
 
             end(ctx);
             return;
@@ -417,7 +443,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             ctx.end(CREATE_TABLE_CONSTRAINTS);
 
-            if (!indexes.isEmpty() && !NO_SUPPORT_INDEXES.contains(ctx.family())) {
+            if (!indexes.isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.family())) {
                 ctx.qualify(false);
 
                 for (Index index : indexes) {

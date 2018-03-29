@@ -37,8 +37,13 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 import java.util.Collection;
 
@@ -52,18 +57,18 @@ public interface CreateTableIndexStep extends CreateTableOnCommitStep {
     /**
      * Add an index to the table.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep index(Index index);
 
     /**
      * Add indexes to the table.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep indexes(Index... indexes);
 
     /**
      * Add indexes to the table.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep indexes(Collection<? extends Index> indexes);
 }

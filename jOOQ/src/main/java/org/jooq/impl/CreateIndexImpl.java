@@ -55,7 +55,10 @@ import static org.jooq.impl.Keywords.K_INDEX;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_ORDERFIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -128,13 +131,28 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
+    public final CreateIndexImpl on(Table<?> t, Collection<? extends OrderField<?>> fields) {
+        return on(t, fields.toArray(EMPTY_ORDERFIELD));
+    }
+
+    @Override
     public final CreateIndexImpl on(Name tableName, Name... fieldNames) {
         return on(table(tableName), Tools.fieldsByName(fieldNames));
     }
 
     @Override
+    public final CreateIndexImpl on(Name tableName, Collection<? extends Name> fieldNames) {
+        return on(tableName, fieldNames.toArray(EMPTY_NAME));
+    }
+
+    @Override
     public final CreateIndexImpl on(String tableName, String... fieldNames) {
         return on(table(name(tableName)), Tools.fieldsByName(fieldNames));
+    }
+
+    @Override
+    public final CreateIndexImpl on(String tableName, Collection<? extends String> fieldNames) {
+        return on(tableName, fieldNames.toArray(EMPTY_STRING));
     }
 
     @Override

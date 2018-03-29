@@ -267,6 +267,7 @@ final class Tools {
     static final int[]                      EMPTY_INT                     = {};
     static final Name[]                     EMPTY_NAME                    = {};
     static final Param<?>[]                 EMPTY_PARAM                   = {};
+    static final OrderField<?>[]            EMPTY_ORDERFIELD              = {};
     static final Query[]                    EMPTY_QUERY                   = {};
     static final QueryPart[]                EMPTY_QUERYPART               = {};
     static final Record[]                   EMPTY_RECORD                  = {};

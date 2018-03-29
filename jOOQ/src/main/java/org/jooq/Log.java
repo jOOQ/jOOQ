@@ -162,11 +162,6 @@ public interface Log {
     void info(Object message, Object details, Throwable throwable);
 
     /**
-     * Check if <code>WARN</code> level logging is enabled.
-     */
-    boolean isWarnEnabled();
-
-    /**
      * Log a message in <code>WARN</code> level.
      *
      * @param message The log message
@@ -201,11 +196,6 @@ public interface Log {
     void warn(Object message, Object details, Throwable throwable);
 
     /**
-     * Check if <code>ERROR</code> level logging is enabled.
-     */
-    boolean isErrorEnabled();
-
-    /**
      * Log a message in <code>ERROR</code> level.
      *
      * @param message The log message
@@ -238,84 +228,6 @@ public interface Log {
      *            message
      */
     void error(Object message, Object details, Throwable throwable);
-
-    default boolean isEnabled(final Log.Level level) {
-        switch (level) {
-            case TRACE: return isTraceEnabled();
-            case DEBUG: return isDebugEnabled();
-            case INFO: return isInfoEnabled();
-            case WARN: return isWarnEnabled();
-            case ERROR: return isErrorEnabled();
-            case FATAL: return isErrorEnabled();
-            default: return false;
-        }
-    }
-
-    default void log(final Object message, final Log.Level level) {
-        log(message, (Object) null, level);
-    }
-
-    default void log(final Object message, final Object details, final Log.Level level) {
-        switch (level) {
-            case TRACE: {
-                trace(message, details);
-                return;
-            }
-            case DEBUG: {
-                debug(message, details);
-                return;
-            }
-            case INFO: {
-                info(message, details);
-                return;
-            }
-            case WARN: {
-                warn(message, details);
-                return;
-            }
-            case ERROR: {
-                error(message, details);
-                return;
-            }
-            case FATAL: {
-                error(message, details);
-                return;
-            }
-        }
-    }
-
-    default void log(final Object message, final Throwable throwable, final Log.Level level) {
-        log(message, null, throwable, level);
-    }
-
-    default void log(final Object message, final Object details, final Throwable throwable, final Log.Level level) {
-        switch (level) {
-            case TRACE: {
-                trace(message, details, throwable);
-                return;
-            }
-            case DEBUG: {
-                debug(message, details, throwable);
-                return;
-            }
-            case INFO: {
-                info(message, details, throwable);
-                return;
-            }
-            case WARN: {
-                warn(message, details, throwable);
-                return;
-            }
-            case ERROR: {
-                error(message, details, throwable);
-                return;
-            }
-            case FATAL: {
-                error(message, details, throwable);
-                return;
-            }
-        }
-    }
 
     /**
      * The log level.

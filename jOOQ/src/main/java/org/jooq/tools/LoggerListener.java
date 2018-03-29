@@ -38,7 +38,6 @@
 package org.jooq.tools;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Objects.requireNonNull;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.val;
@@ -54,7 +53,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
-import org.jooq.Log;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.QueryPart;
@@ -84,121 +82,91 @@ public class LoggerListener extends DefaultExecuteListener {
 
     private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
 
-    private final Log.Level executeLoggingBindVariables;
-
-    private final boolean   executeLoggingAbbreviatedBindVariables;
-
-    private final Log.Level executeLoggingSqlString;
-
-    private final Log.Level executeLoggingResult;
-
-    private final int       executeLoggingResultNumberOfRows;
-
-    private final int       executeLoggingResultNumberOfColumns;
-
-    private final Log.Level executeLoggingRoutine;
-
-    private final Log.Level executeLoggingException;
-
-    public LoggerListener(final Log.Level executeLoggingBindVariables,
-                          final Boolean executeLoggingAbbreviatedBindVariables,
-                          final Log.Level executeLoggingSqlString,
-                          final Log.Level executeLoggingResult,
-                          final Integer executeLoggingResultNumberOfRows,
-                          final Integer executeLoggingResultNumberOfColumns,
-                          final Log.Level executeLoggingRoutine,
-                          final Log.Level executeLoggingException) {
-        this.executeLoggingBindVariables = requireNonNull(executeLoggingBindVariables);
-        this.executeLoggingAbbreviatedBindVariables = requireNonNull(executeLoggingAbbreviatedBindVariables);
-        this.executeLoggingSqlString = requireNonNull(executeLoggingSqlString);
-        this.executeLoggingResult = requireNonNull(executeLoggingResult);
-        this.executeLoggingResultNumberOfRows = requireNonNull(executeLoggingResultNumberOfRows);
-        this.executeLoggingResultNumberOfColumns = requireNonNull(executeLoggingResultNumberOfColumns);
-        this.executeLoggingRoutine = requireNonNull(executeLoggingRoutine);
-        this.executeLoggingException = requireNonNull(executeLoggingException);
-    }
-
     @Override
     public void renderEnd(ExecuteContext ctx) {
-        Configuration configuration = ctx.configuration();
-        String newline = TRUE.equals(configuration.settings().isRenderFormatted()) ? "\n" : "";
+        if (log.isDebugEnabled()) {
+            Configuration configuration = ctx.configuration();
+            String newline = TRUE.equals(configuration.settings().isRenderFormatted()) ? "\n" : "";
 
-        // [#2939] Prevent excessive logging of bind variables only in DEBUG mode, not in TRACE mode.
-        if (executeLoggingAbbreviatedBindVariables)
-            configuration = abbreviateBindVariables(configuration);
+            // [#2939] Prevent excessive logging of bind variables only in DEBUG mode, not in TRACE mode.
+            if (!log.isTraceEnabled())
+                configuration = abbreviateBindVariables(configuration);
 
-        String[] batchSQL = ctx.batchSQL();
-        if (log.isEnabled(executeLoggingSqlString) && ctx.query() != null) {
+            String[] batchSQL = ctx.batchSQL();
+            if (ctx.query() != null) {
 
-            // Actual SQL passed to JDBC
-            log.log("Executing query", newline + ctx.sql(), executeLoggingSqlString);
+                // Actual SQL passed to JDBC
+                log.debug("Executing query", newline + ctx.sql());
 
-            // [#1278] DEBUG log also SQL with inlined bind values, if
-            // that is not the same as the actual SQL passed to JDBC
-            if (log.isEnabled(executeLoggingBindVariables)) {
+                // [#1278] DEBUG log also SQL with inlined bind values, if
+                // that is not the same as the actual SQL passed to JDBC
                 String inlined = DSL.using(configuration).renderInlined(ctx.query());
                 if (!ctx.sql().equals(inlined))
-                    log.log("-> with bind values", newline + inlined, executeLoggingBindVariables);
+                    log.debug("-> with bind values", newline + inlined);
             }
-        }
 
-        // [#2987] Log routines
-        else if (log.isEnabled(executeLoggingRoutine) && ctx.routine() != null) {
+            // [#2987] Log routines
+            else if (ctx.routine() != null) {
+                log.debug("Calling routine", newline + ctx.sql());
 
-            log.log("Calling routine", newline + ctx.sql(), executeLoggingRoutine);
-
-            if (log.isEnabled(executeLoggingBindVariables)) {
                 String inlined = DSL.using(configuration)
-                        .renderInlined(ctx.routine());
+                                    .renderInlined(ctx.routine());
 
                 if (!ctx.sql().equals(inlined))
-                    log.log("-> with bind values", newline + inlined, executeLoggingBindVariables);
+                    log.debug("-> with bind values", newline + inlined);
             }
-        } else if (log.isEnabled(executeLoggingSqlString) && !StringUtils.isBlank(ctx.sql())) {
 
-            // [#1529] Batch queries should be logged specially
-            if (ctx.type() == ExecuteType.BATCH)
-                log.log("Executing batch query", newline + ctx.sql(), executeLoggingSqlString);
-            else
-                log.log("Executing query", newline + ctx.sql(), executeLoggingSqlString);
-        }
+            else if (!StringUtils.isBlank(ctx.sql())) {
 
-        // [#2532] Log a complete BatchMultiple query
-        else if (log.isEnabled(executeLoggingSqlString) && batchSQL.length > 0) {
-            if (batchSQL[batchSQL.length - 1] != null)
-                for (String sql : batchSQL)
-                    log.log("Executing batch query", newline + sql, executeLoggingSqlString);
+                // [#1529] Batch queries should be logged specially
+                if (ctx.type() == ExecuteType.BATCH)
+                    log.debug("Executing batch query", newline + ctx.sql());
+                else
+                    log.debug("Executing query", newline + ctx.sql());
+            }
+
+            // [#2532] Log a complete BatchMultiple query
+            else if (batchSQL.length > 0) {
+                if (batchSQL[batchSQL.length - 1] != null)
+                    for (String sql : batchSQL)
+                        log.debug("Executing batch query", newline + sql);
+            }
         }
     }
 
     @Override
     public void recordEnd(ExecuteContext ctx) {
-        if (log.isEnabled(executeLoggingResult) && ctx.record() != null)
-            logMultiline("Record fetched", ctx.record().toString(), executeLoggingResult);
+        if (log.isTraceEnabled() && ctx.record() != null)
+            logMultiline("Record fetched", ctx.record().toString(), Level.FINER);
     }
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
-        if (log.isEnabled(executeLoggingResult) && ctx.result() != null)
-            logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(executeLoggingResultNumberOfRows).maxColWidth(executeLoggingResultNumberOfColumns)), executeLoggingResult);
+        if (ctx.result() != null)
+            if (log.isTraceEnabled())
+                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(500).maxColWidth(500)), Level.FINE);
+            else if (log.isDebugEnabled())
+                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(5).maxColWidth(50)), Level.FINE);
     }
 
     @Override
     public void executeEnd(ExecuteContext ctx) {
-        if (log.isEnabled(executeLoggingResult) && ctx.rows() >= 0)
-            log.log("Affected row(s)", ctx.rows(), executeLoggingResult);
+        if (ctx.rows() >= 0)
+            if (log.isDebugEnabled())
+                log.debug("Affected row(s)", ctx.rows());
     }
 
     @Override
     public void outEnd(ExecuteContext ctx) {
-        if (log.isEnabled(executeLoggingRoutine) && ctx.routine() != null)
-            logMultiline("Fetched OUT parameters", "" + StringUtils.defaultIfNull(record(ctx.configuration(), ctx.routine()), "N/A"), executeLoggingRoutine);
+        if (ctx.routine() != null)
+            if (log.isDebugEnabled())
+                logMultiline("Fetched OUT parameters", "" + StringUtils.defaultIfNull(record(ctx.configuration(), ctx.routine()), "N/A"), Level.FINE);
     }
 
     @Override
     public void exception(ExecuteContext ctx) {
-        if (log.isEnabled(executeLoggingException))
-            log.log("Exception", ctx.exception(), executeLoggingException);
+        if (log.isDebugEnabled())
+            log.debug("Exception", ctx.exception());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -229,9 +197,14 @@ public class LoggerListener extends DefaultExecuteListener {
         return result;
     }
 
-    private void logMultiline(String comment, String message, Log.Level level) {
+    private void logMultiline(String comment, String message, Level level) {
         for (String line : message.split("\n")) {
-            log.log(comment, line, level);
+            if (level == Level.FINE) {
+                log.debug(comment, line);
+            }
+            else {
+                log.trace(comment, line);
+            }
 
             comment = "";
         }

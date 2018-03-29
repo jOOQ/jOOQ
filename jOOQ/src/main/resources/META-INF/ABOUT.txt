@@ -18,7 +18,6 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Fabrice Le Roy
 - Gonzalo Ortiz Jaureguizar
 - Gregory Hlavac
-- Grenville Wilson
 - Henrik Sjöstrand
 - Ivan Dugic
 - Javier Durante

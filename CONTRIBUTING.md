@@ -5,7 +5,7 @@ Thanks for offering your help.
 
 In order to make our cooperation as smooth as possible, we have a couple of guidelines that we'd like you to follow:
 
-- If in doubt, please discuss your ideas first before providing a pull request. This often helps avoid a lot of unnecessary work.
+- **If in doubt, please discuss your ideas first before providing a pull request. This often helps avoid a lot of unnecessary work. In particular, we might prefer not to prioritise a particular feature for another while.**
 - Fork the repository.
 - Check out and work on your own fork.
 - Try to make your commits as atomic as possible. Related changes to three files should be committed in one commit.

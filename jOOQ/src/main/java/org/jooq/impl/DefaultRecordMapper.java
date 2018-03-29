@@ -542,7 +542,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ProxyMapper implements RecordMapper<R, E> {
 
+
         private Constructor<Lookup>     constructor;
+
         private final MutablePOJOMapper pojomapper;
 
         ProxyMapper() {

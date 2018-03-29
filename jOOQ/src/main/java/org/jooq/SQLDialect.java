@@ -38,6 +38,17 @@
 
 package org.jooq;
 
+import org.jooq.impl.SQLDataType;
+import org.jooq.util.cubrid.CUBRIDDataType;
+import org.jooq.util.derby.DerbyDataType;
+import org.jooq.util.firebird.FirebirdDataType;
+import org.jooq.util.h2.H2DataType;
+import org.jooq.util.hsqldb.HSQLDBDataType;
+import org.jooq.util.mariadb.MariaDBDataType;
+import org.jooq.util.mysql.MySQLDataType;
+import org.jooq.util.postgres.PostgresDataType;
+import org.jooq.util.sqlite.SQLiteDataType;
+
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -63,7 +74,7 @@ public enum SQLDialect {
      *             pseudo-dialect.
      */
     @Deprecated
-    SQL99("", false),
+    SQL99("", SQLDataType.class, false),
 
     /**
      * The default SQL dialect.
@@ -72,7 +83,7 @@ public enum SQLDialect {
      * not intended to be used with any actual database as it may combined
      * dialect-specific things from various dialects.
      */
-    DEFAULT("", false),
+    DEFAULT("", SQLDataType.class, false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for free usage
@@ -81,57 +92,57 @@ public enum SQLDialect {
     /**
      * The CUBRID dialect family.
      */
-    CUBRID("CUBRID", false),
+    CUBRID("CUBRID", CUBRIDDataType.class, false),
 
     /**
      * The Apache Derby dialect family.
      */
-    DERBY("Derby", false),
+    DERBY("Derby", DerbyDataType.class, false),
 
     /**
      * The Firebird dialect family.
      */
-    FIREBIRD("Firebird", false),
+    FIREBIRD("Firebird", FirebirdDataType.class, false),
 
     /**
      * The Firebird 2.5 dialect.
      */
-    FIREBIRD_2_5("Firebird", false, FIREBIRD, null),
+    FIREBIRD_2_5("Firebird", FirebirdDataType.class, false, FIREBIRD, null),
 
     /**
      * The Firebird 3.0 dialect.
      */
-    FIREBIRD_3_0("Firebird", false, FIREBIRD, FIREBIRD_2_5),
+    FIREBIRD_3_0("Firebird", FirebirdDataType.class, false, FIREBIRD, FIREBIRD_2_5),
 
     /**
      * The H2 dialect family.
      */
-    H2("H2", false),
+    H2("H2", H2DataType.class, false),
 
     /**
      * The Hypersonic dialect family.
      */
-    HSQLDB("HSQLDB", false),
+    HSQLDB("HSQLDB", HSQLDBDataType.class, false),
 
     /**
      * The MariaDB dialect family.
      */
-    MARIADB("MariaDB", false),
+    MARIADB("MariaDB", MariaDBDataType.class, false),
 
     /**
      * The MySQL dialect family.
      */
-    MYSQL("MySQL", false),
+    MYSQL("MySQL", MySQLDataType.class, false),
 
     /**
      * The MySQL 5.7 dialect.
      */
-    MYSQL_5_7("MySQL", false, MYSQL, null),
+    MYSQL_5_7("MySQL", MySQLDataType.class, false, MYSQL, null),
 
     /**
      * The MySQL 8.0 dialect.
      */
-    MYSQL_8_0("MySQL", false, MYSQL, MYSQL_5_7),
+    MYSQL_8_0("MySQL", MySQLDataType.class, false, MYSQL, MYSQL_5_7),
 
     /**
      * The PostgreSQL dialect family.
@@ -140,7 +151,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false),
+    POSTGRES("Postgres", PostgresDataType.class, false),
 
     /**
      * The PostgreSQL 9.3 dialect.
@@ -149,7 +160,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_3("Postgres", false, POSTGRES, null),
+    POSTGRES_9_3("Postgres", PostgresDataType.class, false, POSTGRES, null),
 
     /**
      * The PostgreSQL 9.4 dialect.
@@ -158,7 +169,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
+    POSTGRES_9_4("Postgres", PostgresDataType.class, false, POSTGRES, POSTGRES_9_3),
 
     /**
      * The PostgreSQL 9.5 dialect.
@@ -167,7 +178,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_5("Postgres", false, POSTGRES, POSTGRES_9_4),
+    POSTGRES_9_5("Postgres", PostgresDataType.class, false, POSTGRES, POSTGRES_9_4),
 
     /**
      * The PostgreSQL 10 dialect.
@@ -176,12 +187,12 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_10("Postgres", false, POSTGRES, POSTGRES_9_5),
+    POSTGRES_10("Postgres", PostgresDataType.class, false, POSTGRES, POSTGRES_9_5),
 
     /**
      * The SQLite dialect family.
      */
-    SQLITE("SQLite", false),
+    SQLITE("SQLite", SQLiteDataType.class, false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
@@ -386,16 +397,17 @@ public enum SQLDialect {
     private final SQLDialect          family;
     private SQLDialect                predecessor;
     private final ThirdParty          thirdParty;
+    private final Class<?>            dataTypeClass;
 
-    private SQLDialect(String name, boolean commercial) {
-        this(name, commercial, null, null);
+    private SQLDialect(String name, Class<?> dataTypeClass, boolean commercial) {
+        this(name, dataTypeClass, commercial, null, null);
     }
 
-    private SQLDialect(String name, boolean commercial, SQLDialect family) {
-        this(name, commercial, family, null);
+    private SQLDialect(String name, Class<?> dataTypeClass, boolean commercial, SQLDialect family) {
+        this(name, dataTypeClass, commercial, family, null);
     }
 
-    private SQLDialect(String name, boolean commercial, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, Class<?> dataTypeClass, boolean commercial, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
         this.family = family == null ? this : family;
@@ -405,6 +417,7 @@ public enum SQLDialect {
             family.predecessor = this;
 
         this.thirdParty = new ThirdParty();
+        this.dataTypeClass = dataTypeClass;
     }
 
     /**
@@ -553,6 +566,10 @@ public enum SQLDialect {
      */
     public final ThirdParty thirdParty() {
         return thirdParty;
+    }
+
+    public Class<?> getDataTypeClass() {
+        return dataTypeClass;
     }
 
     /**

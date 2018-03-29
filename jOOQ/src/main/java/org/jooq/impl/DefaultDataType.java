@@ -233,12 +233,6 @@ public class DefaultDataType<T> implements DataType<T> {
         }
 
         SQL_DATATYPES_BY_TYPE = new LinkedHashMap<Class<?>, DataType<?>>();
-
-        // [#2506] Transitively load all dialect-specific data types
-        try {
-            Class.forName(SQLDataType.class.getName());
-        }
-        catch (Exception ignore) {}
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {

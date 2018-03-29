@@ -621,12 +621,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1125] Also with temporal data types, casting is needed some times
             // [#4338] ... specifically when using JSR-310 types
             // [#1130] TODO type can be null for ARRAY types, etc.
-            else if (POSTGRES == family && (sqlDataType == null || !sqlDataType.isTemporal()))
+            // [#7351] UUID data types need to be cast too
+            else if (POSTGRES == family && (sqlDataType == null || (!sqlDataType.isTemporal() && sqlDataType != SQLDataType.UUID)))
                 sql(ctx, converted);
 
             // [#1727] VARCHAR types should be cast to their actual lengths in some
             // dialects
-            else if ((sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR) && FIREBIRD == family)
+            else if (FIREBIRD == family && (sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR))
                 sqlCast(ctx, converted, dataType, getValueLength((String) converted), 0, 0);
 
 

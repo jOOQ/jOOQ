@@ -417,16 +417,24 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
             ctx.end(CREATE_TABLE_CONSTRAINTS);
 
-            if (!indexes.isEmpty() && !NO_SUPPORT_INDEXES.contains(ctx.family()))
-                for (Index index : indexes)
+            if (!indexes.isEmpty() && !NO_SUPPORT_INDEXES.contains(ctx.family())) {
+                ctx.qualify(false);
+
+                for (Index index : indexes) {
                     ctx.sql(',')
                        .formatSeparator()
-                       .visit(K_INDEX).sql(' ').visit(index.getUnqualifiedName())
-                       .sql(" (")
-                       .qualify(false)
+                       .visit(K_INDEX);
+
+                    if (!"".equals(index.getName()))
+                        ctx.sql(' ').visit(index.getUnqualifiedName());
+
+                    ctx.sql(" (")
                        .visit(new SortFieldList(index.getFields()))
-                       .qualify(qualify)
                        .sql(')');
+                }
+
+                ctx.qualify(qualify);
+            }
 
             ctx.formatIndentEnd()
                .formatNewLine()

@@ -60,14 +60,21 @@ public final class Internal {
     /**
      * Factory method for indexes.
      */
-    public static Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
-        return new IndexImpl(DSL.name(name), table, sortFields, null, unique);
+    public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
+        return createIndex(DSL.name(name), table, sortFields, unique);
+    }
+
+    /**
+     * Factory method for indexes.
+     */
+    public static final Index createIndex(Name name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
+        return new IndexImpl(name, table, sortFields, null, unique);
     }
 
     /**
      * Factory method for identities.
      */
-    public static <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
+    public static final <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
         return new IdentityImpl<R, T>(table, field);
     }
 
@@ -77,7 +84,7 @@ public final class Internal {
 
     @SafeVarargs
 
-    public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
         return new UniqueKeyImpl<R>(table, fields);
     }
 
@@ -87,7 +94,7 @@ public final class Internal {
 
     @SafeVarargs
 
-    public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
         return new UniqueKeyImpl<R>(table, name, fields);
     }
 
@@ -97,7 +104,7 @@ public final class Internal {
 
     @SafeVarargs
 
-    public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
         return createForeignKey(key, table, null, fields);
     }
 
@@ -107,7 +114,7 @@ public final class Internal {
 
     @SafeVarargs
 
-    public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
         ForeignKey<R, U> result = new ReferenceImpl<R, U>(key, table, name, fields);
 
         if (key instanceof UniqueKeyImpl)

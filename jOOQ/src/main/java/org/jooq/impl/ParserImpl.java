@@ -285,6 +285,7 @@ import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableConstraintStep;
+import org.jooq.CreateTableIndexStep;
 import org.jooq.CreateTableStorageStep;
 import org.jooq.CreateTableWithDataStep;
 import org.jooq.DDLQuery;
@@ -311,6 +312,7 @@ import org.jooq.GrantWithGrantOptionStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
+import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnConflictWhereStep;
@@ -825,7 +827,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static void parseLimit(ParserContext ctx, SelectQueryImpl<Record> result, boolean offset) {
+    private static final void parseLimit(ParserContext ctx, SelectQueryImpl<Record> result, boolean offset) {
         boolean offsetStandard = false;
         boolean offsetPostgres = false;
 
@@ -2106,11 +2108,27 @@ final class ParserImpl implements Parser {
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
             List<Constraint> constraints = new ArrayList<Constraint>();
+            List<Index> indexes = new ArrayList<Index>();
             boolean primary = false;
             boolean noConstraint = true;
 
             parse(ctx, '(');
+
+            columnLoop:
             do {
+                int position = ctx.position();
+
+                // [#7348] Look ahead if the next tokens indicate a MySQL index definition
+                if (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX")) {
+                    if (parseIf(ctx, '(') || parseIdentifierIf(ctx) != null) {
+                        ctx.position(position);
+                        noConstraint = false;
+                        break columnLoop;
+                    }
+
+                    ctx.position(position);
+                }
+
                 Name fieldName = parseIdentifier(ctx);
                 DataType<?> type = parseDataType(ctx);
                 Comment fieldComment = null;
@@ -2308,8 +2326,10 @@ final class ParserImpl implements Parser {
                         constraints.add(parseForeignKeySpecification(ctx, constraint));
                     else if (parseKeywordIf(ctx, "CHECK"))
                         constraints.add(parseCheckSpecification(ctx, constraint));
+                    else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX")))
+                        indexes.add(parseIndexSpecification(ctx, tableName));
                     else
-                        throw ctx.expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
+                        throw ctx.expected("CHECK", "CONSTRAINT", "FOREIGN KEY", "INDEX", "KEY", "PRIMARY KEY", "UNIQUE");
                 }
                 while (parseIf(ctx, ','));
             }
@@ -2325,20 +2345,23 @@ final class ParserImpl implements Parser {
             CreateTableConstraintStep s3 = constraints.isEmpty()
                 ? s2
                 : s2.constraints(constraints);
-            CreateTableCommentStep s4 = s3;
+            CreateTableIndexStep s4 = indexes.isEmpty()
+                ? s3
+                : s3.indexes(indexes);
+            CreateTableCommentStep s5 = s4;
 
             if (temporary && parseKeywordIf(ctx, "ON COMMIT")) {
                 if (parseKeywordIf(ctx, "DELETE ROWS"))
-                    s4 = s3.onCommitDeleteRows();
+                    s5 = s4.onCommitDeleteRows();
                 else if (parseKeywordIf(ctx, "DROP"))
-                    s4 = s3.onCommitDrop();
+                    s5 = s4.onCommitDrop();
                 else if (parseKeywordIf(ctx, "PRESERVE ROWS"))
-                    s4 = s3.onCommitPreserveRows();
+                    s5 = s4.onCommitPreserveRows();
                 else
                     throw ctx.unsupportedClause();
             }
 
-            storageStep = commentStep = s4;
+            storageStep = commentStep = s5;
         }
 
         List<SQL> storage = new ArrayList<SQL>();
@@ -2475,6 +2498,14 @@ final class ParserImpl implements Parser {
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));
         else
             return storageStep;
+    }
+
+    private static final Index parseIndexSpecification(ParserContext ctx, Table<?> table) {
+        Name name = parseIdentifierIf(ctx);
+        parse(ctx, '(');
+        SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
+        parse(ctx, ')');
+        return Internal.createIndex(name == null ? DSL.name("") : name, table, fields, false);
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {

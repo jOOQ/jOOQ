@@ -988,10 +988,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         try {
             switch (format.recordFormat()) {
                 case ARRAY:
-                    ResultImpl.formatJSONArray0(this, fields.fields, format, 0, writer);
+                    AbstractCursor.formatJSONArray0(this, fields.fields, format, 0, writer);
                     break;
                 case OBJECT:
-                    ResultImpl.formatJSONMap0(this, fields.fields, format, 0, writer);
+                    AbstractCursor.formatJSONMap0(this, fields.fields, format, 0, writer);
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);
@@ -1035,7 +1035,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             log.debug("XMLFormat.header currently not supported for Record.formatXML()");
 
         try {
-            ResultImpl.formatXMLRecord(writer, format, 0, this, fields.fields);
+            AbstractCursor.formatXMLRecord(writer, format, 0, this, fields.fields);
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);

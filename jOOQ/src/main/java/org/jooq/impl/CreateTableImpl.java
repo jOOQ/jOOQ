@@ -69,6 +69,7 @@ import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_INDEX;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_DELETE_ROWS;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_DROP;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
@@ -99,6 +100,7 @@ import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableWithDataStep;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -123,6 +125,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final long                serialVersionUID               = 8904572826501186329L;
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_INDEXES             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
@@ -138,6 +141,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final List<Field<?>>             columnFields;
     private final List<DataType<?>>          columnTypes;
     private final List<Constraint>           constraints;
+    private final List<Index>                indexes;
     private final boolean                    temporary;
     private final boolean                    ifNotExists;
     private OnCommit                         onCommit;
@@ -153,6 +157,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         this.columnFields = new ArrayList<Field<?>>();
         this.columnTypes = new ArrayList<DataType<?>>();
         this.constraints = new ArrayList<Constraint>();
+        this.indexes = new ArrayList<Index>();
     }
 
     // ------------------------------------------------------------------------
@@ -228,6 +233,22 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final CreateTableImpl<R> constraints(Collection<? extends Constraint> c) {
         constraints.addAll(c);
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl<R> index(Index i) {
+        return indexes(Arrays.asList(i));
+    }
+
+    @Override
+    public final CreateTableImpl<R> indexes(Index... i) {
+        return indexes(Arrays.asList(i));
+    }
+
+    @Override
+    public final CreateTableImpl<R> indexes(Collection<? extends Index> i) {
+        indexes.addAll(i);
         return this;
     }
 
@@ -394,8 +415,20 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                            .formatSeparator()
                            .visit(constraint);
 
-            ctx.end(CREATE_TABLE_CONSTRAINTS)
-               .formatIndentEnd()
+            ctx.end(CREATE_TABLE_CONSTRAINTS);
+
+            if (!indexes.isEmpty() && !NO_SUPPORT_INDEXES.contains(ctx.family()))
+                for (Index index : indexes)
+                    ctx.sql(',')
+                       .formatSeparator()
+                       .visit(K_INDEX).sql(' ').visit(index.getUnqualifiedName())
+                       .sql(" (")
+                       .qualify(false)
+                       .visit(new SortFieldList(index.getFields()))
+                       .qualify(qualify)
+                       .sql(')');
+
+            ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
 

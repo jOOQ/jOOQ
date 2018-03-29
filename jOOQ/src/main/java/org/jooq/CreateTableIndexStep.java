@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+
 import java.util.Collection;
 
 /**
@@ -44,23 +47,23 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface CreateTableConstraintStep extends CreateTableIndexStep {
+public interface CreateTableIndexStep extends CreateTableOnCommitStep {
 
     /**
-     * Add a constraint to the table.
+     * Add an index to the table.
      */
-    @Support
-    CreateTableConstraintStep constraint(Constraint constraint);
+    @Support({ MARIADB, MYSQL })
+    CreateTableIndexStep index(Index index);
 
     /**
-     * Add constraints to the table.
+     * Add indexes to the table.
      */
-    @Support
-    CreateTableConstraintStep constraints(Constraint... constraints);
+    @Support({ MARIADB, MYSQL })
+    CreateTableIndexStep indexes(Index... indexes);
 
     /**
-     * Add constraints to the table.
+     * Add indexes to the table.
      */
-    @Support
-    CreateTableConstraintStep constraints(Collection<? extends Constraint> constraints);
+    @Support({ MARIADB, MYSQL })
+    CreateTableIndexStep indexes(Collection<? extends Index> indexes);
 }

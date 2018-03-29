@@ -335,6 +335,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     public DefaultDSLContext(Configuration configuration) {
         super(configuration, configuration == null ? null : configuration.data());
+        if (configuration != null) {
+            SQLDialectRegistry.initializeDialect(configuration.dialect());
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -4474,19 +4477,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         delete.addConditions(condition);
         return delete.execute();
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX Static initialisation of dialect-specific data types
-    // -------------------------------------------------------------------------
-
-    static {
-        // Load all dialect-specific data types
-        // TODO [#650] Make this more reliable using a data type registry
-
-        try {
-            Class.forName(SQLDataType.class.getName());
-        } catch (Exception ignore) {}
     }
 
     // -------------------------------------------------------------------------

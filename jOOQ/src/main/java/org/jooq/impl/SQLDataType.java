@@ -573,40 +573,6 @@ public final class SQLDataType {
      */
     public static final DataType<UUID> UUID = new DefaultDataType<UUID>(null, UUID.class, "uuid");
 
-    // -------------------------------------------------------------------------
-    // Static initialisation of dialect-specific data types
-    // -------------------------------------------------------------------------
-
-    static {
-        // Load all dialect-specific data types
-        // TODO [#650] Make this more reliable using a data type registry
-
-        try {
-
-
-
-
-
-
-
-
-
-
-
-
-
-            Class.forName(CUBRIDDataType.class.getName());
-            Class.forName(DerbyDataType.class.getName());
-            Class.forName(FirebirdDataType.class.getName());
-            Class.forName(H2DataType.class.getName());
-            Class.forName(HSQLDBDataType.class.getName());
-            Class.forName(MariaDBDataType.class.getName());
-            Class.forName(MySQLDataType.class.getName());
-            Class.forName(PostgresDataType.class.getName());
-            Class.forName(SQLiteDataType.class.getName());
-        } catch (Exception ignore) {}
-    }
-
     /**
      * No instances
      */

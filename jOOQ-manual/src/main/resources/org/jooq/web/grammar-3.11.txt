@@ -113,8 +113,8 @@ createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT E
 ( break )
 (
   'AS' select
-| '('   ( 'CONSTRAINT' constraintName constraint | constraint | column )
-  { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
+| '('   ( 'CONSTRAINT' constraintName constraint | constraint | index | column )
+  { ',' ( 'CONSTRAINT' constraintName constraint | constraint | index | column ) } ')'
 )
 break
 [ 'ON COMMIT' ( 'DELETE ROWS' | 'DROP' | 'PRESERVE ROWS' ) ]
@@ -263,6 +263,9 @@ column =
     )
   }
 )
+;
+
+index = ( 'KEY' | 'INDEX' ) [ identifier ] '(' sortFields ')'
 ;
 
 constraint =

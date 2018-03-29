@@ -102,7 +102,15 @@ final class ExecuteListeners implements ExecuteListener {
             // [#6747] Avoid allocating the listener (and by consequence, the ExecuteListeners) if
             //         we do not DEBUG log anyway.
             if (LOGGER_LISTENER_LOGGER.isDebugEnabled())
-                (result = init(result)).add(new LoggerListener());
+                (result = init(result)).add(new LoggerListener(
+                        ctx.settings().getExecuteLoggingBindVariables(),
+                        ctx.settings().isExecuteLoggingAbbreviatedBindVariables(),
+                        ctx.settings().getExecuteLoggingSqlString(),
+                        ctx.settings().getExecuteLoggingResult(),
+                        ctx.settings().getExecuteLoggingResultNumberOfRows(),
+                        ctx.settings().getExecuteLoggingResultNumberOfColumns(),
+                        ctx.settings().getExecuteLoggingRoutine(),
+                        ctx.settings().getExecuteLoggingException()));
         }
 
         for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())

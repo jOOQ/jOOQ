@@ -207,6 +207,11 @@ public class BufferedLog implements Log {
     }
 
     @Override
+    public boolean isWarnEnabled() {
+        return delegate.isWarnEnabled();
+    }
+
+    @Override
     public void warn(Object message) {
         delegate.warn(message);
         messages.add(message(WARN, message));
@@ -228,6 +233,11 @@ public class BufferedLog implements Log {
     public void warn(Object message, Object details, Throwable throwable) {
         delegate.warn(message, details, throwable);
         messages.add(message(WARN, message, details, throwable));
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return delegate.isErrorEnabled();
     }
 
     @Override

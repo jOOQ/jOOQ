@@ -37,6 +37,7 @@
  */
 package org.jooq.tools;
 
+import org.apache.log4j.Priority;
 import org.jooq.Log;
 
 /**
@@ -93,6 +94,16 @@ public final class JooqLogger implements Log {
     private boolean                   supportsInfo    = true;
 
     /**
+     * Whether calls to {@link #warn(Object)} are possible.
+     */
+    private boolean                   supportsWarn   = true;
+
+    /**
+     * Whether calls to {@link #error(Object)} are possible.
+     */
+    private boolean                   supportsError    = true;
+
+    /**
      * Get a logger wrapper for a class.
      */
     public static JooqLogger getLogger(Class<?> clazz) {
@@ -118,6 +129,20 @@ public final class JooqLogger implements Log {
         // [#2085] Check if any of the INFO, DEBUG, TRACE levels might be
         // unavailable, e.g. because client code isn't using the latest version
         // of log4j or any other logger
+
+        try {
+            result.isErrorEnabled();
+        }
+        catch (Throwable e) {
+            result.supportsError = false;
+        }
+
+        try {
+            result.isWarnEnabled();
+        }
+        catch (Throwable e) {
+            result.supportsWarn = false;
+        }
 
         try {
             result.isInfoEnabled();
@@ -375,6 +400,23 @@ public final class JooqLogger implements Log {
     }
 
     /**
+     * Check if <code>WARN</code> level logging is enabled.
+     */
+    @Override
+    public boolean isWarnEnabled() {
+        if (!globalThreshold.supports(Log.Level.WARN))
+            return false;
+        if (!supportsWarn)
+            return false;
+        else if (slf4j != null)
+            return slf4j.isWarnEnabled();
+        else if (log4j != null)
+            return log4j.isEnabledFor(Priority.WARN);
+        else
+            return util.isLoggable(java.util.logging.Level.WARNING);
+    }
+
+    /**
      * Log a message in <code>WARN</code> level.
      *
      * @param message The log message
@@ -432,6 +474,23 @@ public final class JooqLogger implements Log {
             log4j.warn(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.WARNING, "" + getMessage(message, details), throwable);
+    }
+
+    /**
+     * Check if <code>ERROR</code> level logging is enabled.
+     */
+    @Override
+    public boolean isErrorEnabled() {
+        if (!globalThreshold.supports(Log.Level.ERROR))
+            return false;
+        if (!supportsError)
+            return false;
+        else if (slf4j != null)
+            return slf4j.isErrorEnabled();
+        else if (log4j != null)
+            return log4j.isEnabledFor(Priority.ERROR);
+        else
+            return util.isLoggable(java.util.logging.Level.SEVERE);
     }
 
     /**

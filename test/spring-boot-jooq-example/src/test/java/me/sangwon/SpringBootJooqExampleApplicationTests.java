@@ -21,22 +21,22 @@ public class SpringBootJooqExampleApplicationTests {
 	@Test
 	public void findAllTest1() {
 		final CustomerDTO customerDTO = customerRepository.findAll().stream().findFirst().get();
-		assertThat(customerDTO.getId()).isEqualTo(1);
+		assertThat(customerDTO.getId()).isEqualTo(0);
 	}
 	@Test
 	public void findAllTest2() {
 		final CustomerDTO customerDTO = customerRepository.findAll().stream().findFirst().get();
-		assertThat(customerDTO.getName()).isEqualTo("sangwon");
+		assertThat(customerDTO.getName()).isEqualTo("test0");
 	}
 	@Test
 	public void findAllTest3() {
 		final CustomerDTO customerDTO = customerRepository.findAll().stream().findFirst().get();
-		assertThat(customerDTO.getEmail()).isEqualTo("sangwon@test.com");
+		assertThat(customerDTO.getEmail()).isEqualTo("test0@test.com");
 	}
 	@Test
 	public void findAllTest4() {
 		final CustomerDTO customerDTO = customerRepository.findAll().stream().findFirst().get();
-		assertThat(customerDTO.getProducts()).hasSize(4);
+		assertThat(customerDTO.getProducts()).hasSize(0);
 	}
 	
 	// Test save method is working(save mean 'insert into')

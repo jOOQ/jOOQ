@@ -144,7 +144,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 	public void modifyTest_2() {
 		customerRepository.modify(0, "lee", "lee@gmail.com");
 		final CustomerDTO customerDTO = customerRepository.findOne(0).get();
-		assertThat(customerDTO.getName()).isEqualTo("lee@gmail.com");
+		assertThat(customerDTO.getEmail()).isEqualTo("lee@gmail.com");
 	}
 	
 	@Test

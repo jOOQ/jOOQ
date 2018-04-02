@@ -31,7 +31,7 @@ public class SpringBootJooqExampleApplicationTests {
 	@Test
 	public void findAllTest3() {
 		final CustomerDTO customerDTO = customerRepository.findAll().stream().findFirst().get();
-		assertThat(customerDTO.getEmail()).isEqualTo("test0@test.com");
+		assertThat(customerDTO.getEmail()).isEqualTo("test0@test");
 	}
 	@Test
 	public void findAllTest4() {

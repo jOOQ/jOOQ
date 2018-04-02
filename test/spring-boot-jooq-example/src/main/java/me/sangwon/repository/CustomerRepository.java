@@ -50,7 +50,8 @@ public class CustomerRepository {
 
   public void modify(int id, String name, String email) {
 	  this.dslContext.update(Customer.CUSTOMER)
-	  .set(Customer.CUSTOMER.NAME, Customer.CUSTOMER.EMAIL)
+	  .set(Customer.CUSTOMER.NAME, name)
+	  .set(Customer.CUSTOMER.EMAIL, email)
       .where(Customer.CUSTOMER.ID.eq(id))
       .execute();
   }

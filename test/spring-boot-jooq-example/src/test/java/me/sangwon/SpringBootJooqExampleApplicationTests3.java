@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootJooqExampleApplicationTests {
+public class SpringBootJooqExampleApplicationTests3 {
 
 	@Autowired
 	private CustomerRepository customerRepository;

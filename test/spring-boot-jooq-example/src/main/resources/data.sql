@@ -1,4 +1,4 @@
-INSERT INTO CUSTOMER VALUES (0, 'test', 'test@test');
+INSERT INTO CUSTOMER VALUES (0, 'test0', 'test0@test');
 INSERT INTO CUSTOMER VALUES (1, 'sangwon', 'sangwon@test.com');
 INSERT INTO CUSTOMER VALUES (2, 'kevin', 'kevin@test.com');
 INSERT INTO CUSTOMER VALUES (3, 'eonseok', 'djstjr14@naver.com');

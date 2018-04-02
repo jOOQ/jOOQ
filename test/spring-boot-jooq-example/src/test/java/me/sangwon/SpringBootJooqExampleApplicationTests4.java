@@ -2,7 +2,7 @@ package me.sangwon;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotEquals;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.junit.Test;
@@ -77,7 +77,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 	public void saveTest_1() { //test for select query
 		customerRepository.save("leewonjun", "lwjun0513@gmail.com"); //Inserting data - test for insert 
 		
-		final CustomerDTO customerDTO = customerRepository.SelectByname("leewonjun")
+		final CustomerDTO customerDTO = customerRepository.findByname("leewonjun")
 			.stream()
 			.findFirst()
 			.get();//
@@ -90,7 +90,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 	public void saveTest_2() { //test for select query
 		customerRepository.save("leewonjun", "lwjun0513@gmail.com"); //Inserting data - test for insert 
 		
-		final CustomerDTO customerDTO = customerRepository.SelectByname("leewonjun")
+		final CustomerDTO customerDTO = customerRepository.findByname("leewonjun")
 			.stream()
 			.findFirst()
 			.get();//
@@ -134,48 +134,28 @@ public class SpringBootJooqExampleApplicationTests4 {
 		assertThat(customerDTO.getProducts()).hasSize(0); //has size is zero because of not product inserted
 	}
 	
-	@Test
-	public void modifyTest_1() {
-		customerRepository.modify(0, "lee", "lee@gmail.com");
-		final CustomerDTO customerDTO = customerRepository.findOne(0).get();
-		assertThat(customerDTO.getName()).isEqualTo("lee");
-	}
-	@Test
-	public void modifyTest_2() {
-		customerRepository.modify(0, "lee", "lee@gmail.com");
-		final CustomerDTO customerDTO = customerRepository.findOne(0).get();
-		assertThat(customerDTO.getName()).isEqualTo("lee@gmail.com");
-	}
-	
+
+
 	@Test
 	public void DeleteRecordTest_1() { //test for delete query
 		final CustomerDTO customerDTO =  customerRepository.DeleteRecord(0)
 				.stream()
 				.findFirst()
-				.get(); 
+				.get();
 		
-		assertThat(customerDTO.getId()).isEqualTo(0); 
-			
+		assertNotEquals(customerDTO.getName(),"test0");//original data "test@test" is deleted
+		
+	
 	}
 	@Test
 	public void DeleteRecordTest_2() { //test for delete query
 		final CustomerDTO customerDTO =  customerRepository.DeleteRecord(0)
 				.stream()
 				.findFirst()
-				.get();
-		
-		assertThat(customerDTO.getName()).isnotEqualTo("test0"); // original data "test" is deleted and second data will become first data
-		
-	
-	}
-	@Test
-	public void DeleteRecordTest_3() { //test for delete query
-		final CustomerDTO customerDTO =  customerRepository.DeleteRecord(0)
-				.stream()
-				.findFirst()
 				.get(); 
 	
-		assertThat(customerDTO.getEmail()).isnotEqualTo("test0@test"); //original data "test@test" is deleted and second data will become first data
+		assertNotEquals(customerDTO.getEmail(),"test0@test");//original data "test@test" is deleted
+		
 	}
 	
 	

@@ -55,6 +55,13 @@ public class CustomerRepository {
       .execute();
   }
 
+  @Transactional
+  public void save(Integer id, String name, String email) {
+    this.dslContext.insertInto(Customer.CUSTOMER)
+      .columns(Customer.CUSTOMER.ID, Customer.CUSTOMER.NAME, Customer.CUSTOMER.EMAIL)
+      .values(id, name, email).execute();
+  }
+  
   public Optional<CustomerDTO> findOne(Integer seq) {
     final Map<Record, Result<Record>> recordResultMap = this.dslContext.select().from(Customer.CUSTOMER)
       .leftJoin(Product.PRODUCT)

@@ -2,7 +2,7 @@ package me.sangwon;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotEquals;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.junit.Test;
@@ -164,7 +164,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 				.findFirst()
 				.get();
 		
-		assertThat(customerDTO.getName()).isnotEqualTo("test0"); // original data "test" is deleted and second data will become first data
+		assertNotEquals(customerDTO.getName(),"test");//original data "test@test" is deleted and second data will become first data
 		
 	
 	}
@@ -175,7 +175,8 @@ public class SpringBootJooqExampleApplicationTests4 {
 				.findFirst()
 				.get(); 
 	
-		assertThat(customerDTO.getEmail()).isnotEqualTo("test0@test"); //original data "test@test" is deleted and second data will become first data
+		assertNotEquals(customerDTO.getEmail(),"test0@test");//original data "test@test" is deleted and second data will become first data
+		
 	}
 	
 	

@@ -68,7 +68,7 @@ public class SpringBootJooqExampleApplicationTests3 {
 	@Test
 	public void removeGtTest2_2() {
 		final CustomerDTO customerDTO = customerRepository.findOne(0).get();
-		assertThat(customerDTO.getName()).isEqualTo("test");
+		assertThat(customerDTO.getName()).isEqualTo("test0");
 	}
 	@Test
 	public void modifyTest() {

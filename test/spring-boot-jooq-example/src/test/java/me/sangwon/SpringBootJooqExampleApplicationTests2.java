@@ -1,11 +1,7 @@
 package me.sangwon;
 
 import me.sangwon.dto.CustomerDTO;
-import me.sangwon.dto.ProductDTO;
 import me.sangwon.repository.CustomerRepository;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,29 +35,29 @@ public class SpringBootJooqExampleApplicationTests2 {
 	// save = insert into(id, name, email)
 	@Test
 	public void saveTest1() {
-		customerRepository.save(3, "test", "test@test.com");
-		final CustomerDTO customerDTO = customerRepository.findByname("test").stream().findFirst().get();
-		assertThat(customerDTO.getId()).isEqualTo(3);
+		customerRepository.save(15, "testSave", "testSave@test.com");
+		final CustomerDTO customerDTO = customerRepository.findByname("testSave").stream().findFirst().get();
+		assertThat(customerDTO.getId()).isEqualTo(15);
 	}
 	
 	@Test
 	public void saveTest2() {
-		final CustomerDTO customerDTO = customerRepository.findByname("test").stream().findFirst().get();
-		assertThat(customerDTO.getName()).isEqualTo("test");
+		final CustomerDTO customerDTO = customerRepository.findByname("testSave").stream().findFirst().get();
+		assertThat(customerDTO.getName()).isEqualTo("testSave");
 	}
 	
 	@Test
 	public void saveTest3() {
-		final CustomerDTO customerDTO = customerRepository.findByname("test").stream().findFirst().get();
-		assertThat(customerDTO.getEmail()).isEqualTo("test@test.com");
+		final CustomerDTO customerDTO = customerRepository.findByname("testSave").stream().findFirst().get();
+		assertThat(customerDTO.getEmail()).isEqualTo("testSave@test.com");
 	}
 	
 	// if you don't enter the ID, assign the ID in order. 
 	@Test
 	public void saveTest4() {
-		customerRepository.save("test5", "test5@test.com");
-		final CustomerDTO customerDTO = customerRepository.findByname("test5").stream().findFirst().get();
-		assertThat(customerDTO.getId()).isEqualTo(5);
+		customerRepository.save("test16", "test16@test.com");
+		final CustomerDTO customerDTO = customerRepository.findByname("test16").stream().findFirst().get();
+		assertThat(customerDTO.getId()).isEqualTo(16);
 	}
 	
 	// If you enter the same ID again, you can't insert it.
@@ -75,8 +71,8 @@ public class SpringBootJooqExampleApplicationTests2 {
 	
 	@Test
 	public void findOne1() {
-		customerRepository.save(4, "test123", "test123@test.com");
-		final CustomerDTO customerDTO = customerRepository.findOne(4).get(); 
+		customerRepository.save(14, "test123", "test123@test.com");
+		final CustomerDTO customerDTO = customerRepository.findOne(14).get(); 
 		assertThat(customerDTO.getEmail()).isEqualTo("test123@test.com");
 	}
 }

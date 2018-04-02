@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: spring-boot-jooq-example
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: LeeSangWon
+Implementation-Vendor-Id: me.sangwon
+Build-Jdk: 1.8.0_144
+Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
+ jooq-example/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

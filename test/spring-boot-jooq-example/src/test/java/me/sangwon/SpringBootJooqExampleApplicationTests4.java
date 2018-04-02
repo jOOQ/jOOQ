@@ -77,7 +77,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 	public void saveTest_1() { //test for select query
 		customerRepository.save("leewonjun", "lwjun0513@gmail.com"); //Inserting data - test for insert 
 		
-		final CustomerDTO customerDTO = customerRepository.SelectByname("leewonjun")
+		final CustomerDTO customerDTO = customerRepository.findByname("leewonjun")
 			.stream()
 			.findFirst()
 			.get();//
@@ -90,7 +90,7 @@ public class SpringBootJooqExampleApplicationTests4 {
 	public void saveTest_2() { //test for select query
 		customerRepository.save("leewonjun", "lwjun0513@gmail.com"); //Inserting data - test for insert 
 		
-		final CustomerDTO customerDTO = customerRepository.SelectByname("leewonjun")
+		final CustomerDTO customerDTO = customerRepository.findByname("leewonjun")
 			.stream()
 			.findFirst()
 			.get();//

@@ -35,6 +35,25 @@ public class CustomerRepository {
       .columns(Customer.CUSTOMER.NAME, Customer.CUSTOMER.EMAIL)
       .values(name, email).execute();
   }
+   
+  public void removeOne(int id) {
+	  this.dslContext.delete(Customer.CUSTOMER)
+      .where(Customer.CUSTOMER.ID.eq(id))
+      .execute();
+  }
+  
+  public void removeGt(int id) {
+	  this.dslContext.delete(Customer.CUSTOMER)
+      .where(Customer.CUSTOMER.ID.gt(id))
+      .execute();
+  }
+
+  public void modify(int id, String name, String email) {
+	  this.dslContext.update(Customer.CUSTOMER)
+	  .set(Customer.CUSTOMER.NAME, Customer.CUSTOMER.EMAIL)
+      .where(Customer.CUSTOMER.ID.eq(id))
+      .execute();
+  }
 
   public Optional<CustomerDTO> findOne(Integer seq) {
     final Map<Record, Result<Record>> recordResultMap = this.dslContext.select().from(Customer.CUSTOMER)

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>me.sangwon</groupId>
+	<artifactId>spring-boot-jooq-example</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>spring-boot-jooq-example</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jooq</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/generated/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>generate</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-jooq-utils</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>compile</goal>
+								</goals>
+								<inherited>false</inherited>
+								<!--<configuration>-->
+									<!--<includes>-->
+										<!--<inclue>sample/jooq/util/**</inclue>-->
+									<!--</includes>-->
+								<!--</configuration>-->
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>com.h2database</groupId>
+								<artifactId>h2</artifactId>
+								<version>${h2.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<driver>${spring.datasource.driver-class-name}</driver>
+							<url>${spring.datasource.url}</url>
+							<username>${spring.datasource.username}</username>
+							<password>${spring.datasource.password}</password>
+							<srcFiles>
+								<srcFile>${basedir}/src/main/resources/schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>properties-maven-plugin</artifactId>
+						<version>1.0.0</version>
+						<executions>
+							<execution>
+								<phase>initialize</phase>
+								<goals>
+									<goal>read-project-properties</goal>
+								</goals>
+								<configuration>
+									<files>
+										<file>src/main/resources/application.properties</file>
+									</files>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.jooq</groupId>
+						<artifactId>jooq-codegen-maven</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>com.h2database</groupId>
+								<artifactId>h2</artifactId>
+								<version>${h2.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<jdbc>
+								<driver>${spring.datasource.driver-class-name}</driver>
+								<url>${spring.datasource.url}</url>
+								<user>${spring.datasource.username}</user>
+								<password>${spring.datasource.password}</password>
+							</jdbc>
+							<generator>
+								<name>org.jooq.util.DefaultGenerator</name>
+								<database>
+									<name>org.jooq.util.h2.H2Database</name>
+									<includes>.*</includes>
+									<excludes />
+									<inputSchema>PUBLIC</inputSchema>
+								</database>
+
+								<target>
+									<packageName>me.sangwon.domain</packageName>
+									<directory>${basedir}/src/generated/java</directory>
+								</target>
+								<generate>
+									<records>false</records>
+								</generate>
+							</generator>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+</project>
+

@@ -1,0 +1,21 @@
+INSERT INTO CUSTOMER VALUES (0, 'test', 'test@test');
+INSERT INTO CUSTOMER VALUES (1, 'sangwon', 'sangwon@test.com');
+INSERT INTO CUSTOMER VALUES (2, 'kevin', 'kevin@test.com');
+INSERT INTO CUSTOMER VALUES (3, 'eonseok', 'djstjr14@naver.com');
+INSERT INTO CUSTOMER VALUES (4, 'sanhyeon', 'jdsd2233@naver.com');
+INSERT INTO CUSTOMER VALUES (5, 'test1', 'test1@test');
+INSERT INTO CUSTOMER VALUES (6, 'test2', 'test2@test');
+INSERT INTO CUSTOMER VALUES (7, 'test3', 'test3@test');
+INSERT INTO CUSTOMER VALUES (8, 'test4', 'test4@test');
+INSERT INTO CUSTOMER VALUES (9, 'test5', 'test5@test');
+INSERT INTO CUSTOMER VALUES (10, 'test6', 'test6@test');
+INSERT INTO CUSTOMER VALUES (11, 'test7', 'test7@test');
+INSERT INTO CUSTOMER VALUES (12, 'test8', 'test8@test');
+INSERT INTO CUSTOMER VALUES (13, 'test9', 'test9@test');
+
+INSERT INTO PRODUCT VALUES (1, 'iphone', 1);
+INSERT INTO PRODUCT VALUES (2, 'imac', 1);
+INSERT INTO PRODUCT VALUES (3, 'book', 1);
+INSERT INTO PRODUCT VALUES (4, 'mac pro', 1);
+INSERT INTO PRODUCT VALUES (5, 'galaxy note5', 2);
+INSERT INTO PRODUCT VALUES (6, 'galaxy note8', 2);

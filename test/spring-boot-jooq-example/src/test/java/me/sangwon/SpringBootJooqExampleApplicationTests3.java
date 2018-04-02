@@ -82,4 +82,5 @@ public class SpringBootJooqExampleApplicationTests {
 		final CustomerDTO customerDTO = customerRepository.findOne(2).get();
 		assertThat(customerDTO.getEmail()).isEqualTo("KEVIN@TEST.COM");
 	}
+	
 }

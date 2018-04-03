@@ -58,7 +58,14 @@ import org.jooq.types.UShort;
  *
  * @author Lukas Eder
  * @see <a href="http://www.sqlite.org/datatype3.html">http://www.sqlite.org/datatype3.html</a>
+ * @deprecated - 3.11.0 - [#7375] - This type is part of jOOQ's internal API. Do
+ *             not reference this type directly from client code. Referencing
+ *             this type before the {@link SQLDataType} class has been
+ *             initialised may lead to deadlocks! See <a href=
+ *             "https://github.com/jOOQ/jOOQ/issues/3777">https://github.com/jOOQ/jOOQ/issues/3777</a>
+ *             for details.
  */
+@Deprecated
 public class SQLiteDataType {
 
     // -------------------------------------------------------------------------

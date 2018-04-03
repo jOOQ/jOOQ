@@ -59,7 +59,14 @@ import org.jooq.types.UShort;
  *
  * @author Lukas Eder
  * @see <a href="http://db.apache.org/derby/docs/10.7/ref/crefsqlj31068.html">http://db.apache.org/derby/docs/10.7/ref/crefsqlj31068.html</a>
+ * @deprecated - 3.11.0 - [#7375] - This type is part of jOOQ's internal API. Do
+ *             not reference this type directly from client code. Referencing
+ *             this type before the {@link SQLDataType} class has been
+ *             initialised may lead to deadlocks! See <a href=
+ *             "https://github.com/jOOQ/jOOQ/issues/3777">https://github.com/jOOQ/jOOQ/issues/3777</a>
+ *             for details.
  */
+@Deprecated
 public class DerbyDataType {
 
     // -------------------------------------------------------------------------

@@ -14093,6 +14093,70 @@ public class DSL {
     }
 
     /**
+     * Subtract an interval from a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Number)
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Timestamp timestamp, Number interval) {
+        return timestampSub(Tools.field(timestamp), Tools.field(interval));
+    }
+
+    /**
+     * Subtract an interval from a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Field<Timestamp> timestamp, Field<? extends Number> interval) {
+        return nullSafe(timestamp).sub(interval);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Timestamp date, Number interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(Tools.field(date), Tools.field(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(Tools.field(date), nullSafe(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Field<Timestamp> date, Number interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(nullSafe(date), Tools.field(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampSub(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(nullSafe(date), nullSafe(interval).neg(), datePart);
+    }
+
+    /**
      * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
      * type.
      * <p>
@@ -14384,6 +14448,70 @@ public class DSL {
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<LocalDateTime>(nullSafe(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Number)
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(LocalDateTime timestamp, Number interval) {
+        return localDateTimeSub(Tools.field(timestamp), Tools.field(interval));
+    }
+
+    /**
+     * Subtract an interval from a timestamp.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> timestamp, Field<? extends Number> interval) {
+        return nullSafe(timestamp).sub(interval);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Number interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(Tools.field(date), Tools.field(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(Tools.field(date), nullSafe(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Number interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(nullSafe(date), Tools.field(interval).neg(), datePart);
+    }
+
+    /**
+     * Subtract an interval from a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<LocalDateTime>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**

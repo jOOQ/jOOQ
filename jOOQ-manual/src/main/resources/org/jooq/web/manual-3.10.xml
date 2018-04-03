@@ -17539,16 +17539,6 @@ public class Book implements java.io.Serializable
 								When using a custom type in jOOQ, you need to let jOOQ know about its associated <reference class="org.jooq.Converter"/>. Ad-hoc usages of such converters has been discussed in the chapter about <reference id="data-type-conversion" title="data type conversion"/>. However, when mapping a custom type onto a standard JDBC type, a more common use-case is to let jOOQ know about custom types at code generation time (if you're using non-standard JDBC types, like for example JSON or HSTORE, see the <reference id="custom-data-type-bindings" title="manual's section about custom data type bindings"/>). Use the following configuration elements to specify, that you'd like to use GregorianCalendar for all database fields that start with DATE_OF_
       						</p>
 
-                            <p>
-                                There's a simple configuration using only <code>&lt;forcedTypes/></code> configuration elements, and an advanced configuration using both <code>&lt;forcedTypes/></code> and <code>&lt;customTypes/></code> elements, which allow for greater reuse.
-                            </p>
-
-                            <h3>Simple configuration</h3>
-
-                            <p>
-                                The simple configuration is most useful in most situations as it can do only by specifying <code>&lt;forcedTypes/></code>:
-                            </p>
-
 </html><xml><![CDATA[<database>
 
   <!-- Then, associate custom types with database columns -->
@@ -17560,59 +17550,6 @@ public class Book implements java.io.Serializable
 
       <!-- Associate that custom type with your converter. -->
       <converter>com.example.CalendarConverter</converter>
-
-      <!-- Add a Java regular expression matching fully-qualified columns. Use the pipe to separate several expressions.
-
-           If provided, both "expressions" and "types" must match. -->
-      <expression>.*\.DATE_OF_.*</expression>
-
-      <!-- Add a Java regular expression matching data types to be forced to
-           have this type.
-
-           Data types may be reported by your database as:
-           - NUMBER              regexp suggestion: NUMBER
-           - NUMBER(5)           regexp suggestion: NUMBER\(5\)
-           - NUMBER(5, 2)        regexp suggestion: NUMBER\(5,\s*2\)
-           - any other form
-
-           It is thus recommended to use defensive regexes for types.
-
-           If provided, both "expressions" and "types" must match. -->
-      <types>.*</types>
-    </forcedType>
-  </forcedTypes>
-</database>]]></xml><html>
-
-                            <p>
-
-                            </p>
-
-                            <h3>Advanced configuration</h3>
-
-                            <p>
-                                The advanced configuration allows for specifying <code>&lt;customTypes/></code>, which can be used to reuse configuration elements for user type / converter / binding combinations by giving them a name:
-                            </p>
-
-</html><xml><![CDATA[<database>
-  <!-- First, register your custom types here -->
-  <customTypes>
-    <customType>
-      <!-- Specify the name of your custom type. Avoid using names from org.jooq.impl.SQLDataType -->
-      <name>GregorianCalendar</name>
-
-      <!-- Specify the Java type of your custom type. This corresponds to the Converter's <U> type. -->
-      <type>java.util.GregorianCalendar</type>
-
-      <!-- Associate that custom type with your converter. -->
-      <converter>com.example.CalendarConverter</converter>
-    </customType>
-  </customTypes>
-
-  <!-- Then, associate custom types with database columns -->
-  <forcedTypes>
-    <forcedType>
-      <!-- Specify the name of your custom type -->
-      <name>GregorianCalendar</name>
 
       <!-- Add a Java regular expression matching fully-qualified columns. Use the pipe to separate several expressions.
 
@@ -17756,11 +17693,10 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
                             <h3>Registering bindings to the code generator</h3>
 
                             <p>
-                                The above <reference class="org.jooq.Binding"/> implementation intercepts all the interaction on a JDBC level, such that jOOQ will never need to know how to crrectly serialise / deserialise your custom data type. Similar to what we've seen in the previous section about <reference id="custom-data-types" title="how to register Converters to the code generator"/>, we can now register such a binding to the code generator. Note that you will reuse the same types of XML elements (<code>&lt;customType/></code> and <code>&lt;forcedType/></code>):
+                                The above <reference class="org.jooq.Binding"/> implementation intercepts all the interaction on a JDBC level, such that jOOQ will never need to know how to correctly serialise / deserialise your custom data type. Similar to what we've seen in the previous section about <reference id="custom-data-types" title="how to register Converters to the code generator"/>, we can now register such a binding to the code generator. Note that you will reuse the same types of XML elements (<code>&lt;forcedType/></code>):
                             </p>
 
 </html><xml><![CDATA[<database>
-  <!-- Optionally, reuse your configuration via a <customType/>, first -->
   <forcedTypes>
     <forcedType>
 

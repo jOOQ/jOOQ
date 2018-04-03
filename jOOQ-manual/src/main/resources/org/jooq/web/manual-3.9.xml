@@ -17453,7 +17453,7 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
                             <h3>Registering bindings to the code generator</h3>
 
                             <p>
-                                The above <reference class="org.jooq.Binding"/> implementation intercepts all the interaction on a JDBC level, such that jOOQ will never need to know how to crrectly serialise / deserialise your custom data type. Similar to what we've seen in the previous section about <reference id="custom-data-types" title="how to register Converters to the code generator"/>, we can now register such a binding to the code generator. Note that you will reuse the same types of XML elements (<code>&lt;customType/></code> and <code>&lt;forcedType/></code>):
+                                The above <reference class="org.jooq.Binding"/> implementation intercepts all the interaction on a JDBC level, such that jOOQ will never need to know how to correctly serialise / deserialise your custom data type. Similar to what we've seen in the previous section about <reference id="custom-data-types" title="how to register Converters to the code generator"/>, we can now register such a binding to the code generator. Note that you will reuse the same types of XML elements (<code>&lt;customType/></code> and <code>&lt;forcedType/></code>):
                             </p>
 
 </html><xml><![CDATA[<database>

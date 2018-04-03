@@ -1341,15 +1341,20 @@ implements
     }
 
     private final void toPostgresInsertOnConflict(Context<?> ctx) {
-        Fields<?> fields = new Fields<Record>(getUpsertFields());
-        Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
-        for (Field<?> field : fields.fields)
-            map.put(field, getUpsertValues().get(fields.indexOf(field)));
-
         if (upsertSelect != null) {
             ctx.sql("[ merge with select is not supported in PostgreSQL ]");
         }
         else {
+            Fields<?> fields = new Fields<Record>(getUpsertFields());
+            Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
+
+            for (Field<?> field : fields.fields) {
+                int i = fields.indexOf(field);
+
+                if (i > -1 && i < getUpsertValues().size())
+                    map.put(field, getUpsertValues().get(i));
+            }
+
             ctx.visit(insertInto(table, getUpsertFields())
                .values(getUpsertValues())
                .onConflict(getUpsertKeys())

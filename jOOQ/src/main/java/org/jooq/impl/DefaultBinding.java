@@ -2570,7 +2570,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object value) throws SQLException {
-            ((AbstractBinding) binding(value.getClass(), isLob)).set0(ctx, value);
+            AbstractBinding b = (AbstractBinding) binding(value.getClass(), isLob);
+
+            // [#7370] Prevent a stack overflow error on unsupported data types
+            if (b instanceof DefaultOtherBinding)
+                ctx.statement().setObject(ctx.index(), value);
+            else
+                b.set0(ctx, value);
         }
 
         @Override
@@ -2594,7 +2600,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Object value) throws SQLException {
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            throw new DataTypeException("Type " + type + " is not supported");
         }
 
         @Override

@@ -65,13 +65,31 @@ public interface EnumType {
      * The catalog of the enum type, if applicable. Otherwise, this returns
      * <code>null</code>
      */
-    Catalog getCatalog();
+
+    default
+
+    Catalog getCatalog()
+
+    {
+        return null;
+    }
+
+    ;
 
     /**
      * The schema of the enum type, if applicable (Postgres schema-scope enum
      * type only). Otherwise, this returns <code>null</code>
      */
-    Schema getSchema();
+
+    default
+
+    Schema getSchema()
+
+    {
+        return null;
+    }
+
+    ;
 
     /**
      * The type name as registered in the database, if applicable (Postgres

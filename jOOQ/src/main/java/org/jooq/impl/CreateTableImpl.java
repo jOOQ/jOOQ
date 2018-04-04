@@ -371,7 +371,10 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
 
 
-                    ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
+                    if ("".equals(index.getName()))
+                        ctx.visit(createIndex().on(index.getTable(), index.getFields()));
+                    else
+                        ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
 
 
 

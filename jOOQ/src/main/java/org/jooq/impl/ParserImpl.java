@@ -6747,7 +6747,28 @@ final class ParserImpl implements Parser {
         parse(ctx, ')');
 
         // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
-        return SQLDataType.VARCHAR(length);
+        String className = "GeneratedEnum" + (literals.hashCode() & 0x7FFFFFF);
+        return SQLDataType.VARCHAR(length)
+
+            .asEnumDataType(Reflect
+                .compile(
+                    "org.jooq.impl." + className,
+                    "package org.jooq.impl;\n"
+                  + "enum " + className + " implements org.jooq.EnumType {\n"
+                  + "  " + String.join(", ", literals) + ";\n"
+                  + "  @Override\n"
+                  + "  public String getName() {\n"
+                  + "    return getClass().getName();\n"
+                  + "  }\n"
+                  + "  @Override\n"
+                  + "  public String getLiteral() {\n"
+                  + "    return name();"
+                  + "  }\n"
+                  + "}")
+                .get()
+            )
+
+        ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

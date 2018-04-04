@@ -939,6 +939,11 @@ public class DefaultDataType<T> implements DataType<T> {
         return UDTRecord.class.isAssignableFrom(tType);
     }
 
+    @Override
+    public final boolean isEnum() {
+        return EnumType.class.isAssignableFrom(tType);
+    }
+
     // ------------------------------------------------------------------------
     // The Object API
     // ------------------------------------------------------------------------

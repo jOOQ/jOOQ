@@ -523,4 +523,9 @@ public interface DataType<T> extends Serializable {
      * Whether this data type is a UDT type.
      */
     boolean isUDT();
+
+    /**
+     * Whether this data type is an enum type.
+     */
+    boolean isEnum();
 }

@@ -636,10 +636,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+            // [#7379] Most databases cannot cast a bind variable to an enum type
+            else if (POSTGRES != family && EnumType.class.isAssignableFrom(type))
+                sqlCast(ctx, converted, Tools.emulateEnumType((DataType<EnumType>) dataType), dataType.length(), dataType.precision(), dataType.scale());
+
             // In all other cases, the bind variable can be cast normally
-            else {
+            else
                 sqlCast(ctx, converted, dataType, dataType.length(), dataType.precision(), dataType.scale());
-            }
         }
 
         private static final int getValueLength(String string) {
@@ -687,14 +690,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // See if we "should" cast, to stay on the safe side
-            if (shouldCast(ctx, converted)) {
+            if (shouldCast(ctx, converted))
                 sqlCast(ctx, converted);
-            }
 
             // Most RDBMS can infer types for bind values
-            else {
+            else
                 sql(ctx, converted);
-            }
         }
 
         private final void sql(BindingSQLContext<U> ctx, T value) throws SQLException {
@@ -2167,14 +2168,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 render.sql("[]");
         }
 
-        @SuppressWarnings("unchecked")
         static final <E extends EnumType> E getEnumType(Class<? extends E> type, String literal) {
             try {
-                EnumType[] list = Tools.enums(type);
+                E[] list = Tools.enums(type);
 
-                for (EnumType e : list)
+                for (E e : list)
                     if (e.getLiteral().equals(literal))
-                        return (E) e;
+                        return e;
             }
             catch (Exception e) {
                 throw new DataTypeException("Unknown enum literal found : " + literal);

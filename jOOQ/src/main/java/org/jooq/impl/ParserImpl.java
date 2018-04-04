@@ -6732,16 +6732,22 @@ final class ParserImpl implements Parser {
     private static final DataType<?> parseDataTypeEnum(ParserContext ctx) {
         parse(ctx, '(');
         List<String> literals = new ArrayList<String>();
+        int length = 0;
 
         do {
-            literals.add(parseStringLiteral(ctx));
+            String literal = parseStringLiteral(ctx);
+
+            if (literal != null)
+                length = Math.max(length, literal.length());
+
+            literals.add(literal);
         }
         while (parseIf(ctx, ','));
 
         parse(ctx, ')');
 
         // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
-        return SQLDataType.VARCHAR;
+        return SQLDataType.VARCHAR(length);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

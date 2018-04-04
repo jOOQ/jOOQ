@@ -229,6 +229,7 @@ import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
@@ -4108,7 +4109,6 @@ final class Tools {
     }
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
-        String typeName = type.getTypeName(ctx.configuration());
 
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {
@@ -4124,14 +4124,15 @@ final class Tools {
 
         // [#5299] MySQL enum types
         if (EnumType.class.isAssignableFrom(type.getType())) {
+
+            @SuppressWarnings("unchecked")
+            DataType<EnumType> enumType = (DataType<EnumType>) type;
+            Object[] enums = enumConstants(enumType);
+
             switch (ctx.family()) {
                 case MARIADB:
                 case MYSQL: {
                     ctx.visit(K_ENUM).sql('(');
-
-                    Object[] enums = type.getType().getEnumConstants();
-                    if (enums == null)
-                        throw new IllegalStateException("EnumType must be a Java enum");
 
                     String separator = "";
                     for (Object e : enums) {
@@ -4141,6 +4142,11 @@ final class Tools {
 
                     ctx.sql(')');
                     return;
+                }
+
+                default: {
+                    type = emulateEnumType(enumType, enums);
+                    break;
                 }
             }
         }
@@ -4156,6 +4162,7 @@ final class Tools {
             }
         }
 
+        String typeName = type.getTypeName(ctx.configuration());
         if (type.hasLength()) {
 
             // [#6289] [#7191] Some databases don't support lengths on binary types
@@ -4192,6 +4199,28 @@ final class Tools {
 
         if (type.collation() != null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
+    }
+
+    private static Object[] enumConstants(DataType<? extends EnumType> type) {
+        Object[] enums = type.getType().getEnumConstants();
+
+        if (enums == null)
+            throw new DataTypeException("EnumType must be a Java enum");
+
+        return enums;
+    }
+
+    static final DataType<String> emulateEnumType(DataType<? extends EnumType> type) {
+        return emulateEnumType(type, enumConstants(type));
+    }
+
+    static final DataType<String> emulateEnumType(DataType<? extends EnumType> type, Object[] enums) {
+        int length = 0;
+        for (Object e : enums)
+            if (((EnumType) e).getLiteral() != null)
+                length = Math.max(length, ((EnumType) e).getLiteral().length());
+
+        return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
     }
 
     // -------------------------------------------------------------------------
@@ -4239,7 +4268,17 @@ final class Tools {
     }
 
 
-    static <E extends EnumType> EnumType[] enums(Class<? extends E> type) {
+    static String[] enumLiterals(Class<? extends EnumType> type) {
+        EnumType[] values = enums(type);
+        String[] result = new String[values.length];
+
+        for (int i = 0; i < values.length; i++)
+            result[i] = values[i].getLiteral();
+
+        return result;
+    }
+
+    static <E extends EnumType> E[] enums(Class<? extends E> type) {
 
         // Java implementation
         if (Enum.class.isAssignableFrom(type)) {
@@ -4255,7 +4294,7 @@ final class Tools {
                 Class<?> companionClass = Thread.currentThread().getContextClassLoader().loadClass(type.getName() + "$");
                 java.lang.reflect.Field module = companionClass.getField("MODULE$");
                 Object companion = module.get(companionClass);
-                return (EnumType[]) companionClass.getMethod("values").invoke(companion);
+                return (E[]) companionClass.getMethod("values").invoke(companion);
             }
             catch (Exception e) {
                 throw new MappingException("Error while looking up Scala enum", e);

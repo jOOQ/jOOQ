@@ -638,7 +638,7 @@ final class Tools {
     private static final char[]   HEX_DIGITS                                   = "0123456789abcdef".toCharArray();
 
     private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
@@ -4049,7 +4049,7 @@ final class Tools {
             ctx.sql(' ').visit(K_NOT_NULL);
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
-            // [#3400] [#4321] ... but not in Derby, Firebird
+            // [#3400] [#4321] [#7392] ... but not in Derby, Firebird, HSQLDB
         else if (!NO_SUPPORT_NULL.contains(ctx.family()))
             ctx.sql(' ').visit(K_NULL);
 

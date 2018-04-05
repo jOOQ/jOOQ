@@ -37,6 +37,7 @@
  */
 package org.jooq.util.h2;
 
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.h2.information_schema.tables.Constraints.CONSTRAINTS;
@@ -62,6 +63,7 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.AbstractDatabase;
@@ -467,6 +469,9 @@ public class H2Database extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
+        if (!is1_4_197())
+            return result;
+
         Result<Record4<String, String, String, String>> records = create()
             .select(
                 Columns.TABLE_SCHEMA,
@@ -540,5 +545,28 @@ public class H2Database extends AbstractDatabase {
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
         return result;
+    }
+
+    private static Boolean is1_4_197;
+
+    boolean is1_4_197() {
+        if (is1_4_197 == null) {
+
+            // [#5874] The COLUMNS.COLUMN_TYPE column was introduced in H2 1.4.197
+            try {
+                create(true)
+                    .select(Columns.COLUMN_TYPE)
+                    .from(COLUMNS)
+                    .where(falseCondition())
+                    .fetch();
+
+                is1_4_197 = true;
+            }
+            catch (DataAccessException e) {
+                is1_4_197 = false;
+            }
+        }
+
+        return is1_4_197;
     }
 }

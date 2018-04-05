@@ -38,7 +38,6 @@
 package org.jooq.util.h2;
 
 import static org.jooq.impl.DSL.choose;
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.zero;
@@ -51,7 +50,6 @@ import java.util.List;
 
 import org.jooq.Param;
 import org.jooq.Record;
-import org.jooq.exception.DataAccessException;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -67,8 +65,6 @@ import org.jooq.util.h2.information_schema.tables.Columns;
  * @author Oliver Flege
  */
 public class H2TableDefinition extends AbstractTableDefinition {
-
-    private static Boolean is1_4_197;
 
     public H2TableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -89,7 +85,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.COLUMN_NAME,
                 Columns.ORDINAL_POSITION,
                 Columns.TYPE_NAME,
-                is1_4_197() ? Columns.COLUMN_TYPE : inline("").as(Columns.COLUMN_TYPE),
+                ((H2Database) getDatabase()).is1_4_197() ? Columns.COLUMN_TYPE : inline("").as(Columns.COLUMN_TYPE),
                 choose().when(Columns.NUMERIC_PRECISION.eq(maxP).and(Columns.NUMERIC_SCALE.eq(maxS)), zero())
                         .otherwise(Columns.CHARACTER_MAXIMUM_LENGTH).as(Columns.CHARACTER_MAXIMUM_LENGTH),
                 Columns.NUMERIC_PRECISION.decode(maxP, zero(), Columns.NUMERIC_PRECISION).as(Columns.NUMERIC_PRECISION),
@@ -134,27 +130,5 @@ public class H2TableDefinition extends AbstractTableDefinition {
         }
 
         return result;
-    }
-
-
-    boolean is1_4_197() {
-        if (is1_4_197 == null) {
-
-            // [#5874] The COLUMNS.COLUMN_TYPE column was introduced in H2 1.4.197
-            try {
-                create(true)
-                    .select(Columns.COLUMN_TYPE)
-                    .from(COLUMNS)
-                    .where(falseCondition())
-                    .fetch();
-
-                is1_4_197 = true;
-            }
-            catch (DataAccessException e) {
-                is1_4_197 = false;
-            }
-        }
-
-        return is1_4_197;
     }
 }

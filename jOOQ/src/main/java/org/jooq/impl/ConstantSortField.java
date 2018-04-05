@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_SELECT;
 
@@ -67,7 +69,8 @@ final class ConstantSortField<T> extends CustomField<T> {
 
 
             case POSTGRES:
-                ctx.sql('(').visit(K_SELECT).sql(" 1)");
+            case HSQLDB:
+                ctx.sql('(').visit(select(one())).sql(')');
                 break;
 
             default:

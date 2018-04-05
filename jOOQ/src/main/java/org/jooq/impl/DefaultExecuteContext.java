@@ -101,7 +101,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private final int[]                            batchRows;
 
     // Transient attributes (created afresh per execution)
-    private transient ConnectionProvider           connectionProvider;
+    transient ConnectionProvider                   connectionProvider;
     private transient Connection                   connection;
     private transient SettingsEnabledConnection    wrappedConnection;
     private transient PreparedStatement            statement;
@@ -763,8 +763,8 @@ class DefaultExecuteContext implements ExecuteContext {
         public final Connection acquire() {
 
             // [#4277] Connections are acquired lazily in parent ExecuteContext. A child ExecuteContext
-            // may well need a Connection earlier than the parent, in case of which acquisition is
-            //  forced in the parent as well.
+            //         may well need a Connection earlier than the parent, in case of which acquisition is
+            //         forced in the parent as well.
             if (connection == null)
                 DefaultExecuteContext.this.connection();
 

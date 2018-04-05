@@ -2332,9 +2332,8 @@ final class Tools {
         ctx.resultSet(null);
 
         PreparedStatement statement = ctx.statement();
-        if (statement != null) {
+        if (statement != null)
             consumeWarnings(ctx, listener);
-        }
 
         // [#385] Close statements only if not requested to keep open
         if (!keepStatement) {
@@ -2348,9 +2347,11 @@ final class Tools {
             else {
                 Connection connection = localConnection();
 
-                if (connection != null) {
-                    ctx.configuration().connectionProvider().release(connection);
-                }
+                // [#4277] We must release the connection on the ExecuteContext's
+                //         ConnectionProvider, as the ctx.configuration().connectionProvider()
+                //         is replaced by a ExecuteContextConnectionProvider instance.
+                if (connection != null && ((DefaultExecuteContext) ctx).connectionProvider != null)
+                    ((DefaultExecuteContext) ctx).connectionProvider.release(connection);
             }
         }
 

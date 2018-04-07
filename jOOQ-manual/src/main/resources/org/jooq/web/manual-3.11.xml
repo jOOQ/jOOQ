@@ -13873,6 +13873,180 @@ x: 2, y: b]]></text><html>
                         </html></content>
                     </section>
 
+                    <section id="diagnostics">
+                        <title>Diagnostics</title>
+                        <content><html>
+                            <p>
+                                jOOQ includes a powerful diagnostics SPI, which can be used to detect problems and inefficiencies on different levels of your database interaction:
+                            </p>
+
+                            <ul>
+                                <li>On the jOOQ API level</li>
+                                <li>On the JDBC level</li>
+                                <li>On the SQL level</li>
+                            </ul>
+
+                            <p>
+                                Just like the <reference id="parsing-connection" title="parsing connection"/>, which was documented in the previuos section, this functionality does not depend on using the jOOQ API in a client application, but can expose itself through a JDBC <reference class="java.sql.Connection"/> that proxies your real database connection.
+                            </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class MyDiagnosticsListener extends DefaultDiagnosticsListener {
+    // Override methods here
+}
+
+// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration.derive(new MyDiagnosticsListener()))
+                       .parsingConnection();
+     Statement s = c.createStatement()) {
+
+    // The tooManyRowsFetched() event is triggered.
+    // --------------------------------------------
+    // This logic does not consume the entire ResultSet. There is more than one row
+    // ready to be fetched into the client, but the client only fetches one row.
+    try (ResultSet rs = s.executeQuery("SELECT id, title FROM book WHERE id > 1")) {
+        if (rs.next())
+            System.out.println("ID: " + rs.getInt(1) + ", title: " + rs.getInt(2));
+    }
+
+    // The duplicateStatements() event is triggered.
+    // ---------------------------------------------
+    // The statement is the same as the previous one, apart from a different "bind variable".
+    // Unfortunately, no actual bind variables were used, which may
+    // 1) hint at a SQL injection risk
+    // 2) can cause a lot of pressure / contention on execution plan caches and SQL parsers
+    //
+    // The tooManyColumnsFetched() event is triggered.
+    // -----------------------------------------------
+    // When iterating the ResultSet, we're actually only ever reading the TITLE column, never
+    // the ID column. This means we probably should not have projected it in the first place
+    try (ResultSet rs = s.executeQuery("SELECT id, title FROM book WHERE id > 2")) {
+        while (rs.next())
+            System.out.println("Title: " + rs.getString(2));
+    }
+}]]></java><html>
+
+                            <p>
+                                This feature incurs a certain overhead over normal operation as it requires:
+                            </p>
+
+                            <ul>
+                                <li>Parsing SQL statements and re-rendering them back to normalised SQL.</li>
+                                <li>Storing a limited size list of such normalised SQL in a cache to gather statistics on that cache.</li>
+                            </ul>
+
+                            <p>
+                                The following sections describe each individual event, how it can happen, how and why it should be remedied.
+                            </p>
+                        </html></content>
+
+                        <sections>
+                            <section id="diagnostics-too-many-rows">
+                                <title>Too Many Rows</title>
+                                <content><html>
+                                    <p>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyRowsFetched()" anchor="#tooManyRowsFetched-DiagnosticsContext-"/>
+                                    </p>
+
+                                    <p>
+                                        If you're using jOOQ (or an ORM) to eagerly fetch your entire result set, then this will not be a problem in your code base, but when working with jOOQ's <reference id="lazy-fetching" title="lazy fetching API"/> or <reference id="lazy-fetching-with-streams" title="lazy streaming support"/>, or as well as with JDBC <reference class="java.sql.ResultSet"/> directly, then it may certainly be possible that client code is aborting the iteration over the entire result set prematurely.
+                                    </p>
+
+                                    <p>
+                                        While it is definitely good not to fetch too many rows from a JDBC <code>ResultSet</code>, it would be even better to communicate to the database that only a limited number of rows are going to be needed in the client, by using the <reference id="limit-clause" title="LIMIT clause"/>. Not only will this prevent the pre-allocation of some resources both in the client and in the server, but it opens up the possibility of much better execution plans. For instance, the optimiser may prefer to chose nested loop joins over hash joins if it knows that the loops can be aborted early.
+                                    </p>
+
+                                    <p>
+                                        An example is given here:
+                                    </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class TooManyRows extends DefaultDiagnosticsListener {
+    @Override
+    public void tooManyRowsFetched(DiagnosticsContext ctx) {
+        System.out.println("Consumed rows: " + ctx.resultSetConsumedRows());
+
+        // This incurs overhead by consuming the ResultSet! Use only if needed.
+        System.out.println("Fetched rows: " + ctx.resultSetFetchedRows());
+    }
+}
+
+// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration.derive(new TooManyRows()))
+                       .parsingConnection();
+     Statement s = c.createStatement()) {
+
+    try (ResultSet rs = s.executeQuery("SELECT id FROM book")) {
+
+        // Unlike "while", "if" only consumes the first row, here.
+        if (rs.next())
+            System.out.println("ID: " + rs.getInt(1));
+    }
+}]]></java><html>
+
+                                </html></content>
+                            </section>
+
+                            <section id="diagnostics-too-many-columns">
+                                <title>Too Many Columns</title>
+                                <content><html>
+                                    <p>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyColumnsFetched()" anchor="#tooManyColumnsFetched-DiagnosticsContext-"/>
+                                    </p>
+
+                                    <p>
+                                        A common problem with SQL is the high probability of having too many columns in the <reference id="select-clause" title="projection"/>. This may be due to reckless usage of <code>SELECT *</code> or some refactoring which removes the need to select some of the projected columns, but the query was not adapted.
+                                    </p>
+
+                                    <p>
+                                        If the columns are consumed by some client (e.g. an ORM), then the jOOQ diagnostics have no way of knowing whether they were actually needed or not. But if they are never consumed from the JDBC <reference class="java.sql.ResultSet"/>, then we can say with certainty that too many columns have been projected.
+                                    </p>
+
+                                    <p>
+                                        The drawbacks of projecting too many columns are manifold:
+                                    </p>
+
+                                    <ul>
+                                        <li>Too much data is loaded, cached, transferred between server and client. The overall resource consumption of a system is too high if too many columns are projected. This can cause orders of magnitude of overhead in extreme cases!</li>
+                                        <li>Locking could occur in cases where it otherwise wouldn't happen, because two conflicting queries actually don't really need to touch the same columns.</li>
+                                        <li>The probability of using "covering indexes" (or "index only scans") on some tables decreases because of the unnecessary projection. This can have drastic effects!</li>
+                                        <li>The probability of applying <a href="https://blog.jooq.org/2017/09/01/join-elimination-an-essential-optimiser-feature-for-advanced-sql-usage/">JOIN elimination</a> decreases, because of the unnecessary projection. This is particularly true if you're querying views.</li>
+                                    </ul>
+
+                                    <p>
+                                        An example is given here:
+                                    </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class TooManyColumns extends DefaultDiagnosticsListener {
+    @Override
+    public void tooManyColumnsFetched(DiagnosticsContext ctx) {
+        System.out.println("Consumed columns: " + ctx.resultSetConsumedColumnCount());
+        System.out.println("Fetched columns: " + ctx.resultSetFetchedColumnCount());
+    }
+}
+
+// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration.derive(new TooManyColumns()))
+                       .parsingConnection();
+     Statement s = c.createStatement()) {
+
+    try (ResultSet rs = s.executeQuery("SELECT id, title FROM book")) {
+
+        // On none of the rows, we retrieve the TITLE column, so selecting it would not have been necessary.
+        while (rs.next())
+            System.out.println("ID: " + rs.getInt(1));
+    }
+}]]></java><html>
+
+                                </html></content>
+                            </section>
+                            <section id="diagnostics-was-null-calls"></section>
+                            <section id="diagnostics-duplicate-statements"></section>
+                            <section id="diagnostics-repeated-statements"></section>
+                        </sections>
+                    </section>
+
                     <section id="logging">
                         <title>Logging</title>
                         <content><html>

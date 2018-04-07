@@ -13897,7 +13897,7 @@ class MyDiagnosticsListener extends DefaultDiagnosticsListener {
 
 // Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
 try (Connection c = DSL.using(configuration.derive(new MyDiagnosticsListener()))
-                       .parsingConnection();
+                       .diagnosticsConnection();
      Statement s = c.createStatement()) {
 
     // The tooManyRowsFetched() event is triggered.
@@ -13952,6 +13952,8 @@ try (Connection c = DSL.using(configuration.derive(new MyDiagnosticsListener()))
                                         If you're using jOOQ (or an ORM) to eagerly fetch your entire result set, then this will not be a problem in your code base, but when working with jOOQ's <reference id="lazy-fetching" title="lazy fetching API"/> or <reference id="lazy-fetching-with-streams" title="lazy streaming support"/>, or as well as with JDBC <reference class="java.sql.ResultSet"/> directly, then it may certainly be possible that client code is aborting the iteration over the entire result set prematurely.
                                     </p>
 
+                                    <h3>Why is it bad?</h3>
+
                                     <p>
                                         While it is definitely good not to fetch too many rows from a JDBC <code>ResultSet</code>, it would be even better to communicate to the database that only a limited number of rows are going to be needed in the client, by using the <reference id="limit-clause" title="LIMIT clause"/>. Not only will this prevent the pre-allocation of some resources both in the client and in the server, but it opens up the possibility of much better execution plans. For instance, the optimiser may prefer to chose nested loop joins over hash joins if it knows that the loops can be aborted early.
                                     </p>
@@ -13973,7 +13975,7 @@ class TooManyRows extends DefaultDiagnosticsListener {
 
 // Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
 try (Connection c = DSL.using(configuration.derive(new TooManyRows()))
-                       .parsingConnection();
+                       .diagnosticsConnection();
      Statement s = c.createStatement()) {
 
     try (ResultSet rs = s.executeQuery("SELECT id FROM book")) {
@@ -14002,6 +14004,8 @@ try (Connection c = DSL.using(configuration.derive(new TooManyRows()))
                                         If the columns are consumed by some client (e.g. an ORM), then the jOOQ diagnostics have no way of knowing whether they were actually needed or not. But if they are never consumed from the JDBC <reference class="java.sql.ResultSet"/>, then we can say with certainty that too many columns have been projected.
                                     </p>
 
+                                    <h3>Why is it bad?</h3>
+
                                     <p>
                                         The drawbacks of projecting too many columns are manifold:
                                     </p>
@@ -14028,7 +14032,7 @@ class TooManyColumns extends DefaultDiagnosticsListener {
 
 // Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
 try (Connection c = DSL.using(configuration.derive(new TooManyColumns()))
-                       .parsingConnection();
+                       .diagnosticsConnection();
      Statement s = c.createStatement()) {
 
     try (ResultSet rs = s.executeQuery("SELECT id, title FROM book")) {
@@ -14041,9 +14045,213 @@ try (Connection c = DSL.using(configuration.derive(new TooManyColumns()))
 
                                 </html></content>
                             </section>
-                            <section id="diagnostics-was-null-calls"></section>
-                            <section id="diagnostics-duplicate-statements"></section>
-                            <section id="diagnostics-repeated-statements"></section>
+
+                            <section id="diagnostics-duplicate-statements">
+                                <title>Duplicate Statements</title>
+                                <content><html>
+                                    <p>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="duplicateStatements()" anchor="#duplicateStatements-DiagnosticsContext-"/>
+                                    </p>
+
+                                    <p>
+                                        A common source of overhead in databases that have an execution plan cache (or "cursor cache", etc.) are static statements, or prepared statements that differ only by "irrelevant" things:
+                                    </p>
+
+                                    <ul>
+                                        <li>They may differ by white space</li>
+                                        <li>They may differ by irrelevant syntactic elements (e.g. excess parentheses, or object name qualification, table aliasing, etc.)</li>
+                                        <li>They may differ by input values, which are inlined into the statement rather than parameterised as bind values</li>
+                                        <li>They may differ by the length of their <reference id="in-predicate" title="IN predicate's IN-list sizes"/></li>
+                                    </ul>
+
+                                    <h3>Why is it bad?</h3>
+
+                                    <p>
+                                        There are two main problems:
+                                    </p>
+
+                                    <ul>
+                                        <li>If the duplicate SQL appears in <reference id="dynamic-sql" title="dynamic SQL"/> (i.e. in generated SQL), then there is an indication that the database's parser and optimiser may have to do too much work parsing the various similar (but not identical) SQL queries and finding an execution plan for them, each time. In fact, it will find the <em>same</em> execution plan most of the time, but with some significant overhead. Depending on the query complexity, this overhead can easily go from milliseconds into several seconds, blocking important resources in the database. If duplicate SQL happens at peak load times, this problem can have a significant impact in production. It never affects your (single user) development environments, where the overhead of parsing duplicate SQL is manageable.</li>
+                                        <li>If the duplicate SQL appears in static SQL, this can simply indicate that the query was copy pasted, and you might be able to refactor it. There's probably not any performance issue arising from duplicate static SQL</li>
+                                    </ul>
+
+                                    <p>
+                                        An example is given here:
+                                    </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class DuplicateStatements extends DefaultDiagnosticsListener {
+    @Override
+    public void duplicateStatements(DiagnosticsContext ctx) {
+
+        // The statement that is being executed and which has duplicates
+        System.out.println("Actual statement: " + ctx.actualStatement());
+
+        // A normalised version of the actual statement, which is shared by all duplicates
+        // This statement has "normal" whitespace, bind variables, IN-lists, etc.
+        System.out.println("Normalised statement: " + ctx.normalisedStatement());
+
+        // All the duplicate actual statements that have produced the same normalised
+        // statement in the recent past.
+        System.out.println("Duplicate statements: " + ctx.duplicateStatements());
+    }
+}
+
+// Utility to run SQL on a new JDBC Statement
+void run(String sql) {
+
+    // Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+    try (Connection c = DSL.using(configuration.derive(new DuplicateStatements()))
+                           .diagnosticsConnection();
+         Statement s = c.createStatement();
+         ResultSet rs = s.executeQuery(sql)) {
+
+        while (rs.next()) {
+            // Consume result set
+        }
+    }
+}
+    // Everything is fine with the first execution
+    run("SELECT title FROM book WHERE id = 1");
+
+    // This query is identical to the previous one, differing only in irrelevant white space
+    run("SELECT title FROM book WHERE  id = 1");
+
+    // This query is identical to the previous one, differing only in irrelevant additional parentheses
+    run("SELECT title FROM book WHERE (id = 1)");
+
+    // This query is identical to the previous one, differing only in what should be a bind variable
+    run("SELECT title FROM book WHERE id = 2");
+
+    // Everything is fine with the first execution of a new query that has never been seen
+    run("SELECT title FROM book WHERE id IN (1, 2, 3, 4, 5)");
+
+    // This query is identical to the previous one, differing only in what should be bind variables
+    run("SELECT title FROM book WHERE id IN (1, 2, 3, 4, 5, 6)");
+}]]></java><html>
+
+                                    <p>
+                                        Unlike when detecting <reference id="diagnostics-repeated-statements" title="repeated statements"/>, duplicate statement statistics are performed globally over all JDBC connections and data sources.
+                                    </p>
+                                </html></content>
+                            </section>
+
+                            <section id="diagnostics-repeated-statements">
+                                <title>Repeated statements</title>
+                                <content><html>
+                                    <p>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="repeatedStatements()" anchor="#repeatedStatements-DiagnosticsContext-"/>
+                                    </p>
+
+                                    <p>
+                                        Sometimes, there is no other option than to repeat an identical (or similar, see <reference id="diagnostics-duplicate-statements" title="duplicate statements"/>) statement many times in a row, but often, it is a sign that your queries can be rewritten and your repeated statements should really be joined to a larger query.
+                                    </p>
+
+                                    <h3>Why is it bad?</h3>
+
+                                    <p>
+                                        This problem is usually referred to as the N+1 problem. A parent entity is loaded (often by an ORM), and its child entities are loaded lazily. Unfortunately, there were several parent instances, so for each parent instance, we're now loading a set of child instances, resulting in many many queries. This diagnostic detects if on the same connection, there is repeated execution of the same statement, even if it is not exactly identical.
+                                    </p>
+
+                                    <p>
+                                        An example is given here:
+                                    </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class RepeatedStatement extends DefaultDiagnosticsListener {
+    @Override
+    public void tooManyRowsFetched(DiagnosticsContext ctx) {
+
+        // The statement that is being executed and which has duplicates
+        System.out.println("Actual statement: " + ctx.actualStatement());
+
+        // A normalised version of the actual statement, which is shared by all duplicates
+        // This statement has "normal" whitespace, bind variables, IN-lists, etc.
+        System.out.println("Normalised statement: " + ctx.normalisedStatement());
+
+        // All the duplicate actual statements that have produced the same normalised
+        // statement in the recent past.
+        System.out.println("Repeated statements: " + ctx.repeatedStatements());
+    }
+}
+
+// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration.derive(new RepeatedStatement()))
+                       .diagnosticsConnection();
+     Statement s1 = c.createStatement();
+     ResultSet a = s1.executeQuery("SELECT id FROM author WHERE first_name LIKE 'A%'")) {
+
+    while (a.next()) {
+        int id = a.getInt(1);
+
+        // This query is run once for every author, when we could have joined the author table
+        try (PreparedStatement s2 = c.prepareStatement("SELECT title FROM book WHERE author_id = ?")) {
+            s2.setInt(1, id);
+
+            try (ResultSet b = s2.executeQuery()) {
+                while (b.next())
+                    System.out.println("ID: " + id + ", title: " + b.getString(1));
+            }
+        }
+    }
+}]]></java><html>
+
+                                    <p>
+                                        Unlike when detecting <reference id="diagnostics-duplicate-statements" title="repeated statements"/>, repeated statement statistics are performed locally only, for a single JDBC Connection, or, if possible, for a transaction. Repeated statements in different transactions are usually not an indication of a problem.
+                                    </p>
+                                </html></content>
+                            </section>
+
+                            <section id="diagnostics-was-null-calls">
+                                <title>WasNull calls</title>
+                                <content><html>
+                                    <p>
+                                        The SPI methods handling these events are <reference class="org.jooq.DiagnosticsListener" title="unnecessaryWasNullCall()" anchor="#missingWasNullCall-DiagnosticsContext-"/>
+                                    </p>
+
+                                    <p>
+                                        This problem appears only when using the JDBC API directly, as both jOOQ and most ORMs abstract over this JDBC legacy correctly. In JDBC, when fetching a primitive types (and some types are available only in their primitive form), a subsequent call to <reference class="java.sql.ResultSet" title="ResultSet.wasNull()" anchor="#wasNull--"/> is required, to see if the previous primitive type was really a <code>NULL</code> value, not a <code>0</code> or <code>false</code> value.
+                                    </p>
+
+                                    <h3>Why is it bad?</h3>
+
+                                    <p>
+                                        There are two misuses that can arise in this area:
+                                    </p>
+
+                                    <ul>
+                                        <li>The call to <code>wasNull()</code> wasn't made when it should have been (nullable type, fetched as a primitive type), possibly resulting in wrong results in the client.</li>
+                                        <li>The call to <code>wasNull()</code> was made too often, or when it did not need to have been made (non-nullable type, or types fetched as reference types), possibly resulting in a very slight performance overhead, depending on the driver.</li>
+                                    </ul>
+
+                                    <p>
+                                        An example is given here:
+                                    </p>
+
+</html><java><![CDATA[// A custom DiagnosticsListener SPI implementation
+class WasNull extends DefaultDiagnosticsListener {
+    @Override
+    public void tooManyRowsFetched(DiagnosticsContext ctx) {
+        System.out.println("Unnecessary wasNull() call: " + ctx.resultSetUnnecessaryWasNullCall());
+        System.out.println("Missing wasNull() call: " + ctx.resultSetMissingWasNullCall());
+    }
+}
+
+// Configuration is configured with the target DataSource, SQLDialect, etc. for instance Oracle.
+try (Connection c = DSL.using(configuration.derive(new WasNull()))
+                       .diagnosticsConnection();
+     Statement s = c.createStatement()) {
+
+    try (ResultSet rs = s.executeQuery("SELECT year_of_birth FROM author")) {
+
+        // The YEAR_OF_BIRTH column is nullable, so a 0 int could really mean null
+        while (rs.next())
+            System.out.println("Year of birth: " + rs.getInt(1));
+    }
+}]]></java><html>
+
+                                </html></content>
+                            </section>
                         </sections>
                     </section>
 

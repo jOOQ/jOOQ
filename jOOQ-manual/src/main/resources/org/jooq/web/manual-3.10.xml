@@ -16473,6 +16473,53 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
                                         </html></content>
                                     </section>
+
+                                    <section id="codegen-generate-fully-qualified-types">
+                                        <title>Fully Qualified Types</title>
+                                        <content><html>
+                                            <p>
+                                                By default, the jOOQ code generator references all types as unqualified types, generating the necessary import statement at the beginning of generated classes.
+                                            </p>
+
+                                            <p>
+                                                In rare cases, this can cause problems when two types conflict with each other, e.g. when there is both a <code>TABLE</code> and a <code>TABLE_RECORD</code> table (generating a <code>TableRecord</code> <reference class="org.jooq.Record"/> type for <code>TABLE</code> as well as a <code>TableRecord</code> <reference class="org.jooq.Table"/> type for <code>TABLE_RECORD</code>). In this case, users can specify a regular expression that matches all objects whose corresponding generated artefacts should never be imported, but always be fully qualified.
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration>
+  <generator>
+    <generate>
+      <fullyQualifiedTypes>.*\.MY_TABLE</fullyQualifiedTypes>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+      .withFullyQualifiedTypes(".*\.MY_TABLE"))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration {
+  generator {
+    generate {
+      fullyQualifiedTypes = '.*\.MY_TABLE'
+    }
+  }
+}]]></java><html>
+
+                                        </html></content>
+                                    </section>
                                 </sections>
                             </section>
 

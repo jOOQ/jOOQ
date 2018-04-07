@@ -56,10 +56,10 @@ public interface DiagnosticsContext {
     ResultSet resultSet();
 
     /**
-     * The number of rows that were fetched from {@link #resultSet()}, or
+     * The number of rows that were consumed from {@link #resultSet()}, or
      * <code>-1</code> if there was no result set.
      */
-    int resultSetFetchedRows();
+    int resultSetConsumedRows();
 
     /**
      * The number of rows that were actually available from
@@ -73,12 +73,12 @@ public interface DiagnosticsContext {
      * {@link ResultSet#close()} call), and scrolling back to the current row
      * after scrolling to the end of {@link #resultSet()} is not possible (e.g.
      * because the driver supports only {@link ResultSet#TYPE_FORWARD_ONLY}),
-     * then this will return the same value as {@link #resultSetFetchedRows()}.
+     * then this will return the same value as {@link #resultSetConsumedRows()}.
      */
-    int resultSetActualRows();
+    int resultSetFetchedRows();
 
     /**
-     * The number of columns that were fetched from the {@link #resultSet()}, or
+     * The number of columns that were consumed from the {@link #resultSet()}, or
      * <code>-1</code> if there was no result set.
      * <p>
      * If the result set is still being consumed (i.e. prior to the
@@ -86,17 +86,34 @@ public interface DiagnosticsContext {
      * columns that were retrieved from the {@link #resultSet()} set <em>thus
      * far</em>.
      */
-    int resultSetFetchedColumns();
+    int resultSetConsumedColumnCount();
 
     /**
      * The number of columns that were actually available from
      * {@link #resultSet()}, or <code>-1</code> if there was no result set.
      */
-    int resultSetActualColumns();
+    int resultSetFetchedColumnCount();
+
+    /**
+     * The number of columns that were consumed from the {@link #resultSet()}, or
+     * <code>-1</code> if there was no result set.
+     * <p>
+     * If the result set is still being consumed (i.e. prior to the
+     * {@link ResultSet#close()} call), then this will return the number of
+     * columns that were retrieved from the {@link #resultSet()} set <em>thus
+     * far</em>.
+     */
+    List<String> resultSetConsumedColumnNames();
+
+    /**
+     * The number of columns that were actually available from
+     * {@link #resultSet()}, or <code>-1</code> if there was no result set.
+     */
+    List<String> resultSetFetchedColumnNames();
 
     /**
      * There had been an unnecessary {@link ResultSet#wasNull()} call to check
-     * the a non-primitive type fetched previously was null, or the call was
+     * that a non-primitive type consumed previously was null, or the call was
      * made more than once.
      * <p>
      * {@link #resultSetColumnIndex()} will return the relevant column index for
@@ -108,7 +125,7 @@ public interface DiagnosticsContext {
 
     /**
      * There had been a missing {@link ResultSet#wasNull()} call on a previously
-     * fetched primitive type, which is reported to be
+     * consumed primitive type, which is reported to be
      * {@link ResultSetMetaData#isNullable(int)}.
      * <p>
      * {@link #resultSetColumnIndex()} will return the relevant column index for

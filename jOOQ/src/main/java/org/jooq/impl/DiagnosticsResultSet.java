@@ -632,10 +632,11 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(sql);
 
         ctx.resultSet = super.getDelegate();
-        ctx.resultSetFetchedColumns = read.cardinality();
-        ctx.resultSetActualColumns = columns;
-        ctx.resultSetFetchedRows = current;
-        ctx.resultSetActualRows = current + 1;
+        ctx.resultSetWrapper = this;
+        ctx.resultSetConsumedColumnCount = read.cardinality();
+        ctx.resultSetFetchedColumnCount = columns;
+        ctx.resultSetConsumedRows = current;
+        ctx.resultSetFetchedRows = current + 1;
 
         return ctx;
     }

@@ -38,31 +38,37 @@
 package org.jooq.impl;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.jooq.DiagnosticsContext;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
 final class DefaultDiagnosticsContext implements DiagnosticsContext {
 
-    ResultSet          resultSet;
-    boolean            resultSetClosing;
-    int                resultSetFetchedColumns;
-    int                resultSetActualColumns;
-    int                resultSetFetchedRows;
-    int                resultSetActualRows;
-    final String       actualStatement;
-    final String       normalisedStatement;
-    final Set<String>  duplicateStatements;
-    final List<String> repeatedStatements;
-    boolean            resultSetUnnecessaryWasNullCall;
-    boolean            resultSetMissingWasNullCall;
-    int                resultSetColumnIndex;
+    private static final JooqLogger log = JooqLogger.getLogger(DefaultDiagnosticsContext.class);
+
+    ResultSet                       resultSet;
+    DiagnosticsResultSet            resultSetWrapper;
+    boolean                         resultSetClosing;
+    int                             resultSetFetchedColumnCount;
+    int                             resultSetConsumedColumnCount;
+    int                             resultSetFetchedRows;
+    int                             resultSetConsumedRows;
+    final String                    actualStatement;
+    final String                    normalisedStatement;
+    final Set<String>               duplicateStatements;
+    final List<String>              repeatedStatements;
+    boolean                         resultSetUnnecessaryWasNullCall;
+    boolean                         resultSetMissingWasNullCall;
+    int                             resultSetColumnIndex;
 
     DefaultDiagnosticsContext(String actualStatement) {
         this(actualStatement, actualStatement, Collections.singleton(actualStatement), Collections.singletonList(actualStatement));
@@ -81,36 +87,65 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     }
 
     @Override
-    public final int resultSetFetchedRows() {
-        return resultSet == null ? -1 : resultSetFetchedRows;
+    public final int resultSetConsumedRows() {
+        return resultSet == null ? -1 : resultSetConsumedRows;
     }
 
     @Override
-    public final int resultSetActualRows() {
+    public final int resultSetFetchedRows() {
         if (resultSet == null)
             return -1;
 
         try {
             if (resultSetClosing || resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
                 while (resultSet.next())
-                    resultSetActualRows++;
+                    resultSetFetchedRows++;
 
-                resultSet.absolute(resultSetFetchedRows);
+                resultSet.absolute(resultSetConsumedRows);
             }
         }
         catch (SQLException ignore) {}
 
-        return resultSetActualRows;
+        return resultSetFetchedRows;
     }
 
     @Override
-    public final int resultSetFetchedColumns() {
-        return resultSet == null ? -1 : resultSetFetchedColumns;
+    public final int resultSetConsumedColumnCount() {
+        return resultSet == null ? -1 : resultSetConsumedColumnCount;
     }
 
     @Override
-    public final int resultSetActualColumns() {
-        return resultSet == null ? -1 : resultSetActualColumns;
+    public final int resultSetFetchedColumnCount() {
+        return resultSet == null ? -1 : resultSetFetchedColumnCount;
+    }
+
+    @Override
+    public final List<String> resultSetConsumedColumnNames() {
+        return resultSetColumnNames(false);
+    }
+
+    @Override
+    public final List<String> resultSetFetchedColumnNames() {
+        return resultSetColumnNames(true);
+    }
+
+    private final List<String> resultSetColumnNames(boolean fetched) {
+        List<String> result = new ArrayList<String>();
+
+        if (resultSet != null) {
+            try {
+                ResultSetMetaData meta = resultSet.getMetaData();
+
+                for (int i = 1; i <= meta.getColumnCount(); i++)
+                    if (fetched || resultSetWrapper.read.get(i - 1))
+                        result.add(meta.getColumnLabel(i));
+            }
+            catch (SQLException e) {
+                log.info(e);
+            }
+        }
+
+        return Collections.unmodifiableList(result);
     }
 
     @Override

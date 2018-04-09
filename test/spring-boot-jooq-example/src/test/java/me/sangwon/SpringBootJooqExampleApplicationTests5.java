@@ -72,7 +72,7 @@ public class SpringBootJooqExampleApplicationTests5 {
 		assertThat(customerDTO.getName()).isEqualTo("newValue");
 		assertThat(customerDTO.getEmail()).isEqualTo("newValue@test");
 	}
-	
+	// t
 	// TransactionPair4
 	// save and removeGT
 	// After save person20,21,22,23, execute removeGT(21)

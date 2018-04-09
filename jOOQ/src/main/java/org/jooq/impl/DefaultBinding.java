@@ -3104,6 +3104,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Configuration configuration) {
+
+
+
+
+
+
+
             return Types.VARCHAR;
         }
     }

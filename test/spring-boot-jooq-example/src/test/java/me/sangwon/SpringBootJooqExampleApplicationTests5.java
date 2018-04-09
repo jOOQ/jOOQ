@@ -36,7 +36,7 @@ public class SpringBootJooqExampleApplicationTests5 {
 		customerRepository.removeOne(14);
 		customerDTO = customerRepository.findOne(14).get();
 	}
-	
+	// 
 	// TransactionPair2
 	// save and modify
 	// After modify, john -> jerry / john6813@naver.com -> jerry5211@naver.com

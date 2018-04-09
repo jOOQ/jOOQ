@@ -82,8 +82,7 @@
 				<li>
 					<reference id="tools"/>
 					<p>
-						This section is dedicated to tools that ship with jOOQ, such as the
-						jOOQ's JDBC mocking feature
+						This section is dedicated to tools that ship with jOOQ.
 					</p>
 				</li>
 				<li>
@@ -13841,6 +13840,185 @@ public class DeleteOrUpdateWithoutWhereException extends RuntimeException {}
                         </html></content>
                     </section>
 
+                    <section id="mocking-connection">
+                        <title>Mocking Connection</title>
+                        <content><html>
+                            <p>
+                                When writing unit tests for your data access layer, you have probably used some generic mocking tool offered by popular providers like <a href="http://code.google.com/p/mockito/">Mockito</a>, <a href="http://jmock.org/">jmock</a>, <a href="http://mockrunner.sourceforge.net/">mockrunner</a>, or even <a href="http://www.dbunit.org/">DBUnit</a>. With jOOQ, you can take advantage of the built-in JDBC mock API that allows you to emulate a simple database on the JDBC level for precisely those SQL/JDBC use cases supported by jOOQ.
+                            </p>
+
+                            <p>
+                                <strong>Disclaimer: </strong> The general idea of mocking a JDBC connection with this jOOQ API is to provide quick workarounds, injection points, etc. using a very simple JDBC abstraction. It is <em>NOT RECOMMENDED</em> to emulate an entire database (including complex state transitions, transactions, locking, etc.) using this mock API. Once you have this requirement, please consider using an actual database instead for integration testing, rather than implementing your test database inside of a <code>MockDataProvider</code>.
+                            </p>
+
+                            <h3>Mocking the JDBC API</h3>
+                            <p>
+                                JDBC is a very complex API. It takes a lot of time to write a useful and correct mock implementation, implementing at least these interfaces:
+                            </p>
+                            <ul>
+                                <li><reference class="java.sql.Connection"/></li>
+                                <li><reference class="java.sql.Statement"/></li>
+                                <li><reference class="java.sql.PreparedStatement"/></li>
+                                <li><reference class="java.sql.CallableStatement"/></li>
+                                <li><reference class="java.sql.ResultSet"/></li>
+                                <li><reference class="java.sql.ResultSetMetaData"/></li>
+                            </ul>
+
+                            <p>
+                                Optionally, you may even want to implement interfaces, such as <reference class="java.sql.Array"/>, <reference class="java.sql.Blob"/>, <reference class="java.sql.Clob"/>, and many others. In addition to the above, you might need to find a way to simultaneously support incompatible JDBC minor versions, such as 4.0, 4.1
+                            </p>
+
+                            <h3>Using jOOQ's own mock API</h3>
+                            <p>
+                                This work is greatly simplified, when using jOOQ's own mock API. The <code>org.jooq.tools.jdbc</code> package contains all the essential implementations for both JDBC 4.0 and 4.1, which are needed to mock JDBC for jOOQ. In order to write mock tests, provide the jOOQ <reference id="dsl-context" title="Configuration"/> with a <reference class="org.jooq.tools.jdbc.MockConnection" title="MockConnection"/>, and implement the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider"/>:
+                            </p>
+
+</html><java><![CDATA[// Initialise your data provider (implementation further down):
+MockDataProvider provider = new MyProvider();
+MockConnection connection = new MockConnection(provider);
+
+// Pass the mock connection to a jOOQ DSLContext:
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE);
+
+// Execute queries transparently, with the above DSLContext:
+Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch();]]></java><html>
+
+                            <p>
+                                As you can see, the configuration setup is simple. Now, the <code>MockDataProvider</code> acts as your single point of contact with JDBC / jOOQ. It unifies any of these execution modes, transparently:
+                            </p>
+
+                            <ul>
+                                <li>Statements without results</li>
+                                <li>Statements without results but with generated keys</li>
+                                <li>Statements with results</li>
+                                <li>Statements with several results</li>
+                                <li>Batch statements with single queries and multiple bind value sets</li>
+                                <li>Batch statements with multiple queries and no bind values</li>
+                            </ul>
+
+                            <p>
+                                The above are the execution modes supported by jOOQ. Whether you're using any of jOOQ's various fetching modes (e.g. <reference id="pojos" title="pojo fetching"/>, <reference id="lazy-fetching" title="lazy fetching"/>, <reference id="many-fetching" title="many fetching"/>, <reference id="later-fetching" title="later fetching"/>) is irrelevant, as those modes are all built on top of the standard JDBC API.
+                            </p>
+
+                            <h3>Implementing MockDataProvider</h3>
+                            <p>
+                                 Now, here's how to implement <code>MockDataProvider</code>:
+                            </p>
+
+</html><java><![CDATA[public class MyProvider implements MockDataProvider {
+
+    @Override
+    public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+
+        // You might need a DSLContext to create org.jooq.Result and org.jooq.Record objects
+        DSLContext create = DSL.using(SQLDialect.ORACLE);
+        MockResult[] mock = new MockResult[1];
+
+        // The execute context contains SQL string(s), bind values, and other meta-data
+        String sql = ctx.sql();
+
+        // Exceptions are propagated through the JDBC and jOOQ APIs
+        if (sql.toUpperCase().startsWith("DROP")) {
+            throw new SQLException("Statement not supported: " + sql);
+        }
+
+        // You decide, whether any given statement returns results, and how many
+        else if (sql.toUpperCase().startsWith("SELECT")) {
+
+            // Always return one record
+            Result<Record2<Integer, String>> result = create.newResult(AUTHOR.ID, AUTHOR.LAST_NAME);
+            result.add(create
+                .newRecord(AUTHOR.ID, AUTHOR.LAST_NAME)
+                .values(1, "Orwell"));
+            mock[0] = new MockResult(1, result);
+        }
+
+        // You can detect batch statements easily
+        else if (ctx.batch()) {
+            // [...]
+        }
+
+        return mock;
+    }
+}]]></java><html>
+
+                            <p>
+                                Essentially, the <reference class="org.jooq.tools.jdbc.MockExecuteContext" title="MockExecuteContext"/> contains all the necessary information for you to decide, what kind of data you should return. The <reference class="org.jooq.tools.jdbc.MockResult" title="MockResult"/> wraps up two pieces of information:
+                            </p>
+                            <ul>
+                                <li> <reference class="java.sql.Statement" anchor="#getUpdateCount" title="Statement.getUpdateCount()"/>: The number of affected rows</li>
+                                <li> <reference class="java.sql.Statement" anchor="#getResultSet()" title="Statement.getResultSet()"/>: The result set</li>
+                            </ul>
+
+                            <p>
+                                You should return as many <code>MockResult</code> objects as there were query executions (in <reference id="batch-execution" title="batch mode"/>) or results (in <reference id="many-fetching" title="fetch-many mode"/>). Instead of an awkward JDBC <code>ResultSet</code>, however, you can construct a "friendlier" <reference class="org.jooq.Result"/> with your own record types. The jOOQ mock API will use meta data provided with this <code>Result</code> in order to create the necessary JDBC <reference class="java.sql.ResultSetMetaData"/>
+                            </p>
+
+                            <p>
+                                See the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider Javadoc"/> for a list of rules that you should follow.
+                            </p>
+                        </html></content>
+                    </section>
+
+                    <section id="mock-file-database">
+                        <title>Mock File Database</title>
+                        <content><html>
+                            <p>
+                                An alternative to the previous <reference id="mocking-connection" title="programmatic implementation of a mocking connection"/> is the more declarative approach using a <reference class="org.jooq.tools.jdbc.MockFileDatabase"/>, which reads SQL statements and their corresponding result sets directly from a file. Assuming the following file content:
+                            </p>
+
+</html><text><![CDATA[# All lines with a leading hash are ignored. This is the MockFileDatabase comment syntax
+-- SQL comments are parsed and passed to the SQL statement
+/* The same is true for multi-line SQL comments */
+select 'A';
+> A
+> -
+> A
+@ rows: 1
+
+select 'A', 'B';
+> A B
+> - -
+> A B
+@ rows: 1
+]]></text><html>
+
+                            <p>
+                                The above syntax consists of the following elements to define an individual statement:
+                            </p>
+
+                            <ul>
+                                <li><code>MockFileDatabase</code> comments are any line with a leading hash (<code>"#"</code>) symbol. They are ignored when reading the file</li>
+                                <li>SQL comments are part of the SQL statement</li>
+                                <li>A SQL statement always starts on a new line and ends with a semi colon (<code>;</code>), which is the last symbol on the line (apart from whitespace)</li>
+                                <li>If the statement has a result set, it immediately succeeds the SQL statement and is prefixed by angle brackets and a whitespace (<code>"&gt; "</code>). Any format that is accepted by <reference class="org.jooq.DSLContext" title="DSLContext.fetchFromTXT()" anchor="#fetchFromTXT-java.lang.String-"/> is accepted.</li>
+                                <li>The statement is always terminated by the row count, which is prefixed by an at symbol, the "rows" keyword, and a double colon (<code>"@ rows:"</code>).</li>
+                            </ul>
+
+                            <p>
+                                The above database supports exactly two statements in total, and is completely stateless (e.g. an <code>INSERT</code> statement cannot be made to affect the results of a subsequent <code>SELECT</code> statement on the same table). It can be loaded through the <code>MockFileDatabase</code> can be used as follows:
+                            </p>
+
+</html><java><![CDATA[// Initialise your data provider (implementation further down):
+MockFileDatabase db = new MockFileDatabase(new File("/path/to/db.txt"));
+MockConnection connection = new MockConnection(provider);
+
+// Pass the mock connection to a jOOQ DSLContext:
+DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+
+// Execute queries transparently, with the above DSLContext:
+Result<?> result = create.select(inline("A")).fetch();
+Result<?> result = create.select(inline("A"), inline("B")).fetch();
+
+// Queries that are not listed in the MockFileDatabase will simply fail
+Result<?> result = create.select(inline("C")).fetch();]]></java><html>
+
+                            <p>
+                                In situations where the expected set of queries are well-defined, the <code>MockFileDatabase</code> can offer a very effective way of mocking parts of the database engine, without offering the complete functionality of the <reference id="mocking-connection" title="programmatic mocking connection"/>.
+                            </p>
+                        </html></content>
+                    </section>
+
                     <section id="parsing-connection">
                         <title>Parsing Connection</title>
                         <content><html>
@@ -19242,127 +19420,7 @@ org.jooq.util.GenerationTool.generate(
 				</html></content>
 
 				<sections>
-					<section id="jdbc-mocking">
-						<title>JDBC mocking for unit testing</title>
-						<content><html>
-							<p>
-								When writing unit tests for your data access layer, you have probably used some generic mocking tool offered by popular providers like <a href="http://code.google.com/p/mockito/">Mockito</a>, <a href="http://jmock.org/">jmock</a>, <a href="http://mockrunner.sourceforge.net/">mockrunner</a>, or even <a href="http://www.dbunit.org/">DBUnit</a>. With jOOQ, you can take advantage of the built-in JDBC mock API that allows you to emulate a simple database on the JDBC level for precisely those SQL/JDBC use cases supported by jOOQ.
-							</p>
-
-                            <p>
-                                <strong>Disclaimer: </strong> The general idea of mocking a JDBC connection with this jOOQ API is to provide quick workarounds, injection points, etc. using a very simple JDBC abstraction. It is <em>NOT RECOMMENDED</em> to emulate an entire database (including complex state transitions, transactions, locking, etc.) using this mock API. Once you have this requirement, please consider using an actual database instead for integration testing, rather than implementing your test database inside of a <code>MockDataProvider</code>.
-                            </p>
-
-							<h3>Mocking the JDBC API</h3>
-							<p>
-								JDBC is a very complex API. It takes a lot of time to write a useful and correct mock implementation, implementing at least these interfaces:
-							</p>
-							<ul>
-								<li><reference class="java.sql.Connection"/></li>
-								<li><reference class="java.sql.Statement"/></li>
-								<li><reference class="java.sql.PreparedStatement"/></li>
-								<li><reference class="java.sql.CallableStatement"/></li>
-								<li><reference class="java.sql.ResultSet"/></li>
-								<li><reference class="java.sql.ResultSetMetaData"/></li>
-							</ul>
-
-							<p>
-								Optionally, you may even want to implement interfaces, such as <reference class="java.sql.Array"/>, <reference class="java.sql.Blob"/>, <reference class="java.sql.Clob"/>, and many others. In addition to the above, you might need to find a way to simultaneously support incompatible JDBC minor versions, such as 4.0, 4.1
-							</p>
-
-							<h3>Using jOOQ's own mock API</h3>
-							<p>
-								This work is greatly simplified, when using jOOQ's own mock API. The <code>org.jooq.tools.jdbc</code> package contains all the essential implementations for both JDBC 4.0 and 4.1, which are needed to mock JDBC for jOOQ. In order to write mock tests, provide the jOOQ <reference id="dsl-context" title="Configuration"/> with a <reference class="org.jooq.tools.jdbc.MockConnection" title="MockConnection"/>, and implement the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider"/>:
-							</p>
-
-</html><java><![CDATA[// Initialise your data provider (implementation further down):
-MockDataProvider provider = new MyProvider();
-MockConnection connection = new MockConnection(provider);
-
-// Pass the mock connection to a jOOQ DSLContext:
-DSLContext create = DSL.using(connection, SQLDialect.ORACLE);
-
-// Execute queries transparently, with the above DSLContext:
-Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch();]]></java><html>
-
-                            <p>
-                                As you can see, the configuration setup is simple. Now, the <code>MockDataProvider</code> acts as your single point of contact with JDBC / jOOQ. It unifies any of these execution modes, transparently:
-                            </p>
-
-                            <ul>
-                                <li>Statements without results</li>
-                                <li>Statements without results but with generated keys</li>
-                                <li>Statements with results</li>
-                                <li>Statements with several results</li>
-                                <li>Batch statements with single queries and multiple bind value sets</li>
-                                <li>Batch statements with multiple queries and no bind values</li>
-                            </ul>
-
-                            <p>
-                                The above are the execution modes supported by jOOQ. Whether you're using any of jOOQ's various fetching modes (e.g. <reference id="pojos" title="pojo fetching"/>, <reference id="lazy-fetching" title="lazy fetching"/>, <reference id="many-fetching" title="many fetching"/>, <reference id="later-fetching" title="later fetching"/>) is irrelevant, as those modes are all built on top of the standard JDBC API.
-                            </p>
-
-                            <h3>Implementing MockDataProvider</h3>
-                            <p>
-                                 Now, here's how to implement <code>MockDataProvider</code>:
-                            </p>
-
-</html><java><![CDATA[public class MyProvider implements MockDataProvider {
-
-    @Override
-    public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
-
-        // You might need a DSLContext to create org.jooq.Result and org.jooq.Record objects
-        DSLContext create = DSL.using(SQLDialect.ORACLE);
-        MockResult[] mock = new MockResult[1];
-
-        // The execute context contains SQL string(s), bind values, and other meta-data
-        String sql = ctx.sql();
-
-        // Exceptions are propagated through the JDBC and jOOQ APIs
-        if (sql.toUpperCase().startsWith("DROP")) {
-            throw new SQLException("Statement not supported: " + sql);
-        }
-
-        // You decide, whether any given statement returns results, and how many
-        else if (sql.toUpperCase().startsWith("SELECT")) {
-
-            // Always return one record
-            Result<Record2<Integer, String>> result = create.newResult(AUTHOR.ID, AUTHOR.LAST_NAME);
-            result.add(create
-                .newRecord(AUTHOR.ID, AUTHOR.LAST_NAME)
-                .values(1, "Orwell"));
-            mock[0] = new MockResult(1, result);
-        }
-
-        // You can detect batch statements easily
-        else if (ctx.batch()) {
-            // [...]
-        }
-
-        return mock;
-    }
-}]]></java><html>
-
-							<p>
-								Essentially, the <reference class="org.jooq.tools.jdbc.MockExecuteContext" title="MockExecuteContext"/> contains all the necessary information for you to decide, what kind of data you should return. The <reference class="org.jooq.tools.jdbc.MockResult" title="MockResult"/> wraps up two pieces of information:
-							</p>
-							<ul>
-							    <li> <reference class="java.sql.Statement" anchor="#getUpdateCount" title="Statement.getUpdateCount()"/>: The number of affected rows</li>
-							    <li> <reference class="java.sql.Statement" anchor="#getResultSet()" title="Statement.getResultSet()"/>: The result set</li>
-							</ul>
-
-							<p>
-								You should return as many <code>MockResult</code> objects as there were query executions (in <reference id="batch-execution" title="batch mode"/>) or results (in <reference id="many-fetching" title="fetch-many mode"/>). Instead of an awkward JDBC <code>ResultSet</code>, however, you can construct a "friendlier" <reference class="org.jooq.Result"/> with your own record types. The jOOQ mock API will use meta data provided with this <code>Result</code> in order to create the necessary JDBC <reference class="java.sql.ResultSetMetaData"/>
-							</p>
-
-							<p>
-								See the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider Javadoc"/> for a list of rules that you should follow.
-							</p>
-						</html></content>
-					</section>
-
-
+                    <redirect id="jdbc-mocking" redirect-to="mocking-connection"/>
                     <section id="checker-framework">
                         <title>API validation using the Checker Framework</title>
                         <content><html>

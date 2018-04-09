@@ -113,8 +113,6 @@ import org.jooq.tools.JooqLogger;
  * <li>In the future, other types of result sources will be supported, such as
  * CSV, XML, JSON</li>
  * </ul>
- * <p>
- * This implementation is still very experimental and not officially supported!
  *
  * @author Lukas Eder
  * @author Samy Deghou
@@ -354,18 +352,14 @@ public class MockFileDatabase implements MockDataProvider {
             }
 
             // Check for the first pattern match
-            if (list == null) {
-                for (Entry<Pattern, List<MockResult>> entry : matchPattern.entrySet()) {
+            if (list == null)
+                for (Entry<Pattern, List<MockResult>> entry : matchPattern.entrySet())
                     if (    entry.getKey().matcher(sql).matches()
-                         || entry.getKey().matcher(inlined).matches()) {
+                         || entry.getKey().matcher(inlined).matches())
                         list = entry.getValue();
-                    }
-                }
-            }
 
-            if (list == null) {
+            if (list == null)
                 throw new SQLException("Invalid SQL: " + sql);
-            }
 
             return list.toArray(new MockResult[list.size()]);
         }

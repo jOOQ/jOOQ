@@ -99,6 +99,7 @@ import java.math.BigInteger;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -115,10 +116,12 @@ import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -159,6 +162,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
+import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.UByte;
@@ -1957,6 +1961,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Configuration configuration) {
+
+
+
+
+
+
+
             return Types.DATE;
         }
     }
@@ -2434,6 +2445,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, OffsetDateTime value) throws SQLException {
+
+
+
+
+
             ctx.statement().setString(ctx.index(), format(value));
         }
 
@@ -2462,9 +2478,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Configuration configuration) {
 
+
+
+
+
+
+
+
+
             // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
             return Types.VARCHAR;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private static final String format(OffsetDateTime val) {
 
@@ -2542,6 +2581,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Configuration configuration) {
+
+
+
+
+
+
+
+
 
             // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
             return Types.VARCHAR;

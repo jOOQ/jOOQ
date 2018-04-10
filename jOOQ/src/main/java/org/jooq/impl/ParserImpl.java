@@ -2618,7 +2618,7 @@ final class ParserImpl implements Parser {
             case 'a':
             case 'A':
                 if (parseKeywordIf(ctx, "ADD"))
-                    return parseAlterTableAdd(ctx, s1);
+                    return parseAlterTableAdd(ctx, s1, tableName);
                 else if (parseKeywordIf(ctx, "ALTER") && (parseKeywordIf(ctx, "COLUMN") || true))
                     return parseAlterTableAlterColumn(ctx, s1);
 
@@ -2643,7 +2643,8 @@ final class ParserImpl implements Parser {
 
                         return s1.dropConstraint(constraint);
                     }
-                    else if (parseKeywordIf(ctx, "INDEX")) {
+                    else if (parseKeywordIf(ctx, "INDEX")
+                          || parseKeywordIf(ctx, "KEY")) {
                         Name index = parseIdentifier(ctx);
                         return ctx.dsl.dropIndex(index).on(tableName);
                     }
@@ -2725,8 +2726,19 @@ final class ParserImpl implements Parser {
         throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME");
     }
 
-    private static DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1) {
+    private static DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
         List<FieldOrConstraint> list = new ArrayList<FieldOrConstraint>();
+
+        if (parseKeywordIf(ctx, "INDEX") || parseKeywordIf(ctx, "KEY")) {
+            Name name = parseIdentifierIf(ctx);
+            parse(ctx, '(');
+            List<SortField<?>> sort = parseSortSpecification(ctx);
+            parse(ctx, ')');
+
+            return name == null
+                ? ctx.dsl.createIndex().on(tableName, sort)
+                : ctx.dsl.createIndex(name).on(tableName, sort);
+        }
 
         if (parseIf(ctx, '(')) {
             do {

@@ -2643,6 +2643,10 @@ final class ParserImpl implements Parser {
 
                         return s1.dropConstraint(constraint);
                     }
+                    else if (parseKeywordIf(ctx, "INDEX")) {
+                        Name index = parseIdentifier(ctx);
+                        return ctx.dsl.dropIndex(index).on(tableName);
+                    }
                     else {
                         parseKeywordIf(ctx, "COLUMN");
                         boolean parens = parseIf(ctx, '(');

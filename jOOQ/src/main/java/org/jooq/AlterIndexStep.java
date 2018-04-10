@@ -41,6 +41,8 @@ package org.jooq;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -60,7 +62,7 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(String)} with
      * {@link AlterTableStep#renameIndex(String)} instead.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(String newName);
 
     /**
@@ -72,7 +74,7 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(Name)} with
      * {@link AlterTableStep#renameIndex(Name)} instead.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(Name newName);
 
     /**
@@ -84,6 +86,6 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(Name)} with
      * {@link AlterTableStep#renameIndex(Index)} instead.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(Index newName);
 }

@@ -9328,7 +9328,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(String index);
 
     /**
@@ -9336,7 +9336,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(Name index);
 
     /**
@@ -9344,7 +9344,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(Index index);
 
     /**

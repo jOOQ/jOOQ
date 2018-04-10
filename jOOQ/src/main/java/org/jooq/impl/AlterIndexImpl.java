@@ -53,6 +53,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_ALTER_INDEX;
+import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
@@ -167,6 +168,20 @@ final class AlterIndexImpl extends AbstractQuery implements
         boolean qualify = ctx.qualify();
 
         switch (ctx.family()) {
+            case MARIADB:
+            case MYSQL: {
+                ctx.visit(K_ALTER_TABLE).sql(' ')
+                   .visit(on).sql(' ')
+                   .visit(K_RENAME_INDEX).sql(' ')
+                   .qualify(false)
+                   .visit(index).sql(' ')
+                   .visit(K_TO).sql(' ')
+                   .visit(renameTo)
+                   .qualify(qualify);
+
+                break;
+            }
+
 
 
 

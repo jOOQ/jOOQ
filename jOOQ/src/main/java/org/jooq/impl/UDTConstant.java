@@ -47,6 +47,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.UDTRecord;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -103,7 +104,6 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
 
 
-
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
@@ -118,10 +118,13 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         }
     }
 
-    private final void toSQLInline(RenderContext context) {
-        switch (context.family()) {
+    private final void toSQLInline(RenderContext ctx) {
+        ParamType previous = ctx.paramType();
+        ctx.paramType(ParamType.INLINED);
+
+        switch (ctx.family()) {
             case POSTGRES:
-                context.visit(K_ROW);
+                ctx.visit(K_ROW);
                 break;
 
 
@@ -131,21 +134,22 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
             // Assume default behaviour if dialect is not available
             default: {
-                context.visit(value.getUDT());
+                ctx.visit(value.getUDT());
                 break;
             }
         }
 
-        context.sql('(');
+        ctx.sql('(');
 
         String separator = "";
         for (Field<?> field : value.fields()) {
-            context.sql(separator);
-            context.visit(val(value.get(field), field));
+            ctx.sql(separator);
+            ctx.visit(val(value.get(field), field));
             separator = ", ";
         }
 
-        context.sql(')');
+        ctx.sql(')')
+           .paramType(previous);
     }
 
     @Deprecated

@@ -1300,6 +1300,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
 
         /**
@@ -2353,7 +2357,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
     private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
-        "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
+        "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])?(\\d)?(\\d)(:\\d{2})?)?");
 
     private static final OffsetTime offsetTime(String string) {
         return string == null ? null : OffsetTime.parse(preparse(string, false));
@@ -2384,7 +2388,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sb.append(":00");
 
             if (m.group(4) != null) {
-                sb.append(m.group(5));
+                if (m.group(5) != null)
+                    sb.append(m.group(5));
+                else
+                    sb.append('+');
 
                 String group6 = m.group(6);
                 String group8 = m.group(8);
@@ -2455,7 +2462,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, OffsetDateTime value) throws SQLException {
-            // [#6630] TODO support this type
+
+
+
+
+
+
+
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
 
@@ -2471,7 +2484,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final OffsetDateTime get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            // [#6630] TODO support this type
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
 

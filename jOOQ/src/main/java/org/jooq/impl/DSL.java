@@ -15082,7 +15082,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static Field<OffsetTime> offsetTime(OffsetTime value) {
         return offsetTime(Tools.field(value));
     }

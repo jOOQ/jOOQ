@@ -39,6 +39,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -90,20 +91,32 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
+     * <p>
+     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
+     * other dialects can emulate it using <code>MERGE</code>, if table meta
+     * data is available.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
+     * <p>
+     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
+     * other dialects can emulate it using <code>MERGE</code>, if table meta
+     * data is available.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.
+     * <p>
+     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
+     * other dialects can emulate it using <code>MERGE</code>, if table meta
+     * data is available.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertReturningStep<R> onConflictDoNothing();
 
     /**

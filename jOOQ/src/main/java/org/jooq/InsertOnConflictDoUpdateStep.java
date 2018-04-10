@@ -37,7 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+// ...
+// ...
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
@@ -62,12 +69,12 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**
      * Add the <code>DO IGNORE</code> clause.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertReturningStep<R> doNothing();
 }

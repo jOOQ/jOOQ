@@ -90,6 +90,7 @@ import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
+import org.jooq.MergeMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
@@ -611,7 +612,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     .whereNotExists(
                         selectOne()
                         .from(table)
-                        .where(matchByPrimaryKey(map))
+                        .where(matchByConflictingKey(map))
                     );
 
                 if (rows == null)
@@ -631,7 +632,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     private final Merge<R> toMerge(Configuration configuration) {
-        if (table.getPrimaryKey() != null) {
+        if ((onConflict != null && onConflict.size() > 0) ||
+            table.getPrimaryKey() != null) {
 
             // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = select == null
@@ -639,19 +641,26 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 : table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
 
             MergeOnConditionStep<R> on = select == null
-                ? create(configuration).mergeInto(table)
-                                       .usingDual()
-                                       .on(matchByPrimaryKey(insertMaps.lastMap()))
-                : create(configuration).mergeInto(table)
-                                       .using(t)
-                                       .on(matchByPrimaryKey(t));
+                ? configuration.dsl().mergeInto(table)
+                                     .usingDual()
+                                     .on(matchByConflictingKey(insertMaps.lastMap()))
+                : configuration.dsl().mergeInto(table)
+                                     .using(t)
+                                     .on(matchByConflictingKey(t));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
-            if (onDuplicateKeyUpdate)
-                notMatched = on.whenMatchedThenUpdate()
-                               .set(updateMap);
+            if (onDuplicateKeyUpdate) {
+                MergeMatchedSetMoreStep<R> set =
+                    on.whenMatchedThenUpdate()
+                      .set(updateMap);
+
+                if (condition.hasWhere())
+                    notMatched = condition != null
+                        ? set.where(condition)
+                        : set;
+            }
 
             return select == null
                 ? notMatched.whenNotMatchedThenInsert(insertMaps.fields())
@@ -669,10 +678,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByPrimaryKey(Map<Field<?>, Field<?>> map) {
+    private final Condition matchByConflictingKey(Map<Field<?>, Field<?>> map) {
         Condition result = null;
 
-        for (Field<?> f : table.getPrimaryKey().getFields()) {
+        // [#6462] The ON DUPLICATE KEY UPDATE clause is emulated using the primary key.
+        //         To properly reflect MySQL behaviour, it should use all the known unique keys.
+        // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
+        //         the MERGE's target and source tables on the conflict columns
+        for (Field<?> f : (onConflict != null && onConflict.size() > 0)
+                ? onConflict
+                : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = (Field<Object>) map.get(field);
 
@@ -688,10 +703,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByPrimaryKey(Table<?> s) {
+    private final Condition matchByConflictingKey(Table<?> s) {
         Condition result = null;
 
-        for (Field<?> f : table.getPrimaryKey().getFields()) {
+        // [#6462] The ON DUPLICATE KEY UPDATE clause is emulated using the primary key.
+        //         To properly reflect MySQL behaviour, it should use all the known unique keys.
+        // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
+        //         the MERGE's target and source tables on the conflict columns
+        for (Field<?> f : (onConflict != null && onConflict.size() > 0)
+                ? onConflict
+                : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = s.field(field);
 

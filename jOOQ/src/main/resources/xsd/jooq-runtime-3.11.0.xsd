@@ -195,6 +195,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="parseUnsupportedSyntax" type="jooq-runtime:ParseUnsupportedSyntax" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5917] Whether the parser should accept unsupported (but known) syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseUnknownFunctions" type="jooq-runtime:ParseUnknownFunctions" minOccurs="0" maxOccurs="1" default="FAIL">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7344] Whether the parser should accept unknown functions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -472,6 +476,17 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Meta lookups are active in parser and throw exceptions on failure -->
       <enumeration value="THROW_ON_FAILURE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseUnsupportedSyntax">
+    <restriction base="string">
+
+      <!-- Fail on syntax that is supported (known) by the parser, but not the jOOQ API -->
+      <enumeration value="FAIL"/>
+
+      <!-- Ignore syntax that is supported (known) by the parser, but not the jOOQ API -->
+      <enumeration value="IGNORE"/>
     </restriction>
   </simpleType>
 

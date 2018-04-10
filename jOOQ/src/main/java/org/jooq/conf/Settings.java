@@ -115,6 +115,9 @@ public class Settings
     @XmlElement(defaultValue = "IGNORE_ON_FAILURE")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.IGNORE_ON_FAILURE;
+    @XmlElement(defaultValue = "IGNORE")
+    @XmlSchemaType(name = "string")
+    protected ParseUnsupportedSyntax parseUnsupportedSyntax = ParseUnsupportedSyntax.IGNORE;
     @XmlElement(defaultValue = "FAIL")
     @XmlSchemaType(name = "string")
     protected ParseUnknownFunctions parseUnknownFunctions = ParseUnknownFunctions.FAIL;
@@ -1023,6 +1026,30 @@ public class Settings
     }
 
     /**
+     * [#5917] Whether the parser should accept unsupported (but known) syntax.
+     *
+     * @return
+     *     possible object is
+     *     {@link ParseUnsupportedSyntax }
+     *
+     */
+    public ParseUnsupportedSyntax getParseUnsupportedSyntax() {
+        return parseUnsupportedSyntax;
+    }
+
+    /**
+     * Sets the value of the parseUnsupportedSyntax property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseUnsupportedSyntax }
+     *
+     */
+    public void setParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
+        this.parseUnsupportedSyntax = value;
+    }
+
+    /**
      * [#7344] Whether the parser should accept unknown functions.
      *
      * @return
@@ -1226,6 +1253,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
+        setParseUnsupportedSyntax(value);
+        return this;
+    }
+
     public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
         setParseUnknownFunctions(value);
         return this;
@@ -1413,6 +1445,11 @@ public class Settings
             sb.append("<parseWithMetaLookups>");
             sb.append(parseWithMetaLookups);
             sb.append("</parseWithMetaLookups>");
+        }
+        if (parseUnsupportedSyntax!= null) {
+            sb.append("<parseUnsupportedSyntax>");
+            sb.append(parseUnsupportedSyntax);
+            sb.append("</parseUnsupportedSyntax>");
         }
         if (parseUnknownFunctions!= null) {
             sb.append("<parseUnknownFunctions>");
@@ -1758,6 +1795,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseUnsupportedSyntax == null) {
+            if (other.parseUnsupportedSyntax!= null) {
+                return false;
+            }
+        } else {
+            if (!parseUnsupportedSyntax.equals(other.parseUnsupportedSyntax)) {
+                return false;
+            }
+        }
         if (parseUnknownFunctions == null) {
             if (other.parseUnknownFunctions!= null) {
                 return false;
@@ -1810,6 +1856,7 @@ public class Settings
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
+        result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));
         return result;
     }

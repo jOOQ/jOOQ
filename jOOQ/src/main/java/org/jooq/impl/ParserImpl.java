@@ -379,6 +379,7 @@ import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.tools.reflect.Reflect;
 
@@ -1729,6 +1730,10 @@ final class ParserImpl implements Parser {
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseCreateIndex(ctx, false);
+        else if (parseKeywordIf(ctx, "SPATIAL INDEX") && ctx.requireUnsupportedSyntax())
+            return parseCreateIndex(ctx, false);
+        else if (parseKeywordIf(ctx, "FULLTEXT INDEX") && ctx.requireUnsupportedSyntax())
+            return parseCreateIndex(ctx, false);
         else if (parseKeywordIf(ctx, "UNIQUE INDEX"))
             return parseCreateIndex(ctx, true);
         else if (parseKeywordIf(ctx, "SCHEMA"))
@@ -1742,7 +1747,18 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseCreateView(ctx, false);
         else
-            throw ctx.expected("GENERATOR", "GLOBAL TEMPORARY TABLE", "INDEX", "OR ALTER VIEW", "OR REPLACE VIEW", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "UNIQUE INDEX", "VIEW");
+            throw ctx.expected(
+                "GENERATOR",
+                "GLOBAL TEMPORARY TABLE",
+                "INDEX",
+                "OR ALTER VIEW",
+                "OR REPLACE VIEW",
+                "SCHEMA",
+                "SEQUENCE",
+                "TABLE",
+                "TEMPORARY TABLE",
+                "UNIQUE INDEX",
+                "VIEW");
     }
 
     private static final Query parseAlter(ParserContext ctx) {
@@ -2729,7 +2745,14 @@ final class ParserImpl implements Parser {
     private static DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
         List<FieldOrConstraint> list = new ArrayList<FieldOrConstraint>();
 
-        if (parseKeywordIf(ctx, "INDEX") || parseKeywordIf(ctx, "KEY")) {
+        if (((parseKeywordIf(ctx, "SPATIAL INDEX")
+            || parseKeywordIf(ctx, "SPATIAL KEY")
+            || parseKeywordIf(ctx, "FULLTEXT INDEX")
+            || parseKeywordIf(ctx, "FULLTEXT KEY"))
+            && ctx.requireUnsupportedSyntax())
+
+            || parseKeywordIf(ctx, "INDEX")
+            || parseKeywordIf(ctx, "KEY")) {
             Name name = parseIdentifierIf(ctx);
             parse(ctx, '(');
             List<SortField<?>> sort = parseSortSpecification(ctx);
@@ -7838,6 +7861,13 @@ final class ParserContext {
     boolean requireProEdition() {
         if (!PRO_EDITION)
             throw exception("Feature only supported in pro edition");
+
+        return true;
+    }
+
+    boolean requireUnsupportedSyntax() {
+        if (dsl.configuration().settings().getParseUnsupportedSyntax() == ParseUnsupportedSyntax.FAIL)
+            throw exception("Syntax not supported");
 
         return true;
     }

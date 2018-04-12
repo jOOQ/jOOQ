@@ -155,6 +155,7 @@ final class Keywords {
     static final Keyword K_IGNORE_NULLS                     = keyword("ignore nulls");
     static final Keyword K_IMMEDIATE                        = keyword("immediate");
     static final Keyword K_IN                               = keyword("in");
+    static final Keyword K_INCLUDE                          = keyword("include");
     static final Keyword K_INDEX                            = keyword("index");
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INSERT                           = keyword("insert");

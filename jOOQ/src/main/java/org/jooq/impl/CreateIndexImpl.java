@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_INDEX;
 // ...
 // ...
@@ -51,10 +52,12 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_INCLUDE;
 import static org.jooq.impl.Keywords.K_INDEX;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_ORDERFIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -67,6 +70,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
 import org.jooq.Field;
@@ -86,6 +90,7 @@ final class CreateIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE INDEX behaviour
     CreateIndexStep,
+    CreateIndexIncludeStep,
     CreateIndexWhereStep {
 
     /**
@@ -101,6 +106,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     private final boolean                    ifNotExists;
     private Table<?>                         table;
     private Field<?>[]                       fields;
+    private Field<?>[]                       include;
     private SortField<?>[]                   sortFields;
     private Condition                        where;
 
@@ -153,6 +159,27 @@ final class CreateIndexImpl extends AbstractQuery implements
     @Override
     public final CreateIndexImpl on(String tableName, Collection<? extends String> fieldNames) {
         return on(tableName, fieldNames.toArray(EMPTY_STRING));
+    }
+
+    @Override
+    public final CreateIndexImpl include(Field<?>... f) {
+        this.include = f;
+        return this;
+    }
+
+    @Override
+    public final CreateIndexImpl include(Name... f) {
+        return include(Tools.fieldsByName(f));
+    }
+
+    @Override
+    public final CreateIndexImpl include(String... f) {
+        return include(Tools.fieldsByName(f));
+    }
+
+    @Override
+    public final CreateIndexImpl include(Collection<? extends Field<?>> fields) {
+        return include(fields.toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -240,17 +267,37 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.visit(generatedName())
                .sql(' ');
 
+        boolean supportsInclude = false                                                      ;
+
+        QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();
+        if (fields != null)
+            list.addAll(asList(fields));
+        else
+            list.addAll(asList(sortFields));
+
+        if (!supportsInclude && include != null)
+            list.addAll(asList(include));
+
         ctx.visit(K_ON)
            .sql(' ')
            .visit(table)
            .sql('(')
            .qualify(false)
-           .visit(fields != null ? new QueryPartList<QueryPart>(fields) : new QueryPartList<QueryPart>(sortFields))
+           .visit(list)
            .qualify(true)
            .sql(')');
 
+        if (supportsInclude && include != null)
+            ctx.formatSeparator()
+               .visit(K_INCLUDE)
+               .sql(" (")
+               .qualify(false)
+               .visit(new QueryPartList<QueryPart>(include))
+               .qualify(true)
+               .sql(')');
+
         if (where != null)
-            ctx.sql(' ')
+            ctx.formatSeparator()
                .visit(K_WHERE)
                .sql(' ')
                .qualify(false)

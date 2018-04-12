@@ -279,6 +279,7 @@ import org.jooq.Constraint;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexFinalStep;
+import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
 import org.jooq.CreateTableAsStep;
@@ -3051,10 +3052,17 @@ final class ParserImpl implements Parser {
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
+
+        Name[] include = null;
+        if (parseKeywordIf(ctx, "INCLUDE")) {
+            parse(ctx, '(');
+            include = parseIdentifiers(ctx).toArray(EMPTY_NAME);
+            parse(ctx, ')');
+        }
+
         Condition condition = parseKeywordIf(ctx, "WHERE")
             ? parseCondition(ctx)
             : null;
-
 
         CreateIndexStep s1 = ifNotExists
             ? unique
@@ -3068,12 +3076,15 @@ final class ParserImpl implements Parser {
                     ? ctx.dsl.createIndex()
                     : ctx.dsl.createIndex(indexName);
 
-        CreateIndexWhereStep s2 = s1.on(tableName, fields);
-        CreateIndexFinalStep s3 = condition != null
-            ? s2.where(condition)
+        CreateIndexIncludeStep s2 = s1.on(tableName, fields);
+        CreateIndexWhereStep s3 = include != null
+            ? s2.include(include)
             : s2;
+        CreateIndexFinalStep s4 = condition != null
+            ? s3.where(condition)
+            : s3;
 
-        return s3;
+        return s4;
     }
 
     private static final DDLQuery parseAlterDomain(ParserContext ctx) {

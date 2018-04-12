@@ -85,8 +85,7 @@ extends
     GroupField,
     OrderField<T>,
     FieldOrRow,
-    FieldOrConstraint,
-    Named {
+    FieldOrConstraint {
 
     // ------------------------------------------------------------------------
     // API

@@ -53,7 +53,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     private final Comment     comment;
 
     AbstractNamed(Name name, Comment comment) {
-        this.name = name;
+        this.name = name == null ? AbstractName.NO_NAME : name;
         this.comment = comment == null ? CommentImpl.NO_COMMENT : comment;
     }
 

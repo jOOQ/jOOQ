@@ -97,7 +97,7 @@ import org.jooq.exception.DataAccessException;
  * @author Lukas Eder
  */
 @SuppressWarnings("rawtypes")
-final class ConstraintImpl extends AbstractQueryPart
+final class ConstraintImpl extends AbstractNamed
 implements
     ConstraintTypeStep
   , ConstraintForeignKeyOnStep
@@ -137,7 +137,6 @@ implements
     private static final long     serialVersionUID = 1018023703769802616L;
     private static final Clause[] CLAUSES          = { CONSTRAINT };
 
-    private final Name            name;
     private Field<?>[]            unique;
     private Field<?>[]            primaryKey;
     private Field<?>[]            foreignKey;
@@ -152,8 +151,12 @@ implements
     }
 
     ConstraintImpl(Name name) {
-        this.name = name;
+        super(name, null);
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
@@ -163,18 +166,18 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ctx.data(DATA_CONSTRAINT_REFERENCE) != null) {
-            if (name == null)
+            if (getQualifiedName() == AbstractName.NO_NAME)
                 throw new DataAccessException("Cannot ALTER or DROP CONSTRAINT without name");
 
-            ctx.visit(name);
+            ctx.visit(getQualifiedName());
         }
         else {
             boolean qualify = ctx.qualify();
 
-            if (name != null)
+            if (getQualifiedName() == AbstractName.NO_NAME)
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
-                   .visit(name)
+                   .visit(getQualifiedName())
                    .formatIndentStart()
                    .formatSeparator();
 
@@ -230,10 +233,14 @@ implements
                    .sql(')');
             }
 
-            if (name != null)
+            if (getQualifiedName() == AbstractName.NO_NAME)
                 ctx.formatIndentEnd();
         }
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Constraint API
+    // ------------------------------------------------------------------------
 
     @Override
     public final ConstraintImpl unique(String... fields) {

@@ -45,6 +45,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface FieldOrConstraint extends QueryPart {
+public interface FieldOrConstraint extends Named {
 
 }

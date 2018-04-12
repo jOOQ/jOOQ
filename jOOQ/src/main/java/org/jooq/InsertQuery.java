@@ -123,7 +123,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     void onConflictOnConstraint(Constraint constraint);
 
     /**
@@ -131,7 +131,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     void onConflictOnConstraint(UniqueKey<R> constraint);
 
     /**
@@ -139,7 +139,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     void onConflictOnConstraint(Name constraint);
 
     /**

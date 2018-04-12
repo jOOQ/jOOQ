@@ -120,6 +120,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private boolean                          onDuplicateKeyUpdate;
     private boolean                          onDuplicateKeyIgnore;
     private Constraint                       onConstraint;
+    private UniqueKey<R>                     onConstraintUniqueKey;
     private QueryPartList<Field<?>>          onConflict;
     private final ConditionProviderImpl      condition;
 
@@ -160,6 +161,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflictOnConstraint(Constraint constraint) {
         this.onConstraint = constraint;
+
+        if (onConstraintUniqueKey == null) {
+            for (UniqueKey<R> key : table.getKeys()) {
+                if (constraint.getName().equals(key.getName())) {
+                    onConstraintUniqueKey = key;
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -167,6 +177,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (StringUtils.isEmpty(constraint.getName()))
             throw new IllegalArgumentException("UniqueKey's name is not specified");
 
+        this.onConstraintUniqueKey = constraint;
         onConflictOnConstraint(name(constraint.getName()));
     }
 
@@ -632,8 +643,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     private final Merge<R> toMerge(Configuration configuration) {
-        if ((onConflict != null && onConflict.size() > 0) ||
-            table.getPrimaryKey() != null) {
+        if ((onConflict != null && onConflict.size() > 0)
+            || onConstraint != null
+            || table.getPrimaryKey() != null) {
 
             // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = select == null
@@ -681,12 +693,19 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private final Condition matchByConflictingKey(Map<Field<?>, Field<?>> map) {
         Condition result = null;
 
-        // [#6462] The ON DUPLICATE KEY UPDATE clause is emulated using the primary key.
-        //         To properly reflect MySQL behaviour, it should use all the known unique keys.
         // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
         //         the MERGE's target and source tables on the conflict columns
+        // [#7409] The ON CONFLICT ON CONSTRAINT clause can be emulated using MERGE by
+        //         joining the MERGE's target and source tables on the constraint columns
+        // [#6462] The ON DUPLICATE KEY UPDATE clause is emulated using the primary key.
+        //         To properly reflect MySQL behaviour, it should use all the known unique keys.
+        if (onConstraint != null && onConstraintUniqueKey == null)
+            return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
+
         for (Field<?> f : (onConflict != null && onConflict.size() > 0)
                 ? onConflict
+                : onConstraintUniqueKey != null
+                ? onConstraintUniqueKey.getFields()
                 : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = (Field<Object>) map.get(field);
@@ -706,12 +725,19 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private final Condition matchByConflictingKey(Table<?> s) {
         Condition result = null;
 
+        // [#7365] The ON CONFLICT (column list) clause can be emulated using MERGE by
+        //         joining the MERGE's target and source tables on the conflict columns
+        // [#7409] The ON CONFLICT ON CONSTRAINT clause can be emulated using MERGE by
+        //         joining the MERGE's target and source tables on the constraint columns
         // [#6462] The ON DUPLICATE KEY UPDATE clause is emulated using the primary key.
         //         To properly reflect MySQL behaviour, it should use all the known unique keys.
-        // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
-        //         the MERGE's target and source tables on the conflict columns
+        if (onConstraint != null && onConstraintUniqueKey == null)
+            return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
+
         for (Field<?> f : (onConflict != null && onConflict.size() > 0)
                 ? onConflict
+                : onConstraintUniqueKey != null
+                ? onConstraintUniqueKey.getFields()
                 : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
             Field<Object> value = s.field(field);

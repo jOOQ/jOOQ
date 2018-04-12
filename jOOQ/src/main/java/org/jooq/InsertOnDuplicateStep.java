@@ -74,19 +74,19 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(UniqueKey<R> constraint);
 
     /**

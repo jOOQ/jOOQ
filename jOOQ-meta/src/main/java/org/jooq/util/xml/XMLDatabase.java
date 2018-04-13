@@ -51,6 +51,7 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,6 +66,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.xml.bind.JAXB;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -157,7 +161,26 @@ public class XMLDatabase extends AbstractDatabase {
                         f = new RandomAccessFile(file, "r");
                         byte[] bytes = new byte[(int) f.length()];
                         f.readFully(bytes);
-                        content = new String(bytes);
+
+                        // [#7414] Default to reading UTF-8
+                        content = new String(bytes, "UTF-8");
+
+                        // [#7414] Alternatively, read the encoding from the XML file
+                        try {
+                            XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader( new StringReader(content) );
+                            String encoding = reader.getCharacterEncodingScheme();
+
+                            // Returned encoding can be null in the presence of a BOM
+                            // See https://stackoverflow.com/a/27147259/521799
+                            if (encoding != null && !"UTF-8".equals(encoding))
+                                content = new String(bytes, encoding);
+                        }
+                        catch (XMLStreamException e) {
+                            log.warn("Could not open XML Stream: " + e.getMessage());
+                        }
+                        catch (UnsupportedEncodingException e) {
+                            log.warn("Unsupported encoding: " + e.getMessage());
+                        }
                     }
                     finally {
                         if (f != null) {

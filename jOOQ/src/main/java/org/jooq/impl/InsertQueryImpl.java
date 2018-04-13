@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
@@ -76,9 +77,12 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.Clause;
@@ -311,25 +315,25 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
                     else {
+                        boolean qualify = ctx.qualify();
+
                         ctx.sql('(');
 
-                        if (onConflict != null && onConflict.size() > 0) {
-                            boolean qualify = ctx.qualify();
-
+                        if (onConflict != null && onConflict.size() > 0)
                             ctx.qualify(false)
                                .visit(onConflict)
                                .qualify(qualify);
-                        }
-                        else if (table.getPrimaryKey() == null) {
-                            ctx.sql("[unknown primary key]");
-                        }
-                        else {
-                            boolean qualify = ctx.qualify();
 
+                        // [#6462] There is no way to emulate MySQL's ON DUPLICATE KEY UPDATE
+                        //         where all UNIQUE keys are considered for conflicts. PostgreSQL
+                        //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
+                        //         column list or a constraint reference.
+                        else if (table.getPrimaryKey() == null)
+                            ctx.sql("[unknown primary key]");
+                        else
                             ctx.qualify(false)
                                .visit(new Fields<Record>(table.getPrimaryKey().getFields()))
                                .qualify(qualify);
-                        }
 
                         ctx.sql(')');
                     }
@@ -606,8 +610,34 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+    private final List<List<? extends Field<?>>> conflictingKeys(Configuration configuration) {
+
+        // [#7365] PostgreSQL ON CONFLICT (conflict columns) clause
+        if (onConflict != null && onConflict.size() > 0)
+            return Collections.singletonList(onConflict);
+
+        // [#7409] PostgreSQL ON CONFLICT ON CONSTRAINT clause
+        else if (onConstraintUniqueKey != null)
+            return Collections.singletonList(onConstraintUniqueKey.getFields());
+
+        // [#6462] MySQL ON DUPLICATGE KEY UPDATE clause
+        //         Flag for backwards compatibility considers only PRIMARY KEY
+        else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
+            return Collections.singletonList(table.getPrimaryKey().getFields());
+
+        // [#6462] MySQL ON DUPLICATGE KEY UPDATE clause
+        //         All conflicting keys are considered
+        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>();
+        for (UniqueKey<R> key : table.getKeys())
+            result.add(key.getFields());
+
+        return result;
+    }
+
     private final QueryPart toInsertSelect(Configuration configuration) {
-        if (table.getPrimaryKey() != null) {
+        List<List<? extends Field<?>>> keys = conflictingKeys(configuration);
+
+        if (!keys.isEmpty()) {
 
             // [#5089] Multi-row inserts need to explicitly generate UNION ALL
             //         here. TODO: Refactor this logic to be more generally
@@ -623,7 +653,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     .whereNotExists(
                         selectOne()
                         .from(table)
-                        .where(matchByConflictingKey(map))
+                        .where(matchByConflictingKeys(configuration, map))
                     );
 
                 if (rows == null)
@@ -632,20 +662,20 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     rows = rows.unionAll(row);
             }
 
-            return create(configuration)
+            return configuration.dsl()
                 .insertInto(table)
                 .columns(insertMaps.fields())
                 .select(selectFrom(table(rows).as("t")));
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table);
         }
     }
 
     private final Merge<R> toMerge(Configuration configuration) {
         if ((onConflict != null && onConflict.size() > 0)
             || onConstraint != null
-            || table.getPrimaryKey() != null) {
+            || !table.getKeys().isEmpty()) {
 
             // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = select == null
@@ -655,10 +685,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             MergeOnConditionStep<R> on = select == null
                 ? configuration.dsl().mergeInto(table)
                                      .usingDual()
-                                     .on(matchByConflictingKey(insertMaps.lastMap()))
+                                     .on(matchByConflictingKeys(configuration, insertMaps.lastMap()))
                 : configuration.dsl().mergeInto(table)
                                      .using(t)
-                                     .on(matchByConflictingKey(t));
+                                     .on(matchByConflictingKeys(configuration, t));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
@@ -690,8 +720,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByConflictingKey(Map<Field<?>, Field<?>> map) {
-        Condition result = null;
+    private final Condition matchByConflictingKeys(Configuration configuration, Map<Field<?>, Field<?>> map) {
+        Condition or = null;
 
         // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
         //         the MERGE's target and source tables on the conflict columns
@@ -702,19 +732,21 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (onConstraint != null && onConstraintUniqueKey == null)
             return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
 
-        for (Field<?> f : (onConflict != null && onConflict.size() > 0)
-                ? onConflict
-                : onConstraintUniqueKey != null
-                ? onConstraintUniqueKey.getFields()
-                : table.getPrimaryKey().getFields()) {
-            Field<Object> field = (Field<Object>) f;
-            Field<Object> value = (Field<Object>) map.get(field);
+        for (List<? extends Field<?>> fields : conflictingKeys(configuration)) {
+            Condition and = null;
 
-            Condition other = field.eq(value);
-            result = (result == null) ? other : result.and(other);
+            for (Field<?> field : fields) {
+                Field<Object> f = (Field<Object>) field;
+                Field<Object> v = (Field<Object>) map.get(f);
+
+                Condition other = f.eq(v);
+                and = (and == null) ? other : and.and(other);
+            }
+
+            or = (or == null) ? and : or.or(and);
         }
 
-        return result;
+        return or;
     }
 
     /**
@@ -722,8 +754,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByConflictingKey(Table<?> s) {
-        Condition result = null;
+    private final Condition matchByConflictingKeys(Configuration configuration, Table<?> s) {
+        Condition or = null;
 
         // [#7365] The ON CONFLICT (column list) clause can be emulated using MERGE by
         //         joining the MERGE's target and source tables on the conflict columns
@@ -734,19 +766,21 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (onConstraint != null && onConstraintUniqueKey == null)
             return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
 
-        for (Field<?> f : (onConflict != null && onConflict.size() > 0)
-                ? onConflict
-                : onConstraintUniqueKey != null
-                ? onConstraintUniqueKey.getFields()
-                : table.getPrimaryKey().getFields()) {
-            Field<Object> field = (Field<Object>) f;
-            Field<Object> value = s.field(field);
+        for (List<? extends Field<?>> fields : conflictingKeys(configuration)) {
+            Condition and = null;
 
-            Condition other = field.eq(value);
-            result = (result == null) ? other : result.and(other);
+            for (Field<?> field : fields) {
+                Field<Object> f = (Field<Object>) field;
+                Field<Object> v = s.field(f);
+
+                Condition other = f.eq(v);
+                and = (and == null) ? other : and.and(other);
+            }
+
+            or = (or == null) ? and : or.or(and);
         }
 
-        return result;
+        return or;
     }
 
     @Override

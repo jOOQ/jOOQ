@@ -183,6 +183,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5826] The delimiter character to be used to delimit statements in batches.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

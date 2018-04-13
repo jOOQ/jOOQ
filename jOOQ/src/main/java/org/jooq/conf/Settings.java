@@ -106,6 +106,8 @@ public class Settings
     protected Integer inListPadBase = 2;
     @XmlElement(defaultValue = ";")
     protected String delimiter = ";";
+    @XmlElement(defaultValue = "false")
+    protected Boolean emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly = false;
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeUpdateWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
@@ -954,6 +956,30 @@ public class Settings
     }
 
     /**
+     * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly() {
+        return emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly;
+    }
+
+    /**
+     * Sets the value of the emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
+        this.emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly = value;
+    }
+
+    /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
      * @return
@@ -1238,6 +1264,11 @@ public class Settings
         return this;
     }
 
+    public Settings withEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
+        setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(value);
+        return this;
+    }
+
     public Settings withExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteUpdateWithoutWhere(value);
         return this;
@@ -1430,6 +1461,11 @@ public class Settings
             sb.append("<delimiter>");
             sb.append(delimiter);
             sb.append("</delimiter>");
+        }
+        if (emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly!= null) {
+            sb.append("<emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly>");
+            sb.append(emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
+            sb.append("</emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly>");
         }
         if (executeUpdateWithoutWhere!= null) {
             sb.append("<executeUpdateWithoutWhere>");
@@ -1768,6 +1804,15 @@ public class Settings
                 return false;
             }
         }
+        if (emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null) {
+            if (other.emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly!= null) {
+                return false;
+            }
+        } else {
+            if (!emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.equals(other.emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly)) {
+                return false;
+            }
+        }
         if (executeUpdateWithoutWhere == null) {
             if (other.executeUpdateWithoutWhere!= null) {
                 return false;
@@ -1853,6 +1898,7 @@ public class Settings
         result = ((prime*result)+((inListPadding == null)? 0 :inListPadding.hashCode()));
         result = ((prime*result)+((inListPadBase == null)? 0 :inListPadBase.hashCode()));
         result = ((prime*result)+((delimiter == null)? 0 :delimiter.hashCode()));
+        result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));

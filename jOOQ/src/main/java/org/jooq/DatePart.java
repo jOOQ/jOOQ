@@ -99,71 +99,104 @@ public enum DatePart {
     /**
      * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in
      * the 3rd.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     MILLENNIUM("millennium"),
 
     /**
      * The century. The year 2000 is in the 20th century, the year 2001 in the
      * 21st.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     CENTURY("century"),
 
     /**
      * The decade. The year divided by 10.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     DECADE("decade"),
 
     /**
      * The epoch in seconds since 1970-01-01.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     EPOCH("epoch"),
 
     /**
      * The quarter. Jan-Mar = 1, Apr-Jun = 2, Jul-Sep = 3, Oct-Dec = 4.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     QUARTER("quarter"),
 
     /**
      * The week of the year.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     WEEK("week"),
 
     /**
      * The day of the year. Corresponds to {@link ChronoField#DAY_OF_YEAR}.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     DAY_OF_YEAR("day_of_year"),
 
     /**
      * The ISO day of the week. 1 = Monday, 2 = Tuesday, ..., 7 = Sunday.
      * Corresponds to {@link ChronoField#DAY_OF_WEEK} .
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     DAY_OF_WEEK("day_of_week"),
 
     /**
      * The timezone offset in seconds. Corresponds to
      * {@link ChronoField#OFFSET_SECONDS}.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     TIMEZONE("timezone"),
 
     /**
      * The time zone offset's hour part.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     TIMEZONE_HOUR("timezone_hour"),
 
     /**
      * The time zone offset's minute part.
+     *
+     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
     @Support({ POSTGRES })
+    @Deprecated
     TIMEZONE_MINUTE("timezone_minute"),
 
     ;

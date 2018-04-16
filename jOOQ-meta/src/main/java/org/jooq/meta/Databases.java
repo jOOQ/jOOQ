@@ -38,26 +38,26 @@
 package org.jooq.meta;
 
 import org.jooq.SQLDialect;
-import org.jooq.meta.ase.ASEDatabase;
+// ...
 import org.jooq.meta.cubrid.CUBRIDDatabase;
-import org.jooq.meta.db2.DB2Database;
+// ...
 import org.jooq.meta.derby.DerbyDatabase;
 import org.jooq.meta.firebird.FirebirdDatabase;
 import org.jooq.meta.h2.H2Database;
-import org.jooq.meta.hana.HanaDatabase;
+// ...
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
-import org.jooq.meta.informix.InformixDatabase;
-import org.jooq.meta.ingres.IngresDatabase;
+// ...
+// ...
 import org.jooq.meta.jdbc.JDBCDatabase;
 import org.jooq.meta.mariadb.MariaDBDatabase;
 import org.jooq.meta.mysql.MySQLDatabase;
-import org.jooq.meta.oracle.OracleDatabase;
+// ...
 import org.jooq.meta.postgres.PostgresDatabase;
-import org.jooq.meta.redshift.RedshiftDatabase;
+// ...
 import org.jooq.meta.sqlite.SQLiteDatabase;
-import org.jooq.meta.sqlserver.SQLServerDatabase;
-import org.jooq.meta.sybase.SybaseDatabase;
-import org.jooq.meta.vertica.VerticaDatabase;
+// ...
+// ...
+// ...
 
 /**
  * A common utility class that provides access to various {@link Database}

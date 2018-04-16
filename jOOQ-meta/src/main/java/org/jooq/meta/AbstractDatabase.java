@@ -80,7 +80,7 @@ import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Nullability;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.Schema;
-import org.jooq.meta.oracle.OracleDatabase;
+// ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;

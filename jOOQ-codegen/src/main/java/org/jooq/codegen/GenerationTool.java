@@ -84,7 +84,7 @@ import org.jooq.meta.jaxb.Property;
 import org.jooq.meta.jaxb.Schema;
 import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
-import org.jooq.meta.oracle.OracleDatabase;
+// ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;

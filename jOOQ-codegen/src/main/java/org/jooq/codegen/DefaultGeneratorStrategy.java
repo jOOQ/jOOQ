@@ -57,7 +57,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
-import org.jooq.meta.oracle.OracleQueueDefinition;
+// ...
 import org.jooq.tools.StringUtils;
 
 /**

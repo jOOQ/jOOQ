@@ -144,10 +144,10 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
-import org.jooq.meta.oracle.OracleDatabase;
-import org.jooq.meta.oracle.OracleLinkDefinition;
-import org.jooq.meta.oracle.OracleQueueDefinition;
-import org.jooq.meta.oracle.OracleRoutineDefinition;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.meta.postgres.PostgresDatabase;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;

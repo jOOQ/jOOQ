@@ -17660,7 +17660,7 @@ public class Book implements java.io.Serializable {
 <generator>
   <strategy>
     <matchers>
-      <!-- Specify 0..n schema matchers in order to provide a naming strategy for objects created from schemas. -->
+      <!-- Specify 0..n schema matchers to provide a strategy for naming objects created from schemas. -->
       <schemas>
         <schema>
 
@@ -17674,8 +17674,7 @@ public class Book implements java.io.Serializable {
         </schema>
       </schemas>
 
-      <!-- Specify 0..n table matchers in order to provide a naming strategy for objects
-           created from database tables. -->
+      <!-- Specify 0..n table matchers to provide a strategy for naming objects created from tables. -->
       <tables>
         <table>
 
@@ -17707,8 +17706,7 @@ public class Book implements java.io.Serializable {
         </table>
       </tables>
 
-      <!-- Specify 0..n field matchers in order to provide a naming strategy for objects
-           created from table fields. -->
+      <!-- Specify 0..n field matchers to provide a strategy for naming objects created from fields. -->
       <fields>
         <field>
 
@@ -17723,8 +17721,7 @@ public class Book implements java.io.Serializable {
         </field>
       </fields>
 
-      <!-- Specify 0..n routine matchers in order to provide a naming strategy for objects
-           created from routines. -->
+      <!-- Specify 0..n routine matchers to provide a strategy for naming objects created from routines. -->
       <routines>
         <routine>
 
@@ -17738,8 +17735,7 @@ public class Book implements java.io.Serializable {
         </routine>
       </routines>
 
-      <!-- Specify 0..n sequence matchers in order to provide a naming strategy for objects
-           created from sequences. -->
+      <!-- Specify 0..n sequence matchers to provide a strategy for naming objects created from sequences. -->
       <sequences>
         <sequence>
 
@@ -17750,6 +17746,19 @@ public class Book implements java.io.Serializable {
           <sequenceIdentifier> --> MatcherRule </sequenceIdentifier>
         </sequence>
       </sequences>
+
+      <!-- Specify 0..n enum matchers to provide a strategy for naming objects created from enums. -->
+      <enums>
+        <enum>
+
+          <!-- Match unqualified or qualified enum names. If left empty, this matcher applies to all enums. -->
+          <expression>MY_ENUM</expression>
+
+          <!-- These elements influence the naming of a generated org.jooq.EnumType object. -->
+          <enumClass> --> MatcherRule </enumClass>
+          <enumImplements>com.example.MyOptionalCustomInterface</enumImplements>
+        </enum>
+      </enums>
     </matchers>
   </strategy>
 </generator>]]></xml><html>

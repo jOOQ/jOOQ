@@ -56,6 +56,12 @@
     <bindings if-exists="true" scd="~tns:MatchersSequenceType">
       <class ref="org.jooq.util.jaxb.MatchersSequenceType"/>
     </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersEnumsType">
+      <class ref="org.jooq.util.jaxb.MatchersEnumsType"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:MatchersEnumType">
+      <class ref="org.jooq.util.jaxb.MatchersEnumType"/>
+    </bindings>
     <bindings if-exists="true" scd="~tns:MatcherRule">
       <class ref="org.jooq.util.jaxb.MatcherRule"/>
     </bindings>

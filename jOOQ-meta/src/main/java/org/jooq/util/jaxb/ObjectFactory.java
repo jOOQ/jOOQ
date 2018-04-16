@@ -125,6 +125,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersEnumType }
+     *
+     */
+    public MatchersEnumType createMatchersEnumType() {
+        return new MatchersEnumType();
+    }
+
+    /**
      * Create an instance of {@link MatcherRule }
      *
      */

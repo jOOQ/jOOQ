@@ -144,6 +144,10 @@
       <element name="sequences" type="tns:MatchersSequencesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for sequence names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="enums" type="tns:MatchersEnumsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for enum names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </sequence>
   </complexType>
 
@@ -310,6 +314,29 @@
 
       <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersEnumsType">
+    <sequence>
+      <element name="enum" type="tns:MatchersEnumType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersEnumType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for enum names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This sequence matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="enumClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.EnumType} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="enumImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlType;
     "tables",
     "fields",
     "routines",
-    "sequences"
+    "sequences",
+    "enums"
 })
 @SuppressWarnings({
     "all"
@@ -55,6 +56,9 @@ public class Matchers implements Serializable
     @XmlElementWrapper(name = "sequences")
     @XmlElement(name = "sequence")
     protected List<MatchersSequenceType> sequences;
+    @XmlElementWrapper(name = "enums")
+    @XmlElement(name = "enum")
+    protected List<MatchersEnumType> enums;
 
     public List<MatchersSchemaType> getSchemas() {
         if (schemas == null) {
@@ -109,6 +113,17 @@ public class Matchers implements Serializable
 
     public void setSequences(List<MatchersSequenceType> sequences) {
         this.sequences = sequences;
+    }
+
+    public List<MatchersEnumType> getEnums() {
+        if (enums == null) {
+            enums = new ArrayList<MatchersEnumType>();
+        }
+        return enums;
+    }
+
+    public void setEnums(List<MatchersEnumType> enums) {
+        this.enums = enums;
     }
 
     public Matchers withSchemas(MatchersSchemaType... values) {
@@ -216,6 +231,27 @@ public class Matchers implements Serializable
         return this;
     }
 
+    public Matchers withEnums(MatchersEnumType... values) {
+        if (values!= null) {
+            for (MatchersEnumType value: values) {
+                getEnums().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withEnums(Collection<MatchersEnumType> values) {
+        if (values!= null) {
+            getEnums().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withEnums(List<MatchersEnumType> enums) {
+        setEnums(enums);
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -243,6 +279,11 @@ public class Matchers implements Serializable
             sb.append("<sequences>");
             sb.append(sequences);
             sb.append("</sequences>");
+        }
+        if (enums!= null) {
+            sb.append("<enums>");
+            sb.append(enums);
+            sb.append("</enums>");
         }
         return sb.toString();
     }
@@ -304,6 +345,15 @@ public class Matchers implements Serializable
                 return false;
             }
         }
+        if (enums == null) {
+            if (other.enums!= null) {
+                return false;
+            }
+        } else {
+            if (!enums.equals(other.enums)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -316,6 +366,7 @@ public class Matchers implements Serializable
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
+        result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
         return result;
     }
 

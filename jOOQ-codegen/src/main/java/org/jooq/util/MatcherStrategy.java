@@ -50,6 +50,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.MatcherRule;
 import org.jooq.util.jaxb.MatcherTransformType;
 import org.jooq.util.jaxb.Matchers;
+import org.jooq.util.jaxb.MatchersEnumType;
 import org.jooq.util.jaxb.MatchersFieldType;
 import org.jooq.util.jaxb.MatchersRoutineType;
 import org.jooq.util.jaxb.MatchersSchemaType;
@@ -132,41 +133,43 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     }
 
     private final List<MatchersSchemaType> schemas(Definition definition) {
-        if (definition instanceof SchemaDefinition) {
+        if (definition instanceof SchemaDefinition)
             return matchers.getSchemas();
-        }
 
         return emptyList();
     }
 
     private final List<MatchersTableType> tables(Definition definition) {
-        if (definition instanceof TableDefinition) {
+        if (definition instanceof TableDefinition)
             return matchers.getTables();
-        }
 
         return emptyList();
     }
 
     private final List<MatchersFieldType> fields(Definition definition) {
-        if (definition instanceof ColumnDefinition) {
+        if (definition instanceof ColumnDefinition)
             return matchers.getFields();
-        }
 
         return emptyList();
     }
 
     private final List<MatchersRoutineType> routines(Definition definition) {
-        if (definition instanceof RoutineDefinition) {
+        if (definition instanceof RoutineDefinition)
             return matchers.getRoutines();
-        }
 
         return emptyList();
     }
 
     private final List<MatchersSequenceType> sequences(Definition definition) {
-        if (definition instanceof SequenceDefinition) {
+        if (definition instanceof SequenceDefinition)
             return matchers.getSequences();
-        }
+
+        return emptyList();
+    }
+
+    private final List<MatchersEnumType> enums(Definition definition) {
+        if (definition instanceof EnumDefinition)
+            return matchers.getEnums();
 
         return emptyList();
     }
@@ -174,9 +177,8 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     private final List<String> split(String result) {
         List<String> list = new ArrayList<String>();
 
-        for (String string : result.split(",")) {
+        for (String string : result.split(","))
             list.add(string.trim());
-        }
 
         return list;
     }
@@ -294,6 +296,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return split(result);
         }
 
+        for (MatchersEnumType enums : enums(definition)) {
+            String result = match(definition, enums.getExpression(), enums.getEnumImplements());
+            if (result != null)
+                return split(result);
+        }
+
         // Default to standard behaviour
         return super.getJavaClassImplements(definition, mode);
     }
@@ -323,6 +331,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineClass());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersEnumType enums : enums(definition)) {
+            String result = match(definition, enums.getExpression(), enums.getEnumClass());
             if (result != null)
                 return result;
         }

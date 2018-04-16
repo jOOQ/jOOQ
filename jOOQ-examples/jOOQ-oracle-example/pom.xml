@@ -167,7 +167,7 @@
                             </jdbc>
                             <generator>
                                 <database>
-                                    <name>org.jooq.util.oracle.OracleDatabase</name>
+                                    <name>org.jooq.meta.oracle.OracleDatabase</name>
                                     <includes>
                                         # Generate the complete SP user
                                         SP\..*

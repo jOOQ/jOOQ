@@ -848,15 +848,15 @@ CREATE TABLE `author` (
   <generator>
     <!-- The default code generator. You can override this one, to generate your own code style.
          Supported generators:
-         - org.jooq.util.JavaGenerator
-         - org.jooq.util.ScalaGenerator
-         Defaults to org.jooq.util.JavaGenerator -->
-    <name>org.jooq.util.JavaGenerator</name>
+         - org.jooq.codegen.JavaGenerator
+         - org.jooq.codegen.ScalaGenerator
+         Defaults to org.jooq.codegen.JavaGenerator -->
+    <name>org.jooq.codegen.JavaGenerator</name>
 
     <database>
       <!-- The database type. The format here is:
            org.util.[database].[database]Database -->
-      <name>org.jooq.util.mysql.MySQLDatabase</name>
+      <name>org.jooq.meta.mysql.MySQLDatabase</name>
 
       <!-- The database schema (or in the absence of schema support, in your RDBMS this
            can be the owner, user, database name) to be generated -->
@@ -897,7 +897,7 @@ CREATE TABLE `author` (
 											</p>
 
 </html><text>java -classpath jooq-{jooq-version}.jar;jooq-meta-{jooq-version}.jar;jooq-codegen-{jooq-version}.jar;mysql-connector-java-5.1.18-bin.jar;.
-  org.jooq.util.GenerationTool library.xml
+  org.jooq.codegen.GenerationTool library.xml
 </text><html>
 
                                             <p>
@@ -905,7 +905,7 @@ CREATE TABLE `author` (
                                             </p>
 
 </html><text>java -classpath jooq-{jooq-version}.jar:jooq-meta-{jooq-version}.jar:jooq-codegen-{jooq-version}.jar:mysql-connector-java-5.1.18-bin.jar:.
-  org.jooq.util.GenerationTool library.xml
+  org.jooq.codegen.GenerationTool library.xml
 </text><html>
 
 											<p>
@@ -14978,34 +14978,34 @@ result.forEach((Object[] entities) -> {
 
            Natively supported values are:
 
-               org.jooq.util.ase.ASEDatabase
-               org.jooq.util.cubrid.CUBRIDDatabase
-               org.jooq.util.db2.DB2Database
-               org.jooq.util.derby.DerbyDatabase
-               org.jooq.util.firebird.FirebirdDatabase
-               org.jooq.util.h2.H2Database
-               org.jooq.util.hsqldb.HSQLDBDatabase
-               org.jooq.util.informix.InformixDatabase
-               org.jooq.util.ingres.IngresDatabase
-               org.jooq.util.mariadb.MariaDBDatabase
-               org.jooq.util.mysql.MySQLDatabase
-               org.jooq.util.oracle.OracleDatabase
-               org.jooq.util.postgres.PostgresDatabase
-               org.jooq.util.sqlite.SQLiteDatabase
-               org.jooq.util.sqlserver.SQLServerDatabase
-               org.jooq.util.sybase.SybaseDatabase
+               org.jooq.meta.ase.ASEDatabase
+               org.jooq.meta.cubrid.CUBRIDDatabase
+               org.jooq.meta.db2.DB2Database
+               org.jooq.meta.derby.DerbyDatabase
+               org.jooq.meta.firebird.FirebirdDatabase
+               org.jooq.meta.h2.H2Database
+               org.jooq.meta.hsqldb.HSQLDBDatabase
+               org.jooq.meta.informix.InformixDatabase
+               org.jooq.meta.ingres.IngresDatabase
+               org.jooq.meta.mariadb.MariaDBDatabase
+               org.jooq.meta.mysql.MySQLDatabase
+               org.jooq.meta.oracle.OracleDatabase
+               org.jooq.meta.postgres.PostgresDatabase
+               org.jooq.meta.sqlite.SQLiteDatabase
+               org.jooq.meta.sqlserver.SQLServerDatabase
+               org.jooq.meta.sybase.SybaseDatabase
 
            This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
 
-               org.jooq.util.jdbc.JDBCDatabase
+               org.jooq.meta.jdbc.JDBCDatabase
 
            This value can be used to reverse-engineer standard jOOQ-meta XML formats
 
-               org.jooq.util.xml.XMLDatabase
+               org.jooq.meta.xml.XMLDatabase
 
-           You can also provide your own org.jooq.util.Database implementation
+           You can also provide your own org.jooq.meta.Database implementation
            here, if your database is currently not supported -->
-      <name>org.jooq.util.oracle.OracleDatabase</name>
+      <name>org.jooq.meta.oracle.OracleDatabase</name>
 
       <!-- All elements that are generated from your schema (A Java regular expression.
            Use the pipe to separate several expressions) Watch out for
@@ -15066,7 +15066,7 @@ result.forEach((Object[] entities) -> {
 								Code generation works by calling this class with the above property file as argument.
 							</p>
 
-</html><config>org.jooq.util.GenerationTool /jooq-config.xml</config><html>
+</html><config>org.jooq.codegen.GenerationTool /jooq-config.xml</config><html>
 
 							<p>
 								Be sure that these elements are located on the classpath:
@@ -15082,7 +15082,7 @@ result.forEach((Object[] entities) -> {
 							<ul>
 								<li>Put the property file, jooq*.jar and the JDBC driver into a directory, e.g. C:\temp\jooq</li>
 							    <li>Go to C:\temp\jooq</li>
-							    <li>Run java -cp jooq-{jooq-version}.jar;jooq-meta-{jooq-version}.jar;jooq-codegen-{jooq-version}.jar;[JDBC-driver].jar;. org.jooq.util.GenerationTool /[XML file] </li>
+							    <li>Run java -cp jooq-{jooq-version}.jar;jooq-meta-{jooq-version}.jar;jooq-codegen-{jooq-version}.jar;[JDBC-driver].jar;. org.jooq.codegen.GenerationTool /[XML file] </li>
 							</ul>
 							<p>
 								Note that the property file must be passed as a classpath resource
@@ -15102,7 +15102,7 @@ result.forEach((Object[] entities) -> {
 							</div>
 
 							<p>
-								Once the project is set up correctly with all required artefacts on the classpath, you can configure an Eclipse Run Configuration for org.jooq.util.GenerationTool.
+								Once the project is set up correctly with all required artefacts on the classpath, you can configure an Eclipse Run Configuration for org.jooq.codegen.GenerationTool.
 							</p>
 							<div class="screenshot">
 							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-02.png" alt="Eclipse configuration"/>
@@ -15181,7 +15181,7 @@ result.forEach((Object[] entities) -> {
     <!-- Generator parameters -->
     <generator>
       <database>
-        <name>org.jooq.util.postgres.PostgresDatabase</name>
+        <name>org.jooq.meta.postgres.PostgresDatabase</name>
         <includes>.*</includes>
         <excludes></excludes>
         <!-- In case your database supports catalogs, e.g. SQL Server:
@@ -15190,7 +15190,7 @@ result.forEach((Object[] entities) -> {
         <inputSchema>public</inputSchema>
       </database>
       <target>
-        <packageName>org.jooq.util.maven.example</packageName>
+        <packageName>org.jooq.codegen.maven.example</packageName>
         <directory>target/generated-sources/jooq</directory>
       </target>
     </generator>
@@ -15523,7 +15523,7 @@ result.forEach((Object[] entities) -> {
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
-      <name>org.jooq.util.xml.XMLDatabase</name>
+      <name>org.jooq.meta.xml.XMLDatabase</name>
       <properties>
         <property>
           <key>dialect</key>
@@ -15545,7 +15545,7 @@ result.forEach((Object[] entities) -> {
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
-      .withName("org.jooq.util.xml.XMLDatabase")
+      .withName("org.jooq.meta.xml.XMLDatabase")
       .withProperties(
         new Property().withKey("dialect").withValue("MYSQL"),
         new Property().withKey("xml-file").withValue("/path/to/database.xml")))));]]></java><html>
@@ -15557,7 +15557,7 @@ result.forEach((Object[] entities) -> {
 </html><java><![CDATA[configuration {
   generator {
     database {
-      name = 'org.jooq.util.xml.XMLDatabase'
+      name = 'org.jooq.meta.xml.XMLDatabase'
       properties {
         property {
           key = 'dialect'
@@ -15577,25 +15577,25 @@ result.forEach((Object[] entities) -> {
                                             </p>
 
                                             <ul>
-                                                <li><code>org.jooq.util.ase.ASEDatabase</code></li>
-                                                <li><code>org.jooq.util.cubrid.CUBRIDDatabase</code></li>
-                                                <li><code>org.jooq.util.db2.DB2Database</code></li>
-                                                <li><code>org.jooq.util.derby.DerbyDatabase</code></li>
-                                                <li><code>org.jooq.util.firebird.FirebirdDatabase</code></li>
-                                                <li><code>org.jooq.util.h2.H2Database</code></li>
-                                                <li><code>org.jooq.util.hana.HanaDatabse</code></li>
-                                                <li><code>org.jooq.util.hsqldb.HSQLDBDatabase</code></li>
-                                                <li><code>org.jooq.util.informix.InformixDatabase</code></li>
-                                                <li><code>org.jooq.util.ingres.IngresDatabase</code></li>
-                                                <li><code>org.jooq.util.mariadb.MariaDBDatabase</code></li>
-                                                <li><code>org.jooq.util.mysql.MySQLDatabase</code></li>
-                                                <li><code>org.jooq.util.oracle.OracleDatabase</code></li>
-                                                <li><code>org.jooq.util.postgres.PostgresDatabase</code></li>
-                                                <li><code>org.jooq.util.redshift.RedshiftDatabase</code></li>
-                                                <li><code>org.jooq.util.sqlite.SQLiteDatabaes</code></li>
-                                                <li><code>org.jooq.util.sqlserver.SQLServerDatabase</code></li>
-                                                <li><code>org.jooq.util.sybase.SybaseDatabase</code></li>
-                                                <li><code>org.jooq.util.vertica.VerticaDatabase</code></li>
+                                                <li><code>org.jooq.meta.ase.ASEDatabase</code></li>
+                                                <li><code>org.jooq.meta.cubrid.CUBRIDDatabase</code></li>
+                                                <li><code>org.jooq.meta.db2.DB2Database</code></li>
+                                                <li><code>org.jooq.meta.derby.DerbyDatabase</code></li>
+                                                <li><code>org.jooq.meta.firebird.FirebirdDatabase</code></li>
+                                                <li><code>org.jooq.meta.h2.H2Database</code></li>
+                                                <li><code>org.jooq.meta.hana.HanaDatabse</code></li>
+                                                <li><code>org.jooq.meta.hsqldb.HSQLDBDatabase</code></li>
+                                                <li><code>org.jooq.meta.informix.InformixDatabase</code></li>
+                                                <li><code>org.jooq.meta.ingres.IngresDatabase</code></li>
+                                                <li><code>org.jooq.meta.mariadb.MariaDBDatabase</code></li>
+                                                <li><code>org.jooq.meta.mysql.MySQLDatabase</code></li>
+                                                <li><code>org.jooq.meta.oracle.OracleDatabase</code></li>
+                                                <li><code>org.jooq.meta.postgres.PostgresDatabase</code></li>
+                                                <li><code>org.jooq.meta.redshift.RedshiftDatabase</code></li>
+                                                <li><code>org.jooq.meta.sqlite.SQLiteDatabaes</code></li>
+                                                <li><code>org.jooq.meta.sqlserver.SQLServerDatabase</code></li>
+                                                <li><code>org.jooq.meta.sybase.SybaseDatabase</code></li>
+                                                <li><code>org.jooq.meta.vertica.VerticaDatabase</code></li>
                                             </ul>
 
                                             <p>
@@ -15603,7 +15603,7 @@ result.forEach((Object[] entities) -> {
                                             </p>
 
                                             <ul>
-                                                <li><code>org.jooq.util.jdbc.JDBCDatabase</code></li>
+                                                <li><code>org.jooq.meta.jdbc.JDBCDatabase</code></li>
                                             </ul>
 
                                             <p>
@@ -15611,7 +15611,7 @@ result.forEach((Object[] entities) -> {
                                             </p>
 
                                             <p>
-                                                Last, but not least, you can of course implement your own by implementing <code>org.jooq.util.Database</code> from the jooq-meta module.
+                                                Last, but not least, you can of course implement your own by implementing <code>org.jooq.meta.Database</code> from the jooq-meta module.
                                             </p>
                                         </html></content>
                                     </section>
@@ -16540,7 +16540,7 @@ configuration {
                                             </p>
 
                                             <ul>
-                                                <li>By providing a fully qualified class name that implements any of <code>org.jooq.util.CatalogVersionProvider</code> or <code>org.jooq.util.SchemaVersionProvider</code> respectively for programmatic version providing.</li>
+                                                <li>By providing a fully qualified class name that implements any of <code>org.jooq.meta.CatalogVersionProvider</code> or <code>org.jooq.meta.SchemaVersionProvider</code> respectively for programmatic version providing.</li>
                                                 <li>By providing a <code>SELECT</code> statement returning one row with one column containing the version string. The <code>SELECT</code> statement may contain a named variable called <code>:catalog_name</code> or <code>:schema_name</code> respectively.</li>
                                                 <li>By providing a constant, such as a Maven property, for instance.</li>
                                             </ul>
@@ -16601,7 +16601,7 @@ configuration {
                                             </ul>
 
                                             <p>
-                                                Sometimes, it may be desireable to override this default ordering to a custom ordering. In particular, the default ordering may be case-sensitive, when case-insensitive ordering is really more desireable at times. Users may define an order provider by specifying a fully qualified class on the code generator's class path, which must implement <reference class="java.util.Comparator" title="java.util.Comparator&lt;org.jooq.util.Definition&gt;"/> as follows:
+                                                Sometimes, it may be desireable to override this default ordering to a custom ordering. In particular, the default ordering may be case-sensitive, when case-insensitive ordering is really more desireable at times. Users may define an order provider by specifying a fully qualified class on the code generator's class path, which must implement <reference class="java.util.Comparator" title="java.util.Comparator&lt;org.jooq.meta.Definition&gt;"/> as follows:
                                             </p>
 
                                             <p>
@@ -16645,7 +16645,7 @@ configuration {
 
 import java.util.Comparator;
 
-import org.jooq.util.Definition;
+import org.jooq.meta.Definition;
 
 public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
     @Override
@@ -16661,8 +16661,8 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
 import java.util.Comparator;
 
-import org.jooq.util.Definition;
-import org.jooq.util.TableDefinition;
+import org.jooq.meta.Definition;
+import org.jooq.meta.TableDefinition;
 
 public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
     @Override
@@ -17362,7 +17362,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                             </p>
 
 </html><java><![CDATA[// Use the fluent-style API to construct the code generator configuration
-import org.jooq.util.jaxb.*;
+import org.jooq.meta.jaxb.*;
 
 // [...]
 
@@ -17374,12 +17374,12 @@ Configuration configuration = new Configuration()
         .withPassword("test"))
     .withGenerator(new Generator()
         .withDatabase(new Database()
-            .withName("org.jooq.util.postgres.PostgresDatabase")
+            .withName("org.jooq.meta.postgres.PostgresDatabase")
             .withIncludes(".*")
             .withExcludes("")
             .withInputSchema("public"))
         .withTarget(new Target()
-            .withPackageName("org.jooq.util.maven.example")
+            .withPackageName("org.jooq.codegen.maven.example")
             .withDirectory("target/generated-sources/jooq")));
 
 GenerationTool.generate(configuration);]]></java><html>
@@ -17408,7 +17408,7 @@ GenerationTool.generate(configuration);]]></java><html>
 
 </html><java><![CDATA[import java.io.File;
 import javax.xml.bind.JAXB;
-import org.jooq.utils.jaxb.Configuration;
+import org.jooq.meta.jaxb.Configuration;
 
 // [...]
 // and then
@@ -17437,14 +17437,14 @@ GeberationTool.generate(configuration);]]></java><html>
 </html><xml><![CDATA[<!-- These properties can be added directly to the generator element: -->
 <generator>
   <!-- The default code generator. You can override this one, to generate your own code style
-       Defaults to org.jooq.util.JavaGenerator -->
-  <name>org.jooq.util.JavaGenerator</name>
+       Defaults to org.jooq.codegen.JavaGenerator -->
+  <name>org.jooq.codegen.JavaGenerator</name>
 
   <!-- The naming strategy used for class and field names.
        You may override this with your custom naming strategy. Some examples follow
-       Defaults to org.jooq.util.DefaultGeneratorStrategy -->
+       Defaults to org.jooq.codegen.DefaultGeneratorStrategy -->
   <strategy>
-    <name>org.jooq.util.DefaultGeneratorStrategy</name>
+    <name>org.jooq.codegen.DefaultGeneratorStrategy</name>
   </strategy>
 </generator>]]></xml><html>
 
@@ -17630,15 +17630,15 @@ public class Book implements java.io.Serializable {
 
                             <h3>An out-of-the-box strategy to keep names as they are</h3>
                             <p>
-                                By default, jOOQ's generator strategy will convert your database's <code>UNDER_SCORE_NAMES</code> to <code>PascalCaseNames</code> as this is a more common idiom in the Java ecosystem. If, however, you want to retain the names and the casing exactly as it is defined in your database, you can use the <code>org.jooq.util.KeepNamesGeneratorStrategy</code>, which will retain all names exactly as they are.
+                                By default, jOOQ's generator strategy will convert your database's <code>UNDER_SCORE_NAMES</code> to <code>PascalCaseNames</code> as this is a more common idiom in the Java ecosystem. If, however, you want to retain the names and the casing exactly as it is defined in your database, you can use the <code>org.jooq.codegen.KeepNamesGeneratorStrategy</code>, which will retain all names exactly as they are.
                             </p>
 
                             <p>
                                 More examples can be found here:
                             </p>
                             <ul>
-                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/util/example/JPrefixGeneratorStrategy.java">org.jooq.util.example.JPrefixGeneratorStrategy</a></li>
-                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/util/example/JVMArgsGeneratorStrategy.java">org.jooq.util.example.JVMArgsGeneratorStrategy</a></li>
+                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/meta/example/JPrefixGeneratorStrategy.java">org.jooq.codegen.example.JPrefixGeneratorStrategy</a></li>
+                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/meta/example/JVMArgsGeneratorStrategy.java">org.jooq.codegen.example.JVMArgsGeneratorStrategy</a></li>
                             </ul>
                         </html></content>
                     </section>
@@ -17652,7 +17652,7 @@ public class Book implements java.io.Serializable {
                             </p>
 
                             <ul>
-                                <li><strong>NOTE:</strong> All regular expressions that match object identifiers try to match identifiers first by unqualified name (<code>org.jooq.util.Definition.getName()</code>), then by qualified name (<code>org.jooq.util.Definition.getQualifiedName()</code>).</li>
+                                <li><strong>NOTE:</strong> All regular expressions that match object identifiers try to match identifiers first by unqualified name (<code>org.jooq.meta.Definition.getName()</code>), then by qualified name (<code>org.jooq.meta.Definition.getQualifiedName()</code>).</li>
                                 <li><strong>NOTE:</strong> There had been an incompatible change between jOOQ 3.2 and jOOQ 3.3 in the configuration of these matcher strategies. See <a href="https://github.com/jOOQ/jOOQ/issues/3217">Issue #3217</a> for details.</li>
                             </ul>
 
@@ -17838,7 +17838,7 @@ public class Book implements java.io.Serializable {
                     <section id="codegen-custom-code">
                         <title>Custom code sections</title>
                         <content><html>
-                            <p>Power users might choose to re-implement large parts of the <code>org.jooq.util.JavaGenerator</code> class. If you only want to add some custom code sections, however, you can extend the <code>JavaGenerator</code> and override only parts of it.</p>
+                            <p>Power users might choose to re-implement large parts of the <code>org.jooq.codegen.JavaGenerator</code> class. If you only want to add some custom code sections, however, you can extend the <code>JavaGenerator</code> and override only parts of it.</p>
 
                             <h3>An example for generating custom class footers</h3>
 
@@ -18812,7 +18812,7 @@ public class Book {
 
 </html><xml><![CDATA[<generator>
     <database>
-        <name>org.jooq.util.jpa.JPADatabase</name>
+        <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
         <properties>
             <!-- A comma separated list of Java packages, that contain your entities -->
             <property>
@@ -18957,7 +18957,7 @@ public class Book {
 
 </html><xml><![CDATA[<generator>
     <database>
-        <name>org.jooq.util.xml.XMLDatabase</name>
+        <name>org.jooq.meta.xml.XMLDatabase</name>
         <properties>
 
             <!-- Use any of the SQLDialect values here -->
@@ -18981,7 +18981,7 @@ public class Book {
 
 </html><xml><![CDATA[<generator>
     <database>
-        <name>org.jooq.util.xml.XMLDatabase</name>
+        <name>org.jooq.meta.xml.XMLDatabase</name>
         <properties>
 
             ...
@@ -19067,7 +19067,7 @@ CREATE TABLE book_to_book_store (
 </html><xml><![CDATA[<configuration>
   <generator>
     <database>
-      <name>org.jooq.util.ddl.DDLDatabase</name>
+      <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
       <properties>
 
         <!-- Specify the location of your SQL script.
@@ -19105,7 +19105,7 @@ CREATE TABLE book_to_book_store (
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
     .withDatabase(new Database()
-      .withName("org.jooq.util.ddl.DDLDatabase")
+      .withName("org.jooq.meta.extensions.ddl.DDLDatabase")
       .withProperties(
         new Property()
           .withKey("scripts")
@@ -19121,7 +19121,7 @@ CREATE TABLE book_to_book_store (
 </html><java><![CDATA[configuration {
   generator {
     database {
-      name = 'org.jooq.util.ddl.DDLDatabase'
+      name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
       properties {
         property {
           key = 'scripts'
@@ -19159,7 +19159,7 @@ CREATE TABLE book_to_book_store (
 
 </html><xml><![CDATA[<configuration>
   <generator>
-    <name>org.jooq.util.XMLGenerator</name>
+    <name>org.jooq.codegen.XMLGenerator</name>
   </generator>
   ...
 </configuration>]]></xml><html>
@@ -19169,7 +19169,7 @@ CREATE TABLE book_to_book_store (
                             </p>
 
 </html><java><![CDATA[configuration.withGenerator(new Generator()
-  .withName("org.jooq.util.XMLGenerator"));]]></java><html>
+  .withName("org.jooq.codegen.XMLGenerator"));]]></java><html>
 
                             <p>
                                 <strong>Gradle configuration</strong>
@@ -19177,7 +19177,7 @@ CREATE TABLE book_to_book_store (
 
 </html><java><![CDATA[configuration {
   generator {
-    name = 'org.jooq.util.XMLGenerator'
+    name = 'org.jooq.codegen.XMLGenerator'
   }
 }]]></java><html>
 
@@ -19254,7 +19254,7 @@ CREATE TABLE book_to_book_store (
 </html><xml><![CDATA[<!-- Run the code generation task -->
 <target name="generate-test-classes">
   <java fork="true"
-        classname="org.jooq.util.GenerationTool">
+        classname="org.jooq.codegen.GenerationTool">
     <arg value="/path/to/configuration.xml"/>
     <classpath>
       <pathelement location="/path/to/jooq-{jooq-version}.jar"/>
@@ -19280,7 +19280,7 @@ CREATE TABLE book_to_book_store (
       <configuration>
         <tasks>
           <java fork="true"
-                classname="org.jooq.util.GenerationTool"
+                classname="org.jooq.codegen.GenerationTool"
                 classpathref="maven.compile.classpath">
               <arg value="/path/to/configuration.xml"/>
           </java>
@@ -19387,8 +19387,8 @@ def xml = new groovy.xml.MarkupBuilder(writer)
 
 // Run the code generator
 // ----------------------
-org.jooq.util.GenerationTool.generate(
-    javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+org.jooq.codegen.GenerationTool.generate(
+    javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
 )
 ]]></java><html>
                         </html></content>

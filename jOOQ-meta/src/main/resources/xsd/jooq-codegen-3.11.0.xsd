@@ -86,7 +86,7 @@
   <complexType name="Generator">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration that affects the way code is being generated.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
-      <element name="name" type="string" default="org.jooq.util.DefaultGenerator" minOccurs="0" maxOccurs="1">
+      <element name="name" type="string" default="org.jooq.codegen.DefaultGenerator" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to generate source code. This can be overridden with a custom code generator implementation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -112,7 +112,7 @@
   <complexType name="Strategy">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <choice>
-      <element name="name" type="string" minOccurs="0" maxOccurs="1" default="org.jooq.util.DefaultGeneratorStrategy">
+      <element name="name" type="string" minOccurs="0" maxOccurs="1" default="org.jooq.codegen.DefaultGeneratorStrategy">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -375,43 +375,43 @@ Available dialects are named <code>org.util.[database].[database]Database</code>
 <p>
 Natively supported values are:
 <ul>
-<li>{@link org.jooq.util.ase.ASEDatabase}</li>
-<li>{@link org.jooq.util.cubrid.CUBRIDDatabase}</li>
-<li>{@link org.jooq.util.db2.DB2Database}</li>
-<li>{@link org.jooq.util.derby.DerbyDatabase}</li>
-<li>{@link org.jooq.util.firebird.FirebirdDatabase}</li>
-<li>{@link org.jooq.util.h2.H2Database}</li>
-<li>{@link org.jooq.util.hana.HanaDatabase}</li>
-<li>{@link org.jooq.util.hsqldb.HSQLDBDatabase}</li>
-<li>{@link org.jooq.util.informix.InformixDatabase}</li>
-<li>{@link org.jooq.util.ingres.IngresDatabase}</li>
-<li>{@link org.jooq.util.mariadb.MariaDBDatabase}</li>
-<li>{@link org.jooq.util.mysql.MySQLDatabase}</li>
-<li>{@link org.jooq.util.oracle.OracleDatabase}</li>
-<li>{@link org.jooq.util.postgres.PostgresDatabase}</li>
-<li>{@link org.jooq.util.redshift.RedshiftDatabase}</li>
-<li>{@link org.jooq.util.sqlite.SQLiteDatabase}</li>
-<li>{@link org.jooq.util.sqlserver.SQLServerDatabase}</li>
-<li>{@link org.jooq.util.sybase.SybaseDatabase}</li>
-<li>{@link org.jooq.util.vertica.VerticaDatabase}</li>
+<li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+<li>{@link org.jooq.meta.cubrid.CUBRIDDatabase}</li>
+<li>{@link org.jooq.meta.db2.DB2Database}</li>
+<li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
+<li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>
+<li>{@link org.jooq.meta.h2.H2Database}</li>
+<li>{@link org.jooq.meta.hana.HanaDatabase}</li>
+<li>{@link org.jooq.meta.hsqldb.HSQLDBDatabase}</li>
+<li>{@link org.jooq.meta.informix.InformixDatabase}</li>
+<li>{@link org.jooq.meta.ingres.IngresDatabase}</li>
+<li>{@link org.jooq.meta.mariadb.MariaDBDatabase}</li>
+<li>{@link org.jooq.meta.mysql.MySQLDatabase}</li>
+<li>{@link org.jooq.meta.oracle.OracleDatabase}</li>
+<li>{@link org.jooq.meta.postgres.PostgresDatabase}</li>
+<li>{@link org.jooq.meta.redshift.RedshiftDatabase}</li>
+<li>{@link org.jooq.meta.sqlite.SQLiteDatabase}</li>
+<li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
+<li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
+<li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
 </ul>
 <p>
 This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
 <ul>
-<li>{@link org.jooq.util.jdbc.JDBCDatabase}</li>
+<li>{@link org.jooq.meta.jdbc.JDBCDatabase}</li>
 </ul>
 <p>
 This value can be used to reverse-engineer standard jOOQ-meta XML formats.
 <ul>
-<li>{@link org.jooq.util.xml.XMLDatabase}</li>
+<li>{@link org.jooq.meta.xml.XMLDatabase}</li>
 </ul>
 <p>
 This value can be used to reverse-engineer JPA annotated entities
 <ul>
-<li>{@link org.jooq.util.jpa.JPADatabase}</li>
+<li>{@link org.jooq.meta.extensions.jpa.JPADatabase}</li>
 </ul>
 <p>
-You can also provide your own org.jooq.util.Database implementation
+You can also provide your own org.jooq.meta.Database implementation
 here, if your database is currently not supported]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -421,13 +421,13 @@ here, if your database is currently not supported]]></jxb:javadoc></jxb:property
 Known supported properties include:
 <p>
 <ul>
-<li>{@link org.jooq.util.xml.XMLDatabase}<p>
+<li>{@link org.jooq.meta.xml.XMLDatabase}<p>
 <pre>dialect=ORACLE
 xml-file=C:\path\to\database.xml
 xsl-files=C:\path\to\1.xsl,C:\path\to\2.xsl</pre></li>
-<li>{@link org.jooq.util.jpa.JPADatabase}<p>
+<li>{@link org.jooq.meta.extensions.jpa.JPADatabase}<p>
 <pre>packages=com.example.entities</pre></li>
-<li>{@link org.jooq.util.ddl.DDLDatabase}<p>
+<li>{@link org.jooq.meta.extensions.ddl.DDLDatabase}<p>
 <pre>scripts=C:\path\to\database.sql
 encoding=UTF-8</pre></li>
 </ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -655,7 +655,7 @@ This configuration element cannot be used at the same time as the {@link #getCat
 There are three operation modes for this element:
 <ul>
 <li>The value is a class that can be found on the classpath and that implements
-  {@link org.jooq.util.SchemaVersionProvider}. Such classes must provide a default constructor</li>
+  {@link org.jooq.meta.SchemaVersionProvider}. Such classes must provide a default constructor</li>
 <li>The value is a SELECT statement that returns one record with one column. The
   SELECT statement may contain a named variable called :schema_name</li>
 <li>The value is a constant, such as a Maven property</li>
@@ -672,7 +672,7 @@ generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
 There are three operation modes for this element:
 <ul>
 <li>The value is a class that can be found on the classpath and that implements
-  {@link org.jooq.util.CatalogVersionProvider}. Such classes must provide a default constructor</li>
+  {@link org.jooq.meta.CatalogVersionProvider}. Such classes must provide a default constructor</li>
 <li>The value is a SELECT statement that returns one record with one column. The
   SELECT statement may contain a named variable called :catalog_name</li>
 <li>The value is a constant, such as a Maven property</li>
@@ -682,7 +682,7 @@ generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="orderProvider" type="string" default="" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom {@link java.util.Comparator} that can compare two {@link org.jooq.util.Definition} objects to determine their order.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
 <p>
 This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

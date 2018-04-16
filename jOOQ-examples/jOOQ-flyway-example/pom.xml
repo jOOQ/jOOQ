@@ -182,7 +182,7 @@
                                 <user>${db.username}</user>
                             </jdbc>
                             <generator>
-                                <name>org.jooq.util.ScalaGenerator</name>
+                                <name>org.jooq.codegen.ScalaGenerator</name>
                                 <database>
                                     <includes>.*</includes>
                                     <inputSchema>FLYWAY_TEST</inputSchema>

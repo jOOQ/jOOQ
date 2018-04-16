@@ -128,7 +128,7 @@
                         <configuration>
                             <generator>
                                 <database>
-                                    <name>org.jooq.util.jpa.JPADatabase</name>
+                                    <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
                                     <properties>
                                         <property>
                                             <key>packages</key>

@@ -51,7 +51,15 @@ import static org.jooq.impl.DSL.atan;
 import static org.jooq.impl.DSL.atan2;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
+import static org.jooq.impl.DSL.bitAnd;
+import static org.jooq.impl.DSL.bitCount;
 import static org.jooq.impl.DSL.bitLength;
+import static org.jooq.impl.DSL.bitNand;
+import static org.jooq.impl.DSL.bitNor;
+import static org.jooq.impl.DSL.bitNot;
+import static org.jooq.impl.DSL.bitOr;
+import static org.jooq.impl.DSL.bitXNor;
+import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.boolOr;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.catalog;
@@ -189,6 +197,8 @@ import static org.jooq.impl.DSL.rtrim;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.second;
 import static org.jooq.impl.DSL.sequence;
+import static org.jooq.impl.DSL.shl;
+import static org.jooq.impl.DSL.shr;
 import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
@@ -4120,6 +4130,10 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldBitLengthIf(ctx)) != null)
                         return field;
+                    else if (parseFunctionNameIf(ctx, "BIT_COUNT"))
+                        return bitCount((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseFieldBitwiseFunctionIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -4412,6 +4426,10 @@ final class ParserImpl implements Parser {
                         return sinh((Field) parseFieldSumParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "SIN"))
                         return sin((Field) parseFieldSumParenthesised(ctx));
+                    else if ((field = parseFieldShlIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldShrIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -4595,6 +4613,128 @@ final class ParserImpl implements Parser {
 
         else
             return parseFieldNameOrSequenceExpression(ctx);
+    }
+
+    private static final Field<?> parseFieldShlIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "SHL") || parseKeywordIf(ctx, "SHIFTLEFT")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return shl((Field) x, (Field) y);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldShrIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "SHR") || parseKeywordIf(ctx, "SHIFTRIGHT")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return shr((Field) x, (Field) y);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldBitwiseFunctionIf(ParserContext ctx) {
+        int position = ctx.position();
+
+        char c1 = ctx.character(position + 1);
+        char c2 = ctx.character(position + 2);
+
+        if (c1 != 'I' && c1 != 'i')
+            return null;
+        if (c2 != 'T' && c2 != 't' && c2 != 'N' && c2 != 'n')
+            return null;
+
+        if (parseKeywordIf(ctx, "BIT_AND") || parseKeywordIf(ctx, "BITAND") || parseKeywordIf(ctx, "BIN_AND")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitAnd((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_NAND") || parseKeywordIf(ctx, "BITNAND") || parseKeywordIf(ctx, "BIN_NAND")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitNand((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_OR") || parseKeywordIf(ctx, "BITOR") || parseKeywordIf(ctx, "BIN_OR")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitOr((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_NOR") || parseKeywordIf(ctx, "BITNOR") || parseKeywordIf(ctx, "BIN_NOR")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitNor((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_XOR") || parseKeywordIf(ctx, "BITXOR") || parseKeywordIf(ctx, "BIN_XOR")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitXor((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_XNOR") || parseKeywordIf(ctx, "BITXNOR") || parseKeywordIf(ctx, "BIN_XNOR")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitXNor((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIT_NOT") || parseKeywordIf(ctx, "BITNOT") || parseKeywordIf(ctx, "BIN_NOT")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return bitNot((Field) x);
+        }
+        else if (parseKeywordIf(ctx, "BIN_SHL")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return shl((Field) x, (Field) y);
+        }
+        else if (parseKeywordIf(ctx, "BIN_SHR")) {
+            parse(ctx, '(');
+            Field<?> x = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ',');
+            Field<?> y = toField(ctx, parseSum(ctx, N));
+            parse(ctx, ')');
+
+            return shr((Field) x, (Field) y);
+        }
+
+        return null;
     }
 
     private static final Field<?> parseNextValueIf(ParserContext ctx) {

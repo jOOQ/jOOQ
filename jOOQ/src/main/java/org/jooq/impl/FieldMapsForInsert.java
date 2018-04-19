@@ -139,10 +139,11 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
+
                 case FIREBIRD: {
                     ctx.formatSeparator()
                        .start(INSERT_SELECT);
-                    ctx.visit(insertSelect(ctx));
+                    ctx.visit(insertSelect());
                     ctx.end(INSERT_SELECT);
 
                     break;
@@ -162,7 +163,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
-    private final Select<Record> insertSelect(Context<?> context) {
+    private final Select<Record> insertSelect() {
         Select<Record> select = null;
 
         for (int row = 0; row < rows; row++) {
@@ -171,7 +172,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             for (List<Field<?>> list : values.values())
                 fields.add(list.get(row));
 
-            Select<Record> iteration = DSL.using(context.configuration()).select(fields);
+            Select<Record> iteration = DSL.select(fields);
 
             if (select == null)
                 select = iteration;

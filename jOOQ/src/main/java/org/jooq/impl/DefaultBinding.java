@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
@@ -1657,6 +1658,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                    .sql("X'")
                    .sql(convertBytesToHex(value))
                    .sql('\'');
+
+
+
+
+
 
 
 

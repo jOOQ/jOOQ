@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -72,7 +73,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
-import org.jooq.CreateIndexWhereStep;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -90,8 +90,7 @@ final class CreateIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE INDEX behaviour
     CreateIndexStep,
-    CreateIndexIncludeStep,
-    CreateIndexWhereStep {
+    CreateIndexIncludeStep {
 
     /**
      * Generated UID
@@ -268,6 +267,7 @@ final class CreateIndexImpl extends AbstractQuery implements
                .sql(' ');
 
         boolean supportsInclude = false                                                      ;
+        boolean supportsFieldsBeforeTable = false                                                     ;
 
         QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();
         if (fields != null)
@@ -278,14 +278,27 @@ final class CreateIndexImpl extends AbstractQuery implements
         if (!supportsInclude && include != null)
             list.addAll(asList(include));
 
+
+
+
+
+
+
+
+
+
         ctx.visit(K_ON)
            .sql(' ')
-           .visit(table)
-           .sql('(')
-           .qualify(false)
-           .visit(list)
-           .qualify(true)
-           .sql(')');
+           .visit(table);
+
+
+
+
+            ctx.sql('(')
+               .qualify(false)
+               .visit(list)
+               .qualify(true)
+               .sql(')');
 
         if (supportsInclude && include != null)
             ctx.formatSeparator()

@@ -82,6 +82,7 @@ import org.jooq.util.sqlite.SQLiteDataType;
 // ...
 // ...
 // ...
+// ...
 
 
 
@@ -583,6 +584,7 @@ public final class SQLDataType {
         // TODO [#5713] Make this more reliable using a data type registry
 
         try {
+
 
 
 

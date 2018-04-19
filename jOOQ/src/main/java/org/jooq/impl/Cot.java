@@ -73,6 +73,7 @@ final class Cot extends AbstractFunction<BigDecimal> {
 
 
 
+
             default:
                 return function("cot", SQLDataType.NUMERIC, argument);
         }

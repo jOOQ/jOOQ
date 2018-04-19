@@ -366,6 +366,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
                 case HSQLDB: {
                     ctx.visit(toMerge(ctx.configuration()));
                     break;
@@ -444,6 +445,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
 
 
 

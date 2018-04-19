@@ -63,7 +63,10 @@ final class Substring extends AbstractFunction<String> {
 
         switch (configuration.family()) {
 
-            // [#430] Firebird has its own syntax
+            // [#430] These databases use SQL standard syntax
+
+
+
             case FIREBIRD: {
                 if (getArguments().length == 2) {
                     return DSL.field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());

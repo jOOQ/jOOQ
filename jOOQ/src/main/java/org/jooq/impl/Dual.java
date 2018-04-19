@@ -59,7 +59,16 @@ final class Dual extends AbstractTable<Record> {
 
 
 
+
     static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
+
+
+
+
+
+    static final Name                  DUAL_FIREBIRD    = DSL.unquotedName("RDB$DATABASE");
+    static final Name                  DUAL_CUBRID      = DSL.unquotedName("db_root");
+    static final Name                  DUAL_DERBY       = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
 
     private final boolean              force;
 
@@ -68,7 +77,7 @@ final class Dual extends AbstractTable<Record> {
     }
 
     Dual(boolean force) {
-        super("dual", (Schema) null);
+        super(DSL.name("dual"), (Schema) null);
 
         this.force = force;
     }
@@ -122,7 +131,7 @@ final class Dual extends AbstractTable<Record> {
                     break;
 
                 case FIREBIRD:
-                    ctx.literal("RDB$DATABASE");
+                    ctx.visit(DUAL_FIREBIRD);
                     break;
 
                 case HSQLDB:
@@ -130,7 +139,7 @@ final class Dual extends AbstractTable<Record> {
                     break;
 
                 case CUBRID:
-                    ctx.literal("db_root");
+                    ctx.visit(DUAL_CUBRID);
                     break;
 
                 // These dialects don't have a DUAL table. But emulation is needed
@@ -163,9 +172,7 @@ final class Dual extends AbstractTable<Record> {
 
 
                 case DERBY:
-                    ctx.literal("SYSIBM")
-                       .sql('.')
-                       .literal("SYSDUMMY1");
+                    ctx.visit(DUAL_DERBY);
                     break;
 
                 case MARIADB:

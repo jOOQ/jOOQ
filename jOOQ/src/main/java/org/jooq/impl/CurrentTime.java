@@ -73,6 +73,7 @@ final class CurrentTime<T> extends AbstractFunction<T> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

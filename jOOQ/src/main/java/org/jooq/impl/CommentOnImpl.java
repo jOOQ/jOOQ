@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;

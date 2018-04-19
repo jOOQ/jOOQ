@@ -58,6 +58,7 @@ import org.jooq.meta.sqlite.SQLiteDatabase;
 // ...
 // ...
 // ...
+// ...
 
 /**
  * A common utility class that provides access to various {@link Database}
@@ -75,6 +76,7 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect) {
+
 
 
 

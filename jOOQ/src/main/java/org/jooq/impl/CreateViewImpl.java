@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
@@ -175,14 +176,15 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         // [#3835] SQLite doesn't like renaming columns at the view level
         boolean rename = fields != null && fields.length > 0;
         boolean renameSupported = ctx.family() != SQLITE;
+        boolean replaceSupported = false                                                     ;
 
         // [#4806] CREATE VIEW doesn't accept parameters in most databases
         ParamType paramType = ctx.paramType();
 
         ctx.start(CREATE_VIEW_NAME)
-           .visit(K_CREATE);
+           .visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
 
-        if (orReplace && !NO_SUPPORT_OR_REPLACE.contains(ctx.family())) {
+        if (orReplace && !replaceSupported && !NO_SUPPORT_OR_REPLACE.contains(ctx.family())) {
             ctx.sql(' ').visit(K_OR);
 
             switch (ctx.family()) {

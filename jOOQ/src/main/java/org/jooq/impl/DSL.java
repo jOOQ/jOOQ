@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -13048,7 +13049,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<String> translate(Field<String> text, Field<String> from, Field<String> to) {
-        return function("translate", text.getDataType(), text, from, to);
+        return new Translate(text, from, to);
     }
 
     /**

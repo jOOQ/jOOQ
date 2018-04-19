@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.two;
@@ -165,35 +166,35 @@ final class Expression<T> extends AbstractFunction<T> {
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber()));
 
+
+
+
+
+
+
+
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && EMULATE_SHR_SHL.contains(family)) {
+        else if (SHL == operator && EMULATE_SHR_SHL.contains(family))
             return lhs.mul((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
-        }
 
         // [#3962] This emulation is expensive. If this is emulated, BitCount should
         // use division instead of SHR directly
-        else if (SHR == operator && EMULATE_SHR_SHL.contains(family)) {
+        else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
             return lhs.div((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
-        }
 
         // Some dialects support shifts as functions
-        else if (SHL == operator && FIREBIRD == family) {
+        else if (SHL == operator && FIREBIRD == family)
             return function("bin_shl", getDataType(), getArguments());
-        }
-        else if (SHR == operator && FIREBIRD == family) {
+        else if (SHR == operator && FIREBIRD == family)
             return function("bin_shr", getDataType(), getArguments());
-        }
 
         // These operators are not supported in any dialect
-        else if (BIT_NAND == operator) {
+        else if (BIT_NAND == operator)
             return (Field<T>) DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber()));
-        }
-        else if (BIT_NOR == operator) {
+        else if (BIT_NOR == operator)
             return (Field<T>) DSL.bitNot(DSL.bitOr(lhsAsNumber(), rhsAsNumber()));
-        }
-        else if (BIT_XNOR == operator) {
+        else if (BIT_XNOR == operator)
             return (Field<T>) DSL.bitNot(DSL.bitXor(lhsAsNumber(), rhsAsNumber()));
-        }
 
         // ---------------------------------------------------------------------
         // XXX: Date time arithmetic operators
@@ -203,19 +204,16 @@ final class Expression<T> extends AbstractFunction<T> {
         else if ((ADD == operator || SUBTRACT == operator) &&
              lhs.getDataType().isDateTime() &&
             (rhs.get(0).getDataType().isNumeric() ||
-             rhs.get(0).getDataType().isInterval())) {
-
+             rhs.get(0).getDataType().isInterval()))
             return new DateExpression();
-        }
 
         // ---------------------------------------------------------------------
         // XXX: Other operators
         // ---------------------------------------------------------------------
 
         // Use the default operator expression for all other cases
-        else {
+        else
             return new DefaultExpression();
-        }
     }
 
     /**

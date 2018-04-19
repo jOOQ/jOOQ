@@ -48,15 +48,18 @@ public interface AlterTableRenameColumnToStep {
     /**
      * Specify a new column name.
      */
+    @Support
     AlterTableFinalStep to(Field<?> newName);
 
     /**
      * Specify a new column name.
      */
+    @Support
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new column name.
      */
+    @Support
     AlterTableFinalStep to(String newName);
 }

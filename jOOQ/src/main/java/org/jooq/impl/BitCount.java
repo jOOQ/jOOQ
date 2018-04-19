@@ -79,6 +79,9 @@ final class BitCount extends AbstractFunction<Integer> {
 
 
 
+
+
+
             // Better solutions very welcome! See also:
             // See also http://stackoverflow.com/questions/7946349/how-to-simulate-the-mysql-bit-count-function-in-sybase-sql-anywhere
             case H2:

@@ -74,6 +74,7 @@ final class Mod<T> extends AbstractFunction<T> {
 
 
 
+
             case SQLITE:
                 return new Expression<T>(MODULO, arg1, arg2);
         }

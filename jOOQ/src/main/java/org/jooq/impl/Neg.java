@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
 import java.util.EnumSet;
@@ -81,28 +82,24 @@ final class Neg<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
         SQLDialect family = ctx.configuration().dialect().family();
 
-        if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(family)) {
+        if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(family))
             ctx.sql("(0 - ")
                .visit(field)
                .sql(" - 1)");
-        }
 
 
 
 
 
 
-
-        else if (operator == BIT_NOT && family == FIREBIRD) {
+        else if (operator == BIT_NOT && family == FIREBIRD)
             ctx.sql("bin_not(")
                .visit(field)
                .sql(')');
-        }
-        else {
+        else
             ctx.sql(operator.toSQL())
                .sql('(')
                .visit(field)
                .sql(')');
-        }
     }
 }

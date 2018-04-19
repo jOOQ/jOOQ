@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -261,9 +262,8 @@ public class JDBCUtils {
      * "Guess" the {@link SQLDialect} from a connection URL.
      */
     public static final SQLDialect dialect(String url) {
-        if (url == null) {
+        if (url == null)
             return DEFAULT;
-        }
 
         // The below list might not be accurate or complete. Feel free to
         // contribute fixes related to new / different JDBC driver configurations
@@ -281,44 +281,27 @@ public class JDBCUtils {
 
 
 
-
-        else if (url.contains(":cubrid:")) {
+        else if (url.contains(":cubrid:"))
             return CUBRID;
-        }
-        else if (url.contains(":derby:")) {
+        else if (url.contains(":derby:"))
             return DERBY;
-        }
-        else if (url.contains(":firebirdsql:")) {
+        else if (url.contains(":firebirdsql:"))
             return FIREBIRD;
-        }
-        else if (url.contains(":h2:")) {
+        else if (url.contains(":h2:"))
             return H2;
-        }
-        else if (url.contains(":hsqldb:")) {
+        else if (url.contains(":hsqldb:"))
             return HSQLDB;
-        }
-        else if (url.contains(":mariadb:")) {
+        else if (url.contains(":mariadb:"))
             return MARIADB;
-        }
         else if (url.contains(":mysql:")
-              || url.contains(":google:")) {
+              || url.contains(":google:"))
             return MYSQL;
-        }
         else if (url.contains(":postgresql:")
-              || url.contains(":pgsql:")) {
+              || url.contains(":pgsql:"))
             return POSTGRES;
-        }
         else if (url.contains(":sqlite:")
-              || url.contains(":sqldroid:")) {
+              || url.contains(":sqldroid:"))
             return SQLITE;
-        }
-
-
-
-
-
-
-
 
 
 
@@ -371,6 +354,8 @@ public class JDBCUtils {
                 return "org.postgresql.Driver";
             case SQLITE:
                 return "org.sqlite.JDBC";
+
+
 
 
 

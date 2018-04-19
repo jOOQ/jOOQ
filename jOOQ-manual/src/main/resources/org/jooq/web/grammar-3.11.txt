@@ -196,7 +196,9 @@ revokeStatement = 'REVOKE'
 selectStatement = select
 ;
 
-insertStatement = [ with ] 'INSERT INTO' tableName
+insertStatement =
+  [ with ]
+  ( 'INSERT' | 'INS' ) 'INTO' tableName
   [ '(' identifiers ')' ]
   (
     values
@@ -221,7 +223,12 @@ insertStatement = [ with ] 'INSERT INTO' tableName
 values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 ;
 
-updateStatement = [ with ] 'UPDATE' tableName 'SET' setClauses [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
+updateStatement =
+  [ with ]
+  ( 'UPDATE' | 'UPD' ) tableName
+  'SET' setClauses
+  [ 'WHERE' condition ]
+  [ 'RETURNING' ( '*' | fields ) ]
 ;
 
 setClauses = setClause { ',' setClause }
@@ -230,7 +237,11 @@ setClauses = setClause { ',' setClause }
 setClause = fieldName '=' field
 ;
 
-deleteStatement = [ with ] 'DELETE' [ 'FROM' ] tableName [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]
+deleteStatement =
+  [ with ]
+  ( 'DELETE' | 'DEL' ) [ 'FROM' ] tableName
+  [ 'WHERE' condition ]
+  [ 'RETURNING' ( '*' | fields ) ]
 ;
 
 mergeStatement = [ with ] 'MERGE' [ 'INTO' ] tableName [ [ 'AS' ] identifier ]
@@ -326,7 +337,7 @@ queryTerm =
 
 queryPrimary =
   '(' select ')'
-| 'SELECT'
+| ( 'SELECT' | 'SEL' )
     [ distinct ]
     [ top ]
     selectList

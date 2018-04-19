@@ -4358,6 +4358,10 @@ final class ParserImpl implements Parser {
 
             case 'o':
             case 'O':
+                if (S.is(type))
+                    if ((field = parseFieldReplaceIf(ctx)) != null)
+                        return field;
+
                 if (N.is(type))
                     if ((field = parseFieldOctetLengthIf(ctx)) != null)
                         return field;
@@ -4424,6 +4428,8 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldSubstringIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldSpaceIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
 
                 if (N.is(type))
@@ -5218,7 +5224,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldReplaceIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "REPLACE")) {
+        if (parseFunctionNameIf(ctx, "REPLACE") ||
+            parseFunctionNameIf(ctx, "OREPLACE") ||
+            parseFunctionNameIf(ctx, "STR_REPLACE")) {
+
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
             parse(ctx, ',');

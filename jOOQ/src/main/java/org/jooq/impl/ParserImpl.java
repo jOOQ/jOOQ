@@ -612,7 +612,7 @@ final class ParserImpl implements Parser {
 
             case 'd':
             case 'D':
-                if (!parseResultQuery && peekKeyword(ctx, "DELETE"))
+                if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
                     return parseDelete(ctx, null);
                 else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
                     return parseDrop(ctx);
@@ -639,7 +639,7 @@ final class ParserImpl implements Parser {
 
             case 'i':
             case 'I':
-                if (!parseResultQuery && peekKeyword(ctx, "INSERT"))
+                if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
                     return parseInsert(ctx, null);
 
                 break;
@@ -662,7 +662,7 @@ final class ParserImpl implements Parser {
 
             case 's':
             case 'S':
-                if (peekKeyword(ctx, "SELECT"))
+                if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
                     return parseSelect(ctx);
                 else if (!parseResultQuery && peekKeyword(ctx, "SET"))
                     return parseSet(ctx);
@@ -678,7 +678,7 @@ final class ParserImpl implements Parser {
 
             case 'u':
             case 'U':
-                if (!parseResultQuery && peekKeyword(ctx, "UPDATE"))
+                if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
                     return parseUpdate(ctx, null);
                 else if (!parseResultQuery && peekKeyword(ctx, "USE"))
                     return parseUse(ctx);
@@ -747,15 +747,16 @@ final class ParserImpl implements Parser {
         // TODO Better model API for WITH clause
         WithImpl with = (WithImpl) new WithImpl(ctx.dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
         Query result;
-        if (!parseSelect && peekKeyword(ctx, "DELETE"))
+        if (!parseSelect && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
             result = parseDelete(ctx, with);
-        else if (!parseSelect && peekKeyword(ctx, "INSERT"))
+        else if (!parseSelect && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
             result = parseInsert(ctx, with);
         else if (!parseSelect && peekKeyword(ctx, "MERGE"))
             result = parseMerge(ctx, with);
-        else if (peekKeyword(ctx, "SELECT", false, true, false))
+        else if (peekKeyword(ctx, "SELECT", false, true, false)
+              || peekKeyword(ctx, "SEL", false, true, false))
             result = parseSelect(ctx, null, with);
-        else if (!parseSelect && peekKeyword(ctx, "UPDATE"))
+        else if (!parseSelect && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
             result = parseUpdate(ctx, with);
         else if ((parseWhitespaceIf(ctx) || true) && ctx.done())
             throw ctx.exception("Missing statement after WITH");
@@ -973,7 +974,9 @@ final class ParserImpl implements Parser {
             return (SelectQueryImpl<Record>) ctx.dsl.selectQuery(parseTableValueConstructor(ctx));
 
         ctx.ignoreHints(false);
-        parseKeyword(ctx, "SELECT");
+        if (!parseKeywordIf(ctx, "SELECT"))
+            parseKeyword(ctx, "SEL");
+
         String hints = parseHints(ctx);
         boolean distinct = parseKeywordIf(ctx, "DISTINCT") || parseKeywordIf(ctx, "UNIQUE");
         List<Field<?>> distinctOn = null;
@@ -1335,7 +1338,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
-        parseKeyword(ctx, "DELETE");
+        if (!parseKeywordIf(ctx, "DELETE"))
+            parseKeyword(ctx, "DEL");
+
         parseKeywordIf(ctx, "FROM");
         Table<?> tableName = parseTableName(ctx);
         boolean where = parseKeywordIf(ctx, "WHERE");
@@ -1356,7 +1361,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
-        parseKeyword(ctx, "INSERT INTO");
+        if (!parseKeywordIf(ctx, "INSERT"))
+            parseKeyword(ctx, "INS");
+
+        parseKeyword(ctx, "INTO");
         Table<?> tableName = parseTableName(ctx);
         InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(tableName) : with.insertInto(tableName));
         Field<?>[] fields = null;
@@ -1409,7 +1417,8 @@ final class ParserImpl implements Parser {
 
             returning = onDuplicate =  s1.set(map);
         }
-        else if (peekKeyword(ctx, "SELECT", false, true, false)){
+        else if (peekKeyword(ctx, "SELECT", false, true, false)
+              || peekKeyword(ctx, "SEL", false, true, false)){
             SelectQueryImpl<Record> select = parseSelect(ctx);
 
             returning = onDuplicate = (fields == null)
@@ -1472,7 +1481,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final Update<?> parseUpdate(ParserContext ctx, WithImpl with) {
-        parseKeyword(ctx, "UPDATE");
+        if (!parseKeywordIf(ctx, "UPDATE"))
+            parseKeyword(ctx, "UPD");
+
         Table<?> tableName = parseTableName(ctx);
         UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));
         parseKeyword(ctx, "SET");
@@ -3296,7 +3307,7 @@ final class ParserImpl implements Parser {
                 Condition result;
 
                 parse(ctx, '(');
-                if (peekKeyword(ctx, "SELECT"))
+                if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(parseSelect(ctx, 1))
@@ -3415,7 +3426,7 @@ final class ParserImpl implements Parser {
             // - A values derived table:              E.g. (values (1))
             // - A joined table:                      E.g. ((a join b on p) right join c on q)
             // - A combination of the above:          E.g. ((a join (select 1) on p) right join (((select 1)) union (select 2)) on q)
-            if (peekKeyword(ctx, "SELECT")) {
+            if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
                 SelectQueryImpl<Record> select = parseSelect(ctx);
                 parse(ctx, ')');
                 result = table(parseQueryExpressionBody(ctx, null, null, select));
@@ -4567,7 +4578,8 @@ final class ParserImpl implements Parser {
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
                 int position = ctx.position();
                 try {
-                    if (peekKeyword(ctx, "SELECT", false, true, false)) {
+                    if (peekKeyword(ctx, "SELECT", false, true, false) ||
+                        peekKeyword(ctx, "SEL", false, true, false)) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
                         if (select.getSelect().size() > 1)
                             throw ctx.exception("Select list must contain at most one column");

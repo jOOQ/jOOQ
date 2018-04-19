@@ -83,23 +83,22 @@ final class Replace extends AbstractFunction<String> {
 
 
 
+
+
+
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-            case SQLITE: {
-                if (args.length == 2) {
+            case SQLITE:
+                if (args.length == 2)
                     return function("replace", VARCHAR, args[0], args[1], val(""));
-                }
-                else {
+                else
                     return function("replace", VARCHAR, args);
-                }
-            }
 
-            default: {
+            default:
                 return function("replace", VARCHAR, args);
-            }
         }
     }
 }

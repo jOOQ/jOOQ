@@ -73,6 +73,7 @@ final class Pi extends AbstractFunction<BigDecimal> {
 
 
 
+
             case SQLITE:
                 return inline(Math.PI, BigDecimal.class);
 

@@ -87,6 +87,7 @@ final class FieldCondition extends AbstractCondition {
 
 
 
+
                 return (QueryPartInternal) condition("{0} = {1}", field, inline(true));
 
 

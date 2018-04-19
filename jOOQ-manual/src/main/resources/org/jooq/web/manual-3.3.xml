@@ -10847,7 +10847,7 @@ Finishing                : Total: 4.814ms, +3.375ms
 							</p>
 
 </html><xml><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <!-- Configure the database connection here -->
   <jdbc>
     <driver>oracle.jdbc.OracleDriver</driver>

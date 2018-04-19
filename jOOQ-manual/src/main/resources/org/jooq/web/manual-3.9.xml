@@ -14018,7 +14018,7 @@ result.forEach((Object[] entities) -> {
 							</p>
 
 </html><xml><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <!-- Configure the database connection here -->
   <jdbc>
     <driver>oracle.jdbc.OracleDriver</driver>
@@ -14291,7 +14291,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>XML configuration (standalone and Maven)</strong>
                                     </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <logging>WARN</logging>
   ...
 </configuration>]]></xml><html>
@@ -14336,7 +14336,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>XML configuration (standalone and Maven)</strong>
                                     </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <jdbc>
     <driver>com.mysql.jdbc.Driver</driver>
     <url>jdbc:mysql://localhost/testdb</url>
@@ -14390,7 +14390,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>XML configuration (standalone and Maven)</strong>
                                     </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <jdbc>
     <driver>com.mysql.jdbc.Driver</driver>
     <url>jdbc:mysql://localhost/testdb</url>
@@ -14447,7 +14447,7 @@ result.forEach((Object[] entities) -> {
                                         Quite often, you'd like to keep passwords (or other elements) out of your configuration, or you'd like to repeat common values for different plugins, e.g. for both <reference id="jooq-with-flyway" title="jOOQ and Flyway"/>. In those cases, the programmatic configuration makes it easiest to quickly replace them, because those values are just ordinary Java local variables for that API. When you use the XML configuration with Maven, you can also very simply use Maven's property mechanism to achieve something like this:
                                     </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <jdbc>
     <driver>${db.driver}</driver>
     <url>${db.url}</url>
@@ -14476,7 +14476,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>XML configuration (standalone and Maven)</strong>
                                     </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <!-- Optional: The fully qualified class name of the code generator. -->
     <name>...</name>
@@ -14582,7 +14582,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <name>org.jooq.util.xml.XMLDatabase</name>
@@ -14698,7 +14698,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <regexFlags>COMMENTS DOTALL</regexFlags>
@@ -14765,7 +14765,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <includes>.*</includes>
@@ -14810,7 +14810,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <includes>.*</includes>
@@ -14859,7 +14859,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <includeTables>true</includeTables>
@@ -14925,7 +14925,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <recordVersionFields>REC_VERSION</recordVersionFields>
@@ -14974,7 +14974,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <syntheticIdentities>SCHEMA\.TABLE\.ID</syntheticIdentities>
@@ -15020,7 +15020,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <syntheticPrimaryKeys>SCHEMA\.TABLE\.COLUMN(1|2)</syntheticPrimaryKeys>
@@ -15070,7 +15070,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <overridePrimaryKeys>MY_UNIQUE_KEY_NAME</overridePrimaryKeys>
@@ -15124,7 +15124,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <dateAsTimestamp>true</dateAsTimestamp>
@@ -15174,7 +15174,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <ignoreProcedureReturnValues>true</ignoreProcedureReturnValues>
@@ -15227,7 +15227,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <unsignedTypes>true</unsignedTypes>
@@ -15285,7 +15285,7 @@ result.forEach((Object[] entities) -> {
                                             </p>
 
 </html><xml><![CDATA[<!-- Read only a single schema (from all catalogs, but in most databases, there is only one "default catalog") -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <inputSchema>my_schema</inputSchema>
@@ -15294,7 +15294,7 @@ result.forEach((Object[] entities) -> {
 </configuration>
 
 <!-- Read only a single catalog and all its schemas -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <inputCatalog>my_catalog</inputCatalog>
@@ -15303,7 +15303,7 @@ result.forEach((Object[] entities) -> {
 </configuration>
 
 <!-- Read only a single catalog and only a single schema -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <inputCatalog>my_catalog</inputCatalog>
@@ -15346,7 +15346,7 @@ result.forEach((Object[] entities) -> {
                                             </p>
 
 </html><xml><![CDATA[<!-- Read two schemas (from all catalogs, but in most databases, there is only one "default catalog") -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <schemata>
@@ -15362,7 +15362,7 @@ result.forEach((Object[] entities) -> {
 </configuration>
 
 <!-- Read two catalogs and all their schemas -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <catalogs>
@@ -15378,7 +15378,7 @@ result.forEach((Object[] entities) -> {
 </configuration>
 
 <!-- Read two schemas from one specific catalog -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <catalogs>
@@ -15498,7 +15498,7 @@ configuration {
                                             </p>
 
 </html><xml><![CDATA[<!-- Map input names to a concrete output name: -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <inputCatalog>my_input_catalog</inputCatalog>
@@ -15510,7 +15510,7 @@ configuration {
 </configuration>
 
 <!-- Map input names to the "default" catalog or schema (i.e. no name): -->
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <inputCatalog>my_input_catalog</inputCatalog>
@@ -15606,7 +15606,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <catalogVersionProvider>SELECT :catalog_name || '_' || MAX("version") FROM "schema_version"</catalogVersionProvider>
@@ -15664,7 +15664,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <!-- The first matching forcedType will be applied to the data type definition. -->
@@ -15738,7 +15738,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <!-- The first matching forcedType will be applied to the data type definition. -->
@@ -15808,7 +15808,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <!-- The first matching forcedType will be applied to the data type definition. -->
@@ -15890,7 +15890,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <database>
       <tableValuedFunctions>true</tableValuedFunctions>
@@ -15964,7 +15964,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <generate>
       <!-- This overrides all the other individual flags -->
@@ -16071,7 +16071,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <generate>
       <jpaAnnotations>true</jpaAnnotations>
@@ -16143,7 +16143,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <generate>
       <javaTimeTypes>true</javaTimeTypes>
@@ -16190,7 +16190,7 @@ configuration {
                                                 <strong>XML configuration (standalone and Maven)</strong>
                                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <generate>
       <fullyQualifiedTypes>.*\.MY_TABLE</fullyQualifiedTypes>
@@ -16232,7 +16232,7 @@ configuration {
                                     </p>
 
 </html><![CDATA[
-<configuration>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   ...
   <generator>
     ...
@@ -17961,7 +17961,7 @@ public class Book {
                                 <strong>XML configuration (standalone and Maven)</strong>
                             </p>
 
-</html><xml><![CDATA[<configuration>
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
     <name>org.jooq.util.XMLGenerator</name>
   </generator>

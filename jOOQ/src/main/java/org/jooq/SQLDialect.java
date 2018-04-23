@@ -634,6 +634,7 @@ public enum SQLDialect {
 
 
 
+
                 case CUBRID:        return "org.hibernate.dialect.CUBRIDDialect";
                 case DERBY:         return "org.hibernate.dialect.DerbyTenSevenDialect";
                 case FIREBIRD:      return "org.hibernate.dialect.FirebirdDialect";

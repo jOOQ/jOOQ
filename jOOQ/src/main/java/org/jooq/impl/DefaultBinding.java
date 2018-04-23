@@ -3169,6 +3169,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final String get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return ctx.resultSet().getString(ctx.index());
         }
 

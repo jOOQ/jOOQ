@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -54,12 +55,15 @@ final class CurrentSchema extends AbstractFunction<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentSchema() {
-        super("current_schema", SQLDataType.VARCHAR);
+        super("current_schema", VARCHAR);
     }
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
+
+
+
 
 
 
@@ -80,20 +84,20 @@ final class CurrentSchema extends AbstractFunction<String> {
                 return inline("");
 
             case DERBY:
-                return DSL.field("{current schema}", String.class);
+                return DSL.field("{current schema}", VARCHAR);
 
             case H2:
-                return DSL.field("{schema}()", String.class);
+                return DSL.field("{schema}()", VARCHAR);
 
             case MARIADB:
             case MYSQL:
-                return DSL.field("{database}()", String.class);
+                return DSL.field("{database}()", VARCHAR);
 
             case HSQLDB:
             case POSTGRES:
-                return DSL.field("{current_schema}", String.class);
+                return DSL.field("{current_schema}", VARCHAR);
         }
 
-        return function("current_schema", String.class);
+        return function("current_schema", VARCHAR);
     }
 }

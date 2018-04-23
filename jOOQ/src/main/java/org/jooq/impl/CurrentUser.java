@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -51,7 +53,7 @@ final class CurrentUser extends AbstractFunction<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentUser() {
-        super("current_user", SQLDataType.VARCHAR);
+        super("current_user", VARCHAR);
     }
 
     @Override
@@ -73,16 +75,17 @@ final class CurrentUser extends AbstractFunction<String> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
-                return DSL.field("{current_user}", String.class);
+                return DSL.field("{current_user}", VARCHAR);
 
             case SQLITE:
                 return DSL.inline("");
         }
 
-        return DSL.function("current_user", SQLDataType.VARCHAR);
+        return DSL.function("current_user", VARCHAR);
     }
 }

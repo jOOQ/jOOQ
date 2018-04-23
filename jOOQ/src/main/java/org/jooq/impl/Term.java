@@ -88,6 +88,7 @@ enum Term {
 
 
 
+
                 case DERBY:
                 case SQLITE:
                     return "8 * length";
@@ -100,6 +101,7 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
+
 
 
 
@@ -169,6 +171,7 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
+
 
 
 

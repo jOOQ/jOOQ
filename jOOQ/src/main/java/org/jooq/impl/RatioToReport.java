@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.DECIMAL;
+
 import java.math.BigDecimal;
 
 import org.jooq.Context;
@@ -54,7 +56,7 @@ final class RatioToReport extends Function<BigDecimal> {
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {
-        super("ratio_to_report", SQLDataType.DECIMAL, field);
+        super("ratio_to_report", DECIMAL, field);
 
         this.field = field;
     }
@@ -69,8 +71,15 @@ final class RatioToReport extends Function<BigDecimal> {
 
 
 
+
+
+
+
+
+
+
             default:
-                ctx.visit(field.cast(SQLDataType.DECIMAL))
+                ctx.visit(field.cast(DECIMAL))
                    .sql(" / ")
                    .visit(DSL.sum(field));
                 toSQLOverClause(ctx);

@@ -106,19 +106,19 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
 
 
+
             case FIREBIRD:
             case MARIADB:
             case MYSQL: {
                 Select<Record> selects = null;
-                for (Row row : rows) {
-                    Select<Record> select = create().select(row.fields());
 
-                    if (selects == null) {
+                for (Row row : rows) {
+                    Select<Record> select = DSL.select(row.fields());
+
+                    if (selects == null)
                         selects = select;
-                    }
-                    else {
+                    else
                         selects = selects.unionAll(select);
-                    }
                 }
 
                 ctx.formatIndentStart()

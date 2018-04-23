@@ -678,7 +678,7 @@ term =
   | 'REGR_SYY'
   | 'REGR_SXY'
   ) '(' sum ',' sum ')'
-| 'REPLACE' '(' field ',' field [ ',' field ] ')'
+| ( 'REPLACE' | 'OREPLACE' ) '(' field ',' field [ ',' field ] ')'
 | 'REPEAT' '(' field ',' field ')'
 | 'REVERSE' '(' field ')'
 | 'RPAD' '(' field ',' field [ ',' field ] ')'
@@ -692,10 +692,8 @@ term =
 | 'ROW' '(' fields ')'
 | ( 'SUBSTR' | 'SUBSTRING' ) '(' field ',' sum [ ',' sum ] ')'
 | 'SECOND' '(' field ')'
-| 'SHIFTLEFT' '(' field ',' field ')'
-| 'SHIFTRIGHT' '(' field ',' field ')'
-| 'SHL' '(' field ',' field ')'
-| 'SHR' '(' field ',' field ')'
+| ( 'SHL' | 'SHIFTLEFT' ) '(' field ',' field ')'
+| ( 'SHR' | 'SHIFTRIGHT' ) '(' field ',' field ')'
 | 'SIGN' '(' field ')'
 | ( 'SQR' | 'SQRT' ) '(' sum ')'
 | 'SIN' '(' sum ')'
@@ -703,6 +701,7 @@ term =
 | 'SPACE' '(' field ')'
 | 'STDDEV_POP' '(' field ')' [ over ]
 | 'STDDEV_SAMP' '(' field ')' [ over ]
+| 'STR_REPLACE' '(' field ',' field ',' field ')'
 | 'SUBSTRING' '(' field 'FROM' sum [ 'FOR' sum ] ')'
 | 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ]
 | 'TAN' '(' sum ')'
@@ -713,7 +712,7 @@ term =
 | 'TO_DATE' '(' field ',' field ')'
 | 'TO_NUMBER' '(' field ')'
 | 'TO_TIMESTAMP' '(' field ',' field ')'
-| 'TRANSLATE' '(' field ',' field ',' field ')'
+| ( 'TRANSLATE' | 'OTRANSLATE' ) '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
 | 'TRUNC' '(' field ',' stringLiteral ')'
 | 'TRUNC' '(' sum ',' sum ')'

@@ -75,6 +75,10 @@ final class Position extends AbstractFunction<Integer> {
 
 
 
+
+
+
+
                 default:
                     return DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one());
             }

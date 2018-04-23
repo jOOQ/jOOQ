@@ -69,15 +69,25 @@ import org.jooq.impl.DefaultRecordMapper;
  * A query that can return results. Mostly, this is a {@link Select} query used
  * for a <code>SELECT</code> statement.
  * <p>
- * <h3>Lifecycle guarantees</h3> Most methods in this type are based on
- * {@link #fetch()}, which completes the whole {@link ConnectionProvider} and
- * {@link ExecuteListener} lifecycles, eagerly fetching all results into memory.
- * Underlying JDBC {@link ResultSet}s are always closed. Underlying JDBC
- * {@link PreparedStatement}s are closed, unless {@link #keepStatement(boolean)}
- * is set.
+ * <h3>Lifecycle guarantees</h3>
+ * <p>
+ * Most methods in this type are based on {@link #fetch()}, which completes the
+ * whole {@link ConnectionProvider} and {@link ExecuteListener} lifecycles,
+ * eagerly fetching all results into memory. Underlying JDBC {@link ResultSet}s
+ * are always closed. Underlying JDBC {@link PreparedStatement}s are closed,
+ * unless {@link #keepStatement(boolean)} is set.
  * <p>
  * In order to keep open {@link ResultSet}s and fetch records lazily, use
  * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
+ * <p>
+ * <h3>Performance</h3>
+ * <p>
+ * Methods throwing {@link TooManyRowsException} need to retrieve at most two
+ * records from the underlying JDBC {@link ResultSet}, which, depending on the
+ * {@link java.sql.Statement#getFetchSize()} /
+ * {@link ResultQuery#fetchSize(int)}, might incur additional database
+ * roundtrips. If this causes problems, {@link ResultQuery#fetchAny()} may be
+ * preferred.
  *
  * @author Lukas Eder
  */

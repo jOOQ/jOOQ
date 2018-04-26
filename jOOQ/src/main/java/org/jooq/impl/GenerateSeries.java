@@ -63,12 +63,18 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     private final Field<Integer> from;
     private final Field<Integer> to;
+    private final Field<Integer> step;
 
     GenerateSeries(Field<Integer> from, Field<Integer> to) {
+        this(from, to, null);
+    }
+
+    GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
         super("generate_series");
 
         this.from = from;
         this.to = to;
+        this.step = step;
     }
 
     @Override
@@ -90,16 +96,26 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
                 // There is a bug in CUBRID preventing reuse of "level" in the
                 // predicate http://jira.cubrid.org/browse/ENGINE-119
-                Field<Integer> level = from.add(level()).sub(one());
-                return table("({select} {0} {as} {1} {from} {2} {connect by} {level} <= {3})",
-                    level,
-                    name("generate_series"),
-                    new Dual(),
-                    to.add(one()).sub(from));
+                if (step == null)
+                    return table("({select} {0} {as} {1} {from} {2} {connect by} {level} <= {3})",
+                        from.add(level()).sub(one()),
+                        name("generate_series"),
+                        new Dual(),
+                        to.add(one()).sub(from));
+                else
+                    return table("({select} {0} {as} {1} {from} {2} {connect by} {level} * {3} <= {4})",
+                        from.add(level().mul(step)).sub(step),
+                        name("generate_series"),
+                        new Dual(),
+                        step,
+                        to.add(step).sub(from));
 
             case POSTGRES:
             default:
-                return table("{generate_series}({0}, {1})", from, to);
+                if (step == null)
+                    return table("{generate_series}({0}, {1})", from, to);
+                else
+                    return table("{generate_series}({0}, {1}, {2})", from, to, step);
         }
     }
 

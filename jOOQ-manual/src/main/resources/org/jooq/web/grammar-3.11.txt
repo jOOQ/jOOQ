@@ -465,10 +465,15 @@ semiAntiJoin = 'LEFT' ( 'SEMI' | 'ANTI' ) 'JOIN' table joinQualification
 
 tableFactor =
   'LATERAL' '(' select ')' [ correlationName ]
+| tableFunction [ correlationName ]
 | '(' select ')' [ correlationName ]
 | values [ correlationName ]
 | tableName [ versions ] [ correlationName ] [ tableHints ]
 | '(' table ')' [ correlationName ]
+;
+
+tableFunction =
+  'GENERATE_SERIES' '(' sum ',' sum [ ',' sum ] ')'
 ;
 
 tableHints = 'WITH' '(' tableHint { ',' tableHint } ')'

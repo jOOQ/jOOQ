@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -53,14 +55,19 @@ final class MD5 extends AbstractFunction<String> {
     private final Field<String> argument;
 
     MD5(Field<String> argument) {
-        super("md5", SQLDataType.VARCHAR, argument);
+        super("md5", VARCHAR, argument);
 
         this.argument = argument;
     }
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+        switch (configuration.dialect()) {
+
+
+
+
+
 
 
 
@@ -70,7 +77,7 @@ final class MD5 extends AbstractFunction<String> {
             case MARIADB:
             case MYSQL:
             default:
-                return DSL.field("{md5}({0})", SQLDataType.VARCHAR, argument);
+                return DSL.field("{md5}({0})", VARCHAR, argument);
         }
     }
 }

@@ -13718,9 +13718,15 @@ public class DSL {
      * <td><code>MD5( ... )</code></td>
      * </tr>
      * <tr>
-     * <td>Oracle</td>
+     * <td>Oracle 11g</td>
      * <td>
      * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
+     * </td>
+     * </tr>
+     * <tr>
+     * <td>Oracle 12c</td>
+     * <td>
+     * <code>LOWER(STANDARD_HASH( ... , 'MD5'))</code>
      * </td>
      * </tr>
      * </table>
@@ -13745,9 +13751,15 @@ public class DSL {
      * <td><code>MD5( ... )</code></td>
      * </tr>
      * <tr>
-     * <td>Oracle</td>
+     * <td>Oracle 11g</td>
      * <td>
      * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
+     * </td>
+     * </tr>
+     * <tr>
+     * <td>Oracle 12c</td>
+     * <td>
+     * <code>LOWER(STANDARD_HASH( ... , 'MD5'))</code>
      * </td>
      * </tr>
      * </table>

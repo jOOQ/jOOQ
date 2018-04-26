@@ -38,6 +38,8 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -58,6 +60,7 @@ import static org.jooq.impl.Keywords.K_DENSE_RANK;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
 import static org.jooq.impl.Keywords.K_KEEP;
 import static org.jooq.impl.Keywords.K_LAST;
@@ -95,6 +98,7 @@ import org.jooq.SQLDialect;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
+import org.jooq.WindowFromFirstLastStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOrderByStep;
 import org.jooq.WindowOverStep;
@@ -117,7 +121,7 @@ class Function<T> extends AbstractField<T> implements
     ArrayAggOrderByStep<T>,
     AggregateFunction<T>,
     // and for window function behaviour
-    WindowIgnoreNullsStep<T>,
+    WindowFromFirstLastStep<T>,
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,
     WindowRowsAndStep<T>
@@ -147,8 +151,8 @@ class Function<T> extends AbstractField<T> implements
     private Name                             windowName;
 
     private boolean                          first;
-    private boolean                          ignoreNulls;
-    private boolean                          respectNulls;
+    private Boolean                          ignoreNulls;
+    private Boolean                          fromLast;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -440,12 +444,10 @@ class Function<T> extends AbstractField<T> implements
             ctx.visit(K_DISTINCT);
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if (ctx.family() == POSTGRES && args.size() > 1) {
+            if (ctx.family() == POSTGRES && args.size() > 1)
                 ctx.sql('(');
-            }
-            else {
+            else
                 ctx.sql(' ');
-            }
         }
 
         if (!args.isEmpty()) {
@@ -466,22 +468,25 @@ class Function<T> extends AbstractField<T> implements
             if (ctx.family() == POSTGRES && args.size() > 1)
                 ctx.sql(')');
 
-        if (ignoreNulls) {
 
 
 
 
 
-                ctx.sql(' ').visit(K_IGNORE_NULLS);
-        }
-        else if (respectNulls) {
 
 
 
 
 
-                ctx.sql(' ').visit(K_RESPECT_NULLS);
-        }
+
+
+
+
+
+
+
+
+
     }
 
     final void toSQLFunctionName(Context<?> ctx) {
@@ -514,6 +519,16 @@ class Function<T> extends AbstractField<T> implements
         withinGroupOrderBy.addAll(Tools.sortFields(fields));
         return this;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -384,6 +384,7 @@ import org.jooq.User;
 // ...
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
+import org.jooq.WindowFromFirstLastStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowSpecification;
@@ -5962,7 +5963,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
-                return parseWindowFunction(ctx, null, rank());
+                return parseWindowFunction(ctx, null, null, rank());
 
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
@@ -5978,7 +5979,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
-                return parseWindowFunction(ctx, null, denseRank());
+                return parseWindowFunction(ctx, null, null, denseRank());
 
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
@@ -5994,7 +5995,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
-                return parseWindowFunction(ctx, null, percentRank());
+                return parseWindowFunction(ctx, null, null, percentRank());
 
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
@@ -6010,7 +6011,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
 
             if (parseIf(ctx, ')'))
-                return parseWindowFunction(ctx, null, cumeDist());
+                return parseWindowFunction(ctx, null, null, cumeDist());
 
             // Hypothetical set function
             List<Field<?>> args = parseFields(ctx);
@@ -6025,7 +6026,7 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "ROW_NUMBER")) {
             parse(ctx, '(');
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, rowNumber());
+            return parseWindowFunction(ctx, null, null, rowNumber());
         }
 
         return null;
@@ -6036,7 +6037,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             int number = (int) (long) parseUnsignedInteger(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, ntile(number));
+            return parseWindowFunction(ctx, null, null, ntile(number));
         }
 
         return null;
@@ -6060,7 +6061,7 @@ final class ParserImpl implements Parser {
                 }
             }
             parse(ctx, ')');
-            return parseWindowFunction(ctx, lead
+            return parseWindowFunction(ctx, null, lead
                 ? f2 == null
                     ? lead(f1)
                     : f3 == null
@@ -6081,7 +6082,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, firstValue(arg), null);
+            return parseWindowFunction(ctx, null, firstValue(arg), null);
         }
 
         return null;
@@ -6092,7 +6093,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, lastValue(arg), null);
+            return parseWindowFunction(ctx, null, lastValue(arg), null);
         }
 
         return null;
@@ -6105,15 +6106,29 @@ final class ParserImpl implements Parser {
             parse(ctx, ',');
             int f2 = (int) (long) parseUnsignedInteger(ctx);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, nthValue(f1, f2), null);
+            return parseWindowFunction(ctx, nthValue(f1, f2), null, null);
         }
 
         return null;
     }
 
-    private static final Field<?> parseWindowFunction(ParserContext ctx, WindowIgnoreNullsStep s1, WindowOverStep<?> s2) {
+    private static final Field<?> parseWindowFunction(ParserContext ctx, WindowFromFirstLastStep s1, WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
         if (s1 != null) {
+            if (parseKeywordIf(ctx, "FROM FIRST") && ctx.requireProEdition())
 
+
+
+                ;
+            else if (parseKeywordIf(ctx, "FROM LAST") && ctx.requireProEdition())
+
+
+
+                ;
+            else
+                s2 = s1;
+        }
+
+        if (s2 != null) {
             if (parseKeywordIf(ctx, "RESPECT NULLS") && ctx.requireProEdition())
 
 
@@ -6125,7 +6140,7 @@ final class ParserImpl implements Parser {
 
                 ;
             else
-                s2 = s1;
+                s3 = s2;
         }
 
         parseKeyword(ctx, "OVER");
@@ -6133,10 +6148,10 @@ final class ParserImpl implements Parser {
 
         // https://bugs.eclipse.org/bugs/show_bug.cgi?id=494897
         Field<?> result = (nameOrSpecification instanceof Name)
-            ? s2.over((Name) nameOrSpecification)
+            ? s3.over((Name) nameOrSpecification)
             : (nameOrSpecification instanceof WindowSpecification)
-            ? s2.over((WindowSpecification) nameOrSpecification)
-            : s2.over();
+            ? s3.over((WindowSpecification) nameOrSpecification)
+            : s3.over();
 
         return result;
     }

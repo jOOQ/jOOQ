@@ -754,7 +754,9 @@ keep = 'KEEP' '(' 'DENSE_RANK' ( 'FIRST' | 'LAST' ) 'ORDER BY' sortFields ')'
 filter = 'FILTER' '(' 'WHERE' condition ')'
 ;
 
-over = [ 'RESPECT NULLS' | 'IGNORE NULLS' ]
+over =
+  [ 'FROM FIRST' | 'FROM LAST' ]
+  [ 'RESPECT NULLS' | 'IGNORE NULLS' ]
   'OVER'
   (
     identifier

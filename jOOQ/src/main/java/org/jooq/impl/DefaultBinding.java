@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -178,12 +179,13 @@ import org.jooq.util.postgres.PostgresUtils;
  */
 public class DefaultBinding<T, U> implements Binding<T, U> {
 
-    static final JooqLogger     log              = JooqLogger.getLogger(DefaultBinding.class);
+    static final JooqLogger                  log                       = JooqLogger.getLogger(DefaultBinding.class);
 
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -198499389344950496L;
+    private static final long                serialVersionUID          = -198499389344950496L;
+    private static final EnumSet<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = EnumSet.of(MYSQL);
 
     final AbstractBinding<T, U> delegate;
 
@@ -1851,7 +1853,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_DATE).sql("('").sql(escape(value, ctx.render())).sql("')");
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (ctx.family() == MYSQL)
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
                 ctx.render().sql("{d '").sql(escape(value, ctx.render())).sql("'}");
 
             // Most dialects implement SQL standard date literals
@@ -3244,7 +3246,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (ctx.family() == MYSQL)
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
                 ctx.render().sql("{t '").sql(escape(value, ctx.render())).sql("'}");
 
 
@@ -3347,7 +3349,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_DATETIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (ctx.family() == MYSQL)
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
                 ctx.render().sql("{ts '").sql(escape(value, ctx.render())).sql("'}");
 
             // Most dialects implement SQL standard timestamp literals

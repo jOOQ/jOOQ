@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.MYSQL;

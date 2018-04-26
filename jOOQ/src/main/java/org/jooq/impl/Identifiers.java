@@ -72,6 +72,9 @@ final class Identifiers {
             switch (family) {
 
                 // MySQL supports backticks and double quotes
+
+
+
                 case MARIADB:
                 case MYSQL:
                     QUOTES.put(family, new char[][][] {

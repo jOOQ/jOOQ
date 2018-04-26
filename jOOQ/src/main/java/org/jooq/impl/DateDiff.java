@@ -65,6 +65,9 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
+
+
+
             case MARIADB:
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);

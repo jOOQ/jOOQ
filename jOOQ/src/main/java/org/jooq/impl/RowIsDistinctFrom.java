@@ -41,6 +41,7 @@ import static org.jooq.Comparator.IS_DISTINCT_FROM;
 import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -74,7 +75,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class RowIsDistinctFrom<T> extends AbstractCondition {
-
 
     /**
      * Generated UID

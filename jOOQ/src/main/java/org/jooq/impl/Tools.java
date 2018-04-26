@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -4097,6 +4098,7 @@ final class Tools {
 
 
 
+
                 case H2:
                 case MARIADB:
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
@@ -4131,6 +4133,10 @@ final class Tools {
             Object[] enums = enumConstants(enumType);
 
             switch (ctx.family()) {
+
+
+
+
                 case MARIADB:
                 case MYSQL: {
                     ctx.visit(K_ENUM).sql('(');

@@ -59,6 +59,7 @@ import static org.jooq.Operator.OR;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -611,6 +612,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case CUBRID:
                 case FIREBIRD_3_0:
                 case MYSQL:
@@ -704,6 +706,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 switch (family) {
 
                     // MySQL has a non-standard implementation for the "FOR SHARE" clause
+
+
+
+
                     case MARIADB:
                     case MYSQL:
                         context.formatSeparator()

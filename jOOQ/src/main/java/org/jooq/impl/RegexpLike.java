@@ -73,6 +73,7 @@ final class RegexpLike extends AbstractCondition {
 
 
 
+
             case CUBRID:
             case H2:
             case MARIADB:

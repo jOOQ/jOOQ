@@ -64,6 +64,7 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 // ...
 // ...
+import org.jooq.util.auroramysql.AuroraMySQLDataType;
 import org.jooq.util.cubrid.CUBRIDDataType;
 // ...
 import org.jooq.util.derby.DerbyDataType;
@@ -584,6 +585,7 @@ public final class SQLDataType {
         // TODO [#5713] Make this more reliable using a data type registry
 
         try {
+
 
 
 

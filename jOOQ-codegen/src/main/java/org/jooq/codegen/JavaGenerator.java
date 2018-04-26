@@ -38,6 +38,8 @@
 package org.jooq.codegen;
 
 
+import static java.util.Arrays.asList;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SortOrder.DESC;
@@ -6080,7 +6082,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (dataType.defaulted()) {
                     sb.append(".defaultValue(");
 
-                    if (MYSQL == db.getDialect().family())
+                    if (asList(MYSQL).contains(db.getDialect().family()))
 
                         // [#5574] While MySQL usually reports actual values, it does report
                         //         a CURRENT_TIMESTAMP expression, inconsistently

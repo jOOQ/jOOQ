@@ -124,6 +124,10 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
                 return DSL.field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
 
             // MySQL's datetime operations operate on a microsecond level
+
+
+
+
             case MARIADB:
             case MYSQL:
                 return DSL.field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);

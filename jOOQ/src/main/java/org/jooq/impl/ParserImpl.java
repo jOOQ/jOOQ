@@ -3415,8 +3415,16 @@ final class ParserImpl implements Parser {
             Field from = toField(ctx, parseConcat(ctx, Type.N));
             parse(ctx, ',');
             Field to = toField(ctx, parseConcat(ctx, Type.N));
-            result = generateSeries(from, to);
+
+            Field step = parseIf(ctx, ',')
+                ? toField(ctx, parseConcat(ctx, Type.N))
+                : null;
+
             parse(ctx, ')');
+
+            result = step == null
+                ? generateSeries(from, to)
+                : generateSeries(from, to, step);
         }
         else if (parseIf(ctx, '(')) {
 

@@ -97,6 +97,9 @@ final class Trunc<T> extends AbstractFunction<T> {
                           field.mul(power).ceil().div(power));
             }
 
+
+
+
             case H2:
             case MARIADB:
             case MYSQL:

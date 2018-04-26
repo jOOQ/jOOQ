@@ -54,6 +54,7 @@ import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -686,6 +687,9 @@ final class AlterTableImpl extends AbstractQuery implements
 
         if (comment != null) {
             switch (family) {
+
+
+
                 case MARIADB:
                 case MYSQL:
                     break;
@@ -720,6 +724,7 @@ final class AlterTableImpl extends AbstractQuery implements
             switch (family) {
 
                 // [#5724] These databases use table-scoped index names
+
 
 
 
@@ -1007,6 +1012,8 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_ALTER);
 
             switch (family) {
+
+
 
 
 

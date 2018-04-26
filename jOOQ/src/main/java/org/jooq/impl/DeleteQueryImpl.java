@@ -42,6 +42,7 @@ import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;

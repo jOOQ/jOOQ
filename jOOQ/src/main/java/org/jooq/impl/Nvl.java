@@ -80,6 +80,9 @@ final class Nvl<T> extends AbstractFunction<T> {
             case POSTGRES:
                 return DSL.field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
 
+
+
+
             case MARIADB:
             case MYSQL:
             case SQLITE:

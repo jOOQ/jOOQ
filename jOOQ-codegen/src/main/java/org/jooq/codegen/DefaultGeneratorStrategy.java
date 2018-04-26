@@ -38,6 +38,7 @@
 package org.jooq.codegen;
 
 import static java.util.Arrays.asList;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...

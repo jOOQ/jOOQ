@@ -95,6 +95,9 @@ final class ExplainQuery {
                 result = ctx.fetch("{explain analyze} {0}", query);
                 break;
 
+
+
+
             case MARIADB:
             case MYSQL:
             case POSTGRES:

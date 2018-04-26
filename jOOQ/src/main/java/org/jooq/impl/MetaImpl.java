@@ -75,6 +75,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -132,7 +133,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class MetaImpl extends AbstractMeta implements Serializable {
+final class MetaImpl extends AbstractMeta {
 
     private static final long                serialVersionUID                 = 3582980783173033809L;
     private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);

@@ -35,62 +35,21 @@
  *
  *
  */
-package org.jooq.impl;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.QueryPart;
+package org.jooq.meta.auroramysql;
 
-final class Space extends AbstractFunction<String> {
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+import org.jooq.meta.mysql.MySQLDatabase;
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -4239524454814412161L;
-
-    private final Field<Integer> count;
-
-    Space(Field<Integer> count) {
-        super("space", SQLDataType.VARCHAR, count);
-
-        this.count = count;
-    }
+/**
+ * @author Lukas Eder
+ */
+public class AuroraMySQLDatabase extends MySQLDatabase {
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-
-
-
-
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return DSL.repeat(DSL.inline(" "), count);
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case MARIADB:
-            case MYSQL:
-            case H2:
-            default:
-                return DSL.field("{space}({0})", getDataType(), count);
-        }
+    protected DSLContext create0() {
+        return DSL.using(getConnection(), SQLDialect.AURORA_MYSQL);
     }
-
 }

@@ -293,6 +293,9 @@ final class Expression<T> extends AbstractFunction<T> {
             int sign = (operator == ADD) ? 1 : -1;
 
             switch (dialect.family()) {
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -319,14 +322,12 @@ final class Expression<T> extends AbstractFunction<T> {
                 case HSQLDB: {
                     Field<T> result;
 
-                    if (rhs.get(0).getType() == YearToMonth.class) {
+                    if (rhs.get(0).getType() == YearToMonth.class)
                         result = DSL.field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
                             getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
-                    }
-                    else {
+                    else
                         result = DSL.field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }",
                             getDataType(), val(sign * (long) rhsAsDTS().getTotalSeconds()), lhs);
-                    }
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE
@@ -334,52 +335,29 @@ final class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case FIREBIRD: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
+                    if (rhs.get(0).getType() == YearToMonth.class)
                         return DSL.field("{dateadd}({month}, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
-                    }
-                    else {
+                    else
                         return DSL.field("{dateadd}({millisecond}, {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
-                    }
                 }
 
                 case H2: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
+                    if (rhs.get(0).getType() == YearToMonth.class)
                         return DSL.field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
-                    }
-                    else {
+                    else
                         return DSL.field("{dateadd}('ms', {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
-                    }
                 }
 
                 case SQLITE: {
                     boolean ytm = rhs.get(0).getType() == YearToMonth.class;
                     Field<?> interval = val(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
-                    if (sign < 0) {
+                    if (sign < 0)
                         interval = interval.neg();
-                    }
 
                     interval = interval.concat(inline(ytm ? " months" : " seconds"));
                     return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -494,9 +472,8 @@ final class Expression<T> extends AbstractFunction<T> {
          * field
          */
         private final Field<T> castNonTimestamps(Configuration configuration, Field<T> result) {
-            if (getDataType().getType() != Timestamp.class) {
+            if (getDataType().getType() != Timestamp.class)
                 return DSL.field("{cast}({0} {as} " + getDataType().getCastTypeName(configuration) + ")", getDataType(), result);
-            }
 
             return result;
         }
@@ -526,60 +503,47 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
-
-
-
-
                 case FIREBIRD: {
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         return DSL.field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
-                    }
-                    else {
+                    else
                         return DSL.field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber().neg(), lhs);
-                    }
                 }
 
 
 
 
                 case HSQLDB: {
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         return lhs.add(DSL.field("{0} day", rhsAsNumber()));
-                    }
-                    else {
+                    else
                         return lhs.sub(DSL.field("{0} day", rhsAsNumber()));
-                    }
                 }
 
                 case DERBY: {
                     Field<T> result;
 
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         result = DSL.field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber(), lhs);
-                    }
-                    else {
+                    else
                         result = DSL.field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber().neg(), lhs);
-                    }
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE
                     return castNonTimestamps(configuration, result);
                 }
 
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         return DSL.field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber());
-                    }
-                    else {
+                    else
                         return DSL.field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber().neg());
-                    }
                 }
-
-
-
-
 
 
 
@@ -604,21 +568,17 @@ final class Expression<T> extends AbstractFunction<T> {
                     // This seems to be the most reliable way to avoid issues
                     // with incompatible data types and timezones
                     // ? + CAST (? || ' days' as interval)
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         return new DateAdd(lhs, rhsAsNumber(), DatePart.DAY);
-                    }
-                    else {
+                    else
                         return new DateAdd(lhs, rhsAsNumber().neg(), DatePart.DAY);
-                    }
                 }
 
                 case SQLITE:
-                    if (operator == ADD) {
+                    if (operator == ADD)
                         return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().concat(inline(" day")));
-                    }
-                    else {
+                    else
                         return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().neg().concat(inline(" day")));
-                    }
 
                 // These dialects can add / subtract days using +/- operators
 
@@ -652,12 +612,11 @@ final class Expression<T> extends AbstractFunction<T> {
             ctx.sql('(');
             ctx.visit(lhs);
 
-            for (Field<?> field : rhs) {
+            for (Field<?> field : rhs)
                 ctx.sql(' ')
                    .sql(op)
                    .sql(' ')
                    .visit(field);
-            }
 
             ctx.sql(')');
         }

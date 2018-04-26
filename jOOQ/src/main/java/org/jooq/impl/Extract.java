@@ -184,6 +184,7 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
+
             case MARIADB:
             case MYSQL:
             case POSTGRES:

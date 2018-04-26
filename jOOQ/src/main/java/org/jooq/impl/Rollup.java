@@ -74,6 +74,9 @@ final class Rollup extends AbstractField<Object> {
 
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.family()) {
+
+
+
             case CUBRID:
             case MARIADB:
             case MYSQL:

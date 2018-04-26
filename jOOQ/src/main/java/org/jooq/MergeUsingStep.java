@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
@@ -137,6 +138,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
     MergeKeyStepN<R> columns(Collection<? extends Field<?>> fields);
 
     // [jooq-tools] START [columns]
+
     /**
      * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
      * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).

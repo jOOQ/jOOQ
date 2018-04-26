@@ -77,6 +77,9 @@ final class DateOrTime<T> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.family()) {
+
+
+
             case MYSQL:
             case MARIADB:
                 return DSL.field("{" + name(getDataType()) + "}({0})", getDataType(), field);

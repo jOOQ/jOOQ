@@ -438,6 +438,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
                 case DERBY:
                 case H2:
                 case MARIADB:
@@ -542,6 +543,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
+
 
 
 

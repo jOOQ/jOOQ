@@ -8531,17 +8531,13 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> unnest(Field<?> cursor) {
-        if (cursor == null) {
+        if (cursor == null)
             throw new IllegalArgumentException();
-        }
 
         // The field is an actual CURSOR or REF CURSOR returned from a stored
         // procedure or from a NESTED TABLE
-        else if (cursor.getType() == Result.class) {
+        else if (cursor.getType() == Result.class)
             return new org.jooq.impl.FunctionTable<Record>(cursor);
-        }
-
-
 
 
 
@@ -8554,9 +8550,8 @@ public class DSL {
 
 
         // The field is a regular array
-        else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
+        else if (cursor.getType().isArray() && cursor.getType() != byte[].class)
             return new ArrayTable(cursor);
-        }
 
         // The field has any other type. Try to make it an array
         throw new SQLDialectNotSupportedException("Converting arbitrary types into array tables is currently not supported");

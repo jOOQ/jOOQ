@@ -221,6 +221,7 @@ import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
+import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.varPop;
@@ -3385,7 +3386,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseTable(ParserContext ctx) {
-        Table<?> result = parseTableFactor(ctx);
+        Table<?> result = parseLateral(ctx);
 
         for (;;) {
             Table<?> joined = parseJoinedTableIf(ctx, result);
@@ -3396,19 +3397,28 @@ final class ParserImpl implements Parser {
         }
     }
 
+    private static final Table<?> parseLateral(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "LATERAL"))
+            return lateral(parseTableFactor(ctx));
+        else
+            return parseTableFactor(ctx);
+    }
+
     private static final Table<?> parseTableFactor(ParserContext ctx) {
         Table<?> result = null;
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
         // TOOD ONLY ( table primary )
-        if (parseKeywordIf(ctx, "LATERAL")) {
+        if (parseFunctionNameIf(ctx, "UNNEST")) {
             parse(ctx, '(');
-            result = lateral(parseSelect(ctx));
+            Field<?> f = parseField(ctx, Type.A);
+
+            // Work around a missing feature in unnest()
+            if (!f.getType().isArray())
+                f = f.coerce(f.getDataType().getArrayDataType());
+
+            result = unnest(f);
             parse(ctx, ')');
-        }
-        else if (parseFunctionNameIf(ctx, "UNNEST")) {
-            // TODO
-            throw ctx.notImplemented("UNNEST");
         }
         else if (parseFunctionNameIf(ctx, "GENERATE_SERIES")) {
             parse(ctx, '(');
@@ -3693,7 +3703,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseJoinedTable(ParserContext ctx) {
-        Table<?> result = parseTableFactor(ctx);
+        Table<?> result = parseLateral(ctx);
 
         for (;;) {
             Table<?> joined = parseJoinedTableIf(ctx, result);
@@ -3711,7 +3721,7 @@ final class ParserImpl implements Parser {
         if (joinType == null)
             return null;
 
-        Table<?> right = joinType.qualified() ? parseTable(ctx) : parseTableFactor(ctx);
+        Table<?> right = joinType.qualified() ? parseTable(ctx) : parseLateral(ctx);
 
         TableOptionalOnStep<?> s0;
         TablePartitionByStep<?> s1;

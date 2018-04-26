@@ -440,12 +440,12 @@ sortField = field [ 'ASC' | 'DESC' ] [ 'NULLS FIRST' | 'NULLS LAST' ]
 tables = table { ',' table }
 ;
 
-table = tableFactor { unqualifiedJoin | innerJoin | outerJoin | semiAntiJoin }
+table = lateral { unqualifiedJoin | innerJoin | outerJoin | semiAntiJoin }
 ;
 
 unqualifiedJoin =
 ( 'CROSS JOIN' | 'CROSS APPLY' | 'OUTER APPLY' | 'NATURAL' [ ( 'LEFT' | 'RIGHT' ) [ 'OUTER' ] ] 'JOIN' )
-tableFactor
+lateral
 ;
 
 innerJoin =
@@ -463,13 +463,18 @@ outerJoin =
 semiAntiJoin = 'LEFT' ( 'SEMI' | 'ANTI' ) 'JOIN' table joinQualification
 ;
 
+lateral =
+  'LATERAL' tableFactor
+| tableFactor
+;
+
 tableFactor =
-  'LATERAL' '(' select ')' [ correlationName ]
-| tableFunction [ correlationName ]
-| '(' select ')' [ correlationName ]
-| values [ correlationName ]
-| tableName [ versions ] [ correlationName ] [ tableHints ]
+  tableName [ versions ] [ correlationName ] [ tableHints ]
 | '(' table ')' [ correlationName ]
+| '(' select ')' [ correlationName ]
+| tableFunction [ correlationName ]
+| 'UNNEST' '(' field ')'
+| values [ correlationName ]
 ;
 
 tableFunction =

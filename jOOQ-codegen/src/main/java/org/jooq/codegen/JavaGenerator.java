@@ -3137,35 +3137,101 @@ public class JavaGenerator extends AbstractGenerator {
         // ---------------------------------------------------------------------
 
         // Default constructor
-        if (!generateImmutablePojos()) {
-            out.println();
-
-            if (scala) {
-
-                // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
-                int size = getTypedElements(tableOrUDT).size();
-                if (size > 0) {
-                    List<String> nulls = new ArrayList<String>();
-                    for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
-
-                        // Avoid ambiguities between a single-T-value constructor
-                        // and the copy constructor
-                        if (size == 1)
-                            nulls.add("null : " + out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
-                        else
-                            nulls.add("null");
-
-                    out.tab(1).println("def this() = {", className);
-                    out.tab(2).println("this([[%s]])", nulls);
-                    out.tab(1).println("}");
-                }
-            }
-            else {
-                out.tab(1).println("public %s() {}", className);
-            }
-        }
+        if (!generateImmutablePojos())
+            generatePojoDefaultConstructor(tableOrUDT, out);
 
         // [#1363] [#7055] copy constructor
+        generatePojoCopyConstructor(tableOrUDT, out);
+
+        // Multi-constructor
+        generatePojoMultiConstructor(tableOrUDT, out);
+
+        List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableOrUDT);
+        for (int i = 0; i < elements.size(); i++) {
+            TypedElementDefinition<?> column = elements.get(i);
+
+            if (tableOrUDT instanceof TableDefinition)
+                generatePojoGetter(column, i, out);
+            else
+                generateUDTPojoGetter(column, i, out);
+
+            // Setter
+            if (!generateImmutablePojos())
+                if (tableOrUDT instanceof TableDefinition)
+                    generatePojoSetter(column, i, out);
+                else
+                    generateUDTPojoSetter(column, i, out);
+        }
+
+        if (generatePojosEqualsAndHashCode())
+            generatePojoEqualsAndHashCode(tableOrUDT, out);
+
+        if (generatePojosToString())
+            generatePojoToString(tableOrUDT, out);
+
+        if (generateInterfaces() && !generateImmutablePojos())
+            printFromAndInto(out, tableOrUDT);
+
+        if (tableOrUDT instanceof TableDefinition)
+            generatePojoClassFooter((TableDefinition) tableOrUDT, out);
+        else
+            generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
+
+        out.println("}");
+        closeJavaWriter(out);
+    }
+    /**
+     * Subclasses may override this method to provide their own pojo copy constructors.
+     */
+    private void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+
+        int maxLength = 0;
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
+            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
+
+        if (scala) {
+        }
+
+        // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
+        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
+        else if (getTypedElements(tableOrUDT).size() > 0 &&
+                 getTypedElements(tableOrUDT).size() < 256) {
+            out.println();
+            out.tab(1).print("public %s(", className);
+
+            String separator1 = "";
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                out.println(separator1);
+
+                out.tab(2).print("%s %s",
+                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
+                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                separator1 = ",";
+            }
+
+            out.println();
+            out.tab(1).println(") {");
+
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(2).println("this.%s = %s;", columnMember, columnMember);
+            }
+
+            out.tab(1).println("}");
+        }
+    }
+
+    /**
+     * Subclasses may override this method to provide their own pojo copy constructors.
+     */
+    protected void generatePojoCopyConstructor(Definition tableOrUDT, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+        final String interfaceName = generateInterfaces()
+            ? out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE))
+            : "";
+
         out.println();
 
         if (scala) {
@@ -3203,77 +3269,39 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).println("}");
         }
+    }
 
-        // Multi-constructor
+    /**
+     * Subclasses may override this method to provide their own pojo default constructors.
+     */
+    protected void generatePojoDefaultConstructor(Definition tableOrUDT, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+
+        out.println();
 
         if (scala) {
-        }
 
-        // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
-        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
-        else if (getTypedElements(tableOrUDT).size() > 0 &&
-                 getTypedElements(tableOrUDT).size() < 256) {
-            out.println();
-            out.tab(1).print("public %s(", className);
+            // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
+            int size = getTypedElements(tableOrUDT).size();
+            if (size > 0) {
+                List<String> nulls = new ArrayList<String>();
+                for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
 
-            String separator1 = "";
-            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                out.println(separator1);
+                    // Avoid ambiguities between a single-T-value constructor
+                    // and the copy constructor
+                    if (size == 1)
+                        nulls.add("null : " + out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
+                    else
+                        nulls.add("null");
 
-                out.tab(2).print("%s %s",
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
-                    getStrategy().getJavaMemberName(column, Mode.POJO));
-                separator1 = ",";
+                out.tab(1).println("def this() = {", className);
+                out.tab(2).println("this([[%s]])", nulls);
+                out.tab(1).println("}");
             }
-
-            out.println();
-            out.tab(1).println(") {");
-
-            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-
-                out.tab(2).println("this.%s = %s;", columnMember, columnMember);
-            }
-
-            out.tab(1).println("}");
         }
-
-        List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableOrUDT);
-        for (int i = 0; i < elements.size(); i++) {
-            TypedElementDefinition<?> column = elements.get(i);
-
-            if (tableOrUDT instanceof TableDefinition)
-                generatePojoGetter(column, i, out);
-            else
-                generateUDTPojoGetter(column, i, out);
-
-            // Setter
-            if (!generateImmutablePojos())
-                if (tableOrUDT instanceof TableDefinition)
-                    generatePojoSetter(column, i, out);
-                else
-                    generateUDTPojoSetter(column, i, out);
+        else {
+            out.tab(1).println("public %s() {}", className);
         }
-
-        if (generatePojosEqualsAndHashCode()) {
-            generatePojoEqualsAndHashCode(tableOrUDT, out);
-        }
-
-        if (generatePojosToString()) {
-            generatePojoToString(tableOrUDT, out);
-        }
-
-        if (generateInterfaces() && !generateImmutablePojos()) {
-            printFromAndInto(out, tableOrUDT);
-        }
-
-        if (tableOrUDT instanceof TableDefinition)
-            generatePojoClassFooter((TableDefinition) tableOrUDT, out);
-        else
-            generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
-
-        out.println("}");
-        closeJavaWriter(out);
     }
 
     /**

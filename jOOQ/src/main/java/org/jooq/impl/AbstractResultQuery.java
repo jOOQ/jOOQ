@@ -532,7 +532,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchOne() {
-        return Tools.fetchOne(fetchLazy());
+        return Tools.fetchOne(fetchLazy(), hasLimit1());
     }
 
     @Override
@@ -627,7 +627,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchSingle() {
-        return Tools.fetchSingle(fetchLazy());
+        return Tools.fetchSingle(fetchLazy(), hasLimit1());
     }
 
     @Override
@@ -1474,5 +1474,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         public final Result<R> call() throws Exception {
             return fetch();
         }
+    }
+
+    @SuppressWarnings("rawtypes")
+    private final boolean hasLimit1() {
+        if (this instanceof SelectQueryImpl) {
+            Limit l = ((SelectQueryImpl) this).getLimit();
+            return !l.withTies()                                          && l.limitOne();
+        }
+
+        return false;
     }
 }

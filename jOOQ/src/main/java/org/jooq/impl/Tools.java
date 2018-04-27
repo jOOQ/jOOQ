@@ -1705,11 +1705,31 @@ final class Tools {
      *             element
      */
     static final <R extends Record> R fetchOne(Cursor<R> cursor) throws TooManyRowsException {
+        return fetchOne(cursor, false);
+    }
+
+    /**
+     * Get the only element from a cursor or <code>null</code>, or throw an
+     * exception.
+     * <p>
+     * [#2373] This method will always close the argument cursor, as it is
+     * supposed to be completely consumed by this method.
+     *
+     * @param cursor The cursor
+     * @param hasLimit1 Whether a LIMIT clause is present that guarantees at
+     *            most one row
+     * @return The only element from the cursor or <code>null</code>
+     * @throws TooManyRowsException Thrown if the cursor returns more than one
+     *             element
+     */
+    static final <R extends Record> R fetchOne(Cursor<R> cursor, boolean hasLimit1) throws TooManyRowsException {
         try {
 
             // [#7001] Fetching at most two rows rather than at most one row
             //         (and then checking of additional rows) improves debug logs
-            Result<R> result = cursor.fetchNext(2);
+            // [#7430] Avoid fetching the second row (additional overhead) if
+            //         there is a guarantee of at most one row
+            Result<R> result = cursor.fetchNext(hasLimit1 ? 1 : 2);
             int size = result.size();
 
             if (size == 0)
@@ -1737,11 +1757,31 @@ final class Tools {
      *             element
      */
     static final <R extends Record> R fetchSingle(Cursor<R> cursor) throws NoDataFoundException, TooManyRowsException {
+        return fetchSingle(cursor, false);
+    }
+
+    /**
+     * Get the only element from a cursor, or throw an exception.
+     * <p>
+     * [#2373] This method will always close the argument cursor, as it is
+     * supposed to be completely consumed by this method.
+     *
+     * @param cursor The cursor
+     * @param hasLimit1 Whether a LIMIT clause is present that guarantees at
+     *            most one row
+     * @return The only element from the cursor
+     * @throws NoDataFoundException Thrown if the cursor did not return any rows
+     * @throws TooManyRowsException Thrown if the cursor returns more than one
+     *             element
+     */
+    static final <R extends Record> R fetchSingle(Cursor<R> cursor, boolean hasLimit1) throws NoDataFoundException, TooManyRowsException {
         try {
 
             // [#7001] Fetching at most two rows rather than at most one row
             //         (and then checking of additional rows) improves debug logs
-            Result<R> result = cursor.fetchNext(2);
+            // [#7430] Avoid fetching the second row (additional overhead) if
+            //         there is a guarantee of at most one row
+            Result<R> result = cursor.fetchNext(hasLimit1 ? 1 : 2);
             int size = result.size();
 
             if (size == 0)

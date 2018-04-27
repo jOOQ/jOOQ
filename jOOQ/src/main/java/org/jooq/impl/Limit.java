@@ -360,10 +360,21 @@ final class Limit extends AbstractQueryPart {
     }
 
     /**
-     * Whether this limit has an offset of zero
+     * Whether this limit has a limit of zero
      */
     final boolean limitZero() {
         return numberOfRows == null;
+    }
+
+    /**
+     * Whether this limit has a limit of one
+     */
+    final boolean limitOne() {
+        return !limitZero()
+            && !withTies()
+
+            && numberOfRows instanceof Param
+            && Integer.valueOf(1).equals(((Param<?>) numberOfRows).getValue());
     }
 
     /**

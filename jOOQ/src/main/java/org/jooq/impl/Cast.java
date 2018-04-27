@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DECIMAL;
@@ -84,7 +85,10 @@ final class Cast<T> extends AbstractFunction<T> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
+
+
+
 
 
 
@@ -235,6 +239,29 @@ final class Cast<T> extends AbstractFunction<T> {
             super.accept(ctx);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class Native extends AbstractQueryPart {
 

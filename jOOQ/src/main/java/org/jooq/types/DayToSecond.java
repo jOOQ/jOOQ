@@ -37,6 +37,7 @@
  */
 package org.jooq.types;
 
+import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -192,7 +193,9 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     }
 
     /**
-     * Load a {@link Double} representation of a <code>INTERVAL DAY TO SECOND</code>
+     * Load a {@link Double} representation of a
+     * <code>INTERVAL DAY TO SECOND</code> by assuming standard 24 hour days and
+     * 60 second minutes.
      *
      * @param milli The number of milliseconds as a fractional number
      * @return The loaded <code>INTERVAL DAY TO SECOND</code> object
@@ -208,12 +211,21 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
         DayToSecond result = new DayToSecond(d, h, m, s, n);
 
-        if (milli < 0) {
+        if (milli < 0)
             result = result.neg();
-        }
 
         return result;
     }
+
+
+    /**
+     * Transform a {@link Duration} into a {@link DayToSecond} interval by
+     * taking its number of milliseconds.
+     */
+    public static DayToSecond valueOf(Duration duration) {
+        return duration == null ? null : valueOf(duration.toMillis());
+    }
+
 
     // -------------------------------------------------------------------------
     // XXX Number API

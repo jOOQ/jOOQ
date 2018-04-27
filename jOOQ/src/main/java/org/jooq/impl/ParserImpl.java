@@ -395,6 +395,9 @@ import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.Interval;
+import org.jooq.types.YearToMonth;
 
 /**
  * @author Lukas Eder
@@ -4293,9 +4296,15 @@ final class ParserImpl implements Parser {
 
             case 'i':
             case 'I':
-                if (N.is(type) && (field = parseFieldInstrIf(ctx)) != null)
-                    return field;
-                else if ((field = parseFieldIfnullIf(ctx)) != null)
+                if (D.is(type))
+                    if ((field = parseFieldIntervalLiteralIf(ctx)) != null)
+                        return field;
+
+                if (N.is(type))
+                    if ((field = parseFieldInstrIf(ctx)) != null)
+                        return field;
+
+                if ((field = parseFieldIfnullIf(ctx)) != null)
                     return field;
                 else if ((field = parseFieldIsnullIf(ctx)) != null)
                     return field;
@@ -5071,6 +5080,27 @@ final class ParserImpl implements Parser {
         }
     }
 
+    private static final Field<?> parseFieldIntervalLiteralIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "INTERVAL"))
+            return inline(parseIntervalLiteral(ctx));
+
+        return null;
+    }
+
+    private static final Interval parseIntervalLiteral(ParserContext ctx) {
+        String string = parseStringLiteral(ctx);
+        YearToMonth ym = YearToMonth.valueOf(string);
+
+        if (ym != null)
+            return ym;
+
+        DayToSecond ds = DayToSecond.valueOf(string);
+        if (ds != null)
+            return ds;
+
+        throw ctx.exception("Illegal interval literal");
+    }
+
     private static final Field<?> parseFieldDateLiteralIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "DATE")) {
             if (parseIf(ctx, '(')) {
@@ -5099,7 +5129,6 @@ final class ParserImpl implements Parser {
 
         return null;
     }
-
 
     private static final Date parseDateLiteral(ParserContext ctx) {
         try {

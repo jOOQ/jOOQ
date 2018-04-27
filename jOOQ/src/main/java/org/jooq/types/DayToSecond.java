@@ -38,6 +38,7 @@
 package org.jooq.types;
 
 import java.time.Duration;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,7 +86,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      * Generated UID
      */
     private static final long    serialVersionUID = -3853596481984643811L;
-    private static final Pattern PATTERN          = Pattern.compile("(\\+|-)?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?");
+    private static final Pattern PATTERN          = Pattern.compile("([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?");
 
     private final boolean        negative;
     private final int            days;
@@ -186,6 +187,15 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
                     return new DayToSecond(days, hours, minutes, seconds, nano, negative);
                 }
+
+
+                else {
+                    try {
+                        return DayToSecond.valueOf(Duration.parse(string));
+                    }
+                    catch (DateTimeParseException ignore) {}
+                }
+
             }
         }
 

@@ -79,7 +79,8 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
      * Generated UID
      */
     private static final long    serialVersionUID = 1308553645456594273L;
-    private static final Pattern PATTERN          = Pattern.compile("(\\+|-)?(\\d+)-(\\d+)");
+    private static final Pattern PATTERN_SQL      = Pattern.compile("([+-])?(\\d+)-(\\d+)");
+    private static final Pattern PATTERN_ISO      = Pattern.compile("([+-])?P(?:([+-]?\\d+)Y)?(?:([+-]?\\d+)M)?", Pattern.CASE_INSENSITIVE);
 
     private final boolean        negative;
     private final int            years;
@@ -123,12 +124,24 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
      */
     public static YearToMonth valueOf(String string) {
         if (string != null) {
-            Matcher matcher = PATTERN.matcher(string);
+            Matcher matcher;
 
-            if (matcher.find()) {
+            if ((matcher = PATTERN_SQL.matcher(string)).find()) {
                 boolean negative = "-".equals(matcher.group(1));
                 int years = Integer.parseInt(matcher.group(2));
                 int months = Integer.parseInt(matcher.group(3));
+
+                return new YearToMonth(years, months, negative);
+            }
+
+            if ((matcher = PATTERN_ISO.matcher(string)).find()) {
+                boolean negative = "-".equals(matcher.group(1));
+
+                String group2 = matcher.group(2);
+                String group3 = matcher.group(3);
+
+                int years = group2 == null ? 0 : Integer.parseInt(group2);
+                int months = group3 == null ? 0 : Integer.parseInt(group3);
 
                 return new YearToMonth(years, months, negative);
             }

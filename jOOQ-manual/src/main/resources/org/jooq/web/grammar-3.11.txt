@@ -639,6 +639,7 @@ term =
 | 'HOUR' '(' field ')'
 | 'IFNULL' '(' field ',' field ')'
 | 'INSTR' '(' field ',' field ')'
+| intervalLiteral
 | 'IIF' '(' condition ',' field ',' field ')'
 | 'ISNULL' '(' field ',' field ')'
 | ( 'LOWER' | 'LCASE' ) '(' field ')'
@@ -895,6 +896,9 @@ timeLiteral = 'TIME' stringLiteral
 ;
 
 timestampLiteral = 'TIMESTAMP' stringLiteral
+;
+
+intervalLiteral = 'INTERVAL' stringLiteral
 ;
 
 signedInteger = todo

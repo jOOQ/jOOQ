@@ -5089,14 +5089,15 @@ final class ParserImpl implements Parser {
 
     private static final Interval parseIntervalLiteral(ParserContext ctx) {
         String string = parseStringLiteral(ctx);
-        YearToMonth ym = YearToMonth.valueOf(string);
-
-        if (ym != null)
-            return ym;
 
         DayToSecond ds = DayToSecond.valueOf(string);
         if (ds != null)
             return ds;
+
+        YearToMonth ym = YearToMonth.valueOf(string);
+
+        if (ym != null)
+            return ym;
 
         throw ctx.exception("Illegal interval literal");
     }

@@ -5027,6 +5027,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldTimestampLiteralIf(ParserContext ctx) {
+        int position = ctx.position();
+
         if (parseKeywordIf(ctx, "TIMESTAMP")) {
             if (parseKeywordIf(ctx, "WITHOUT TIME ZONE")) {
                 return inline(parseTimestampLiteral(ctx));
@@ -5036,8 +5038,12 @@ final class ParserImpl implements Parser {
                 parse(ctx, ')');
                 return timestamp((Field) f);
             }
-            else {
+            else if (peek(ctx, '\'')) {
                 return inline(parseTimestampLiteral(ctx));
+            }
+            else {
+                ctx.position(position);
+                return field(parseIdentifier(ctx));
             }
         }
 
@@ -5054,6 +5060,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldTimeLiteralIf(ParserContext ctx) {
+        int position = ctx.position();
+
         if (parseKeywordIf(ctx, "TIME")) {
             if (parseKeywordIf(ctx, "WITHOUT TIME ZONE")) {
                 return inline(parseTimeLiteral(ctx));
@@ -5063,8 +5071,12 @@ final class ParserImpl implements Parser {
                 parse(ctx, ')');
                 return time((Field) f);
             }
-            else {
+            else if (peek(ctx, '\'')) {
                 return inline(parseTimeLiteral(ctx));
+            }
+            else {
+                ctx.position(position);
+                return field(parseIdentifier(ctx));
             }
         }
 
@@ -5081,8 +5093,17 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldIntervalLiteralIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "INTERVAL"))
-            return inline(parseIntervalLiteral(ctx));
+        int position = ctx.position();
+
+        if (parseKeywordIf(ctx, "INTERVAL")) {
+            if (peek(ctx, '\'')) {
+                return inline(parseIntervalLiteral(ctx));
+            }
+            else {
+                ctx.position(position);
+                return field(parseIdentifier(ctx));
+            }
+        }
 
         return null;
     }
@@ -5103,14 +5124,20 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldDateLiteralIf(ParserContext ctx) {
+        int position = ctx.position();
+
         if (parseKeywordIf(ctx, "DATE")) {
             if (parseIf(ctx, '(')) {
                 Field<?> f = parseField(ctx, S);
                 parse(ctx, ')');
                 return date((Field) f);
             }
-            else {
+            else if (peek(ctx, '\'')) {
                 return inline(parseDateLiteral(ctx));
+            }
+            else {
+                ctx.position(position);
+                return field(parseIdentifier(ctx));
             }
         }
 

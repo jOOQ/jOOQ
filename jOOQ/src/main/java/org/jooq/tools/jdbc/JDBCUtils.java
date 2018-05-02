@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -53,7 +54,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.MYSQL_5_7;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
@@ -180,6 +181,8 @@ public class JDBCUtils {
 
         return dialect;
     }
+
+
 
 
 

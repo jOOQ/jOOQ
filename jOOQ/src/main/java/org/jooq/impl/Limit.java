@@ -286,6 +286,7 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
             // [#4785] OFFSET cannot be without LIMIT
             case H2:
             case MARIADB:

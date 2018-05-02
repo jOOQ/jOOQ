@@ -48,7 +48,7 @@ import static org.jooq.Clause.INSERT_SELECT;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.dual;
@@ -460,6 +460,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
 
 
 

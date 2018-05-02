@@ -8777,11 +8777,11 @@ create.selectFrom(AUTHOR)
 								Any of the following databases might be available in the future
 							</p>
 						    <ul>
+							    <li>Azure SQL Database</li>
 							    <li>Informix</li>
 							    <li>Interbase</li>
 							    <li>MS Access</li>
 							    <li>MS Excel</li>
-							    <li>SQL Azure</li>
 							    <li>Sybase SQL Anywhere OnDemand</li>
 							    <li>Teradata</li>
 						    </ul>

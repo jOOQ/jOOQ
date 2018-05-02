@@ -12617,6 +12617,7 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
                                 Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, some 70 unit tests are run for syntax and variable binding verification, as well as some 400 integration tests with an overall of around 4000 queries for any of these databases:
                             </p>
                             <ul>
+                                <li>Azure SQL Database</li>
                                 <li>CUBRID</li>
                                 <li>DB2</li>
                                 <li>Derby</li>
@@ -12630,7 +12631,6 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
                                 <li>Oracle</li>
                                 <li>PostgreSQL</li>
                                 <li>SQLite</li>
-                                <li>SQL Azure</li>
                                 <li>SQL Server</li>
                                 <li>Sybase Adaptive Server Enterprise</li>
                                 <li>Sybase SQL Anywhere</li>

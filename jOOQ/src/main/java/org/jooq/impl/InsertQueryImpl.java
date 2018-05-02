@@ -147,6 +147,14 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return insertMaps.lastMap();
     }
 
+    final FieldMapsForInsert getInsertMaps() {
+        return insertMaps;
+    }
+
+    final Select<?> getSelect() {
+        return select;
+    }
+
     @Override
     public final void addRecord(R record) {
         newRecord();
@@ -796,5 +804,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final boolean isExecutable() {
         return insertMaps.isExecutable() || defaultValues || select != null;
+    }
+
+    @Override
+    final int estimatedRowCount() {
+        if (defaultValues)
+            return 1;
+        else if (select != null)
+            return Integer.MAX_VALUE;
+        else
+            return insertMaps.rows;
     }
 }

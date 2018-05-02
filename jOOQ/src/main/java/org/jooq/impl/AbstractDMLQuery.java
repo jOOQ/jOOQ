@@ -47,12 +47,15 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BULK_COLLECT_INTO;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_FORALL;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_RETURNING;
@@ -62,6 +65,7 @@ import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
+import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -83,18 +87,19 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
-import org.jooq.DeleteQuery;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.Name;
+import org.jooq.Param;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
-import org.jooq.UpdateQuery;
 import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.exception.DataAccessException;
@@ -286,10 +291,88 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
     }
+
+
+
+
+
+
 
 
 

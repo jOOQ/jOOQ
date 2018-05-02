@@ -169,4 +169,9 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         return super.isExecutable();
     }
+
+    @Override
+    final int estimatedRowCount() {
+        return Integer.MAX_VALUE;
+    }
 }

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
@@ -44,6 +45,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 
 import java.util.AbstractList;
 import java.util.AbstractMap;
@@ -140,11 +142,28 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case FIREBIRD: {
                     ctx.formatSeparator()
-                       .start(INSERT_SELECT);
-                    ctx.visit(insertSelect());
-                    ctx.end(INSERT_SELECT);
+                       .start(INSERT_SELECT)
+                       .visit(insertSelect())
+                       .end(INSERT_SELECT);
 
                     break;
                 }
@@ -163,7 +182,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
-    private final Select<Record> insertSelect() {
+    final Select<Record> insertSelect() {
         Select<Record> select = null;
 
         for (int row = 0; row < rows; row++) {
@@ -184,9 +203,13 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     final void toSQL92Values(Context<?> ctx) {
+        toSQL92Values(ctx, false);
+    }
+
+    final void toSQL92Values(Context<?> ctx, boolean emulateBulkInsertReturning) {
         boolean indent = (values.size() > 1);
 
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < rows                                                                     ; row++) {
             if (row > 0)
                 ctx.sql(", ");
 
@@ -197,11 +220,17 @@ final class FieldMapsForInsert extends AbstractQueryPart {
                 ctx.formatIndentStart();
 
             String separator = "";
+            int i = 0;
             for (List<Field<?>> list : values.values()) {
                 ctx.sql(separator);
 
                 if (indent)
                     ctx.formatNewLine();
+
+
+
+
+
 
                 ctx.visit(list.get(row));
                 separator = ", ";

@@ -482,7 +482,19 @@ final class Tools {
          * [#3579] [#6431] [#7222] There are nested set operations in the current
          * {@link Select} scope.
          */
-        DATA_NESTED_SET_OPERATIONS
+        DATA_NESTED_SET_OPERATIONS,
+
+        /**
+         * [#5191] Whether INSERT RETURNING is being emulated for bulk insertions.
+         */
+        DATA_EMULATE_BULK_INSERT_RETURNING
+    }
+
+    /**
+     * Like {@link DataKey}, but not an enum - for rare usage.
+     */
+    static class DataExtendedKey {
+
     }
 
     /**

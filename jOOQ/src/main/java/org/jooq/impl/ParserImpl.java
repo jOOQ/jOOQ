@@ -979,8 +979,8 @@ final class ParserImpl implements Parser {
             return (SelectQueryImpl<Record>) ctx.dsl.selectQuery(parseTableValueConstructor(ctx));
 
         ctx.ignoreHints(false);
-        if (!parseKeywordIf(ctx, "SELECT"))
-            parseKeyword(ctx, "SEL");
+        if (!parseKeywordIf(ctx, "SEL"))
+            parseKeyword(ctx, "SELECT");
 
         String hints = parseHints(ctx);
         boolean distinct = parseKeywordIf(ctx, "DISTINCT") || parseKeywordIf(ctx, "UNIQUE");
@@ -1343,8 +1343,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
-        if (!parseKeywordIf(ctx, "DELETE"))
-            parseKeyword(ctx, "DEL");
+        if (!parseKeywordIf(ctx, "DEL"))
+            parseKeyword(ctx, "DELETE");
 
         parseKeywordIf(ctx, "FROM");
         Table<?> tableName = parseTableName(ctx);
@@ -1366,8 +1366,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
-        if (!parseKeywordIf(ctx, "INSERT"))
-            parseKeyword(ctx, "INS");
+        if (!parseKeywordIf(ctx, "INS"))
+            parseKeyword(ctx, "INSERT");
 
         parseKeyword(ctx, "INTO");
         Table<?> tableName = parseTableName(ctx);
@@ -1486,8 +1486,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Update<?> parseUpdate(ParserContext ctx, WithImpl with) {
-        if (!parseKeywordIf(ctx, "UPDATE"))
-            parseKeyword(ctx, "UPD");
+        if (!parseKeywordIf(ctx, "UPD"))
+            parseKeyword(ctx, "UPDATE");
 
         Table<?> tableName = parseTableName(ctx);
         UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));

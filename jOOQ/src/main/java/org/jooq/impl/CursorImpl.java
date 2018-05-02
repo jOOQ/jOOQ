@@ -276,9 +276,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     @Override
     public final Stream<R> stream() throws DataAccessException {
         return StreamSupport.stream(
-            Spliterators.spliterator(
+            Spliterators.spliteratorUnknownSize(
                 iterator(),
-                0,
                 Spliterator.ORDERED | Spliterator.NONNULL
             ),
             false

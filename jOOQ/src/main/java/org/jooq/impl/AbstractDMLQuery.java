@@ -368,11 +368,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         }
     }
 
-
-
-
-
-
+    /**
+     * The estimated number of affected rows, {@link Integer#MAX_VALUE}, if
+     * unknown.
+     */
+    abstract int estimatedRowCount();
 
 
 

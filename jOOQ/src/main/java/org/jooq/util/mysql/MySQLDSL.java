@@ -37,7 +37,7 @@
  */
 package org.jooq.util.mysql;
 
-import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 
 import org.jooq.EnumType;
 import org.jooq.Field;

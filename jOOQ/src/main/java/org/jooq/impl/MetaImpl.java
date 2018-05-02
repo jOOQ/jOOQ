@@ -78,7 +78,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;

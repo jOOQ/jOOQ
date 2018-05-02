@@ -54,7 +54,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 // ...
@@ -17391,6 +17391,7 @@ public class DSL {
      * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
      * emulated by the following dialects:
      * <ul>
+     * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
@@ -17413,6 +17414,7 @@ public class DSL {
      * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
      * emulated by the following dialects:
      * <ul>
+     * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
@@ -17434,6 +17436,7 @@ public class DSL {
      * <p>
      * This is natively supported by
      * <ul>
+     * <li> {@link SQLDialect#AURORA_MYSQL}</li>
      * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
@@ -17461,6 +17464,7 @@ public class DSL {
      * <p>
      * This is natively supported by
      * <ul>
+     * <li> {@link SQLDialect#AURORA_MYSQL}</li>
      * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
@@ -17488,6 +17492,7 @@ public class DSL {
      * <p>
      * This is natively supported by
      * <ul>
+     * <li> {@link SQLDialect#AURORA_MYSQL}</li>
      * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>

@@ -46,7 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 // ...
 // ...
 import static org.jooq.impl.DSL.name;

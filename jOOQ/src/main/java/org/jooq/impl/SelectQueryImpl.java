@@ -1040,7 +1040,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean wrapQueryExpressionBodyInDerivedTable = false;
 
 
-        wrapQueryExpressionInDerivedTable = false
+        wrapQueryExpressionInDerivedTable =
+
+        // [#6380] SEEK BEFORE with LIMIT requires two applications of ORDER BY:
+        //         - A reversed ordering in a derived table
+        //         - The desired ordering in the outer table
+            seekBefore && getLimit().isApplicable()
 
 
 
@@ -1256,27 +1261,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // WHERE clause
         // ------------
         context.start(SELECT_WHERE);
+        ConditionProviderImpl where = getWhere();
 
         if (TRUE.equals(context.data().get(DataKey.DATA_SELECT_NO_DATA)))
             context.formatSeparator()
                    .visit(K_WHERE)
                    .sql(' ')
                    .visit(falseCondition());
-        else if (!getWhere().hasWhere() && semiAntiJoinPredicates == null)
+        else if (!where.hasWhere() && semiAntiJoinPredicates == null)
             ;
         else {
-            ConditionProviderImpl where = new ConditionProviderImpl();
+            ConditionProviderImpl actual = new ConditionProviderImpl();
 
             if (semiAntiJoinPredicates != null)
-                where.addConditions(semiAntiJoinPredicates);
+                actual.addConditions(semiAntiJoinPredicates);
 
-            if (getWhere().hasWhere())
-                where.addConditions(getWhere());
+            if (where.hasWhere())
+                actual.addConditions(where);
 
             context.formatSeparator()
                    .visit(K_WHERE)
                    .sql(' ')
-                   .visit(where);
+                   .visit(actual);
         }
 
         context.end(SELECT_WHERE);
@@ -1922,57 +1928,63 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         grouping = true;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     final ConditionProviderImpl getWhere() {
-        if (getOrderBy().isEmpty() || getSeek().isEmpty()) {
+        if (getOrderBy().isEmpty() || getSeek().isEmpty())
             return condition;
+
+        ConditionProviderImpl result = new ConditionProviderImpl();
+
+        if (condition.hasWhere())
+            result.addConditions(condition.getWhere());
+
+        result.addConditions(getSeekCondition());
+        return result;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final Condition getSeekCondition() {
+        SortFieldList o = getOrderBy();
+        Condition c = null;
+
+        // [#2786] TODO: Check if NULLS FIRST | NULLS LAST clauses are
+        // contained in the SortFieldList, in case of which, the below
+        // predicates will become a lot more complicated.
+        if (o.nulls()) {}
+
+        // If we have uniform sorting, more efficient row value expression
+        // predicates can be applied, which can be heavily optimised on some
+        // databases.
+        if (o.size() > 1 && o.uniform()) {
+            if (o.get(0).getOrder() != DESC ^ seekBefore)
+                c = row(o.fields()).gt(row(getSeek()));
+            else
+                c = row(o.fields()).lt(row(getSeek()));
         }
+
+        // With alternating sorting, the SEEK clause has to be explicitly
+        // phrased for each ORDER BY field.
         else {
-            SortFieldList o = getOrderBy();
-            Condition c = null;
+            ConditionProviderImpl or = new ConditionProviderImpl();
 
-            // [#2786] TODO: Check if NULLS FIRST | NULLS LAST clauses are
-            // contained in the SortFieldList, in case of which, the below
-            // predicates will become a lot more complicated.
-            if (o.nulls()) {}
+            for (int i = 0; i < o.size(); i++) {
+                ConditionProviderImpl and = new ConditionProviderImpl();
 
-            // If we have uniform sorting, more efficient row value expression
-            // predicates can be applied, which can be heavily optimised on some
-            // databases.
-            if (o.size() > 1 && o.uniform()) {
-                if (o.get(0).getOrder() != DESC ^ seekBefore)
-                    c = row(o.fields()).gt(row(getSeek()));
+                for (int j = 0; j < i; j++)
+                    and.addConditions(((Field) ((SortFieldImpl<?>) o.get(j)).getField()).eq(getSeek().get(j)));
+
+                SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
+                if (s.getOrder() != DESC ^ seekBefore)
+                    and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
                 else
-                    c = row(o.fields()).lt(row(getSeek()));
+                    and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
+
+                or.addConditions(OR, and);
             }
 
-            // With alternating sorting, the SEEK clause has to be explicitly
-            // phrased for each ORDER BY field.
-            else {
-                ConditionProviderImpl or = new ConditionProviderImpl();
-
-                for (int i = 0; i < o.size(); i++) {
-                    ConditionProviderImpl and = new ConditionProviderImpl();
-
-                    for (int j = 0; j < i; j++)
-                        and.addConditions(((Field) ((SortFieldImpl<?>) o.get(j)).getField()).eq(getSeek().get(j)));
-
-                    SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
-                    if (s.getOrder() != DESC ^ seekBefore)
-                        and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
-                    else
-                        and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
-
-                    or.addConditions(OR, and);
-                }
-
-                c = or;
-            }
-
-            ConditionProviderImpl result = new ConditionProviderImpl();
-            result.addConditions(condition, c);
-            return result;
+            c = or;
         }
+
+        return c;
     }
 
     final ConditionProviderImpl getConnectBy() {

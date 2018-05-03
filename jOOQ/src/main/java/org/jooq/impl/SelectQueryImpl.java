@@ -1040,12 +1040,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean wrapQueryExpressionBodyInDerivedTable = false;
 
 
-        wrapQueryExpressionInDerivedTable =
-
-        // [#6380] SEEK BEFORE with LIMIT requires two applications of ORDER BY:
-        //         - A reversed ordering in a derived table
-        //         - The desired ordering in the outer table
-            seekBefore && getLimit().isApplicable()
+        wrapQueryExpressionInDerivedTable = false
 
 
 

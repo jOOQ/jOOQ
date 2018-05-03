@@ -576,7 +576,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Adds seeking fields.
      *
      * @param fields The seeking fields
+     * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
+    @Deprecated
     @Support
     void addSeekBefore(Field<?>... fields);
 
@@ -584,7 +586,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Adds seeking fields.
      *
      * @param fields The seeking fields
+     * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
+    @Deprecated
     @Support
     void addSeekBefore(Collection<? extends Field<?>> fields);
 

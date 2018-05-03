@@ -2114,11 +2114,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    @Deprecated
     public final void addSeekBefore(Field<?>... fields) {
         addSeekBefore(Arrays.asList(fields));
     }
 
     @Override
+    @Deprecated
     public final void addSeekBefore(Collection<? extends Field<?>> fields) {
         if (unionOp.size() == 0)
             seekBefore = true;

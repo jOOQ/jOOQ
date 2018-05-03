@@ -335,7 +335,9 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
+    @Deprecated
     SelectSeekLimitStep<R> seekBefore(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
 
     /**
@@ -385,6 +387,8 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
+    @Deprecated
     SelectSeekLimitStep<R> seekBefore(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 }

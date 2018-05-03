@@ -1038,6 +1038,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // synthetic parentheses
         boolean wrapQueryExpressionInDerivedTable;
         boolean wrapQueryExpressionBodyInDerivedTable = false;
+        boolean applySeekOnDerivedTable = applySeekOnDerivedTable(context);
 
 
         wrapQueryExpressionInDerivedTable = false
@@ -1072,28 +1073,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+        // [#7459] In the presence of UNIONs and other set operations, the SEEK
+        //         predicate must be applied on a derived table, not on the individual subqueries
+        wrapQueryExpressionBodyInDerivedTable |= applySeekOnDerivedTable;
+
+        if (wrapQueryExpressionBodyInDerivedTable) {
+            context.visit(K_SELECT).sql(' ');
 
 
 
 
 
+            context.formatIndentStart()
+                   .formatNewLine()
+                   .sql("t.*");
 
+            if (alternativeFields != null && originalFields.length < alternativeFields.length)
+                context.sql(", ")
+                       .formatSeparator()
+                       .declareFields(true)
+                       .visit(alternativeFields[alternativeFields.length - 1])
+                       .declareFields(false);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            context.formatIndentEnd()
+                   .formatSeparator()
+                   .visit(K_FROM).sql(" (")
+                   .formatIndentStart()
+                   .formatNewLine();
+        }
 
         // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
         // all databases, we need to wrap relevant subqueries in parentheses.
@@ -1424,12 +1431,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.data().remove(DATA_NESTED_SET_OPERATIONS);
         }
 
+        if (wrapQueryExpressionBodyInDerivedTable) {
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(") t");
 
+            if (applySeekOnDerivedTable) {
+                boolean qualify = context.qualify();
 
-
-
-
-
+                context.formatSeparator()
+                       .visit(K_WHERE)
+                       .sql(' ')
+                       .qualify(false)
+                       .visit(getSeekCondition())
+                       .qualify(qualify);
+            }
+        }
 
         // ORDER BY clause for UNION
         // -------------------------
@@ -1525,6 +1542,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (ctx.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
             ctx.visit(actualLimit);
+    }
+
+    private final boolean applySeekOnDerivedTable(Context<?> ctx) {
+        return !getSeek().isEmpty() && !getOrderBy().isEmpty() && !unionOp.isEmpty();
     }
 
     private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
@@ -1924,7 +1945,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     final ConditionProviderImpl getWhere() {
-        if (getOrderBy().isEmpty() || getSeek().isEmpty())
+
+        // Do not apply SEEK predicates in the WHERE clause, if:
+        // - There is no ORDER BY clause (SEEK is non-deterministic)
+        // - There is no SEEK clause (obvious case)
+        // - There are unions (union is nested in derived table
+        //   and SEEK predicate is applied outside). See [#7459]
+        if (getOrderBy().isEmpty() || getSeek().isEmpty() || unionOp.size() > 0)
             return condition;
 
         ConditionProviderImpl result = new ConditionProviderImpl();

@@ -285,8 +285,13 @@ public class GenerationTool {
                 strategy = new MatcherStrategy(matchers);
 
                 if (g.getStrategy().getName() != null) {
-                    log.warn("WARNING: Matchers take precedence over custom strategy. Strategy ignored: " +
-                        g.getStrategy().getName());
+
+                    // [#7416] Depending on who is unmarshalling the Configuration (Maven / JAXB),
+                    //         the XSD's default value might apply, which we can safely ignore.
+                    if (!DefaultGeneratorStrategy.class.getName().equals(g.getStrategy().getName()))
+                        log.warn("WARNING: Matchers take precedence over custom strategy. Strategy ignored: " +
+                            g.getStrategy().getName());
+
                     g.getStrategy().setName(null);
                 }
             }

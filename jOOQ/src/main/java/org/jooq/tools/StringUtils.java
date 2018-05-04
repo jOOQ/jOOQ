@@ -17,6 +17,7 @@
 package org.jooq.tools;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1210,8 +1211,31 @@ public final class StringUtils {
     // -------------------------------------------------------------------------
 
     /**
-     * <p>Compares two objects for equality, where either one or both
-     * objects may be {@code null}.</p>
+     * <p>
+     * Compares two strings for equality, where either one or both objects may
+     * be {@code null}.
+     * </p>
+     *
+     * <pre>
+     * ObjectUtils.equals(null, null)                  = true
+     * ObjectUtils.equals(null, "")                    = false
+     * ObjectUtils.equals("", null)                    = false
+     * ObjectUtils.equals("", "")                      = true
+     * </pre>
+     *
+     * @param o1 the first object, may be {@code null}
+     * @param o2 the second object, may be {@code null}
+     * @return {@code true} if the values of both objects are the same
+     */
+    public static boolean equals(String o1, String o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
+    }
+
+    /**
+     * <p>
+     * Compares two objects for deep equality, where either one or both objects
+     * may be {@code null}.
+     * </p>
      *
      * <pre>
      * ObjectUtils.equals(null, null)                  = true
@@ -1224,18 +1248,38 @@ public final class StringUtils {
      * ObjectUtils.equals(Boolean.TRUE, Boolean.FALSE) = false
      * </pre>
      *
-     * @param object1  the first object, may be {@code null}
-     * @param object2  the second object, may be {@code null}
+     * @param o1 the first object, may be {@code null}
+     * @param o2 the second object, may be {@code null}
      * @return {@code true} if the values of both objects are the same
      */
-    public static boolean equals(Object object1, Object object2) {
-        if (object1 == object2) {
+    public static boolean equals(Object o1, Object o2) {
+        if (o1 == o2)
             return true;
-        }
-        if ((object1 == null) || (object2 == null)) {
+        else if ((o1 == null) || (o2 == null))
             return false;
-        }
-        return object1.equals(object2);
+        else if (o1.getClass().isArray())
+            if (o1 instanceof Object[] && o2 instanceof Object[])
+                return Arrays.deepEquals((Object[]) o1, (Object[]) o2);
+            else if (o1 instanceof byte[] && o2 instanceof byte[])
+                return Arrays.equals((byte[]) o1, (byte[]) o2);
+            else if (o1 instanceof short[] && o2 instanceof short[])
+                return Arrays.equals((short[]) o1, (short[]) o2);
+            else if (o1 instanceof int[] && o2 instanceof int[])
+                return Arrays.equals((int[]) o1, (int[]) o2);
+            else if (o1 instanceof long[] && o2 instanceof long[])
+                return Arrays.equals((long[]) o1, (long[]) o2);
+            else if (o1 instanceof float[] && o2 instanceof float[])
+                return Arrays.equals((float[]) o1, (float[]) o2);
+            else if (o1 instanceof double[] && o2 instanceof double[])
+                return Arrays.equals((double[]) o1, (double[]) o2);
+            else if (o1 instanceof char[] && o2 instanceof char[])
+                return Arrays.equals((char[]) o1, (char[]) o2);
+            else if (o1 instanceof boolean[] && o2 instanceof boolean[])
+                return Arrays.equals((boolean[]) o1, (boolean[]) o2);
+            else
+                return false;
+        else
+            return o1.equals(o2);
     }
 
     /**

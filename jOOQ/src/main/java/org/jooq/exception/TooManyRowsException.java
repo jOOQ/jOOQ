@@ -37,6 +37,8 @@
  */
 package org.jooq.exception;
 
+import java.sql.ResultSet;
+
 import org.jooq.InsertResultStep;
 import org.jooq.ResultQuery;
 
@@ -51,6 +53,15 @@ import org.jooq.ResultQuery;
  * {@link InsertResultStep#fetchOne()} on an <code>INSERT</code> statement, the
  * database change will still be executed: the rows will still be locked or
  * inserted.
+ * <p>
+ * <strong>Performance</strong>
+ * <p>
+ * Methods throwing {@link TooManyRowsException} need to retrieve at most two
+ * records from the underlying JDBC {@link ResultSet}, which, depending on the
+ * {@link java.sql.Statement#getFetchSize()} /
+ * {@link ResultQuery#fetchSize(int)}, might incur additional database
+ * roundtrips. If this causes problems, {@link ResultQuery#fetchAny()} may be
+ * preferred.
  *
  * @author Lukas Eder
  */

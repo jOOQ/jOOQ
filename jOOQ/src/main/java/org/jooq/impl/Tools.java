@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -487,7 +487,12 @@ final class Tools {
         /**
          * [#5191] Whether INSERT RETURNING is being emulated for bulk insertions.
          */
-        DATA_EMULATE_BULK_INSERT_RETURNING
+        DATA_EMULATE_BULK_INSERT_RETURNING,
+
+        /**
+         * [#7467] In SQL Server, the TOP clause is sometimes preferred over the FETCH clause.
+         */
+        DATA_PREFER_TOP_OVER_FETCH,
     }
 
     /**

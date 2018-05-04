@@ -131,6 +131,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLU
 import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
 import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
@@ -500,6 +501,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             switch (dialect) {
+
 
 
 
@@ -1129,10 +1131,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .sql(' ');
 
         // [#1493] Oracle hints come directly after the SELECT keyword
-        if (!StringUtils.isBlank(hint)) {
+        if (!StringUtils.isBlank(hint))
             context.sql(hint).sql(' ');
-        }
-
 
 
 
@@ -1557,6 +1557,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

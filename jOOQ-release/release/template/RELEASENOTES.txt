@@ -11,6 +11,23 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.10.7 - May the 4th be with you, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#7432 - Document the fact that fetchOne() needs to fetch the second record
+
+Bug Fixes
+---------
+#7399 - Optimistic locking should run deep equality checks on arrays
+#7417 - Misleading warning message when using external configurationFile with <matchers/>
+#7443 - ORA-00932 when running CAST(.. AS CLOB) in Oracle
+#7457 - ArrayIndexOutOfBoundsException on terminal operation of sorted ResultQuery.stream()
+#7465 - Excess ORDER BY "rn" generated in ORACLE11G dialect when LIMIT is used without ORDER BY
+
 Version 3.10.6 - March 20, 2018
 ================================================================================
 

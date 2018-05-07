@@ -70,6 +70,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -87,7 +88,6 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.exception.ControlFlowSignal;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -274,7 +274,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
 
     @Override
-    public final Stream<R> stream() throws DataAccessException {
+    public final Stream<R> stream() {
         return StreamSupport.stream(
             Spliterators.spliteratorUnknownSize(
                 iterator(),
@@ -282,6 +282,11 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             ),
             false
         ).onClose(() -> close());
+    }
+
+    @Override
+    public final <X, A> X collect(Collector<? super R, A, X> collector) {
+        return stream().collect(collector);
     }
 
 

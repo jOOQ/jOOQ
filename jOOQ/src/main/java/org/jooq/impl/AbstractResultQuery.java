@@ -66,6 +66,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import org.jooq.Configuration;
@@ -86,7 +87,6 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
@@ -361,6 +361,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Stream<R> stream() {
         return fetchLazy().stream();
+    }
+
+    @Override
+    public final <X, A> X collect(Collector<? super R, A, X> collector) {
+        try (Cursor<R> c = fetchLazy()) {
+            return c.collect(collector);
+        }
     }
 
 
@@ -1351,7 +1358,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException {
+    public final <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) {
         return fetch().intoSet(mapper);
     }
 

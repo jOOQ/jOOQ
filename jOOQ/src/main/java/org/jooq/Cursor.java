@@ -43,6 +43,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import org.jooq.conf.Settings;
@@ -479,6 +480,25 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @throws DataAccessException if something went wrong executing the query
      */
     Stream<R> stream() throws DataAccessException;
+
+    /**
+     * Reduce the execution results of this query using a {@link Collector}.
+     * <p>
+     * This works in the same way as calling the following code:
+     *
+     * <pre>
+     * <code>
+     * cursor.stream().collect(collector);
+     * </code>
+     * </pre>
+     *
+     * @param collector The collector that collects all records and accumulates
+     *            them into a result type.
+     * @return The result of the collection.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
+
 
 
     /**

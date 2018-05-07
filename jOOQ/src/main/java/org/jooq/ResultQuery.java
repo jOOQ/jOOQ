@@ -51,7 +51,10 @@ import java.util.Spliterator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
@@ -253,6 +256,29 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      */
     Stream<R> stream() throws DataAccessException;
 
+    /**
+     * Reduce the execution results of this query using a {@link Collector}.
+     * <p>
+     * This works in the same way as calling the following code:
+     *
+     * <pre>
+     * <code>
+     * try (Stream&lt;R> stream = resultQuery.stream()) {
+     *     X result = stream.collect(collector);
+     * }
+     * </code>
+     * </pre>
+     *
+     * ... with the exception of allowing client code to ignore the need for
+     * managing resources, which are handled inside of the
+     * <code>collect()</code> method.
+     *
+     * @param collector The collector that collects all records and accumulates
+     *            them into a result type.
+     * @return The result of the collection.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
 
     /**
      * Execute the query and "lazily" return the generated result.

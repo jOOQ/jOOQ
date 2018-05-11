@@ -137,6 +137,9 @@ public abstract class AbstractDatabase implements Database {
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
+    private boolean                                                          includeRelations                     = true;
+    private boolean                                                          tableValuedFunctions                 = true;
+    private int                                                              logSlowQueriesAfterSeconds;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
@@ -161,8 +164,6 @@ public abstract class AbstractDatabase implements Database {
     private List<RoutineDefinition>                                          routines;
     private List<PackageDefinition>                                          packages;
     private Relations                                                        relations;
-    private boolean                                                          includeRelations                     = true;
-    private boolean                                                          tableValuedFunctions                 = true;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
@@ -274,9 +275,12 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
+                    if (getLogSlowQueriesAfterSeconds() <= 0)
+                        return;
+
                     StopWatch watch = (StopWatch) ctx.data("org.jooq.meta.AbstractDatabase.watch");
 
-                    if (watch.split() > TimeUnit.SECONDS.toNanos(5L)) {
+                    if (watch.split() > TimeUnit.SECONDS.toNanos(getLogSlowQueriesAfterSeconds())) {
                         watch.splitWarn("Slow SQL");
 
                         log.warn(
@@ -1051,11 +1055,20 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
-        if (configuredForcedTypes == null) {
+        if (configuredForcedTypes == null)
             configuredForcedTypes = new ArrayList<ForcedType>();
-        }
 
         return configuredForcedTypes;
+    }
+
+    @Override
+    public final int getLogSlowQueriesAfterSeconds() {
+        return logSlowQueriesAfterSeconds;
+    }
+
+    @Override
+    public final void setLogSlowQueriesAfterSeconds(int logSlowQueriesAfterSeconds) {
+        this.logSlowQueriesAfterSeconds = logSlowQueriesAfterSeconds;
     }
 
     @Override

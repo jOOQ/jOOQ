@@ -674,6 +674,16 @@ public interface Database  extends AutoCloseable  {
     void setConfiguredForcedTypes(List<ForcedType> types);
 
     /**
+     * Log slow queries after this amount of seconds.
+     */
+    int getLogSlowQueriesAfterSeconds();
+
+    /**
+     * Log slow queries after this amount of seconds.
+     */
+    void setLogSlowQueriesAfterSeconds(int logSlowQueriesAfterSeconds);
+
+    /**
      * The database's schema version provider.
      */
     SchemaVersionProvider getSchemaVersionProvider();

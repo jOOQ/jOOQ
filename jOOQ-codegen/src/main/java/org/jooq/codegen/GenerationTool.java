@@ -498,6 +498,7 @@ public class GenerationTool {
             database.setConfiguredCustomTypes(d.getCustomTypes());
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
+            database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
 
             if (d.getRegexFlags() != null)
                 database.setRegexFlags(d.getRegexFlags());

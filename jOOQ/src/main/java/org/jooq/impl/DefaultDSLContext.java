@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
@@ -3794,6 +3795,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Record newRecord(Field<?>... fields) {
         return Tools.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
+    }
+
+    @Override
+    public Record newRecord(Collection<? extends Field<?>> fields) {
+        return newRecord(fields.toArray(EMPTY_FIELD));
     }
 
     // [jooq-tools] START [newRecord]

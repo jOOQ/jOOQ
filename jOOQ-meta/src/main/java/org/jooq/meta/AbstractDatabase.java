@@ -275,17 +275,18 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
-                    if (getLogSlowQueriesAfterSeconds() <= 0)
+                    int s = getLogSlowQueriesAfterSeconds();
+                    if (s <= 0)
                         return;
 
                     StopWatch watch = (StopWatch) ctx.data("org.jooq.meta.AbstractDatabase.watch");
 
-                    if (watch.split() > TimeUnit.SECONDS.toNanos(getLogSlowQueriesAfterSeconds())) {
+                    if (watch.split() > TimeUnit.SECONDS.toNanos(s)) {
                         watch.splitWarn("Slow SQL");
 
                         log.warn(
                             "Slow SQL",
-                            "jOOQ Meta executed a slow query (slower than 5 seconds)"
+                            "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
                           + "\n\n"
                           + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
                           + formatted(ctx.query())

@@ -714,6 +714,10 @@ and VARRAY types in Oracle.
 While this flag defaults to true for most databases, it defaults to false
 for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="logSlowQueriesAfterSeconds" type="int" minOccurs="0" maxOccurs="1" default="5">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

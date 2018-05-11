@@ -127,6 +127,8 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
+    @XmlElement(defaultValue = "5")
+    protected Integer logSlowQueriesAfterSeconds = 5;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
     protected List<Property> properties;
@@ -1190,6 +1192,30 @@ public class Database implements Serializable
         this.tableValuedFunctions = value;
     }
 
+    /**
+     * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
+     *
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *
+     */
+    public Integer getLogSlowQueriesAfterSeconds() {
+        return logSlowQueriesAfterSeconds;
+    }
+
+    /**
+     * Sets the value of the logSlowQueriesAfterSeconds property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
+    public void setLogSlowQueriesAfterSeconds(Integer value) {
+        this.logSlowQueriesAfterSeconds = value;
+    }
+
     public List<Property> getProperties() {
         if (properties == null) {
             properties = new ArrayList<Property>();
@@ -1449,6 +1475,11 @@ public class Database implements Serializable
 
     public Database withTableValuedFunctions(Boolean value) {
         setTableValuedFunctions(value);
+        return this;
+    }
+
+    public Database withLogSlowQueriesAfterSeconds(Integer value) {
+        setLogSlowQueriesAfterSeconds(value);
         return this;
     }
 
@@ -1765,6 +1796,11 @@ public class Database implements Serializable
             sb.append("<tableValuedFunctions>");
             sb.append(tableValuedFunctions);
             sb.append("</tableValuedFunctions>");
+        }
+        if (logSlowQueriesAfterSeconds!= null) {
+            sb.append("<logSlowQueriesAfterSeconds>");
+            sb.append(logSlowQueriesAfterSeconds);
+            sb.append("</logSlowQueriesAfterSeconds>");
         }
         if (properties!= null) {
             sb.append("<properties>");
@@ -2144,6 +2180,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (logSlowQueriesAfterSeconds == null) {
+            if (other.logSlowQueriesAfterSeconds!= null) {
+                return false;
+            }
+        } else {
+            if (!logSlowQueriesAfterSeconds.equals(other.logSlowQueriesAfterSeconds)) {
+                return false;
+            }
+        }
         if (properties == null) {
             if (other.properties!= null) {
                 return false;
@@ -2242,6 +2287,7 @@ public class Database implements Serializable
         result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
+        result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));

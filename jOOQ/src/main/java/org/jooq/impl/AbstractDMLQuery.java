@@ -125,6 +125,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     final Table<R>                               table;
     final SelectFieldList<SelectFieldOrAsterisk> returning;
     final List<Field<?>>                         returningResolvedAsterisks;
+    Result<Record>                               returnedResult;
     Result<R>                                    returned;
 
     AbstractDMLQuery(Configuration configuration, WithImpl with, Table<R> table) {
@@ -169,18 +170,32 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
     // @Override
     public final R getReturnedRecord() {
-        if (getReturnedRecords().size() == 0)
+        if (getReturnedRecords().isEmpty())
             return null;
 
         return getReturnedRecords().get(0);
     }
 
     // @Override
+    @SuppressWarnings("unchecked")
     public final Result<R> getReturnedRecords() {
         if (returned == null)
-            returned = new ResultImpl<R>(configuration(), returningResolvedAsterisks);
+
+            // [#3682] Plain SQL tables do not have any fields
+            if (table.fields().length > 0)
+                returned = getResult().into(table);
+            else
+                returned = (Result<R>) getResult();
 
         return returned;
+    }
+
+    // @Override
+    public final Result<?> getResult() {
+        if (returnedResult == null)
+            returnedResult = new ResultImpl<Record>(configuration(), returningResolvedAsterisks);
+
+        return returnedResult;
     }
 
     @Override
@@ -594,11 +609,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     listener.executeEnd(ctx);
 
                     DSLContext create = DSL.using(ctx.configuration());
-                    returned =
+                    returnedResult =
                     create.select(returning)
                           .from(table)
                           .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
-                          .fetchInto(table);
+                          .fetch();
 
                     return result;
                 }
@@ -757,7 +772,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
-
                 case HSQLDB:
                 default: {
                     listener.executeStart(ctx);
@@ -774,17 +788,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
-
-            // [#3682] Plain SQL tables do not have any fields
-            if (table.fields().length > 0)
-                returned = returned.into(table);
+            returnedResult = new CursorImpl<Record>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
 
             // [#5366] HSQLDB currently doesn't support fetching updated records in UPDATE statements.
             // [#5408] Other dialects may fall through the switch above (PostgreSQL, Firebird, Oracle) and must
             //         execute this logic
-            if (returned.size() > 0 || ctx.family() != HSQLDB) {
-                result = returned.size();
+            if (!returnedResult.isEmpty() || ctx.family() != HSQLDB) {
+                result = returnedResult.size();
                 ctx.rows(result);
             }
 
@@ -796,7 +806,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      * Get the returning record in those dialects that do not support fetching
      * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void selectReturning(Configuration configuration, Object... values) {
         if (values != null && values.length > 0) {
 
@@ -805,15 +815,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             if (table.getIdentity() != null) {
                 final Field<Object> field = (Field<Object>) table.getIdentity().getField();
                 Object[] ids = new Object[values.length];
-                for (int i = 0; i < values.length; i++) {
+                for (int i = 0; i < values.length; i++)
                     ids[i] = field.getDataType().convert(values[i]);
-                }
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
                 if (returningResolvedAsterisks.size() == 1 && new Fields<Record>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
-                        getReturnedRecords().add(
+                        ((Result) getResult()).add(
                         Tools.newRecord(true, table, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
@@ -832,11 +841,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                 // Other values are requested, too. Run another query
                 else {
-                    returned =
+                    returnedResult =
                     configuration.dsl().select(returning)
                                        .from(table)
                                        .where(field.in(ids))
-                                       .fetchInto(table);
+                                       .fetch();
                 }
             }
         }

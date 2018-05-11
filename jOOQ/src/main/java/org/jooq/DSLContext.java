@@ -10010,6 +10010,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     Record newRecord(Field<?>... fields);
 
+    /**
+     * Create a new empty {@link Record}.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param fields The fields defining the <code>Record</code> type
+     * @return The new record
+     */
+    Record newRecord(Collection<? extends Field<?>> fields);
+
     // [jooq-tools] START [newRecord]
 
     /**

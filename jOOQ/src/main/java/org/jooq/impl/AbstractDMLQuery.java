@@ -179,15 +179,27 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     // @Override
     @SuppressWarnings("unchecked")
     public final Result<R> getReturnedRecords() {
-        if (returned == null)
+        if (returned == null) {
 
             // [#3682] Plain SQL tables do not have any fields
-            if (table.fields().length > 0)
+            if (table.fields().length > 0) {
+
+                // [#7479] [#7475] Warn users about potential API misuse
+                warnOnAPIMisuse();
                 returned = getResult().into(table);
-            else
+            }
+            else {
                 returned = (Result<R>) getResult();
+            }
+        }
 
         return returned;
+    }
+
+    private final void warnOnAPIMisuse() {
+        for (Field<?> field : getResult().fields())
+            if (table.field(field) == null)
+                log.warn("API misuse", "Column " + field + " has been requested through the returning() clause, which is not present in table " + table + ". Use StoreQuery.getResult() or the returningResult() clause instead.");
     }
 
     // @Override

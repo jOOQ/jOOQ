@@ -3380,6 +3380,16 @@ extends
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
+     * @see DSL#concat(String...)
+     */
+    @Support
+    Field<String> concat(char... values);
+
+    /**
+     * This method is part of the pre-2.0 API. This API is maintained for
+     * backwards-compatibility. It may be removed in the future. Consider using
+     * equivalent methods from {@link DSLContext}
+     *
      * @see DSL#substring(Field, int)
      */
     @Support

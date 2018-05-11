@@ -1930,6 +1930,11 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
+    public final Field<String> concat(char... values) {
+        return concat(new String(values));
+    }
+
+    @Override
     @Deprecated
     public final Field<String> substring(int startingPosition) {
         return DSL.substring(varchar(), startingPosition);

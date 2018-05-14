@@ -2116,6 +2116,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <R extends Record> SelectWhereStep<R> selectFrom(Name table) {
+        return new SelectImpl(configuration(), null).from(table);
+    }
+
+    @Override
+    public <R extends Record> SelectWhereStep<R> selectFrom(SQL sql) {
+        return new SelectImpl(configuration(), null).from(sql);
+    }
+
+    @Override
+    public <R extends Record> SelectWhereStep<R> selectFrom(String sql) {
+        return new SelectImpl(configuration(), null).from(sql);
+    }
+
+    @Override
+    public <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings) {
+        return new SelectImpl(configuration(), null).from(sql, bindings);
+    }
+
+    @Override
+    public <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts) {
+        return new SelectImpl(configuration(), null).from(sql, parts);
+    }
+
+    @Override
     public SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields) {
         return new SelectImpl(configuration(), null).select(fields);
     }

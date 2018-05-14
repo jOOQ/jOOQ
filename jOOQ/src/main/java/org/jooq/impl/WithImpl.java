@@ -64,6 +64,7 @@ import org.jooq.Field;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -87,6 +88,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
@@ -512,6 +514,31 @@ implements
     @Override
     public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         return new SelectImpl(configuration, this).from(table);
+    }
+
+    @Override
+    public final <R extends Record> SelectWhereStep<R> selectFrom(Name table) {
+        return new SelectImpl(configuration, this).from(table);
+    }
+
+    @Override
+    public final <R extends Record> SelectWhereStep<R> selectFrom(SQL sql) {
+        return new SelectImpl(configuration, this).from(sql);
+    }
+
+    @Override
+    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql) {
+        return new SelectImpl(configuration, this).from(sql);
+    }
+
+    @Override
+    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings) {
+        return new SelectImpl(configuration, this).from(sql, bindings);
+    }
+
+    @Override
+    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts) {
+        return new SelectImpl(configuration, this).from(sql, parts);
     }
 
     @Override

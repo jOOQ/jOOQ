@@ -2648,6 +2648,148 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     *
+     * @see DSL#table(Name)
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(Name table) {
+        return dsl().selectFrom(table);
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see SQL
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(SQL sql) {
+        return dsl().selectFrom(sql);
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see DSL#sql(String)
+     * @see SQL
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql) {
+        return dsl().selectFrom(sql);
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings) {
+        return dsl().selectFrom(sql, bindings);
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts) {
+        return dsl().selectFrom(sql, parts);
+    }
+
+    /**
      * Create a new DSL subselect statement.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this

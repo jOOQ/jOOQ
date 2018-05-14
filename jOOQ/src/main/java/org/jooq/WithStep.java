@@ -487,6 +487,93 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL select statement.
      * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    <R extends Record> SelectWhereStep<R> selectFrom(Name table);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see DSL#sql(String)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    <R extends Record> SelectWhereStep<R> selectFrom(String sql);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to

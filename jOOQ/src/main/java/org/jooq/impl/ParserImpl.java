@@ -1559,13 +1559,26 @@ final class ParserImpl implements Parser {
         boolean insert = false;
         Field<?>[] insertColumns = null;
         List<Field<?>> insertValues = null;
+        Condition insertWhere = null;
         Map<Field<?>, Object> updateSet = null;
+        Condition updateWhere = null;
 
         for (;;) {
-            if (!update && (update = parseKeywordIf(ctx, "WHEN MATCHED THEN UPDATE SET"))) {
+            if (!update && (update = parseKeywordIf(ctx, "WHEN MATCHED"))) {
+                if (parseKeywordIf(ctx, "AND"))
+                    updateWhere = parseCondition(ctx);
+
+                parseKeyword(ctx, "THEN UPDATE SET");
                 updateSet = parseSetClauseList(ctx);
+
+                if (updateWhere == null && parseKeywordIf(ctx, "WHERE"))
+                    updateWhere = parseCondition(ctx);
             }
-            else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED THEN INSERT"))) {
+            else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED"))) {
+                if (parseKeywordIf(ctx, "AND"))
+                    insertWhere = parseCondition(ctx);
+
+                parseKeyword(ctx, "THEN INSERT");
                 parse(ctx, '(');
                 insertColumns = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
                 parse(ctx, ')');
@@ -1576,6 +1589,9 @@ final class ParserImpl implements Parser {
 
                 if (insertColumns.length != insertValues.size())
                     throw ctx.exception("Insert column size (" + insertColumns.length + ") must match values size (" + insertValues.size() + ")");
+
+                if (insertWhere == null && parseKeywordIf(ctx, "WHERE"))
+                    insertWhere = parseCondition(ctx);
             }
             else
                 break;
@@ -1584,14 +1600,21 @@ final class ParserImpl implements Parser {
         if (!update && !insert)
             throw ctx.exception("At least one of UPDATE or INSERT clauses is required");
 
-        // TODO support WHERE
         // TODO support multi clause MERGE
         // TODO support DELETE
 
         MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
         MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
-        MergeNotMatchedStep<?> s3 = update ? s2.whenMatchedThenUpdate().set(updateSet) : s2;
-        MergeFinalStep<?> s4 = insert ? s3.whenNotMatchedThenInsert(insertColumns).values(insertValues) : s3;
+        MergeNotMatchedStep<?> s3 = update
+            ? updateWhere != null
+                ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
+                : s2.whenMatchedThenUpdate().set(updateSet)
+            : s2;
+        MergeFinalStep<?> s4 = insert
+            ? insertWhere != null
+                ? s3.whenNotMatchedThenInsert(insertColumns).values(insertValues).where(insertWhere)
+                : s3.whenNotMatchedThenInsert(insertColumns).values(insertValues)
+            : s3;
 
         return s4;
     }

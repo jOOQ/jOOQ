@@ -248,8 +248,8 @@ mergeStatement = [ with ] 'MERGE' [ 'INTO' ] tableName [ [ 'AS' ] identifier ]
   'USING' '(' select ')' [ [ 'AS' ] identifier ]
   'ON' condition break
   {
-    'WHEN MATCHED THEN UPDATE' 'SET' setClauses
-  | 'WHEN NOT MATCHED THEN INSERT' '(' identifiers ')' 'VALUES' '(' fields ')'
+    'WHEN' 'MATCHED' [ 'AND' condition ] 'THEN' 'UPDATE' 'SET' setClauses [ 'WHERE' condition ]
+  | 'WHEN' 'NOT' 'MATCHED' [ 'AND' condition ] 'THEN' 'INSERT' '(' identifiers ')' 'VALUES' '(' fields ')' [ 'WHERE' condition ]
   }
 ;
 

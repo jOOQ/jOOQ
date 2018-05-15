@@ -3992,7 +3992,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (generateImplicitJoinPathsToOne()) {
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
                         final String keyFullId = out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
-                        final String referencedTableClassName = out.ref(getStrategy().getJavaClassName(foreignKey.getReferencedTable()));
+                        final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
                         if (scala) {

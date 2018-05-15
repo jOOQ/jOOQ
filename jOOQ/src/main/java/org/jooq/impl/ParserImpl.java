@@ -344,6 +344,7 @@ import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
+import org.jooq.Parameter;
 import org.jooq.Parser;
 import org.jooq.Privilege;
 import org.jooq.QualifiedAsterisk;
@@ -563,6 +564,66 @@ final class ParserImpl implements Parser {
         ctx.done("Unexpected content after end of name input");
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final void parseDelimiterSpecifications(ParserContext ctx) {
         while (parseKeywordIf(ctx, "DELIMITER"))
@@ -2792,7 +2853,7 @@ final class ParserImpl implements Parser {
         throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME");
     }
 
-    private static DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
+    private static final DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
         List<FieldOrConstraint> list = new ArrayList<FieldOrConstraint>();
 
         if (((parseKeywordIf(ctx, "SPATIAL INDEX")

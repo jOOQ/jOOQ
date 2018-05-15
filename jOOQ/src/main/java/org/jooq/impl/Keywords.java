@@ -175,6 +175,7 @@ final class Keywords {
     static final Keyword K_LIMIT                            = keyword("limit");
     static final Keyword K_LOCK_IN_SHARE_MODE               = keyword("lock in share mode");
     static final Keyword K_LOOP                             = keyword("loop");
+    static final Keyword K_MATCHED                          = keyword("matched");
     static final Keyword K_MERGE_INTO                       = keyword("merge into");
     static final Keyword K_MINUS                            = keyword("minus");
     static final Keyword K_MODIFY                           = keyword("modify");
@@ -289,8 +290,6 @@ final class Keywords {
     static final Keyword K_VERSIONS_BETWEEN                 = keyword("versions between");
     static final Keyword K_VIEW                             = keyword("view");
     static final Keyword K_WHEN                             = keyword("when");
-    static final Keyword K_WHEN_MATCHED_THEN_UPDATE_SET     = keyword("when matched then update set");
-    static final Keyword K_WHEN_NOT_MATCHED_THEN_INSERT     = keyword("when not matched then insert");
     static final Keyword K_WHERE                            = keyword("where");
     static final Keyword K_WINDOW                           = keyword("window");
     static final Keyword K_WITH                             = keyword("with");

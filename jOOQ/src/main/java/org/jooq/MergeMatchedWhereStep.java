@@ -39,6 +39,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 
 /**
  * This type is used for the {@link Merge}'s DSL API.
@@ -83,13 +84,17 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * Add an additional <code>WHERE</code> clause to the preceding
      * <code>WHEN MATCHED THEN UPDATE</code> clause.
      * <p>
-     * <b>Note:</b> This syntax is only available for the
-     * {@link SQLDialect#CUBRID} and {@link SQLDialect#ORACLE} databases!
+     * <h3>In Oracle, this will produce:</h3>
      * <p>
-     * See <a href=
-     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
-     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
-     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
+     * <code><pre>
+     * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
+     * </pre></code>
+     * <p>
+     * <h3>In SQL Server, this will produce:</h3>
+     * <p>
+     * <code><pre>
+     * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
+     * </pre><code>
      */
     @Support({ CUBRID })
     MergeMatchedDeleteStep<R> where(Condition condition);
@@ -98,13 +103,17 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * Add an additional <code>WHERE</code> clause to the preceding
      * <code>WHEN MATCHED THEN UPDATE</code> clause.
      * <p>
-     * <b>Note:</b> This syntax is only available for the
-     * {@link SQLDialect#CUBRID} and {@link SQLDialect#ORACLE} databases!
+     * <h3>In Oracle, this will produce:</h3>
      * <p>
-     * See <a href=
-     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
-     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
-     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
+     * <code><pre>
+     * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
+     * </pre></code>
+     * <p>
+     * <h3>In SQL Server, this will produce:</h3>
+     * <p>
+     * <code><pre>
+     * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
+     * </pre><code>
      */
     @Support({ CUBRID })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
@@ -113,13 +122,17 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * Add an additional <code>WHERE</code> clause to the preceding
      * <code>WHEN MATCHED THEN UPDATE</code> clause.
      * <p>
-     * <b>Note:</b> This syntax is only available for the
-     * {@link SQLDialect#CUBRID} and {@link SQLDialect#ORACLE} databases!
+     * <h3>In Oracle, this will produce:</h3>
      * <p>
-     * See <a href=
-     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
-     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
-     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
+     * <code><pre>
+     * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
+     * </pre></code>
+     * <p>
+     * <h3>In SQL Server, this will produce:</h3>
+     * <p>
+     * <code><pre>
+     * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
+     * </pre><code>
      *
      * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} or
      *             {@link #where(Field)} instead. Due to ambiguity between

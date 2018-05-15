@@ -40,6 +40,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+// ...
 
 import java.util.Collection;
 

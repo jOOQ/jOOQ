@@ -49,21 +49,28 @@ import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
 // ...
+// ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DELETE_WHERE;
+import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_KEY;
+import static org.jooq.impl.Keywords.K_MATCHED;
 import static org.jooq.impl.Keywords.K_MERGE_INTO;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_UPSERT;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_VALUES;
-import static org.jooq.impl.Keywords.K_WHEN_MATCHED_THEN_UPDATE_SET;
-import static org.jooq.impl.Keywords.K_WHEN_NOT_MATCHED_THEN_INSERT;
+import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -73,6 +80,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -143,6 +151,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Row;
 import org.jooq.SQL;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -226,31 +235,35 @@ implements
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = -8835479296876774391L;
-    private static final Clause[]       CLAUSES          = { MERGE };
+    private static final long                serialVersionUID = -8835479296876774391L;
+    private static final Clause[]            CLAUSES          = { MERGE };
 
-    private final WithImpl              with;
-    private final Table<R>              table;
-    private final ConditionProviderImpl on;
-    private TableLike<?>                using;
+
+
+
+
+    private final WithImpl                   with;
+    private final Table<R>                   table;
+    private final ConditionProviderImpl      on;
+    private TableLike<?>                     using;
 
     // [#998] Oracle extensions to the MERGE statement
-    private Condition                   matchedWhere;
-    private Condition                   matchedDeleteWhere;
-    private Condition                   notMatchedWhere;
+    private Condition                        matchedWhere;
+    private Condition                        matchedDeleteWhere;
+    private Condition                        notMatchedWhere;
 
     // Flags to keep track of DSL object creation state
-    private boolean                     matchedClause;
-    private FieldMapForUpdate           matchedUpdate;
-    private boolean                     notMatchedClause;
-    private FieldMapsForInsert          notMatchedInsert;
+    private boolean                          matchedClause;
+    private FieldMapForUpdate                matchedUpdate;
+    private boolean                          notMatchedClause;
+    private FieldMapsForInsert               notMatchedInsert;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
-    private boolean                     upsertStyle;
-    private QueryPartList<Field<?>>     upsertFields;
-    private QueryPartList<Field<?>>     upsertKeys;
-    private QueryPartList<Field<?>>     upsertValues;
-    private Select<?>                   upsertSelect;
+    private boolean                          upsertStyle;
+    private QueryPartList<Field<?>>          upsertFields;
+    private QueryPartList<Field<?>>          upsertKeys;
+    private QueryPartList<Field<?>>          upsertValues;
+    private Select<?>                        upsertSelect;
 
     MergeImpl(Configuration configuration, WithImpl with, Table<R> table) {
         this(configuration, with, table, null);
@@ -1503,7 +1516,14 @@ implements
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
             ctx.formatSeparator()
-               .visit(K_WHEN_MATCHED_THEN_UPDATE_SET)
+               .visit(K_WHEN).sql(' ').visit(K_MATCHED);
+
+
+
+
+
+
+            ctx.sql(' ').visit(K_THEN).sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
                .formatSeparator()
                .visit(matchedUpdate)
@@ -1514,21 +1534,22 @@ implements
            .start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
-        if (matchedWhere != null) {
+        if (matchedWhere != null)
+
+
+
             ctx.formatSeparator()
                .visit(K_WHERE).sql(' ')
                .visit(matchedWhere);
-        }
 
         ctx.end(MERGE_WHERE)
            .start(MERGE_DELETE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
-        if (matchedDeleteWhere != null) {
+        if (matchedDeleteWhere != null)
             ctx.formatSeparator()
                .visit(K_DELETE_WHERE).sql(' ')
                .visit(matchedDeleteWhere);
-        }
 
         ctx.end(MERGE_DELETE_WHERE)
            .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
@@ -1537,7 +1558,11 @@ implements
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             ctx.formatSeparator()
-               .visit(K_WHEN_NOT_MATCHED_THEN_INSERT);
+               .visit(K_WHEN).sql(' ')
+               .visit(K_NOT).sql(' ')
+               .visit(K_MATCHED).sql(' ')
+               .visit(K_THEN).sql(' ')
+               .visit(K_INSERT);
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)

@@ -658,6 +658,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             toSQLAssign(context);
 
         toSQLCall(context);
+        context.sql(' ');
+
+//
+
+
         context.sql('(');
 
         String separator = "";
@@ -712,6 +717,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         if (indent)
             context.formatIndentEnd().formatNewLine();
+
+//
+
 
         context.sql(')');
         toSQLEnd(context);
@@ -1061,7 +1069,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         toSQLQualifiedName(context);
     }
 
-    private final void toSQLOutParam(RenderContext context, Parameter<?> parameter, int index) {
+    private final void toSQLOutParam(RenderContext ctx, Parameter<?> parameter, int index) {
 
 
 
@@ -1077,10 +1085,14 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-        context.sql('?');
+
+
+
+
+        ctx.sql('?');
     }
 
-    private final void toSQLInParam(RenderContext context, Parameter<?> parameter, int index, Field<?> value) {
+    private final void toSQLInParam(RenderContext ctx, Parameter<?> parameter, int index, Field<?> value) {
 
 
 
@@ -1096,7 +1108,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-        context.visit(value);
+
+
+
+
+        ctx.visit(value);
     }
 
     private final void toSQLQualifiedName(RenderContext context) {

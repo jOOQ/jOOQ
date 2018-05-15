@@ -50,6 +50,7 @@ import static org.jooq.tools.StringUtils.rightPad;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.Date;
@@ -101,10 +102,15 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractCursor<R extends Record> implements Formattable, Iterable<R> {
+abstract class AbstractCursor<R extends Record> implements Formattable, Iterable<R>, Serializable {
 
-    final Fields<R> fields;
-    Configuration   configuration;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -3412555195899758746L;
+
+    final Fields<R>           fields;
+    Configuration             configuration;
 
     AbstractCursor(Configuration configuration, Fields<R> fields) {
         this.configuration = configuration;

@@ -4312,6 +4312,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDateTruncIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDateAddIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
@@ -5242,6 +5244,22 @@ final class ParserImpl implements Parser {
         return null;
     }
 
+    private static final Field<?> parseFieldDateAddIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DATEADD")) {
+            parse(ctx, '(');
+            DatePart part = parseDatePart2(ctx);
+            parse(ctx, ',');
+            Field<Number> interval = (Field<Number>) parseField(ctx, Type.N);
+            parse(ctx, ',');
+            Field<Date> date = (Field<Date>) parseField(ctx, Type.D);
+            parse(ctx, ')');
+
+            return DSL.dateAdd(date, interval, part);
+        }
+
+        return null;
+    }
+
     private static final Date parseDateLiteral(ParserContext ctx) {
         try {
             return Date.valueOf(parseStringLiteral(ctx));
@@ -5271,6 +5289,105 @@ final class ParserImpl implements Parser {
                 return part;
 
         throw ctx.exception("Unsupported date part");
+    }
+
+    private static final DatePart parseDatePart2(ParserContext ctx) {
+        char character = ctx.character();
+
+        switch (character) {
+            case 'd':
+            case 'D':
+                if (parseKeywordIf(ctx, "DAYOFYEAR") ||
+                    parseKeywordIf(ctx, "DY"))
+                    return DatePart.DAY_OF_YEAR;
+                else if (parseKeywordIf(ctx, "DAY") ||
+                    parseKeywordIf(ctx, "DD") ||
+                    parseKeywordIf(ctx, "D"))
+                    return DatePart.DAY;
+                else if (parseKeywordIf(ctx, "DW"))
+                    return DatePart.DAY_OF_WEEK;
+
+                break;
+
+            case 'h':
+            case 'H':
+                if (parseKeywordIf(ctx, "HOUR") ||
+                    parseKeywordIf(ctx, "HH"))
+                    return DatePart.HOUR;
+
+                break;
+
+            case 'm':
+            case 'M':
+                if (parseKeywordIf(ctx, "MINUTE") ||
+                    parseKeywordIf(ctx, "MI"))
+                    return DatePart.MINUTE;
+                else if (parseKeywordIf(ctx, "MICROSECOND") ||
+                    parseKeywordIf(ctx, "MCS"))
+                    return DatePart.MICROSECOND;
+                else if (parseKeywordIf(ctx, "MILLISECOND") ||
+                    parseKeywordIf(ctx, "MS"))
+                    return DatePart.MILLISECOND;
+                else if (parseKeywordIf(ctx, "MONTH") ||
+                    parseKeywordIf(ctx, "MM") ||
+                    parseKeywordIf(ctx, "M"))
+                    return DatePart.MONTH;
+
+                break;
+
+            case 'n':
+            case 'N':
+                if (parseKeywordIf(ctx, "NANOSECOND") ||
+                    parseKeywordIf(ctx, "NS"))
+                    return DatePart.NANOSECOND;
+                else if (parseKeywordIf(ctx, "N"))
+                    return DatePart.MINUTE;
+
+                break;
+
+            case 'q':
+            case 'Q':
+                if (parseKeywordIf(ctx, "QUARTER") ||
+                    parseKeywordIf(ctx, "QQ") ||
+                    parseKeywordIf(ctx, "Q"))
+                    return DatePart.QUARTER;
+
+                break;
+
+            case 's':
+            case 'S':
+                if (parseKeywordIf(ctx, "SECOND") ||
+                    parseKeywordIf(ctx, "SS") ||
+                    parseKeywordIf(ctx, "S"))
+                    return DatePart.SECOND;
+
+                break;
+
+            case 'w':
+            case 'W':
+                if (parseKeywordIf(ctx, "WEEK") ||
+                    parseKeywordIf(ctx, "WK") ||
+                    parseKeywordIf(ctx, "WW"))
+                    return DatePart.WEEK;
+                else if (parseKeywordIf(ctx, "WEEKDAY") ||
+                    parseKeywordIf(ctx, "W"))
+                    return DatePart.DAY_OF_WEEK;
+
+                break;
+
+            case 'y':
+            case 'Y':
+                if (parseKeywordIf(ctx, "YEAR") ||
+                    parseKeywordIf(ctx, "YYYY") ||
+                    parseKeywordIf(ctx, "YY"))
+                    return DatePart.YEAR;
+                else if (parseKeywordIf(ctx, "Y"))
+                    return DatePart.DAY_OF_YEAR;
+
+                break;
+        }
+
+        throw ctx.expected("DatePart");
     }
 
     private static final Field<?> parseFieldAsciiIf(ParserContext ctx) {
@@ -5933,7 +6050,7 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
             parseKeyword(ctx, "AS");
-            DataType<?> type = parseDataType(ctx);
+            DataType<?> type = parseCastDataType(ctx);
             parse(ctx, ')');
 
             return cast(field, type);
@@ -6786,6 +6903,28 @@ final class ParserImpl implements Parser {
              : parseIf(ctx, '[', false) ? ']'
              : allowAposQuotes && parseIf(ctx, '\'', false) ? '\''
              : 0;
+    }
+
+    private static final DataType<?> parseCastDataType(ParserContext ctx) {
+        char character = ctx.character();
+
+        switch (character) {
+            case 's':
+            case 'S':
+                if (parseKeywordIf(ctx, "SIGNED") && (parseKeywordIf(ctx, "INTEGER") || true))
+                    return SQLDataType.BIGINT;
+
+                break;
+
+            case 'u':
+            case 'U':
+                if (parseKeywordIf(ctx, "UNSIGNED") && (parseKeywordIf(ctx, "INTEGER") || true))
+                    return SQLDataType.BIGINTUNSIGNED;
+
+                break;
+        }
+
+        return parseDataType(ctx);
     }
 
     private static final DataType<?> parseDataType(ParserContext ctx) {

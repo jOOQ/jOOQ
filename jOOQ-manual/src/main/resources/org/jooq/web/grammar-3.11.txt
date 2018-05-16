@@ -599,7 +599,7 @@ term =
 | 'BITXOR' '(' field ',' field ')'
 | 'BIT_XOR' '(' field ',' field ')'
 | case
-| 'CAST' '(' field 'AS' dataType ')'
+| 'CAST' '(' field 'AS' castDataType ')'
 | ( 'CEIL' | 'CEILING' ) '(' sum ')'
 | 'CHARINDEX' '(' field ',' field ')'
 | 'CHAR_LENGTH' '(' field ')'
@@ -787,6 +787,12 @@ case = 'CASE'
 ;
 
 comparator = '=' | '!=' | '<>' | '>=' | '>' | '<=>' | '<=' | '<'
+;
+
+castDataType =
+  dataType
+| 'SIGNED' [ 'INTEGER' ]
+| 'UNSIGNED' [ 'INTEGER' ]
 ;
 
 dataType =

@@ -39,6 +39,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 import java.time.temporal.ChronoField;
 
@@ -95,6 +96,35 @@ public enum DatePart {
     // ------------------------------------------------------------------------
     // XXX: Vendor-specific date parts
     // ------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in

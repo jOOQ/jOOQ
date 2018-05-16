@@ -1430,7 +1430,7 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "INS"))
             parseKeyword(ctx, "INSERT");
 
-        parseKeyword(ctx, "INTO");
+        parseKeywordIf(ctx, "INTO");
         Table<?> tableName = parseTableName(ctx);
         InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(tableName) : with.insertInto(tableName));
         Field<?>[] fields = null;

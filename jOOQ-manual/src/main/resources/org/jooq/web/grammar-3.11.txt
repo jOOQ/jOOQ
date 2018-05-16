@@ -198,7 +198,7 @@ selectStatement = select
 
 insertStatement =
   [ with ]
-  ( 'INSERT' | 'INS' ) 'INTO' tableName
+  ( 'INSERT' | 'INS' ) [ 'INTO' ] tableName
   [ '(' identifiers ')' ]
   (
     values

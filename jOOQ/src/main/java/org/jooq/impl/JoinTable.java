@@ -142,6 +142,7 @@ implements
     private static final EnumSet<SQLDialect> EMULATE_NATURAL_JOIN       = EnumSet.of(CUBRID);
     private static final EnumSet<SQLDialect> EMULATE_NATURAL_OUTER_JOIN = EnumSet.of(CUBRID, H2);
     private static final EnumSet<SQLDialect> EMULATE_JOIN_USING         = EnumSet.of(CUBRID, H2);
+    private static final EnumSet<SQLDialect> EMULATE_APPLY              = EnumSet.of(POSTGRES);
 
     final Table<?>                           lhs;
     final Table<?>                           rhs;
@@ -199,9 +200,9 @@ implements
 
         Keyword keyword = translatedType.toKeyword();
 
-        if (translatedType == CROSS_APPLY && ctx.family() == POSTGRES)
+        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.family()))
             keyword = K_CROSS_JOIN_LATERAL;
-        else if (translatedType == OUTER_APPLY && ctx.family() == POSTGRES)
+        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.family()))
             keyword = K_LEFT_OUTER_JOIN_LATERAL;
 
 
@@ -278,16 +279,14 @@ implements
                     NATURAL_LEFT_OUTER_JOIN,
                     NATURAL_RIGHT_OUTER_JOIN,
                     CROSS_APPLY,
-                    OUTER_APPLY).contains(translatedType)) {
+                    OUTER_APPLY).contains(translatedType))
             toSQLJoinCondition(ctx);
-        }
-        else if (OUTER_APPLY == translatedType && ctx.family() == POSTGRES) {
+        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.family()))
             ctx.formatSeparator()
                .start(TABLE_JOIN_ON)
                .visit(K_ON)
-               .sql(" true")
+               .sql(" 1 = 1")
                .end(TABLE_JOIN_ON);
-        }
 
         ctx.end(translatedClause)
            .formatIndentEnd();

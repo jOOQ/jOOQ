@@ -281,10 +281,12 @@ index = ( 'KEY' | 'INDEX' ) [ identifier ] '(' sortFields ')'
 ;
 
 constraint =
+(
   'PRIMARY KEY' '(' fieldNames ')'
 | 'UNIQUE' [ 'KEY' | 'INDEX' ] '(' fieldNames ')'
 | 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCES' constraintReferenceSpecification
 | 'CHECK' '(' condition ')'
+) [ 'ENABLE' ]
 ;
 
 constraintReferenceSpecification = tableName '(' fieldNames ')'

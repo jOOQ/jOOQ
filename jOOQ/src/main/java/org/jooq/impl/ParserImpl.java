@@ -2635,6 +2635,11 @@ final class ParserImpl implements Parser {
         return Internal.createIndex(name == null ? DSL.name("") : name, table, fields, false);
     }
 
+    private static boolean parseConstraintStateIf(ParserContext ctx) {
+        parseKeywordIf(ctx, "ENABLE");
+        return true;
+    }
+
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parse(ctx, '(');
         Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
@@ -2643,6 +2648,8 @@ final class ParserImpl implements Parser {
         Constraint e = constraint == null
             ? primaryKey(fieldNames)
             : constraint.primaryKey(fieldNames);
+
+        parseConstraintStateIf(ctx);
         return e;
     }
 
@@ -2651,9 +2658,12 @@ final class ParserImpl implements Parser {
         Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
 
-        return constraint == null
+        Constraint e = constraint == null
             ? unique(fieldNames)
             : constraint.unique(fieldNames);
+
+        parseConstraintStateIf(ctx);
+        return e;
     }
 
     private static final Constraint parseCheckSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
@@ -2661,9 +2671,12 @@ final class ParserImpl implements Parser {
         Condition condition = parseCondition(ctx);
         parse(ctx, ')');
 
-        return constraint == null
+        Constraint e = constraint == null
             ? check(condition)
             : constraint.check(condition);
+
+        parseConstraintStateIf(ctx);
+        return e;
     }
 
     private static final Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
@@ -2730,6 +2743,7 @@ final class ParserImpl implements Parser {
                 throw ctx.expected("DELETE", "UPDATE");
         }
 
+        parseConstraintStateIf(ctx);
         return e;
     }
 

@@ -4203,15 +4203,14 @@ public class JavaGenerator extends AbstractGenerator {
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
 
                         out.tab(3).print(separator);
 
-                        if (parametersAsField) {
+                        if (parametersAsField)
                             out.println("%s", paramArgName);
-                        }
-                        else {
-                            out.println("%s.value(%s, %s)", DSL.class, paramArgName, paramTypeRef);
-                        }
+                        else
+                            out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + ")", DSL.class, paramArgName, paramTypeRef, converter);
 
                         separator = ", ";
                     }
@@ -4229,15 +4228,14 @@ public class JavaGenerator extends AbstractGenerator {
                     for (ParameterDefinition parameter : table.getParameters()) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
 
                         out.tab(3).print(separator);
 
-                        if (parametersAsField) {
+                        if (parametersAsField)
                             out.println("%s", paramArgName);
-                        }
-                        else {
-                            out.println("%s.val(%s, %s)", DSL.class, paramArgName, paramTypeRef);
-                        }
+                        else
+                            out.println("%s.val(%s, %s" + converterTemplateForTableValuedFunction(converter) + ")", DSL.class, paramArgName, paramTypeRef, converter);
 
                         separator = ", ";
                     }
@@ -4263,6 +4261,21 @@ public class JavaGenerator extends AbstractGenerator {
                 return "[[before=, ][new %s()]]";
             case EXPRESSION:
                 return "[[before=, ][%s]]";
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private String converterTemplateForTableValuedFunction(List<String> converter) {
+        if (converter == null || converter.isEmpty())
+            return "[[]]";
+        if (converter.size() > 1)
+            throw new IllegalArgumentException();
+        switch (GenerationUtil.expressionType(converter.get(0))) {
+            case CONSTRUCTOR_REFERENCE:
+                return "[[before=.asConvertedDataType(][after=)][new %s()]]";
+            case EXPRESSION:
+                return "[[before=.asConvertedDataType(][after=)][%s]]";
             default:
                 throw new IllegalArgumentException();
         }

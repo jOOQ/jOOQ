@@ -1,6 +1,6 @@
 ### Expected behavior and actual behavior:
 
-### Steps to reproduce the problem:
+### Steps to reproduce the problem (include example code if possible):
 
 ### Versions:
 

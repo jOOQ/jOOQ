@@ -620,6 +620,7 @@ term =
 | 'CURRENT_TIMESTAMP'
 | 'CURRENT_USER'
 | dateLiteral
+| 'DATEADD' '(' datePart ',' field ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'

@@ -14681,7 +14681,7 @@ public class Book implements java.io.Serializable
   <!-- Associate data type rewrites with database columns -->
   <forcedTypes>
     <forcedType>
-      <!-- Specify any data type from org.jooq.impl.SQLDataType -->
+      <!-- Specify any data type that is supported in your database, or if unsupported, a type from org.jooq.impl.SQLDataType -->
       <name>BOOLEAN</name>
 
       <!-- Add a Java regular expression matching fully-qualified columns. Use the pipe to separate several expressions.

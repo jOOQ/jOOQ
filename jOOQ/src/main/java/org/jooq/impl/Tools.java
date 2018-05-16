@@ -187,7 +187,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 // ...
-import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
@@ -206,7 +205,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
-import org.jooq.QualifiedAsterisk;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -222,7 +220,6 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
-import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -4402,32 +4399,6 @@ final class Tools {
                 return true;
 
         return false;
-    }
-
-    static final SelectFieldOrAsterisk[] qualify(Table<?> table, SelectFieldOrAsterisk... fields) {
-        if (fields == null)
-            return null;
-
-        SelectFieldOrAsterisk[] result = new SelectFieldOrAsterisk[fields.length];
-        Name[] part = table.getQualifiedName().parts();
-
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i] instanceof SelectField) {
-                SelectField<?> field = (SelectField<?>) fields[i];
-                Name[] name = new Name[part.length + 1];
-                System.arraycopy(part, 0, name, 0, part.length);
-                name[part.length] = field.getUnqualifiedName();
-                result[i] = DSL.field(DSL.name(name), field.getDataType());
-            }
-            else if (fields[i] instanceof QualifiedAsterisk)
-                result[i] = table.asterisk();
-            else if (fields[i] instanceof Asterisk)
-                result[i] = fields[i];
-            else
-                throw new AssertionError("Type not supported: " + fields[i]);
-        }
-
-        return result;
     }
 
     static final <T> Field<T> qualify(Table<?> table, Field<T> field) {

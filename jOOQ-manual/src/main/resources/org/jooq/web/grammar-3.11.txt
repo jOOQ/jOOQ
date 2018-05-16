@@ -365,8 +365,8 @@ selectField = field [ [ 'AS' ] identifier ]
 
 tableExpression =
   [ 'FROM' tables ]
-  [ connectBy ]
   [ 'WHERE' condition ]
+  [ connectBy ]
   [ groupBy ]
   [ 'HAVING' condition ]
   [ 'WINDOW' windows ]

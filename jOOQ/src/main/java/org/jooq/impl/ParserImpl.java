@@ -1115,6 +1115,9 @@ final class ParserImpl implements Parser {
         if (from != null && from.size() == 1 && from.get(0).getName().equalsIgnoreCase("dual"))
             from = null;
 
+        if (parseKeywordIf(ctx, "WHERE"))
+            where = parseCondition(ctx);
+
         if (parseKeywordIf(ctx, "START WITH")) {
             startWith = parseCondition(ctx);
             parseKeyword(ctx, "CONNECT BY");
@@ -1128,9 +1131,6 @@ final class ParserImpl implements Parser {
             if (parseKeywordIf(ctx, "START WITH"))
                 startWith = parseCondition(ctx);
         }
-
-        if (parseKeywordIf(ctx, "WHERE"))
-            where = parseCondition(ctx);
 
         if (parseKeywordIf(ctx, "GROUP BY")) {
             if (parseIf(ctx, '(')) {

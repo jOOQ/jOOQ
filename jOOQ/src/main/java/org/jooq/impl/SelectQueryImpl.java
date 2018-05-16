@@ -132,7 +132,6 @@ import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
-import static org.jooq.impl.Tools.DataKey.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;

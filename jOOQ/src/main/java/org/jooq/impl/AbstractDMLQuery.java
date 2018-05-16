@@ -66,7 +66,6 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
-import static org.jooq.impl.Tools.DataKey.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -104,6 +103,7 @@ import org.jooq.Table;
 import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 

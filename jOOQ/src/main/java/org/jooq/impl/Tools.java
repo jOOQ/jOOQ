@@ -187,6 +187,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 // ...
+import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
@@ -205,6 +206,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
+import org.jooq.QualifiedAsterisk;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -220,6 +222,8 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectField;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -259,26 +263,27 @@ final class Tools {
     // Empty arrays for use with Collection.toArray()
     // ------------------------------------------------------------------------
 
-    static final byte[]                     EMPTY_BYTE                    = {};
-    static final Class<?>[]                 EMPTY_CLASS                   = {};
-    static final Clause[]                   EMPTY_CLAUSE                  = {};
-    static final Collection<?>[]            EMPTY_COLLECTION              = {};
-    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
-    static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};
-    static final Field<?>[]                 EMPTY_FIELD                   = {};
-    static final int[]                      EMPTY_INT                     = {};
-    static final Name[]                     EMPTY_NAME                    = {};
-    static final Param<?>[]                 EMPTY_PARAM                   = {};
-    static final OrderField<?>[]            EMPTY_ORDERFIELD              = {};
-    static final Query[]                    EMPTY_QUERY                   = {};
-    static final QueryPart[]                EMPTY_QUERYPART               = {};
-    static final Record[]                   EMPTY_RECORD                  = {};
-    static final RowN[]                     EMPTY_ROWN                    = {};
-    static final SortField<?>[]             EMPTY_SORTFIELD               = {};
-    static final String[]                   EMPTY_STRING                  = {};
-    static final Table<?>[]                 EMPTY_TABLE                   = {};
-    static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
-    static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
+    static final byte[]                     EMPTY_BYTE                     = {};
+    static final Class<?>[]                 EMPTY_CLASS                    = {};
+    static final Clause[]                   EMPTY_CLAUSE                   = {};
+    static final Collection<?>[]            EMPTY_COLLECTION               = {};
+    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION  = {};
+    static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER         = {};
+    static final Field<?>[]                 EMPTY_FIELD                    = {};
+    static final int[]                      EMPTY_INT                      = {};
+    static final Name[]                     EMPTY_NAME                     = {};
+    static final Param<?>[]                 EMPTY_PARAM                    = {};
+    static final OrderField<?>[]            EMPTY_ORDERFIELD               = {};
+    static final Query[]                    EMPTY_QUERY                    = {};
+    static final QueryPart[]                EMPTY_QUERYPART                = {};
+    static final Record[]                   EMPTY_RECORD                   = {};
+    static final RowN[]                     EMPTY_ROWN                     = {};
+    static final SelectFieldOrAsterisk[]    EMPTY_SELECT_FIELD_OR_ASTERISK = {};
+    static final SortField<?>[]             EMPTY_SORTFIELD                = {};
+    static final String[]                   EMPTY_STRING                   = {};
+    static final Table<?>[]                 EMPTY_TABLE                    = {};
+    static final TableRecord<?>[]           EMPTY_TABLE_RECORD             = {};
+    static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD         = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -4399,7 +4404,33 @@ final class Tools {
         return false;
     }
 
-    static final <T> Field<T> qualify(Field<T> field, Table<?> table) {
+    static final SelectFieldOrAsterisk[] qualify(Table<?> table, SelectFieldOrAsterisk... fields) {
+        if (fields == null)
+            return null;
+
+        SelectFieldOrAsterisk[] result = new SelectFieldOrAsterisk[fields.length];
+        Name[] part = table.getQualifiedName().parts();
+
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i] instanceof SelectField) {
+                SelectField<?> field = (SelectField<?>) fields[i];
+                Name[] name = new Name[part.length + 1];
+                System.arraycopy(part, 0, name, 0, part.length);
+                name[part.length] = field.getUnqualifiedName();
+                result[i] = DSL.field(DSL.name(name), field.getDataType());
+            }
+            else if (fields[i] instanceof QualifiedAsterisk)
+                result[i] = table.asterisk();
+            else if (fields[i] instanceof Asterisk)
+                result[i] = fields[i];
+            else
+                throw new AssertionError("Type not supported: " + fields[i]);
+        }
+
+        return result;
+    }
+
+    static final <T> Field<T> qualify(Table<?> table, Field<T> field) {
         Field<T> result = table.field(field);
 
         if (result != null)

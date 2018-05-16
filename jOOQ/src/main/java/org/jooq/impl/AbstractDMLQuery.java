@@ -64,6 +64,7 @@ import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_SELECT_FIELD_OR_ASTERISK;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
@@ -166,6 +167,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 returningResolvedAsterisks.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
             else if (f instanceof Asterisk)
                 returningResolvedAsterisks.addAll(Arrays.asList(table.fields()));
+            else
+                throw new AssertionError("Type not supported: " + f);
     }
 
     // @Override
@@ -216,6 +219,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             ctx.visit(with).formatSeparator();
 
         boolean previousDeclareFields = ctx.declareFields();
+
+
 
 
 

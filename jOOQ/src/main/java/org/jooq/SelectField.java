@@ -44,25 +44,11 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectField<T> extends SelectFieldOrAsterisk {
+public interface SelectField<T> extends SelectFieldOrAsterisk, Named {
 
     // ------------------------------------------------------------------------
     // API
     // ------------------------------------------------------------------------
-
-    /**
-     * The name of the field.
-     * <p>
-     * The name is any of these:
-     * <ul>
-     * <li>The formal name of the field, if it is a <i>physical table/view
-     * field</i></li>
-     * <li>The alias of an <i>aliased field</i></li>
-     * <li>A generated / unspecified value for any other <i>expression</i></li>
-     * <li>The name of a parameter if it is a named {@link Param}</li>
-     * </ul>
-     */
-    String getName();
 
     /**
      * The field's underlying {@link Converter}.

@@ -395,9 +395,9 @@ implements
                     }
 
                     context.sql(' ')
-                           .visit(Tools.qualify(field, lhs))
+                           .visit(Tools.qualify(lhs, field))
                            .sql(" = ")
-                           .visit(Tools.qualify(field, rhs));
+                           .visit(Tools.qualify(rhs, field));
                 }
 
                 context.end(TABLE_JOIN_ON);

@@ -1884,6 +1884,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
             else if (f instanceof Asterisk)
                 result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+            else
+                throw new AssertionError("Type not supported: " + f);
 
         return result;
     }

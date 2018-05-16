@@ -630,6 +630,7 @@ term =
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
 | 'FLOOR' '(' sum ')'
+| 'FIELD' '(' field ',' field { ',' field } ')'
 | 'FIRST_VALUE' '(' field ')' over
 | 'GETDATE' '(' ')'
 | 'GREATEST' '(' fields ')'

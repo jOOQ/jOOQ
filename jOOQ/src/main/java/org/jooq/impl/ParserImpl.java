@@ -4352,6 +4352,8 @@ final class ParserImpl implements Parser {
 
                 if ((field = parseFieldFirstValueIf(ctx)) != null)
                     return field;
+                else if ((field = parseFieldFieldIf(ctx)) != null)
+                    return field;
 
                 break;
 
@@ -5322,12 +5324,14 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "MINUTE") ||
                     parseKeywordIf(ctx, "MI"))
                     return DatePart.MINUTE;
-                else if (parseKeywordIf(ctx, "MICROSECOND") ||
-                    parseKeywordIf(ctx, "MCS"))
-                    return DatePart.MICROSECOND;
-                else if (parseKeywordIf(ctx, "MILLISECOND") ||
-                    parseKeywordIf(ctx, "MS"))
-                    return DatePart.MILLISECOND;
+
+
+
+
+
+
+
+
                 else if (parseKeywordIf(ctx, "MONTH") ||
                     parseKeywordIf(ctx, "MM") ||
                     parseKeywordIf(ctx, "M"))
@@ -5337,11 +5341,13 @@ final class ParserImpl implements Parser {
 
             case 'n':
             case 'N':
-                if (parseKeywordIf(ctx, "NANOSECOND") ||
-                    parseKeywordIf(ctx, "NS"))
-                    return DatePart.NANOSECOND;
-                else if (parseKeywordIf(ctx, "N"))
+                if (parseKeywordIf(ctx, "N"))
                     return DatePart.MINUTE;
+
+
+
+
+
 
                 break;
 
@@ -5991,6 +5997,36 @@ final class ParserImpl implements Parser {
 
             Field[] a = EMPTY_FIELD;
             return coalesce(fields.get(0), fields.size() == 1 ? a : fields.subList(1, fields.size()).toArray(a));
+        }
+
+        return null;
+    }
+
+    private static final <T, Z> Field<?> parseFieldFieldIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "FIELD")) {
+            parse(ctx, '(');
+
+            List<Field<?>> args = new ArrayList<Field<?>>();
+
+            args.add(parseField(ctx));
+            parse(ctx, ',');
+
+            int i = 1;
+            do {
+                args.add(parseField(ctx));
+                args.add(inline(i++));
+            }
+            while (parseIf(ctx, ','));
+
+            args.add(inline(0));
+            parse(ctx, ')');
+
+            return DSL.decode(
+                (Field<T>) args.get(0),
+                (Field<T>) args.get(1),
+                (Field<Z>) args.get(2),
+                args.subList(3, args.size()).toArray(EMPTY_FIELD)
+            );
         }
 
         return null;

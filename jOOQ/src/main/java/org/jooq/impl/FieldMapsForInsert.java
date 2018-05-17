@@ -186,7 +186,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         Select<Record> select = null;
 
         for (int row = 0; row < rows; row++) {
-            List<Field<?>> fields = new ArrayList<Field<?>>();
+            List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
 
             for (List<Field<?>> list : values.values())
                 fields.add(list.get(row));

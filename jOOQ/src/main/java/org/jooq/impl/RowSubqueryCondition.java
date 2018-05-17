@@ -153,7 +153,7 @@ final class RowSubqueryCondition extends AbstractCondition {
         else {
             String table = render == null ? "t" : render.nextAlias();
 
-            List<String> names = new ArrayList<String>();
+            List<String> names = new ArrayList<String>(left.size());
             for (int i = 0; i < left.size(); i++)
                 names.add(table + "_" + i);
 

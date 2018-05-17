@@ -1335,7 +1335,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private final List<EnumDefinition> getConfiguredEnums() {
-        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>(configuredCustomTypes.size());
 
         for (EnumType enumType : configuredEnumTypes) {
             String name = enumType.getName();

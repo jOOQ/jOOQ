@@ -646,7 +646,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#6462] MySQL ON DUPLICATGE KEY UPDATE clause
         //         All conflicting keys are considered
-        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>();
+        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>(table.getKeys().size());
         for (UniqueKey<R> key : table.getKeys())
             result.add(key.getFields());
 

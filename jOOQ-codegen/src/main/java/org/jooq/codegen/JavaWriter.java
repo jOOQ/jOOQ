@@ -202,7 +202,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>(clazz == null ? 0 : clazz.size());
 
         if (clazz != null) {
             for (String c : clazz) {

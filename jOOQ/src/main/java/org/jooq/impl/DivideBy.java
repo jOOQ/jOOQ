@@ -95,7 +95,7 @@ implements
      */
     private final Table<Record> table() {
         ConditionProviderImpl selfJoin = new ConditionProviderImpl();
-        List<Field<?>> select = new ArrayList<Field<?>>();
+        List<Field<?>> select = new ArrayList<Field<?>>(returning.size());
         Table<?> outer = dividend.as("dividend");
 
         for (Field<?> field : returning) {

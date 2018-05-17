@@ -181,7 +181,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
 
             for (int index = 0; index < fields.fields.length; index++) {
                 if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
-                    List<Integer> decimalPlacesList = new ArrayList<Integer>();
+                    List<Integer> decimalPlacesList = new ArrayList<Integer>(1 + buffer.size());
 
                     // Initialize
                     decimalPlacesList.add(0);
@@ -205,7 +205,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                 colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : format.maxColWidth();
 
                 // Collect all widths for the column
-                List<Integer> widthList = new ArrayList<Integer>();
+                List<Integer> widthList = new ArrayList<Integer>(1 + buffer.size());
 
                 // Add column name width first
                 widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.fields[index].getName().length())));

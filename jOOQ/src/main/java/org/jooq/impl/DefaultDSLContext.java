@@ -704,10 +704,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public List<Object> extractBindValues(QueryPart part) {
-        List<Object> result = new ArrayList<Object>();
-
         ParamCollector collector = new ParamCollector(configuration(), false);
         collector.visit(part);
+
+        List<Object> result = new ArrayList<Object>(collector.resultList.size());
         for (Entry<String, Param<?>> entry : collector.resultList)
             result.add(entry.getValue().getValue());
 
@@ -1459,7 +1459,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             return new ResultImpl<Record>(configuration());
         }
         else {
-            List<Field<?>> fields = new ArrayList<Field<?>>();
+            List<Field<?>> fields = new ArrayList<Field<?>>(strings.get(0).length);
             int firstRow;
 
             if (header) {

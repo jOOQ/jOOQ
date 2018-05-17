@@ -115,7 +115,7 @@ final class RowCondition extends AbstractCondition {
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
             EMULATE_EQ_AND_NE.contains(dialect.family())) {
-            List<Condition> conditions = new ArrayList<Condition>();
+            List<Condition> conditions = new ArrayList<Condition>(left.fields().length);
 
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
@@ -156,16 +156,16 @@ final class RowCondition extends AbstractCondition {
                 = (comparator == GREATER_OR_EQUAL)
                 ||(comparator == LESS_OR_EQUAL);
 
-            // The following algorithm emulates the equivalency of these expressions:
-            // (A, B, C) > (X, Y, Z)
-            // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
-            List<Condition> outer = new ArrayList<Condition>();
-
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
 
+            // The following algorithm emulates the equivalency of these expressions:
+            // (A, B, C) > (X, Y, Z)
+            // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
+            List<Condition> outer = new ArrayList<Condition>(1 + leftFields.length);
+
             for (int i = 0; i < leftFields.length; i++) {
-                List<Condition> inner = new ArrayList<Condition>();
+                List<Condition> inner = new ArrayList<Condition>(1 + i);
 
                 for (int j = 0; j < i; j++)
                     inner.add(leftFields[j].equal((Field) rightFields[j]));

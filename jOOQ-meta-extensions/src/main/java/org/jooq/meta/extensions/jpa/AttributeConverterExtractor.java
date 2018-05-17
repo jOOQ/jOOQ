@@ -169,7 +169,7 @@ final class AttributeConverterExtractor implements Integrator {
     }
 
     private final List<String> entityClassNames() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>(classes.size());
 
         for (Class<?> klass : classes)
             result.add(klass.getName());

@@ -48,6 +48,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Sven Jacobs
 - Szymon Jachim
 - Terence Zhang
+- Timothy Wilson
 - Timur Shaidullin
 - Thomas Darimont
 - Tsukasa Kitachi

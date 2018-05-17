@@ -185,11 +185,11 @@ implements
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final List<ForeignKey<Record, ?>> getReferences() {
-        List<ForeignKey<?, ?>> result = new ArrayList<ForeignKey<?, ?>>();
-
-        result.addAll(lhs.getReferences());
-        result.addAll(rhs.getReferences());
-
+        List<? extends ForeignKey<?, ?>> lhsReferences = lhs.getReferences();
+        List<? extends ForeignKey<?, ?>> rhsReferences = rhs.getReferences();
+        List<ForeignKey<?, ?>> result = new ArrayList<ForeignKey<?, ?>>(lhsReferences.size() + rhsReferences.size());
+        result.addAll(lhsReferences);
+        result.addAll(rhsReferences);
         return (List) result;
     }
 

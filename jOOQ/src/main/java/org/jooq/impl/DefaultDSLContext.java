@@ -1460,22 +1460,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>(strings.get(0).length);
-            int firstRow;
+            int firstRow = header ? 1 : 0;
 
-            if (header) {
-                firstRow = 1;
-
-                for (String name : strings.get(0)) {
+            if (header)
+                for (String name : strings.get(0))
                     fields.add(field(name(name), String.class));
-                }
-            }
-            else {
-                firstRow = 0;
-
-                for (int i = 0; i < strings.get(0).length; i++) {
+            else
+                for (int i = 0; i < strings.get(0).length; i++)
                     fields.add(field(name("COL" + (i + 1)), String.class));
-                }
-            }
 
             Result<Record> result = new ResultImpl<Record>(configuration(), fields);
 

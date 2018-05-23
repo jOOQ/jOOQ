@@ -66,11 +66,10 @@ import static org.jooq.tools.Convert.TRUE_VALUES;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -947,12 +946,13 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition in(Collection<?> values) {
-        List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
+        Field<?>[] fields = new Field[values.size()];
 
-        for (Object value : values)
-            fields.add(Tools.field(value, this));
+        Iterator<?> it = values.iterator();
+        for (int i = 0; it.hasNext(); i++)
+            fields[i] = Tools.field(it.next(), this);
 
-        return in(fields.toArray(EMPTY_FIELD));
+        return in(fields);
     }
 
     @Override
@@ -987,12 +987,13 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition notIn(Collection<?> values) {
-        List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
+        Field<?>[] fields = new Field[values.size()];
 
-        for (Object value : values)
-            fields.add(Tools.field(value, this));
+        Iterator<?> it = values.iterator();
+        for (int i = 0; it.hasNext(); i++)
+            fields[i] = Tools.field(it.next(), this);
 
-        return notIn(fields.toArray(EMPTY_FIELD));
+        return notIn(fields);
     }
 
     @Override

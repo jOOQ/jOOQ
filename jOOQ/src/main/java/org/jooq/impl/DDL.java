@@ -88,6 +88,7 @@ final class DDL {
     private final List<Query> alterTableAddConstraints(Table<?> table) {
         List<Constraint> constraints = constraints(table);
         List<Query> result = new ArrayList<Query>(constraints.size());
+
         for (Constraint constraint : constraints)
             result.add(ctx.alterTable(table).add(constraint));
 

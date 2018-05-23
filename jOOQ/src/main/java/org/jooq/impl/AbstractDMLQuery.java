@@ -573,7 +573,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                 case HSQLDB:
                 default: {
-                    List<String> names = new ArrayList<String>(returningResolvedAsterisks.size());
+                    List<String> names = new ArrayList<String>();
                     RenderNameStyle style = configuration().settings().getRenderNameStyle();
 
                     for (Field<?> field : returningResolvedAsterisks) {

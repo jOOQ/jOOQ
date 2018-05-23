@@ -115,11 +115,11 @@ final class RowCondition extends AbstractCondition {
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
             EMULATE_EQ_AND_NE.contains(dialect.family())) {
-            List<Condition> conditions = new ArrayList<Condition>(left.fields().length);
 
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
 
+            List<Condition> conditions = new ArrayList<Condition>(leftFields.length);
             for (int i = 0; i < leftFields.length; i++)
                 conditions.add(leftFields[i].equal((Field) rightFields[i]));
 

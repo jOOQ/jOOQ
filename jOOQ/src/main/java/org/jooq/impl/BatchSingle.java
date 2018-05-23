@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.visitAll;
@@ -47,6 +46,7 @@ import static org.jooq.impl.Tools.visitAll;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -200,11 +200,12 @@ final class BatchSingle implements BatchBindStep {
         // [#4062] Make sure we collect also repeated named parameters
         ParamCollector collector = new ParamCollector(configuration, false);
         collector.visit(query);
-        List<Param<?>> params = new ArrayList<Param<?>>(collector.resultList.size());
-        for (Entry<String, Param<?>> entry : collector.resultList)
-            params.add(entry.getValue());
+        Param<?>[] params = new Param[collector.resultList.size()];
+        Iterator<Entry<String, Param<?>>> it = collector.resultList.iterator();
+        for (int i = 0; it.hasNext(); i++)
+            params[i] = it.next().getValue();
 
-        DataType<?>[] paramTypes = dataTypes(params.toArray(EMPTY_FIELD));
+        DataType<?>[] paramTypes = dataTypes(params);
 
         try {
             listener.renderStart(ctx);
@@ -266,9 +267,8 @@ final class BatchSingle implements BatchBindStep {
         List<Query> queries = new ArrayList<Query>(allBindValues.size());
 
         for (Object[] bindValues : allBindValues) {
-            for (int i = 0; i < bindValues.length; i++) {
+            for (int i = 0; i < bindValues.length; i++)
                 query.bind(i + 1, bindValues[i]);
-            }
 
             queries.add(create.query(query.getSQL(INLINED)));
         }

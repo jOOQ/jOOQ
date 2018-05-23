@@ -47,7 +47,7 @@ import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -57,12 +57,9 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -153,13 +150,13 @@ final class RowSubqueryCondition extends AbstractCondition {
         else {
             String table = render == null ? "t" : render.nextAlias();
 
-            List<String> names = new ArrayList<String>(left.size());
+            String[] names = new String[left.size()];
             for (int i = 0; i < left.size(); i++)
-                names.add(table + "_" + i);
+                names[i] = table + "_" + i;
 
-            Field<?>[] fields = new Field[names.size()];
+            Field<?>[] fields = new Field[names.length];
             for (int i = 0; i < fields.length; i++)
-                fields[i] = field(name(table, names.get(i)));
+                fields[i] = field(name(table, names[i]));
 
             Condition condition;
             switch (comparator) {
@@ -189,7 +186,7 @@ final class RowSubqueryCondition extends AbstractCondition {
             }
 
             Select<Record> subselect =
-            select().from(right.asTable(table, names.toArray(EMPTY_STRING)))
+            select().from(right.asTable(table, names))
                     .where(condition);
 
             switch (comparator) {

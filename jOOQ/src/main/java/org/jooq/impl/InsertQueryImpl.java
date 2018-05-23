@@ -639,15 +639,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         else if (onConstraintUniqueKey != null)
             return Collections.singletonList(onConstraintUniqueKey.getFields());
 
-        // [#6462] MySQL ON DUPLICATGE KEY UPDATE clause
+        // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
         else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
             return Collections.singletonList(table.getPrimaryKey().getFields());
 
-        // [#6462] MySQL ON DUPLICATGE KEY UPDATE clause
+        // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered
-        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>(table.getKeys().size());
-        for (UniqueKey<R> key : table.getKeys())
+        List<UniqueKey<R>> keys = table.getKeys();
+        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>(keys.size());
+        for (UniqueKey<R> key : keys)
             result.add(key.getFields());
 
         return result;

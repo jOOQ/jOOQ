@@ -55,7 +55,6 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DELETE_WHERE;
@@ -286,25 +285,22 @@ implements
     // -------------------------------------------------------------------------
 
     QueryPartList<Field<?>> getUpsertFields() {
-        if (upsertFields == null) {
+        if (upsertFields == null)
             upsertFields = new QueryPartList<Field<?>>(table.fields());
-        }
 
         return upsertFields;
     }
 
     QueryPartList<Field<?>> getUpsertKeys() {
-        if (upsertKeys == null) {
+        if (upsertKeys == null)
             upsertKeys = new QueryPartList<Field<?>>();
-        }
 
         return upsertKeys;
     }
 
     QueryPartList<Field<?>> getUpsertValues() {
-        if (upsertValues == null) {
+        if (upsertValues == null)
             upsertValues = new QueryPartList<Field<?>>();
-        }
 
         return upsertValues;
     }
@@ -1213,9 +1209,8 @@ implements
             Row row = upsertSelect.fieldsRow();
             List<Field<?>> v = new ArrayList<Field<?>>(row.size());
 
-            for (int i = 0; i < row.size(); i++) {
+            for (int i = 0; i < row.size(); i++)
                 v.add(row.field(i).as("s" + (i + 1)));
-            }
 
             // [#579] TODO: Currently, this syntax may require aliasing
             // on the call-site
@@ -1224,9 +1219,8 @@ implements
         else {
             List<Field<?>> v = new ArrayList<Field<?>>(getUpsertValues().size());
 
-            for (int i = 0; i < getUpsertValues().size(); i++) {
+            for (int i = 0; i < getUpsertValues().size(); i++)
                 v.add(getUpsertValues().get(i).as("s" + (i + 1)));
-            }
 
             src = DSL.select(v).asTable("src");
         }

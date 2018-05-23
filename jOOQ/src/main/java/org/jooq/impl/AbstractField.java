@@ -947,7 +947,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition in(Collection<?> values) {
-        List<Field<?>> fields = new ArrayList<Field<?>>();
+        List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
 
         for (Object value : values)
             fields.add(Tools.field(value, this));
@@ -987,7 +987,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition notIn(Collection<?> values) {
-        List<Field<?>> fields = new ArrayList<Field<?>>();
+        List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
 
         for (Object value : values)
             fields.add(Tools.field(value, this));

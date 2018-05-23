@@ -20642,7 +20642,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Collection<?> values) {
-        Collection<Field<?>> fields = new ArrayList<Field<?>>();
+        Collection<Field<?>> fields = new ArrayList<Field<?>>(values.size());
 
         for (Object o : values)
             fields.add(o instanceof Field<?> ? (Field<?>) o : val(o));

@@ -426,7 +426,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     private final int executeSelectFromPOSTGRES() {
         DSLContext create = create(configuration);
 
-        List<Field<?>> fields = new ArrayList<Field<?>>();
+        List<Field<?>> fields = new ArrayList<Field<?>>(1 + outParameters.size());
         if (returnParameter != null)
             fields.add(DSL.field(DSL.name(getName()), returnParameter.getDataType()));
         for (Parameter<?> p : outParameters)
@@ -1606,7 +1606,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             RenderContext local = create(ctx).renderContext();
             toSQLQualifiedName(local);
 
-            List<Field<?>> fields = new ArrayList<Field<?>>();
+            List<Field<?>> fields = new ArrayList<Field<?>>(getInParameters().size());
             for (Parameter<?> parameter : getInParameters()) {
 
                 // [#1183] [#3533] Skip defaulted parameters

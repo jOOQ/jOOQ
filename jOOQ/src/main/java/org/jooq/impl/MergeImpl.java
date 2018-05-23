@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DELETE_WHERE;
@@ -1209,8 +1210,8 @@ implements
         // ------------------------------
         Table<?> src;
         if (upsertSelect != null) {
-            List<Field<?>> v = new ArrayList<Field<?>>();
             Row row = upsertSelect.fieldsRow();
+            List<Field<?>> v = new ArrayList<Field<?>>(row.size());
 
             for (int i = 0; i < row.size(); i++) {
                 v.add(row.field(i).as("s" + (i + 1)));
@@ -1221,7 +1222,7 @@ implements
             src = DSL.select(v).from(upsertSelect).asTable("src");
         }
         else {
-            List<Field<?>> v = new ArrayList<Field<?>>();
+            List<Field<?>> v = new ArrayList<Field<?>>(getUpsertValues().size());
 
             for (int i = 0; i < getUpsertValues().size(); i++) {
                 v.add(getUpsertValues().get(i).as("s" + (i + 1)));

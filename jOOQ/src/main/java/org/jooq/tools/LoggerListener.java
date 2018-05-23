@@ -173,7 +173,7 @@ public class LoggerListener extends DefaultExecuteListener {
     private Record record(Configuration configuration, Routine<?> routine) {
         Record result = null;
 
-        List<Field<?>> fields = new ArrayList<Field<?>>();
+        List<Field<?>> fields = new ArrayList<Field<?>>(1 + routine.getOutParameters().size());
         Parameter<?> returnParam = routine.getReturnParameter();
         if (returnParam != null)
             fields.add(field(name(returnParam.getName()), returnParam.getDataType()));

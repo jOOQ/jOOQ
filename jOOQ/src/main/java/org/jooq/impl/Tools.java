@@ -671,7 +671,7 @@ final class Tools {
      * Turn a {@link Result} into a list of {@link Row}
      */
     static final List<Row> rows(Result<?> result) {
-        List<Row> rows = new ArrayList<Row>();
+        List<Row> rows = new ArrayList<Row>(result.size());
 
         for (Record record : result)
             rows.add(record.valuesRow());
@@ -1421,11 +1421,12 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final <T> List<Field<T>> fields(T[] values) {
-        List<Field<T>> result = new ArrayList<Field<T>>();
+        int length = values == null ? 0 : values.length;
+        List<Field<T>> result = new ArrayList<Field<T>>(length);
 
-        if (values != null)
-            for (T value : values)
-                result.add(field(value));
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i]));
+        }
 
         return result;
     }
@@ -1439,12 +1440,11 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, Field<?> field) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || field == null ? 0 : values.length;
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && field != null) {
-            for (int i = 0; i < values.length; i++) {
-                result.add(field(values[i], field));
-            }
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], field));
         }
 
         return result;
@@ -1459,12 +1459,11 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || fields == null ? 0 : Math.min(values.length, fields.length);
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && fields != null) {
-            for (int i = 0; i < values.length && i < fields.length; i++) {
-                result.add(field(values[i], fields[i]));
-            }
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], fields[i]));
         }
 
         return result;
@@ -1479,12 +1478,11 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, Class<?> type) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || type == null ? 0 : values.length;
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && type != null) {
-            for (int i = 0; i < values.length; i++) {
-                result.add(field(values[i], type));
-            }
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], type));
         }
 
         return result;
@@ -1499,12 +1497,11 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || types == null ? 0 : Math.min(values.length, types.length);
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && types != null) {
-            for (int i = 0; i < values.length && i < types.length; i++) {
-                result.add(field(values[i], types[i]));
-            }
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], types[i]));
         }
 
         return result;
@@ -1519,12 +1516,11 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, DataType<?> type) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || type == null ? 0 : values.length;
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && type != null) {
-            for (int i = 0; i < values.length; i++) {
-                result.add(field(values[i], type));
-            }
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], type));
         }
 
         return result;
@@ -1539,21 +1535,23 @@ final class Tools {
      *         values created from the argument objects.
      */
     static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        int length = values == null || types == null ? 0 : Math.min(values.length, types.length);
+        List<Field<?>> result = new ArrayList<Field<?>>(length);
 
-        if (values != null && types != null)
-            for (int i = 0; i < values.length && i < types.length; i++)
-                result.add(field(values[i], types[i]));
+        for (int i = 0; i < length; i++) {
+            result.add(field(values[i], types[i]));
+        }
 
         return result;
     }
 
     static final <T> List<Field<T>> inline(T[] values) {
-        List<Field<T>> result = new ArrayList<Field<T>>();
+        int length = values == null ? 0 : values.length;
+        List<Field<T>> result = new ArrayList<Field<T>>(length);
 
-        if (values != null)
-            for (T value : values)
-                result.add(DSL.inline(value));
+        for (int i = 0; i < length; i++) {
+            result.add(DSL.inline(values[i]));
+        }
 
         return result;
     }
@@ -2230,7 +2228,7 @@ final class Tools {
             return queryParts(new Object[] { null });
         }
         else {
-            List<QueryPart> result = new ArrayList<QueryPart>();
+            List<QueryPart> result = new ArrayList<QueryPart>(substitutes.length);
 
             for (Object substitute : substitutes) {
 

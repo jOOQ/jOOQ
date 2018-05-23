@@ -200,7 +200,7 @@ final class BatchSingle implements BatchBindStep {
         // [#4062] Make sure we collect also repeated named parameters
         ParamCollector collector = new ParamCollector(configuration, false);
         collector.visit(query);
-        List<Param<?>> params = new ArrayList<Param<?>>();
+        List<Param<?>> params = new ArrayList<Param<?>>(collector.resultList.size());
         for (Entry<String, Param<?>> entry : collector.resultList)
             params.add(entry.getValue());
 
@@ -263,7 +263,7 @@ final class BatchSingle implements BatchBindStep {
     }
 
     private final int[] executeStatic() {
-        List<Query> queries = new ArrayList<Query>();
+        List<Query> queries = new ArrayList<Query>(allBindValues.size());
 
         for (Object[] bindValues : allBindValues) {
             for (int i = 0; i < bindValues.length; i++) {

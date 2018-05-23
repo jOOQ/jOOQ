@@ -169,7 +169,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
      * Extract a list of values from a set of records given some fields
      */
     private static <R extends Record> List<Object> extractValues(Collection<? extends R> records, TableField<R, ?> field2) {
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<Object>(records.size());
 
         for (R record : records)
             result.add(record.get(field2));
@@ -181,7 +181,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
      * Extract a list of row value expressions from a set of records given some fields
      */
     private static <R extends Record> List<RowN> extractRows(Collection<? extends R> records, TableField<R, ?>[] fields) {
-        List<RowN> rows = new ArrayList<RowN>();
+        List<RowN> rows = new ArrayList<RowN>(records.size());
 
         for (R record : records) {
             Object[] values = new Object[fields.length];

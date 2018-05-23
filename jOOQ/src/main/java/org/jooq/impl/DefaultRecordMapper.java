@@ -391,7 +391,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     Class<?> klassType = Tools.ktKClass().type();
                     Method getJavaClass = jvmClassMappingKt.type().getMethod("getJavaClass", klassType);
 
-                    List<String> parameterNames = new ArrayList<String>();
+                    List<String> parameterNames = new ArrayList<String>(parameters.size());
                     Class<?>[] parameterTypes = new Class[parameters.size()];
 
                     for (int i = 0; i < parameterTypes.length; i++) {

@@ -1403,8 +1403,8 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
-            List<String> arguments = new ArrayList<String>();
-            List<String> calls = new ArrayList<String>();
+            List<String> arguments = new ArrayList<String>(degree);
+            List<String> calls = new ArrayList<String>(degree);
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
@@ -1459,7 +1459,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3130] Invalid UDTs may have a degree of 0
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         if (degree > 0 && degree < 256) {
-            List<String> arguments = new ArrayList<String>();
+            List<String> arguments = new ArrayList<String>(degree);
 
             for (int i = 0; i < degree; i++) {
                 final TypedElementDefinition<?> column = columns.get(i);
@@ -2394,7 +2394,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(e, Mode.ENUM);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(e, Mode.ENUM));
         final List<String> literals = e.getLiterals();
-        final List<String> identifiers = new ArrayList<String>();
+        final List<String> identifiers = new ArrayList<String>(literals.size());
 
         for (int i = 0; i < literals.size(); i++) {
             String identifier = convertToIdentifier(literals.get(i), language);
@@ -3284,7 +3284,7 @@ public class JavaGenerator extends AbstractGenerator {
             // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
             int size = getTypedElements(tableOrUDT).size();
             if (size > 0) {
-                List<String> nulls = new ArrayList<String>();
+                List<String> nulls = new ArrayList<String>(size);
                 for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
 
                     // Avoid ambiguities between a single-T-value constructor

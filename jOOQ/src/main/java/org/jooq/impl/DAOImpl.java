@@ -399,7 +399,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     private /* non-final */ List<R> records(Collection<P> objects, boolean forUpdate) {
-        List<R> result = new ArrayList<R>();
+        List<R> result = new ArrayList<R>(objects.size());
         Field<?>[] pk = pk();
 
         for (P object : objects) {

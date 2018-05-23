@@ -109,7 +109,7 @@ final class RowIsNull extends AbstractCondition {
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
         // Informix doesn't implement the RVE IS NULL predicate.
         if (EMULATE_NULL.contains(configuration.family())) {
-            List<Condition> conditions = new ArrayList<Condition>();
+            List<Condition> conditions = new ArrayList<Condition>(row.fields().length);
 
             for (Field<?> field : row.fields())
                 conditions.add(isNull ? field.isNull() : field.isNotNull());

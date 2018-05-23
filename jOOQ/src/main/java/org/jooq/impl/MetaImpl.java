@@ -382,7 +382,7 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
-            List<Table<?>> result = new ArrayList<Table<?>>();
+            List<Table<?>> result = new ArrayList<Table<?>>(tables.size());
             for (Record table : tables) {
                 String catalog = table.get(0, String.class);
                 String schema = table.get(1, String.class);
@@ -581,7 +581,6 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public List<ForeignKey<Record, ?>> getReferences() {
-            List<ForeignKey<Record, ?>> references = new ArrayList<ForeignKey<Record, ?>>();
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
@@ -620,6 +619,7 @@ final class MetaImpl extends AbstractMeta {
             for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
 
+            List<ForeignKey<Record, ?>> references = new ArrayList<ForeignKey<Record, ?>>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().get(1));
 
@@ -846,7 +846,6 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
-            List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>();
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
@@ -885,6 +884,7 @@ final class MetaImpl extends AbstractMeta {
             for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
 
+            List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().get(1));
 

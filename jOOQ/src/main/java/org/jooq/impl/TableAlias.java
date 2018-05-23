@@ -87,9 +87,9 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Fields<R> init(Name[] fieldAliases) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
         Row row = this.alias.wrapped().fieldsRow();
         int size = row.size();
+        List<Field<?>> result = new ArrayList<Field<?>>(size);
 
         for (int i = 0; i < size; i++) {
             Field<?> field = row.field(i);

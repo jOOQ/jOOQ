@@ -182,9 +182,10 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     }
 
     private final List<String> split(String result) {
-        List<String> list = new ArrayList<String>();
+        String[] split = result.split(",");
+        List<String> list = new ArrayList<String>(split.length);
 
-        for (String string : result.split(","))
+        for (String string : split)
             list.add(string.trim());
 
         return list;

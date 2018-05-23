@@ -101,9 +101,9 @@ final class JSONReader implements Closeable {
     }
 
     private final void readRecords(LinkedHashMap<String, LinkedList<?>> jsonRoot) {
-        records = new ArrayList<String[]>();
-
-        for (Object record : jsonRoot.get("records")) {
+        LinkedList<?> rootRecords = jsonRoot.get("records");
+        records = new ArrayList<String[]>(rootRecords.size());
+        for (Object record : rootRecords) {
             String[] v = new String[fieldNames.length];
             int i = 0;
 

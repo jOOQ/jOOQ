@@ -351,7 +351,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final List<Map<String, Object>> intoMaps() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(size());
 
         for (R record : this)
             list.add(record.intoMap());
@@ -537,7 +537,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         Map<List<?>, E> map = new LinkedHashMap<List<?>, E>();
 
         for (R record : this) {
-            List<Object> keyValueList = new ArrayList<Object>();
+            List<Object> keyValueList = new ArrayList<Object>(keys.length);
 
             for (Field<?> key : keys)
                 keyValueList.add(record.get(key));
@@ -1399,7 +1399,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
-        List<E> result = new ArrayList<E>();
+        List<E> result = new ArrayList<E>(size());
 
         for (R record : this)
             result.add(mapper.map(record));

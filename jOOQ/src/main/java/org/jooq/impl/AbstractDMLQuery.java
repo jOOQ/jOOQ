@@ -64,7 +64,6 @@ import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -573,10 +572,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                 case HSQLDB:
                 default: {
-                    List<String> names = new ArrayList<String>();
+                    String[] names = new String[returningResolvedAsterisks.size()];
                     RenderNameStyle style = configuration().settings().getRenderNameStyle();
 
-                    for (Field<?> field : returningResolvedAsterisks) {
+                    for (int i = 0; i < names.length; i++) {
 
                         // [#2845] Field names should be passed to JDBC in the case
                         // imposed by the user. For instance, if the user uses
@@ -584,14 +583,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderKeywordStyle.
                         if (style == UPPER)
-                            names.add(field.getName().toUpperCase());
+                            names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase();
                         else if (style == LOWER)
-                            names.add(field.getName().toLowerCase());
+                            names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase();
                         else
-                            names.add(field.getName());
+                            names[i] = returningResolvedAsterisks.get(i).getName();
                     }
 
-                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(EMPTY_STRING)));
+                    ctx.statement(connection.prepareStatement(ctx.sql(), names));
                     return;
                 }
             }

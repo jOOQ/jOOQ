@@ -3861,7 +3861,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("}");
                 }
                 else {
-                    out.tab(1).println("<O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
+                    out.tab(1).println("public <O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
                     out.tab(2).println("super(child, key, %s);", tableId);
                     out.tab(1).println("}");
                 }

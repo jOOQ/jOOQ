@@ -783,7 +783,8 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static final DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        int ordinal = dialect.ordinal();
+        SQLDialect family = dialect.family();
+        int ordinal = family.ordinal();
         String upper = typeName.toUpperCase();
         String normalised = typeName;
         DataType<?> result = TYPES_BY_NAME[ordinal].get(upper);
@@ -797,11 +798,11 @@ public class DefaultDataType<T> implements DataType<T> {
                 result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                if (result == null && dialect.family() == SQLDialect.POSTGRES && normalised.charAt(0) == '_')
+                if (result == null && family == SQLDialect.POSTGRES && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY
-                if (result == null && dialect.family() == SQLDialect.HSQLDB && upper.endsWith(" ARRAY"))
+                if (result == null && family == SQLDialect.HSQLDB && upper.endsWith(" ARRAY"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
 
                 // [#366] Don't log a warning here. The warning is logged when

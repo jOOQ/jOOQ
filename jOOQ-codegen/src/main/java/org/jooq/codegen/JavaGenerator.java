@@ -4202,13 +4202,14 @@ public class JavaGenerator extends AbstractGenerator {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
+                        final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                         out.tab(3).print(separator);
 
                         if (parametersAsField)
                             out.println("%s", paramArgName);
                         else
-                            out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + ")", DSL.class, paramArgName, paramTypeRef, converter);
+                            out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", DSL.class, paramArgName, paramTypeRef, converter, binding);
 
                         separator = ", ";
                     }
@@ -4227,13 +4228,14 @@ public class JavaGenerator extends AbstractGenerator {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
+                        final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                         out.tab(3).print(separator);
 
                         if (parametersAsField)
                             out.println("%s", paramArgName);
                         else
-                            out.println("%s.val(%s, %s" + converterTemplateForTableValuedFunction(converter) + ")", DSL.class, paramArgName, paramTypeRef, converter);
+                            out.println("%s.val(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", DSL.class, paramArgName, paramTypeRef, converter, binding);
 
                         separator = ", ";
                     }

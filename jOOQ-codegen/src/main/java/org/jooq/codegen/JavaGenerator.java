@@ -154,8 +154,6 @@ import org.jooq.meta.postgres.PostgresDatabase;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 // ...
 // ...
 
@@ -6065,25 +6063,38 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(")");
         }
         else {
-            DataType<?> dataType = null;
+            DataType<?> dataType;
+            String sqlDataTypeRef;
 
             try {
-                dataType = mapJavaTimeTypes(getDataType(db, t, p, s)).nullable(n).identity(i);
-
-                if (d != null)
-                    dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
+                dataType = mapJavaTimeTypes(getDataType(db, t, p, s));
             }
 
-            // Mostly because of unsupported data types. Will be handled later.
+            // Mostly because of unsupported data types.
             catch (SQLDialectNotSupportedException ignore) {
+                dataType = SQLDataType.OTHER.nullable(n).identity(i);
+
+                sb = new StringBuilder();
+
+                sb.append(DefaultDataType.class.getName());
+                sb.append(".getDefaultDataType(\"");
+                sb.append(t.replace("\"", "\\\""));
+                sb.append("\")");
             }
+
+            dataType = dataType
+                .nullable(n)
+                .identity(i);
+
+            if (d != null)
+                dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
 
             // If there is a standard SQLDataType available for the dialect-
             // specific DataType t, then reference that one.
-            if (dataType != null && dataType.getSQLDataType() != null) {
+            if (dataType.getSQLDataType() != null && sb.length() == 0) {
                 DataType<?> sqlDataType = dataType.getSQLDataType();
                 String literal = SQLDATATYPE_LITERAL_LOOKUP.get(sqlDataType);
-                String sqlDataTypeRef =
+                sqlDataTypeRef =
                     SQLDataType.class.getCanonicalName()
                   + '.'
                   + literal;
@@ -6111,93 +6122,42 @@ public class JavaGenerator extends AbstractGenerator {
                         sb.append("(").append(l).append(")");
                     else
                         sb.append(".length(").append(l).append(")");
+            }
+            else {
+                sqlDataTypeRef = SQLDataType.class.getCanonicalName() + ".OTHER";
+            }
 
-                if (!dataType.nullable())
-                    sb.append(".nullable(false)");
+            if (!dataType.nullable())
+                sb.append(".nullable(false)");
 
-                if (dataType.identity())
-                    sb.append(".identity(true)");
+            if (dataType.identity())
+                sb.append(".identity(true)");
 
-                // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
-                //         report actual values (e.g. MySQL).
-                if (dataType.defaulted()) {
-                    sb.append(".defaultValue(");
+            // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
+            //         report actual values (e.g. MySQL).
+            if (dataType.defaulted()) {
+                sb.append(".defaultValue(");
 
-                    if (asList(MYSQL).contains(db.getDialect().family()))
+                if (asList(MYSQL).contains(db.getDialect().family()))
 
-                        // [#5574] While MySQL usually reports actual values, it does report
-                        //         a CURRENT_TIMESTAMP expression, inconsistently
-                        if (d != null && d.toLowerCase().startsWith("current_timestamp"))
-                            sb.append("org.jooq.impl.DSL.field(\"")
-                              .append(escapeString(d))
-                              .append("\"");
-                        else
-                            sb.append("org.jooq.impl.DSL.inline(\"")
-                              .append(escapeString(d))
-                              .append("\"");
-                    else
+                    // [#5574] While MySQL usually reports actual values, it does report
+                    //         a CURRENT_TIMESTAMP expression, inconsistently
+                    if (d != null && d.toLowerCase().startsWith("current_timestamp"))
                         sb.append("org.jooq.impl.DSL.field(\"")
                           .append(escapeString(d))
                           .append("\"");
+                    else
+                        sb.append("org.jooq.impl.DSL.inline(\"")
+                          .append(escapeString(d))
+                          .append("\"");
+                else
+                    sb.append("org.jooq.impl.DSL.field(\"")
+                      .append(escapeString(d))
+                      .append("\"");
 
-                    sb.append(", ")
-                      .append(sqlDataTypeRef)
-                      .append("))");
-                }
-            }
-
-            // Otherwise, reference the dialect-specific DataType itself.
-            else {
-                try {
-
-                    // [#4173] DEFAULT and SQL99 data types
-                    String typeClass = (db.getDialect().getName() == null)
-                        ? SQLDataType.class.getName()
-                        : "org.jooq.meta." +
-                          db.getDialect().getName().toLowerCase() +
-                          "." +
-                          db.getDialect().getName() +
-                          "DataType";
-
-                    sb.append(typeClass);
-                    sb.append(".");
-
-                    String type1 = getType(db, schema, t, p, s, u, null, null);
-                    String type2 = getType(db, schema, t, 0, 0, u, null, null);
-                    String typeName = DefaultDataType.normalise(t);
-
-                    // [#1298] Prevent compilation errors for missing types
-                    Reflect.on(typeClass).field(typeName);
-
-                    sb.append(typeName);
-                    if (!type1.equals(type2)) {
-                        Class<?> clazz = mapJavaTimeTypes(getDataType(db, t, p, s)).getType();
-
-                        sb.append(".asNumberDataType(");
-                        sb.append(classOf(clazz.getCanonicalName()));
-                        sb.append(")");
-                    }
-                }
-
-                // Mostly because of unsupported data types
-                catch (SQLDialectNotSupportedException e) {
-                    sb = new StringBuilder();
-
-                    sb.append(DefaultDataType.class.getName());
-                    sb.append(".getDefaultDataType(\"");
-                    sb.append(t.replace("\"", "\\\""));
-                    sb.append("\")");
-                }
-
-                // More unsupported data types
-                catch (ReflectException e) {
-                    sb = new StringBuilder();
-
-                    sb.append(DefaultDataType.class.getName());
-                    sb.append(".getDefaultDataType(\"");
-                    sb.append(t.replace("\"", "\\\""));
-                    sb.append("\")");
-                }
+                sb.append(", ")
+                  .append(sqlDataTypeRef)
+                  .append("))");
             }
         }
 

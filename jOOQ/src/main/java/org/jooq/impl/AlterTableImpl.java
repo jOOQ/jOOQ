@@ -913,7 +913,7 @@ final class AlterTableImpl extends AbstractQuery implements
         else if (add != null) {
             boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
-            boolean parens = !multiAdd && !NO_SUPPORT_PARENS_ON_MULTI_ALTER.contains(ctx.family());
+            boolean parens = !multiAdd                                                                                     ;
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD)

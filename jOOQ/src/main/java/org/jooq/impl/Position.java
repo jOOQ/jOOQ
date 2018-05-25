@@ -79,6 +79,7 @@ final class Position extends AbstractFunction<Integer> {
 
 
 
+
                 default:
                     return DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one());
             }
@@ -89,6 +90,7 @@ final class Position extends AbstractFunction<Integer> {
 
                 case DERBY:
                     return DSL.field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
+
 
 
 

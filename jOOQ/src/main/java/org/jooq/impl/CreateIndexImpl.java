@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -266,7 +267,7 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.visit(generatedName())
                .sql(' ');
 
-        boolean supportsInclude = false                                                      ;
+        boolean supportsInclude = false                                                                                          ;
         boolean supportsFieldsBeforeTable = false                                                     ;
 
         QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();

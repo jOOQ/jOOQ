@@ -78,6 +78,7 @@ final class CurrentSchema extends AbstractFunction<String> {
 
 
 
+
             case CUBRID:
             case FIREBIRD:
             case SQLITE:

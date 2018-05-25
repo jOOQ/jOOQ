@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -63,6 +64,7 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -103,7 +105,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
 
         // Single record inserts can use the standard syntax in any dialect
-        else if (rows == 1) {
+        else if (rows == 1                                                ) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .visit(K_VALUES)
@@ -117,6 +119,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
+
 
 
 
@@ -181,6 +184,22 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     final Select<Record> insertSelect() {
         Select<Record> select = null;

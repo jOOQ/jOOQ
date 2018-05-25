@@ -126,6 +126,7 @@ final class RegexpLike extends AbstractCondition {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             default: {

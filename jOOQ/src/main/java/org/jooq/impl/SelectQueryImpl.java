@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -203,6 +204,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect>     SUPPORT_WINDOW_CLAUSE           = EnumSet.of(MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+
+
+
+
 
 
 
@@ -501,6 +506,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             switch (dialect) {
+
 
 
 
@@ -922,7 +928,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#5068] Don't rely on nested query's ordering in case an operation
         //         like DISTINCT or JOIN produces hashing.
-        if (!ctx.subquery())
+        // [#7427] Don't order if not strictly required.
+        if (!ctx.subquery() && !getOrderBy().isEmpty())
             ctx.formatSeparator()
                .visit(K_ORDER_BY)
                .sql(' ')
@@ -1626,6 +1633,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
     private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = EnumSet.of(SQLITE);
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS            = EnumSet.of(DERBY, MARIADB, MYSQL);
 
@@ -2056,6 +2068,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             SortFieldList result = new SortFieldList();
 
             switch (configuration.family()) {
+
 
 
 

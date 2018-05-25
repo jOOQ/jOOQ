@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 
 import java.util.ArrayList;
 import java.util.List;

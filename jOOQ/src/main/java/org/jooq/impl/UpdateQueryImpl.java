@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
+// ...
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -521,6 +522,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            // UPDATE statements
            .declareTables(
                true
+
 
 
 

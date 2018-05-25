@@ -83,10 +83,9 @@ final class Rpad extends AbstractFunction<String> {
 
 
 
-
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
-            case SQLITE: {
+            case SQLITE:
                 return DSL.field(
                     "{0} || substr(" +
                              "replace(" +
@@ -101,17 +100,14 @@ final class Rpad extends AbstractFunction<String> {
                            ")",
                     String.class,
                     field, length, character);
-            }
 
             // According to the Firebird documentation, LPAD outcomes should be
             // cast to truncate large results...
-            case FIREBIRD: {
+            case FIREBIRD:
                 return DSL.field("cast(rpad({0}, {1}, {2}) as varchar(4000))", SQLDataType.VARCHAR, field, length, character);
-            }
 
-            default: {
+            default:
                 return function("rpad", SQLDataType.VARCHAR, field, length, character);
-            }
         }
     }
 }

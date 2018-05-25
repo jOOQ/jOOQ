@@ -152,6 +152,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
             default: {
                 accept0(ctx);
                 break;
@@ -169,6 +170,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
+
 
 
 

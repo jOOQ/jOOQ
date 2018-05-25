@@ -68,16 +68,11 @@ final class Substring extends AbstractFunction<String> {
 
 
             case FIREBIRD: {
-                if (getArguments().length == 2) {
+                if (getArguments().length == 2)
                     return DSL.field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
-                }
-                else {
+                else
                     return DSL.field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
-                }
             }
-
-
-
 
 
 

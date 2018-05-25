@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -472,6 +473,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
+
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -495,6 +497,7 @@ final class Expression<T> extends AbstractFunction<T> {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.family()) {
+
 
 
 

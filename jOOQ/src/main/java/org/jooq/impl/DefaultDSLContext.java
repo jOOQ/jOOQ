@@ -3768,6 +3768,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
             default:
                 throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration().dialect());
         }

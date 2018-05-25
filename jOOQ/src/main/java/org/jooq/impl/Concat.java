@@ -94,6 +94,7 @@ final class Concat extends AbstractFunction<String> {
 
 
 
+
             default:
                 return new Expression<String>(CONCAT, first, others);
         }

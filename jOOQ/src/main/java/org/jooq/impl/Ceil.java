@@ -75,6 +75,7 @@ final class Ceil<T extends Number> extends AbstractFunction<T> {
 
 
 
+
             case H2:
                 return DSL.field("{ceiling}({0})", getDataType(), argument);
 

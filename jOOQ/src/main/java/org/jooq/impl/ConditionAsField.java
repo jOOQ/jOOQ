@@ -75,6 +75,7 @@ final class ConditionAsField extends AbstractFunction<Boolean> {
 
 
 
+
             case CUBRID:
             case FIREBIRD:
 

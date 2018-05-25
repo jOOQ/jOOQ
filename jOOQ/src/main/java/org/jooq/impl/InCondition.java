@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
@@ -111,6 +112,7 @@ final class InCondition<T> extends AbstractCondition {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.family()) {
+
 
 
 

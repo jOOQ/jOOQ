@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+// ...
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -74,6 +76,7 @@ final class Space extends AbstractFunction<String> {
             case POSTGRES:
             case SQLITE:
                 return DSL.repeat(DSL.inline(" "), count);
+
 
 
 

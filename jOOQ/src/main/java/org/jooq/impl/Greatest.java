@@ -78,6 +78,7 @@ final class Greatest<T> extends AbstractFunction<T> {
 
 
 
+
             case DERBY: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];

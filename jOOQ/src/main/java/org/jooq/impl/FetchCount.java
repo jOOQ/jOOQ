@@ -94,6 +94,7 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
 
 
+
             default:
                 return select(count).from(query.asTable("q"));
         }

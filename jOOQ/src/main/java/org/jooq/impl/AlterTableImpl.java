@@ -62,9 +62,10 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 import static org.jooq.impl.DSL.alterTable;
@@ -104,6 +105,7 @@ import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_RENAME_INDEX;
+import static org.jooq.impl.Keywords.K_RENAME_OBJECT;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
@@ -181,6 +183,8 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
+
+
 
 
 
@@ -728,6 +732,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
                 case MYSQL:
                     break;
 
@@ -771,10 +776,15 @@ final class AlterTableImpl extends AbstractQuery implements
                (renameConstraint != null && family == HSQLDB)
             || (renameColumn != null && family == DERBY);
         boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(family);
+        boolean renameObject = renameTo != null && (false                                                                   );
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
-               .visit(renameTable ? K_RENAME_TABLE : K_ALTER_TABLE);
+               .visit(renameObject
+                   ? K_RENAME_OBJECT
+                   : renameTable
+                   ? K_RENAME_TABLE
+                   : K_ALTER_TABLE);
 
             if (ifExists && supportsIfExists(ctx))
                 ctx.sql(' ').visit(K_IF_EXISTS);
@@ -793,7 +803,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.start(ALTER_TABLE_RENAME)
                .qualify(false)
-               .visit(renameTable ? K_TO : K_RENAME_TO).sql(' ')
+               .visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
                .visit(renameTo)
                .qualify(qualify)
                .end(ALTER_TABLE_RENAME);
@@ -903,13 +913,14 @@ final class AlterTableImpl extends AbstractQuery implements
         else if (add != null) {
             boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
+            boolean parens = !multiAdd && !NO_SUPPORT_PARENS_ON_MULTI_ALTER.contains(ctx.family());
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD)
                .qualify(false)
                .sql(' ');
 
-            if (!multiAdd)
+            if (parens)
                 ctx.sql('(');
 
             boolean indent = !multiAdd && add.size() > 1;
@@ -938,7 +949,7 @@ final class AlterTableImpl extends AbstractQuery implements
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
-            if (!multiAdd)
+            if (parens)
                 ctx.sql(')');
 
             ctx.qualify(qualify)
@@ -952,6 +963,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             if (ifNotExistsColumn) {
                 switch (ctx.family()) {
+
 
 
 
@@ -1012,6 +1024,7 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_ALTER);
 
             switch (family) {
+
 
 
 
@@ -1197,6 +1210,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
             default:
                 ctx.visit(K_DROP);
                 break;
@@ -1206,6 +1220,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void acceptIfExistsColumn(Context<?> ctx) {
         if (ifExistsColumn) {
             switch (ctx.family()) {
+
 
 
 

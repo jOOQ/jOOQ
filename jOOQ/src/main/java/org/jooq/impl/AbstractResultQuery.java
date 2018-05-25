@@ -43,6 +43,7 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;

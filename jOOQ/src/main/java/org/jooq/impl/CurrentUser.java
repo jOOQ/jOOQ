@@ -76,6 +76,7 @@ final class CurrentUser extends AbstractFunction<String> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

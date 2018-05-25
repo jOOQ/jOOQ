@@ -84,6 +84,7 @@ final class Lpad extends AbstractFunction<String> {
 
 
 
+
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {

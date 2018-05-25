@@ -65,6 +65,7 @@ enum Term {
 
 
 
+
             return "atan2";
         }
     },
@@ -72,6 +73,7 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
+
 
 
 
@@ -101,6 +103,7 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
+
 
 
 
@@ -186,6 +189,7 @@ enum Term {
 
 
 
+
                 case DERBY:
                 case SQLITE:
                     return "length";
@@ -222,12 +226,14 @@ enum Term {
 
 
 
+
             return "stddev_pop";
         }
     },
     STDDEV_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
+
 
 
 
@@ -262,12 +268,14 @@ enum Term {
 
 
 
+
             return "var_pop";
         }
     },
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
+
 
 
 

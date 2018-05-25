@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
@@ -68,6 +69,7 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
+
 
 
 

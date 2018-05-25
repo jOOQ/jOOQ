@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.commentOnView;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER;
@@ -163,6 +164,7 @@ final class AlterViewImpl extends AbstractQuery implements
             ctx.visit(commentOnView(view).is(comment));
             return;
         }
+
 
 
 

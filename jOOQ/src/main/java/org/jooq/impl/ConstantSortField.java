@@ -68,6 +68,7 @@ final class ConstantSortField<T> extends CustomField<T> {
 
 
 
+
             case POSTGRES:
             case HSQLDB:
                 ctx.sql('(').visit(select(one())).sql(')');

@@ -52,9 +52,10 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -3636,6 +3637,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 // Most databases don't have such a type. In this case, jOOQ
                 // emulates the type
                 default: {
@@ -3667,6 +3669,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 // Most databases don't have such a type. In this case, jOOQ
                 // emulates the type
                 default:
@@ -3683,6 +3686,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case H2:
                 case POSTGRES:
                     return (UUID) ctx.statement().getObject(ctx.index());
+
 
 
 

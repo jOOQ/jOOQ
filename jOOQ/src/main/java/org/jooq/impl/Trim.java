@@ -74,6 +74,7 @@ final class Trim extends AbstractFunction<String> {
 
 
 
+
         return function("trim", SQLDataType.VARCHAR, argument);
     }
 }

@@ -71,6 +71,7 @@ public abstract class AbstractIndexDefinition extends AbstractDefinition impleme
 
 
 
+
             default:
                 result.addAll(getSchema().getDefinitionPath());
         }

@@ -75,6 +75,7 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
+
                 ctx.visit(DSL.field(not(condition(field))));
                 break;
 

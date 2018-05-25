@@ -181,7 +181,9 @@ final class Keywords {
     static final Keyword K_MODIFY                           = keyword("modify");
     static final Keyword K_NEW_TABLE                        = keyword("new table");
     static final Keyword K_NOCYCLE                          = keyword("nocycle");
+    static final Keyword K_NONCLUSTERED                     = keyword("nonclustered");
     static final Keyword K_NOT                              = keyword("not");
+    static final Keyword K_NOT_ENFORCED                     = keyword("not enforced");
     static final Keyword K_NOT_EXISTS                       = keyword("not exists");
     static final Keyword K_NOT_IN                           = keyword("not in");
     static final Keyword K_NOT_NULL                         = keyword("not null");
@@ -225,6 +227,7 @@ final class Keywords {
     static final Keyword K_RENAME_COLUMN                    = keyword("rename column");
     static final Keyword K_RENAME_CONSTRAINT                = keyword("rename constraint");
     static final Keyword K_RENAME_INDEX                     = keyword("rename index");
+    static final Keyword K_RENAME_OBJECT                    = keyword("rename object");
     static final Keyword K_RENAME_TABLE                     = keyword("rename table");
     static final Keyword K_RENAME_TO                        = keyword("rename to");
     static final Keyword K_REPLACE                          = keyword("replace");

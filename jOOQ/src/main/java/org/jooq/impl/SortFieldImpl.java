@@ -122,6 +122,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
 
 
+
                 // These OSS dialects don't support this syntax at all
                 case CUBRID:
                 case MARIADB:

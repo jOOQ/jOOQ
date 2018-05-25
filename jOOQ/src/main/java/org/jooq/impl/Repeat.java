@@ -88,6 +88,7 @@ final class Repeat extends AbstractFunction<String> {
 
 
 
+
             default:
                 return function("repeat", SQLDataType.VARCHAR, string, count);
         }

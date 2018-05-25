@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
@@ -3361,6 +3362,7 @@ final class Tools {
 
 
 
+
     }
 
     /**
@@ -3888,6 +3890,7 @@ final class Tools {
 
 
 
+
             case FIREBIRD: {
                 begin(ctx);
                 beginExecuteImmediate(ctx);
@@ -3944,6 +3947,7 @@ final class Tools {
 
     static final void endTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
+
 
 
 
@@ -4136,6 +4140,7 @@ final class Tools {
     static final void toSQLDDLTypeDeclarationIdentityBeforeNull(Context<?> ctx, DataType<?> type) {
         if (type.identity()) {
             switch (ctx.family()) {
+
 
 
 

@@ -80,6 +80,7 @@ final class Left extends AbstractFunction<String> {
 
 
 
+
             case CUBRID:
             case FIREBIRD:
             case H2:

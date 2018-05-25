@@ -50,6 +50,7 @@ import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
@@ -1496,7 +1497,8 @@ implements
 
 
 
-        boolean onParentheses = false                                                                           ;
+
+        boolean onParentheses = false                                                 ;
         ctx.end(MERGE_USING)
            .formatSeparator()
            .start(MERGE_ON)
@@ -1577,6 +1579,7 @@ implements
 
         ctx.end(MERGE_WHERE)
            .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
+
 
 
 

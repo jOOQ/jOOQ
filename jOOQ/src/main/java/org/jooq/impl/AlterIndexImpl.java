@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -184,6 +185,7 @@ final class AlterIndexImpl extends AbstractQuery implements
 
                 break;
             }
+
 
 
 

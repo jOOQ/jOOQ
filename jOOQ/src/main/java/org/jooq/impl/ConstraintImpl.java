@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.CONSTRAINT;
+// ...
 import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
 import static org.jooq.impl.ConstraintImpl.Action.NO_ACTION;
 import static org.jooq.impl.ConstraintImpl.Action.RESTRICT;
@@ -48,6 +49,8 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CHECK;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
+import static org.jooq.impl.Keywords.K_NONCLUSTERED;
+import static org.jooq.impl.Keywords.K_NOT_ENFORCED;
 import static org.jooq.impl.Keywords.K_ON_DELETE;
 import static org.jooq.impl.Keywords.K_ON_UPDATE;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
@@ -188,14 +191,30 @@ implements
                    .visit(new QueryPartList<Field<?>>(unique))
                    .qualify(qualify)
                    .sql(')');
+
+
+
+
+
             }
             else if (primaryKey != null) {
-                ctx.visit(K_PRIMARY_KEY)
-                   .sql(" (")
+                ctx.visit(K_PRIMARY_KEY);
+
+
+
+
+
+
+                ctx.sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(primaryKey))
                    .qualify(qualify)
                    .sql(')');
+
+
+
+
+
             }
             else if (foreignKey != null) {
                 ctx.visit(K_FOREIGN_KEY)

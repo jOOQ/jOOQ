@@ -88,6 +88,7 @@ final class CurrentTime<T> extends AbstractFunction<T> {
 
 
 
+
         }
 
         return DSL.function("current_time", getDataType());

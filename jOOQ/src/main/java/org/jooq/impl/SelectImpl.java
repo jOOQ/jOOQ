@@ -1701,9 +1701,24 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
 // [jooq-tools] END [seek]
 
+    private final List<? extends Field<?>> seekValues(Object[] values) {
+        if (getQuery() instanceof SelectQueryImpl) {
+            SelectQueryImpl<R> query = (SelectQueryImpl<R>) getQuery();
+            List<Field<?>> fields = query.getOrderBy().fields();
+            DataType<?>[] types = new DataType[fields.size()];
+
+            for (int i = 0; i < types.length; i++)
+                types[i] = fields.get(i).getDataType();
+
+            return Tools.fields(values, types);
+        }
+        else
+            return Tools.fields(values);
+    }
+
     @Override
     public final SelectSeekLimitStep<R> seek(Object... values) {
-        getQuery().addSeekAfter(Tools.fields(values));
+        getQuery().addSeekAfter(seekValues(values));
         return this;
     }
 
@@ -1715,7 +1730,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectSeekLimitStep<R> seekAfter(Object... values) {
-        getQuery().addSeekAfter(Tools.fields(values));
+        getQuery().addSeekAfter(seekValues(values));
         return this;
     }
 

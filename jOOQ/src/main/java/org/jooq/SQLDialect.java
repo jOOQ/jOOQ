@@ -607,6 +607,7 @@ public enum SQLDialect {
 
 
 
+
                 case DERBY:     return "Derby";
                 case H2:        return "H2";
                 case HSQLDB:    return "HSQL";
@@ -630,6 +631,7 @@ public enum SQLDialect {
          */
         public final String hibernateDialect() {
             switch (SQLDialect.this) {
+
 
 
 

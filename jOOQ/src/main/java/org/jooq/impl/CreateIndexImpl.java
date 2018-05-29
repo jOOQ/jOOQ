@@ -267,7 +267,7 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.visit(generatedName())
                .sql(' ');
 
-        boolean supportsInclude = false                                                                                          ;
+        boolean supportsInclude = false                                                      ;
         boolean supportsFieldsBeforeTable = false                                                     ;
 
         QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();

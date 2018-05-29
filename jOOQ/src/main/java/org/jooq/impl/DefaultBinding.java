@@ -560,6 +560,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                         case POSTGRES: {
                             return true;
                         }
@@ -2664,6 +2665,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
 
 
 

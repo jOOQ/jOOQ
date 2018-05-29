@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 // ...
+import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CONTINUE_IDENTITY;
 import static org.jooq.impl.Keywords.K_IMMEDIATE;
@@ -71,9 +72,9 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { TRUNCATE };
 
-    private final Table<R>    table;
-    private Boolean           cascade;
-    private Boolean           restartIdentity;
+    private final Table<R>        table;
+    private Boolean               cascade;
+    private Boolean               restartIdentity;
 
     public TruncateImpl(Configuration configuration, Table<R> table) {
         super(configuration);
@@ -114,9 +115,10 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
 
 
 
+
             case FIREBIRD:
             case SQLITE: {
-                ctx.visit(create(ctx).delete(table));
+                ctx.visit(delete(table));
                 break;
             }
 

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.sql.Date;
 
@@ -176,6 +177,18 @@ final class DateAdd<T> extends AbstractFunction<T> {
 
                 return DSL.field("{datetime}({0}, '+' || {1} || {2})", getDataType(), date, interval, inline(keyword));
             }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

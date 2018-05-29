@@ -70,9 +70,7 @@ final class Decode<T, Z> extends AbstractFunction<Z> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<Z> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
-
-
+        switch (configuration.family()) {
 
 
 
@@ -84,26 +82,22 @@ final class Decode<T, Z> extends AbstractFunction<Z> {
 
 
             // Other dialects emulate it with a CASE ... WHEN expression
-            default: {
+            default:
                 CaseConditionStep<Z> when = DSL
-                    .decode()
+                    .choose()
                     .when(field.isNotDistinctFrom(search), result);
 
-                for (int i = 0; i < more.length; i += 2) {
+                for (int i = 0; i < more.length; i += 2)
 
                     // search/result pair
-                    if (i + 1 < more.length) {
+                    if (i + 1 < more.length)
                         when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
-                    }
 
                     // trailing default value
-                    else {
+                    else
                         return when.otherwise((Field<Z>) more[i]);
-                    }
-                }
 
                 return when;
-            }
         }
     }
 }

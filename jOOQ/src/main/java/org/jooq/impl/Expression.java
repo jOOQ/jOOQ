@@ -474,6 +474,20 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -594,7 +608,13 @@ final class Expression<T> extends AbstractFunction<T> {
                     else
                         return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().neg().concat(inline(" day")));
 
-                // These dialects can add / subtract days using +/- operators
+
+
+
+
+
+
+
 
 
 

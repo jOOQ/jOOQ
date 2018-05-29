@@ -89,9 +89,8 @@ final class Val<T> extends AbstractParam<T> {
         else {
 
             // [#1302] Bind value only if it was not explicitly forced to be inlined
-            if (!isInline(ctx)) {
+            if (!isInline(ctx))
                 ctx.bindValue(value, this);
-            }
         }
     }
 
@@ -103,12 +102,10 @@ final class Val<T> extends AbstractParam<T> {
         if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
             int index = ctx.nextIndex();
 
-            if (StringUtils.isBlank(getParamName())) {
+            if (StringUtils.isBlank(getParamName()))
                 return ":" + index;
-            }
-            else {
+            else
                 return ":" + getParamName();
-            }
         }
         else {
             return "?";

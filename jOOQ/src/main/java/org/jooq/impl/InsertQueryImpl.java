@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.name;
@@ -544,6 +545,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             //         interpreted as the (missing) INSERT column list's parens.
             if (insertMaps.fields().size() == 0)
                 ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
+
+
+
+
 
 
 

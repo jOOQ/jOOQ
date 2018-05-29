@@ -2137,7 +2137,9 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterView(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> oldName = parseTableName(ctx);
-        parseKeyword(ctx, "RENAME TO");
+        parseKeyword(ctx, "RENAME");
+        if (!parseKeywordIf(ctx, "AS"))
+            parseKeyword(ctx, "TO");
         Table<?> newName = parseTableName(ctx);
 
         return ifExists
@@ -2175,13 +2177,17 @@ final class ParserImpl implements Parser {
             ? ctx.dsl.alterSequenceIfExists(sequenceName)
             : ctx.dsl.alterSequence(sequenceName);
 
-        if (parseKeywordIf(ctx, "RENAME TO"))
+        if (parseKeywordIf(ctx, "RENAME")) {
+            if (!parseKeywordIf(ctx, "AS"))
+                parseKeyword(ctx, "TO");
             return s1.renameTo(parseSequenceName(ctx));
-        else if (parseKeywordIf(ctx, "RESTART"))
+        }
+        else if (parseKeywordIf(ctx, "RESTART")) {
             if (parseKeywordIf(ctx, "WITH"))
                 return s1.restartWith(parseUnsignedInteger(ctx));
             else
                 return s1.restart();
+        }
         else
             throw ctx.expected("RENAME TO", "RESTART");
     }
@@ -2833,28 +2839,31 @@ final class ParserImpl implements Parser {
             case 'r':
             case 'R':
                 if (parseKeywordIf(ctx, "RENAME")) {
-                    if (parseKeywordIf(ctx, "TO")) {
+                    if (parseKeywordIf(ctx, "AS") || parseKeywordIf(ctx, "TO")) {
                         Table<?> newName = parseTableName(ctx);
 
                         return s1.renameTo(newName);
                     }
                     else if (parseKeywordIf(ctx, "COLUMN")) {
                         Name oldName = parseIdentifier(ctx);
-                        parseKeyword(ctx, "TO");
+                        if (!parseKeywordIf(ctx, "AS"))
+                            parseKeyword(ctx, "TO");
                         Name newName = parseIdentifier(ctx);
 
                         return s1.renameColumn(oldName).to(newName);
                     }
                     else if (parseKeywordIf(ctx, "INDEX")) {
                         Name oldName = parseIdentifier(ctx);
-                        parseKeyword(ctx, "TO");
+                        if (!parseKeywordIf(ctx, "AS"))
+                            parseKeyword(ctx, "TO");
                         Name newName = parseIdentifier(ctx);
 
                         return s1.renameIndex(oldName).to(newName);
                     }
                     else if (parseKeywordIf(ctx, "CONSTRAINT")) {
                         Name oldName = parseIdentifier(ctx);
-                        parseKeyword(ctx, "TO");
+                        if (!parseKeywordIf(ctx, "AS"))
+                            parseKeyword(ctx, "TO");
                         Name newName = parseIdentifier(ctx);
 
                         return s1.renameConstraint(oldName).to(newName);
@@ -3009,7 +3018,7 @@ final class ParserImpl implements Parser {
             return s1.alter(field).dropNotNull();
         else if (parseKeywordIf(ctx, "SET NOT NULL"))
             return s1.alter(field).setNotNull();
-        else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO"))
+        else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO") || parseKeywordIf(ctx, "RENAME AS"))
             return s1.renameColumn(field).to(parseFieldName(ctx));
         else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
             ;
@@ -3032,7 +3041,8 @@ final class ParserImpl implements Parser {
             case 'C':
                 if (parseKeywordIf(ctx, "COLUMN")) {
                     TableField<?, ?> oldName = parseFieldName(ctx);
-                    parseKeyword(ctx, "TO");
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
                     Field<?> newName = parseFieldName(ctx);
 
                     return ctx.dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(newName);
@@ -3044,7 +3054,8 @@ final class ParserImpl implements Parser {
             case 'I':
                 if (parseKeywordIf(ctx, "INDEX")) {
                     Name oldName = parseIndexName(ctx);
-                    parseKeyword(ctx, "TO");
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
                     Name newName = parseIndexName(ctx);
 
                     return ctx.dsl.alterIndex(oldName).renameTo(newName);
@@ -3056,14 +3067,16 @@ final class ParserImpl implements Parser {
             case 'S':
                 if (parseKeywordIf(ctx, "SCHEMA")) {
                     Schema oldName = parseSchemaName(ctx);
-                    parseKeyword(ctx, "TO");
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
                     Schema newName = parseSchemaName(ctx);
 
                     return ctx.dsl.alterSchema(oldName).renameTo(newName);
                 }
                 else if (parseKeywordIf(ctx, "SEQUENCE")) {
                     Sequence<?> oldName = parseSequenceName(ctx);
-                    parseKeyword(ctx, "TO");
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
                     Sequence<?> newName = parseSequenceName(ctx);
 
                     return ctx.dsl.alterSequence(oldName).renameTo(newName);
@@ -3075,7 +3088,8 @@ final class ParserImpl implements Parser {
             case 'V':
                 if (parseKeywordIf(ctx, "VIEW")) {
                     Table<?> oldName = parseTableName(ctx);
-                    parseKeyword(ctx, "TO");
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
                     Table<?> newName = parseTableName(ctx);
 
                     return ctx.dsl.alterView(oldName).renameTo(newName);
@@ -3087,7 +3101,8 @@ final class ParserImpl implements Parser {
         // If all of the above fails, we can assume we're renaming a table.
         parseKeywordIf(ctx, "TABLE");
         Table<?> oldName = parseTableName(ctx);
-        parseKeyword(ctx, "TO");
+        if (!parseKeywordIf(ctx, "AS"))
+            parseKeyword(ctx, "TO");
         Table<?> newName = parseTableName(ctx);
 
         return ctx.dsl.alterTable(oldName).renameTo(newName);
@@ -3133,7 +3148,9 @@ final class ParserImpl implements Parser {
             ? ctx.dsl.alterSchemaIfExists(schemaName)
             : ctx.dsl.alterSchema(schemaName);
 
-        if (parseKeywordIf(ctx, "RENAME TO")) {
+        if (parseKeywordIf(ctx, "RENAME")) {
+            if (!parseKeywordIf(ctx, "AS"))
+                parseKeyword(ctx, "TO");
             Schema newName = parseSchemaName(ctx);
             AlterSchemaFinalStep s2 = s1.renameTo(newName);
             return s2;
@@ -3236,7 +3253,8 @@ final class ParserImpl implements Parser {
         }
         else if (parseKeywordIf(ctx, "RENAME CONSTRAINT")) {
             parseIdentifier(ctx);
-            parseKeyword(ctx, "TO");
+            if (!parseKeywordIf(ctx, "AS"))
+                parseKeyword(ctx, "TO");
             parseIdentifier(ctx);
             return IGNORE;
         }
@@ -3258,7 +3276,9 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterIndex(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Name indexName = parseIndexName(ctx);
-        parseKeyword(ctx, "RENAME TO");
+        parseKeyword(ctx, "RENAME");
+        if (!parseKeywordIf(ctx, "AS"))
+            parseKeyword(ctx, "TO");
         Name newName = parseIndexName(ctx);
 
         AlterIndexStep s1 = ifExists

@@ -888,7 +888,7 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            if (family == HSQLDB) {
+            if (family == HSQLDB)
                 ctx.qualify(false)
                    .visit(K_ALTER_CONSTRAINT).sql(' ')
                    .visit(renameConstraint)
@@ -896,16 +896,14 @@ final class AlterTableImpl extends AbstractQuery implements
                    .visit(K_RENAME_TO).sql(' ')
                    .visit(renameConstraintTo)
                    .qualify(qualify);
-            }
-            else {
+            else
                 ctx.qualify(false)
-                   .visit(K_RENAME_CONSTRAINT).sql(' ')
+                   .visit(                                                         K_RENAME_CONSTRAINT).sql(' ')
                    .visit(renameConstraint)
                    .formatSeparator()
                    .visit(K_TO).sql(' ')
                    .visit(renameConstraintTo)
                    .qualify(qualify);
-            }
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
@@ -1111,7 +1109,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
                     default:
-                        ctx.visit(K_SET_DEFAULT);
+                        ctx.sql(' ').visit(K_SET_DEFAULT);
                         break;
                 }
 

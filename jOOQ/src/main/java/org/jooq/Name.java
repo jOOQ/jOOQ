@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -131,7 +132,7 @@ public interface Name extends QueryPart {
      *
      * @see #as(WindowSpecification)
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
     WindowDefinition as();
 
     /**
@@ -145,7 +146,7 @@ public interface Name extends QueryPart {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
     WindowDefinition as(WindowSpecification window);
 
     /**
@@ -155,7 +156,7 @@ public interface Name extends QueryPart {
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
     /**
@@ -166,7 +167,7 @@ public interface Name extends QueryPart {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList fields(String... fieldNames);
 
     /**
@@ -177,7 +178,7 @@ public interface Name extends QueryPart {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList fields(Name... fieldNames);
 
 
@@ -223,7 +224,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList1 fields(String fieldName1);
 
     /**
@@ -235,7 +236,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList2 fields(String fieldName1, String fieldName2);
 
     /**
@@ -247,7 +248,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList3 fields(String fieldName1, String fieldName2, String fieldName3);
 
     /**
@@ -259,7 +260,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList4 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4);
 
     /**
@@ -271,7 +272,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList5 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5);
 
     /**
@@ -283,7 +284,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList6 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6);
 
     /**
@@ -295,7 +296,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList7 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7);
 
     /**
@@ -307,7 +308,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList8 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8);
 
     /**
@@ -319,7 +320,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList9 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9);
 
     /**
@@ -331,7 +332,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList10 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10);
 
     /**
@@ -343,7 +344,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList11 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11);
 
     /**
@@ -355,7 +356,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList12 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12);
 
     /**
@@ -367,7 +368,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList13 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13);
 
     /**
@@ -379,7 +380,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList14 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14);
 
     /**
@@ -391,7 +392,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList15 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15);
 
     /**
@@ -403,7 +404,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList16 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16);
 
     /**
@@ -415,7 +416,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList17 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17);
 
     /**
@@ -427,7 +428,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList18 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18);
 
     /**
@@ -439,7 +440,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList19 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19);
 
     /**
@@ -451,7 +452,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList20 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20);
 
     /**
@@ -463,7 +464,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList21 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21);
 
     /**
@@ -475,7 +476,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList22 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21, String fieldName22);
 
     /**
@@ -487,7 +488,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList1 fields(Name fieldName1);
 
     /**
@@ -499,7 +500,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList2 fields(Name fieldName1, Name fieldName2);
 
     /**
@@ -511,7 +512,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList3 fields(Name fieldName1, Name fieldName2, Name fieldName3);
 
     /**
@@ -523,7 +524,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList4 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4);
 
     /**
@@ -535,7 +536,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList5 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5);
 
     /**
@@ -547,7 +548,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList6 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6);
 
     /**
@@ -559,7 +560,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList7 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7);
 
     /**
@@ -571,7 +572,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList8 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8);
 
     /**
@@ -583,7 +584,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList9 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9);
 
     /**
@@ -595,7 +596,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList10 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10);
 
     /**
@@ -607,7 +608,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList11 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11);
 
     /**
@@ -619,7 +620,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList12 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12);
 
     /**
@@ -631,7 +632,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList13 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13);
 
     /**
@@ -643,7 +644,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList14 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14);
 
     /**
@@ -655,7 +656,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList15 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15);
 
     /**
@@ -667,7 +668,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList16 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16);
 
     /**
@@ -679,7 +680,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList17 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17);
 
     /**
@@ -691,7 +692,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList18 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18);
 
     /**
@@ -703,7 +704,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList19 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19);
 
     /**
@@ -715,7 +716,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList20 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20);
 
     /**
@@ -727,7 +728,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList21 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20, Name fieldName21);
 
     /**
@@ -739,7 +740,7 @@ public interface Name extends QueryPart {
      * <code>WITH</code> clauses.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     DerivedColumnList22 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20, Name fieldName21, Name fieldName22);
 
 // [jooq-tools] END [fields]

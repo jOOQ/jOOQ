@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -69,34 +70,34 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> andFollowing(int number);
 }

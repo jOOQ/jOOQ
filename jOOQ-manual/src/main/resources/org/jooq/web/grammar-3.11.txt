@@ -65,28 +65,28 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
   (
     [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
   | ( 'SET' | 'DROP' ) 'NOT NULL'
-  | [ 'RENAME' ] 'TO' identifier
+  | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
   )
 | 'COMMENT' [ '=' ] stringLiteral
 | 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
-| 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] 'TO' identifier
+| 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] ( 'TO' | 'AS' ) identifier
 )
 ;
 
 alterIndexStatement = 'ALTER INDEX' [ 'IF EXISTS' ] indexName
-  'RENAME TO' indexName
+  'RENAME' ( 'TO' | 'AS' ) indexName
 ;
 
 alterSchemaStatement = 'ALTER SCHEMA' [ 'IF EXISTS' ] schemaName
-  'RENAME TO' schemaName
+  'RENAME' ( 'TO' | 'AS' ) schemaName
 ;
 
 alterSequenceStatement =
 (
   'ALTER SEQUENCE' [ 'IF EXISTS' ] sequenceName
   (
-    'RENAME TO' sequenceName
+    'RENAME' ( 'TO' | 'AS' ) sequenceName
   | 'RESTART' [ 'WITH' unsignedInteger ]
   )
 | 'SET GENERATOR' sequenceName 'TO' unsignedInteger
@@ -97,7 +97,7 @@ alterSessionStatement = 'ALTER SESSION' 'SET CURRENT_SCHEMA' '=' schemaName
 ;
 
 alterViewStatement = 'ALTER VIEW' [ 'IF EXISTS' ] tableName
-  'RENAME TO' tableName
+  'RENAME' ( 'TO' | 'AS' ) tableName
 ;
 
 commentStatement = 'COMMENT ON' (
@@ -154,12 +154,12 @@ dropSchemaStatement = 'DROP SCHEMA' [ 'IF EXISTS' ] schemaName [ 'CASCADE' | 'RE
 
 renameStatement = 'RENAME'
 (
-  'COLUMN' fieldName 'TO' fieldName
-| 'INDEX' indexName 'TO' indexName
-| 'SCHEMA' schemaName 'TO' schemaName
-| 'SEQUENCE' sequenceName 'TO' sequenceName
-| 'VIEW' tabelName 'TO' tableName
-| [ 'TABLE' ] tableName 'TO' tableName
+  'COLUMN' fieldName ( 'TO' | 'AS' ) fieldName
+| 'INDEX' indexName ( 'TO' | 'AS' ) indexName
+| 'SCHEMA' schemaName ( 'TO' | 'AS' ) schemaName
+| 'SEQUENCE' sequenceName ( 'TO' | 'AS' ) sequenceName
+| 'VIEW' tabelName ( 'TO' | 'AS' ) tableName
+| [ 'TABLE' ] tableName ( 'TO' | 'AS' ) tableName
 )
 ;
 

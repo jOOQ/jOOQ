@@ -41,6 +41,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -73,6 +74,6 @@ public interface WithAsStep11 {
     /**
      * Associate a subselect with a common table expression's table and column names.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithStep as(Select<? extends Record11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 }

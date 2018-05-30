@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -89,13 +90,13 @@ public interface WindowSpecificationPartitionByStep extends WindowSpecificationO
     /**
      * Add a <code>PARTITION BY</code> clause to the window specification.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
     WindowSpecificationOrderByStep partitionBy(Field<?>... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the window specification.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
     WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields);
 
     /**
@@ -110,6 +111,6 @@ public interface WindowSpecificationPartitionByStep extends WindowSpecificationO
      *             omit the clause entirely.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
     WindowSpecificationOrderByStep partitionByOne();
 }

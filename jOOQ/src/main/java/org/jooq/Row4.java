@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -55,13 +56,12 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
-import org.jooq.Comparator;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
+
+import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 
 /**
  * A model type for a row value expression with degree <code>4</code>.

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -488,6 +489,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
+
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -572,6 +574,7 @@ final class Expression<T> extends AbstractFunction<T> {
                     else
                         return DSL.field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber().neg());
                 }
+
 
 
 

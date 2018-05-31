@@ -97,6 +97,9 @@ final class CurrentSchema extends AbstractFunction<String> {
             case MYSQL:
                 return DSL.field("{database}()", VARCHAR);
 
+
+
+
             case HSQLDB:
             case POSTGRES:
                 return DSL.field("{current_schema}", VARCHAR);

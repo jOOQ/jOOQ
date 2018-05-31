@@ -100,6 +100,7 @@ final class RegexpLike extends AbstractCondition {
 
 
 
+
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)

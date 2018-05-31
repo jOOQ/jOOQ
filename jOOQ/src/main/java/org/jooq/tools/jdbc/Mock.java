@@ -39,7 +39,6 @@ package org.jooq.tools.jdbc;
 
 import static org.jooq.impl.DSL.using;
 
-import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.Result;
 

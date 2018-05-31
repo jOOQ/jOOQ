@@ -67,6 +67,10 @@ final class BoolAnd extends Function<Boolean> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
             case POSTGRES:
                 super.accept(ctx);
                 break;

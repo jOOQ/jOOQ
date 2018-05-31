@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;

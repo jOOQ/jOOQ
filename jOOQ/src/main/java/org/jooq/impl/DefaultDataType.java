@@ -39,6 +39,9 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 import static org.jooq.Nullability.NOT_NULL;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
@@ -646,6 +649,10 @@ public class DefaultDataType<T> implements DataType<T> {
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 
+
+
+
+
                 case POSTGRES:
                 default:
                     return Types.OTHER;
@@ -798,11 +805,11 @@ public class DefaultDataType<T> implements DataType<T> {
                 result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                if (result == null && family == SQLDialect.POSTGRES && normalised.charAt(0) == '_')
+                if (result == null && (                                                      family == POSTGRES) && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY
-                if (result == null && family == SQLDialect.HSQLDB && upper.endsWith(" ARRAY"))
+                if (result == null && family == HSQLDB && upper.endsWith(" ARRAY"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
 
                 // [#366] Don't log a warning here. The warning is logged when

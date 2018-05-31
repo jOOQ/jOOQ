@@ -468,6 +468,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
             switch (ctx.family()) {
+
+
+
                 case FIREBIRD:
                 case POSTGRES: {
                     boolean previous = ctx.declareFields();
@@ -520,6 +523,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         // Values should be returned from the INSERT
         else {
             switch (ctx.family()) {
+
 
 
 
@@ -691,6 +695,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                         JDBCUtils.safeClose(rs);
                     }
                 }
+
 
 
 

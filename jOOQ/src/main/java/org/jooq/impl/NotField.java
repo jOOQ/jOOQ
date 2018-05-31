@@ -84,6 +84,7 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
+
             // Native support
             case DERBY:
             case H2:

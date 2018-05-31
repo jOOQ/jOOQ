@@ -77,6 +77,7 @@ final class Rand extends AbstractFunction<BigDecimal> {
 
 
 
+
             case DERBY:
             case POSTGRES:
             case SQLITE:

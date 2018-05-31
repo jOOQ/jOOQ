@@ -90,6 +90,9 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
             // [#4254] This is required to enable using PostgreSQL functions
             // with defaulted parameters.
+
+
+
             case POSTGRES: {
                 ctx.visit(function);
                 break;

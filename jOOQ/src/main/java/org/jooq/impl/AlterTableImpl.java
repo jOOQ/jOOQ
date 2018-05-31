@@ -55,6 +55,7 @@ import static org.jooq.Nullability.NULL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -751,6 +752,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
                 case POSTGRES:
                     alterColumnTypeAndNullabilityInBlock(ctx);
                     return;
@@ -760,6 +762,10 @@ final class AlterTableImpl extends AbstractQuery implements
         // [#5319] Compound statements to drop multiple columns in a single statement.
         if (dropColumns != null && dropColumns.size() > 1) {
             switch (family) {
+
+
+
+
                 case POSTGRES:
                     dropColumnsInBlock(ctx);
                     return;
@@ -1227,6 +1233,8 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+
                 case H2:
                 case MARIADB:
                 case POSTGRES:
@@ -1340,6 +1348,8 @@ final class AlterTableImpl extends AbstractQuery implements
         ctx.sql(';').formatSeparator();
 
         switch (ctx.family()) {
+
+
 
 
 

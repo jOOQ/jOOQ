@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -119,6 +120,9 @@ final class BlockImpl extends AbstractQuery implements Block {
 //                decrement(ctx.data(), DATA_BLOCK_NESTING);
 //                break;
 //            }
+
+
+
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)

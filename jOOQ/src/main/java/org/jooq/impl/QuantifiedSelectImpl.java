@@ -115,6 +115,9 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
             switch (ctx.family()) {
 
                 // [#869] Postgres supports this syntax natively
+
+
+
                 case POSTGRES: {
                     return (QueryPartInternal) array;
                 }

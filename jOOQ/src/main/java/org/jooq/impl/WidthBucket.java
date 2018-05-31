@@ -77,6 +77,7 @@ final class WidthBucket<T extends Number> extends AbstractField<T> {
 
 
 
+
             case POSTGRES:
                 ctx.visit(DSL.field("{width_bucket}({0}, {1}, {2}, {3})", getType(), field, low, high, buckets));
                 break;

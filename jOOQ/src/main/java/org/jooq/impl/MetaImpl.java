@@ -78,7 +78,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
@@ -332,6 +332,9 @@ final class MetaImpl extends AbstractMeta {
                     switch (configuration.family()) {
 
                         // [#3977] PostgreSQL returns other object types, too
+
+
+
                         case POSTGRES:
                             types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
                             break;

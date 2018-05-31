@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -334,7 +335,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         // [#4254] In PostgreSQL, there are only functions, no procedures. Some
         // functions cannot be called using a CallableStatement, e.g. those with
         // DEFAULT parameters
-        if (family == POSTGRES) {
+        if (                                                      family == POSTGRES) {
             return executeSelectFromPOSTGRES();
         }
 
@@ -1613,6 +1614,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
             Field<?>[] fields = new Field[getInParameters().size()];
             Iterator<Parameter<?>> it = getInParameters().iterator();
+            SQLDialect family = ctx.family();
             for (int i = 0; it.hasNext(); i++) {
                 Parameter<?> parameter = it.next();
                 // [#1183] [#3533] Skip defaulted parameters
@@ -1620,7 +1622,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if (ctx.family() == POSTGRES)
+                if (                                                      family == POSTGRES)
 
                     // [#4920] In case there are any unnamed parameters, we mustn't
                     if (hasUnnamedParameters())

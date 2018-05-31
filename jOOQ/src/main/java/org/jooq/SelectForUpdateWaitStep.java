@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;

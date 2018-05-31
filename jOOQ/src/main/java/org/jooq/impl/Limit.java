@@ -312,6 +312,9 @@ final class Limit extends AbstractQueryPart {
             }
 
             // [#4785] OFFSET can be without LIMIT
+
+
+
             case HSQLDB:
             case POSTGRES:
             case POSTGRES_9_3:

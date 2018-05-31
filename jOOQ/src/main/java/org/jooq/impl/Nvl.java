@@ -76,6 +76,9 @@ final class Nvl<T> extends AbstractFunction<T> {
             case HSQLDB:
                 return DSL.field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
 
+
+
+
             case DERBY:
             case POSTGRES:
                 return DSL.field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);

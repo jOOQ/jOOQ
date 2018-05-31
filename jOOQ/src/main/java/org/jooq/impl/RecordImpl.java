@@ -44,14 +44,6 @@ import javax.annotation.Generated;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -62,9 +54,17 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
+import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 
 /**
  * A general purpose record, typically used for ad-hoc types.

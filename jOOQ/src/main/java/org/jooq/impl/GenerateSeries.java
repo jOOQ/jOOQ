@@ -110,6 +110,9 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
                         step,
                         to.add(step).sub(from));
 
+
+
+
             case POSTGRES:
             default:
                 if (step == null)

@@ -312,6 +312,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     break;
                 }
 
+
+
+
                 case POSTGRES: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
@@ -409,6 +412,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
+
+
+
 
                 case POSTGRES_9_5:
                 case POSTGRES_10:

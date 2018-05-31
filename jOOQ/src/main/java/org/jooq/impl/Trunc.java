@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.math.BigDecimal.TEN;
-// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
@@ -108,6 +107,9 @@ final class Trunc<T> extends AbstractFunction<T> {
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
             // DOUBLE PRECISION ones
+
+
+
             case POSTGRES:
                 return DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
 

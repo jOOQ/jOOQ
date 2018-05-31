@@ -41,12 +41,13 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SQLITE;
@@ -221,7 +222,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-        else if (term == MEDIAN && ctx.family() == POSTGRES) {
+        else if (term == MEDIAN && (                                                            ctx.family() == POSTGRES)) {
             Field<?>[] fields = new Field[arguments.size()];
             for (int i = 0; i < fields.length; i++)
                 fields[i] = DSL.field("{0}", arguments.get(i));
@@ -330,7 +331,12 @@ class Function<T> extends AbstractField<T> implements
     }
 
     final void toSQLFilterClause(Context<?> ctx) {
-        if (filter != null && (HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect()))) {
+        if (filter != null && (
+                HSQLDB == ctx.family() ||
+
+
+
+                POSTGRES_9_4.precedes(ctx.dialect()))) {
             ctx.sql(' ')
                .visit(K_FILTER)
                .sql(" (")
@@ -366,7 +372,7 @@ class Function<T> extends AbstractField<T> implements
         // [#3727] Referenced WindowDefinitions that contain a frame clause
         // shouldn't be referenced from within parentheses (in PostgreSQL)
         if (windowDefinition != null)
-            if (POSTGRES == ctx.family())
+            if (                                                            POSTGRES == ctx.family())
                 return windowDefinition;
             else
                 return DSL.sql("({0})", windowDefinition);
@@ -444,14 +450,19 @@ class Function<T> extends AbstractField<T> implements
             ctx.visit(K_DISTINCT);
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if (ctx.family() == POSTGRES && args.size() > 1)
+            if ((                                                            ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql('(');
             else
                 ctx.sql(' ');
         }
 
         if (!args.isEmpty()) {
-            if (filter == null || HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect())) {
+            if (filter == null ||
+                    HSQLDB == ctx.family() ||
+
+
+
+                    POSTGRES_9_4.precedes(ctx.dialect())) {
                 ctx.visit(args);
             }
             else {
@@ -465,7 +476,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (distinct)
-            if (ctx.family() == POSTGRES && args.size() > 1)
+            if ((                                                            ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql(')');
 
 

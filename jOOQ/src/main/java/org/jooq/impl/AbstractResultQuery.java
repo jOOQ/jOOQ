@@ -39,7 +39,9 @@ package org.jooq.impl;
 
 import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
+import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -260,7 +262,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
-        if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
+        if (asList(POSTGRES).contains(ctx.family()) && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
         SQLException e = executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);

@@ -158,6 +158,9 @@ enum Term {
                 case SQLITE:
                     return "group_concat";
 
+
+
+
                 case POSTGRES:
                     return "string_agg";
             }

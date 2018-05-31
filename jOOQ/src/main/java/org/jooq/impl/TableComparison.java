@@ -67,6 +67,9 @@ final class TableComparison<R extends Record> extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
             case POSTGRES: {
                 ctx.visit(DSL.condition("{0} {1} {2}", lhs, sql(comparator.toSQL()), rhs));
                 break;

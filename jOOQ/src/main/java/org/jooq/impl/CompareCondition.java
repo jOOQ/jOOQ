@@ -46,6 +46,7 @@ import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -114,6 +115,9 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         // [#1423] Only Postgres knows a true ILIKE operator. Other dialects
         // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
         else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE)
+
+
+
                 && POSTGRES != family) {
 
             lhs = lhs.lower();

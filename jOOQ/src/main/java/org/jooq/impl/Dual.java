@@ -126,6 +126,7 @@ final class Dual extends AbstractTable<Record> {
 
 
 
+
                 case H2:
                 case POSTGRES:
                 case SQLITE:

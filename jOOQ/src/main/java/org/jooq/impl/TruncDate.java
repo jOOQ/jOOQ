@@ -123,6 +123,7 @@ final class TruncDate<T> extends AbstractFunction<T> {
 
 
 
+
             case POSTGRES: {
                 switch (part) {
                     case YEAR:   keyword = "year";   break;

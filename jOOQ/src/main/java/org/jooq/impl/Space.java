@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-// ...
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -61,6 +59,7 @@ final class Space extends AbstractFunction<String> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.family()) {
+
 
 
 

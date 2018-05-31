@@ -64,6 +64,10 @@ final class CountTable extends Function<Integer> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
             case POSTGRES: {
                 super.accept(ctx);
                 break;

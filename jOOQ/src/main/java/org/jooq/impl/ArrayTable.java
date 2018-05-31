@@ -184,6 +184,9 @@ final class ArrayTable extends AbstractTable<Record> {
 
             // [#756] These dialects need special care when aliasing unnested
             // arrays
+
+
+
             case HSQLDB:
             case POSTGRES:
                 return new PostgresHSQLDBTable().as(alias, fieldAliases);

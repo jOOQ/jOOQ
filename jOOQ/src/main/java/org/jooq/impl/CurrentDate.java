@@ -85,6 +85,7 @@ final class CurrentDate<T> extends AbstractFunction<T> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

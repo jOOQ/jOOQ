@@ -76,6 +76,10 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         switch (configuration.family()) {
             case HSQLDB:
                 return dataType + " array";
+
+
+
+
             case POSTGRES:
                 return dataType + "[]";
             case H2:

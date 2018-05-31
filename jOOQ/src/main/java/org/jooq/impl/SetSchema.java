@@ -80,6 +80,9 @@ final class SetSchema extends AbstractQuery {
                 ctx.visit(K_USE).sql(' ').visit(schema);
                 break;
 
+
+
+
             case POSTGRES:
                 ctx.visit(K_SET).sql(' ').visit(K_SEARCH_PATH).sql(" = ").visit(schema);
                 break;

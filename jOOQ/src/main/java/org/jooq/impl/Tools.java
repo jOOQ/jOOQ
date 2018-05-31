@@ -43,6 +43,7 @@ import static java.lang.Character.isJavaIdentifierPart;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -1951,7 +1952,7 @@ final class Tools {
 
             // [#6704] PostgreSQL supports additional quoted string literals, which we must skip: E'...'
             else if ((sqlChars[i] == 'e' || sqlChars[i] == 'E')
-                        && ctx.family() == POSTGRES
+                        && (                                                            ctx.family() == POSTGRES)
                         && i + 1 < sqlChars.length
                         && sqlChars[i + 1] == '\'') {
 
@@ -3741,6 +3742,9 @@ final class Tools {
                 break;
             }
 
+
+
+
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
@@ -3771,6 +3775,9 @@ final class Tools {
                    .visit(K_END);
                 break;
             }
+
+
+
             case POSTGRES: {
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
@@ -3925,6 +3932,9 @@ final class Tools {
 
                 break;
             }
+
+
+
 
             case POSTGRES: {
                 begin(ctx);
@@ -4097,6 +4107,9 @@ final class Tools {
                 break;
             }
 
+
+
+
             case POSTGRES: {
                 ctx.sql(';').formatIndentEnd().formatSeparator()
                    .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
@@ -4189,6 +4202,7 @@ final class Tools {
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {
             switch (ctx.family()) {
+
 
 
 

@@ -91,6 +91,7 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
 
 
 
+
             case CUBRID:
             case POSTGRES:
 

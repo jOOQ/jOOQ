@@ -37,6 +37,7 @@
  */
 package org.jooq.util.postgres;
 
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.Condition;

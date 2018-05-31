@@ -145,6 +145,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
 
+
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
                     return DSL.field(field, getDataType());

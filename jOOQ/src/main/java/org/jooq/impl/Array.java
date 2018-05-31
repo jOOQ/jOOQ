@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
@@ -81,6 +82,10 @@ final class Array<T> extends AbstractField<T[]> {
                 ctx.sql('(').visit(fields).sql(')');
                 break;
 
+
+
+
+
             case HSQLDB:
             case POSTGRES:
             default:
@@ -89,7 +94,7 @@ final class Array<T> extends AbstractField<T[]> {
                    .visit(fields)
                    .sql(']');
 
-                if (fields.fields.length == 0 && ctx.family() == POSTGRES)
+                if (fields.fields.length == 0 && (                                                            ctx.family() == POSTGRES))
                     ctx.sql("::").visit(K_INT).sql("[]");
 
                 break;

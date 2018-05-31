@@ -3744,6 +3744,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
+
+
+
+
             case POSTGRES: {
                 Field<BigInteger> field = field("lastval()", BigInteger.class);
                 return select(field).fetchOne(field);

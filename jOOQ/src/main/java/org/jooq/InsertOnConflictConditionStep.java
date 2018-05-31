@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
 
 import org.jooq.impl.DSL;

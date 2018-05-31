@@ -8981,7 +8981,7 @@ public class DSL {
      * This allows for full outer joining several table-valued functions on the
      * row number of each function's produced rows.
      */
-    @Support(POSTGRES)
+    @Support({ POSTGRES })
     public static Table<Record> rowsFrom(Table<?>... tables) {
         return new RowsFrom(tables);
     }
@@ -16168,7 +16168,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ CUBRID, H2, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }
@@ -17042,7 +17042,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -17050,7 +17050,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, field("{0}", field));
     }
@@ -17062,7 +17062,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES}, then the primary key is used with
      * {@link #count(Field)}, instead.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
     }
@@ -17663,7 +17663,7 @@ public class DSL {
      * The <code>mode() within group (oder by [order clause])</code> ordered
      * aggregate function.
      */
-    @Support(POSTGRES_9_4)
+    @Support({ POSTGRES_9_4 })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new Mode();
     }

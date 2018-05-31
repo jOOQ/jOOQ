@@ -70,34 +70,34 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
+    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
+    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
+    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
+    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
+    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> andFollowing(int number);
 }

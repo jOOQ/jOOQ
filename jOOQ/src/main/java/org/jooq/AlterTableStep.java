@@ -253,7 +253,7 @@ public interface AlterTableStep {
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
-    // @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    // @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     @Support({ H2 })
     AlterTableFinalStep add(FieldOrConstraint... fields);
 
@@ -261,7 +261,7 @@ public interface AlterTableStep {
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
-    // @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    // @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     @Support({ H2 })
     AlterTableFinalStep add(Collection<? extends FieldOrConstraint> fields);
 
@@ -493,7 +493,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?>... fields);
 
     /**
@@ -502,7 +502,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Name... fields);
 
     /**
@@ -511,28 +511,28 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Field<?>... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Name... fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL })
     AlterTableDropStep dropColumns(String... fields);
 
     /**
@@ -541,14 +541,14 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL })
     AlterTableDropStep drop(Collection<? extends Field<?>> fields);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
     /**

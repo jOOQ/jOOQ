@@ -2641,7 +2641,7 @@ final class ParserImpl implements Parser {
         return Internal.createIndex(name == null ? DSL.name("") : name, table, fields, false);
     }
 
-    private static boolean parseConstraintStateIf(ParserContext ctx) {
+    private static final boolean parseConstraintStateIf(ParserContext ctx) {
         parseKeywordIf(ctx, "ENABLE");
         return true;
     }
@@ -7183,7 +7183,6 @@ final class ParserImpl implements Parser {
                     if (parseKeywordOrIdentifierIf(ctx, "WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
                 }
-
                 else if (parseKeywordOrIdentifierIf(ctx, "TINYBLOB"))
                     return SQLDataType.BLOB;
                 else if (parseKeywordOrIdentifierIf(ctx, "TINYINT"))

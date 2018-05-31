@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
 // ...
+// ...
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -459,9 +460,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void addFrom(Collection<? extends TableLike<?>> f) {
-        for (TableLike<?> provider : f) {
+        for (TableLike<?> provider : f)
             from.add(provider.asTable());
-        }
     }
 
     @Override
@@ -635,16 +635,16 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
             default:
                 ctx.start(UPDATE_FROM);
 
-                if (!from.isEmpty()) {
+                if (!from.isEmpty())
                     ctx.formatSeparator()
                        .visit(K_FROM).sql(' ')
                        .declareTables(true)
                        .visit(from)
                        .declareTables(false);
-                }
 
                 ctx.end(UPDATE_FROM);
                 break;

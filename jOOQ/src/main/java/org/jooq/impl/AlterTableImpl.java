@@ -976,6 +976,8 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+
                     case H2:
                     case MARIADB:
                     case POSTGRES:
@@ -1077,6 +1079,9 @@ final class AlterTableImpl extends AbstractQuery implements
                     case DERBY:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
+
+
+
 
                     case FIREBIRD:
                     case POSTGRES:

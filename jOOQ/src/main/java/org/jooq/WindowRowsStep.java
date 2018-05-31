@@ -78,7 +78,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ POSTGRES, MARIADB, MYSQL_8_0MARIADB, MYSQL_8_0 })
+    @Support({ POSTGRES, MARIADB, MYSQL_8_0 })
     WindowFinalStep<T> rowsPreceding(int number);
 
     /**

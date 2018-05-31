@@ -17356,7 +17356,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ CUBRID, HSQLDB, POSTGRES_9_4 })
+    @Support({ CUBRID, HSQLDB, MARIADB, POSTGRES_9_4 })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
     }

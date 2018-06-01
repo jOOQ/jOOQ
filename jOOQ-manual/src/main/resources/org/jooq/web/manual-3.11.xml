@@ -4934,6 +4934,23 @@ create.select(
                                             <p>
                                                 The generated SQL is almost identical to the original one - there is no performance penalty to this syntax.
                                             </p>
+
+                                            <h3>How it works</h3>
+
+                                            <p>
+                                                During the SQL generation phase, implicit join paths are replaced by generated aliases for the path's last table. The paths are translated to a join graph, which is always <code>LEFT JOIN</code>ed to the path's "root table". If two paths share a common prefix, that prefix is also shared in the join graph.
+                                            </p>
+
+                                            <p>
+                                                Future versions of jOOQ may choose to generate correlated subqueries or inner joins where this may seem more appropriate, if the query semantics doesn't change through that.
+                                            </p>
+
+                                            <h3>Known limitations</h3>
+
+                                            <ul>
+                                                <li>Implicit JOINs are currently only supported in <reference id="select-statement" title="SELECT statements"/> (including any type of subquery), but not in the <code>WHERE</code> clause of <reference id="update-statement" title="UPDATE statements"/> or <reference id="delete-statement" title="DELETE statements"/>, for instance.</li>
+                                                <li>Implicit JOINs can currently only be used to access columns, not to produce joins. I.e. it is not possible to write things like <code>FROM book IMPLICIT JOIN book.author</code></li>
+                                            </ul>
                                         </html></content>
                                     </section>
 

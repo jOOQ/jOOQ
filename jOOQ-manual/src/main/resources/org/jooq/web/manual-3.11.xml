@@ -7463,6 +7463,45 @@ Field<Integer> field2 = val("1").coerce(Integer.class);]]></java><html>
                                 </html></content>
                             </section>
 
+                            <section id="collations">
+                                <title>Collations</title>
+                                <content><html>
+                                    <p>
+                                        Many databases support "collations", which defines the sort order on character data types, such as <code>VARCHAR</code>.
+                                    </p>
+
+                                    <p>
+                                        Such databases usually allow for specifying:
+                                    </p>
+
+                                    <ul>
+                                        <li>System-wide default collations</li>
+                                        <li>Session-wide default collations</li>
+                                        <li>Per-table specific default collations</li>
+                                        <li>Per-column specific default collations</li>
+                                        <li>Per-usage specific collation</li>
+                                    </ul>
+
+                                    <p>
+                                        The actual implementation is vendor-specific, including the way the above defaults override each other.
+                                    </p>
+
+                                    <p>
+                                        To accommodate most use-cases jOOQ 3.11 introduced the <reference class="org.jooq.Collation"/> type, which can be attached to a <reference class="org.jooq.DataType"/> through <reference class="org.jooq.DataType" anchor="#collate-org.jooq.Collation-" title="DataType.collate(Collation)"/>, or to a <reference class="org.jooq.Field"/> through <reference class="org.jooq.Field" anchor="#collate-org.jooq.Collation-" title="Field.collate(Collation)"/>, for example:
+                                    </p>
+
+</html><code-pair>
+    <sql>SELECT *
+FROM book
+ORDER BY title COLLATE utf8_bin</sql>
+    <java>create.selectFrom(BOOK)
+      .orderBy(BOOK.TITLE.collate("utf8_bin"))
+      .fetch();</java>
+</code-pair><html>
+
+                                </html></content>
+                            </section>
+
 							<section id="arithmetic-expressions">
 								<title>Arithmetic expressions</title>
 								<content><html>

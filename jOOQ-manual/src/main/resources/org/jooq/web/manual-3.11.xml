@@ -15018,11 +15018,14 @@ result.forEach((Object[] entities) -> {
            Natively supported values are:
 
                org.jooq.meta.ase.ASEDatabase
+               org.jooq.meta.auroramysql.AuroraMySQLDatabase
+               org.jooq.meta.aurorapostgres.AuroraPostgresDatabase
                org.jooq.meta.cubrid.CUBRIDDatabase
                org.jooq.meta.db2.DB2Database
                org.jooq.meta.derby.DerbyDatabase
                org.jooq.meta.firebird.FirebirdDatabase
                org.jooq.meta.h2.H2Database
+               org.jooq.meta.hana.HANADatabase
                org.jooq.meta.hsqldb.HSQLDBDatabase
                org.jooq.meta.informix.InformixDatabase
                org.jooq.meta.ingres.IngresDatabase
@@ -15030,9 +15033,13 @@ result.forEach((Object[] entities) -> {
                org.jooq.meta.mysql.MySQLDatabase
                org.jooq.meta.oracle.OracleDatabase
                org.jooq.meta.postgres.PostgresDatabase
+               org.jooq.meta.redshift.RedshiftDatabase
+               org.jooq.meta.sqldatawarehouse.SQLDataWarehouseDatabase
                org.jooq.meta.sqlite.SQLiteDatabase
                org.jooq.meta.sqlserver.SQLServerDatabase
                org.jooq.meta.sybase.SybaseDatabase
+               org.jooq.meta.teradata.TeradataDatabase
+               org.jooq.meta.vertica.VerticaDatabase
 
            This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
 

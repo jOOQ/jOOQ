@@ -13255,6 +13255,7 @@ result.forEach((Object[] entities) -> {
                org.jooq.util.derby.DerbyDatabase
                org.jooq.util.firebird.FirebirdDatabase
                org.jooq.util.h2.H2Database
+               org.jooq.util.hana.HANADatabase
                org.jooq.util.hsqldb.HSQLDBDatabase
                org.jooq.util.informix.InformixDatabase
                org.jooq.util.ingres.IngresDatabase

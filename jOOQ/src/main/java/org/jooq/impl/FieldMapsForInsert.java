@@ -84,6 +84,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     final Map<Field<?>, Field<?>>       empty;
     final Map<Field<?>, List<Field<?>>> values;
     int                                 rows;
+    int                                 nextRow          = -1;
 
     FieldMapsForInsert(Table<?> table) {
         this.table = table;
@@ -277,6 +278,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         if (rows == 0)
             newRecord();
 
+        initNextRow();
         for (Object field : fields) {
             Field<?> f = Tools.tableField(table, field);
             Field<?> e = empty.get(f);
@@ -296,6 +298,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     final void set(Collection<? extends Field<?>> fields) {
+        initNextRow();
+
         Iterator<? extends Field<?>> it1 = fields.iterator();
         Iterator<List<Field<?>>> it2 = values.values().iterator();
 
@@ -321,14 +325,21 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
+    private final void initNextRow() {
+        if (rows == nextRow) {
+            Iterator<List<Field<?>>> v = values.values().iterator();
+            Iterator<Field<?>> e = empty.values().iterator();
+
+            while (v.hasNext() && e.hasNext())
+                v.next().add(e.next());
+
+            rows++;
+        }
+    }
+
     final void newRecord() {
-        Iterator<List<Field<?>>> it1 = values.values().iterator();
-        Iterator<Field<?>> it2 = empty.values().iterator();
-
-        while (it1.hasNext() && it2.hasNext())
-            it1.next().add(it2.next());
-
-        rows++;
+        if (nextRow < rows)
+            nextRow++;
     }
 
     final Collection<Field<?>> fields() {
@@ -336,6 +347,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     final List<Map<Field<?>, Field<?>>> maps() {
+        initNextRow();
+
         return new AbstractList<Map<Field<?>, Field<?>>>() {
             @Override
             public Map<Field<?>, Field<?>> get(int index) {
@@ -350,6 +363,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     final Map<Field<?>, Field<?>> map(final int index) {
+        initNextRow();
+
         return new AbstractMap<Field<?>, Field<?>>() {
             transient Set<Entry<Field<?>, Field<?>>> entrySet;
 

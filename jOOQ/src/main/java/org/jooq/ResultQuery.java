@@ -278,6 +278,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      */
     <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
 
+
+
     /**
      * Execute the query and "lazily" return the generated result.
      * <p>

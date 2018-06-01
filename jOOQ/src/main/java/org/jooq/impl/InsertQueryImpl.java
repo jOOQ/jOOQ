@@ -644,16 +644,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#7365] PostgreSQL ON CONFLICT (conflict columns) clause
         if (onConflict != null && onConflict.size() > 0)
-            return Collections.singletonList(onConflict);
+            return Collections.<List<? extends Field<?>>>singletonList(onConflict);
 
         // [#7409] PostgreSQL ON CONFLICT ON CONSTRAINT clause
         else if (onConstraintUniqueKey != null)
-            return Collections.singletonList(onConstraintUniqueKey.getFields());
+            return Collections.<List<? extends Field<?>>>singletonList(onConstraintUniqueKey.getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
         else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
-            return Collections.singletonList(table.getPrimaryKey().getFields());
+            return Collections.<List<? extends Field<?>>>singletonList(table.getPrimaryKey().getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered

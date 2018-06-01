@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 
 import java.util.Collection;
 
@@ -254,16 +255,14 @@ public interface AlterTableStep {
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
-    // @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
-    @Support({ H2 })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep add(FieldOrConstraint... fields);
 
     /**
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
-    // @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
-    @Support({ H2 })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep add(Collection<? extends FieldOrConstraint> fields);
 
     /**

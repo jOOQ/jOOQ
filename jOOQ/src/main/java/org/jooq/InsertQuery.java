@@ -55,7 +55,9 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 
@@ -105,7 +107,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     void onConflict(Field<?>... fields);
 
     /**
@@ -117,8 +119,16 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     void onConflict(Collection<? extends Field<?>> fields);
+
+    /**
+     * Whether use a <code>On CONFLICT</code> or
+     * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
+     * statement.
+     */
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    void onConflictOnConstraint(Name constraint);
 
     /**
      * Whether use a <code>On CONFLICT</code> or
@@ -133,16 +143,8 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     void onConflictOnConstraint(UniqueKey<R> constraint);
-
-    /**
-     * Whether use a <code>On CONFLICT</code> or
-     * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
-     * statement.
-     */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
-    void onConflictOnConstraint(Name constraint);
 
     /**
      * Whether a <code>ON DUPLICATE KEY UPDATE</code> clause should be added to

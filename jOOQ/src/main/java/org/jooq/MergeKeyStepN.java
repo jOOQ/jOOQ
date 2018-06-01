@@ -37,11 +37,15 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
 // ...
@@ -70,7 +74,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     MergeValuesStepN<R> key(Field<?>... keys);
 
     /**
@@ -79,6 +83,6 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

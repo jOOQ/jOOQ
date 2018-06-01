@@ -106,7 +106,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(UniqueKey<R> constraint);
 
     /**
@@ -116,7 +116,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * other dialects can emulate it using <code>MERGE</code>, if table meta
      * data is available.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
 
     /**
@@ -126,7 +126,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * other dialects can emulate it using <code>MERGE</code>, if table meta
      * data is available.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
@@ -136,7 +136,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * other dialects can emulate it using <code>MERGE</code>, if table meta
      * data is available.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support
     InsertReturningStep<R> onConflictDoNothing();
 
     /**

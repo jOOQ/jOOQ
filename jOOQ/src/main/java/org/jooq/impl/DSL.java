@@ -66,6 +66,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -15751,7 +15752,7 @@ public class DSL {
      *
      * @see #bitCount(Field)
      */
-    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(Tools.field(value));
     }
@@ -15773,7 +15774,7 @@ public class DSL {
      * <p>
      * More efficient algorithms are very welcome
      */
-    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
     }

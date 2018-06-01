@@ -2547,571 +2547,461 @@ extends
     // ------------------------------------------------------------------------
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sign(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sign(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> sign();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#abs(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#abs(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> abs();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#round(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> round();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#round(Field, int)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field, int)} instead.
      */
+    @Deprecated
     @Support
     Field<T> round(int decimals);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#floor(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#floor(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> floor();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#ceil(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#ceil(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> ceil();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sqrt(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sqrt(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sqrt();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#exp(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#exp(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> exp();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#ln(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#ln(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> ln();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#log(Field, int)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#log(Field, int)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> log(int base);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#acos(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#acos(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> acos();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#asin(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#asin(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> asin();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#atan(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#atan2(Field, Number)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Number)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Number y);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#atan2(Field, Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#cos(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#cos(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cos();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sin(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sin(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sin();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#tan(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#tan(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tan();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#cot(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#cot(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cot();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sinh(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sinh(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sinh();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#cosh(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#cosh(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cosh();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#tanh(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#tanh(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tanh();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#coth(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#coth(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> coth();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#deg(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#deg(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<BigDecimal> deg();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#rad(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#rad(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<BigDecimal> rad();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#count(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> count();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#countDistinct(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#countDistinct(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> countDistinct();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#max(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> max();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#min(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> min();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sum(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<BigDecimal> sum();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#avg(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<BigDecimal> avg();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#median(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#median(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, HSQLDB })
     Field<BigDecimal> median();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#stddevPop(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevPop();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#stddevSamp(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevSamp();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#varPop(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varPop();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#varSamp(Field)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varSamp();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#count(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#max(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<T> maxOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#min(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<T> minOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sum(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#avg(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#firstValue(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lastValue(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lead(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lead(Field, int)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lead(Field, int, Object)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Object)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lead(Field, int, Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Field)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lag(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lag(Field, int)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lag(Field, int, Object)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Object)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#lag(Field, int, Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Field)} instead.
      */
+    @Deprecated
     @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#stddevPop(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#stddevSamp(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#varPop(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#varSamp(Field)
      * @see AggregateFunction#over()
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
@@ -3468,52 +3358,42 @@ extends
     Field<Integer> octetLength();
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#extract(Field, DatePart)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#extract(DatePart)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> extract(DatePart datePart);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#greatest(Field, Field...)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> greatest(T... others);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#greatest(Field, Field...)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> greatest(Field<?>... others);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#least(Field, Field...)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> least(T... others);
 
     /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#least(Field, Field...)
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> least(Field<?>... others);
 

@@ -241,7 +241,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                 (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.family()) || parameters == null || ctx.declareTables())) {
             Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
-            if (mappedSchema != null) {
+            if (mappedSchema != null && !"".equals(mappedSchema.getName())) {
                 ctx.visit(mappedSchema);
                 ctx.sql('.');
             }

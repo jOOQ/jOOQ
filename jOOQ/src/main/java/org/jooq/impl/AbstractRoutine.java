@@ -1121,16 +1121,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         ctx.visit(value);
     }
 
-    private final void toSQLQualifiedName(RenderContext context) {
-        Schema mappedSchema = Tools.getMappedSchema(context.configuration(), getSchema());
+    private final void toSQLQualifiedName(RenderContext ctx) {
+        if (ctx.qualify()) {
+            Schema mapped = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
-        if (context.qualify()) {
-            if (mappedSchema != null) {
-                context.visit(mappedSchema);
-                context.sql('.');
-            }
-
-
+            if (mapped != null && !"".equals(mapped.getName()))
+                ctx.visit(mapped)
+                   .sql('.');
 
 
 
@@ -1144,7 +1141,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         }
 
-        context.literal(getName());
+        ctx.literal(getName());
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {

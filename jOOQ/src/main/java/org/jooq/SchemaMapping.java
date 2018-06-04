@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.schema;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.Serializable;
@@ -294,11 +296,10 @@ public class SchemaMapping implements Serializable {
 
         Schema result = schema;
         if (result != null) {
-            String schemaName = result.getName();
 
             // [#2089] DefaultSchema has an empty schema name
-            if (StringUtils.isEmpty(schemaName))
-                return null;
+            // [#7498] But we're mapping those names as well
+            String schemaName = result.getName();
 
             // [#4642] Don't initialise schema mapping if not necessary
             if (!mapping().getSchemata().isEmpty()) {
@@ -337,9 +338,8 @@ public class SchemaMapping implements Serializable {
 
             // The configured default schema is mapped to "null". This prevents
             // it from being rendered to SQL
-            if (result.getName().equals(mapping().getDefaultSchema())) {
+            if (result.getName().equals(mapping().getDefaultSchema()))
                 result = null;
-            }
         }
 
         return result;
@@ -362,9 +362,12 @@ public class SchemaMapping implements Serializable {
             // [#1189] Schema can be null in SQLite
             // [#2089] DefaultSchema have empty schema names
             // [#1186] TODO: replace this by calling table.getQualifiedName()
-            String schemaName = (schema == null) ? "" : schema.getName();
+            if (schema == null)
+                schema = schema(name(""));
+
+            String schemaName = schema.getName();
             String tableName = result.getName();
-            String key = (schema == null || StringUtils.isEmpty(schemaName)) ? tableName : (schemaName + "." + tableName);
+            String key = StringUtils.isEmpty(schemaName) ? tableName : (schemaName + "." + tableName);
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {
@@ -385,13 +388,17 @@ public class SchemaMapping implements Serializable {
                                         // Ignore self-mappings and void-mappings
                                         if (!isBlank(t.getOutput()))
                                             if (t.getInput() != null && !t.getOutput().equals(tableName))
-                                                result = new RenamedTable<R>(result, t.getOutput());
+                                                result = new RenamedTable<R>(map(schema), result, t.getOutput());
                                             else if (t.getInputExpression() != null)
-                                                result = new RenamedTable<R>(result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+                                                result = new RenamedTable<R>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
 
                                         break schemaLoop;
                                     }
                                 }
+
+                                // [#7498] Even without table mapping configuration, we may still need to map the schema
+                                result = new RenamedTable<R>(map(schema), result, tableName);
+                                break schemaLoop;
                             }
                         }
 

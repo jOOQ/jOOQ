@@ -232,16 +232,13 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     private final void accept0(Context<?> ctx, boolean asStringLiterals) {
         Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), schema);
 
-        if (mappedSchema != null && ctx.family() != CUBRID) {
-            if (asStringLiterals) {
+        if (mappedSchema != null && !"".equals(mappedSchema.getName()) && ctx.family() != CUBRID)
+            if (asStringLiterals)
                 ctx.visit(inline(mappedSchema.getName()))
                    .sql(", ");
-            }
-            else {
+            else
                 ctx.visit(mappedSchema)
                    .sql('.');
-            }
-        }
 
         if (asStringLiterals)
             ctx.visit(inline(name));

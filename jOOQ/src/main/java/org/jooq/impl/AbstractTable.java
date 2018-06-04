@@ -52,6 +52,7 @@ import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -388,7 +389,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         if (tableschema == null)
             tableschema = getQualifiedName().qualified()
                         ? DSL.schema(getQualifiedName().qualifier())
-                        : null;
+                        : DSL.schema(name(""));
 
         return tableschema;
     }

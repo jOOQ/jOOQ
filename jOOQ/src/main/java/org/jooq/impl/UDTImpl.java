@@ -209,7 +209,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     public final void accept(Context<?> ctx) {
         Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
-        if (mappedSchema != null)
+        if (mappedSchema != null && !"".equals(mappedSchema.getName()))
             ctx.visit(mappedSchema).sql('.');
 
 

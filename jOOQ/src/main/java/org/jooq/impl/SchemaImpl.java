@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.SCHEMA;
 import static org.jooq.Clause.SCHEMA_REFERENCE;
+import static org.jooq.impl.DSL.name;
 
 import java.util.Collections;
 import java.util.List;
@@ -100,18 +101,20 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         if (catalog == null)
             catalog = getQualifiedName().qualified()
                     ? DSL.catalog(getQualifiedName().qualifier())
-                    : null;
+                    : DSL.catalog(name(""));
 
         return catalog;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), getCatalog());
+        if (ctx.qualifyCatalog()) {
+            Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), getCatalog());
 
-        if (ctx.qualifyCatalog() && mappedCatalog != null) {
-            ctx.visit(mappedCatalog);
-            ctx.sql('.');
+            if (mappedCatalog != null && !"".equals(mappedCatalog.getName())) {
+                ctx.visit(mappedCatalog);
+                ctx.sql('.');
+            }
         }
 
         ctx.visit(getUnqualifiedName());

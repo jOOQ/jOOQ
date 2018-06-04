@@ -45,7 +45,7 @@ package org.jooq;
 public interface Named extends QueryPart {
 
     /**
-     * The name of this object.
+     * The unqualified name of this object.
      */
     String getName();
 

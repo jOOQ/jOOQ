@@ -51,11 +51,10 @@ class RenamedTable<R extends Record> extends TableImpl<R> {
      */
     private static final long serialVersionUID = -309012919785933903L;
 
-    RenamedTable(Table<R> delegate, String rename) {
-        super(rename, delegate.getSchema());
+    RenamedTable(Schema schema, Table<R> delegate, String rename) {
+        super(rename, schema);
 
-        for (Field<?> field : delegate.fields()) {
+        for (Field<?> field : delegate.fields())
             createField(field.getName(), field.getDataType(), this);
-        }
     }
 }

@@ -2523,7 +2523,7 @@ final class Tools {
         Schema mapped = getMappedSchema(configuration, udt.getSchema());
         StringBuilder sb = new StringBuilder();
 
-        if (mapped != null)
+        if (mapped != null && !"".equals(mapped.getName()))
             sb.append(mapped.getName()).append('.');
 
 

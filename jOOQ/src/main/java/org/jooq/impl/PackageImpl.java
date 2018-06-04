@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.name;
-
 import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -81,7 +79,7 @@ public class PackageImpl extends AbstractNamed implements Package {
         if (schema == null)
             schema = getQualifiedName().qualified()
                    ? DSL.schema(getQualifiedName().qualifier())
-                   : DSL.schema(name(""));
+                   : null;
 
         return schema;
     }

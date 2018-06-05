@@ -14171,7 +14171,7 @@ configuration.getJdbc()
              .withUser("username")
              .withPassword("password");
 
-GeberationTool.generate(configuration);]]></java><html>
+GenerationTool.generate(configuration);]]></java><html>
 
                             <p>
                                 ... and then, modify parts of your configuration programmatically, for instance the JDBC user / password:

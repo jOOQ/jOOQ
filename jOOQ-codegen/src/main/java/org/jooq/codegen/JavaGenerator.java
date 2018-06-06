@@ -6080,7 +6080,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(DefaultDataType.class.getName());
                 sb.append(".getDefaultDataType(\"");
-                sb.append(t.replace("\"", "\\\""));
+                sb.append((u != null ? u.toString() : t).replace("\"", "\\\""));
                 sb.append("\")");
             }
 

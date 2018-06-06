@@ -2089,6 +2089,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Double value) throws SQLException {
+
+
+
+
+
             ctx.statement().setDouble(ctx.index(), value);
         }
 
@@ -2114,6 +2119,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Configuration configuration) {
+
+
+
+
+
             return Types.DOUBLE;
         }
     }
@@ -2250,6 +2260,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Float value) throws SQLException {
+
+
+
+
+
             ctx.statement().setFloat(ctx.index(), value);
         }
 
@@ -2275,6 +2290,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Configuration configuration) {
+
+
+
+
+
             return Types.FLOAT;
         }
     }

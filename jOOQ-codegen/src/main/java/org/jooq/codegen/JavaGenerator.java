@@ -4888,16 +4888,14 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
-                final List<String> converters = out.ref(list(
-                        parameter.getType(resolver()).getConverter(),
-                        parameter.getType(resolver()).getBinding()
-                ));
+                final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
+                final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
-                out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s[[before=, ][new %s]])",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
+                out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             out.println("}");

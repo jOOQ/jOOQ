@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1814763098;
+    private static final long serialVersionUID = 1521142277;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -115,7 +115,7 @@ public class Film extends TableImpl<FilmRecord> {
         super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
+    public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
         super(child, key, FILM);
     }
 

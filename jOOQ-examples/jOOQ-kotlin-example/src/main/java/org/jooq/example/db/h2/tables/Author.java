@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -33303089;
+    private static final long serialVersionUID = -2120467788;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -115,7 +115,7 @@ public class Author extends TableImpl<AuthorRecord> {
         super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {
+    public <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {
         super(child, key, AUTHOR);
     }
 

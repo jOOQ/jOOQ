@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = -15217694;
+    private static final long serialVersionUID = -153566641;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -88,7 +88,7 @@ public class BookStore extends TableImpl<BookStoreRecord> {
         super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    <O extends Record> BookStore(Table<O> child, ForeignKey<O, BookStoreRecord> key) {
+    public <O extends Record> BookStore(Table<O> child, ForeignKey<O, BookStoreRecord> key) {
         super(child, key, BOOK_STORE);
     }
 

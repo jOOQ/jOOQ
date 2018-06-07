@@ -58,7 +58,7 @@ public final class ParserCLI {
             a = parse(args);
 
             if (a.toDialect == null || a.sql == null) {
-                System.err.println("Mandatory arguments: -t and -s");
+                System.err.println("Mandatory arguments: -t and -s. Use -h for help");
                 throw new RuntimeException();
             }
         }

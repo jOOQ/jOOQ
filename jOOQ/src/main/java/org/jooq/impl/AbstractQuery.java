@@ -536,13 +536,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
 
 
-
-
-
         return result;
     }
-
-
 
 
 

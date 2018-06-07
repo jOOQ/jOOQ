@@ -11,201 +11,673 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
-Version 3.10.7 - May the 4th be with you, 2018
+Version 3.11.0 - June 7, 2018
 ================================================================================
 
-This is a 3.10 patch release with bug fixes
+New Databases Supported
+-----------------------
+
+At last, 4 new SQL dialects have been added to jOOQ! These are:
+
+jOOQ Professional Edition
+
+- Aurora MySQL Edition
+- Aurora PostgreSQL Edition
+- Azure SQL Data Warehouse
+
+jOOQ Enterprise Edition
+
+- Teradata
+
+
+Implicit Joins
+--------------
+
+One of the really cool features in ORMs like Hibernate, Doctrine, and others, is
+the capability of using a relationship graph notation to access another entity's
+columns through what is often called "implicit joins".
+
+Instead of explicitly joining a to-one relationship to access its columns:
+
+<pre>
+SELECT author.first_name, author.last_name, book.title
+FROM book
+JOIN author ON book.author_id = author.id
+</pre>
+
+We would like to be able to access those columns directly, using this notation:
+
+<pre>
+SELECT book.author.first_name, book.author.last_name, book.title
+FROM book
+</pre>
+
+The join is implied and should be added implicitly. jOOQ now allows for this to
+happen when you use the code generator:
+
+<pre>
+ctx.select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE)
+   .from(BOOK)
+   .fetch();
+</pre>
+
+When rendering this query, the implicit join graph will be calculated on the fly
+and added behind the scenes to the BOOK table. This works for queries of
+arbitrary complexity and on any level of nested SELECT.
+
+More details in this blog post:
+https://blog.jooq.org/2018/02/20/type-safe-implicit-join-through-path-navigation-in-jooq-3-11/
+
+
+DiagnosticsListener SPI
+-----------------------
+
+A new DiagnosticsListener SPI has been added to jOOQ:
+https://github.com/jOOQ/jOOQ/issues/5960
+
+The purpose of this SPI is to sanitise your SQL language, JDBC and jOOQ API
+usage. Listeners can listen to events such as:
+
+- duplicateStatements (similar SQL is executed, bind variables should be used)
+- repeatedStatements (identical SQL is executed, should be batched or rewritten)
+- tooManyColumnsFetched (not all projected columns were needed)
+- tooManyRowsFetched (not all fetched rows were needed)
+
+The great thing about this SPI is that it can be exposed to clients through the
+JDBC API, in case of which the diagnostics feature can reverse engineer your
+JDBC or even JPA generated SQL. Ever wanted to detect N+1 queries from
+Hibernate? Pass those Hibernate-generated queries through this SPI.
+
+Want to find missing bind variables leading to cursor cache contention or SQLi?
+Let jOOQ find similar SQL statements and report them. E.g.
+
+- SELECT name FROM person WHERE id = 1
+- SELECT name FROM person WHERE id = 2
+
+Or also:
+
+- SELECT name FROM person WHERE id IN (?, ?)
+- SELECT name FROM person WHERE id IN (?, ?, ?)
+
+
+Anonymous blocks
+----------------
+
+Many databases support anonymous blocks to run several statements in a single
+block scope. For example, Oracle:
+
+<pre>
+DECLARE
+  l_var NUMBER(10);
+BEGIN
+  l_var := 10;
+  dbms_output.put_line(l_var);
+END;
+</pre>
+
+jOOQ now supports the new org.jooq.Block API to allow for wrapping DDL and DML
+statements in such a block. This is a first step towards a future jOOQ providing
+support for:
+
+- Abstractions over procedural languages
+- CREATE PROCEDURE and CREATE FUNCTION statements
+- Trigger support
+- And much more
+
+
+Parser
+------
+
+jOOQ's parser support is an ongoing effort. This release has added support for
+a lot of new SQL clauses and functions from various vendors and in various DDL
+and DML statements.
+
+The parser is now also exposed through a public website and API, where SQL can
+be translated from one dialect to another:
+https://www.jooq.org/translate
+
+This website will help further drive jOOQ API development by helping to find
+missing functionality that is used in real-world SQL.
+
+Another way to access this API is through the new org.jooq.ParserCLI command
+line tool. For example, run:
+
+<pre>
+$ java -jar jooq-3.10.0.jar -f -t ORACLE -s "SELECT * FROM (VALUES(1),(2)) AS t(a)"
+</pre>
+
+To get:
+
+<pre>
+select *
+from (
+  (
+    select null a
+    from dual
+    where 1 = 0
+  )
+  union all (
+    select *
+    from (
+      (
+        select 1
+        from dual
+      )
+      union all (
+        select 2
+        from dual
+      )
+    ) t
+  )
+) t;
+</pre>
+
+Formal Java 10 Support
+----------------------
+
+jOOQ 3.11 is the first release that is formally integration tested with Java 10.
+To use jOOQ with Java 10, use the Java 8 distribution which has not yet been
+modularised, but contains Automatic-Module-Name specification to be forward
+compatible with future, modularised jOOQ distributions.
+
+Additionally, package names between jOOQ, jOOQ-meta, and jOOQ-codegen have been
+cleaned up to prevent duplicate package names, and the JAXB dependency has been
+added explicitly to the various artefacts.
+
+
+End of Scala 2.11 support in the jOOQ Open Source Edition
+---------------------------------------------------------
+
+Scala 2.10 and 2.11 are now only supported in the commercial distributions
+
+
+
+Other great improvements
+------------------------
+
+- Finally, asterisks (SELECT * or SELECT t.*) are formally supported in the API.
+- Collations can now be specified on a variety of syntax elements
+- The org.jooq.Comment type has been added, and DDL statements for it
+- The DefaultBinding implementation has been rewritten for better peformance
+- Several performance improvements in jOOQ's internals
+- Many more DDL statements are supported including GRANT and REVOKE
+- Support for the EXPLAIN statement
+- FETCH n PERCENT ROWS and TOP n PERCENT clauses are supported
+- Better org.jooq.Name and org.jooq.Named API for identifier handling
+- Support for PostgreSQL 10
+- Support for SQL Server 2017
+- Support for DB2 11
+- Upgraded MariaDB support for window functions, inv dist functions, WITH
+- jOOU dependency updated to 0.9.3
+- jOOR dependency updated to 0.9.8
+- Server output (e.g. DBMS_OUTPUT) can now be fetched automatically, by jOOQ
+- Code generation support for PL/SQL TABLE types
+- SQL Keywords Can Now Be Rendered In Pascal Style If You Must
+- Emulate PostgreSQL's ON CONFLICT clause using MERGE
+
 
 Features and Improvements
 -------------------------
-#7432 - Document the fact that fetchOne() needs to fetch the second record
+
+#629 - Add support for the Teradata database
+#717 - Add support for SQLite unique columns
+#1053 - Add syntax railroad diagram to the manual
+#1502 - Add support for implicit join over to-one relationships
+#1677 - Add SelectFieldOrAsterisk type to support Table.asterisk() (t.*) and DSL.asterisk()
+#2051 - Add is[Not]DistinctFrom() to Row[N] types
+#2508 - Support ON DUPLICATE KEY UPDATE in H2
+#2637 - Add a section to the manual about the MockFileDatabase, change its experimental status
+#2769 - Add DSL.asterisk() to allow for explicitly issuing SELECT * statements
+#2791 - Add a Context data map scoped to the outer scope of a subquery
+#2908 - Add support for COLLATIONS
+#3686 - Add support for default parameter values in SQL Server
+#3930 - Improve code generation manual sections explaining each flag individually with XML / programmatic examples
+#4015 - Add support for LATERAL to DB2
+#4059 - Add <link rel="canonical"/> references from older Javadocs/manuals to the latest versions
+#4627 - Support Java 8 constructor parameter reflection in DefaultRecordMapper
+#4888 - Add <serializablePojos/> to allow for POJOs not to be Serializable
+#4930 - Create one DefaultXYZBinding type per DataType, internally
+#5196 - Add support for Amazon Aurora MySQL Edition
+#5296 - Add a MetaProvider Configuration.metaProvider() SPI
+#5314 - Add support for ALTER TABLE .. ADD IF NOT EXISTS
+#5315 - Add support for ALTER TABLE .. DROP IF EXISTS
+#5318 - Add support for ALTER TABLE .. ADD (...) to add multiple objects to a table at once
+#5319 - Add support for ALTER TABLE .. DROP (...) to allow for dropping multiple objects at once
+#5491 - Provide maven-deploy script to install artifacts on remote repository
+#5594 - Add support for Oracle 12c FETCH N PERCENT ROWS and SQL Server TOP n PERCENT clauses
+#5703 - Add option to disable code generation of comments
+#5863 - Support multi-row INSERT .. RETURNING for Oracle using PL/SQL FORALL .. INSERT .. RETURNING .. BULK COLLECT INTO
+#5874 - Add support for H2's new enum types
+#5917 - Add Settings.parseUnsupportedSyntax to define behaviour when a parser error occurs
+#5925 - Replace asList(SQLDialect ...).contains() by EnumSet.of(SQLDialect ...).contains() in internals
+#5960 - Add a DiagnosticsListener SPI
+#5988 - Add Javadoc to DSL.table(String) and Table.field(String) explaining the lack of field references in plain SQL tables
+#6071 - Add Name Sequence.getQualifiedName() and getUnqualifiedName()
+#6131 - Add plain SQL storage() clause to CREATE TABLE statements
+#6140 - Add <clean/> to <target/> in code generator configuration
+#6145 - Add Queries.block()
+#6220 - Add DSL.localDateTimeAdd() localDateTimeSub(), localDateTimeDiff()
+#6240 - Add support for SQL Server's ALTER TABLE .. RENAME INDEX emulation
+#6261 - Support loading multiple files in DDLDatabase
+#6265 - Add org.jooq.Named API for all types containing a getName() method
+#6324 - Add support for COMMENT ON statements
+#6328 - Add SQLDialect.SQLSERVER2017
+#6358 - Add ResultQuery.fetchSet(RecordMapper)
+#6371 - Add support for DROP TEMPORARY TABLE
+#6474 - Add org.jooq.Block to wrap several statements in an anonymous block
+#6482 - Document in the manual: SQL and JDBC are one-based, jOOQ is zero-based
+#6554 - Mark Maven plugin as @ThreadSafe
+#6577 - Add documentation about the <fullyQualifiedTypes/> flag
+#6580 - Add Settings.fetchServerOutputSize to fetch server output
+#6606 - End of Scala 2.11 support for jOOQ Open Source Edition
+#6627 - Add DateToLocalDateConverter, TimeToLocalTimeConverter, TimestampToLocalDateTimeConverter
+#6630 - Support Oracle TIMESTAMP WITH TIME ZONE data type in UDT
+#6631 - Deprecate public DefaultBinding constructor
+#6632 - Generate DAO.fetchOneByXYZ(T value) for unique columns on SQLite
+#6642 - DefaultBinding should check Settings.executeLogging to decide whether to log
+#6644 - Improve "no catalogs were loaded" error message
+#6654 - Improve code generator's INFO message when objects have no name
+#6660 - Add <catalogs/> to <information_schema>
+#6661 - Add support for catalogs in the XMLGenerator
+#6662 - Support new <catalogs/> element in DSLContext.meta()
+#6663 - Support new <catalogs/> element in DSLContext.informationSchema()
+#6676 - Add markdown to error message about slow SQL
+#6694 - Overload SelectWhereStep.where(Condition...) and similar methods to avoid Condition[] allocation
+#6704 - Support PostgreSQL's escape string constants
+#6715 - Add { Insert | Update | Delete }ReturningStep.returningResult(Field<T1>, ..., Field<TN>)
+#6718 - Add missing overload DSLContext.newResult(Collection<? extends Field<?>>)
+#6720 - Refactor some internals to use Scope.dsl() or Configuration.dsl()
+#6721 - Deprecate AbstractStore.create()
+#6722 - Deprecate AbstractQueryPart.create() methods
+#6765 - Add SQLDialect.POSTGRES_10
+#6771 - Add a Setting to prevent UPDATE and DELETE statements that lack a WHERE clause
+#6772 - Add a <jpaVersion/> code generator configuration
+#6776 - Add MockResult() and MockResult(int) convenience constructors
+#6781 - Clarify DSL.currentDate() Javadoc: It creates ANSI SQL DATE values, not Oracle DATE
+#6783 - Add explicit unit of time specification to Query.queryTimeout()
+#6796 - [#4627] Support parameter info compiled into bytecode
+#6798 - Add Settings.mapConstructorParameterNames
+#6812 - Add support for GRANT and REVOKE statements
+#6817 - Add DSL.noCondition()
+#6823 - Add DSLContext.explain(Query)
+#6832 - Enhance DSLContext.fetchFromTXT() to support Oracle DBMS_XPLAN format
+#6833 - Add TXTFormat to allow for additional text formatting options
+#6835 - Add new TXTFormat options to generate different table styles
+#6836 - Add Record.format()
+#6838 - Add org.jooq.User
+#6839 - Add org.jooq.Role
+#6853 - [#6838] The User type for GRANT statement
+#6862 - [#6839] The Role type for GRANT statement
+#6867 - Add DSLContext.ddl(Table[]) and ddl(Collection<? extends Table<?>>)
+#6872 - [#4627] Support using first available constructor with **different** number of arguments as the last resort
+#6876 - Add DSL.localDateTimeDiff() and localDateTimeAdd()
+#6878 - [#6812] Added GRANT statement and its implementation.
+#6879 - Add javax.xml.bind:jaxb-api dependency and avoid using the implementation
+#6883 - Add support for loading default values and comments for org.jooq.Meta columns
+#6884 - Emulate SET [ ROW ] = [ ROW ] syntax on all databases
+#6885 - [#6867] Added a possibility to export several DDL of tables
+#6897 - [#6868] Prefer public constructors
+#6899 - Log a link to GitHub when DDLDatabase runs into a ParserException
+#6903 - Add ExecuteContext.statementExecutionCount() to count the number of executions of a statement
+#6906 - Add support for PostgreSQL ON CONFLICT .. ON CONSTRAINT ..
+#6911 - Add support for GRANT .. TO PUBLIC and REVOKE .. FROM PUBLIC
+#6913 - Add support for WITH GRANT OPTION clause to GRANT statement
+#6919 - [#6906] Added support for PostgreSQL ON CONFLICT .. ON CONSTRAINT ..
+#6921 - Optimization of {ULong,UInteger,UShort}.toBigInteger
+#6922 - Upgrade the jOOU dependency to version 0.9.3
+#6927 - Add ExecuteListener.serverOutput()
+#6928 - Add AlterTableStep.add(Field) taking the data type from the field directly
+#6931 - Add support for REVOKE GRANT OPTION FOR
+#6933 - Add org.jooq.Statement for procedural statements inside of org.jooq.Block
+#6934 - [#6913] Added a support for GRANT .. WITH GRANT OPTION
+#6936 - Parse empty INSERT .. VALUES () clause as an emulated DEFAULT VALUES clause
+#6938 - [#6931] Added a support for REVOKE GRANT OPTION FOR .. clause
+#6940 - [#6913] Added parser support for WITH GRANT OPTION clause
+#6941 - [#6931] Added parser support for GRANT OPTION FOR clause
+#6943 - Add integration test for <forcedType/> applied to table valued function result
+#6951 - Add <includeTriggerRoutines/> flag to exclude the generation of PostgreSQL trigger routines
+#6955 - [#6772] Added a new flag `jpaVersion` to code generator.
+#6958 - Generate hint about <deprecationOnUnknownType/> in Javadoc
+#6962 - Add code generator flags for <globalKeyReferences/>
+#6963 - Add section to the manual about the <globalXYZReferences/> code generation flags
+#6968 - Implement IdentityConverter.toString()
+#6969 - Support various DDL statements in Firebird
+#6977 - Add native support for SQL Server 2017 TRIM()
+#6978 - Add support for TRANSLATE() function
+#6982 - Make jooq-meta's org.jooq.util.Database AutoCloseable
+#6985 - Add an org.jooq.Comment type
+#6986 - Emulate COMMENT ON in SQL Server using sp_updateextendedproperty
+#6987 - Add DDLFlag.COMMENT to extract COMMENT statements from DSLContext.ddl()
+#6990 - When DDLFlag.TABLE is inactive, constraints should produce ALTER TABLE statements on DSLContext.ddl()
+#6991 - Add comments to jooq-meta.xsd
+#6992 - Add Catalog.getComment()
+#6993 - Add Schema.getComment()
+#6994 - Emulate COMMENT ON TABLE in MySQL
+#6997 - Support system properties in Maven code generation
+#7000 - Document the possibility of skipping code generation via a Maven command line argument
+#7008 - Support various DDL statements in MariaDB
+#7016 - Add option to disable the generation of all Javadoc
+#7027 - Add DSL.field(Name, DataType<T>, Comment) and DSL.table(Name, Comment), etc.
+#7028 - Add support for CREATE TABLE .. COMMENT
+#7039 - DDLDatabase should auto-create missing schemas
+#7040 - Add DataAccessException.getCause(Class<? extends Throwable>)
+#7043 - Emulate MySQL's CREATE TABLE .. COMMENT on other databases
+#7044 - Add support for ALTER TABLE .. COMMENT
+#7055 - POJO copy constructor should use interface when codegen of <interfaces/> = true
+#7069 - Add ParserException.sql(), position(), line(), column()
+#7073 - Add <nullability/> to <forcedType/> to allow for matching nullable / non-nullable / all columns
+#7075 - Generate equals(), hashCode(), and toString() on XJC generated classes
+#7082 - Generate comments in SQL Server
+#7086 - Add support for COMMENT ON VIEW
+#7087 - Add support for SET SCHEMA and SET CATALOG
+#7094 - Add ParamType.FORCE_INDEXED
+#7095 - Add Settings.inListPadBase
+#7097 - Expose jOOQ Connection proxies also as DataSource
+#7101 - Add T DSLContext.fetchValue(Field<T>)
+#7107 - Add support for CREATE INDEX ON (unnamed indexes)
+#7112 - Support WITH clause for H2
+#7115 - Allow usage of derived table as aliased parameter of TableImpl constructor
+#7116 - Add Field.collate(Collation) and collate(String) to support COLLATE clauses
+#7117 - Add DataType.collate(Collation)
+#7120 - Add org.jooq.Collation and DSL.collation(String)
+#7123 - Add CREATE TABLE and ALTER TABLE support for explicit column collations
+#7125 - Add code generation support for PL/SQL TABLE types
+#7131 - Wrap the Table type in an implicit Scala class to allow for writing t.*
+#7134 - Add ArrayRecord.isSQLUsable() and ArrayRecord.getPackage()
+#7139 - Add support for CREATE TABLE AS SELECT .. WITH [ NO ] DATA
+#7140 - Add support for converting java.sql.Struct to UDTRecord
+#7148 - Add code generation support for to-one implicit join relationships
+#7152 - Add Context.scopeStart() and scopeEnd()
+#7154 - Add TableDefinition.getForeignKeys(TableDefinition)
+#7158 - Add public internal API for use by code generator (to work around Scala issues)
+#7162 - Add DSLContext.meta(DatabaseMetaData) and meta(Catalog...), meta(Schema...), meta(Table...)
+#7164 - Add Meta.getXYZ(String), getXYZ(Name) accessors for all object types
+#7166 - Change DSL.unnest(List) and table(List) to unnest(Collection) and table(Collection)
+#7173 - Add documentation for the new DiagnosticsListener SPI
+#7174 - Add support for PostgreSQL ROWTYPE function parameters
+#7185 - Emulate CREATE VIEW IF NOT EXISTS in PostgreSQL
+#7187 - Add List<T> DSLContext.fetchValues(Table<? extends Record1<T>>)
+#7188 - Upgrade Hibernate dependency in jOOQ-meta-extensions to 5.2.13
+#7210 - Add <serializableInterfaces/> to allow for interfaces not to be Serializable
+#7211 - Upgrade Scala 2.10 dependency to 2.10.7
+#7217 - DDLDatabase should sort SQL files
+#7219 - XMLDatabase should support reading files from classpath
+#7229 - Add <forceIntegerTypesOnZeroScaleDecimals/> configuration to allow for treating DECIMAL types as BigDecimal
+#7237 - Add DSL.now() as a synonym for DSL.currentTimestamp()
+#7258 - Deprecate org.jooq.Clause
+#7261 - Add more error messages to the parser
+#7264 - Add Parser.parseSelect()
+#7266 - Support parsing column references as predicates
+#7269 - Expose Parser as a CLI tool
+#7275 - Add DSL.iif(Condition, Field<T>, Field<T>)
+#7276 - Add support for SQL Server's CHOOSE() function
+#7277 - Add DSL.with(Name) and DSL.withRecursive(Name)
+#7279 - Add RenderKeywordStyle.PASCAL
+#7280 - Add ConstraintForeignKeyReferencesStep[N].references(Table<?>)
+#7286 - Add CREATE OR REPLACE VIEW
+#7288 - Add DSL.count(SelectFieldOrAsterisk) and countDistinct(SelectFieldOrAsterisk)
+#7296 - Add Name.as() to create empty window specifications
+#7300 - SQL Translation Error - Transact-SQL outer joins
+#7310 - Document <javaTimeTypes> in the manual
+#7311 - Add support for (+) outer join in DB2
+#7314 - [#5873] Add Setting.quoteEscaping to allow for alternative escaping of single quote
+#7320 - Support parsing Oracle TO_DATE() and TO_TIMESTAMP() functions
+#7324 - Support Kotlin metadata in DefaultRecordMapper
+#7329 - [#7324] Support Kotlin data classes in DefaultRecordMapper
+#7340 - <validationAnnotations/> should generate Size annotations also for (VAR)BINARY types
+#7343 - Add <includePackageConstants>, <includePackageRoutines>, <includePackageUDTs> code generation configuration flags
+#7344 - Add Settings.parseUnknownFunctions to turn off failing on unknown functions
+#7345 - Add section to the manual explaining annotation generation flags
+#7346 - #7301: Allow customization of LoggerListener
+#7347 - Support parsing KEY/INDEX specifications in MySQL CREATE TABLE statements
+#7348 - Add possibility of adding an INDEX (or KEY) as a "constraint" to DDL statements
+#7353 - Let Cursor extend Formattable
+#7355 - Add org.jooq.Formattable
+#7356 - Emulate MySQL's CREATE TABLE (... INDEX) clause using anonymous blocks
+#7357 - Overload CreateIndexStep.on() clauses with Collection accepting version
+#7358 - Add support for SQL Data Warehouse
+#7365 - Emulate PostgreSQL's ON CONFLICT clause with MERGE
+#7374 - Add DSL.timestampSub() and localDateTimeSub()
+#7375 - Deprecate <SQLDialect>DataType classes
+#7379 - Translate MySQL / PostgreSQL ENUM type to check constraint in other databases
+#7385 - Upgrade jOOR dependency to 0.9.8
+#7386 - org.jooq.Parser should generate in-memory enum types
+#7387 - Add DataType.isEnum()
+#7388 - Make EnumType.getCatalog() and getSchema() default methods
+#7407 - Add support for ALTER INDEX .. RENAME in MySQL by using ALTER TABLE .. RENAME INDEX
+#7409 - Emulate PostgreSQL's ON CONFLICT .. ON CONSTRAINT clause with MERGE
+#7412 - Add support for the CREATE INDEX .. INCLUDE syntax
+#7415 - Add ability for MatcherStrategy to allow for customizing enum class names
+#7420 - Code generation XML config snippets should refer to XMLNS in manual
+#7431 - Document the fact that fetchOne() needs to fetch the second record
+#7433 - Add support for Amazon Aurora PostgreSQL Edition
+#7437 - Add support for generate_series() with step parameter
+#7439 - Add ORACLE12C support for the STANDARD_HASH function
+#7440 - Add support for the NTH_VALUE(..) [ FROM { FIRST | LAST } ] clause
+#7441 - JavaGenerator should allow for overriding POJO constructor generation
+#7446 - Support parsing ISO_8601 interval literals
+#7447 - Add DayToSecond.valueOf(Duration)
+#7452 - Support multi-row INSERT .. SELECT .. RETURNING for Oracle using PL/SQL FORALL .. INSERT .. RETURNING .. BULK COLLECT INTO
+#7453 - Update docs: SQL Azure is now called Azure SQL Database
+#7454 - Add SQLDialect.DB2_11
+#7461 - Deprecate SEEK BEFORE
+#7469 - Add { ResultQuery | Cursor }.collect(Collector<? super T, A, R>)
+#7474 - Make number of seconds that are considered "slow" in jOOQ-meta configurable
+#7475 - Add { Insert | Update | Delete }ReturningStep.returningResult(...) methods
+#7477 - Add Field.concat(char...)
+#7478 - Add Javadoc to XYZ..Step API to hint at users they should never need to reference it
+#7479 - Log warning when { Insert | Update | Delete }ReturningStep.returning() is used with arbitrary column expressions
+#7480 - Add DSLContext.newRecord(Collection<? extends Field<?>>)
+#7483 - Deprecate DSL.getDataType()
+#7484 - Add DSLContext.selectFrom(Name) and selectFrom(String) overloads
+#7491 - Emulate ON CONFLICT .. DO UPDATE .. WHERE <p> on SQL Server using WHEN MATCHED AND <p>
+#7493 - Emulate { OUTER | CROSS } APPLY on DB2
+#7498 - Improve RenderMapping to allow for adding a schema to unqualified objects
+#7514 - Add MariaDB support for window functions
+#7522 - Add MariaDB support for inverse distribution functions
+#7523 - Add MariaDB support for WITH
+#7524 - Add support for MariaDB WITH TIES
+#7538 - Deprecate some Field.xyz() convenience API
+
+
+Breaking changes
+----------------
+
+#6462 - INSERT .. ON DUPLICATE KEY { IGNORE | UPDATE } emulation should consider all UNIQUE keys
+#6814 - JDBCUtils.dialect(Connection) should recognise database version
+#6818 - [#6814] overload the JDBCUtils.dialect method
+#6852 - Remove PostgresDataType.MONEY
+#6868 - DefaultRecordMapper should prefer calling public constructors over private ones
+#6961 - Remove generated Sequences classes from jOOQ-meta
+#7167 - Errors should also roll back a transaction
+#7322 - Trailing newRecord() results in NULL insert statement
+#7341 - Change SQLServerDataType.TIMESTAMP to be of type VARBINARY / byte[]
+#7419 - Rename jooq-meta and jooq-codegen packages to avoid conflicts in JPMS
+#7504 - DefaultDataType.getDataType(SQLDialect) should use family
+
 
 Bug Fixes
 ---------
-#7399 - Optimistic locking should run deep equality checks on arrays
-#7417 - Misleading warning message when using external configurationFile with <matchers/>
-#7443 - ORA-00932 when running CAST(.. AS CLOB) in Oracle
-#7457 - ArrayIndexOutOfBoundsException on terminal operation of sorted ResultQuery.stream()
-#7465 - Excess ORDER BY "rn" generated in ORACLE11G dialect when LIMIT is used without ORDER BY
 
-Version 3.10.6 - March 20, 2018
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#7178 - Flawed implementation of SET SCHEMA for PostgreSQL
-#7212 - Upgrade Scala 2.10 dependency to 2.10.7
-#7220 - XMLDatabase should be lenient about XML namespace
-#7239 - Add DSL.now() as a synonym for DSL.currentTimestamp()
-#7249 - Add Javadoc to DSL.table(String) and Table.field(String) explaining the lack of field references in plain SQL tables
-#7278 - Add DSL.with(Name) and DSL.withRecursive(Name)
-#7281 - Add ConstraintForeignKeyReferencesStep[N].references(Table<?>)
-
-Bug Fixes
----------
-#7181 - PostgresUtils.toPGXYZString() methods (and others) should avoid using String.replace() pre JDK 9
-#7184 - Cannot ORDER BY null in PostgreSQL, when Field.sortAsc() has no parameters
-#7190 - NullPointerException when DSL.name(Name...) contains a null Name argument
-#7192 - Using VARBINARY type with length on Oracle fails in DDL statements
-#7199 - DataType.nullable() and defaultValue() are not generated for enum types
-#7205 - DDLDatabase fails with order in Index statements
-#7207 - DDLDatabase reports DECIMAL(65535, 32767) for precision/scale-less decimals
-#7233 - Not all columns are fetched when plain SQL tables are mixed with generated ones
-#7244 - Vertica generated sequences are of type Byte instead of Long
-#7254 - Error when running "SELECT 1" query from AbstractDatabase in unsupported SQLDialect
-#7272 - Generator doesn't select appropriate DataType for Columns using an enum from another schema
-#7307 - Nondeterministic ordering in generated schemas in PostgreSQL
-#7316 - SQLDataType.CLOB translates to TINYTEXT rather than TEXT in MySQL
-#7332 - Workaround for regression in H2 generator where primary keys are no longer found
-
-
-Version 3.10.5 - February 15, 2018
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#7088 - Add support for SET SCHEMA and SET CATALOG
-
-Bug Fixes
----------
-#7080 - Support PostgreSQL SMALLSERIAL and BIGSERIAL types in parser / DDLDatabase
-#7090 - Parser and DDLDatabase cannot parse certain PostgreSQL types
-#7092 - ParsingStatement is not overriding all methods from DefaultStatement
-#7110 - Compilation error in generated DAOs when primary key is a composite type
-#7128 - NPE while fetching certain indexes during code generation
-#7159 - Add public internal API for use by code generator (to work around Scala issues)
-#7170 - Various parser bugs / missing features
-
-
-Version 3.10.4 - January 16, 2018
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#7041 - DDLDatabase should auto-create missing schemas
-#7072 - Add DataAccessException.getCause(Class<? extends Throwable>)
-
-Bug Fixes
----------
-#7012 - Invalid SQL rendered for inlined named parameters
-#7026 - DDLDatabase fails with MySQL ENUM columns
-#7029 - DDLDatabase fails with COMMENT on columns
-#7030 - DDLDatabase fails with MySQL TINYINT(1) type columns
-#7031 - DDLDatabase fails with MySQL UNIQUE INDEX clause
-#7033 - Remove broken Parser "Expected Tokens" error message
-#7036 - Plain SQL API should recognise multi-character PostgreSQL ltree operators
-#7038 - Plain SQL API should recognise multi-character PostgreSQL geometry operators
-#7046 - DDLDatabase fails with MySQL ON UPDATE
-#7059 - Generated Tables.scala has unused imports
-#7063 - Programmatic code generator Database configuration doesn't default to <includes>.*</includes>
-#7065 - NotSerializableException when Record references reflection cache
-#7071 - jOOQ-scala 2.11 cannot be built with JDK 9
-
-
-Version 3.10.3 - January 5, 2018
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#6900 - Log a link to GitHub when DDLDatabase runs into a ParserException
-#6965 - Generate hint about <deprecationOnUnknownType/> in Javadoc
-
-Bug Fixes
----------
-#6856 - sqlite_sequence is not a reliable way to discover identities
-#6888 - org.jooq.Meta ignores foreign key names
-#6890 - maven-deploy.bat's help options do not work (cannot be discovered easily)
-#6891 - In MySQL, an incorrect column default is generated when the default is CURRENT_TIMESTAMP
-#6894 - Scala generated code for Oracle queues does not compile
-#6901 - Parser API doesn't document thrown ParserException
-#6905 - Javadoc warnings in ExecuteListener
-#6924 - Clarify the meaning of MockResult.data == null
-#6974 - Firebird IF [ NOT ] EXISTS clause emulations broken
-#6981 - Wrong Javadoc on DropIndexOnStep
-#6983 - DDLDatabase and JPADatabase should use unique in-memory database name
-#6996 - Oracle array of object containing date mapped to LocalDate cannot be bound as a variable
-#7002 - Line numbers not aligned correctly between OSS and Pro edition
-
-
-Version 3.10.2 - November 29, 2017
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#6782 - Clarify DSL.currentDate() Javadoc: It creates ANSI SQL DATE values, not Oracle DATE
-#6784 - Add explicit unit of time specification to Query.queryTimeout()
-#6810 - Provide maven-deploy script to install artifacts on remote repository
-
-Bug Fixes
----------
-#6682 - Typo in ResultQuery Javadoc: thorws should be throws
-#6685 - Avoid creating a new DefaultConfiguration in DSLContext.select() and similar methods
-#6687 - Avoid allocation of CursorImpl.intern array
-#6692 - Prevent calling DSL.name() with empty arguments
-#6697 - Remove the DATA_LOCALLY_SCOPED_DATA_MAP in SelectQueryImpl
-#6700 - DSL.trueCondition() and DSL.falseCondition() should return constants
-#6710 - Parser.parse() fails on trailing whitespace
-#6711 - Avoid generating code with a redundant (Object) cast
-#6713 - Redundant Javadoc generated when deprecation for unknown types is generated
-#6716 - PostgreSQL RETURNING <col> AS <alias> is not rendered correctly
-#6731 - Typo in Cursor.fetchOne() Javadoc's deprecation hint
-#6738 - jooq-runtime-3.10.0 lists wrong version in namespace
-#6743 - Oracle OBJECT type declarations inside generated RECORD declarations are not bound correctly, if NULL
-#6748 - Avoid allocating a fresh "ExecuteListeners" instance in the absence of actual ExecuteListeners
-#6750 - Avoid adding the LoggerListener if the log level is more than DEBUG
-#6753 - Avoid various array allocations due to unnecessary varargs
-#6756 - Avoid unnecessary UnqualifiedName[] allocations in QualifiedField etc.
-#6759 - Avoid allocation of AbstractContext.visitListeners if unneeded
-#6775 - Improve MockDataProvider Javadoc about null or empty return values
-#6780 - Oracle's quoted string literals start with case-insensitive Q letter
-#6786 - Result.format() breaks when there is a tabulator in the content
-#6788 - Inefficient ProxyMapper allocates a new MutablePOJOMapper delegate every time
-#6791 - ConvertAll inefficiently unboxes and boxes primitive types
-#6801 - Optimise internal reflection cache by avoiding cache key arrays where possible
-#6805 - Override equals() and hashCode() in org.jooq.impl.Fields
-#6808 - Improve DefaultRecordMapper::init MappingException message
-#6828 - Error when passing java.util.Date to DSL.year(), month(), day(), hour(), minute(), second()
-#6830 - DayToSecond generates nanosecond precision for DAY_MICROSECOND interval
-#6842 - MockResultSet.getTimestamp(int, Calendar) ignores Calendar
-#6844 - SQLDataType.INTEGER.identity(true) not working for SQLLite
-#6846 - <deprecationOnUnknownTypes/> has no effect
-#6848 - Code generator doesn't work when Derby database uses non-standard collation
-#6858 - SQLiteTableDefinition.toString() prints "." after empty schema
-#6869 - Code generator doesn't work in Java 6 build, which calls java.lang.reflect.Method.getParameterCount()
-
-
-Version 3.10.1 - October 11, 2017
-================================================================================
-
-This is a 3.10 patch release with bug fixes
-
-Features and Improvements
--------------------------
-#6651 - Improve "no catalogs were loaded" error message
-#6655 - Improve code generator's INFO message when objects have no name
-
-Bug Fixes
----------
-#6622 - Constants.MINOR_VERSION points to 3.9 instead of 3.10
-#6624 - NPE "Error while fetching indexes" while generating code for function based indexes
-#6636 - Limit.numberOfRowsOrMax should be initalised from static value
-#6641 - QualifiedName.nonEmpty() shouldn't clone argument
-#6649 - Error while generating classes from Record Types and Oracle Types in Oracle 11g
-#6658 - Error in maven-install.bat and .sh scripts when installing cross released Scala deliverables
-#6667 - Costly null check in CombinedCondition constructor
-#6670 - Lazy initialise thread local ArrayLists in DefaultExecuteContext
-#6673 - DefaultBinding.escape() uses String.replace() rather than StringUtils.replace()
-#6677 - Add markdown to error message about slow SQL
+#3045 - DSL.groupConcat() without orderBy() is incorrectly emulated for Oracle
+#3777 - Deadlock when loading DataType classes
+#4277 - INSERT .. RETURNING acquires two different Connections for MySQL
+#4556 - Converter or Binding is not applied to standalone bind values that are passed to functions like DECODE(), COALESCE(), NVL(), etc.
+#5127 - Remove the DATA_LOCALLY_SCOPED_DATA_MAP in SelectQueryImpl
+#5537 - Keys.java shouldn't be generated when <globalObjectReferences/> is set to false
+#5574 - In MySQL, an incorrect column default is generated when the default is CURRENT_TIMESTAMP
+#5688 - PostgreSQL RETURNING <col> AS <alias> is not rendered correctly
+#5692 - jOOQ website CSS is broken on Android
+#6241 - DataType.nullable() and defaultValue() are not generated for enum types
+#6431 - Recursive CTE doesn't work on MySQL because of automatic UNION nesting
+#6485 - Various parser bugs / missing features
+#6607 - MockResultSet.getTimestamp(int, Calendar) ignores Calendar
+#6620 - NPE "Error while fetching indexes" while generating code for function based indexes
+#6621 - Manual should not display "Unsupported versions" header when there are none
+#6625 - Copyright statement in PDF manual is outdated
+#6626 - Manual does not list all contributors from ABOUT.txt
+#6635 - Limit.numberOfRowsOrMax should be initalised from static value
+#6638 - Avoid creating a new DefaultConfiguration in DSLContext.select() and similar methods
+#6640 - QualifiedName.nonEmpty() shouldn't clone argument
+#6643 - Error while generating classes from Record Types and Oracle Types in Oracle 11g
+#6657 - Error in maven-install.bat and .sh scripts when installing cross released Scala deliverables
+#6666 - Costly null check in CombinedCondition constructor
+#6669 - Lazy initialise thread local ArrayLists in DefaultExecuteContext
+#6672 - DefaultBinding.escape() uses String.replace() rather than StringUtils.replace()
+#6679 - Reduce GC pressure through lazy QueryPartList initialisation in SelectQueryImpl
+#6680 - Typo in ResultQuery Javadoc: thorws should be throws
+#6684 - Avoid allocation of CursorImpl.intern array
+#6691 - Prevent calling DSL.name() with empty arguments
+#6696 - Lazy allocate DefaultExecuteContext.batchXYZ arrays if not batching
+#6699 - DSL.trueCondition() and DSL.falseCondition() should return constants
+#6706 - [#6705] Avoid generating code with a redundant cast
+#6707 - Parser.parse() fails on trailing whitespace
+#6708 - DDLDatabase fails when engine=InnoDB is specified
+#6712 - Redundant Javadoc generated when deprecation for unknown types is generated
+#6726 - Support precision on TIME and TIMESTAMP data types
+#6727 - XMLDatabase should be lenient about XML namespace
+#6730 - Typo in Cursor.fetchOne() Javadoc's deprecation hint
+#6733 - jOOQ-scala 2.11 cannot be built with JDK 9
+#6742 - Oracle OBJECT type declarations inside generated RECORD declarations are not bound correctly, if NULL
+#6746 - Avoid allocating a fresh "ExecuteListeners" instance in the absence of actual ExecuteListeners
+#6747 - Avoid adding the LoggerListener if the log level is more than DEBUG
+#6752 - Avoid various array allocations due to unnecessary varargs
+#6755 - Avoid unnecessary UnqualifiedName[] allocations in QualifiedField etc.
+#6758 - Avoid allocation of AbstractContext.visitListeners if unneeded
+#6763 - PostgreSQL 10 multi column update expressions should use ROW()
+#6766 - Sakila example database: staff.picture column data is too long for mysql
+#6774 - Improve MockDataProvider Javadoc about null or empty return values
+#6779 - Oracle's quoted string literals start with case-insensitive Q letter
+#6785 - Result.format() breaks when there is a tabulator in the content
+#6787 - Inefficient ProxyMapper allocates a new MutablePOJOMapper delegate every time
+#6790 - ConvertAll inefficiently unboxes and boxes primitive types
+#6794 - Custom type converters ignored for table-valued (set-returning) function parameters.
+#6797 - Code generator doesn't work when Derby database uses non-standard collation
+#6800 - Optimise internal reflection cache by avoiding cache key arrays where possible
+#6803 - Cache RecordMapper instances in DefaultRecordMapperProvider
+#6804 - Override equals() and hashCode() in org.jooq.impl.Fields
+#6807 - Improve DefaultRecordMapper::init MappingException message
+#6820 - DayToSecond generates nanosecond precision for DAY_MICROSECOND interval
+#6825 - Error when passing java.util.Date to DSL.year(), month(), day(), hour(), minute(), second()
+#6841 - SQLDataType.INTEGER.identity(true) not working for SQLLite
+#6845 - <deprecationOnUnknownTypes/> has no effect
+#6854 - sqlite_sequence is not a reliable way to discover identities
+#6855 - SQLiteTableDefinition.toString() prints "." after empty schema
+#6860 - Code generator doesn't work in Java 6 build, which calls java.lang.reflect.Method.getParameterCount()
+#6873 - Line numbers not aligned correctly between OSS and Pro edition
+#6875 - scala AbstractKeys cannot be accessed
+#6880 - ALTER COLUMN .. SET with identity type generates wrong query in MySQL and MariaDB
+#6881 - maven-deploy.bat's help options do not work (cannot be discovered easily)
+#6887 - org.jooq.Meta ignores foreign key names
+#6893 - Scala generated code for Oracle queues does not compile
+#6898 - Parser API doesn't document thrown ParserException
+#6904 - Javadoc warnings in ExecuteListener
+#6912 - Bad inlining of Double.NaN in H2
+#6918 - Generated file headers comment is ill formatted
+#6923 - Clarify the meaning of MockResult.data == null
+#6930 - Compilation error in generated code when <enumConverter/> is applied to an enum column
+#6949 - Video on "learn" page is missing
+#6966 - In JavaGenerator printed overview, add missing flags
+#6967 - Oracle array of object containing date mapped to LocalDate cannot be bound as a variable
+#6972 - Manual examples for code generation includes / excludes contain wrong regular expressions
+#6973 - Firebird IF [ NOT ] EXISTS clause emulations broken
+#6979 - Wrong Javadoc on DropIndexOnStep
+#6980 - DDLDatabase and JPADatabase should use unique in-memory database name
+#6988 - DDLFlag.TABLE does not work correctly on DSLContext.ddl()
+#7001 - Confusing debug log output when fetchOptional or fetchOne throw TooManyRowsException
+#7009 - Invalid SQL rendered for inlined named parameters
+#7017 - DDLDatabase fails with MySQL ENUM columns
+#7019 - DDLDatabase fails with MySQL ON UPDATE
+#7020 - DDLDatabase fails with MySQL TINYINT(1) type columns
+#7021 - DDLDatabase fails with MySQL DATETIME columns
+#7022 - DDLDatabase fails with MySQL UNIQUE INDEX clause
+#7032 - Remove broken Parser "Expected Tokens" error message
+#7035 - Plain SQL API should recognise multi-character PostgreSQL ltree operators
+#7037 - Plain SQL API should recognise multi-character PostgreSQL geometry operators
+#7049 - Generated Tables.scala has unused imports
+#7051 - Generated scala code contains deprecation warning for TableImpl
+#7052 - [7051] Fix generated scala deprecation warning
+#7054 - [#7021] Add parser support for DATETIME data type.
+#7061 - Programmatic code generator Database configuration doesn't default to <includes>.*</includes>
+#7062 - NotSerializableException when Record references reflection cache
+#7068 - Compilation error in generated DAOs when primary key is a composite type
+#7074 - Support PostgreSQL SMALLSERIAL and BIGSERIAL types in parser / DDLDatabase
+#7078 - Excess whitespace in generated Scala case classes
+#7079 - Excess semi colon generated in Scala code
+#7084 - DDLDatabase not working with PostgresSQL database dump
+#7089 - Parser and DDLDatabase cannot parse certain PostgreSQL types
+#7091 - ParsingStatement is not overriding all methods from DefaultStatement
+#7102 - Inaccurate Javadoc for DSLContext.fetchValue() and fetchValues()
+#7114 - DSLContext.transactionXYZ() methods throw ConfigurationException with wrong message
+#7127 - NPE while fetching certain indexes during code generation
+#7135 - Bad ArrayRecord.toString() rendering for nested arrays in Oracle
+#7157 - Queries generates trailing separator / newline character
+#7171 - Various parser bugs / missing features
+#7176 - Regression in PostgreSQL MODE function implementation
+#7177 - Flawed implementation of SET SCHEMA for PostgreSQL
+#7179 - PostgresUtils.toPGXYZString() methods (and others) should avoid using String.replace() pre JDK 9
+#7183 - Cannot ORDER BY null in PostgreSQL, when Field.sortAsc() has no parameters
+#7186 - NullPointerException when MetaTable.getIndexes() call retrieves a function-based index expression
+#7189 - NullPointerException when DSL.name(Name...) contains a null Name argument
+#7191 - Using VARBINARY type with length on Oracle fails in DDL statements
+#7194 - H2 MetaTable's string column default values are wrong
+#7203 - DDLDatabase fails with order in Index statements
+#7206 - DDLDatabase reports DECIMAL(65535, 32767) for precision/scale-less decimals
+#7222 - IN (SELECT .. UNION SELECT ..) doesn't work on Derby
+#7224 - Do not emulate nested set operators if not strictly needed
+#7231 - Not all columns are fetched when plain SQL tables are mixed with generated ones
+#7243 - Vertica generated sequences are of type Byte instead of Long
+#7248 - Error when running "SELECT 1" query from AbstractDatabase in unsupported SQLDialect
+#7270 - Generating JOOQ-classes for CockroachDB fails when using PostgreSQLDatabase
+#7271 - Generator doesn't select appropriate DataType for Columns using an enum from another schema
+#7282 - Oracle LIMIT always generates OFFSET clause, even if not required
+#7292 - SQL Translation Error
+#7294 - SQL Translation Error
+#7298 - Internal Tools.peek() methods should not operate on strings, but on char[]
+#7299 - Missing whitespace between USING and (
+#7303 - Nondeterministic ordering in generated schemas in PostgreSQL
+#7315 - SQLDataType.CLOB translates to TINYTEXT rather than TEXT in MySQL
+#7321 - Make visiting a window actually conditional on its nullity.
+#7325 - Error when fetching SQLite timestamps in ISO format (including the letter T)
+#7330 - Workaround for regression in H2 generator where primary keys are no longer found
+#7335 - Optimise SelectLimitStep.limit(Param) for inline parameters
+#7338 - jOOQ 3.10.6 download fail
+#7351 - Error when binding null values to UUID types in PostgreSQL
+#7359 - IndexOutOfBounds when trying to do a MERGE with SELECT in Postgres
+#7370 - Regression in jOOQ 3.11 when binding unknown data types
+#7373 - Undocument <customType/> in jOOQ 3.10+ documentation
+#7376 - Internal FieldMapsForInsert.empty behaves incorrectly
+#7380 - Error in PLSQL procedure if CLOB OUT PARAMETER is > 32kb
+#7381 - 3.11 code generator for H2 throws "Error while fetching enums" exception
+#7392 - Do not use HSQLDB's undocumented NULL keyword for the absence of NOT NULL constraints in CREATE TABLE
+#7394 - InsertQuery.newRecord() without any values produces wrong SQL
+#7396 - Optimistic locking should run deep equality checks on arrays
+#7400 - ORA-01843: not a valid month binding JSR 310 to prepared statements
+#7402 - Regression on Oracle DATE IN OUT parameters
+#7404 - Oracle code generator does not recognise TIMESTAMP WITH TZ type in object types
+#7405 - DSL.inline(UDTRecord) does not work
+#7414 - XMLDatabase should use XML file's encoding, not default Charset
+#7416 - Misleading warning message when using external configurationFile with <matchers/>
+#7427 - Excess ORDER BY "rn" generated in ORACLE11G dialect when LIMIT is used without ORDER BY
+#7430 - ResultQuery.fetchOne() should not fetch second record on a LIMIT 1 query
+#7442 - ORA-00932 when running CAST(.. AS CLOB) in Oracle
+#7455 - ArrayIndexOutOfBoundsException on terminal operation of sorted ResultQuery.stream()
+#7456 - [#7455] Create spliterator correctly
+#7459 - SEEK with UNION doesn't work correctly
+#7460 - SEEK without WHERE produces excess 1 = 1 predicate
+#7463 - Statements provided by delegate should not close underlying connection
+#7488 - Wrong SQL generated in SQL Server when adding nanoseconds to a Timestamp
+#7492 - Clarify meaning of <name/> in data type rewriting in manual
+#7494 - Regression on DB2's INSERT .. RETURNING emulation
+#7497 - Specify capacity for internal ArrayLists whose size is known
+#7500 - Nullability is not correctly generated for Postgres JSONB columns
+#7501 - Binding ARRAY of jsonb in Postgres function results in SQLDialectNotSupportedException
+#7505 - JDBCDatabase doesn't recognise vendor-specific data types
+#7515 - SEEK operations do not auto-convert bind variables to appropriate type
+#7526 - Clean up Support annotations
+#7535 - Missing Meta Database references in the manual
+#7547 - Code generator should not generate "USER-DEFINED" for unknown data types
+#7548 - Underflow when binding small Double values to Oracle JDBC
 
 
 Version 3.10.0 - September 29, 2017

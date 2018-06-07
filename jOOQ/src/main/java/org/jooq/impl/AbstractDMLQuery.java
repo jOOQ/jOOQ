@@ -605,6 +605,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        returned = null;
+        returnedResult = null;
+
         if (returning.isEmpty()) {
             return super.execute(ctx, listener);
         }

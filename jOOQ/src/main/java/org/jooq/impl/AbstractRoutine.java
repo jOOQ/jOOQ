@@ -77,6 +77,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 
@@ -87,7 +88,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1609,11 +1609,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             RenderContext local = create(ctx).renderContext();
             toSQLQualifiedName(local);
 
-            Field<?>[] fields = new Field[getInParameters().size()];
-            Iterator<Parameter<?>> it = getInParameters().iterator();
             SQLDialect family = ctx.family();
-            for (int i = 0; it.hasNext(); i++) {
-                Parameter<?> parameter = it.next();
+            List<Field<?>> fields = new ArrayList<Field<?>>(getInParameters().size());
+            for (Parameter<?> parameter : getInParameters()) {
+
                 // [#1183] [#3533] Skip defaulted parameters
                 if (inValuesDefaulted.contains(parameter))
                     continue;
@@ -1624,19 +1623,19 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     // [#4920] In case there are any unnamed parameters, we mustn't
                     if (hasUnnamedParameters())
                         if (pgArgNeedsCasting(parameter))
-                            fields[i] = new Cast(getInValues().get(parameter), parameter.getDataType());
+                            fields.add(new Cast(getInValues().get(parameter), parameter.getDataType()));
                         else
-                            fields[i] = getInValues().get(parameter);
+                            fields.add(getInValues().get(parameter));
                     else
                         if (pgArgNeedsCasting(parameter))
-                            fields[i] = DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType()));
+                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
-                            fields[i] = DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter));
+                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
                 else
-                    fields[i] = getInValues().get(parameter);
+                    fields.add(getInValues().get(parameter));
             }
 
-            Field<T> result = function(local.render(), getDataType(), fields);
+            Field<T> result = function(local.render(), getDataType(), fields.toArray(EMPTY_FIELD));
 
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching

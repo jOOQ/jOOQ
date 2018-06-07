@@ -69,8 +69,12 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             bind0((BindContext) ctx);
     }
 
-    final void toSQL0(RenderContext context) {
-        switch (context.family()) {
+    final void toSQL0(RenderContext ctx) {
+        ParamType paramType = ctx.paramType();
+        if (isInline())
+            ctx.paramType(INLINED);
+
+        switch (ctx.family()) {
 
 
 
@@ -108,21 +112,21 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
-                toSQLInline(context);
-                return;
+                toSQLInline(ctx);
+                break;
             }
 
             // Assume default behaviour if dialect is not available
             default:
-                toSQLInline(context);
-                return;
+                toSQLInline(ctx);
+                break;
         }
+
+        if (isInline())
+            ctx.paramType(paramType);
     }
 
     private final void toSQLInline(RenderContext ctx) {
-        ParamType previous = ctx.paramType();
-        ctx.paramType(ParamType.INLINED);
-
         switch (ctx.family()) {
 
 
@@ -152,13 +156,12 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             separator = ", ";
         }
 
-        ctx.sql(')')
-           .paramType(previous);
+        ctx.sql(')');
     }
 
     @Deprecated
-    private final String getInlineConstructor(RenderContext context) {
-        switch (context.family()) {
+    private final String getInlineConstructor(RenderContext ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -172,12 +175,12 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
             // Assume default behaviour if dialect is not available
             default:
-                return Tools.getMappedUDTName(context.configuration(), value);
+                return Tools.getMappedUDTName(ctx.configuration(), value);
         }
     }
 
-    final void bind0(BindContext context) {
-        switch (context.family()) {
+    final void bind0(BindContext ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -195,13 +198,13 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
                 for (Field<?> field : value.fields())
-                    context.visit(val(value.get(field)));
+                    ctx.visit(val(value.get(field)));
 
                 break;
             }
 
             default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.dialect());
+                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + ctx.dialect());
         }
     }
 }

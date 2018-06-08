@@ -19,7 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.jooq.version>3.12.0-SNAPSHOT</org.jooq.version>
-        <h2.version>1.4.195</h2.version>
+        <h2.version>1.4.197</h2.version>
     </properties>
 
     <dependencies>

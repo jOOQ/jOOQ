@@ -180,9 +180,10 @@ To use jOOQ with Java 10, use the Java 8 distribution which has not yet been
 modularised, but contains Automatic-Module-Name specification to be forward
 compatible with future, modularised jOOQ distributions.
 
-Additionally, package names between jOOQ, jOOQ-meta, and jOOQ-codegen have been
+<strong>Additionally, package names between jOOQ, jOOQ-meta, and jOOQ-codegen have been
 cleaned up to prevent duplicate package names, and the JAXB dependency has been
-added explicitly to the various artefacts.
+added explicitly to the various artefacts. See https://github.com/jOOQ/jOOQ/issues/7419
+for more details</strong>
 
 
 End of Scala 2.11 support in the jOOQ Open Source Edition

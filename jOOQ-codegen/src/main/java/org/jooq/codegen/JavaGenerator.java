@@ -1015,20 +1015,34 @@ public class JavaGenerator extends AbstractGenerator {
 
         printDeprecationIfUnknownType(out, identityTypeFull);
         if (scala)
-            out.tab(2).println("val %s : %s[%s, %s] = %s.createIdentity(%s, %s)",
+            out.tab(2).print("val %s : %s[%s, %s] = ",
                 getStrategy().getJavaIdentifier(identity),
                 Identity.class,
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
+                identityType);
+        else
+            out.tab(2).print("public static %s<%s, %s> %s = ",
+                Identity.class,
+                out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
                 identityType,
+                getStrategy().getJavaIdentifier(identity));
+
+        printCreateIdentity(out, identity);
+
+        if (scala)
+            out.println();
+        else
+            out.println(";");
+    }
+
+    private void printCreateIdentity(JavaWriter out, IdentityDefinition identity) {
+        if (scala)
+            out.print("%s.createIdentity(%s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
         else
-            out.tab(2).println("public static %s<%s, %s> %s = %s.createIdentity(%s, %s);",
-                Identity.class,
-                out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
-                identityType,
-                getStrategy().getJavaIdentifier(identity),
+            out.print("%s.createIdentity(%s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
@@ -1052,19 +1066,33 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).println("val %s : %s[%s] = %s.createUniqueKey(%s, \"%s\", [[%s]])",
+            out.tab(2).print("val %s : %s[%s] = ",
                 getStrategy().getJavaIdentifier(uniqueKey),
                 UniqueKey.class,
+                out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
+        else
+            out.tab(2).print("public static final %s<%s> %s = ",
+                UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
+                getStrategy().getJavaIdentifier(uniqueKey));
+
+        printCreateUniqueKey(out, uniqueKey);
+
+        if (scala)
+            out.println();
+        else
+            out.println(";");
+    }
+
+    private void printCreateUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
+        if (scala)
+            out.print("%s.createUniqueKey(%s, \"%s\", [[%s]])",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
         else
-            out.tab(2).println("public static final %s<%s> %s = %s.createUniqueKey(%s, \"%s\", [[%s]]);",
-                UniqueKey.class,
-                out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
-                getStrategy().getJavaIdentifier(uniqueKey),
+            out.print("%s.createUniqueKey(%s, \"%s\", [[%s]])",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 escapeString(uniqueKey.getOutputName()),
@@ -3902,21 +3930,28 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Add primary / unique / foreign key information
-        if (generateRelations() && generateGlobalKeyReferences()) {
+        if (generateRelations()) {
             IdentityDefinition identity = table.getIdentity();
 
             // The identity column
             if (identity != null) {
                 final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
                 final String identityType = out.ref(identityTypeFull);
-                final String identityFullId = out.ref(getStrategy().getFullJavaIdentifier(identity), 2);
+                final String identityFullId = generateGlobalKeyReferences()
+                    ? out.ref(getStrategy().getFullJavaIdentifier(identity), 2)
+                    : null;
 
                 if (scala) {
                     out.println();
 
                     printDeprecationIfUnknownType(out, identityTypeFull);
                     out.tab(1).println("override def getIdentity : %s[%s, %s] = {", Identity.class, recordType, identityType);
-                    out.tab(2).println("%s", identityFullId);
+
+                    if (identityFullId != null)
+                        out.tab(2).println("%s", identityFullId);
+                    else
+                        printCreateIdentity(out, identity);
+
                     out.tab(1).println("}");
                 }
                 else {
@@ -3926,25 +3961,46 @@ public class JavaGenerator extends AbstractGenerator {
                         out.tab(1).overrideInherit();
 
                     out.tab(1).println("public %s<%s, %s> getIdentity() {", Identity.class, recordType, identityType);
-                    out.tab(2).println("return %s;", identityFullId);
+                    out.tab(2).print("return ");
+
+                    if (identityFullId != null)
+                        out.tab(2).println("%s", identityFullId);
+                    else
+                        printCreateIdentity(out, identity);
+
+                    out.println(";");
                     out.tab(1).println("}");
                 }
             }
 
             // The primary / main unique key
             if (primaryKey != null) {
-                final String keyFullId = out.ref(getStrategy().getFullJavaIdentifier(primaryKey), 2);
+                final String keyFullId = generateGlobalKeyReferences()
+                    ? out.ref(getStrategy().getFullJavaIdentifier(primaryKey), 2)
+                    : null;
 
                 if (scala) {
                     out.println();
                     out.tab(1).println("override def getPrimaryKey : %s[%s] = {", UniqueKey.class, recordType);
-                    out.tab(2).println("%s", keyFullId);
+
+                    if (keyFullId != null)
+                        out.tab(2).println("%s", keyFullId);
+                    else
+                        printCreateUniqueKey(out, primaryKey);
+
                     out.tab(1).println("}");
                 }
                 else {
                     out.tab(1).overrideInherit();
                     out.tab(1).println("public %s<%s> getPrimaryKey() {", UniqueKey.class, recordType);
-                    out.tab(2).println("return %s;", keyFullId);
+                    out.tab(2).print("return ");
+
+                    if (keyFullId != null)
+                        out.tab(2).println("%s", keyFullId);
+                    else
+                        printCreateUniqueKey(out, primaryKey);
+
+                    out.println(";");
                     out.tab(1).println("}");
                 }
             }
@@ -3952,25 +4008,64 @@ public class JavaGenerator extends AbstractGenerator {
             // The remaining unique keys
             List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
             if (uniqueKeys.size() > 0) {
-                final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(uniqueKeys), 2);
+                if (generateGlobalKeyReferences()) {
+                    final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(uniqueKeys), 2);
 
-                if (scala) {
-                    out.println();
-                    out.tab(1).println("override def getKeys : %s[ %s[%s] ] = {", List.class, UniqueKey.class, recordType);
-                    out.tab(2).println("return %s.asList[ %s[%s] ]([[%s]])", Arrays.class, UniqueKey.class, recordType, keyFullIds);
-                    out.tab(1).println("}");
+                    if (scala) {
+                        out.println();
+                        out.tab(1).println("override def getKeys : %s[ %s[%s] ] = {", List.class, UniqueKey.class, recordType);
+                        out.tab(2).println("return %s.asList[ %s[%s] ]([[%s]])", Arrays.class, UniqueKey.class, recordType, keyFullIds);
+                        out.tab(1).println("}");
+                    }
+                    else {
+                        out.tab(1).overrideInherit();
+                        out.tab(1).println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
+                        out.tab(2).println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
+                        out.tab(1).println("}");
+                    }
                 }
                 else {
-                    out.tab(1).overrideInherit();
-                    out.tab(1).println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
-                    out.tab(2).println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
-                    out.tab(1).println("}");
+                    String separator = "  ";
+
+                    if (scala) {
+                        out.println();
+                        out.tab(1).println("override def getKeys : %s[ %s[%s] ] = {", List.class, UniqueKey.class, recordType);
+                        out.tab(2).println("return %s.asList[ %s[%s] ](", Arrays.class, UniqueKey.class, recordType);
+
+                        for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                            out.tab(3).print("%s", separator);
+                            printCreateUniqueKey(out, uniqueKey);
+                            out.println();
+                            separator = ", ";
+                        }
+
+                        out.tab(2).println(")");
+                        out.tab(1).println("}");
+                    }
+                    else {
+                        out.tab(1).overrideInherit();
+                        out.tab(1).println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
+                        out.tab(2).println("return %s.<%s<%s>>asList(", Arrays.class, UniqueKey.class, recordType);
+
+                        for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                            out.tab(3).print("%s", separator);
+                            printCreateUniqueKey(out, uniqueKey);
+                            out.println();
+                            separator = ", ";
+                        }
+
+                        out.tab(2).println(");");
+                        out.tab(1).println("}");
+
+                    }
                 }
             }
 
             // Foreign keys
             List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
-            if (foreignKeys.size() > 0) {
+
+            // [#7554] Not yet supported with global key references turned off
+            if (foreignKeys.size() > 0 && generateGlobalKeyReferences()) {
                 final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys), 2);
 
                 if (scala) {

@@ -826,16 +826,33 @@ public class GenerationTool {
             }
         }
 
-        // [#2801] [#4620]
         catch (ClassNotFoundException e) {
-            if (className.startsWith("org.jooq.meta.") && className.endsWith("Database")) {
-                log.warn("Type not found",
+            String message = null;
+
+            // [#7556]
+            if (className.startsWith("org.jooq.util.")) {
+                log.warn("Type not found", message =
+                    "Your configured org.jooq.util type was not found.\n"
+                  + "Do note that in jOOQ 3.11, jOOQ-meta and jOOQ-codegen packages have been renamed. New package names are:\n"
+                  + "- org.jooq.meta\n"
+                  + "- org.jooq.meta.extensions\n"
+                  + "- org.jooq.codegen\n"
+                  + "- org.jooq.codegen.maven\n"
+                  + "See https://github.com/jOOQ/jOOQ/issues/7419 for details");
+            }
+
+            // [#2801] [#4620]
+            else if (className.startsWith("org.jooq.meta.") && className.endsWith("Database")) {
+                log.warn("Type not found", message =
                       "Your configured database type was not found. This can have several reasons:\n"
                     + "- You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central.\n"
                     + "- You have mis-typed your class name.");
             }
 
-            throw e;
+            if (message == null)
+                throw e;
+            else
+                throw new ClassNotFoundException(message, e);
         }
     }
 

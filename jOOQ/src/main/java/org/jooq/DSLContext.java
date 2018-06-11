@@ -83,8 +83,6 @@ import java.util.concurrent.Executor;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
-
-import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.conf.ParamType;
@@ -3867,7 +3865,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep1 with(String alias, String fieldAlias1);
 
@@ -3884,7 +3881,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2);
 
@@ -3901,7 +3897,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
 
@@ -3918,7 +3913,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
 
@@ -3935,7 +3929,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
 
@@ -3952,7 +3945,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
 
@@ -3969,7 +3961,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
 
@@ -3986,7 +3977,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
 
@@ -4003,7 +3993,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
 
@@ -4020,7 +4009,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
 
@@ -4037,7 +4025,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
 
@@ -4054,7 +4041,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
 
@@ -4071,7 +4057,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
 
@@ -4088,7 +4073,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
 
@@ -4105,7 +4089,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
 
@@ -4122,7 +4105,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
 
@@ -4139,7 +4121,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
 
@@ -4156,7 +4137,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
 
@@ -4173,7 +4153,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
 
@@ -4190,7 +4169,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
 
@@ -4207,7 +4185,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
 
@@ -4224,7 +4201,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
@@ -4241,7 +4217,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep1 with(Name alias, Name fieldAlias1);
 
@@ -4258,7 +4233,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2);
 
@@ -4275,7 +4249,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
 
@@ -4292,7 +4265,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
 
@@ -4309,7 +4281,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
 
@@ -4326,7 +4297,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
 
@@ -4343,7 +4313,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
 
@@ -4360,7 +4329,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
 
@@ -4377,7 +4345,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
 
@@ -4394,7 +4361,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
 
@@ -4411,7 +4377,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
 
@@ -4428,7 +4393,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
 
@@ -4445,7 +4409,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
 
@@ -4462,7 +4425,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
 
@@ -4479,7 +4441,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
 
@@ -4496,7 +4457,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
 
@@ -4513,7 +4473,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
 
@@ -4530,7 +4489,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
 
@@ -4547,7 +4505,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
 
@@ -4564,7 +4521,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
 
@@ -4581,7 +4537,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
 
@@ -4598,7 +4553,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
@@ -4749,7 +4703,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep1 withRecursive(String alias, String fieldAlias1);
 
@@ -4766,7 +4719,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2);
 
@@ -4783,7 +4735,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
 
@@ -4800,7 +4751,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
 
@@ -4817,7 +4767,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
 
@@ -4834,7 +4783,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
 
@@ -4851,7 +4799,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
 
@@ -4868,7 +4815,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
 
@@ -4885,7 +4831,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
 
@@ -4902,7 +4847,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
 
@@ -4919,7 +4863,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
 
@@ -4936,7 +4879,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
 
@@ -4953,7 +4895,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
 
@@ -4970,7 +4911,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
 
@@ -4987,7 +4927,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
 
@@ -5004,7 +4943,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
 
@@ -5021,7 +4959,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
 
@@ -5038,7 +4975,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
 
@@ -5055,7 +4991,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
 
@@ -5072,7 +5007,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
 
@@ -5089,7 +5023,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
 
@@ -5106,7 +5039,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
@@ -5123,7 +5055,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep1 withRecursive(Name alias, Name fieldAlias1);
 
@@ -5140,7 +5071,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2);
 
@@ -5157,7 +5087,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
 
@@ -5174,7 +5103,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
 
@@ -5191,7 +5119,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
 
@@ -5208,7 +5135,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
 
@@ -5225,7 +5151,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
 
@@ -5242,7 +5167,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
 
@@ -5259,7 +5183,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
 
@@ -5276,7 +5199,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
 
@@ -5293,7 +5215,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
 
@@ -5310,7 +5231,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
 
@@ -5327,7 +5247,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
 
@@ -5344,7 +5263,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
 
@@ -5361,7 +5279,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
 
@@ -5378,7 +5295,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
 
@@ -5395,7 +5311,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
 
@@ -5412,7 +5327,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
 
@@ -5429,7 +5343,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
 
@@ -5446,7 +5359,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
 
@@ -5463,7 +5375,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
 
@@ -5480,7 +5391,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
     WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
@@ -5702,7 +5612,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1);
 
@@ -5732,7 +5641,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2> SelectSelectStep<Record2<T1, T2>> select(SelectField<T1> field1, SelectField<T2> field2);
 
@@ -5762,7 +5670,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
@@ -5792,7 +5699,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
@@ -5822,7 +5728,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
@@ -5852,7 +5757,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
@@ -5882,7 +5786,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
@@ -5912,7 +5815,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
@@ -5942,7 +5844,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
@@ -5972,7 +5873,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
@@ -6002,7 +5902,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
@@ -6032,7 +5931,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
@@ -6062,7 +5960,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
@@ -6092,7 +5989,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
@@ -6122,7 +6018,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
@@ -6152,7 +6047,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
@@ -6182,7 +6076,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
@@ -6212,7 +6105,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
@@ -6242,7 +6134,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
@@ -6272,7 +6163,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
@@ -6302,7 +6192,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
@@ -6332,7 +6221,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
@@ -6432,7 +6320,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1);
 
@@ -6462,7 +6349,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2);
 
@@ -6492,7 +6378,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
@@ -6522,7 +6407,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
@@ -6552,7 +6436,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
@@ -6582,7 +6465,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
@@ -6612,7 +6494,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
@@ -6642,7 +6523,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
@@ -6672,7 +6552,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
@@ -6702,7 +6581,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
@@ -6732,7 +6610,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
@@ -6762,7 +6639,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
@@ -6792,7 +6668,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
@@ -6822,7 +6697,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
@@ -6852,7 +6726,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
@@ -6882,7 +6755,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
@@ -6912,7 +6784,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
@@ -6942,7 +6813,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
@@ -6972,7 +6842,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
@@ -7002,7 +6871,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
@@ -7032,7 +6900,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
@@ -7062,7 +6929,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
@@ -7206,7 +7072,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1);
 
@@ -7224,7 +7089,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2);
 
@@ -7242,7 +7106,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
@@ -7260,7 +7123,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
@@ -7278,7 +7140,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
@@ -7296,7 +7157,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
@@ -7314,7 +7174,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
@@ -7332,7 +7191,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -7350,7 +7208,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
@@ -7368,7 +7225,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
@@ -7386,7 +7242,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
@@ -7404,7 +7259,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
@@ -7422,7 +7276,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
@@ -7440,7 +7293,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
@@ -7458,7 +7310,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
@@ -7476,7 +7327,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
@@ -7494,7 +7344,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
@@ -7512,7 +7361,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
@@ -7530,7 +7378,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
@@ -7548,7 +7395,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
@@ -7566,7 +7412,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
@@ -7584,7 +7429,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .execute();
      * </pre></code>
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
@@ -7746,7 +7590,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1);
 
@@ -7756,7 +7599,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2);
 
@@ -7766,7 +7608,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
@@ -7776,7 +7617,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
@@ -7786,7 +7626,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
@@ -7796,7 +7635,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
@@ -7806,7 +7644,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
@@ -7816,7 +7653,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -7826,7 +7662,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
@@ -7836,7 +7671,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
@@ -7846,7 +7680,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
@@ -7856,7 +7689,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
@@ -7866,7 +7698,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
@@ -7876,7 +7707,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
@@ -7886,7 +7716,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
@@ -7896,7 +7725,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
@@ -7906,7 +7734,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
@@ -7916,7 +7743,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
@@ -7926,7 +7752,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
@@ -7936,7 +7761,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
@@ -7946,7 +7770,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
@@ -7956,7 +7779,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
@@ -10122,7 +9944,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1> Record1<T1> newRecord(Field<T1> field1);
 
     /**
@@ -10134,7 +9955,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2> Record2<T1, T2> newRecord(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -10146,7 +9966,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3> Record3<T1, T2, T3> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -10158,7 +9977,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4> Record4<T1, T2, T3, T4> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -10170,7 +9988,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -10182,7 +9999,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -10194,7 +10010,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -10206,7 +10021,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -10218,7 +10032,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -10230,7 +10043,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -10242,7 +10054,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -10254,7 +10065,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -10266,7 +10076,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -10278,7 +10087,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -10290,7 +10098,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -10302,7 +10109,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -10314,7 +10120,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -10326,7 +10131,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -10338,7 +10142,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -10350,7 +10153,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -10362,7 +10164,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -10374,7 +10175,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new record
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 // [jooq-tools] END [newRecord]
@@ -10426,7 +10226,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1> Result<Record1<T1>> newResult(Field<T1> field1);
 
     /**
@@ -10438,7 +10237,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2> Result<Record2<T1, T2>> newResult(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -10450,7 +10248,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3> Result<Record3<T1, T2, T3>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -10462,7 +10259,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4> Result<Record4<T1, T2, T3, T4>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -10474,7 +10270,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5> Result<Record5<T1, T2, T3, T4, T5>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -10486,7 +10281,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6> Result<Record6<T1, T2, T3, T4, T5, T6>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -10498,7 +10292,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7> Result<Record7<T1, T2, T3, T4, T5, T6, T7>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -10510,7 +10303,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8> Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -10522,7 +10314,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -10534,7 +10325,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -10546,7 +10336,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -10558,7 +10347,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -10570,7 +10358,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -10582,7 +10369,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -10594,7 +10380,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -10606,7 +10391,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -10618,7 +10402,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -10630,7 +10413,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -10642,7 +10424,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -10654,7 +10435,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -10666,7 +10446,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -10678,7 +10457,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @return The new result
      */
-    @Generated("This method was generated using jOOQ-tools")
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> newResult(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 // [jooq-tools] END [newResult]

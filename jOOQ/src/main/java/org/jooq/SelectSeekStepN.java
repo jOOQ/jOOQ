@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.

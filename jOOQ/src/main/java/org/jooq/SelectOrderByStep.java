@@ -43,8 +43,6 @@ import static org.jooq.SQLDialect.CUBRID;
 
 import java.util.Collection;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -112,154 +110,132 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1> SelectSeekStep1<R, T1> orderBy(OrderField<T1> field1);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2> SelectSeekStep2<R, T1, T2> orderBy(OrderField<T1> field1, OrderField<T2> field2);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3> SelectSeekStep3<R, T1, T2, T3> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4> SelectSeekStep4<R, T1, T2, T3, T4> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5> SelectSeekStep5<R, T1, T2, T3, T4, T5> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6> SelectSeekStep6<R, T1, T2, T3, T4, T5, T6> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7> SelectSeekStep7<R, T1, T2, T3, T4, T5, T6, T7> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSeekStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSeekStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSeekStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSeekStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSeekStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSeekStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSeekStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSeekStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSeekStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSeekStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSeekStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSeekStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18, OrderField<T19> field19);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSeekStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18, OrderField<T19> field19, OrderField<T20> field20);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18, OrderField<T19> field19, OrderField<T20> field20, OrderField<T21> field21);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Generated("This method was generated using jOOQ-tools")
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18, OrderField<T19> field19, OrderField<T20> field20, OrderField<T21> field21, OrderField<T22> field22);
 

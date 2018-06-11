@@ -39,8 +39,6 @@ package org.jooq;
 
 import java.util.Collection;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -57,7 +55,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplicateStep<R> {
 
     /**

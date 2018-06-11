@@ -56,12 +56,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
-import java.util.Collection;
-
-import javax.annotation.Generated;
-
+import org.jooq.Comparator;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+
+import java.util.Collection;
 
 /**
  * A model type for a row value expression with degree <code>7</code>.
@@ -72,7 +71,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
 
     // ------------------------------------------------------------------------

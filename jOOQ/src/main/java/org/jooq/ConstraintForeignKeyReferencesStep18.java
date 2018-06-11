@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import javax.annotation.Generated;
-
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
  * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>
@@ -46,7 +44,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface ConstraintForeignKeyReferencesStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> {
 
     /**

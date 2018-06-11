@@ -37,15 +37,12 @@
  */
 package org.jooq;
 
-import javax.annotation.Generated;
-
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
  * predicate.
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface BetweenAndStep6<T1, T2, T3, T4, T5, T6> {
 
     /**

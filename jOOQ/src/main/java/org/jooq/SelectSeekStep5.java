@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import javax.annotation.Generated;
+import org.jooq.Record;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -81,7 +81,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface SelectSeekStep5<R extends Record, T1, T2, T3, T4, T5> extends SelectLimitStep<R> {
 
     /**

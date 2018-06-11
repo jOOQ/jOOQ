@@ -46,8 +46,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -62,7 +60,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**

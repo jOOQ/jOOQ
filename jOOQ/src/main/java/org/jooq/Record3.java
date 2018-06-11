@@ -37,15 +37,12 @@
  */
 package org.jooq;
 
-import javax.annotation.Generated;
-
 /**
  * A model type for a records with degree <code>3</code>
  *
  * @see Row3
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface Record3<T1, T2, T3> extends Record {
 
     // ------------------------------------------------------------------------

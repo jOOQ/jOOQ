@@ -52,8 +52,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
-import javax.annotation.Generated;
-
 /**
  * A <code>DerivedColumnList</code> is a name of a table expression with
  * optional derived column list.
@@ -63,7 +61,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface DerivedColumnList1 extends QueryPart {
 
     /**

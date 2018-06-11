@@ -52,8 +52,6 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
 
 import java.util.Collection;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -68,7 +66,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface MergeKeyStep1<R extends Record, T1> extends MergeValuesStep1<R, T1> {
 
     /**

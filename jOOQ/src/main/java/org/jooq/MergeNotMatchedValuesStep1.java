@@ -48,8 +48,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 
 import java.util.Collection;
 
-import javax.annotation.Generated;
-
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -69,7 +67,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
 
     /**

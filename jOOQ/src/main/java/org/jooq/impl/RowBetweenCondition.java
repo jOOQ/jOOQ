@@ -70,9 +70,15 @@ import static org.jooq.impl.Keywords.K_SYMMETRIC;
 
 import java.util.EnumSet;
 
-import javax.annotation.Generated;
-
 import org.jooq.BetweenAndStep1;
+import org.jooq.BetweenAndStep2;
+import org.jooq.BetweenAndStep3;
+import org.jooq.BetweenAndStep4;
+import org.jooq.BetweenAndStep5;
+import org.jooq.BetweenAndStep6;
+import org.jooq.BetweenAndStep7;
+import org.jooq.BetweenAndStep8;
+import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStep10;
 import org.jooq.BetweenAndStep11;
 import org.jooq.BetweenAndStep12;
@@ -83,17 +89,9 @@ import org.jooq.BetweenAndStep16;
 import org.jooq.BetweenAndStep17;
 import org.jooq.BetweenAndStep18;
 import org.jooq.BetweenAndStep19;
-import org.jooq.BetweenAndStep2;
 import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
-import org.jooq.BetweenAndStep3;
-import org.jooq.BetweenAndStep4;
-import org.jooq.BetweenAndStep5;
-import org.jooq.BetweenAndStep6;
-import org.jooq.BetweenAndStep7;
-import org.jooq.BetweenAndStep8;
-import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStepN;
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -103,6 +101,14 @@ import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -113,19 +119,19 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
-import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Row;
 import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -136,24 +142,15 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
-import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowBetweenCondition<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractCondition
 implements

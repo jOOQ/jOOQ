@@ -49,8 +49,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-
-import javax.annotation.Generated;
+// ...
+// ...
 
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
@@ -69,7 +69,6 @@ import javax.annotation.Generated;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface WithAsStep14 {
 
     /**

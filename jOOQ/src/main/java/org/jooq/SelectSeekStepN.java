@@ -79,7 +79,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-@Generated("This class was generated using jOOQ-tools")
 public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
 
     /**

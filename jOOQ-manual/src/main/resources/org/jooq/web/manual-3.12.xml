@@ -726,7 +726,7 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
   <version>{jooq-version}</version>
 </dependency>]]></xml><html>
 
-                                            <h3>Commercial Editions (Java 8+)</h3>
+                                            <h3>Commercial Editions (Java 9+)</h3>
 
 </html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
 <dependency>
@@ -741,6 +741,25 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 </dependency>
 <dependency>
   <groupId>org.jooq.pro</groupId>
+  <artifactId>jooq-codegen</artifactId>
+  <version>{jooq-version}</version>
+</dependency>]]></xml><html>
+
+                                            <h3>Commercial Editions (Java 8+)</h3>
+
+</html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
+<dependency>
+  <groupId>org.jooq.pro-java-8</groupId>
+  <artifactId>jooq</artifactId>
+  <version>{jooq-version}</version>
+</dependency>
+<dependency>
+  <groupId>org.jooq.pro-java-8</groupId>
+  <artifactId>jooq-meta</artifactId>
+  <version>{jooq-version}</version>
+</dependency>
+<dependency>
+  <groupId>org.jooq.pro-java-8</groupId>
   <artifactId>jooq-codegen</artifactId>
   <version>{jooq-version}</version>
 </dependency>]]></xml><html>
@@ -1165,6 +1184,7 @@ public class Main {
     <dependency>
         <!-- Use org.jooq            for the Open Source Edition
                  org.jooq.pro        for commercial editions,
+                 org.jooq.pro-java-8 for commercial editions with Java 8 support,
                  org.jooq.pro-java-6 for commercial editions with Java 6 support,
                  org.jooq.trial      for the free trial edition
 
@@ -1502,6 +1522,7 @@ public class TransactionTest {
 <dependency>
     <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
+             org.jooq.pro-java-8 for commercial editions with Java 8 support,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
              org.jooq.trial      for the free trial edition
 
@@ -1584,6 +1605,7 @@ public class TransactionTest {
 </html><xml><![CDATA[<plugin>
     <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
+             org.jooq.pro-java-8 for commercial editions with Java 8 support,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
              org.jooq.trial      for the free trial edition
 
@@ -1957,6 +1979,7 @@ $$ LANGUAGE PLPGSQL;
             <plugin>
                 <!-- Use org.jooq            for the Open Source Edition
                          org.jooq.pro        for commercial editions,
+                         org.jooq.pro-java-8 for commercial editions with Java 8 support,
                          org.jooq.pro-java-6 for commercial editions with Java 6 support,
                          org.jooq.trial      for the free trial edition
 
@@ -1996,6 +2019,7 @@ $$ LANGUAGE PLPGSQL;
         <dependency>
             <!-- Use org.jooq            for the Open Source Edition
                      org.jooq.pro        for commercial editions,
+                     org.jooq.pro-java-8 for commercial editions with Java 8 support,
                      org.jooq.pro-java-6 for commercial editions with Java 6 support,
                      org.jooq.trial      for the free trial edition
 
@@ -15203,6 +15227,7 @@ result.forEach((Object[] entities) -> {
   <!-- Specify the maven code generator plugin -->
   <!-- Use org.jooq            for the Open Source Edition
            org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-8 for commercial editions with Java 8 support,
            org.jooq.pro-java-6 for commercial editions with Java 6 support,
            org.jooq.trial      for the free trial edition
 
@@ -18860,6 +18885,7 @@ public class Book {
 </html><xml><![CDATA[<dependency>
     <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
+             org.jooq.pro-java-8 for commercial editions with Java 8 support,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
              org.jooq.trial      for the free trial edition
 
@@ -19262,6 +19288,7 @@ CREATE TABLE book_to_book_store (
   <!-- Specify the maven code generator plugin -->
   <!-- Use org.jooq            for the Open Source Edition
            org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-8 for commercial editions with Java 8 support,
            org.jooq.pro-java-6 for commercial editions with Java 6 support,
            org.jooq.trial      for the free trial edition
 
@@ -19363,6 +19390,7 @@ CREATE TABLE book_to_book_store (
     <dependency>
       <!-- Use org.jooq            for the Open Source Edition
                org.jooq.pro        for commercial editions,
+               org.jooq.pro-java-8 for commercial editions with Java 8 support,
                org.jooq.pro-java-6 for commercial editions with Java 6 support,
                org.jooq.trial      for the free trial edition
 
@@ -19529,6 +19557,7 @@ org.jooq.codegen.GenerationTool.generate(
 </html><xml><![CDATA[<dependency>
   <!-- Use org.jooq            for the Open Source edition
            org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-8 for commercial editions with Java 8 support,
            org.jooq.pro-java-6 for commercial editions with Java 6 support,
            org.jooq.trial      for the free trial edition -->
 

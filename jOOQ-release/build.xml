@@ -138,6 +138,7 @@
         <delete dir="${dir.release}/${dir.version}"/>
     </target>
 
+	<!-- [java-9] -->
     <!-- [java-8] -->
     <!-- [trial] -->
     <target name="release-oss" description="Release a new version">
@@ -148,6 +149,16 @@
         <antcall target="copy-src"/>
         <antcall target="rest"/>
     </target>
+
+
+
+
+
+
+
+
+
+
 
 
 

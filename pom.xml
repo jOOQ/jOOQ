@@ -297,13 +297,16 @@
 
 
 
+
+
+
     </modules>
 
     <profiles>
         <profile>
             <id>default</id>
             <properties>
-                <java.version>1.8</java.version>
+                <java.version>10</java.version>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -313,7 +316,7 @@
         <profile>
             <id>release-oss</id>
             <properties>
-                <java.version>1.8</java.version>
+                <java.version>10</java.version>
             </properties>
             <build>
                 <plugins>
@@ -345,6 +348,70 @@
                 </plugins>
             </build>
         </profile>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

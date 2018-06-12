@@ -1,0 +1,16 @@
+/* [java-9] */
+/**
+ * The jOOQ code generation maven plugin module.
+ */
+module org.jooq.codegen.maven {
+    requires org.jooq;
+    requires org.jooq.meta;
+    requires org.jooq.codegen;
+
+    requires maven.plugin.annotations;
+
+    // Split packages between these
+    requires maven.core;
+    requires maven.plugin.api;
+}
+/* [/java-9] */

@@ -165,6 +165,15 @@
                             <arg>-Xlint:varargs</arg>
                         </compilerArgs>
                     </configuration>
+
+                    <!-- Required to compile with Java 10 https://stackoverflow.com/a/49398936/521799 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>6.2</version> <!-- Use newer version of ASM -->
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -214,13 +223,13 @@
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.5.0</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.5</version>
+                    <version>3.5.2</version>
                 </plugin>
 
                 <plugin>
@@ -273,10 +282,10 @@
         <!-- [java-8] -->
         <module>jOOQ-checker</module>
         <!-- [/java-8] -->
-        <module>jOOQ-codegen</module>
-        <module>jOOQ-codegen-maven</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
+        <module>jOOQ-codegen</module>
+        <module>jOOQ-codegen-maven</module>
         <module>jOOQ-scala_2.12</module>
 
 

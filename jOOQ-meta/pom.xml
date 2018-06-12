@@ -49,5 +49,12 @@
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
         </dependency>
+
+        <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>

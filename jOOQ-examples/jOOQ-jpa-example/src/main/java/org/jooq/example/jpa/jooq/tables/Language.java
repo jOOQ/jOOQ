@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = 59039490;
+    private static final long serialVersionUID = 105795132;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -119,7 +119,8 @@ public class Language extends TableImpl<LanguageRecord> {
      */
     @Override
     public Identity<LanguageRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_LANGUAGE;
+        return Keys.IDENTITY_LANGUAGE
+        ;
     }
 
     /**
@@ -127,7 +128,8 @@ public class Language extends TableImpl<LanguageRecord> {
      */
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
-        return Keys.CONSTRAINT_C;
+        return Keys.CONSTRAINT_C
+        ;
     }
 
     /**

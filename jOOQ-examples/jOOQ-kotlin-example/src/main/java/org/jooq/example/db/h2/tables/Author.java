@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -1267795772;
+    private static final long serialVersionUID = -196275582;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -140,7 +140,8 @@ public class Author extends TableImpl<AuthorRecord> {
      */
     @Override
     public Identity<AuthorRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_AUTHOR;
+        return Keys.IDENTITY_AUTHOR
+        ;
     }
 
     /**
@@ -148,7 +149,8 @@ public class Author extends TableImpl<AuthorRecord> {
      */
     @Override
     public UniqueKey<AuthorRecord> getPrimaryKey() {
-        return Keys.PK_T_AUTHOR;
+        return Keys.PK_T_AUTHOR
+        ;
     }
 
     /**

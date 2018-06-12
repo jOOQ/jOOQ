@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>integration</artifactId>
+            <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
             <type>jar</type>
             <scope>provided</scope>
@@ -106,8 +106,8 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
+            <scope>runtime</scope>
         </dependency>
-
 
 
 

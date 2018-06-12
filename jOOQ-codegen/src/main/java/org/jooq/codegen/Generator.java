@@ -40,8 +40,6 @@ package org.jooq.codegen;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
-
 import org.jooq.meta.Database;
 
 /**
@@ -139,12 +137,12 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether the {@link Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} annotation should be generated
      */
     boolean generateGeneratedAnnotation();
 
     /**
-     * Whether the {@link Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} annotation should be generated
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 

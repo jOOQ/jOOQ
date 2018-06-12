@@ -37,6 +37,7 @@ public class Indexes {
     public static final Index FK_T_BOOK_CO_AUTHOR_ID_INDEX_1 = Indexes0.FK_T_BOOK_CO_AUTHOR_ID_INDEX_1;
     public static final Index PRIMARY_KEY_1 = Indexes0.PRIMARY_KEY_1;
     public static final Index PRIMARY_KEY_F = Indexes0.PRIMARY_KEY_F;
+    public static final Index FK_B2BS_BS_NAME_INDEX_2 = Indexes0.FK_B2BS_BS_NAME_INDEX_2;
     public static final Index FK_B2BS_B_ID_INDEX_2 = Indexes0.FK_B2BS_B_ID_INDEX_2;
     public static final Index PRIMARY_KEY_2 = Indexes0.PRIMARY_KEY_2;
 
@@ -50,6 +51,7 @@ public class Indexes {
         public static Index FK_T_BOOK_CO_AUTHOR_ID_INDEX_1 = Internal.createIndex("FK_T_BOOK_CO_AUTHOR_ID_INDEX_1", Book.BOOK, new OrderField[] { Book.BOOK.CO_AUTHOR_ID }, false);
         public static Index PRIMARY_KEY_1 = Internal.createIndex("PRIMARY_KEY_1", Book.BOOK, new OrderField[] { Book.BOOK.ID }, true);
         public static Index PRIMARY_KEY_F = Internal.createIndex("PRIMARY_KEY_F", BookStore.BOOK_STORE, new OrderField[] { BookStore.BOOK_STORE.NAME }, true);
+        public static Index FK_B2BS_BS_NAME_INDEX_2 = Internal.createIndex("FK_B2BS_BS_NAME_INDEX_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME }, false);
         public static Index FK_B2BS_B_ID_INDEX_2 = Internal.createIndex("FK_B2BS_B_ID_INDEX_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, false);
         public static Index PRIMARY_KEY_2 = Internal.createIndex("PRIMARY_KEY_2", BookToBookStore.BOOK_TO_BOOK_STORE, new OrderField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
     }

@@ -1,0 +1,13 @@
+/* [java-9] */
+/**
+ * The jOOQ checker module
+ */
+/*
+// Modularisation not possible, yet: https://github.com/typetools/checker-framework/issues/2024
+module org.jooq.checker {
+    requires org.jooq;
+
+    requires checker;
+}
+*/
+/* [/java-9] */

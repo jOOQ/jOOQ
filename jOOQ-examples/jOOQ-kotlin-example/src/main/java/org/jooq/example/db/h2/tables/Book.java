@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -1555387226;
+    private static final long serialVersionUID = -1912553945;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -109,7 +109,7 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
      */
-    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP.precision(23), this, "");
+    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP.precision(26), this, "");
 
     /**
      * Create a <code>PUBLIC.BOOK</code> table reference
@@ -165,7 +165,8 @@ public class Book extends TableImpl<BookRecord> {
      */
     @Override
     public Identity<BookRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_BOOK;
+        return Keys.IDENTITY_BOOK
+        ;
     }
 
     /**
@@ -173,7 +174,8 @@ public class Book extends TableImpl<BookRecord> {
      */
     @Override
     public UniqueKey<BookRecord> getPrimaryKey() {
-        return Keys.PK_T_BOOK;
+        return Keys.PK_T_BOOK
+        ;
     }
 
     /**

@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
 
-    private static final long serialVersionUID = -577579416;
+    private static final long serialVersionUID = 616165327;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_TO_BOOK_STORE</code>
@@ -110,7 +110,7 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FK_B2BS_B_ID_INDEX_2, Indexes.PRIMARY_KEY_2);
+        return Arrays.<Index>asList(Indexes.FK_B2BS_BS_NAME_INDEX_2, Indexes.FK_B2BS_B_ID_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
     /**
@@ -118,7 +118,8 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
      */
     @Override
     public UniqueKey<BookToBookStoreRecord> getPrimaryKey() {
-        return Keys.PK_B2BS;
+        return Keys.PK_B2BS
+        ;
     }
 
     /**

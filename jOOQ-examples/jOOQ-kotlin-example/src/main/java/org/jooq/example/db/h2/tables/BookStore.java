@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = 1153022795;
+    private static final long serialVersionUID = 1313017441;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -113,7 +113,8 @@ public class BookStore extends TableImpl<BookStoreRecord> {
      */
     @Override
     public UniqueKey<BookStoreRecord> getPrimaryKey() {
-        return Keys.UK_T_BOOK_STORE_NAME;
+        return Keys.UK_T_BOOK_STORE_NAME
+        ;
     }
 
     /**

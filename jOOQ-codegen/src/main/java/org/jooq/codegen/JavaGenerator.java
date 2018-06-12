@@ -3870,29 +3870,17 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences()) {
-            boolean hasInboundForeignKeys = false;
+            out.println();
 
-            uniqueKeyLoop:
-            for (UniqueKeyDefinition u : table.getUniqueKeys()) {
-                if (!u.getForeignKeys().isEmpty()) {
-                    hasInboundForeignKeys = true;
-                    break uniqueKeyLoop;
-                }
+            if (scala) {
+                out.tab(1).println("def this(child : %s[_ <: %s], key : %s[_ <: %s, %s]) = {", Table.class, Record.class, ForeignKey.class, Record.class, recordType);
+                out.tab(2).println("this(%s.createPathAlias(child, key), child, key, %s, null)", Internal.class, tableId);
+                out.tab(1).println("}");
             }
-
-            if (hasInboundForeignKeys) {
-                out.println();
-
-                if (scala) {
-                    out.tab(1).println("def this(child : %s[_ <: %s], key : %s[_ <: %s, %s]) = {", Table.class, Record.class, ForeignKey.class, Record.class, recordType);
-                    out.tab(2).println("this(%s.createPathAlias(child, key), child, key, %s, null)", Internal.class, tableId);
-                    out.tab(1).println("}");
-                }
-                else {
-                    out.tab(1).println("public <O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
-                    out.tab(2).println("super(child, key, %s);", tableId);
-                    out.tab(1).println("}");
-                }
+            else {
+                out.tab(1).println("public <O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
+                out.tab(2).println("super(child, key, %s);", tableId);
+                out.tab(1).println("}");
             }
         }
 
@@ -3964,7 +3952,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(2).print("return ");
 
                     if (identityFullId != null)
-                        out.tab(2).println("%s", identityFullId);
+                        out.tab(2).print("%s", identityFullId);
                     else
                         printCreateIdentity(out, identity);
 
@@ -3996,7 +3984,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(2).print("return ");
 
                     if (keyFullId != null)
-                        out.tab(2).println("%s", keyFullId);
+                        out.tab(2).print("%s", keyFullId);
                     else
                         printCreateUniqueKey(out, primaryKey);
 

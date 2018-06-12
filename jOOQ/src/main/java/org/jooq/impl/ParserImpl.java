@@ -2243,24 +2243,55 @@ final class ParserImpl implements Parser {
             List<Constraint> constraints = new ArrayList<Constraint>();
             List<Index> indexes = new ArrayList<Index>();
             boolean primary = false;
-            boolean noConstraint = true;
 
             parse(ctx, '(');
 
             columnLoop:
             do {
+                ConstraintTypeStep constraint = null;
                 int position = ctx.position();
 
-                // [#7348] Look ahead if the next tokens indicate a MySQL index definition
-                if (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX")) {
-                    if (parseIf(ctx, '(') || parseIdentifierIf(ctx) != null) {
-                        ctx.position(position);
-                        noConstraint = false;
-                        break columnLoop;
-                    }
+                if (parseKeywordIf(ctx, "CONSTRAINT"))
+                    constraint = constraint(parseIdentifier(ctx));
 
-                    ctx.position(position);
+                if (parseKeywordIf(ctx, "PRIMARY KEY")) {
+                    if (primary)
+                        throw ctx.exception("Duplicate primary key specification");
+
+                    primary = true;
+                    constraints.add(parsePrimaryKeySpecification(ctx, constraint));
+                    continue columnLoop;
                 }
+                else if (parseKeywordIf(ctx, "UNIQUE")) {
+                    if (!parseKeywordIf(ctx, "KEY"))
+                        parseKeywordIf(ctx, "INDEX");
+
+                    constraints.add(parseUniqueSpecification(ctx, constraint));
+                    continue columnLoop;
+                }
+                else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
+                    constraints.add(parseForeignKeySpecification(ctx, constraint));
+                    continue columnLoop;
+                }
+                else if (parseKeywordIf(ctx, "CHECK")) {
+                    constraints.add(parseCheckSpecification(ctx, constraint));
+                    continue columnLoop;
+                }
+                else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX"))) {
+                    int p2 = ctx.position();
+
+                    // [#7348] Look ahead if the next tokens indicate a MySQL index definition
+                    if (parseIf(ctx, '(') || parseIdentifierIf(ctx) != null) {
+                        ctx.position(p2);
+                        indexes.add(parseIndexSpecification(ctx, tableName));
+                        continue columnLoop;
+                    }
+                    else {
+                        ctx.position(position);
+                    }
+                }
+                else if (constraint != null)
+                    throw ctx.expected("CHECK", "CONSTRAINT", "FOREIGN KEY", "INDEX", "KEY", "PRIMARY KEY", "UNIQUE");
 
                 Name fieldName = parseIdentifier(ctx);
                 DataType<?> type = parseDataType(ctx);
@@ -2413,7 +2444,6 @@ final class ParserImpl implements Parser {
                         }
                     }
 
-
                     if (!comment) {
                         if (parseKeywordIf(ctx, "COMMENT")) {
                             fieldComment = parseComment(ctx);
@@ -2426,46 +2456,10 @@ final class ParserImpl implements Parser {
 
                 fields.add(field(fieldName, type, fieldComment));
             }
-            while (parseIf(ctx, ',')
-               && (noConstraint =
-                      !peekKeyword(ctx, "PRIMARY KEY")
-                   && !peekKeyword(ctx, "UNIQUE")
-                   && !peekKeyword(ctx, "FOREIGN KEY")
-                   && !peekKeyword(ctx, "CHECK")
-                   && !peekKeyword(ctx, "CONSTRAINT"))
-            );
+            while (parseIf(ctx, ','));
 
-            if (!noConstraint) {
-                do {
-                    ConstraintTypeStep constraint = null;
-
-                    if (parseKeywordIf(ctx, "CONSTRAINT"))
-                        constraint = constraint(parseIdentifier(ctx));
-
-                    if (parseKeywordIf(ctx, "PRIMARY KEY")) {
-                        if (primary)
-                            throw ctx.exception("Duplicate primary key specification");
-
-                        primary = true;
-                        constraints.add(parsePrimaryKeySpecification(ctx, constraint));
-                    }
-                    else if (parseKeywordIf(ctx, "UNIQUE")) {
-                        if (!parseKeywordIf(ctx, "KEY"))
-                            parseKeywordIf(ctx, "INDEX");
-
-                        constraints.add(parseUniqueSpecification(ctx, constraint));
-                    }
-                    else if (parseKeywordIf(ctx, "FOREIGN KEY"))
-                        constraints.add(parseForeignKeySpecification(ctx, constraint));
-                    else if (parseKeywordIf(ctx, "CHECK"))
-                        constraints.add(parseCheckSpecification(ctx, constraint));
-                    else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX")))
-                        indexes.add(parseIndexSpecification(ctx, tableName));
-                    else
-                        throw ctx.expected("CHECK", "CONSTRAINT", "FOREIGN KEY", "INDEX", "KEY", "PRIMARY KEY", "UNIQUE");
-                }
-                while (parseIf(ctx, ','));
-            }
+            if (fields.isEmpty())
+                throw ctx.expected("At least one column");
 
             parse(ctx, ')');
 

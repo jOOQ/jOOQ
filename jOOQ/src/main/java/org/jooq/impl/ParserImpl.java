@@ -6999,8 +6999,19 @@ final class ParserImpl implements Parser {
 
     private static final DataType<?> parseDataType(ParserContext ctx) {
         DataType<?> result = parseDataTypePrefix(ctx);
+        boolean array = false;
 
-        if (parseIf(ctx, '[') && parse(ctx, ']'))
+        if (parseKeywordIf(ctx, "ARRAY"))
+            array = true;
+
+        if (parseIf(ctx, '[')) {
+            parseUnsignedIntegerIf(ctx);
+            parse(ctx, ']');
+
+            array = true;
+        }
+
+        if (array)
             result = result.getArrayDataType();
 
         return result;

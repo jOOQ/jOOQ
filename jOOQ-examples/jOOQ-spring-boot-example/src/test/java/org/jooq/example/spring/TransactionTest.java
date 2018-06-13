@@ -154,7 +154,7 @@ public class TransactionTest {
 		}
 
 		assertEquals(4, dsl.fetchCount(BOOK));
-		assertTrue(rollback2.get());
+		assertTrue(rollback1.get());
 		assertTrue(rollback2.get());
 	}
 }

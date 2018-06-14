@@ -12,6 +12,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -33,7 +34,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Generate implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(defaultValue = "true")
     protected Boolean indexes = true;
     @XmlElement(defaultValue = "true")
@@ -48,6 +49,9 @@ public class Generate implements Serializable
     protected Boolean instanceFields = true;
     @XmlElement(defaultValue = "true")
     protected Boolean generatedAnnotation = true;
+    @XmlElement(defaultValue = "DETECT_FROM_JDK")
+    @XmlSchemaType(name = "string")
+    protected GeneratedAnnotationType generatedAnnotationType = GeneratedAnnotationType.DETECT_FROM_JDK;
     @XmlElement(defaultValue = "true")
     protected Boolean routines = true;
     @XmlElement(defaultValue = "true")
@@ -308,8 +312,8 @@ public class Generate implements Serializable
     }
 
     /**
-     * Generate the {@link javax.annotation.Generated} annotation to indicate
-     * jOOQ version used for source code
+     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
      *
      * @return
      *     possible object is
@@ -330,6 +334,31 @@ public class Generate implements Serializable
      */
     public void setGeneratedAnnotation(Boolean value) {
         this.generatedAnnotation = value;
+    }
+
+    /**
+     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
+     *
+     * @return
+     *     possible object is
+     *     {@link GeneratedAnnotationType }
+     *
+     */
+    public GeneratedAnnotationType getGeneratedAnnotationType() {
+        return generatedAnnotationType;
+    }
+
+    /**
+     * Sets the value of the generatedAnnotationType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link GeneratedAnnotationType }
+     *
+     */
+    public void setGeneratedAnnotationType(GeneratedAnnotationType value) {
+        this.generatedAnnotationType = value;
     }
 
     /**
@@ -1713,6 +1742,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withGeneratedAnnotationType(GeneratedAnnotationType value) {
+        setGeneratedAnnotationType(value);
+        return this;
+    }
+
     public Generate withRoutines(Boolean value) {
         setRoutines(value);
         return this;
@@ -2025,6 +2059,11 @@ public class Generate implements Serializable
             sb.append("<generatedAnnotation>");
             sb.append(generatedAnnotation);
             sb.append("</generatedAnnotation>");
+        }
+        if (generatedAnnotationType!= null) {
+            sb.append("<generatedAnnotationType>");
+            sb.append(generatedAnnotationType);
+            sb.append("</generatedAnnotationType>");
         }
         if (routines!= null) {
             sb.append("<routines>");
@@ -2376,6 +2415,15 @@ public class Generate implements Serializable
             }
         } else {
             if (!generatedAnnotation.equals(other.generatedAnnotation)) {
+                return false;
+            }
+        }
+        if (generatedAnnotationType == null) {
+            if (other.generatedAnnotationType!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedAnnotationType.equals(other.generatedAnnotationType)) {
                 return false;
             }
         }
@@ -2888,6 +2936,7 @@ public class Generate implements Serializable
         result = ((prime*result)+((deprecationOnUnknownTypes == null)? 0 :deprecationOnUnknownTypes.hashCode()));
         result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));
         result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
+        result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));

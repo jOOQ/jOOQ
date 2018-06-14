@@ -146,6 +146,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
+import org.jooq.meta.jaxb.GeneratedAnnotationType;
 // ...
 // ...
 // ...
@@ -154,6 +155,8 @@ import org.jooq.meta.postgres.PostgresDatabase;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 // ...
 // ...
 
@@ -5742,7 +5745,38 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void printClassAnnotations(JavaWriter out, SchemaDefinition schema, CatalogDefinition catalog) {
         if (generateGeneratedAnnotation()) {
-            out.println("@%s(", out.ref("javax.annotation.Generated"));
+
+            // [#7581] The concrete annotation type depends on the JDK, with
+            //         javax.annotation.Generated being deprecated in JDK 9
+            GeneratedAnnotationType type = generateGeneratedAnnotationType();
+            if (type == null)
+                type = GeneratedAnnotationType.DETECT_FROM_JDK;
+
+            String generated;
+            switch (type) {
+                case DETECT_FROM_JDK:
+                    try {
+
+                        // Seems more reliable than tampering with java.version
+                        Reflect.on("java.util.Optional").call("of", new Object()).call("stream");
+                        generated = "javax.annotation.processing.Generated";
+                    }
+                    catch (ReflectException e) {
+                        generated = "javax.annotation.Generated";
+                    }
+
+                    break;
+                case JAVAX_ANNOTATION_GENERATED:
+                    generated = "javax.annotation.Generated";
+                    break;
+                case JAVAX_ANNOTATION_PROCESSING_GENERATED:
+                    generated = "javax.annotation.processing.Generated";
+                    break;
+                default:
+                    throw new IllegalStateException("Unsupported type: " + type);
+            }
+
+            out.println("@%s(", out.ref(generated));
 
             if (useSchemaVersionProvider() || useCatalogVersionProvider()) {
                 boolean hasCatalogVersion = !StringUtils.isBlank(catalogVersions.get(catalog));

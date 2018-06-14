@@ -32,7 +32,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class MatchersEnumType implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule enumClass;

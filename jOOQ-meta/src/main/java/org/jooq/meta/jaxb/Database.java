@@ -12,16 +12,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.jooq.util.jaxb.tools.StringAdapter;
 
 
@@ -41,12 +38,11 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Database implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlList
     @XmlElement(defaultValue = "COMMENTS CASE_INSENSITIVE")
-    @XmlSchemaType(name = "anySimpleType")
     protected List<RegexFlag> regexFlags;
     @XmlElement(defaultValue = ".*")
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -156,7 +152,6 @@ public class Database implements Serializable
      * <p>
      * Natively supported values are:
      * <ul>
-     * <li>{@link org.jooq.meta.auroramysql.AuroraMySQLDatabase}</li>
      * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
      * <li>{@link org.jooq.meta.cubrid.CUBRIDDatabase}</li>
      * <li>{@link org.jooq.meta.db2.DB2Database}</li>
@@ -173,10 +168,8 @@ public class Database implements Serializable
      * <li>{@link org.jooq.meta.postgres.PostgresDatabase}</li>
      * <li>{@link org.jooq.meta.redshift.RedshiftDatabase}</li>
      * <li>{@link org.jooq.meta.sqlite.SQLiteDatabase}</li>
-     * <li>{@link org.jooq.meta.sqldatawarehouse.SQLDataWarehouseDatabase}</li>
      * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
      * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
-     * <li>{@link org.jooq.meta.teradata.TeradataDatabase}</li>
      * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
      * </ul>
      * <p>
@@ -838,7 +831,6 @@ public class Database implements Serializable
      *     {@link Boolean }
      *
      */
-    @Deprecated
     public Boolean isIgnoreProcedureReturnValues() {
         return ignoreProcedureReturnValues;
     }

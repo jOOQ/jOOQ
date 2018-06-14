@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.jooq.meta.Database;
+import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.tools.JooqLogger;
 
 
@@ -61,9 +62,10 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateDeprecationOnUnknownTypes  = true;
     boolean                            generateIndexes                    = true;
     boolean                            generateRelations                  = true;
-    boolean                            generateImplicitJoinPathsToOne                        = true;
+    boolean                            generateImplicitJoinPathsToOne     = true;
     boolean                            generateInstanceFields             = true;
     boolean                            generateGeneratedAnnotation        = true;
+    GeneratedAnnotationType            generateGeneratedAnnotationType    = GeneratedAnnotationType.DETECT_FROM_JDK;
     boolean                            useSchemaVersionProvider           = false;
     boolean                            useCatalogVersionProvider          = false;
     boolean                            generateRoutines                   = true;
@@ -127,6 +129,7 @@ abstract class AbstractGenerator implements Generator {
     protected String                   targetEncoding                     = "UTF-8";
     protected boolean                  targetClean                        = true;
     final Language                     language;
+
 
     AbstractGenerator(Language language) {
         this.language = language;
@@ -277,6 +280,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation) {
         this.generateGeneratedAnnotation = generateGeneratedAnnotation;
+    }
+
+    @Override
+    public GeneratedAnnotationType generateGeneratedAnnotationType() {
+        return generateGeneratedAnnotationType;
+    }
+
+    @Override
+    public void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType) {
+        this.generateGeneratedAnnotationType = generateGeneratedAnnotationType;
     }
 
     @Override

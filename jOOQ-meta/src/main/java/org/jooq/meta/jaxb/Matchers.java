@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Matchers implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElementWrapper(name = "schemas")
     @XmlElement(name = "schema")
     protected List<MatchersSchemaType> schemas;

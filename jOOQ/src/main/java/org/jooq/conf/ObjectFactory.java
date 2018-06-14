@@ -81,8 +81,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Settings }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Settings }{@code >}
      *
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Settings }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.jooq.org/xsd/jooq-runtime-3.11.0.xsd", name = "settings")
     public JAXBElement<Settings> createSettings(Settings value) {

@@ -41,6 +41,7 @@ package org.jooq.codegen;
 import java.io.Serializable;
 
 import org.jooq.meta.Database;
+import org.jooq.meta.jaxb.GeneratedAnnotationType;
 
 /**
  * The Generator provides a basic interface for java code generation
@@ -137,14 +138,24 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether the {@link javax.annotation.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
      */
     boolean generateGeneratedAnnotation();
 
     /**
-     * Whether the {@link javax.annotation.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
+
+    /**
+     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     */
+    GeneratedAnnotationType generateGeneratedAnnotationType();
+
+    /**
+     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     */
+    void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
 
     boolean useSchemaVersionProvider();
     void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);

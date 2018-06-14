@@ -10,7 +10,6 @@
         <version>3.12.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-checker</artifactId>
     <name>jOOQ Checker</name>
 

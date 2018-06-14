@@ -9,7 +9,6 @@
         <version>3.12.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-meta</artifactId>
     <name>jOOQ Meta</name>
 

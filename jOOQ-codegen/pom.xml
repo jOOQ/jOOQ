@@ -10,7 +10,6 @@
         <version>3.12.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen</artifactId>
     <name>jOOQ Codegen</name>
 

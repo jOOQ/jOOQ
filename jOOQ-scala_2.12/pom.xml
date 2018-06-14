@@ -10,7 +10,6 @@
         <version>3.12.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-scala_2.12</artifactId>
     <name>jOOQ Scala 2.12</name>
 

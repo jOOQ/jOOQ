@@ -10,6 +10,7 @@ module org.jooq.codegen.maven {
     requires maven.plugin.annotations;
 
     // Split packages between these
+    // See https://issues.apache.org/jira/browse/MPLUGIN-341
     requires maven.core;
     requires maven.plugin.api;
 }

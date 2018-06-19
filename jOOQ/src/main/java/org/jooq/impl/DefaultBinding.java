@@ -69,6 +69,7 @@ import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.DefaultExecuteContext.targetPreparedStatement;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BLOB;

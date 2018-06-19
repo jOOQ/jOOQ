@@ -301,7 +301,12 @@ class DefaultExecuteContext implements ExecuteContext {
     /**
      * [#3696] We shouldn't infinitely attempt to unwrap connections.
      */
-    private static int            maxUnwrappedConnections = 256;
+    private static int maxUnwrappedConnections = 256;
+
+    /**
+     * [#7589] No infinite attempts to unwrap statements, either.
+     */
+    private static int maxUnwrappedStatements  = 256;
 
     /**
      * Get the registered connection's "target connection" if applicable.
@@ -365,6 +370,66 @@ class DefaultExecuteContext implements ExecuteContext {
             // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingConnection
             try {
                 Connection r = Reflect.on(result).call("getDelegate").get();
+                if (result != r && r != null) {
+                    result = r;
+                    continue unwrappingLoop;
+                }
+            }
+            catch (ReflectException ignore) {}
+
+            // No unwrapping method was found.
+            break;
+        }
+
+        return result;
+    }
+    /**
+     * Get the registered connection's "target connection" if applicable.
+     * <p>
+     * This will try to unwrap any native connection if it has been wrapped with
+     * any of:
+     * <ul>
+     * <li><code>org.apache.commons.dbcp.DelegatingPreparedStatement</code></li>
+     * <li>...</li>
+     * </ul>
+     */
+    static final PreparedStatement targetPreparedStatement(PreparedStatement stmt) {
+        PreparedStatement result = stmt;
+
+        unwrappingLoop:
+        for (int i = 0; i < maxUnwrappedStatements; i++) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingPreparedStatement
+            try {
+                PreparedStatement r = Reflect.on(result).call("getDelegate").get();
                 if (result != r && r != null) {
                     result = r;
                     continue unwrappingLoop;

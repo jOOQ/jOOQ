@@ -25,6 +25,7 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
@@ -177,25 +178,36 @@ public class Reflect {
 
 
     static final Constructor<MethodHandles.Lookup> CACHED_LOOKUP_CONSTRUCTOR;
+    static final boolean                           JAVA_9;
 
     static {
-        Constructor<MethodHandles.Lookup> result;
 
-        /* [java-9] */
-        // if (true)
-        //     result = null;
-        // else
-        /* [/java-9] */
+        // Runtime detection if we're on Java 9
+        boolean java9;
+
         try {
-            result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
-
-            if (!result.isAccessible())
-                result.setAccessible(true);
+            Optional.class.getMethod("stream");
+            java9 = true;
+        }
+        catch (NoSuchMethodException e) {
+            java9 = false;
         }
 
-        // Can no longer access the above in JDK 9
-        catch (Throwable ignore) {
-            result = null;
+        JAVA_9 = java9;
+
+        Constructor<MethodHandles.Lookup> result = null;
+
+        if (!java9) {
+            try {
+                result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+
+                if (!result.isAccessible())
+                    result.setAccessible(true);
+            }
+
+            // Can no longer access the above in JDK 9
+            catch (Throwable ignore) {
+            }
         }
 
         CACHED_LOOKUP_CONSTRUCTOR = result;

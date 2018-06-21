@@ -6031,7 +6031,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final <T, Z> Field<?> parseFieldFieldIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "FIELD")) {
+        if (parseFunctionNameIf(ctx, "FIELD")) {
             parse(ctx, '(');
 
             List<Field<?>> args = new ArrayList<Field<?>>();

@@ -796,7 +796,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         final void trim() {
             if (scopeLevel > 0)
-                for (List<ScopeStackElement> list : stack.values())
+                for (List<ScopeStackElement> list : stack().values())
                     while (list.size() > scopeLevel || list.size() > 0 && list.get(list.size() - 1) == null)
                         list.remove(list.size() - 1);
         }

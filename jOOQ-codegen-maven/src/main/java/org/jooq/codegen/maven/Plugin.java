@@ -206,7 +206,6 @@ public class Plugin extends AbstractMojo {
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
     }
 
-    @SuppressWarnings("unchecked")
     private ClassLoader getClassLoader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();

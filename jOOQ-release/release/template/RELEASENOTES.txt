@@ -11,6 +11,23 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.11.1 - June 19, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+Bug Fixes
+---------
+#7555 - UpdatableRecordImpl no longer work when globalObjectReferences is set to false
+#7557 - Add a specific error message if org.jooq.util packages are being used in 3.11+
+#7563 - Incomplete Support annotation on some of the H2 style mergeInto overloads
+#7574 - Code generator should generate implicit join constructors in absence of inbound foreign keys
+#7575 - Support alternative PostgreSQL array syntax in parser
+#7576 - Support mixing constraint definitions and columns in the parser
+#7592 - Cannot bind double types to prepared statements when using Oracle and DBCP
+#7593 - Regression in DSL.or(Collection) when passing empty collection
+
+
 Version 3.11.0 - June 7, 2018
 ================================================================================
 
@@ -143,7 +160,7 @@ Another way to access this API is through the new org.jooq.ParserCLI command
 line tool. For example, run:
 
 <pre>
-$ java -cp jooq-3.11.0.jar org.jooq.ParserCLI -f -t ORACLE -s "SELECT * FROM (VALUES(1),(2)) AS t(a)"
+$ java -jar jooq-3.10.0.jar -f -t ORACLE -s "SELECT * FROM (VALUES(1),(2)) AS t(a)"
 </pre>
 
 To get:

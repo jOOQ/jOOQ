@@ -4217,7 +4217,6 @@ final class Tools {
 
             @SuppressWarnings("unchecked")
             DataType<EnumType> enumType = (DataType<EnumType>) type;
-            Object[] enums = enumConstants(enumType);
 
             switch (ctx.family()) {
 
@@ -4229,7 +4228,7 @@ final class Tools {
                     ctx.visit(K_ENUM).sql('(');
 
                     String separator = "";
-                    for (Object e : enums) {
+                    for (Object e : enumConstants(enumType)) {
                         ctx.sql(separator).visit(DSL.inline(((EnumType) e).getLiteral()));
                         separator = ", ";
                     }
@@ -4238,8 +4237,15 @@ final class Tools {
                     return;
                 }
 
+                // [#7597] In PostgreSQL, the enum type reference should be used
+
+
+
+                case POSTGRES:
+                    break;
+
                 default: {
-                    type = emulateEnumType(enumType, enums);
+                    type = emulateEnumType(enumType, enumConstants(enumType));
                     break;
                 }
             }

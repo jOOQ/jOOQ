@@ -211,9 +211,8 @@ public class Plugin extends AbstractMojo {
             List<String> classpathElements = project.getRuntimeClasspathElements();
             URL urls[] = new URL[classpathElements.size()];
 
-            for (int i = 0; i < urls.length; i++) {
+            for (int i = 0; i < urls.length; i++)
                 urls[i] = new File(classpathElements.get(i)).toURI().toURL();
-            }
 
             return new URLClassLoader(urls, getClass().getClassLoader());
         }

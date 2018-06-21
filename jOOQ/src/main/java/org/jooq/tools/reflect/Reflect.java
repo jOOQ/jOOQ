@@ -25,7 +25,6 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
@@ -178,36 +177,25 @@ public class Reflect {
 
 
     static final Constructor<MethodHandles.Lookup> CACHED_LOOKUP_CONSTRUCTOR;
-    static final boolean                           JAVA_9;
 
     static {
+        Constructor<MethodHandles.Lookup> result;
 
-        // Runtime detection if we're on Java 9
-        boolean java9;
-
+        /* [java-9] */
+        if (true)
+            result = null;
+        else
+        /* [/java-9] */
         try {
-            Optional.class.getMethod("stream");
-            java9 = true;
+            result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+
+            if (!result.isAccessible())
+                result.setAccessible(true);
         }
-        catch (NoSuchMethodException e) {
-            java9 = false;
-        }
 
-        JAVA_9 = java9;
-
-        Constructor<MethodHandles.Lookup> result = null;
-
-        if (!java9) {
-            try {
-                result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
-
-                if (!result.isAccessible())
-                    result.setAccessible(true);
-            }
-
-            // Can no longer access the above in JDK 9
-            catch (Throwable ignore) {
-            }
+        // Can no longer access the above in JDK 9
+        catch (Throwable ignore) {
+            result = null;
         }
 
         CACHED_LOOKUP_CONSTRUCTOR = result;
@@ -659,14 +647,14 @@ public class Reflect {
 
                         /* [java-9] */
                         // Java 9 version
-                        // if (CACHED_LOOKUP_CONSTRUCTOR == null) {
-                        //     return MethodHandles
-                        //         .privateLookupIn(proxyType, MethodHandles.lookup())
-                        //         .in(proxyType)
-                        //         .unreflectSpecial(method, proxyType)
-                        //         .bindTo(proxy)
-                        //         .invokeWithArguments(args);
-                        // }
+                        if (CACHED_LOOKUP_CONSTRUCTOR == null) {
+                            return MethodHandles
+                                .privateLookupIn(proxyType, MethodHandles.lookup())
+                                .in(proxyType)
+                                .unreflectSpecial(method, proxyType)
+                                .bindTo(proxy)
+                                .invokeWithArguments(args);
+                        }
                         /* [/java-9] */
 
                         // Java 8 version

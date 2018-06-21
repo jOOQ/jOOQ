@@ -15,6 +15,8 @@ package org.jooq.tools.reflect;
 
 
 
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
@@ -31,8 +33,6 @@ import javax.tools.JavaFileManager;
 import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
-// import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
 
 /**
@@ -58,7 +58,7 @@ class Compile {
                 files.add(new CharSequenceJavaFileObject(className, content));
                 StringWriter out = new StringWriter();
 
-                compiler.getTask(null, fileManager, null, null, null, files).call();
+                compiler.getTask(out, fileManager, null, null, null, files).call();
 
                 if (fileManager.o == null)
                     throw new ReflectException("Compilation error: " + out);
@@ -66,48 +66,48 @@ class Compile {
                 Class<?> result = null;
 
                 // This works if we have private-access to the interfaces in the class hierarchy
-                // if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
+                if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
                     ClassLoader cl = lookup.lookupClass().getClassLoader();
                     byte[] b = fileManager.o.getBytes();
                     result = Reflect.on(cl).call("defineClass", className, b, 0, b.length).get();
-                // }
+                }
                 /* [java-9] */
 
                 // Lookup.defineClass() has only been introduced in Java 9. It is
                 // required to get private-access to interfaces in the class hierarchy
-                // else {
-                //
-                //     // This method is called by client code from two levels up the current stack frame
-                //     // We need a private-access lookup from the class in that stack frame in order to get
-                //     // private-access to any local interfaces at that location.
-                //     Class<?> caller = StackWalker
-                //         .getInstance(RETAIN_CLASS_REFERENCE)
-                //         .walk(s -> s
-                //             .skip(2)
-                //             .findFirst()
-                //             .get()
-                //             .getDeclaringClass());
-                //
-                //     // If the compiled class is in the same package as the caller class, then
-                //     // we can use the private-access Lookup of the caller class
-                //     if (className.startsWith(caller.getPackageName() + ".")) {
-                //         result = MethodHandles
-                //             .privateLookupIn(caller, lookup)
-                //             .defineClass(fileManager.o.getBytes());
-                //     }
-                //
-                //     // Otherwise, use an arbitrary class loader. This approach doesn't allow for
-                //     // loading private-access interfaces in the compiled class's type hierarchy
-                //     else {
-                //         result = new ClassLoader() {
-                //             @Override
-                //             protected Class<?> findClass(String name) throws ClassNotFoundException {
-                //                 byte[] b = fileManager.o.getBytes();
-                //                 return defineClass(className, b, 0, b.length);
-                //             }
-                //         }.loadClass(className);
-                //     }
-                // }
+                else {
+
+                    // This method is called by client code from two levels up the current stack frame
+                    // We need a private-access lookup from the class in that stack frame in order to get
+                    // private-access to any local interfaces at that location.
+                    Class<?> caller = StackWalker
+                        .getInstance(RETAIN_CLASS_REFERENCE)
+                        .walk(s -> s
+                            .skip(2)
+                            .findFirst()
+                            .get()
+                            .getDeclaringClass());
+
+                    // If the compiled class is in the same package as the caller class, then
+                    // we can use the private-access Lookup of the caller class
+                    if (className.startsWith(caller.getPackageName() + ".")) {
+                        result = MethodHandles
+                            .privateLookupIn(caller, lookup)
+                            .defineClass(fileManager.o.getBytes());
+                    }
+
+                    // Otherwise, use an arbitrary class loader. This approach doesn't allow for
+                    // loading private-access interfaces in the compiled class's type hierarchy
+                    else {
+                        result = new ClassLoader() {
+                            @Override
+                            protected Class<?> findClass(String name) throws ClassNotFoundException {
+                                byte[] b = fileManager.o.getBytes();
+                                return defineClass(className, b, 0, b.length);
+                            }
+                        }.loadClass(className);
+                    }
+                }
                 /* [/java-9] */
 
                 return result;

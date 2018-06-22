@@ -33,7 +33,7 @@ public class RenderFormatting
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(defaultValue = "\n")
     protected String newline = "\n";
     @XmlElement(defaultValue = "  ")

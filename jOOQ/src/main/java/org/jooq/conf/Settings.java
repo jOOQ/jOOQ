@@ -34,7 +34,7 @@ public class Settings
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
@@ -51,6 +51,8 @@ public class Settings
     protected RenderFormatting renderFormatting;
     @XmlElement(defaultValue = "false")
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
@@ -329,6 +331,40 @@ public class Settings
      */
     public void setRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         this.renderScalarSubqueriesForStoredFunctions = value;
+    }
+
+    /**
+     * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+     * <p>
+     * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2,
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle,
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces
+     * jOOQ to not generate the additional <code>ORDER BY</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRenderOrderByRownumberForEmulatedPagination() {
+        return renderOrderByRownumberForEmulatedPagination;
+    }
+
+    /**
+     * Sets the value of the renderOrderByRownumberForEmulatedPagination property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRenderOrderByRownumberForEmulatedPagination(Boolean value) {
+        this.renderOrderByRownumberForEmulatedPagination = value;
     }
 
     /**
@@ -1139,6 +1175,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
+        setRenderOrderByRownumberForEmulatedPagination(value);
+        return this;
+    }
+
     public Settings withBackslashEscaping(BackslashEscaping value) {
         setBackslashEscaping(value);
         return this;
@@ -1336,6 +1377,11 @@ public class Settings
             sb.append("<renderScalarSubqueriesForStoredFunctions>");
             sb.append(renderScalarSubqueriesForStoredFunctions);
             sb.append("</renderScalarSubqueriesForStoredFunctions>");
+        }
+        if (renderOrderByRownumberForEmulatedPagination!= null) {
+            sb.append("<renderOrderByRownumberForEmulatedPagination>");
+            sb.append(renderOrderByRownumberForEmulatedPagination);
+            sb.append("</renderOrderByRownumberForEmulatedPagination>");
         }
         if (backslashEscaping!= null) {
             sb.append("<backslashEscaping>");
@@ -1576,6 +1622,15 @@ public class Settings
             }
         } else {
             if (!renderScalarSubqueriesForStoredFunctions.equals(other.renderScalarSubqueriesForStoredFunctions)) {
+                return false;
+            }
+        }
+        if (renderOrderByRownumberForEmulatedPagination == null) {
+            if (other.renderOrderByRownumberForEmulatedPagination!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOrderByRownumberForEmulatedPagination.equals(other.renderOrderByRownumberForEmulatedPagination)) {
                 return false;
             }
         }
@@ -1873,6 +1928,7 @@ public class Settings
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
+        result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));

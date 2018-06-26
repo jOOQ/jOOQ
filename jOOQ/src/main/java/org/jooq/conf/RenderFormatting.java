@@ -9,7 +9,6 @@
 package org.jooq.conf;
 
 import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,7 +33,7 @@ public class RenderFormatting
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31102L;
     @XmlElement(defaultValue = "\n")
     protected String newline = "\n";
     @XmlElement(defaultValue = "  ")

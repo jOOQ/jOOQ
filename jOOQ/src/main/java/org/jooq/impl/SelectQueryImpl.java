@@ -932,12 +932,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#5068] Don't rely on nested query's ordering in case an operation
         //         like DISTINCT or JOIN produces hashing.
         // [#7427] Don't order if not strictly required.
-        if (!ctx.subquery() && !getOrderBy().isEmpty())
+        // [#7609] Don't order if users prefer not to
+        if (!ctx.subquery()
+                && !getOrderBy().isEmpty()
+                && !Boolean.FALSE.equals(ctx.settings().isRenderOrderByRownumberForEmulatedPagination()))
             ctx.formatSeparator()
                .visit(K_ORDER_BY)
                .sql(' ')
                .visit(name("rn"));
     }
+
+
+
 
 
 

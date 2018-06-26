@@ -399,7 +399,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), cursorFields);
+        ResultImpl<R> result = new ResultImpl<R>(((DefaultExecuteContext) ctx).originalConfiguration(), cursorFields);
 
         ctx.result(result);
         listener.resultStart(ctx);
@@ -1614,7 +1614,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                         rs.updateRow();
                     }
 
-                    record = Tools.newRecord(true, (RecordFactory<AbstractRecord>) factory, ctx.configuration())
+                    record = Tools.newRecord(true, (RecordFactory<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
                                   .operate(new CursorRecordInitialiser(cursorFields, 0));
 
                     rows++;
@@ -1710,7 +1710,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                     if (field instanceof RowField) {
                         Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
 
-                        value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
+                        value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ((DefaultExecuteContext) ctx).originalConfiguration())
                                          .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
 
                         offset += emulatedFields.length - 1;

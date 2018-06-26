@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.11.2.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.11.2.xsd"
   elementFormDefault="qualified"
   jxb:version="2.1">
 
@@ -57,6 +57,20 @@ This is set to "QUOTED" by default for backwards-compatibility]]></jxb:javadoc><
 <p>
 Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
 set to true, users can automatically profit from this feature in all SQL statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderOrderByRownumberForEmulatedPagination" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+<p>
+Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2,
+SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not
+<em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle,
+it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess
+<code>ORDER BY</code> clause may add some additional performance overhead. This setting forces
+jOOQ to not generate the additional <code>ORDER BY</code> clause.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT">
@@ -115,12 +129,20 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether reflection information should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="cacheRecordMappers" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether record mappers should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="throwExceptions" type="jooq-runtime:ThrowExceptions" minOccurs="0" maxOccurs="1" default="THROW_ALL">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A strategy defining how exceptions from the database / JDBC driver should be propagated]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="fetchWarnings" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether warnings should be fetched after each query execution.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fetchServerOutputSize" type="int" minOccurs="0" maxOccurs="1" default="0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether server output should be fetched after each query execution.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="returnAllOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false">
@@ -138,6 +160,10 @@ IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other valu
 
       <element name="mapJPAAnnotations" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="mapConstructorParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="queryTimeout" type="int" minOccurs="0" maxOccurs="1" default="0">
@@ -160,11 +186,39 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       </element>
 
       <element name="inListPadding" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5600] Whether IN lists in IN predicates should be padded to powers of 2.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="inListPadBase" type="int" minOccurs="0" maxOccurs="1" default="2">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7095] The base to use to calculate the powers of when applying in list padding.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="delimiter" type="string" minOccurs="0" maxOccurs="1" default=";">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5826] The delimiter character to be used to delimit statements in batches.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="executeDeleteWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="IGNORE_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseUnsupportedSyntax" type="jooq-runtime:ParseUnsupportedSyntax" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5917] Whether the parser should accept unsupported (but known) syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseUnknownFunctions" type="jooq-runtime:ParseUnknownFunctions" minOccurs="0" maxOccurs="1" default="FAIL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7344] Whether the parser should accept unknown functions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -258,6 +312,9 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <!-- Execute statements with indexed parameters, the way JDBC expects them -->
       <enumeration value="INDEXED"/>
 
+      <!-- Execute statements with indexed parameters, forcing explicit inlined and named parameters to be indexed as well -->
+      <enumeration value="FORCE_INDEXED"/>
+
       <!-- Execute statements with named parameters -->
       <enumeration value="NAMED"/>
 
@@ -346,6 +403,10 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <!-- Keywords are rendered in upper case. For instance:
            SELECT .. FROM .. WHERE .. -->
       <enumeration value="UPPER"/>
+
+      <!-- Keywords are rendered in Pascal Case. For instance:
+           Select .. From .. Where .. -->
+      <enumeration value="PASCAL"/>
     </restriction>
   </simpleType>
 
@@ -399,6 +460,62 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Throw no exceptions, but collect them in ResultOrRows -->
       <enumeration value="THROW_NONE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ExecuteWithoutWhere">
+    <restriction base="string">
+
+      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause -->
+      <enumeration value="IGNORE"/>
+
+      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as DEBUG level -->
+      <enumeration value="LOG_DEBUG"/>
+
+      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as INFO level -->
+      <enumeration value="LOG_INFO"/>
+
+      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as WARN level -->
+      <enumeration value="LOG_WARN"/>
+
+      <!-- UPDATE and DELETE statements are not allowed to lack a WHERE clause -->
+      <enumeration value="THROW"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseWithMetaLookups">
+    <restriction base="string">
+
+      <!-- Meta lookups are deactivated in parser -->
+      <enumeration value="OFF"/>
+
+      <!-- Meta lookups are active in parser, but don't throw exceptions on failure -->
+      <enumeration value="IGNORE_ON_FAILURE"/>
+
+      <!-- Meta lookups are active in parser and throw exceptions on failure -->
+      <enumeration value="THROW_ON_FAILURE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseUnsupportedSyntax">
+    <restriction base="string">
+
+      <!-- Fail on syntax that is supported (known) by the parser, but not the jOOQ API -->
+      <enumeration value="FAIL"/>
+
+      <!-- Ignore syntax that is supported (known) by the parser, but not the jOOQ API -->
+      <enumeration value="IGNORE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseUnknownFunctions">
+    <restriction base="string">
+
+      <!-- Functions have to be known by the parser, or by the catalog -->
+      <enumeration value="FAIL"/>
+
+      <!-- Unknown functions (parser or catalog) will be passed on as plain SQL -->
+      <enumeration value="IGNORE"/>
     </restriction>
   </simpleType>
 </schema>

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -629,13 +630,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
-                    DSLContext create = DSL.using(ctx.configuration());
+                    DSLContext create = ctx.dsl();
                     returnedResult =
                     create.select(returning)
                           .from(table)
                           .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
                           .fetch();
 
+                    returnedResult.attach(((DefaultExecuteContext) ctx).originalConfiguration());
                     return result;
                 }
 
@@ -655,7 +657,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
-                    selectReturning(ctx.configuration(), ctx.dsl().lastID());
+                    selectReturning(
+                        ((DefaultExecuteContext) ctx).originalConfiguration(),
+                        ctx.configuration(),
+                        ctx.dsl().lastID()
+                    );
+
                     return result;
                 }
 
@@ -691,7 +698,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                             while (rs.next())
                                 list.add(rs.getObject(1));
 
-                        selectReturning(ctx.configuration(), list.toArray());
+                        selectReturning(
+                            ((DefaultExecuteContext) ctx).originalConfiguration(),
+                            ctx.configuration(),
+                            list.toArray()
+                        );
+
                         return result;
                     }
                     finally {
@@ -717,6 +729,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
 
                 // These dialects have full JDBC support
+
 
 
 
@@ -830,7 +843,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private final void selectReturning(Configuration configuration, Object... values) {
+    private final void selectReturning(
+        Configuration originalConfiguration,
+        Configuration derivedConfiguration,
+        Object... values
+    ) {
         if (values != null && values.length > 0) {
 
             // This shouldn't be null, as relevant dialects should
@@ -846,7 +863,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 if (returningResolvedAsterisks.size() == 1 && new Fields<Record>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
-                        Tools.newRecord(true, table, configuration)
+                        Tools.newRecord(true, table, originalConfiguration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
                                 @Override
@@ -865,10 +882,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 // Other values are requested, too. Run another query
                 else {
                     returnedResult =
-                    configuration.dsl().select(returning)
-                                       .from(table)
-                                       .where(field.in(ids))
-                                       .fetch();
+                    derivedConfiguration.dsl()
+                                        .select(returning)
+                                        .from(table)
+                                        .where(field.in(ids))
+                                        .fetch();
+
+                    returnedResult.attach(originalConfiguration);
                 }
             }
         }

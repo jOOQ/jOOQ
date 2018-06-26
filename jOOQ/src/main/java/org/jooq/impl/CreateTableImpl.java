@@ -136,7 +136,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
     private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK       = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> EMULATE_ENUM_TYPES_AS_CHECK    = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_ENUM_TYPES_AS_CHECK    = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, SQLITE);
     private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);

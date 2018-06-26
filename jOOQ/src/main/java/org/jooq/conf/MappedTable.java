@@ -10,7 +10,6 @@ package org.jooq.conf;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,7 +35,7 @@ public class MappedTable
     implements Serializable, Cloneable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31102L;
     protected String input;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(RegexAdapter.class)

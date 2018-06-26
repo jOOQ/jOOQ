@@ -11692,7 +11692,7 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch()
                             <ul>
                                 <li>Azure SQL Database</li>
                                 <li>CUBRID</li>
-                                <li>DB2</li>
+                                <li>DB2 LUW</li>
                                 <li>Derby</li>
                                 <li>Firebird</li>
                                 <li>H2</li>
@@ -11702,8 +11702,8 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.eq(5)).fetch()
                                 <li>MySQL</li>
                                 <li>Oracle</li>
                                 <li>PostgreSQL</li>
-                                <li>SQLite</li>
                                 <li>SQL Server</li>
+                                <li>SQLite</li>
                                 <li>Sybase Adaptive Server Enterprise</li>
                                 <li>Sybase SQL Anywhere</li>
                             </ul>

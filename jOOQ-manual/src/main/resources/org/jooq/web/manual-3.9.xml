@@ -18605,7 +18605,7 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
                             <ul>
                                 <li>Azure SQL Database</li>
                                 <li>CUBRID</li>
-                                <li>DB2</li>
+                                <li>DB2 LUW</li>
                                 <li>Derby</li>
                                 <li>Firebird</li>
                                 <li>H2</li>
@@ -18618,10 +18618,12 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
                                 <li>MySQL</li>
                                 <li>Oracle</li>
                                 <li>PostgreSQL</li>
-                                <li>SQLite</li>
+                                <li>Redshift</li>
                                 <li>SQL Server</li>
+                                <li>SQLite</li>
                                 <li>Sybase Adaptive Server Enterprise</li>
                                 <li>Sybase SQL Anywhere</li>
+                                <li>Vertica</li>
                             </ul>
 
                             <p>

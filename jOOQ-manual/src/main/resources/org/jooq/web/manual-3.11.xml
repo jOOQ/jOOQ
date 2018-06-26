@@ -19764,25 +19764,31 @@ Result<Record2<String, String>> result = create.select( Actor.ACTOR.FIRST_NAME, 
 						   		Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, some 70 unit tests are run for syntax and variable binding verification, as well as some 400 integration tests with an overall of around 4000 queries for any of these databases:
 					   		</p>
 							<ul>
+                                <li>Aurora MySQL Edition</li>
+                                <li>Aurora PostgreSQL Edition</li>
+                                <li>Azure SQL Data Warehouse</li>
                                 <li>Azure SQL Database</li>
-							    <li>CUBRID</li>
-							    <li>DB2</li>
-							    <li>Derby</li>
-							    <li>Firebird</li>
-							    <li>H2</li>
-							    <li>HANA</li>
-							    <li>HSQLDB</li>
+                                <li>CUBRID</li>
+                                <li>DB2 LUW</li>
+                                <li>Derby</li>
+                                <li>Firebird</li>
+                                <li>H2</li>
+                                <li>HANA</li>
+                                <li>HSQLDB</li>
                                 <li>Informix</li>
-							    <li>Ingres</li>
+                                <li>Ingres</li>
                                 <li>MariaDB</li>
                                 <li>Microsoft Access</li>
-							    <li>MySQL</li>
-							    <li>Oracle</li>
-							    <li>PostgreSQL</li>
-							    <li>SQLite</li>
-							    <li>SQL Server</li>
-							    <li>Sybase Adaptive Server Enterprise</li>
-							    <li>Sybase SQL Anywhere</li>
+                                <li>MySQL</li>
+                                <li>Oracle</li>
+                                <li>PostgreSQL</li>
+                                <li>Redshift</li>
+                                <li>SQL Server</li>
+                                <li>SQLite</li>
+                                <li>Sybase Adaptive Server Enterprise</li>
+                                <li>Sybase SQL Anywhere</li>
+                                <li>Teradata</li>
+                                <li>Vertica</li>
 							</ul>
 
                             <p>

@@ -89,7 +89,8 @@ class DefaultExecuteContext implements ExecuteContext {
     private static final JooqLogger                log     = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
-    private final Configuration                    configuration;
+    private final Configuration                    originalConfiguration;
+    private final Configuration                    derivedConfiguration;
     private final Map<Object, Object>              data;
     private final Query                            query;
     private final Routine<?>                       routine;
@@ -468,8 +469,10 @@ class DefaultExecuteContext implements ExecuteContext {
 
         // [#4277] The ExecuteContext's Configuration will always return the same Connection,
         //         e.g. when running statements from sub-ExecuteContexts
+        // [#7569] The original configuration is attached to Record and Result instances
         this.connectionProvider = configuration.connectionProvider();
-        this.configuration = configuration.derive(new ExecuteContextConnectionProvider());
+        this.originalConfiguration = configuration;
+        this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
         this.data = new DataMap();
         this.query = query;
         this.routine = routine;
@@ -656,7 +659,13 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Configuration configuration() {
-        return configuration;
+        return derivedConfiguration;
+    }
+
+    // [#4277] [#7569] The original configuration that was used to create the
+    //                 derived configuration in this ExecuteContext
+    final Configuration originalConfiguration() {
+        return originalConfiguration;
     }
 
     @Override
@@ -712,7 +721,7 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     private final SettingsEnabledConnection wrapConnection(ConnectionProvider provider, Connection c) {
-        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
+        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), derivedConfiguration.settings());
     }
 
     final void incrementStatementExecutionCount() {

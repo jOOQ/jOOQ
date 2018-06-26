@@ -250,7 +250,7 @@ public class XMLDatabase extends AbstractDatabase {
                 JAXB.marshal(new InformationSchema(), test);
 
                 if (!test.toString().contains("xmlns"))
-                    content = content.replaceAll("xmlns=\".*\"", "");
+                    content = content.replaceAll("xmlns=\"[^\"]*\"", "");
 
                 info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
             }

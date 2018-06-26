@@ -241,6 +241,17 @@ public class XMLDatabase extends AbstractDatabase {
                     "<information_schema>",
                     "<information_schema xmlns=\"" + Constants.NS_META + "\">");
 
+                // [#7579] On JDK 9, 10, depending on how JAXB is loaded onto the classpath / module path,
+                //         the xmlns seems to be considered for (un)marshalling, or not. This seems to be
+                //         a bug in JAXB, with no known tracking ID as of yet.
+                //         The following quick fix tests the presence of the xmlns when marshalling, and if absent
+                //         removes it prior to unmarshalling.
+                StringWriter test = new StringWriter();
+                JAXB.marshal(new InformationSchema(), test);
+
+                if (!test.toString().contains("xmlns"))
+                    content = content.replaceAll("xmlns=\".*\"", "");
+
                 info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
             }
             catch (Exception e) {

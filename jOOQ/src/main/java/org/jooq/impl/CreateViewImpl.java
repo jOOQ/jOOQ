@@ -46,7 +46,6 @@ import static org.jooq.Clause.CREATE_VIEW_NAME;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -98,7 +97,6 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private static final long                                                       serialVersionUID         = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
     private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD, POSTGRES);
-    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_OR_REPLACE    = EnumSet.of(H2);
 
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;
@@ -186,7 +184,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         ctx.start(CREATE_VIEW_NAME)
            .visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
 
-        if (orReplace && !replaceSupported && !NO_SUPPORT_OR_REPLACE.contains(ctx.family())) {
+        if (orReplace && !replaceSupported) {
             ctx.sql(' ').visit(K_OR);
 
             switch (ctx.family()) {

@@ -880,14 +880,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .visit(getLimit().getUpperRownum());
 
         // [#5068] Don't rely on nested query's ordering. In most cases, the
-        //         ordering is stable, but in some cases (DISTINCT + JOIN) it is
-        //         not.
-        if (!ctx.subquery())
+        //         ordering is stable, but in some cases (DISTINCT + JOIN) it is not.
+        // [#7427] Don't order if not strictly required.
+        // [#7609] Don't order if users prefer not to
+        if (!ctx.subquery()
+                && !getOrderBy().isEmpty()
+                && !Boolean.FALSE.equals(ctx.settings().isRenderOrderByRownumberForEmulatedPagination()))
             ctx.formatSeparator()
                .visit(K_ORDER_BY)
                .sql(' ')
                .visit(name("rn"));
     }
+
+
+
 
 
 

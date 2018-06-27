@@ -7814,7 +7814,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields);
 
     /**
@@ -7822,7 +7822,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
     /**

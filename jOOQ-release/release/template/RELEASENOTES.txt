@@ -11,6 +11,24 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.10.8 - June 27, 2018
+================================================================================
+
+This is a 3.10 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+
+#7521 - Support ON DUPLICATE KEY UPDATE in H2
+#7611 - Add Setting to turn off ORDER BY clause in emulated OFFSET .. FETCH pagination
+
+Bug Fixes
+---------
+
+#7564 - Incomplete Support annotation on some of the H2 style mergeInto overloads
+#7615 - org.jooq.meta.xml.XMLDatabase does not generate target classes when project is compiled on JDK 9 or 10
+
+
 Version 3.10.7 - May the 4th be with you, 2018
 ================================================================================
 

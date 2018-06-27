@@ -37,7 +37,7 @@ if [ -z ${URL+x} ]; then
   exit 1
 fi
 
-VERSION=3.10.7
+VERSION=3.10.8
 
 if [ -f jOOQ-javadoc/jooq-$VERSION-javadoc.jar ]; then
   JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc/jooq-$VERSION-javadoc.jar

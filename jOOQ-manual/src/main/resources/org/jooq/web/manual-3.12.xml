@@ -13883,11 +13883,6 @@ public class PrettyPrinter extends DefaultExecuteListener {
         else if (ctx.routine() != null) {
             System.out.println(create.renderInlined(ctx.routine()));
         }
-
-        // If we're executing anything else (e.g. plain SQL)
-        else if (!StringUtils.isBlank(ctx.sql())) {
-            System.out.println(ctx.sql());
-        }
     }
 }]]></java><html>
 							<p>

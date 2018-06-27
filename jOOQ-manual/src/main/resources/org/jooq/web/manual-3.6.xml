@@ -7056,6 +7056,40 @@ GROUP BY AUTHOR_ID
 										Aggregate functions have strong limitations about when they may be used and when not. For instance, you can use aggregate functions in scalar queries. Typically, this means you only select aggregate functions, no <reference id="table-columns" title="regular columns"/> or other <reference id="column-expressions" title="column expressions"/>. Another use case is to use them along with a <reference id="group-by-clause" title="GROUP BY clause"/> as seen in the previous example. Note, that jOOQ does not check whether your using of aggregate functions is correct according to the SQL standards, or according to your database's behaviour.
 									</p>
 
+                                    <h3>Filtered aggregate functions</h3>
+                                    <p>
+                                        The SQL standard specifies an optional <code>FILTER</code> clause, that can be appended to all aggregate functions. This is very useful to implement "pivot" tables, such as the following:
+                                    </p>
+
+</html><code-pair>
+<sql>SELECT<![CDATA[
+  count(*),
+  count(*) FILTER (WHERE TITLE LIKE 'A%')
+FROM BOOK]]></sql>
+<java><![CDATA[
+create.select(
+         count(),
+         count().filterWhere(BOOK.TITLE.like("A%")))
+      .from(BOOK)]]></java>
+</code-pair><html>
+
+                                    <p>
+                                        It is usually a good idea to <a href="https://blog.jooq.org/2017/04/20/how-to-calculate-multiple-aggregate-functions-in-a-single-query/">calculate multiple aggregate functions in a single query</a>, if this is possible.
+                                    </p>
+
+                                    <p>
+                                        Only few databases (e.g. HSQLDB, PostgreSQL) implement native support for the <code>FILTER</code> clause. In all other databases, jOOQ emulates the clause using a <reference id="case-expressions" title="CASE expression"/>:
+                                    </p>
+
+</html><sql>SELECT
+  count(*),
+  count(CASE WHEN TITLE LIKE 'A%' THEN 1 END)
+FROM BOOK</sql><html>
+
+                                    <p>
+                                        Aggregate functions exclude <code>NULL</code> values from aggregation, so the above query is equivalent to the one using <code>FILTER</code>.
+                                    </p>
+
 		                            <h3>Ordered-set aggregate functions</h3>
 		                            <p>
 		                            	Oracle and some other databases support "ordered-set aggregate functions". This means you can provide an <code>ORDER BY</code> clause to an aggregate function, which will be taken into consideration when aggregating. The best example for this is Oracle's <code>LISTAGG()</code> (also known as <code>GROUP_CONCAT</code> in other <reference id="sql-dialects" title="SQL dialects"/>). The following query groups by authors and concatenates their books' titles

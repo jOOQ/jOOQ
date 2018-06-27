@@ -14464,7 +14464,11 @@ result.forEach((Object[] entities) -> {
 
            This value can be used to reverse-engineer schemas defined by SQL files (requires jooq-meta-extensions dependency)
 
-               org.jooq.meta.extensions.ddl.DDLDatabase
+               org.jooq.util.ddl.DDLDatabase
+
+           This value can be used to reverse-engineer schemas defined by JPA annotated entities (requires jooq-meta-extensions dependency)
+
+               org.jooq.util.jpa.JPADatabase
 
            You can also provide your own org.jooq.util.Database implementation
            here, if your database is currently not supported -->

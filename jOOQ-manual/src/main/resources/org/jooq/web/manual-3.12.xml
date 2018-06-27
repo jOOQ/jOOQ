@@ -4529,18 +4529,34 @@ Select<?> select2 = create.selectOne().fetch();]]></java>
 
                                             <h3>SELECT *</h3>
                                             <p>
-                                            	jOOQ does not explicitly support the asterisk operator in projections. However, you can omit the projection as in these examples:
+                                                jOOQ supports the asterisk operator in projections both as a qualified asterisk (through <reference class="org.jooq.Table" anchor="#asterisk--" title="Table.asterisk()"/>) and as an unqualified asterisk (through <reference class="org.jooq.impl.DSL" anchor="asterisk--" title="DSL.asterisk()"/>). It is also possible to omit the projection entirely, in case of which an asterisk may appear in generated SQL, if not all column names are known to jOOQ.
                                             </p>
 
-</html><java><![CDATA[// Explicitly selects all columns available from BOOK
+</html><java><![CDATA[// Explicitly selects all columns available from BOOK - No asterisk
 create.select().from(BOOK).fetch();
 
-// Explicitly selects all columns available from BOOK and AUTHOR
+// Explicitly selects all columns available from BOOK and AUTHOR - No asterisk
 create.select().from(BOOK, AUTHOR).fetch();
 create.select().from(BOOK).crossJoin(AUTHOR).fetch();
 
-// Renders a SELECT * statement, as columns are unknown to jOOQ
-create.select().from(table(name("BOOK"))).fetch();]]></java><html>
+// Renders a SELECT * statement, as columns are unknown to jOOQ - Implicit unqualified asterisk
+create.select().from(table(name("BOOK"))).fetch();
+
+// Renders a SELECT * statement - Explicit unqualified asterisk
+create.select(asterisk()).from(BOOK).fetch();
+
+// Renders a SELECT BOOK.* statement - Explicit qualified asterisk
+create.select(BOOK.asterisk()).from(BOOK).fetch();
+create.select(BOOK.asterisk(), AUTHOR.asterisk()).from(BOOK, AUTHOR).fetch();
+]]></java><html>
+
+                                            <p>
+                                                With all of the above syntaxes, the row type (as discussed below) is unknown to jOOQ and to the Java compiler.
+                                            </p>
+
+                                            <p>
+                                                It is worth mentioning that in many cases, using an asterisk is a sign of an inefficient query because if not all columns are needed, too much data is transferred between client and server, plus some joins that could be eliminated otherwise, cannot.
+                                            </p>
 
 											<h3>Typesafe projections with degree up to {max-row-degree}</h3>
 											<p>

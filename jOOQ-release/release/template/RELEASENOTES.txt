@@ -11,6 +11,30 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.11.2 - June 26, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Features and Improvements
+-------------------------
+
+#7604 - Print row count in LoggerListener for ResultQuery
+#7610 - Add Setting to turn off ORDER BY clause in emulated OFFSET .. FETCH pagination
+#7620 - Don't ship old XSDs in binaries
+
+Bug Fixes
+---------
+
+#7603 - NullPointerException on Query.getBindValues
+#7606 - CREATE TABLE with enum types generates CHECK constraint rather than enum type reference in PostgreSQL
+#7607 - Cannot parse CREATE INDEX statement on a field called "field"
+#7614 - org.jooq.meta.xml.XMLDatabase does not generate target classes when project is compiled on JDK 9 or 10
+#7617 - Support CREATE OR REPLACE VIEW in H2
+#7618 - Regression in UpdatableRecord.store() and update() methods when used with connection pools
+
+
 Version 3.11.1 - June 19, 2018
 ================================================================================
 
@@ -18,6 +42,7 @@ This is a 3.11 patch release with bug fixes
 
 Bug Fixes
 ---------
+
 #7555 - UpdatableRecordImpl no longer work when globalObjectReferences is set to false
 #7557 - Add a specific error message if org.jooq.util packages are being used in 3.11+
 #7563 - Incomplete Support annotation on some of the H2 style mergeInto overloads
@@ -160,7 +185,7 @@ Another way to access this API is through the new org.jooq.ParserCLI command
 line tool. For example, run:
 
 <pre>
-$ java -jar jooq-3.10.0.jar -f -t ORACLE -s "SELECT * FROM (VALUES(1),(2)) AS t(a)"
+$ java -cp jooq-3.11.0.jar org.jooq.ParserCLI -f -t ORACLE -s "SELECT * FROM (VALUES(1),(2)) AS t(a)"
 </pre>
 
 To get:

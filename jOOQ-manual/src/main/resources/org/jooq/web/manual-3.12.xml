@@ -19187,7 +19187,7 @@ CREATE TABLE book_to_book_store (
         <property>
           <key>sort</key>
           <value>semantic</value>
-        </propert>
+        </property>
       </properties>
     </database>
   </generator>

@@ -15096,6 +15096,10 @@ result.forEach((Object[] entities) -> {
 
                org.jooq.meta.xml.XMLDatabase
 
+           This value can be used to reverse-engineer schemas defined by SQL files (requires jooq-meta-extensions dependency)
+
+               org.jooq.meta.extensions.ddl.DDLDatabase
+
            You can also provide your own org.jooq.meta.Database implementation
            here, if your database is currently not supported -->
       <name>org.jooq.meta.oracle.OracleDatabase</name>

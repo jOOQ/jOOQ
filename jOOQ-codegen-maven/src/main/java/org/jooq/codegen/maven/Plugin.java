@@ -168,10 +168,11 @@ public class Plugin extends AbstractMojo {
         }
 
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
-
-        // [#2886] Add the surrounding project's dependencies to the current classloader
         URLClassLoader pluginClassLoader = getClassLoader();
+
         try {
+
+            // [#2886] Add the surrounding project's dependencies to the current classloader
             Thread.currentThread().setContextClassLoader(pluginClassLoader);
 
             // [#5881] Target is allowed to be null
@@ -198,16 +199,22 @@ public class Plugin extends AbstractMojo {
         catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         }
-
-        // [#2886] Restore old class loader
         finally {
+
+            // [#2886] Restore old class loader
             Thread.currentThread().setContextClassLoader(oldCL);
+
+
+            // [#7630] Close URLClassLoader to help free resources
             try {
                 pluginClassLoader.close();
             }
-            catch (Throwable e) { // catch all possible errors to avoid suppressing the original exception
+
+            // Catch all possible errors to avoid suppressing the original exception
+            catch (Throwable e) {
                 getLog().error("Couldn't close the classloader.", e);
             }
+
         }
 
         project.addCompileSourceRoot(generator.getTarget().getDirectory());

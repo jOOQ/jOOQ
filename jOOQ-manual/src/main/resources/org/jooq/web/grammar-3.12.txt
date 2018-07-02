@@ -302,7 +302,10 @@ constraintReferenceSpecification = tableName '(' fieldNames ')'
   }
 ;
 
-identity =
+identity = identityProperty { [ ',' ] identityProperty }
+;
+
+identityProperty =
 (
   'START WITH' ( 'LIMIT VALUE' | unsignedInteger )
 | 'INCREMENT BY' unsignedInteger
@@ -311,7 +314,7 @@ identity =
 | ( 'CACHE' unsignedInteger | 'NOCACHE' )
 | ( 'CYCLE' | 'NOCYCLE' )
 | ( 'ORDER' | 'NOORDER' )
-)+
+)
 ;
 
 with = 'WITH' [ 'RECURSIVE' ] commonTableExpression { ',' commonTableExpression }

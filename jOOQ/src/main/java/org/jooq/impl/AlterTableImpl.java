@@ -915,13 +915,11 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
-            boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
             boolean parens = !multiAdd                                                                                     ;
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD)
-               .qualify(false)
                .sql(' ');
 
             if (parens)
@@ -956,8 +954,7 @@ final class AlterTableImpl extends AbstractQuery implements
             if (parens)
                 ctx.sql(')');
 
-            ctx.qualify(qualify)
-               .end(ALTER_TABLE_ADD);
+            ctx.end(ALTER_TABLE_ADD);
         }
         else if (addColumn != null) {
             boolean qualify = ctx.qualify();
@@ -1006,15 +1003,11 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addConstraint != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(ALTER_TABLE_ADD);
 
             ctx.visit(K_ADD)
                .sql(' ')
-               .qualify(false)
-               .visit(addConstraint)
-               .qualify(qualify);
+               .visit(addConstraint);
 
 
 

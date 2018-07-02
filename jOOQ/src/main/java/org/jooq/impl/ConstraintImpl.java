@@ -178,7 +178,7 @@ implements
             if (getQualifiedName() != AbstractName.NO_NAME)
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
-                   .visit(getQualifiedName())
+                   .visit(getUnqualifiedName())
                    .formatIndentStart()
                    .formatSeparator();
 

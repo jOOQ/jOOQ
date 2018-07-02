@@ -15391,7 +15391,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>Gradle configuration</strong>
                                     </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   logging = 'WARN'
 }]]></java><html>
 
@@ -15455,7 +15455,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>Gradle configuration</strong>
                                     </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   jdbc {
     driver = 'com.mysql.jdbc.Driver'
     url = 'jdbc:mysql://localhost/testdb'
@@ -15509,7 +15509,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>Gradle configuration</strong>
                                     </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   jdbc {
     driver = 'com.mysql.jdbc.Driver'
     url = 'jdbc:mysql://localhost/testdb'
@@ -15596,7 +15596,7 @@ result.forEach((Object[] entities) -> {
                                         <strong>Gradle configuration</strong>
                                     </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     name = '...'
     strategy {
@@ -15701,7 +15701,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       name = 'org.jooq.meta.xml.XMLDatabase'
@@ -15804,7 +15804,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       regexFlags = 'COMMENTS DOTALL'
@@ -15878,7 +15878,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       includes = '.*'
@@ -15920,7 +15920,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       includes = '.*'
@@ -15985,7 +15985,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       includeTables = true
@@ -16042,7 +16042,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       recordVersionFields = 'REC_VERSION'
@@ -16089,7 +16089,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       syntheticIdentities = 'SCHEMA\.TABLE\.ID'
@@ -16135,7 +16135,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       syntheticPrimaryKeys = 'SCHEMA\.TABLE\.COLUMN(1|2)'
@@ -16185,7 +16185,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       overridePrimaryKeys = 'MY_UNIQUE_KEY_NAME'
@@ -16239,7 +16239,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       dateAsTimestamp = true
@@ -16289,7 +16289,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       ignoreProcedureReturnValues = true
@@ -16342,7 +16342,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       unsignedTypes = true
@@ -16420,7 +16420,7 @@ result.forEach((Object[] entities) -> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       inputCatalog = 'my_catalog'
@@ -16529,7 +16529,7 @@ configuration
                                             </p>
 
 </html><java><![CDATA[// Two schemas from any catalog
-configuration {
+myConfigurationName(sourceSets.main) {
   generator {
     database {
       schemata {
@@ -16545,7 +16545,7 @@ configuration {
 }
 
 // All schemas from two catalogs
-configuration {
+myConfigurationName(sourceSets.main) {
   generator {
     database {
       catalogs {
@@ -16561,7 +16561,7 @@ configuration {
 }
 
 // Two schemas from a specific catalog
-configuration {
+myConfigurationName(sourceSets.main) {
   generator {
     database {
       catalogs {
@@ -16642,7 +16642,7 @@ configuration
                                             </p>
 
 </html><java><![CDATA[// Map input names to a concrete output name:
-configuration {
+myConfigurationName(sourceSets.main) {
   generator {
     database {
       inputCatalog = 'my_input_catalog'
@@ -16654,7 +16654,7 @@ configuration {
 }
 
 // Map input names to the "default" catalog or schema (i.e. no name):
-configuration {
+myConfigurationName(sourceSets.main) {
   generator {
     database {
       inputCatalog = 'my_input_catalog'
@@ -16723,7 +16723,7 @@ configuration {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       catalogVersionProvider = 'SELECT :catalog_name || '_' || MAX("version") FROM "schema_version"'
@@ -16776,7 +16776,7 @@ configuration {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       orderProvider = 'com.example.CaseInsensitiveOrderProvider'
@@ -16899,7 +16899,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       // The first matching forcedType will be applied to the data type definition.
@@ -16965,7 +16965,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       // The first matching forcedType will be applied to the data type definition.
@@ -17035,7 +17035,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       // The first matching forcedType will be applied to the data type definition.
@@ -17098,7 +17098,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       tableValuedFunctions = true
@@ -17195,7 +17195,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     generate {
 
@@ -17286,7 +17286,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     generate {
       jpaAnnotations = true
@@ -17355,7 +17355,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     generate {
       javaTimeTypes = true
@@ -17409,7 +17409,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     generate {
       forceIntegerTypesOnZeroScaleDecimals = true
@@ -17456,7 +17456,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                                 <strong>Gradle configuration</strong>
                                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     generate {
       fullyQualifiedTypes = '.*\.MY_TABLE'
@@ -19266,7 +19266,7 @@ CREATE TABLE book_to_book_store (
                                         <strong>Gradle configuration</strong>
                                     </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     database {
       name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
@@ -19323,7 +19323,7 @@ CREATE TABLE book_to_book_store (
                                 <strong>Gradle configuration</strong>
                             </p>
 
-</html><java><![CDATA[configuration {
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
     name = 'org.jooq.codegen.XMLGenerator'
   }

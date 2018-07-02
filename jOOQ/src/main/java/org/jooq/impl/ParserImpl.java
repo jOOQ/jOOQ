@@ -2357,6 +2357,9 @@ final class ParserImpl implements Parser {
                                 boolean identityOption = false;
 
                                 for (;;) {
+                                    if (identityOption)
+                                        parseIf(ctx, ',');
+
                                     if (parseKeywordIf(ctx, "START WITH")) {
                                         if (!parseKeywordIf(ctx, "LIMIT VALUE"))
                                             parseUnsignedInteger(ctx);

@@ -119,7 +119,7 @@ final class AttributeConverterExtractor implements Integrator {
                 Type type = property.getValue().getType();
 
                 if (type instanceof AttributeConverterTypeAdapter) {
-                    AttributeConverter<?, ?> converter = ((AttributeConverterTypeAdapter<?>) type).getAttributeConverter();
+                    AttributeConverter<?, ?> converter = ((AttributeConverterTypeAdapter<?>) type).getAttributeConverter().getConverterBean().getBeanInstance();
                     Iterator<Column> columnIterator = property.getColumnIterator();
 
                     if (columnIterator.hasNext()) {

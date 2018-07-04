@@ -6,8 +6,8 @@ module org.jooq.meta.extensions {
     requires org.jooq;
     requires org.jooq.meta;
 
-    requires hibernate.jpa;
-    requires hibernate.core;
+    requires java.persistence;
+    requires org.hibernate.orm.core;
     requires spring.beans;
     requires spring.context;
     requires spring.core;

@@ -19257,6 +19257,26 @@ CREATE TABLE book_to_book_store (
     }
   }
 }]]></java><html>
+                            <h3>Dependencies</h3>
+
+                            <p>
+                                Note that the <code>org.jooq.meta.extensions.ddl.DDLDatabase</code> class is located in an external dependency, which needs to be placed on the classpath of the jOOQ code generator. E.g. using Maven:
+                            </p>
+
+</html><xml><![CDATA[<dependency>
+  <!-- Use org.jooq            for the Open Source Edition
+           org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-8 for commercial editions with Java 8 support,
+           org.jooq.pro-java-6 for commercial editions with Java 6 support,
+           org.jooq.trial      for the free trial edition
+
+       Note: Only the Open Source Edition is hosted on Maven Central.
+             Import the others manually from your distribution -->
+  <groupId>org.jooq.trial</groupId>
+  <artifactId>jooq-meta-extensions</artifactId>
+  <version>{jooq-version}</version>
+</dependency>
+]]></xml><html>
                         </html></content>
                     </section>
 

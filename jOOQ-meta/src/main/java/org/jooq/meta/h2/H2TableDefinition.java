@@ -107,13 +107,21 @@ public class H2TableDefinition extends AbstractTableDefinition {
                    null != record.get(Columns.SEQUENCE_NAME)
                 || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
 
+
+            // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
+            boolean isTimestamp = record.get(Columns.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
                 record.get(Columns.TYPE_NAME),
                 record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
-                record.get(Columns.NUMERIC_PRECISION),
-                record.get(Columns.NUMERIC_SCALE),
+                isTimestamp
+                    ? record.get(Columns.NUMERIC_SCALE)
+                    : record.get(Columns.NUMERIC_PRECISION),
+                isTimestamp
+                    ? 0
+                    : record.get(Columns.NUMERIC_SCALE),
                 record.get(Columns.IS_NULLABLE, boolean.class),
                 isIdentity ? null : record.get(Columns.COLUMN_DEFAULT),
                 name(getSchema().getName(), getName() + "_" + record.get(Columns.COLUMN_NAME)));

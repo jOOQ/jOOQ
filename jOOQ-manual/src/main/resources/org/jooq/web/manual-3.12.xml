@@ -1202,19 +1202,14 @@ public class Main {
     <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
-        <version>1.3.168</version>
+        <version>1.4.197</version>
     </dependency>
 
     <!-- Logging -->
     <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.16</version>
-    </dependency>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.5</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>2.11.0</version>
     </dependency>
 
     <!-- Spring (transitive dependencies are not listed explicitly) -->
@@ -1535,19 +1530,14 @@ public class TransactionTest {
 <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
-    <version>1.4.177</version>
+    <version>1.4.197</version>
 </dependency>
 
 <!-- For improved logging, we'll be using log4j via slf4j to see what's going on during migration and code generation -->
 <dependency>
-    <groupId>log4j</groupId>
-    <artifactId>log4j</artifactId>
-    <version>1.2.16</version>
-</dependency>
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-log4j12</artifactId>
-    <version>1.7.5</version>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-slf4j-impl</artifactId>
+    <version>2.11.0</version>
 </dependency>
 
 <!-- To ensure our code is working, we're using JUnit -->
@@ -2035,9 +2025,9 @@ $$ LANGUAGE PLPGSQL;
             <version>9.4.1212</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.0</version>
         </dependency>
     </dependencies>
 </project>]]></xml><html>
@@ -2825,8 +2815,8 @@ fun main(args: Array<String>) {
 								However, the above rule has some exceptions:
 							</p>
 							<ul>
-								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find <a href="http://www.slf4j.org/">slf4j</a> or <a href="http://logging.apache.org/log4j">log4j</a> on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
-								<li>Oracle ojdbc types used for array creation are loaded using reflection. The same applies to Postgres PG* types.</li>
+								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find <a href="http://www.slf4j.org/">slf4j</a> on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
+								<li>Oracle ojdbc types used for array creation are loaded using reflection. The same applies to SQL Server types and Postgres PG* types.</li>
 								<li>Small libraries with compatible licenses are incorporated into jOOQ. These include <a href="https://github.com/jOOQ/jOOR">jOOR</a>, <a href="https://github.com/jOOQ/jOOU">jOOU</a>, parts of <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, parts of <a href="http://commons.apache.org/lang/">commons-lang</a></li>
 								<li><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/package-summary.html">javax.persistence</a> and <a href="http://docs.oracle.com/javaee/6/api/javax/validation/package-summary.html">javax.validation</a> will be needed if you activate the relevant <reference id="code-generation" title="code generation flags"/></li>
 							</ul>
@@ -14568,22 +14558,23 @@ try (Connection c = DSL.using(configuration.derive(new WasNull()))
                         <title>Logging</title>
                         <content><html>
 							<p>
-								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Settings"/>. In order to see any DEBUG log output, put either log4j or slf4j on jOOQ's classpath along with their respective configuration. A sample log4j configuration can be seen here:
+								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Settings"/>. In order to see any DEBUG log output, put slf4j on jOOQ's classpath or module path along with their respective configuration. A sample log4j configuration can be seen here:
 							</p>
 
 </html><xml><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<log4j:configuration>
-    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%m%n" />
-        </layout>
-    </appender>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ABSOLUTE} %5p [%-50c{4}] - %m%n"/>
+        </Console>
+    </Appenders>
 
-    <root>
-        <priority value="debug" />
-        <appender-ref ref="stdout" />
-    </root>
-</log4j:configuration>]]></xml><html>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>]]></xml><html>
 
 							<p>
 								With the above configuration, let's fetch some data with jOOQ

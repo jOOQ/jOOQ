@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.2.13.Final</org.hibernate.version>
+        <org.hibernate.version>5.3.1.Final</org.hibernate.version>
     </properties>
 
     <dependencies>
@@ -26,7 +26,7 @@
         <!-- Database access -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${org.hibernate.version}</version>
         </dependency>
     </dependencies>
@@ -42,8 +42,8 @@
                     <maxmem>1024m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>10</source>
+                    <target>10</target>
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <!-- [#2413] Make compiler warnings a bit more visible

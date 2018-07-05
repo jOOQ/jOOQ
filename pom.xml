@@ -95,11 +95,30 @@
 
 
 
+
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>2.3.0</version>
+            </dependency>
+
+            <!-- Optional logging dependency -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.8.0-beta2</version>
+                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- Optional JPA dependency -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>javax.persistence-api</artifactId>
+                <version>2.2</version>
+                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
 
 

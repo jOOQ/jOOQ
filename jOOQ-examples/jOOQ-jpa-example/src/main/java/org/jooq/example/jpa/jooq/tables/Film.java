@@ -4,6 +4,7 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
+import java.time.Year;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -393220386;
+    private static final long serialVersionUID = 1433747065;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -57,10 +58,9 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, Integer> LENGTH = createField("LENGTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     * The column <code>PUBLIC.FILM.RELEASE_YEAR</code>.
      */
-    @java.lang.Deprecated
-    public final TableField<FilmRecord, Object> RELEASE_YEAR = createField("RELEASE_YEAR", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
+    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField("RELEASE_YEAR", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
 
     /**
      * The column <code>PUBLIC.FILM.TITLE</code>.

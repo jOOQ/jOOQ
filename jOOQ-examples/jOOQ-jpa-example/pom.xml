@@ -20,8 +20,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.jooq.version>3.12.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.197</org.h2.version>
-        <org.hibernate.version>5.2.13.Final</org.hibernate.version>
-        <org.springframework.version>4.3.8.RELEASE</org.springframework.version>
+        <org.hibernate.version>5.3.1.Final</org.hibernate.version>
+        <org.springframework.version>5.0.7.RELEASE</org.springframework.version>
     </properties>
 
     <dependencies>
@@ -40,8 +40,13 @@
             <version>${org.jooq.version}</version>
         </dependency>
         <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${org.hibernate.version}</version>
         </dependency>
         <dependency>
@@ -69,14 +74,9 @@
 
         <!-- Logging -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.0</version>
         </dependency>
 
         <!-- Testing -->
@@ -100,8 +100,8 @@
                     <maxmem>1024m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>10</source>
+                    <target>10</target>
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <!-- [#2413] Make compiler warnings a bit more visible
@@ -110,6 +110,15 @@
                         <arg>-Xlint:varargs</arg>
                     </compilerArgs>
                 </configuration>
+
+                <!-- Required to compile with Java 10 https://stackoverflow.com/a/49398936/521799 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>6.2</version> <!-- Use newer version of ASM -->
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- The jOOQ code generator plugin -->
@@ -152,11 +161,16 @@
                 </executions>
                 <dependencies>
 
-                    <!--  This is needed for the JPADatabase -->
+                    <!-- This is needed for the JPADatabase -->
                     <dependency>
                         <groupId>org.jooq</groupId>
                         <artifactId>jooq-meta-extensions</artifactId>
                         <version>${org.jooq.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.persistence</groupId>
+                        <artifactId>javax.persistence-api</artifactId>
+                        <version>2.2</version>
                     </dependency>
                 </dependencies>
             </plugin>

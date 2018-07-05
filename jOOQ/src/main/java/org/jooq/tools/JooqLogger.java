@@ -68,11 +68,6 @@ public final class JooqLogger implements Log {
     private org.slf4j.Logger          slf4j;
 
     /**
-     * The log4j Logger instance, if available.
-     */
-    private org.apache.log4j.Logger   log4j;
-
-    /**
      * The JDK Logger instance, if available.
      */
     private java.util.logging.Logger  util;
@@ -103,16 +98,9 @@ public final class JooqLogger implements Log {
             result.slf4j = org.slf4j.LoggerFactory.getLogger(clazz);
         }
 
-        // If that's not on the classpath, try log4j instead
-        catch (Throwable e1) {
-            try {
-                result.log4j = org.apache.log4j.Logger.getLogger(clazz);
-            }
-
-            // If that's not on the classpath either, ignore most of logging
-            catch (Throwable e2) {
-                result.util = java.util.logging.Logger.getLogger(clazz.getName());
-            }
+        // If that's not on the classpath, log using the JDK logger
+        catch (Throwable e2) {
+            result.util = java.util.logging.Logger.getLogger(clazz.getName());
         }
 
         // [#2085] Check if any of the INFO, DEBUG, TRACE levels might be
@@ -154,8 +142,6 @@ public final class JooqLogger implements Log {
             return false;
         else if (slf4j != null)
             return slf4j.isTraceEnabled();
-        else if (log4j != null)
-            return log4j.isTraceEnabled();
         else
             return util.isLoggable(java.util.logging.Level.FINER);
     }
@@ -182,8 +168,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.trace(getMessage(message, details));
-        else if (log4j != null)
-            log4j.trace(getMessage(message, details));
         else
             util.finer("" + getMessage(message, details));
     }
@@ -214,8 +198,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.trace(getMessage(message, details), throwable);
-        else if (log4j != null)
-            log4j.trace(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.FINER, "" + getMessage(message, details), throwable);
     }
@@ -231,8 +213,6 @@ public final class JooqLogger implements Log {
             return false;
         else if (slf4j != null)
             return slf4j.isDebugEnabled();
-        else if (log4j != null)
-            return log4j.isDebugEnabled();
         else
             return util.isLoggable(java.util.logging.Level.FINE);
     }
@@ -259,8 +239,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.debug(getMessage(message, details));
-        else if (log4j != null)
-            log4j.debug(getMessage(message, details));
         else
             util.fine("" + getMessage(message, details));
     }
@@ -291,8 +269,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.debug(getMessage(message, details), throwable);
-        else if (log4j != null)
-            log4j.debug(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.FINE, "" + getMessage(message, details), throwable);
     }
@@ -308,8 +284,6 @@ public final class JooqLogger implements Log {
             return false;
         else if (slf4j != null)
             return slf4j.isInfoEnabled();
-        else if (log4j != null)
-            return log4j.isInfoEnabled();
         else
             return util.isLoggable(java.util.logging.Level.INFO);
     }
@@ -336,8 +310,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.info(getMessage(message, details));
-        else if (log4j != null)
-            log4j.info(getMessage(message, details));
         else
             util.info("" + getMessage(message, details));
     }
@@ -368,8 +340,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.info(getMessage(message, details), throwable);
-        else if (log4j != null)
-            log4j.info(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.INFO, "" + getMessage(message, details), throwable);
     }
@@ -396,8 +366,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.warn(getMessage(message, details));
-        else if (log4j != null)
-            log4j.warn(getMessage(message, details));
         else
             util.warning("" + getMessage(message, details));
     }
@@ -428,8 +396,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.warn(getMessage(message, details), throwable);
-        else if (log4j != null)
-            log4j.warn(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.WARNING, "" + getMessage(message, details), throwable);
     }
@@ -456,8 +422,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.error(getMessage(message, details));
-        else if (log4j != null)
-            log4j.error(getMessage(message, details));
         else
             util.severe("" + getMessage(message, details));
     }
@@ -488,8 +452,6 @@ public final class JooqLogger implements Log {
             return;
         else if (slf4j != null)
             slf4j.error(getMessage(message, details), throwable);
-        else if (log4j != null)
-            log4j.error(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.SEVERE, "" + getMessage(message, details), throwable);
     }

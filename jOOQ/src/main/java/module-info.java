@@ -26,10 +26,9 @@ module org.jooq {
     // This dependency may be removed in the future.
     requires static java.compiler;
 
-    // Optional logging APIs
+    // Optional logging APIs - slf4j will be preferred if found
+    requires static org.slf4j;
     requires static java.logging;
-    requires static slf4j.api;
-    requires static log4j;
 
     exports org.jooq;
     exports org.jooq.api.annotation;

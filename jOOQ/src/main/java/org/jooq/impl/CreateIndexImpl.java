@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
 // ...
 // ...
 // ...
@@ -268,7 +269,7 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.visit(generatedName())
                .sql(' ');
 
-        boolean supportsInclude = false                                                      ;
+        boolean supportsInclude = POSTGRES_11.precedes(ctx.family())                                                      ;
         boolean supportsFieldsBeforeTable = false                                                     ;
 
         QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();

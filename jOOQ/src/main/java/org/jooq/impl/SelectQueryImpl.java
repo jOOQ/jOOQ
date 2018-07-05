@@ -633,7 +633,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case POSTGRES_9_3:
                 case POSTGRES_9_4:
                 case POSTGRES_9_5:
-                case POSTGRES_10: {
+                case POSTGRES_10:
+                case POSTGRES_11: {
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else

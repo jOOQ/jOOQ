@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
+import static org.jooq.SQLDialect.POSTGRES_11;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
@@ -237,6 +238,9 @@ public class JDBCUtils {
 
         if (majorVersion >= 10)
             return POSTGRES_10;
+
+        if (majorVersion >= 11)
+            return POSTGRES_11;
 
         return POSTGRES;
     }

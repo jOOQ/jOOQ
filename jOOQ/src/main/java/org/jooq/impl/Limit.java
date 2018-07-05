@@ -321,6 +321,7 @@ final class Limit extends AbstractQueryPart {
             case POSTGRES_9_4:
             case POSTGRES_9_5:
             case POSTGRES_10:
+            case POSTGRES_11:
                 // No break
 
             // A default implementation is necessary for hashCode() and toString()

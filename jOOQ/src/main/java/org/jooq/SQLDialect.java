@@ -179,6 +179,15 @@ public enum SQLDialect {
     POSTGRES_10("Postgres", false, POSTGRES, POSTGRES_9_5),
 
     /**
+     * The PostgreSQL 11 dialect.
+     * <p>
+     * While this family (and its dialects) have been observed to work to some
+     * extent on Amazon RedShift as well, we strongly suggest you use the
+     * official {@link #REDSHIFT} support, instead.
+     */
+    POSTGRES_11("Postgres", false, POSTGRES, POSTGRES_10),
+
+    /**
      * The SQLite dialect family.
      */
     SQLITE("SQLite", false),

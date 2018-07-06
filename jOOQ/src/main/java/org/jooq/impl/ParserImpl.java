@@ -1287,7 +1287,7 @@ final class ParserImpl implements Parser {
         boolean groups = !rows && !range && parseKeywordIf(ctx, "GROUPS");
 
         if ((rows || range || groups) && !orderByAllowed)
-            throw ctx.exception("ROWS or RANGE not allowed");
+            throw ctx.exception("ROWS, RANGE, or GROUPS not allowed");
 
         if (rows || range || groups) {
             Long n;
@@ -1452,14 +1452,14 @@ final class ParserImpl implements Parser {
             else
                 throw ctx.expected("BETWEEN", "CURRENT ROW", "UNBOUNDED", "integer literal");
 
-            if (parseIf(ctx, "EXCLUDE"))
-                if (parseIf(ctx, "CURRENT ROW"))
+            if (parseKeywordIf(ctx, "EXCLUDE"))
+                if (parseKeywordIf(ctx, "CURRENT ROW"))
                     return s4.excludeCurrentRow();
-                else if (parseIf(ctx, "TIES"))
+                else if (parseKeywordIf(ctx, "TIES"))
                     return s4.excludeTies();
-                else if (parseIf(ctx, "GROUP"))
+                else if (parseKeywordIf(ctx, "GROUP"))
                     return s4.excludeGroup();
-                else if (parseIf(ctx, "NO OTHERS"))
+                else if (parseKeywordIf(ctx, "NO OTHERS"))
                     return s4.excludeNoOthers();
                 else
                     throw ctx.expected("CURRENT ROW", "TIES", "GROUP", "NO OTHERS");

@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
 // ...
 // ...
 // ...
@@ -82,41 +83,29 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface WindowSpecificationRowsAndStep {
+public interface WindowSpecificationExcludeStep extends WindowSpecificationFinalStep {
 
     /**
-     * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
-     * specification.
+     * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationExcludeStep andUnboundedPreceding();
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep excludeCurrentRow();
 
     /**
-     * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
-     * specification.
+     * Add an <code>EXCLUDE GROUP</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationExcludeStep andPreceding(int number);
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep excludeGroup();
 
     /**
-     * Add a <code>... AND CURRENT ROW</code> frame clause to the window
-     * specification.
+     * Add an <code>EXCLUDE TIES</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationExcludeStep andCurrentRow();
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep excludeTies();
 
     /**
-     * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
-     * specification.
+     * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationExcludeStep andUnboundedFollowing();
-
-    /**
-     * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
-     * specification.
-     */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationExcludeStep andFollowing(int number);
-
+    WindowSpecificationFinalStep excludeNoOthers();
 }

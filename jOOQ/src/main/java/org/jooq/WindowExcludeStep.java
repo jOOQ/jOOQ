@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
+// ...
 // ...
 // ...
 // ...
@@ -66,40 +68,29 @@ import static org.jooq.SQLDialect.POSTGRES;
  * @param <T> The function return type
  * @author Lukas Eder
  */
-public interface WindowRowsAndStep<T> {
+public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
 
     /**
-     * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
-     * function.
+     * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowExcludeStep<T> andUnboundedPreceding();
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> excludeCurrentRow();
 
     /**
-     * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
-     * function.
+     * Add an <code>EXCLUDE GROUP</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowExcludeStep<T> andPreceding(int number);
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> excludeGroup();
 
     /**
-     * Add a <code>... AND CURRENT ROW</code> frame clause to the window
-     * function.
+     * Add an <code>EXCLUDE TIES</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowExcludeStep<T> andCurrentRow();
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> excludeTies();
 
     /**
-     * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
-     * function.
+     * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowExcludeStep<T> andUnboundedFollowing();
-
-    /**
-     * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
-     * function.
-     */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowExcludeStep<T> andFollowing(int number);
+    WindowFinalStep<T> excludeNoOthers();
 }

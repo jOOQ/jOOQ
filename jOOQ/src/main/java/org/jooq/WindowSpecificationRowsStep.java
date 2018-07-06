@@ -90,35 +90,35 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rowsUnboundedPreceding();
+    WindowSpecificationExcludeStep rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rowsPreceding(int number);
+    WindowSpecificationExcludeStep rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rowsCurrentRow();
+    WindowSpecificationExcludeStep rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rowsUnboundedFollowing();
+    WindowSpecificationExcludeStep rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rowsFollowing(int number);
+    WindowSpecificationExcludeStep rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
@@ -160,35 +160,35 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rangeUnboundedPreceding();
+    WindowSpecificationExcludeStep rangeUnboundedPreceding();
 
     /**
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rangePreceding(int number);
+    WindowSpecificationExcludeStep rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rangeCurrentRow();
+    WindowSpecificationExcludeStep rangeCurrentRow();
 
     /**
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rangeUnboundedFollowing();
+    WindowSpecificationExcludeStep rangeUnboundedFollowing();
 
     /**
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowSpecificationFinalStep rangeFollowing(int number);
+    WindowSpecificationExcludeStep rangeFollowing(int number);
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
@@ -230,35 +230,35 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * specification.
      */
     @Support({ POSTGRES_11 })
-    WindowSpecificationFinalStep groupsUnboundedPreceding();
+    WindowSpecificationExcludeStep groupsUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
     @Support({ POSTGRES_11 })
-    WindowSpecificationFinalStep groupsPreceding(int number);
+    WindowSpecificationExcludeStep groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window
      * specification.
      */
     @Support({ POSTGRES_11 })
-    WindowSpecificationFinalStep groupsCurrentRow();
+    WindowSpecificationExcludeStep groupsCurrentRow();
 
     /**
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ POSTGRES_11 })
-    WindowSpecificationFinalStep groupsUnboundedFollowing();
+    WindowSpecificationExcludeStep groupsUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
     @Support({ POSTGRES_11 })
-    WindowSpecificationFinalStep groupsFollowing(int number);
+    WindowSpecificationExcludeStep groupsFollowing(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to

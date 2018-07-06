@@ -46,12 +46,17 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_CURRENT_ROW;
+import static org.jooq.impl.Keywords.K_EXCLUDE;
 import static org.jooq.impl.Keywords.K_FOLLOWING;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
+import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
+import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
+import static org.jooq.impl.WindowSpecificationImpl.Exclude.TIES;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.GROUPS;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
@@ -66,6 +71,7 @@ import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.OrderField;
 import org.jooq.SQLDialect;
+import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
@@ -78,7 +84,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     // Cascading interface implementations for window specification behaviour
     WindowSpecificationPartitionByStep,
-    WindowSpecificationRowsAndStep
+    WindowSpecificationRowsAndStep,
+    WindowSpecificationExcludeStep
     {
 
 
@@ -93,6 +100,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     private Integer                          frameStart;
     private Integer                          frameEnd;
     private FrameUnits                       frameUnits;
+    private Exclude                          exclude;
     private boolean                          partitionByOne;
 
     WindowSpecificationImpl() {
@@ -144,6 +152,9 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             }
 
             glue = " ";
+
+            if (exclude != null)
+                ctx.sql(glue).visit(K_EXCLUDE).sql(' ').visit(exclude.keyword);
         }
     }
 
@@ -181,7 +192,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     public final WindowSpecificationOrderByStep partitionByOne() {
         partitionByOne = true;
         partitionBy.add(one());
-        return null;
+        return this;
     }
 
     @Override
@@ -196,35 +207,35 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final WindowSpecificationFinalStep rowsUnboundedPreceding() {
+    public final WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         frameUnits = ROWS;
         frameStart = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rowsPreceding(int number) {
+    public final WindowSpecificationExcludeStep rowsPreceding(int number) {
         frameUnits = ROWS;
         frameStart = -number;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rowsCurrentRow() {
+    public final WindowSpecificationExcludeStep rowsCurrentRow() {
         frameUnits = ROWS;
         frameStart = 0;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rowsUnboundedFollowing() {
+    public final WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         frameUnits = ROWS;
         frameStart = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rowsFollowing(int number) {
+    public final WindowSpecificationExcludeStep rowsFollowing(int number) {
         frameUnits = ROWS;
         frameStart = number;
         return this;
@@ -261,35 +272,35 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final WindowSpecificationFinalStep rangeUnboundedPreceding() {
+    public final WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         frameUnits = RANGE;
         frameStart = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rangePreceding(int number) {
+    public final WindowSpecificationExcludeStep rangePreceding(int number) {
         frameUnits = RANGE;
         frameStart = -number;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rangeCurrentRow() {
+    public final WindowSpecificationExcludeStep rangeCurrentRow() {
         frameUnits = RANGE;
         frameStart = 0;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rangeUnboundedFollowing() {
+    public final WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         frameUnits = RANGE;
         frameStart = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep rangeFollowing(int number) {
+    public final WindowSpecificationExcludeStep rangeFollowing(int number) {
         frameUnits = RANGE;
         frameStart = number;
         return this;
@@ -326,35 +337,35 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final WindowSpecificationFinalStep groupsUnboundedPreceding() {
+    public final WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         frameUnits = GROUPS;
         frameStart = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep groupsPreceding(int number) {
+    public final WindowSpecificationExcludeStep groupsPreceding(int number) {
         frameUnits = GROUPS;
         frameStart = -number;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep groupsCurrentRow() {
+    public final WindowSpecificationExcludeStep groupsCurrentRow() {
         frameUnits = GROUPS;
         frameStart = 0;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep groupsUnboundedFollowing() {
+    public final WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         frameUnits = GROUPS;
         frameStart = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep groupsFollowing(int number) {
+    public final WindowSpecificationExcludeStep groupsFollowing(int number) {
         frameUnits = GROUPS;
         frameStart = number;
         return this;
@@ -391,32 +402,56 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final WindowSpecificationFinalStep andUnboundedPreceding() {
+    public final WindowSpecificationExcludeStep andUnboundedPreceding() {
         frameEnd = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep andPreceding(int number) {
+    public final WindowSpecificationExcludeStep andPreceding(int number) {
         frameEnd = -number;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep andCurrentRow() {
+    public final WindowSpecificationExcludeStep andCurrentRow() {
         frameEnd = 0;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep andUnboundedFollowing() {
+    public final WindowSpecificationExcludeStep andUnboundedFollowing() {
         frameEnd = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
-    public final WindowSpecificationFinalStep andFollowing(int number) {
+    public final WindowSpecificationExcludeStep andFollowing(int number) {
         frameEnd = number;
+        return this;
+    }
+
+    @Override
+    public WindowSpecificationFinalStep excludeCurrentRow() {
+        exclude = CURRENT_ROW;
+        return this;
+    }
+
+    @Override
+    public WindowSpecificationFinalStep excludeGroup() {
+        exclude = GROUP;
+        return this;
+    }
+
+    @Override
+    public WindowSpecificationFinalStep excludeTies() {
+        exclude = TIES;
+        return this;
+    }
+
+    @Override
+    public WindowSpecificationFinalStep excludeNoOthers() {
+        exclude = NO_OTHERS;
         return this;
     }
 
@@ -425,9 +460,22 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         RANGE("range"),
         GROUPS("groups");
 
-        private final Keyword keyword;
+        final Keyword keyword;
 
         private FrameUnits(String keyword) {
+            this.keyword = DSL.keyword(keyword);
+        }
+    }
+
+    enum Exclude {
+        CURRENT_ROW("current row"),
+        TIES("ties"),
+        GROUP("group"),
+        NO_OTHERS("no others");
+
+        final Keyword keyword;
+
+        private Exclude(String keyword) {
             this.keyword = DSL.keyword(keyword);
         }
     }

@@ -75,34 +75,34 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rowsUnboundedPreceding();
+    WindowExcludeStep<T> rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rowsPreceding(int number);
+    WindowExcludeStep<T> rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rowsCurrentRow();
+    WindowExcludeStep<T> rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rowsUnboundedFollowing();
+    WindowExcludeStep<T> rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rowsFollowing(int number);
+    WindowExcludeStep<T> rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
@@ -144,34 +144,34 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rangeUnboundedPreceding();
+    WindowExcludeStep<T> rangeUnboundedPreceding();
 
     /**
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rangePreceding(int number);
+    WindowExcludeStep<T> rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rangeCurrentRow();
+    WindowExcludeStep<T> rangeCurrentRow();
 
     /**
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rangeUnboundedFollowing();
+    WindowExcludeStep<T> rangeUnboundedFollowing();
 
     /**
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    WindowFinalStep<T> rangeFollowing(int number);
+    WindowExcludeStep<T> rangeFollowing(int number);
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
@@ -213,34 +213,34 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ POSTGRES_11 })
-    WindowFinalStep<T> groupsUnboundedPreceding();
+    WindowExcludeStep<T> groupsUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * function.
      */
     @Support({ POSTGRES_11 })
-    WindowFinalStep<T> groupsPreceding(int number);
+    WindowExcludeStep<T> groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window function.
      */
     @Support({ POSTGRES_11 })
-    WindowFinalStep<T> groupsCurrentRow();
+    WindowExcludeStep<T> groupsCurrentRow();
 
     /**
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ POSTGRES_11 })
-    WindowFinalStep<T> groupsUnboundedFollowing();
+    WindowExcludeStep<T> groupsUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
     @Support({ POSTGRES_11 })
-    WindowFinalStep<T> groupsFollowing(int number);
+    WindowExcludeStep<T> groupsFollowing(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to

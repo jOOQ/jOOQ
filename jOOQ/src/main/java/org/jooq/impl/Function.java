@@ -98,6 +98,7 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
+import org.jooq.WindowExcludeStep;
 import org.jooq.WindowFinalStep;
 import org.jooq.WindowFromFirstLastStep;
 import org.jooq.WindowIgnoreNullsStep;
@@ -125,7 +126,8 @@ class Function<T> extends AbstractField<T> implements
     WindowFromFirstLastStep<T>,
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,
-    WindowRowsAndStep<T>
+    WindowRowsAndStep<T>,
+    WindowExcludeStep<T>
     {
 
 
@@ -703,31 +705,31 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowFinalStep<T> rowsUnboundedPreceding() {
+    public final WindowExcludeStep<T> rowsUnboundedPreceding() {
         windowSpecification.rowsUnboundedPreceding();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rowsPreceding(int number) {
+    public final WindowExcludeStep<T> rowsPreceding(int number) {
         windowSpecification.rowsPreceding(number);
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rowsCurrentRow() {
+    public final WindowExcludeStep<T> rowsCurrentRow() {
         windowSpecification.rowsCurrentRow();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rowsUnboundedFollowing() {
+    public final WindowExcludeStep<T> rowsUnboundedFollowing() {
         windowSpecification.rowsUnboundedFollowing();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rowsFollowing(int number) {
+    public final WindowExcludeStep<T> rowsFollowing(int number) {
         windowSpecification.rowsFollowing(number);
         return this;
     }
@@ -763,31 +765,31 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowFinalStep<T> rangeUnboundedPreceding() {
+    public final WindowExcludeStep<T> rangeUnboundedPreceding() {
         windowSpecification.rangeUnboundedPreceding();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rangePreceding(int number) {
+    public final WindowExcludeStep<T> rangePreceding(int number) {
         windowSpecification.rangePreceding(number);
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rangeCurrentRow() {
+    public final WindowExcludeStep<T> rangeCurrentRow() {
         windowSpecification.rangeCurrentRow();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rangeUnboundedFollowing() {
+    public final WindowExcludeStep<T> rangeUnboundedFollowing() {
         windowSpecification.rangeUnboundedFollowing();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> rangeFollowing(int number) {
+    public final WindowExcludeStep<T> rangeFollowing(int number) {
         windowSpecification.rangeFollowing(number);
         return this;
     }
@@ -823,31 +825,31 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowFinalStep<T> groupsUnboundedPreceding() {
+    public final WindowExcludeStep<T> groupsUnboundedPreceding() {
         windowSpecification.groupsUnboundedPreceding();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> groupsPreceding(int number) {
+    public final WindowExcludeStep<T> groupsPreceding(int number) {
         windowSpecification.groupsPreceding(number);
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> groupsCurrentRow() {
+    public final WindowExcludeStep<T> groupsCurrentRow() {
         windowSpecification.groupsCurrentRow();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> groupsUnboundedFollowing() {
+    public final WindowExcludeStep<T> groupsUnboundedFollowing() {
         windowSpecification.groupsUnboundedFollowing();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> groupsFollowing(int number) {
+    public final WindowExcludeStep<T> groupsFollowing(int number) {
         windowSpecification.groupsFollowing(number);
         return this;
     }
@@ -883,32 +885,56 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowFinalStep<T> andUnboundedPreceding() {
+    public final WindowExcludeStep<T> andUnboundedPreceding() {
         windowSpecification.andUnboundedPreceding();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> andPreceding(int number) {
+    public final WindowExcludeStep<T> andPreceding(int number) {
         windowSpecification.andPreceding(number);
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> andCurrentRow() {
+    public final WindowExcludeStep<T> andCurrentRow() {
         windowSpecification.andCurrentRow();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> andUnboundedFollowing() {
+    public final WindowExcludeStep<T> andUnboundedFollowing() {
         windowSpecification.andUnboundedFollowing();
         return this;
     }
 
     @Override
-    public final WindowFinalStep<T> andFollowing(int number) {
+    public final WindowExcludeStep<T> andFollowing(int number) {
         windowSpecification.andFollowing(number);
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> excludeCurrentRow() {
+        windowSpecification.excludeCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> excludeGroup() {
+        windowSpecification.excludeGroup();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> excludeTies() {
+        windowSpecification.excludeTies();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> excludeNoOthers() {
+        windowSpecification.excludeNoOthers();
         return this;
     }
 }

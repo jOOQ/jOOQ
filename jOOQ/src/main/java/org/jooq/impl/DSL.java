@@ -318,7 +318,7 @@ import org.jooq.WindowFromFirstLastStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowSpecification;
-import org.jooq.WindowSpecificationFinalStep;
+import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
@@ -17560,7 +17560,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rowsUnboundedPreceding() {
+    public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
     }
 
@@ -17568,7 +17568,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rowsPreceding(int number) {
+    public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
     }
 
@@ -17576,7 +17576,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rowsCurrentRow() {
+    public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
     }
 
@@ -17584,7 +17584,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rowsUnboundedFollowing() {
+    public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
     }
 
@@ -17592,7 +17592,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rowsFollowing(int number) {
+    public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
     }
 
@@ -17640,7 +17640,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rangeUnboundedPreceding() {
+    public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
     }
 
@@ -17648,7 +17648,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rangePreceding(int number) {
+    public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
     }
 
@@ -17656,7 +17656,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rangeCurrentRow() {
+    public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
     }
 
@@ -17664,7 +17664,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rangeUnboundedFollowing() {
+    public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
     }
 
@@ -17672,7 +17672,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
-    public static WindowSpecificationFinalStep rangeFollowing(int number) {
+    public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
     }
 
@@ -17720,7 +17720,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @Support({ POSTGRES_11 })
-    public static WindowSpecificationFinalStep groupsUnboundedPreceding() {
+    public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
 
@@ -17728,7 +17728,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @Support({ POSTGRES_11 })
-    public static WindowSpecificationFinalStep groupsPreceding(int number) {
+    public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
 
@@ -17736,7 +17736,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @Support({ POSTGRES_11 })
-    public static WindowSpecificationFinalStep groupsCurrentRow() {
+    public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
 
@@ -17744,7 +17744,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @Support({ POSTGRES_11 })
-    public static WindowSpecificationFinalStep groupsUnboundedFollowing() {
+    public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
 
@@ -17752,7 +17752,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @Support({ POSTGRES_11 })
-    public static WindowSpecificationFinalStep groupsFollowing(int number) {
+    public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
 

@@ -399,6 +399,7 @@ import org.jooq.WindowFromFirstLastStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowSpecification;
+import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
@@ -1265,6 +1266,7 @@ final class ParserImpl implements Parser {
         final WindowSpecificationOrderByStep s1;
         final WindowSpecificationRowsStep s2;
         final WindowSpecificationRowsAndStep s3;
+        final WindowSpecificationExcludeStep s4;
 
         s1 = parseKeywordIf(ctx, "PARTITION BY")
             ? partitionBy(parseFields(ctx))
@@ -1364,18 +1366,18 @@ final class ParserImpl implements Parser {
 
                 if (parseKeywordIf(ctx, "UNBOUNDED"))
                     if (parseKeywordIf(ctx, "PRECEDING"))
-                        return s3.andUnboundedPreceding();
+                        s4 =  s3.andUnboundedPreceding();
                     else if (parseKeywordIf(ctx, "FOLLOWING"))
-                        return s3.andUnboundedFollowing();
+                        s4 =  s3.andUnboundedFollowing();
                     else
                         throw ctx.expected("FOLLOWING", "PRECEDING");
                 else if (parseKeywordIf(ctx, "CURRENT ROW"))
-                    return s3.andCurrentRow();
+                    s4 =  s3.andCurrentRow();
                 else if ((n = parseUnsignedInteger(ctx)) != null)
                     if (parseKeywordIf(ctx, "PRECEDING"))
-                        return s3.andPreceding(n.intValue());
+                        s4 =  s3.andPreceding(n.intValue());
                     else if (parseKeywordIf(ctx, "FOLLOWING"))
-                        return s3.andFollowing(n.intValue());
+                        s4 =  s3.andFollowing(n.intValue());
                     else
                         throw ctx.expected("FOLLOWING", "PRECEDING");
                 else
@@ -1383,7 +1385,7 @@ final class ParserImpl implements Parser {
             }
             else if (parseKeywordIf(ctx, "UNBOUNDED"))
                 if (parseKeywordIf(ctx, "PRECEDING"))
-                    return s2 == null
+                    s4 = s2 == null
                         ?     rows
                             ? rowsUnboundedPreceding()
                             : range
@@ -1395,7 +1397,7 @@ final class ParserImpl implements Parser {
                             ? s2.rangeUnboundedPreceding()
                             : s2.groupsUnboundedPreceding();
                 else if (parseKeywordIf(ctx, "FOLLOWING"))
-                    return s2 == null
+                    s4 = s2 == null
                         ?     rows
                             ? rowsUnboundedFollowing()
                             : range
@@ -1409,7 +1411,7 @@ final class ParserImpl implements Parser {
                 else
                     throw ctx.expected("FOLLOWING", "PRECEDING");
             else if (parseKeywordIf(ctx, "CURRENT ROW"))
-                return s2 == null
+                s4 = s2 == null
                     ?     rows
                         ? rowsCurrentRow()
                         : range
@@ -1422,7 +1424,7 @@ final class ParserImpl implements Parser {
                         : s2.groupsCurrentRow();
             else if ((n = parseUnsignedInteger(ctx)) != null)
                 if (parseKeywordIf(ctx, "PRECEDING"))
-                    return s2 == null
+                    s4 = s2 == null
                         ?     rows
                             ? rowsPreceding(n.intValue())
                             : range
@@ -1434,7 +1436,7 @@ final class ParserImpl implements Parser {
                             ? s2.rangePreceding(n.intValue())
                             : s2.groupsPreceding(n.intValue());
                 else if (parseKeywordIf(ctx, "FOLLOWING"))
-                    return s2 == null
+                    s4 = s2 == null
                         ?     rows
                             ? rowsFollowing(n.intValue())
                             : range
@@ -1449,6 +1451,20 @@ final class ParserImpl implements Parser {
                     throw ctx.expected("FOLLOWING", "PRECEDING");
             else
                 throw ctx.expected("BETWEEN", "CURRENT ROW", "UNBOUNDED", "integer literal");
+
+            if (parseIf(ctx, "EXCLUDE"))
+                if (parseIf(ctx, "CURRENT ROW"))
+                    return s4.excludeCurrentRow();
+                else if (parseIf(ctx, "TIES"))
+                    return s4.excludeTies();
+                else if (parseIf(ctx, "GROUP"))
+                    return s4.excludeGroup();
+                else if (parseIf(ctx, "NO OTHERS"))
+                    return s4.excludeNoOthers();
+                else
+                    throw ctx.expected("CURRENT ROW", "TIES", "GROUP", "NO OTHERS");
+            else
+                return s4;
         }
         else
             return s2;

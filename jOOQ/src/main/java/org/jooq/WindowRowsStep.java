@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
 // ...
 // ...
 // ...
@@ -206,4 +207,73 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowRowsAndStep<T> rangeBetweenFollowing(int number);
+
+    /**
+     * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> groupsUnboundedPreceding();
+
+    /**
+     * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> groupsPreceding(int number);
+
+    /**
+     * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> groupsCurrentRow();
+
+    /**
+     * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> groupsUnboundedFollowing();
+
+    /**
+     * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowFinalStep<T> groupsFollowing(int number);
+
+    /**
+     * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowRowsAndStep<T> groupsBetweenUnboundedPreceding();
+
+    /**
+     * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowRowsAndStep<T> groupsBetweenPreceding(int number);
+
+    /**
+     * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowRowsAndStep<T> groupsBetweenCurrentRow();
+
+    /**
+     * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowRowsAndStep<T> groupsBetweenUnboundedFollowing();
+
+    /**
+     * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES_11 })
+    WindowRowsAndStep<T> groupsBetweenFollowing(int number);
 }

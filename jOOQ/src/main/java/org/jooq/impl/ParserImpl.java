@@ -104,6 +104,16 @@ import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.grouping;
 import static org.jooq.impl.DSL.groupingId;
 import static org.jooq.impl.DSL.groupingSets;
+import static org.jooq.impl.DSL.groupsBetweenCurrentRow;
+import static org.jooq.impl.DSL.groupsBetweenFollowing;
+import static org.jooq.impl.DSL.groupsBetweenPreceding;
+import static org.jooq.impl.DSL.groupsBetweenUnboundedFollowing;
+import static org.jooq.impl.DSL.groupsBetweenUnboundedPreceding;
+import static org.jooq.impl.DSL.groupsCurrentRow;
+import static org.jooq.impl.DSL.groupsFollowing;
+import static org.jooq.impl.DSL.groupsPreceding;
+import static org.jooq.impl.DSL.groupsUnboundedFollowing;
+import static org.jooq.impl.DSL.groupsUnboundedPreceding;
 import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.iif;
@@ -1272,58 +1282,79 @@ final class ParserImpl implements Parser {
 
         boolean rows = parseKeywordIf(ctx, "ROWS");
         boolean range = !rows && parseKeywordIf(ctx, "RANGE");
+        boolean groups = !rows && !range && parseKeywordIf(ctx, "GROUPS");
 
-        if ((rows || range) &&!orderByAllowed)
+        if ((rows || range || groups) && !orderByAllowed)
             throw ctx.exception("ROWS or RANGE not allowed");
 
-        if (rows || range) {
+        if (rows || range || groups) {
             Long n;
 
             if (parseKeywordIf(ctx, "BETWEEN")) {
                 if (parseKeywordIf(ctx, "UNBOUNDED"))
                     if (parseKeywordIf(ctx, "PRECEDING"))
                         s3 = s2 == null
-                            ? rows
+                            ?     rows
                                 ? rowsBetweenUnboundedPreceding()
-                                : rangeBetweenUnboundedPreceding()
-                            : rows
+                                : range
+                                ? rangeBetweenUnboundedPreceding()
+                                : groupsBetweenUnboundedPreceding()
+                            :     rows
                                 ? s2.rowsBetweenUnboundedPreceding()
-                                : s2.rangeBetweenUnboundedPreceding();
+                                : range
+                                ? s2.rangeBetweenUnboundedPreceding()
+                                : s2.groupsBetweenUnboundedPreceding();
                     else if (parseKeywordIf(ctx, "FOLLOWING"))
                         s3 = s2 == null
-                            ? rows
+                            ?     rows
                                 ? rowsBetweenUnboundedFollowing()
-                                : rangeBetweenUnboundedFollowing()
-                            : rows
+                                : range
+                                ? rangeBetweenUnboundedFollowing()
+                                : groupsBetweenUnboundedFollowing()
+                            :     rows
                                 ? s2.rowsBetweenUnboundedFollowing()
-                                : s2.rangeBetweenUnboundedFollowing();
+                                : range
+                                ? s2.rangeBetweenUnboundedFollowing()
+                                : s2.groupsBetweenUnboundedFollowing();
                     else
                         throw ctx.expected("FOLLOWING", "PRECEDING");
                 else if (parseKeywordIf(ctx, "CURRENT ROW"))
                     s3 = s2 == null
-                        ? rows
+                        ?     rows
                             ? rowsBetweenCurrentRow()
-                            : rangeBetweenCurrentRow()
-                        : rows
+                            : range
+                            ? rangeBetweenCurrentRow()
+                            : groupsBetweenCurrentRow()
+                        :     rows
                             ? s2.rowsBetweenCurrentRow()
-                            : s2.rangeBetweenCurrentRow();
+                            : range
+                            ? s2.rangeBetweenCurrentRow()
+                            : s2.groupsBetweenCurrentRow();
                 else if ((n = parseUnsignedIntegerIf(ctx)) != null)
                     if (parseKeywordIf(ctx, "PRECEDING"))
                         s3 = s2 == null
-                            ? rows
+                            ?     rows
                                 ? rowsBetweenPreceding(n.intValue())
-                                : rangeBetweenPreceding(n.intValue())
-                            : rows
+                                : range
+                                ? rangeBetweenPreceding(n.intValue())
+                                : groupsBetweenPreceding(n.intValue())
+                            :     rows
                                 ? s2.rowsBetweenPreceding(n.intValue())
-                                : s2.rangeBetweenPreceding(n.intValue());
+                                : range
+                                ? s2.rangeBetweenPreceding(n.intValue())
+                                : s2.groupsBetweenPreceding(n.intValue());
                     else if (parseKeywordIf(ctx, "FOLLOWING"))
                         s3 = s2 == null
-                            ? rows
+                            ?     rows
                                 ? rowsBetweenFollowing(n.intValue())
-                                : rangeBetweenFollowing(n.intValue())
-                            : rows
+                                : range
+                                ? rangeBetweenFollowing(n.intValue())
+                                : groupsBetweenFollowing(n.intValue())
+                            :     rows
                                 ? s2.rowsBetweenFollowing(n.intValue())
-                                : s2.rangeBetweenFollowing(n.intValue());
+                                : range
+                                ? s2.rangeBetweenFollowing(n.intValue())
+                                : s2.groupsBetweenFollowing(n.intValue());
                     else
                         throw ctx.expected("FOLLOWING", "PRECEDING");
                 else
@@ -1353,47 +1384,67 @@ final class ParserImpl implements Parser {
             else if (parseKeywordIf(ctx, "UNBOUNDED"))
                 if (parseKeywordIf(ctx, "PRECEDING"))
                     return s2 == null
-                        ? rows
+                        ?     rows
                             ? rowsUnboundedPreceding()
-                            : rangeUnboundedPreceding()
-                        : rows
+                            : range
+                            ? rangeUnboundedPreceding()
+                            : groupsUnboundedPreceding()
+                        :     rows
                             ? s2.rowsUnboundedPreceding()
-                            : s2.rangeUnboundedPreceding();
+                            : range
+                            ? s2.rangeUnboundedPreceding()
+                            : s2.groupsUnboundedPreceding();
                 else if (parseKeywordIf(ctx, "FOLLOWING"))
                     return s2 == null
-                        ? rows
+                        ?     rows
                             ? rowsUnboundedFollowing()
-                            : rangeUnboundedFollowing()
-                        : rows
+                            : range
+                            ? rangeUnboundedFollowing()
+                            : groupsUnboundedFollowing()
+                        :     rows
                             ? s2.rowsUnboundedFollowing()
-                            : s2.rangeUnboundedFollowing();
+                            : range
+                            ? s2.rangeUnboundedFollowing()
+                            : s2.groupsUnboundedFollowing();
                 else
                     throw ctx.expected("FOLLOWING", "PRECEDING");
             else if (parseKeywordIf(ctx, "CURRENT ROW"))
                 return s2 == null
-                    ? rows
+                    ?     rows
                         ? rowsCurrentRow()
-                        : rangeCurrentRow()
-                    : rows
+                        : range
+                        ? rangeCurrentRow()
+                        : groupsCurrentRow()
+                    :     rows
                         ? s2.rowsCurrentRow()
-                        : s2.rangeCurrentRow();
+                        : range
+                        ? s2.rangeCurrentRow()
+                        : s2.groupsCurrentRow();
             else if ((n = parseUnsignedInteger(ctx)) != null)
                 if (parseKeywordIf(ctx, "PRECEDING"))
                     return s2 == null
-                        ? rows
+                        ?     rows
                             ? rowsPreceding(n.intValue())
-                            : rangePreceding(n.intValue())
-                        : rows
+                            : range
+                            ? rangePreceding(n.intValue())
+                            : groupsPreceding(n.intValue())
+                        :     rows
                             ? s2.rowsPreceding(n.intValue())
-                            : s2.rangePreceding(n.intValue());
+                            : range
+                            ? s2.rangePreceding(n.intValue())
+                            : s2.groupsPreceding(n.intValue());
                 else if (parseKeywordIf(ctx, "FOLLOWING"))
                     return s2 == null
-                        ? rows
+                        ?     rows
                             ? rowsFollowing(n.intValue())
-                            : rangeFollowing(n.intValue())
-                        : rows
+                            : range
+                            ? rangeFollowing(n.intValue())
+                            : groupsFollowing(n.intValue())
+                        :     rows
                             ? s2.rowsFollowing(n.intValue())
-                            : s2.rangeFollowing(n.intValue());
+                            : range
+                            ? s2.rangeFollowing(n.intValue())
+                            : s2.groupsFollowing(n.intValue());
                 else
                     throw ctx.expected("FOLLOWING", "PRECEDING");
             else

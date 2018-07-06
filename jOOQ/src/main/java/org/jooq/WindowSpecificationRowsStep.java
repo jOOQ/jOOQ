@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
 // ...
 // ...
 // ...
@@ -223,4 +224,74 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      */
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     WindowSpecificationRowsAndStep rangeBetweenFollowing(int number);
+
+    /**
+     * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep groupsUnboundedPreceding();
+
+    /**
+     * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep groupsPreceding(int number);
+
+    /**
+     * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep groupsCurrentRow();
+
+    /**
+     * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep groupsUnboundedFollowing();
+
+    /**
+     * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationFinalStep groupsFollowing(int number);
+
+    /**
+     * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding();
+
+    /**
+     * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationRowsAndStep groupsBetweenPreceding(int number);
+
+    /**
+     * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to the
+     * window specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationRowsAndStep groupsBetweenCurrentRow();
+
+    /**
+     * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing();
+
+    /**
+     * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES_11 })
+    WindowSpecificationRowsAndStep groupsBetweenFollowing(int number);
 }

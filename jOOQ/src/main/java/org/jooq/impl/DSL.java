@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_11;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
@@ -17713,6 +17714,86 @@ public class DSL {
     @Support({ MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationFinalStep groupsUnboundedPreceding() {
+        return new WindowSpecificationImpl().groupsUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationFinalStep groupsPreceding(int number) {
+        return new WindowSpecificationImpl().groupsPreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationFinalStep groupsCurrentRow() {
+        return new WindowSpecificationImpl().groupsCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationFinalStep groupsUnboundedFollowing() {
+        return new WindowSpecificationImpl().groupsUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationFinalStep groupsFollowing(int number) {
+        return new WindowSpecificationImpl().groupsFollowing(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
+        return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
+        return new WindowSpecificationImpl().groupsBetweenPreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
+        return new WindowSpecificationImpl().groupsBetweenCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
+        return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
+     */
+    @Support({ POSTGRES_11 })
+    public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
+        return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }
 
     // -------------------------------------------------------------------------

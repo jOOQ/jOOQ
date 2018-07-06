@@ -52,6 +52,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.GROUPS;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 
@@ -325,6 +326,71 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
+    public final WindowSpecificationFinalStep groupsUnboundedPreceding() {
+        frameUnits = GROUPS;
+        frameStart = Integer.MIN_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep groupsPreceding(int number) {
+        frameUnits = GROUPS;
+        frameStart = -number;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep groupsCurrentRow() {
+        frameUnits = GROUPS;
+        frameStart = 0;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep groupsUnboundedFollowing() {
+        frameUnits = GROUPS;
+        frameStart = Integer.MAX_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep groupsFollowing(int number) {
+        frameUnits = GROUPS;
+        frameStart = number;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
+        groupsUnboundedPreceding();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
+        groupsPreceding(number);
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
+        groupsCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
+        groupsUnboundedFollowing();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
+        groupsFollowing(number);
+        return this;
+    }
+
+    @Override
     public final WindowSpecificationFinalStep andUnboundedPreceding() {
         frameEnd = Integer.MIN_VALUE;
         return this;
@@ -356,7 +422,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     enum FrameUnits {
         ROWS("rows"),
-        RANGE("range");
+        RANGE("range"),
+        GROUPS("groups");
 
         private final Keyword keyword;
 

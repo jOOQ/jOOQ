@@ -823,6 +823,66 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
+    public final WindowFinalStep<T> groupsUnboundedPreceding() {
+        windowSpecification.groupsUnboundedPreceding();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> groupsPreceding(int number) {
+        windowSpecification.groupsPreceding(number);
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> groupsCurrentRow() {
+        windowSpecification.groupsCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> groupsUnboundedFollowing() {
+        windowSpecification.groupsUnboundedFollowing();
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> groupsFollowing(int number) {
+        windowSpecification.groupsFollowing(number);
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> groupsBetweenUnboundedPreceding() {
+        windowSpecification.groupsBetweenUnboundedPreceding();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> groupsBetweenPreceding(int number) {
+        windowSpecification.groupsBetweenPreceding(number);
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> groupsBetweenCurrentRow() {
+        windowSpecification.groupsBetweenCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> groupsBetweenUnboundedFollowing() {
+        windowSpecification.groupsBetweenUnboundedFollowing();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> groupsBetweenFollowing(int number) {
+        windowSpecification.groupsBetweenFollowing(number);
+        return this;
+    }
+
+    @Override
     public final WindowFinalStep<T> andUnboundedPreceding() {
         windowSpecification.andUnboundedPreceding();
         return this;

@@ -88,7 +88,12 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <scope>runtime</scope>
+        </dependency>
+
+        <!-- From JDK 11 onwards, the transitive activation dependency needs to be made explicit -->
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
         </dependency>
 
 

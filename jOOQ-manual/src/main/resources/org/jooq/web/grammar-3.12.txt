@@ -402,8 +402,10 @@ window = identifier 'AS' '(' windowSpecification ')'
 windowSpecification =
   [ 'PARTITION BY' fields ]
   [ 'ORDER BY' sortFields ]
-  [ ( 'ROWS' | 'RANGE' )
-    ( 'BETWEEN' rangeBound 'AND' rangeBound | rangeBound) ]
+  [ ( 'ROWS' | 'RANGE' | 'GROUPS' )
+    ( 'BETWEEN' rangeBound 'AND' rangeBound | rangeBound)
+    [ 'EXCLUDE' ( 'CURRENT ROW' | 'TIES' | 'GROUPS' | 'NO OTHERS' ) ]
+  ]
 ;
 
 orderBy =

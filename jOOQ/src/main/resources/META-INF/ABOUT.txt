@@ -9,6 +9,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Ben Manes
 - Brent Douglas
 - Brett Meyer
+- Christian Stein
 - Christopher Deckers
 - Ed Schaller
 - Eric Peters

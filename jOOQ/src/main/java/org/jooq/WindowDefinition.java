@@ -60,6 +60,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface WindowDefinition extends QueryPart {
+public interface WindowDefinition extends WindowSpecificationOrderByStep {
 
 }

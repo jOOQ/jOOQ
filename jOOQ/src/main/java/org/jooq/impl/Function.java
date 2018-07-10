@@ -72,6 +72,7 @@ import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
+import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
@@ -131,13 +132,13 @@ class Function<T> extends AbstractField<T> implements
     {
 
 
-    private static final long                serialVersionUID      = 347252741712134044L;
-    private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG     = EnumSet.of(HSQLDB, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT  = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG    = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_WINDOW_CLAUSE = EnumSet.of(MYSQL, POSTGRES);
+    private static final long                serialVersionUID                   = 347252741712134044L;
+    private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG                  = EnumSet.of(HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT               = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG                 = EnumSet.of(POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(MYSQL, POSTGRES);
 
-    static final Field<Integer>              ASTERISK              = DSL.field("*", Integer.class);
+    static final Field<Integer>              ASTERISK                           = DSL.field("*", Integer.class);
 
     // Mutually exclusive attributes: super.getName(), this.name, this.term
     private final Name                       name;
@@ -372,9 +373,9 @@ class Function<T> extends AbstractField<T> implements
             return DSL.sql("({0})", windowSpecification);
 
         // [#3727] Referenced WindowDefinitions that contain a frame clause
-        // shouldn't be referenced from within parentheses (in PostgreSQL)
+        // shouldn't be referenced from within parentheses (in MySQL and PostgreSQL)
         if (windowDefinition != null)
-            if (                                                            POSTGRES == ctx.family())
+            if (SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.family()))
                 return windowDefinition;
             else
                 return DSL.sql("({0})", windowDefinition);
@@ -644,7 +645,10 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final WindowFinalStep<T> over(WindowSpecification specification) {
-        this.windowSpecification = (WindowSpecificationImpl) specification;
+        this.windowSpecification = specification instanceof WindowSpecificationImpl
+            ? (WindowSpecificationImpl) specification
+            : new WindowSpecificationImpl((WindowDefinitionImpl) specification);
+
         return this;
     }
 

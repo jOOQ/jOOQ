@@ -1254,7 +1254,7 @@ final class ParserImpl implements Parser {
             Name name = parseIdentifier(ctx);
             parseKeyword(ctx, "AS");
             parse(ctx, '(');
-            result.add(name.as(parseWindowSpecificationIf(ctx, true)));
+            result.add(name.as(parseWindowSpecificationIf(ctx, null, true)));
             parse(ctx, ')');
         }
         while (parseIf(ctx, ','));
@@ -1262,13 +1262,16 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final WindowSpecification parseWindowSpecificationIf(ParserContext ctx, boolean orderByAllowed) {
+    private static final WindowSpecification parseWindowSpecificationIf(ParserContext ctx, Name windowName, boolean orderByAllowed) {
         final WindowSpecificationOrderByStep s1;
         final WindowSpecificationRowsStep s2;
         final WindowSpecificationRowsAndStep s3;
         final WindowSpecificationExcludeStep s4;
+        final WindowSpecification result;
 
-        s1 = parseKeywordIf(ctx, "PARTITION BY")
+        s1 = windowName != null
+            ? windowName.as()
+            : parseKeywordIf(ctx, "PARTITION BY")
             ? partitionBy(parseFields(ctx))
             : null;
 
@@ -1454,20 +1457,29 @@ final class ParserImpl implements Parser {
 
             if (parseKeywordIf(ctx, "EXCLUDE"))
                 if (parseKeywordIf(ctx, "CURRENT ROW"))
-                    return s4.excludeCurrentRow();
+                    result = s4.excludeCurrentRow();
                 else if (parseKeywordIf(ctx, "TIES"))
-                    return s4.excludeTies();
+                    result = s4.excludeTies();
                 else if (parseKeywordIf(ctx, "GROUP"))
-                    return s4.excludeGroup();
+                    result = s4.excludeGroup();
                 else if (parseKeywordIf(ctx, "NO OTHERS"))
-                    return s4.excludeNoOthers();
+                    result = s4.excludeNoOthers();
                 else
                     throw ctx.expected("CURRENT ROW", "TIES", "GROUP", "NO OTHERS");
             else
-                return s4;
+                result = s4;
         }
         else
-            return s2;
+            result = s2;
+
+        if (result != null)
+            return result;
+        else if (windowName != null)
+            return null;
+        else if ((windowName = parseIdentifierIf(ctx)) != null)
+            return parseWindowSpecificationIf(ctx, windowName, orderByAllowed);
+        else
+            return null;
     }
 
     private static final Delete<?> parseDelete(ParserContext ctx, WithImpl with) {
@@ -6336,11 +6348,7 @@ final class ParserImpl implements Parser {
         Object result;
 
         if (parseIf(ctx, '(')) {
-            result = parseWindowSpecificationIf(ctx, orderByAllowed);
-
-            if (result == null)
-                result = parseIdentifierIf(ctx);
-
+            result = parseWindowSpecificationIf(ctx, null, orderByAllowed);
             parse(ctx, ')');
         }
         else {

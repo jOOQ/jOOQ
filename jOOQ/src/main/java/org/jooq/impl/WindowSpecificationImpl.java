@@ -95,6 +95,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     private static final long                serialVersionUID      = 2996016924769376361L;
     private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE = EnumSet.of(CUBRID, MYSQL);
 
+    private final WindowDefinitionImpl       windowDefinition;
     private final QueryPartList<Field<?>>    partitionBy;
     private final SortFieldList              orderBy;
     private Integer                          frameStart;
@@ -104,6 +105,11 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     private boolean                          partitionByOne;
 
     WindowSpecificationImpl() {
+        this(null);
+    }
+
+    WindowSpecificationImpl(WindowDefinitionImpl windowDefinition) {
+        this.windowDefinition = windowDefinition;
         this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
@@ -111,6 +117,18 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     @Override
     public final void accept(Context<?> ctx) {
         String glue = "";
+
+        if (windowDefinition != null) {
+            boolean declareWindows = ctx.declareWindows();
+
+            ctx.sql(glue)
+               .declareWindows(false)
+               .visit(windowDefinition)
+               .declareWindows(declareWindows);
+
+            glue = " ";
+        }
+
 
         if (!partitionBy.isEmpty()) {
 
@@ -432,25 +450,25 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public WindowSpecificationFinalStep excludeCurrentRow() {
+    public final WindowSpecificationFinalStep excludeCurrentRow() {
         exclude = CURRENT_ROW;
         return this;
     }
 
     @Override
-    public WindowSpecificationFinalStep excludeGroup() {
+    public final WindowSpecificationFinalStep excludeGroup() {
         exclude = GROUP;
         return this;
     }
 
     @Override
-    public WindowSpecificationFinalStep excludeTies() {
+    public final WindowSpecificationFinalStep excludeTies() {
         exclude = TIES;
         return this;
     }
 
     @Override
-    public WindowSpecificationFinalStep excludeNoOthers() {
+    public final WindowSpecificationFinalStep excludeNoOthers() {
         exclude = NO_OTHERS;
         return this;
     }

@@ -128,6 +128,16 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
     SelectForUpdateStep<R> limit(int numberOfRows);
 
     /**
+     * Add a <code>LIMIT</code> clause to the query.
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
+     * function and nested <code>SELECT</code> statements.
+     */
+    @Support
+    SelectForUpdateStep<R> limit(Number numberOfRows);
+
+    /**
      * Add a <code>LIMIT</code> clause to the query using named parameters.
      * <p>
      * Note that some dialects do not support bind values at all in
@@ -140,6 +150,6 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectForUpdateStep<R> limit(Param<Integer> numberOfRows);
+    SelectForUpdateStep<R> limit(Param<? extends Number> numberOfRows);
 
 }

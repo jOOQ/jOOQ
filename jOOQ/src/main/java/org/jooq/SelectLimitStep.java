@@ -135,6 +135,19 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentStep<R> limit(int numberOfRows);
 
     /**
+     * Add a <code>LIMIT</code> clause to the query
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
+     * function and nested <code>SELECT</code> statements.
+     * <p>
+     * This is the same as calling {@link #limit(int, int)} with offset = 0, or
+     * calling <code>.limit(numberOfRows).offset(0)</code>
+     */
+    @Support
+    SelectLimitPercentStep<R> limit(Number numberOfRows);
+
+    /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
      * <p>
      * Note that some dialects do not support bind values at all in
@@ -150,7 +163,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectLimitPercentStep<R> limit(Param<Integer> numberOfRows);
+    SelectLimitPercentStep<R> limit(Param<? extends Number> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -165,6 +178,20 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectWithTiesAfterOffsetStep<R> limit(int offset, int numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectWithTiesAfterOffsetStep<R> limit(Number offset, Number numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -194,6 +221,21 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectLimitPercentAfterOffsetStep<R> limit(Number offset, Param<? extends Number> numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -209,7 +251,22 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> offset, Number numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
 
     /**
      * Add an <code>OFFSET</code> clause to the query
@@ -223,6 +280,17 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitAfterOffsetStep<R> offset(int offset);
 
     /**
+     * Add an <code>OFFSET</code> clause to the query
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectLimitAfterOffsetStep<R> offset(Number offset);
+
+    /**
      * Add an <code>OFFSET</code> clause to the query using a named parameter
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
@@ -231,5 +299,5 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectLimitAfterOffsetStep<R> offset(Param<Integer> offset);
+    SelectLimitAfterOffsetStep<R> offset(Param<? extends Number> offset);
 }

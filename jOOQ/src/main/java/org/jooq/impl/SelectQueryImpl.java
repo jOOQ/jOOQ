@@ -1774,44 +1774,69 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addOffset(int offset) {
+        addOffset((Number) offset);
+    }
+
+    @Override
+    public final void addOffset(Number offset) {
         getLimit().setOffset(offset);
     }
 
     @Override
-    public final void addOffset(Param<Integer> offset) {
+    public final void addOffset(Param<? extends Number> offset) {
         getLimit().setOffset(offset);
     }
 
     @Override
     public final void addLimit(int numberOfRows) {
+        addLimit((Number) numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Number numberOfRows) {
         getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
-    public final void addLimit(Param<Integer> numberOfRows) {
+    public final void addLimit(Param<? extends Number> numberOfRows) {
         getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, int numberOfRows) {
+        addLimit((Number) offset, (Number) numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Number offset, Number numberOfRows) {
         getLimit().setOffset(offset);
         getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, Param<Integer> numberOfRows) {
+        addLimit((Number) offset, numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Number offset, Param<? extends Number> numberOfRows) {
         getLimit().setOffset(offset);
         getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> offset, int numberOfRows) {
+        addLimit(offset, (Number) numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Param<? extends Number> offset, Number numberOfRows) {
         getLimit().setOffset(offset);
         getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
-    public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
+    public final void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows) {
         getLimit().setOffset(offset);
         getLimit().setNumberOfRows(numberOfRows);
     }

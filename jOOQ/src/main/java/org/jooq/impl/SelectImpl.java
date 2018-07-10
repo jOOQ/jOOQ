@@ -181,40 +181,40 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -5425308887382166448L;
+    private static final long                 serialVersionUID = -5425308887382166448L;
 
     /**
      * A temporary member holding a join table
      */
-    private transient TableLike<?>          joinTable;
+    private transient TableLike<?>            joinTable;
 
     /**
      * A temporary member holding a join partition by expression
      */
-    private transient Field<?>[]            joinPartitionBy;
+    private transient Field<?>[]              joinPartitionBy;
 
     /**
      * A temporary member holding a join type
      */
-    private transient JoinType              joinType;
+    private transient JoinType                joinType;
 
     /**
      * A temporary member holding a join condition
      */
-    private transient ConditionProviderImpl joinConditions;
+    private transient ConditionProviderImpl   joinConditions;
 
     /**
      * The step that is currently receiving new conditions
      */
-    private transient ConditionStep         conditionStep;
+    private transient ConditionStep           conditionStep;
 
     /**
-     * The limit that has been added in a limit(int).offset(int) construct
+     * The limit that has been added in a limit(Number).offset(Number) construct
      */
-    private transient Integer               limit;
-    private transient Param<Integer>        limitParam;
-    private transient Integer               offset;
-    private transient Param<Integer>        offsetParam;
+    private transient Number                  limit;
+    private transient Param<? extends Number> limitParam;
+    private transient Number                  offset;
+    private transient Param<? extends Number> offsetParam;
 
     SelectImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, false);
@@ -1598,13 +1598,18 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl limit(int l) {
+        return limit((Number) l);
+    }
+
+    @Override
+    public final SelectImpl limit(Number l) {
         limit = l;
         limitParam = null;
         return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> l) {
+    public final SelectImpl limit(Param<? extends Number> l) {
         limit = null;
         limitParam = l;
         return limitOffset();
@@ -1612,6 +1617,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl limit(int o, int l) {
+        return limit((Number) o, (Number) l);
+    }
+
+    @Override
+    public final SelectImpl limit(Number o, Number l) {
         offset = o;
         offsetParam = null;
         limit = l;
@@ -1621,6 +1631,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl limit(int o, Param<Integer> l) {
+        return limit((Number) o, l);
+    }
+
+    @Override
+    public final SelectImpl limit(Number o, Param<? extends Number> l) {
         offset = o;
         offsetParam = null;
         limit = null;
@@ -1630,6 +1645,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl limit(Param<Integer> o, int l) {
+        return limit(o, (Number) l);
+    }
+
+    @Override
+    public final SelectImpl limit(Param<? extends Number> o, Number l) {
         offset = null;
         offsetParam = o;
         limit = l;
@@ -1638,7 +1658,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> o, Param<Integer> l) {
+    public final SelectImpl limit(Param<? extends Number> o, Param<? extends Number> l) {
         offset = null;
         offsetParam = o;
         limit = null;
@@ -1648,13 +1668,18 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl offset(int o) {
+        return offset((Number) o);
+    }
+
+    @Override
+    public final SelectImpl offset(Number o) {
         offset = o;
         offsetParam = null;
         return limitOffset();
     }
 
     @Override
-    public final SelectImpl offset(Param<Integer> o) {
+    public final SelectImpl offset(Param<? extends Number> o) {
         offset = null;
         offsetParam = o;
         return limitOffset();

@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static org.jooq.RenderContext.CastMode.NEVER;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
@@ -58,6 +57,7 @@ import static org.jooq.impl.Keywords.K_START_AT;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TOP;
 import static org.jooq.impl.Keywords.K_WITH_TIES;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
 
 import org.jooq.Clause;
@@ -81,11 +81,11 @@ final class Limit extends AbstractQueryPart {
     private static final Field<Integer> ONE               = one();
     private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);
 
-    private Field<Integer>              numberOfRows;
-    private Field<Integer>              numberOfRowsOrMax = MAX;
-    private Field<Integer>              offset;
-    private Field<Integer>              offsetOrZero      = ZERO;
-    private Field<Integer>              offsetPlusOne     = ONE;
+    private Field<?>                    numberOfRows;
+    private Field<?>                    numberOfRowsOrMax = MAX;
+    private Field<?>                    offset;
+    private Field<?>                    offsetOrZero      = ZERO;
+    private Field<?>                    offsetPlusOne     = ONE;
     private boolean                     rendersParams;
     private boolean                     withTies;
 
@@ -149,7 +149,7 @@ final class Limit extends AbstractQueryPart {
                 ctx.castMode(NEVER)
                    .formatSeparator()
                    .visit(K_ROWS)
-                   .sql(' ').visit(getLowerRownum().add(inline(1, SQLDataType.INTEGER)))
+                   .sql(' ').visit(getLowerRownum().add(ONE))
                    .sql(' ').visit(K_TO)
                    .sql(' ').visit(getUpperRownum())
                    .castMode(castMode);
@@ -385,7 +385,7 @@ final class Limit extends AbstractQueryPart {
             && !withTies()
 
             && numberOfRows instanceof Param
-            && Integer.valueOf(1).equals(((Param<?>) numberOfRows).getValue());
+            && Long.valueOf(1L).equals(((Param<?>) numberOfRows).getValue());
     }
 
     /**
@@ -398,14 +398,14 @@ final class Limit extends AbstractQueryPart {
     /**
      * The lower bound, such that ROW_NUMBER() > getLowerRownum()
      */
-    final Field<Integer> getLowerRownum() {
+    final Field<?> getLowerRownum() {
         return offsetOrZero;
     }
 
     /**
      * The upper bound, such that ROW_NUMBER() &lt;= getUpperRownum()
      */
-    final Field<Integer> getUpperRownum() {
+    final Field<?> getUpperRownum() {
         return offsetOrZero.add(numberOfRowsOrMax);
     }
 
@@ -428,26 +428,26 @@ final class Limit extends AbstractQueryPart {
         return rendersParams;
     }
 
-    final void setOffset(int offset) {
-        if (offset != 0) {
-            this.offset = val(offset, SQLDataType.INTEGER);
+    final void setOffset(Number offset) {
+        if (offset.longValue() != 0L) {
+            this.offset = val(offset.longValue(), BIGINT);
             this.offsetOrZero = this.offset;
-            this.offsetPlusOne = val(offset + 1, SQLDataType.INTEGER);
+            this.offsetPlusOne = val(offset.longValue() + 1L, BIGINT);
         }
     }
 
-    final void setOffset(Param<Integer> offset) {
+    final void setOffset(Param<? extends Number> offset) {
         this.offset = offset;
         this.offsetOrZero = offset;
         this.rendersParams = rendersParams |= offset.isInline();
     }
 
-    final void setNumberOfRows(int numberOfRows) {
-        this.numberOfRows = val(numberOfRows, SQLDataType.INTEGER);
+    final void setNumberOfRows(Number numberOfRows) {
+        this.numberOfRows = val(numberOfRows.longValue(), SQLDataType.BIGINT);
         this.numberOfRowsOrMax = this.numberOfRows;
     }
 
-    final void setNumberOfRows(Param<Integer> numberOfRows) {
+    final void setNumberOfRows(Param<? extends Number> numberOfRows) {
         this.numberOfRows = numberOfRows;
         this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams |= numberOfRows.isInline();

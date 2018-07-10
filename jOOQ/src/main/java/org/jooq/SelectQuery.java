@@ -607,6 +607,17 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOffset(int offset);
 
     /**
+     * Add an <code>OFFSET</code> clause to the query.
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addOffset(Number offset);
+
+    /**
      * Add an <code>OFFSET</code> clause to the query using a named parameter.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
@@ -615,7 +626,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    void addOffset(Param<Integer> offset);
+    void addOffset(Param<? extends Number> offset);
 
     /**
      * Limit the results of this select.
@@ -626,6 +637,16 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addLimit(int numberOfRows);
+
+    /**
+     * Limit the results of this select.
+     * <p>
+     * This is the same as calling {@link #addLimit(int, int)} with offset = 0
+     *
+     * @param numberOfRows The number of rows to return
+     */
+    @Support
+    void addLimit(Number numberOfRows);
 
     /**
      * Limit the results of this select using named parameters.
@@ -644,7 +665,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    void addLimit(Param<Integer> numberOfRows);
+    void addLimit(Param<? extends Number> numberOfRows);
 
     /**
      * Limit the results of this select.
@@ -670,6 +691,23 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>LIMIT</code> or <code>TOP</code> clauses!
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addLimit(Number offset, Number numberOfRows);
+
+    /**
+     * Limit the results of this select.
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
      * this may be emulated with a <code>ROW_NUMBER()</code> window function
@@ -680,6 +718,24 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<Integer> offset, int numberOfRows);
+
+    /**
+     * Limit the results of this select.
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addLimit(Param<? extends Number> offset, Number numberOfRows);
 
     /**
      * Limit the results of this select using named parameters.
@@ -715,7 +771,25 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
+    void addLimit(Number offset, Param<? extends Number> numberOfRows);
+
+    /**
+     * Limit the results of this select using named parameters.
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
 
 
 

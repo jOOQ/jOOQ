@@ -97,16 +97,22 @@
 
 
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
+            <!-- The dependency can cause trouble in older JDKs, so it needs to be
+                 excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
+            <!-- [java-9] -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>2.3.0</version>
             </dependency>
+
+            <!-- From JDK 11 onwards, the transitive activation dependency needs to be made explicit -->
             <dependency>
                 <groupId>com.sun.activation</groupId>
                 <artifactId>javax.activation</artifactId>
                 <version>1.2.0</version>
             </dependency>
+            <!-- [/java-9] -->
 
             <!-- Optional logging dependency -->
             <dependency>

@@ -53,17 +53,5 @@
             <groupId>org.jooq</groupId>
             <artifactId>jooq-meta</artifactId>
         </dependency>
-
-        <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
-
-        <!-- From JDK 11 onwards, the transitive activation dependency needs to be made explicit -->
-        <dependency>
-            <groupId>com.sun.activation</groupId>
-            <artifactId>javax.activation</artifactId>
-        </dependency>
     </dependencies>
 </project>

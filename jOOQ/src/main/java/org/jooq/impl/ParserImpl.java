@@ -2347,8 +2347,8 @@ final class ParserImpl implements Parser {
                 else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX"))) {
                     int p2 = ctx.position();
 
-                    // [#7348] Look ahead if the next tokens indicate a MySQL index definition
-                    if (parseIf(ctx, '(') || parseIdentifierIf(ctx) != null) {
+                    // [#7348] [#7651] Look ahead if the next tokens indicate a MySQL index definition
+                    if (parseIf(ctx, '(') || (parseIdentifierIf(ctx) != null && parseIf(ctx, '('))) {
                         ctx.position(p2);
                         indexes.add(parseIndexSpecification(ctx, tableName));
                         continue columnLoop;

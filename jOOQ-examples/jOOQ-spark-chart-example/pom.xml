@@ -41,9 +41,17 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>8</release>
                 </configuration>
+
+                <!-- Required to compile with Java 10 https://stackoverflow.com/a/49398936/521799 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>6.2</version> <!-- Use newer version of ASM -->
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>

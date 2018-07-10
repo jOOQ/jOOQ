@@ -92,8 +92,7 @@
                     <maxmem>1024m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>8</release>
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <!-- [#2413] Make compiler warnings a bit more visible
@@ -102,6 +101,15 @@
                         <arg>-Xlint:varargs</arg>
                     </compilerArgs>
                 </configuration>
+
+                <!-- Required to compile with Java 10 https://stackoverflow.com/a/49398936/521799 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>6.2</version> <!-- Use newer version of ASM -->
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- We're using the properties plugin to load external properties into Maven.

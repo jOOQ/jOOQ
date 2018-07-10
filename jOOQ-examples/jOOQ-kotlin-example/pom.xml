@@ -22,7 +22,7 @@
         <kotlin.version>1.2.30</kotlin.version>
         <org.jooq.version>3.12.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.197</org.h2.version>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
     </properties>
 
     <dependencies>
@@ -183,8 +183,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
 

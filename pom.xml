@@ -99,7 +99,6 @@
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
             <!-- The dependency can cause trouble in older JDKs, so it needs to be
                  excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
-            <!-- [java-9] -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
@@ -107,12 +106,12 @@
             </dependency>
 
             <!-- From JDK 11 onwards, the transitive activation dependency needs to be made explicit -->
+            <!-- This is probably due to a bug in JAXB: https://github.com/javaee/jaxb-v2/issues/1207 -->
             <dependency>
                 <groupId>com.sun.activation</groupId>
                 <artifactId>javax.activation</artifactId>
                 <version>1.2.0</version>
             </dependency>
-            <!-- [/java-9] -->
 
             <!-- Optional logging dependency -->
             <dependency>
@@ -204,8 +203,8 @@
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <release>${java.version}</release>
+
                         <debug>true</debug>
                         <debuglevel>lines,vars,source</debuglevel>
                         <!-- [#2413] Make compiler warnings a bit more visible

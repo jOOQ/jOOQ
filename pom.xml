@@ -203,7 +203,11 @@
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
-                        <release>${java.version}</release>
+                        <release>10</release>
+
+                        <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
+                        <source>10</source>
+                        <target>10</target>
 
                         <debug>true</debug>
                         <debuglevel>lines,vars,source</debuglevel>
@@ -405,18 +409,6 @@
                 </plugins>
             </build>
         </profile>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -110,8 +110,15 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
             renderContextDefinitionOrName:
             if (windows != null) {
+
+                windowLoop:
                 for (WindowDefinition w : windows) {
                     if (((WindowDefinitionImpl) w).getName().equals(name)) {
+
+                        // Prevent StackOverflowError
+                        if (w == this)
+                            break windowLoop;
+
                         ctx.visit(w);
                         break renderContextDefinitionOrName;
                     }

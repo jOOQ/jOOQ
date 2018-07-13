@@ -168,10 +168,12 @@ public class Plugin extends AbstractMojo {
         }
 
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
+        URLClassLoader pluginClassLoader = getClassLoader();
 
         try {
+
             // [#2886] Add the surrounding project's dependencies to the current classloader
-            Thread.currentThread().setContextClassLoader(getClassLoader());
+            Thread.currentThread().setContextClassLoader(pluginClassLoader);
 
             // [#5881] Target is allowed to be null
             if (generator.getTarget() == null)
@@ -197,17 +199,29 @@ public class Plugin extends AbstractMojo {
         catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         }
-
-        // [#2886] Restore old class loader
         finally {
+
+            // [#2886] Restore old class loader
             Thread.currentThread().setContextClassLoader(oldCL);
+
+
+            // [#7630] Close URLClassLoader to help free resources
+            try {
+                pluginClassLoader.close();
+            }
+
+            // Catch all possible errors to avoid suppressing the original exception
+            catch (Throwable e) {
+                getLog().error("Couldn't close the classloader.", e);
+            }
+
         }
 
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
     }
 
     @SuppressWarnings("unchecked")
-    private ClassLoader getClassLoader() throws MojoExecutionException {
+    private URLClassLoader getClassLoader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();
             URL urls[] = new URL[classpathElements.size()];

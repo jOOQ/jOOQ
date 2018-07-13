@@ -379,12 +379,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         return intoMap(field(keyFieldName));
     }
 
-    private final <K> Map<K, R> intoMap0(int keyFieldIndex) {
+    private final <K> Map<K, R> intoMap0(int kIndex) {
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : this)
-            if (map.put((K) record.get(keyFieldIndex), record) != null)
-                throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
+            if (map.put((K) record.get(kIndex), record) != null)
+                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
 
         return map;
     }
@@ -689,12 +689,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         return intoMap0(indexOrFail(fieldsRow(), key), mapper);
     }
 
-    private final <K, E> Map<K, E> intoMap0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
+    private final <K, E> Map<K, E> intoMap0(int kIndex, RecordMapper<? super R, E> mapper) {
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this)
-            if (map.put((K) record.get(keyFieldIndex), mapper.map(record)) != null)
-                throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
+            if (map.put((K) record.get(kIndex), mapper.map(record)) != null)
+                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
 
         return map;
     }

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
@@ -84,7 +83,7 @@ final class BoolOr extends Function<Boolean> {
                     }
                 });
 
-                ctx.visit(DSL.when(max.eq(one()), inline(true)).otherwise(inline(false)));
+                ctx.visit(DSL.field(max.eq(one())));
                 break;
         }
     }

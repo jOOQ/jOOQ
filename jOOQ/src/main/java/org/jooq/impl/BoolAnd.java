@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
@@ -79,12 +78,12 @@ final class BoolAnd extends Function<Boolean> {
                 final Field<Integer> max = DSL.field("{0}", Integer.class, new CustomQueryPart() {
                     @Override
                     public void accept(Context<?> c) {
-                        c.visit(DSL.max(DSL.when(condition, zero()).otherwise(one())));
+                        c.visit(DSL.min(DSL.when(condition, one()).otherwise(zero())));
                         toSQLOverClause(c);
                     }
                 });
 
-                ctx.visit(DSL.when(max.eq(zero()), inline(true)).otherwise(inline(false)));
+                ctx.visit(DSL.field(max.eq(one())));
                 break;
         }
     }

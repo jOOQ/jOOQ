@@ -65,6 +65,8 @@ import org.jooq.types.UShort;
  *             initialised may lead to deadlocks! See <a href=
  *             "https://github.com/jOOQ/jOOQ/issues/3777">https://github.com/jOOQ/jOOQ/issues/3777</a>
  *             for details.
+ *             <p>
+ *             Use the corresponding {@link SQLDataType} instead.
  */
 @Deprecated
 public class DerbyDataType {

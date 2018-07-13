@@ -36,7 +36,7 @@ GOTO end
 IF NOT "%~1"=="" GOTO usage
 IF "%URL%"=="" GOTO usage
 
-set VERSION=3.11.2
+set VERSION=3.11.3
 
 if exist jOOQ-javadoc\jooq-%VERSION%-javadoc.jar (
   set JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc\jooq-%VERSION%-javadoc.jar

@@ -1192,7 +1192,7 @@ WHERE LAST_NAME = :lastName
 								jOOQ refers to that as "inlined" bind values.
 								When bind values are inlined, they render the
 								actual value in SQL rather than a JDBC question mark.
-								Bind value inlining can be achieved in two ways:
+								Bind value inlining can be achieved in several ways:
 							</p>
 
 							<ol>

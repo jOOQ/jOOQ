@@ -6817,18 +6817,21 @@ WHERE LAST_NAME = :lastName]]></sql>
 							    <title>Inlined parameters</title>
 								<content><html>
 									<p>
-										Sometimes, you may wish to avoid rendering bind variables while still using custom values in SQL. jOOQ refers to that as "inlined" bind values. When bind values are inlined, they render the actual value in SQL rather than a JDBC question mark. Bind value inlining can be achieved in two ways:
+										Sometimes, you may wish to avoid rendering bind variables while still using custom values in SQL. jOOQ refers to that as "inlined" bind values. When bind values are inlined, they render the actual value in SQL rather than a JDBC question mark. Bind value inlining can be achieved in several ways:
 									</p>
-									<ul>
-										<li>
-											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Configuration.
-										</li>
-										<li>
-											By using <reference class="org.jooq.impl.DSL" anchor="#inline(java.lang.Object)" title="DSL.inline()"/> methods.
-										</li>
-									</ul>
+                                    <ul>
+                                        <li>
+                                            Globally, by using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Configuration.
+                                        </li>
+                                        <li>
+                                            Per query locally, by using the <reference class="org.jooq.Query" anchor="#getSQL-org.jooq.conf.ParamType-" title="Query.getSQL(ParamType)"/> method.
+                                        </li>
+                                        <li>
+                                            Per value locally, by using <reference class="org.jooq.impl.DSL" anchor="#inline(java.lang.Object)" title="DSL.inline()"/> methods.
+                                        </li>
+                                    </ul>
 									<p>
-										In both cases, your inlined bind values will be properly escaped to avoid SQL syntax errors and SQL injection. Some examples:
+										In all cases, your inlined bind values will be properly escaped to avoid SQL syntax errors and SQL injection. Some examples:
 									</p>
 
 </html><java><![CDATA[

@@ -287,23 +287,29 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private RecordMapper<R, E>       delegate;
 
+    /**
+     * Create a new <code>DefaultRecordMapper</code>.
+     * <p>
+     * This constructor uses a new {@link DefaultConfiguration} internally to
+     * cache various reflection methods. For better performance, use
+     * {@link #DefaultRecordMapper(RecordType, Class, Configuration)} instead.
+     */
     public DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type) {
         this(rowType, type, null, null);
     }
 
-    DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, Configuration configuration) {
+    /**
+     * Create a new <code>DefaultRecordMapper</code>.
+     */
+    public DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, Configuration configuration) {
         this(rowType, type, null, configuration);
-    }
-
-    DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance) {
-        this(rowType, type, instance, null);
     }
 
     DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance, Configuration configuration) {
         this.rowType = rowType;
         this.fields = rowType.fields();
         this.type = type;
-        this.configuration = configuration;
+        this.configuration = configuration != null ? configuration : new DefaultConfiguration();
 
         init(instance);
     }

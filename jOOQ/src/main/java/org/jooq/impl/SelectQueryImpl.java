@@ -103,6 +103,8 @@ import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CONNECT_BY;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_DISTINCT_ON;
+import static org.jooq.impl.Keywords.K_FOR_KEY_SHARE;
+import static org.jooq.impl.Keywords.K_FOR_NO_KEY_UPDATE;
 import static org.jooq.impl.Keywords.K_FOR_SHARE;
 import static org.jooq.impl.Keywords.K_FOR_UPDATE;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -227,11 +229,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private boolean                                      distinct;
     private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
     private boolean                                      forUpdate;
+    private boolean                                      forUpdateNoKey;
     private QueryPartList<Field<?>>                      forUpdateOf;
     private TableList                                    forUpdateOfTables;
     private ForUpdateMode                                forUpdateMode;
     private int                                          forUpdateWait;
     private boolean                                      forShare;
+    private boolean                                      forShareKey;
 
 
 
@@ -654,8 +658,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
             if (forUpdate && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
-                context.formatSeparator()
-                       .visit(K_FOR_UPDATE);
+                if (forUpdateNoKey) {
+                    context.formatSeparator()
+                            .visit(K_FOR_NO_KEY_UPDATE);
+                }
+                else {
+                    context.formatSeparator()
+                            .visit(K_FOR_UPDATE);
+                }
 
                 if (Tools.isNotEmpty(forUpdateOf)) {
 
@@ -731,8 +741,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     // Postgres is known to implement the "FOR SHARE" clause like this
                     default:
-                        context.formatSeparator()
-                               .visit(K_FOR_SHARE);
+                        if (forShareKey) {
+                            context.formatSeparator()
+                                    .visit(K_FOR_SHARE);
+                        }
+                        else {
+                            context.formatSeparator()
+                                    .visit(K_FOR_KEY_SHARE);
+                        }
+
                         break;
                 }
             }
@@ -1859,6 +1876,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void setForUpdate(boolean forUpdate) {
         this.forUpdate = forUpdate;
         this.forShare = false;
+        this.forShareKey = false;
+    }
+
+    @Override
+    public final void setForNoKeyUpdate(boolean forNoKeyUpdate) {
+        setForUpdate(true);
+        this.forUpdateNoKey = forNoKeyUpdate;
     }
 
     @Override
@@ -1907,12 +1931,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void setForShare(boolean forShare) {
         this.forUpdate = false;
         this.forShare = forShare;
+        this.forUpdateNoKey = false;
         this.forUpdateOf = null;
         this.forUpdateOfTables = null;
         this.forUpdateMode = null;
         this.forUpdateWait = 0;
     }
 
+    @Override
+    public final void setForKeyShare(boolean forKeyShare) {
+        setForShare(true);
+        this.forShareKey = forKeyShare;
+    }
 
 
 

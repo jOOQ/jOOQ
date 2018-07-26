@@ -140,7 +140,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      *      details
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    SelectOptionStep<R> forShare();
+    SelectForShareKeyStep<R> forShare();
 
 
 

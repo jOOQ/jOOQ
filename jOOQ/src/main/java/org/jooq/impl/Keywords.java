@@ -139,6 +139,8 @@ final class Keywords {
     static final Keyword K_FOR                              = keyword("for");
     static final Keyword K_FORALL                           = keyword("forall");
     static final Keyword K_FORMAT                           = keyword("format");
+    static final Keyword K_FOR_NO_KEY_UPDATE                = keyword("for no key update");
+    static final Keyword K_FOR_KEY_SHARE                    = keyword("for key share");
     static final Keyword K_FOR_SHARE                        = keyword("for share");
     static final Keyword K_FOR_UPDATE                       = keyword("for update");
     static final Keyword K_FOREIGN_KEY                      = keyword("foreign key");

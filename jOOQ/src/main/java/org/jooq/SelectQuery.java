@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
@@ -872,6 +873,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setForUpdate(boolean forUpdate);
 
     /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR UPDATE</code> clause. In this case, the session will disallow updates to the primary key, avoiding
+     * locking of inserts and updates on foreign keys to record primary key values.
+     * <p>
+     * This automatically sets the {@link #setForUpdate(boolean)} flag, and
+     * unsets the {@link #setForShare(boolean)} flag, if it was previously set.
+     * <p>
+     * This has been observed to be supported by any of these dialects:
+     * <ul>
+     * <li>Postgres 9.3+</li>
+     * </ul>
+     */
+    @Support({ POSTGRES_9_3 })
+    void setForNoKeyUpdate(boolean forNoKeyUpdate);
+
+    /**
      * Some RDBMS allow for specifying the fields that should be locked by the
      * <code>FOR UPDATE</code> clause, instead of the full row.
      * <p>
@@ -1013,6 +1030,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForShare(boolean forShare);
+
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR SHARE</code> clause. In this case, the share can be acquired on a row with an
+     * existing for no key update lock.
+     * <p>
+     * This automatically sets the {@link #setForShare(boolean)} flag, and
+     * unsets the {@link #setForUpdate(boolean)} flag, if it was previously set.
+     * <p>
+     * This has been observed to be supported by any of these dialects:
+     * <ul>
+     * <li>Postgres 9.3+</li>
+     * </ul>
+     */
+    @Support({ POSTGRES_9_3 })
+    void setForKeyShare(boolean forKeyShare);
 
 
 

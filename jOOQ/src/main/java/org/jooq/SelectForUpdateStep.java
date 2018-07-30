@@ -134,6 +134,15 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
     SelectForUpdateOfStep<R> forUpdate();
 
     /**
+     * Add a <code>FOR NO KEY UPDATE</code> clause to the end of the query.
+     *
+     * @see SelectQuery#setForShare(boolean) see LockProvider for more
+     *      details
+     */
+    @Support({ POSTGRES })
+    SelectForUpdateOfStep<R> forNoKeyUpdate();
+
+    /**
      * Add a <code>FOR SHARE</code> clause to the end of the query.
      *
      * @see SelectQuery#setForShare(boolean) see LockProvider for more
@@ -141,6 +150,15 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectOptionStep<R> forShare();
+
+    /**
+     * Add a <code>FOR KEY SHARE</code> clause to the end of the query.
+     *
+     * @see SelectQuery#setForShare(boolean) see LockProvider for more
+     *      details
+     */
+    @Support({ POSTGRES })
+    SelectForUpdateOfStep<R> forKeyShare();
 
 
 

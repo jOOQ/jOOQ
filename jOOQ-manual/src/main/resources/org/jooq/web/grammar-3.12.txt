@@ -435,6 +435,8 @@ offsetFetch =
 
 forUpdate =
   'FOR SHARE'
+| 'FOR KEY SHARE'
+| 'FOR NO KEY UPDATE'
 | 'FOR UPDATE' [ 'OF' fields ] [ 'NOWAIT' | 'WAIT' unsignedInteger | 'SKIP LOCKED' ]
 ;
 
@@ -806,7 +808,8 @@ castDataType =
 
 dataType =
 (
-  'BIGINT' [ 'UNSIGNED' ]
+  'ARRAY'
+| 'BIGINT' [ 'UNSIGNED' ]
 | 'BINARY' [ '(' unsignedInteger ')' ]
 | 'BIT' [ '(' unsignedInteger ')' ]
 | 'BLOB' [ '(' unsignedInteger ')' ]
@@ -834,6 +837,7 @@ dataType =
 | 'NUMBER' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NUMERIC' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
+| 'OTHER'
 | 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'SERIAL'
 | 'SERIAL4'

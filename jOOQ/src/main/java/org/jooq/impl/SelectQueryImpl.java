@@ -103,8 +103,7 @@ import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CONNECT_BY;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_DISTINCT_ON;
-import static org.jooq.impl.Keywords.K_FOR_SHARE;
-import static org.jooq.impl.Keywords.K_FOR_UPDATE;
+import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_GROUP_BY;
 import static org.jooq.impl.Keywords.K_HAVING;
@@ -226,12 +225,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private String                                       option;
     private boolean                                      distinct;
     private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
-    private boolean                                      forUpdate;
     private QueryPartList<Field<?>>                      forUpdateOf;
     private TableList                                    forUpdateOfTables;
-    private ForUpdateMode                                forUpdateMode;
+    private ForUpdateLockMode                            forUpdateLockMode;
+    private ForUpdateWaitMode                            forUpdateWaitMode;
     private int                                          forUpdateWait;
-    private boolean                                      forShare;
 
 
 
@@ -653,9 +651,47 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
-            if (forUpdate && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
-                context.formatSeparator()
-                       .visit(K_FOR_UPDATE);
+            if (forUpdateLockMode != null && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
+                switch (forUpdateLockMode) {
+                    case UPDATE:
+                        context.formatSeparator()
+                               .visit(K_FOR)
+                               .sql(' ')
+                               .visit(forUpdateLockMode.toKeyword());
+                        break;
+
+                    case SHARE:
+                        switch (family) {
+
+                            // MySQL has a non-standard implementation for the "FOR SHARE" clause
+
+
+
+
+                            case MARIADB:
+                            case MYSQL:
+                                context.formatSeparator()
+                                       .visit(K_LOCK_IN_SHARE_MODE);
+                                break;
+
+                            // Postgres is known to implement the "FOR SHARE" clause like this
+                            default:
+                                context.visit(K_FOR)
+                                       .sql(' ')
+                                       .visit(forUpdateLockMode.toKeyword());
+                                break;
+                        }
+
+                        break;
+
+                    case KEY_SHARE:
+                    case NO_KEY_UPDATE:
+                    default:
+                        context.visit(K_FOR)
+                               .sql(' ')
+                               .visit(forUpdateLockMode.toKeyword());
+                        break;
+                }
 
                 if (Tools.isNotEmpty(forUpdateOf)) {
 
@@ -701,39 +737,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
                 // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-                if (family == FIREBIRD) {
+                if (family == FIREBIRD)
                     context.sql(' ').visit(K_WITH_LOCK);
-                }
 
-                if (forUpdateMode != null) {
+                if (forUpdateWaitMode != null) {
                     context.sql(' ');
-                    context.visit(forUpdateMode.toKeyword());
+                    context.visit(forUpdateWaitMode.toKeyword());
 
-                    if (forUpdateMode == ForUpdateMode.WAIT) {
+                    if (forUpdateWaitMode == ForUpdateWaitMode.WAIT) {
                         context.sql(' ');
                         context.sql(forUpdateWait);
                     }
-                }
-            }
-            else if (forShare) {
-                switch (family) {
-
-                    // MySQL has a non-standard implementation for the "FOR SHARE" clause
-
-
-
-
-                    case MARIADB:
-                    case MYSQL:
-                        context.formatSeparator()
-                               .visit(K_LOCK_IN_SHARE_MODE);
-                        break;
-
-                    // Postgres is known to implement the "FOR SHARE" clause like this
-                    default:
-                        context.formatSeparator()
-                               .visit(K_FOR_SHARE);
-                        break;
                 }
             }
 
@@ -1857,8 +1871,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void setForUpdate(boolean forUpdate) {
-        this.forUpdate = forUpdate;
-        this.forShare = false;
+        this.forUpdateLockMode = ForUpdateLockMode.UPDATE;
+    }
+
+    @Override
+    public final void setForNoKeyUpdate(boolean forNoKeyUpdate) {
+        this.forUpdateLockMode = ForUpdateLockMode.NO_KEY_UPDATE;
+    }
+
+    @Override
+    public final void setForKeyShare(boolean forKeyShare) {
+        this.forUpdateLockMode = ForUpdateLockMode.KEY_SHARE;
     }
 
     @Override
@@ -1892,24 +1915,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void setForUpdateNoWait() {
         setForUpdate(true);
-        forUpdateMode = ForUpdateMode.NOWAIT;
+        forUpdateWaitMode = ForUpdateWaitMode.NOWAIT;
         forUpdateWait = 0;
     }
 
     @Override
     public final void setForUpdateSkipLocked() {
         setForUpdate(true);
-        forUpdateMode = ForUpdateMode.SKIP_LOCKED;
+        forUpdateWaitMode = ForUpdateWaitMode.SKIP_LOCKED;
         forUpdateWait = 0;
     }
 
     @Override
     public final void setForShare(boolean forShare) {
-        this.forUpdate = false;
-        this.forShare = forShare;
+        this.forUpdateLockMode = ForUpdateLockMode.SHARE;
         this.forUpdateOf = null;
         this.forUpdateOfTables = null;
-        this.forUpdateMode = null;
+        this.forUpdateWaitMode = null;
         this.forUpdateWait = 0;
     }
 
@@ -2246,7 +2268,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     final boolean isForUpdate() {
-        return forUpdate;
+        return forUpdateLockMode == ForUpdateLockMode.UPDATE;
     }
 
     @Override
@@ -2590,7 +2612,29 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The lock mode for the <code>FOR UPDATE</code> clause, if set.
      */
-    private static enum ForUpdateMode {
+    private static enum ForUpdateLockMode {
+        UPDATE("update"),
+        NO_KEY_UPDATE("no key update"),
+        SHARE("share"),
+        KEY_SHARE("key share"),
+
+        ;
+
+        private final Keyword keyword;
+
+        private ForUpdateLockMode(String sql) {
+            this.keyword = DSL.keyword(sql);
+        }
+
+        public final Keyword toKeyword() {
+            return keyword;
+        }
+    }
+
+    /**
+     * The wait mode for the <code>FOR UPDATE</code> clause, if set.
+     */
+    private static enum ForUpdateWaitMode {
         WAIT("wait"),
         NOWAIT("nowait"),
         SKIP_LOCKED("skip locked"),
@@ -2599,7 +2643,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         private final Keyword keyword;
 
-        private ForUpdateMode(String sql) {
+        private ForUpdateWaitMode(String sql) {
             this.keyword = DSL.keyword(sql);
         }
 

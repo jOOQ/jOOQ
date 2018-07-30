@@ -891,27 +891,29 @@ final class ParserImpl implements Parser {
         }
 
         if (parseKeywordIf(ctx, "FOR")) {
-            if (parseKeywordIf(ctx, "SHARE")) {
+            if (parseKeywordIf(ctx, "KEY SHARE"))
+                result.setForKeyShare(true);
+            else if (parseKeywordIf(ctx, "NO KEY UPDATE"))
+                result.setForNoKeyUpdate(true);
+            else if (parseKeywordIf(ctx, "SHARE"))
                 result.setForShare(true);
-            }
-            else if (parseKeywordIf(ctx, "UPDATE")) {
+            else if (parseKeywordIf(ctx, "UPDATE"))
                 result.setForUpdate(true);
-
-                if (parseKeywordIf(ctx, "OF"))
-                    result.setForUpdateOf(parseFields(ctx));
-
-                if (parseKeywordIf(ctx, "NOWAIT"))
-                    result.setForUpdateNoWait();
-                else if (parseKeywordIf(ctx, "WAIT") && ctx.requireProEdition())
-
-
-
-                    ;
-                else if (parseKeywordIf(ctx, "SKIP LOCKED"))
-                    result.setForUpdateSkipLocked();
-            }
             else
-                throw ctx.expected("SHARE", "UPDATE");
+                throw ctx.expected("UPDATE", "NO KEY UPDATE", "SHARE", "KEY SHARE");
+
+            if (parseKeywordIf(ctx, "OF"))
+                result.setForUpdateOf(parseFields(ctx));
+
+            if (parseKeywordIf(ctx, "NOWAIT"))
+                result.setForUpdateNoWait();
+            else if (parseKeywordIf(ctx, "WAIT") && ctx.requireProEdition())
+
+
+
+                ;
+            else if (parseKeywordIf(ctx, "SKIP LOCKED"))
+                result.setForUpdateSkipLocked();
         }
 
         return result;
@@ -8394,6 +8396,9 @@ final class ParserImpl implements Parser {
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
+        "FOR KEY SHARE",
+        "FOR NO KEY UPDATE",
+        "FOR SHARE",
         "FOR UPDATE",
         "FROM",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
@@ -8421,6 +8426,8 @@ final class ParserImpl implements Parser {
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
+        "FOR KEY SHARE",
+        "FOR NO KEY UPDATE",
         "FOR SHARE",
         "FOR UPDATE",
         "FULL JOIN",

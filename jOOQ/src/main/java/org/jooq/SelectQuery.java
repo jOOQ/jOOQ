@@ -872,6 +872,12 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setForUpdate(boolean forUpdate);
 
     /**
+     * Sets the "FOR NO KEY UPDATE" flag onto the query.
+     */
+    @Support({ POSTGRES })
+    void setForNoKeyUpdate(boolean forNoKeyUpdate);
+
+    /**
      * Some RDBMS allow for specifying the fields that should be locked by the
      * <code>FOR UPDATE</code> clause, instead of the full row.
      * <p>
@@ -1013,6 +1019,12 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForShare(boolean forShare);
+
+    /**
+     * Sets the "FOR KEY SHARE" flag onto the query.
+     */
+    @Support({ POSTGRES })
+    void setForKeyShare(boolean forKeyShare);
 
 
 

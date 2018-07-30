@@ -1735,6 +1735,12 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final SelectImpl forNoKeyUpdate() {
+        getQuery().setForNoKeyUpdate(true);
+        return this;
+    }
+
+    @Override
     public final SelectImpl of(Field<?>... fields) {
         getQuery().setForUpdateOf(fields);
         return this;
@@ -1775,6 +1781,12 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final SelectImpl forShare() {
         getQuery().setForShare(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl forKeyShare() {
+        getQuery().setForKeyShare(true);
         return this;
     }
 

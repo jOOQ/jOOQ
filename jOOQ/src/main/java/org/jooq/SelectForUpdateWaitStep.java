@@ -103,7 +103,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
+public interface SelectForUpdateWaitStep<R extends Record> extends SelectForUpdateNoKeyStep<R> {
 
 
 

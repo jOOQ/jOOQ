@@ -88,6 +88,7 @@ import org.jooq.SelectConnectByAfterStartWithStep;
 import org.jooq.SelectConnectByConditionStep;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectFinalStep;
+import org.jooq.SelectForShareKeyStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
@@ -176,7 +177,8 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectLimitPercentStep<R>,
     SelectLimitAfterOffsetStep<R>,
     SelectLimitPercentAfterOffsetStep<R>,
-    SelectForUpdateOfStep<R> {
+    SelectForUpdateOfStep<R>,
+    SelectForShareKeyStep<R> {
 
     /**
      * Generated UID
@@ -1773,8 +1775,20 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final SelectImpl noKey() {
+        getQuery().setForNoKeyUpdate(true);
+        return this;
+    }
+
+    @Override
     public final SelectImpl forShare() {
         getQuery().setForShare(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl key() {
+        getQuery().setForKeyShare(true);
         return this;
     }
 

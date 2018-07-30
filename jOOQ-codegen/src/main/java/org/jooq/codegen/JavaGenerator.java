@@ -6242,6 +6242,9 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 sqlDataTypeRef = SQLDataType.class.getCanonicalName() + ".OTHER";
+
+                if (sb.length() == 0)
+                    sb.append(sqlDataTypeRef);
             }
 
             if (!dataType.nullable())

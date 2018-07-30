@@ -7096,6 +7096,13 @@ final class ParserImpl implements Parser {
             character = ctx.characterNext();
 
         switch (character) {
+            case 'a':
+            case 'A':
+                if (parseKeywordOrIdentifierIf(ctx, "ARRAY"))
+                    return SQLDataType.OTHER.getArrayDataType();
+
+                break;
+
             case 'b':
             case 'B':
                 if (parseKeywordOrIdentifierIf(ctx, "BIGINT"))

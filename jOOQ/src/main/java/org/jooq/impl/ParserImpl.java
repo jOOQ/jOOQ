@@ -7208,6 +7208,13 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'o':
+            case 'O':
+                if (parseKeywordOrIdentifierIf(ctx, "OTHER"))
+                    return SQLDataType.OTHER;
+
+                break;
+
             case 'r':
             case 'R':
                 if (parseKeywordOrIdentifierIf(ctx, "REAL"))

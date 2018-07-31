@@ -5004,25 +5004,6 @@ GROUP BY AUTHOR_ID
 												Note, as defined in the SQL standard, when grouping, you may no longer project any columns that are not a formal part of the GROUP BY clause, or <reference id="aggregate-functions" title="aggregate functions"/>.
 											</p>
 
-											<h3>MySQL's deviation from the SQL standard</h3>
-											<p>
-												MySQL has a peculiar way of not adhering to this standard behaviour. This is documented in the <a href="http://dev.mysql.com/doc/refman/5.6/en/group-by-hidden-columns.html">MySQL manual</a>. In short, with MySQL, you can also project any other field that is not part of the GROUP BY clause. The projected values will just be arbitrary values from within the group. You cannot rely on any ordering. For example:
-											</p>
-
-</html><code-pair>
-<sql><![CDATA[SELECT AUTHOR_ID, TITLE
-FROM BOOK
-GROUP BY AUTHOR_ID
-]]>&#160;</sql>
-<java><![CDATA[create.select(BOOK.AUTHOR_ID, BOOK.TITLE)
-      .from(BOOK)
-      .groupBy(AUTHOR_ID)
-      .fetch();]]></java></code-pair><html>
-
-											<p>
-												This will return an arbitrary title per author. jOOQ supports this syntax, as jOOQ is not doing any checks internally, about the consistence of tables/fields/functions that you provide it.
-											</p>
-
 											<h3>Empty GROUP BY clauses</h3>
 											<p>
 												jOOQ supports empty <code>GROUP BY ()</code> clause as well. This will result in <reference id="select-statement" title="SELECT statements"/> that return only one record.

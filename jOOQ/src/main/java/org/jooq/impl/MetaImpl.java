@@ -76,10 +76,12 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -140,6 +142,9 @@ final class MetaImpl extends AbstractMeta {
     private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
 
+
+
+
     private final DSLContext                 ctx;
     private final Configuration              configuration;
     private final DatabaseMetaData           databaseMetaData;
@@ -177,21 +182,28 @@ final class MetaImpl extends AbstractMeta {
     public final List<Catalog> getCatalogs() {
         List<Catalog> result = new ArrayList<Catalog>();
 
-        // [#2760] MySQL JDBC confuses "catalog" and "schema"
-        if (!inverseSchemaCatalog) {
-            Result<Record> catalogs = meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    return ctx.fetch(
-                        meta.getCatalogs(),
-                        SQLDataType.VARCHAR // TABLE_CATALOG
-                    );
-                }
-            });
 
-            for (String name : catalogs.getValues(0, String.class))
-                result.add(new MetaCatalog(name));
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // There should always be at least one (empty) catalog in a database
         if (result.isEmpty())
@@ -280,7 +292,6 @@ final class MetaImpl extends AbstractMeta {
                         );
                     }
                 });
-
 
                 for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));

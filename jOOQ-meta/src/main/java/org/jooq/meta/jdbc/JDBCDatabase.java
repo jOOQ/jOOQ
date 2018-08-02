@@ -42,6 +42,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Catalog;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Schema;
@@ -73,7 +74,8 @@ import org.jooq.meta.UDTDefinition;
  */
 public class JDBCDatabase extends AbstractDatabase {
 
-    private List<Schema> schemas;
+    private List<Catalog> catalogs;
+    private List<Schema>  schemas;
 
     @Override
     protected DSLContext create0() {
@@ -119,8 +121,22 @@ public class JDBCDatabase extends AbstractDatabase {
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
         List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
-        result.add(new CatalogDefinition(this, "", ""));
+
+        for (Catalog catalog : getCatalogsFromMeta())
+            result.add(new CatalogDefinition(this, catalog.getName(), ""));
+
         return result;
+    }
+
+    private List<Catalog> getCatalogsFromMeta() {
+        if (catalogs == null) {
+            catalogs = new ArrayList<Catalog>();
+
+            for (Catalog catalog : create().meta().getCatalogs())
+                catalogs.add(catalog);
+        }
+
+        return catalogs;
     }
 
     @Override
@@ -128,8 +144,15 @@ public class JDBCDatabase extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
         for (Schema schema : getSchemasFromMeta()) {
-            result.add(new SchemaDefinition(this, schema.getName(), ""));
+            if (schema.getCatalog() != null) {
+                if (getCatalog(schema.getCatalog().getName()) != null) {
+                    result.add(new SchemaDefinition(this, schema.getName(), "", getCatalog(schema.getCatalog().getName())));
+                }
+            }
+            else
+                result.add(new SchemaDefinition(this, schema.getName(), ""));
         }
+
 
         return result;
     }
@@ -139,8 +162,7 @@ public class JDBCDatabase extends AbstractDatabase {
             schemas = new ArrayList<Schema>();
 
             for (Schema schema : create().meta().getSchemas())
-                if (getInputSchemata().contains(schema.getName()))
-                    schemas.add(schema);
+                schemas.add(schema);
         }
 
         return schemas;
@@ -175,11 +197,9 @@ public class JDBCDatabase extends AbstractDatabase {
         for (Schema schema : getSchemasFromMeta()) {
             SchemaDefinition sd = getSchema(schema.getName());
 
-            if (sd != null) {
-                for (Table<?> table : schema.getTables()) {
+            if (sd != null)
+                for (Table<?> table : schema.getTables())
                     result.add(new JDBCTableDefinition(sd, table));
-                }
-            }
         }
 
         return result;

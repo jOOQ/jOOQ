@@ -303,6 +303,7 @@ final class Keywords {
     static final Keyword K_WITH_GRANT_OPTION                = keyword("with grant option");
     static final Keyword K_WITH_LOCK                        = keyword("with lock");
     static final Keyword K_WITH_NO_DATA                     = keyword("with no data");
+    static final Keyword K_WITH_NO_DATACOPY                 = keyword("with no datacopy");
     static final Keyword K_WITH_PRIMARY_KEY                 = keyword("with primary key");
     static final Keyword K_WITH_READ_ONLY                   = keyword("with read only");
     static final Keyword K_WITH_ROLLUP                      = keyword("with rollup");

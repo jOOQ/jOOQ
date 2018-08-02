@@ -109,6 +109,7 @@ import static org.jooq.impl.Keywords.K_RENAME_INDEX;
 import static org.jooq.impl.Keywords.K_RENAME_OBJECT;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
@@ -117,6 +118,7 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Keywords.K_WITH_NO_DATACOPY;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.beginTryCatch;
@@ -725,6 +727,8 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+
         if (renameIndexTo != null) {
             switch (family) {
 
@@ -1038,6 +1042,14 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+
+
+
+
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -1112,6 +1124,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
                     default:
                         ctx.sql(' ').visit(K_SET_DEFAULT);
                         break;
@@ -1174,6 +1187,11 @@ final class AlterTableImpl extends AbstractQuery implements
                     ctx.sql(' ').visit(K_CASCADE);
             }
 
+
+
+
+
+
             ctx.end(ALTER_TABLE_DROP);
         }
         else if (dropConstraint != null) {
@@ -1194,6 +1212,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
     private final void acceptDropColumn(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 
@@ -1242,6 +1261,9 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
     }
+
+
+
 
 
 

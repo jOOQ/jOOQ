@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -184,6 +185,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
                 case FIREBIRD:
                 case MARIADB:
                 default:
@@ -214,6 +216,9 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
                 if (!(s instanceof Block))
+
+
+
                     ctx.sql(';');
             }
         }
@@ -225,6 +230,7 @@ final class BlockImpl extends AbstractQuery implements Block {
         switch (ctx.family()) {
             case FIREBIRD:
                 break;
+
 
 
 

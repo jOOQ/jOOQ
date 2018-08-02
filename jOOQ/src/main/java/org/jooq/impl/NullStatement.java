@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
@@ -69,8 +70,13 @@ final class NullStatement extends AbstractStatement {
 
 
 
+
+
+
+
+
             default:
-                ctx.visit(K_NULL);
+                ctx.visit(K_NULL).sql(';');
                 break;
         }
     }

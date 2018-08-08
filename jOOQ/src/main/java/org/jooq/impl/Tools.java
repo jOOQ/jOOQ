@@ -2042,16 +2042,20 @@ final class Tools {
                     render.sql(sqlChars[i++]);
 
                 // Consume the whole identifier
+                identifierLoop:
                 for (;;) {
 
                     // Consume an escaped quote
-                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter]))
+                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
                         for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length; d++)
                             render.sql(sqlChars[i++]);
 
+                        continue identifierLoop;
+                    }
+
                     // Break on the terminal identifier delimiter
                     else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER][delimiter]))
-                        break;
+                        break identifierLoop;
 
                     // Consume identifier content
                     render.sql(sqlChars[i++]);

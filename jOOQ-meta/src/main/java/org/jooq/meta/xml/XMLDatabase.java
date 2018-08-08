@@ -80,6 +80,8 @@ import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.conf.MiniJAXB;
+import org.jooq.exception.ExceptionTools;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -247,12 +249,23 @@ public class XMLDatabase extends AbstractDatabase {
                 //         The following quick fix tests the presence of the xmlns when marshalling, and if absent
                 //         removes it prior to unmarshalling.
                 StringWriter test = new StringWriter();
-                JAXB.marshal(new InformationSchema(), test);
+                try {
+                    JAXB.marshal(new InformationSchema(), test);
 
-                if (!test.toString().contains("xmlns"))
-                    content = content.replaceAll("xmlns=\"[^\"]*\"", "");
+                    if (!test.toString().contains("xmlns"))
+                        content = content.replaceAll("xmlns=\"[^\"]*\"", "");
 
-                info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
+                    info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
+                }
+                catch (Throwable t) {
+                    if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
+                        ExceptionTools.getCause(t, Error.class) != null) {
+
+                        info = MiniJAXB.unmarshal(content, InformationSchema.class);
+                    }
+                    else
+                        throw t;
+                }
             }
             catch (Exception e) {
                 throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);

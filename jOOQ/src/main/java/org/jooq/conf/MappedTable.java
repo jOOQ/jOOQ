@@ -146,7 +146,7 @@ public class MappedTable
         }
         if (inputExpression!= null) {
             sb.append("<inputExpression>");
-            sb.append(inputExpression);
+            sb.append(inputExpression.pattern());
             sb.append("</inputExpression>");
         }
         if (output!= null) {

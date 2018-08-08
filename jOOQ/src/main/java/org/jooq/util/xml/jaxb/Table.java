@@ -182,19 +182,19 @@ public class Table implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (tableCatalog!= null) {
-            sb.append("<tableCatalog>");
+            sb.append("<table_catalog>");
             sb.append(tableCatalog);
-            sb.append("</tableCatalog>");
+            sb.append("</table_catalog>");
         }
         if (tableSchema!= null) {
-            sb.append("<tableSchema>");
+            sb.append("<table_schema>");
             sb.append(tableSchema);
-            sb.append("</tableSchema>");
+            sb.append("</table_schema>");
         }
         if (tableName!= null) {
-            sb.append("<tableName>");
+            sb.append("<table_name>");
             sb.append(tableName);
-            sb.append("</tableName>");
+            sb.append("</table_name>");
         }
         if (comment!= null) {
             sb.append("<comment>");

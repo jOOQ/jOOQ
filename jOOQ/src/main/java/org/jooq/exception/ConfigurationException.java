@@ -60,4 +60,14 @@ public class ConfigurationException extends DataAccessException {
     public ConfigurationException(String message) {
         super(message);
     }
+
+    /**
+     * Constructor for ConfigurationException.
+     *
+     * @param message the detail message
+     * @param cause the cause
+     */
+    public ConfigurationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

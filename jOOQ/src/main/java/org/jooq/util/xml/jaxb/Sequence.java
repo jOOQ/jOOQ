@@ -311,39 +311,39 @@ public class Sequence implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (sequenceCatalog!= null) {
-            sb.append("<sequenceCatalog>");
+            sb.append("<sequence_catalog>");
             sb.append(sequenceCatalog);
-            sb.append("</sequenceCatalog>");
+            sb.append("</sequence_catalog>");
         }
         if (sequenceSchema!= null) {
-            sb.append("<sequenceSchema>");
+            sb.append("<sequence_schema>");
             sb.append(sequenceSchema);
-            sb.append("</sequenceSchema>");
+            sb.append("</sequence_schema>");
         }
         if (sequenceName!= null) {
-            sb.append("<sequenceName>");
+            sb.append("<sequence_name>");
             sb.append(sequenceName);
-            sb.append("</sequenceName>");
+            sb.append("</sequence_name>");
         }
         if (dataType!= null) {
-            sb.append("<dataType>");
+            sb.append("<data_type>");
             sb.append(dataType);
-            sb.append("</dataType>");
+            sb.append("</data_type>");
         }
         if (characterMaximumLength!= null) {
-            sb.append("<characterMaximumLength>");
+            sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);
-            sb.append("</characterMaximumLength>");
+            sb.append("</character_maximum_length>");
         }
         if (numericPrecision!= null) {
-            sb.append("<numericPrecision>");
+            sb.append("<numeric_precision>");
             sb.append(numericPrecision);
-            sb.append("</numericPrecision>");
+            sb.append("</numeric_precision>");
         }
         if (numericScale!= null) {
-            sb.append("<numericScale>");
+            sb.append("<numeric_scale>");
             sb.append(numericScale);
-            sb.append("</numericScale>");
+            sb.append("</numeric_scale>");
         }
         if (comment!= null) {
             sb.append("<comment>");

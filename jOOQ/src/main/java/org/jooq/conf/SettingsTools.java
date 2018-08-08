@@ -48,8 +48,6 @@ import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-import javax.xml.bind.JAXB;
-
 /**
  * Convenience methods for jOOQ runtime settings.
  *
@@ -68,16 +66,16 @@ public final class SettingsTools {
             // Check classpath first
             InputStream in = SettingsTools.class.getResourceAsStream(property);
             if (in != null)
-                settings = JAXB.unmarshal(in, Settings.class);
+                settings = MiniJAXB.unmarshal(in, Settings.class);
             else
-                settings = JAXB.unmarshal(new File(property), Settings.class);
+                settings = MiniJAXB.unmarshal(new File(property), Settings.class);
         }
 
         if (settings == null) {
             InputStream in = SettingsTools.class.getResourceAsStream("/jooq-settings.xml");
 
             if (in != null)
-                settings = JAXB.unmarshal(in, Settings.class);
+                settings = MiniJAXB.unmarshal(in, Settings.class);
         }
 
         if (settings == null)

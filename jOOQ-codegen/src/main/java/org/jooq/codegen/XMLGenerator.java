@@ -46,9 +46,8 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 import java.io.StringWriter;
 import java.util.List;
 
-import javax.xml.bind.JAXB;
-
 import org.jooq.SortOrder;
+import org.jooq.conf.MiniJAXB;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -352,7 +351,7 @@ public class XMLGenerator extends AbstractGenerator {
         }
 
         StringWriter writer = new StringWriter();
-        JAXB.marshal(is, writer);
+        MiniJAXB.marshal(is, writer);
         out.print(writer.toString());
         out.close();
     }

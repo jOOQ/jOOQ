@@ -306,42 +306,42 @@ public class KeyColumnUsage implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (columnName!= null) {
-            sb.append("<columnName>");
+            sb.append("<column_name>");
             sb.append(columnName);
-            sb.append("</columnName>");
+            sb.append("</column_name>");
         }
         if (constraintCatalog!= null) {
-            sb.append("<constraintCatalog>");
+            sb.append("<constraint_catalog>");
             sb.append(constraintCatalog);
-            sb.append("</constraintCatalog>");
+            sb.append("</constraint_catalog>");
         }
         if (constraintSchema!= null) {
-            sb.append("<constraintSchema>");
+            sb.append("<constraint_schema>");
             sb.append(constraintSchema);
-            sb.append("</constraintSchema>");
+            sb.append("</constraint_schema>");
         }
         if (constraintName!= null) {
-            sb.append("<constraintName>");
+            sb.append("<constraint_name>");
             sb.append(constraintName);
-            sb.append("</constraintName>");
+            sb.append("</constraint_name>");
         }
-        sb.append("<ordinalPosition>");
+        sb.append("<ordinal_position>");
         sb.append(ordinalPosition);
-        sb.append("</ordinalPosition>");
+        sb.append("</ordinal_position>");
         if (tableCatalog!= null) {
-            sb.append("<tableCatalog>");
+            sb.append("<table_catalog>");
             sb.append(tableCatalog);
-            sb.append("</tableCatalog>");
+            sb.append("</table_catalog>");
         }
         if (tableSchema!= null) {
-            sb.append("<tableSchema>");
+            sb.append("<table_schema>");
             sb.append(tableSchema);
-            sb.append("</tableSchema>");
+            sb.append("</table_schema>");
         }
         if (tableName!= null) {
-            sb.append("<tableName>");
+            sb.append("<table_name>");
             sb.append(tableName);
-            sb.append("</tableName>");
+            sb.append("</table_name>");
         }
         return sb.toString();
     }

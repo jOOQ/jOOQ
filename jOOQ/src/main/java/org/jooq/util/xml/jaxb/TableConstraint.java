@@ -315,39 +315,39 @@ public class TableConstraint implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (constraintCatalog!= null) {
-            sb.append("<constraintCatalog>");
+            sb.append("<constraint_catalog>");
             sb.append(constraintCatalog);
-            sb.append("</constraintCatalog>");
+            sb.append("</constraint_catalog>");
         }
         if (constraintSchema!= null) {
-            sb.append("<constraintSchema>");
+            sb.append("<constraint_schema>");
             sb.append(constraintSchema);
-            sb.append("</constraintSchema>");
+            sb.append("</constraint_schema>");
         }
         if (constraintName!= null) {
-            sb.append("<constraintName>");
+            sb.append("<constraint_name>");
             sb.append(constraintName);
-            sb.append("</constraintName>");
+            sb.append("</constraint_name>");
         }
         if (constraintType!= null) {
-            sb.append("<constraintType>");
+            sb.append("<constraint_type>");
             sb.append(constraintType);
-            sb.append("</constraintType>");
+            sb.append("</constraint_type>");
         }
         if (tableCatalog!= null) {
-            sb.append("<tableCatalog>");
+            sb.append("<table_catalog>");
             sb.append(tableCatalog);
-            sb.append("</tableCatalog>");
+            sb.append("</table_catalog>");
         }
         if (tableSchema!= null) {
-            sb.append("<tableSchema>");
+            sb.append("<table_schema>");
             sb.append(tableSchema);
-            sb.append("</tableSchema>");
+            sb.append("</table_schema>");
         }
         if (tableName!= null) {
-            sb.append("<tableName>");
+            sb.append("<table_name>");
             sb.append(tableName);
-            sb.append("</tableName>");
+            sb.append("</table_name>");
         }
         if (comment!= null) {
             sb.append("<comment>");

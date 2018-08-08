@@ -69,6 +69,8 @@ import javax.xml.validation.SchemaFactory;
 
 import org.jooq.Constants;
 import org.jooq.Log.Level;
+import org.jooq.conf.MiniJAXB;
+import org.jooq.exception.ExceptionTools;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
@@ -923,8 +925,15 @@ public class GenerationTool {
             });
             return (Configuration) unmarshaller.unmarshal(new StringReader(xml));
         }
-        catch (Exception e) {
-            throw new GeneratorException("Error while reading XML configuration", e);
+        catch (Throwable t) {
+
+            // [#7734] If JAXB cannot be loaded, try using our own
+            if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
+                ExceptionTools.getCause(t, Error.class) != null) {
+                return MiniJAXB.unmarshal(xml, Configuration.class);
+            }
+
+            throw new GeneratorException("Error while reading XML configuration", t);
         }
     }
 }

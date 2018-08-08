@@ -186,7 +186,7 @@ public class MappedSchema
         }
         if (inputExpression!= null) {
             sb.append("<inputExpression>");
-            sb.append(inputExpression);
+            sb.append(inputExpression.pattern());
             sb.append("</inputExpression>");
         }
         if (output!= null) {
@@ -196,7 +196,11 @@ public class MappedSchema
         }
         if (tables!= null) {
             sb.append("<tables>");
-            sb.append(tables);
+            for (int i = 0; (i<tables.size()); i ++) {
+                sb.append("<table>");
+                sb.append(tables.get(i));
+                sb.append("</table>");
+            }
             sb.append("</tables>");
         }
         return sb.toString();

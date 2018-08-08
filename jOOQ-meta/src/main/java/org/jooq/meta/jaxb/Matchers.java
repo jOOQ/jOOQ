@@ -257,32 +257,56 @@ public class Matchers implements Serializable
         StringBuilder sb = new StringBuilder();
         if (schemas!= null) {
             sb.append("<schemas>");
-            sb.append(schemas);
+            for (int i = 0; (i<schemas.size()); i ++) {
+                sb.append("<schema>");
+                sb.append(schemas.get(i));
+                sb.append("</schema>");
+            }
             sb.append("</schemas>");
         }
         if (tables!= null) {
             sb.append("<tables>");
-            sb.append(tables);
+            for (int i = 0; (i<tables.size()); i ++) {
+                sb.append("<table>");
+                sb.append(tables.get(i));
+                sb.append("</table>");
+            }
             sb.append("</tables>");
         }
         if (fields!= null) {
             sb.append("<fields>");
-            sb.append(fields);
+            for (int i = 0; (i<fields.size()); i ++) {
+                sb.append("<field>");
+                sb.append(fields.get(i));
+                sb.append("</field>");
+            }
             sb.append("</fields>");
         }
         if (routines!= null) {
             sb.append("<routines>");
-            sb.append(routines);
+            for (int i = 0; (i<routines.size()); i ++) {
+                sb.append("<routine>");
+                sb.append(routines.get(i));
+                sb.append("</routine>");
+            }
             sb.append("</routines>");
         }
         if (sequences!= null) {
             sb.append("<sequences>");
-            sb.append(sequences);
+            for (int i = 0; (i<sequences.size()); i ++) {
+                sb.append("<sequence>");
+                sb.append(sequences.get(i));
+                sb.append("</sequence>");
+            }
             sb.append("</sequences>");
         }
         if (enums!= null) {
             sb.append("<enums>");
-            sb.append(enums);
+            for (int i = 0; (i<enums.size()); i ++) {
+                sb.append("<enum>");
+                sb.append(enums.get(i));
+                sb.append("</enum>");
+            }
             sb.append("</enums>");
         }
         return sb.toString();

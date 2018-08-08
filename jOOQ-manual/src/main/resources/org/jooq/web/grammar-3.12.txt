@@ -753,6 +753,7 @@ term =
 | '{' 't' stringLiteral '}'
 | '{' 'fn' term '}'
 | '{' 'ts' stringLiteral '}'
+| identifier '(' [ field { ',' field } ] ')'
 ;
 
 truthValue = 'TRUE' | 'FALSE' | 'NULL'

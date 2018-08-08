@@ -4608,7 +4608,7 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldPowerIf(ctx)) != null)
                         return field;
-                    else if (parseFunctionNameIf(ctx, "PI"))
+                    else if (parseFunctionNameIf(ctx, "PI") && parse(ctx, '(') && parse(ctx, ')'))
                         return pi();
 
                 if (parseKeywordIf(ctx, "PRIOR"))
@@ -6876,12 +6876,15 @@ final class ParserImpl implements Parser {
         if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && parseIf(ctx, '(')) {
             List<Field<?>> arguments = new ArrayList<Field<?>>();
 
-            do {
-                arguments.add(parseField(ctx));
-            }
-            while (parseIf(ctx, ','));
+            if (!parseIf(ctx, ')')) {
+                do {
+                    arguments.add(parseField(ctx));
+                }
+                while (parseIf(ctx, ','));
 
-            parse(ctx, ')');
+                parse(ctx, ')');
+            }
+
             return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
         else {

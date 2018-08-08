@@ -258,7 +258,7 @@ public class MappedSchema
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((input == null)? 0 :input.hashCode()));
-        result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.hashCode()));
+        result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.pattern().hashCode()));
         result = ((prime*result)+((output == null)? 0 :output.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         return result;

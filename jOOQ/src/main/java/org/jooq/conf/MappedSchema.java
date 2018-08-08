@@ -228,7 +228,7 @@ public class MappedSchema
                 return false;
             }
         } else {
-            if (!inputExpression.equals(other.inputExpression)) {
+            if (!inputExpression.pattern().equals(other.inputExpression.pattern())) {
                 return false;
             }
         }

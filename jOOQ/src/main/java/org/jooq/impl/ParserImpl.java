@@ -158,6 +158,7 @@ import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.percentileCont;
 import static org.jooq.impl.DSL.percentileDisc;
+import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
@@ -4605,6 +4606,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldPowerIf(ctx)) != null)
                         return field;
+                    else if (parseFunctionNameIf(ctx, "PI"))
+                        return pi();
 
                 if (parseKeywordIf(ctx, "PRIOR"))
                     return prior(toField(ctx, parseConcat(ctx, type)));

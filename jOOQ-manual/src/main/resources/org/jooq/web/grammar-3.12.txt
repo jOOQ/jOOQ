@@ -684,6 +684,7 @@ term =
 | 'NEXT VALUE FOR' sequenceName
 | 'NEXTVAL' '(' ( name | stringLiteral ) ')'
 | 'OCTET_LENGTH' '(' field ')'
+| 'PI' '(' ')'
 | 'POSITION' '(' field 'IN' field ')'
 | 'PERCENT_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'PERCENTILE_CONT' | 'PERCENTILE_DISC' ) '(' unsignedNumericLiteral ')' withinGroup [ over ]

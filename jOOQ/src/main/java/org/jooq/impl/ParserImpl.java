@@ -4433,7 +4433,9 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDayIf(ctx)) != null)
                         return field;
-                    else if (parseFunctionNameIf(ctx, "DEGREE") || parseFunctionNameIf(ctx, "DEG"))
+                    else if (parseFunctionNameIf(ctx, "DEGREES")
+                          || parseFunctionNameIf(ctx, "DEGREE")
+                          || parseFunctionNameIf(ctx, "DEG"))
                         return deg((Field) parseFieldSumParenthesised(ctx));
 
                 if ((field = parseFieldDecodeIf(ctx)) != null)
@@ -4645,7 +4647,9 @@ final class ParserImpl implements Parser {
                         return field;
                     else if (parseKeywordIf(ctx, "ROWNUM"))
                         return rownum();
-                    else if (parseFunctionNameIf(ctx, "RADIAN") || parseFunctionNameIf(ctx, "RAD"))
+                    else if (parseFunctionNameIf(ctx, "RADIANS")
+                          || parseFunctionNameIf(ctx, "RADIAN")
+                          || parseFunctionNameIf(ctx, "RAD"))
                         return rad((Field) parseFieldSumParenthesised(ctx));
 
                 if (parseFunctionNameIf(ctx, "ROW"))

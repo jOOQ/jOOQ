@@ -634,7 +634,7 @@ term =
 | 'DAY' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
-| ( 'DEG' | 'DEGREE' ) '(' sum ')'
+| ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
@@ -711,7 +711,7 @@ term =
 | 'RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'ROUND' '(' field [ ',' unsignedInteger ] ')'
 | 'ROWNUM'
-| ( 'RAD' | 'RADIAN' ) '(' sum ')'
+| ( 'RAD' | 'RADIAN' | 'RADIANS' ) '(' sum ')'
 | 'ROW' '(' fields ')'
 | ( 'SUBSTR' | 'SUBSTRING' ) '(' field ',' sum [ ',' sum ] ')'
 | 'SECOND' '(' field ')'

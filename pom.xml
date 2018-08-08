@@ -105,14 +105,6 @@
                 <version>2.3.0</version>
             </dependency>
 
-            <!-- From JDK 11 onwards, the transitive activation dependency needs to be made explicit -->
-            <!-- This is probably due to a bug in JAXB: https://github.com/javaee/jaxb-v2/issues/1207 -->
-            <dependency>
-                <groupId>com.sun.activation</groupId>
-                <artifactId>javax.activation</artifactId>
-                <version>1.2.0</version>
-            </dependency>
-
             <!-- Optional logging dependency -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -323,6 +315,7 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-scala_2.12</module>
+
 
 
 

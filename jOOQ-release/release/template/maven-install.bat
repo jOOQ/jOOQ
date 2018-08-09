@@ -1,5 +1,5 @@
 @echo off
-set VERSION=3.11.3
+set VERSION=3.11.4
 
 if exist jOOQ-javadoc\jooq-%VERSION%-javadoc.jar (
   set JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc\jooq-%VERSION%-javadoc.jar

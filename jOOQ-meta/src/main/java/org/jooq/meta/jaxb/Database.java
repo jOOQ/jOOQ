@@ -1619,7 +1619,11 @@ public class Database implements Serializable
         }
         if (regexFlags!= null) {
             sb.append("<regexFlags>");
-            sb.append(regexFlags);
+            for (int i = 0; (i<regexFlags.size()); i ++) {
+                sb.append("<regexFlags>");
+                sb.append(regexFlags.get(i));
+                sb.append("</regexFlags>");
+            }
             sb.append("</regexFlags>");
         }
         if (includes!= null) {
@@ -1804,32 +1808,56 @@ public class Database implements Serializable
         }
         if (properties!= null) {
             sb.append("<properties>");
-            sb.append(properties);
+            for (int i = 0; (i<properties.size()); i ++) {
+                sb.append("<property>");
+                sb.append(properties.get(i));
+                sb.append("</property>");
+            }
             sb.append("</properties>");
         }
         if (catalogs!= null) {
             sb.append("<catalogs>");
-            sb.append(catalogs);
+            for (int i = 0; (i<catalogs.size()); i ++) {
+                sb.append("<catalog>");
+                sb.append(catalogs.get(i));
+                sb.append("</catalog>");
+            }
             sb.append("</catalogs>");
         }
         if (schemata!= null) {
             sb.append("<schemata>");
-            sb.append(schemata);
+            for (int i = 0; (i<schemata.size()); i ++) {
+                sb.append("<schema>");
+                sb.append(schemata.get(i));
+                sb.append("</schema>");
+            }
             sb.append("</schemata>");
         }
         if (customTypes!= null) {
             sb.append("<customTypes>");
-            sb.append(customTypes);
+            for (int i = 0; (i<customTypes.size()); i ++) {
+                sb.append("<customType>");
+                sb.append(customTypes.get(i));
+                sb.append("</customType>");
+            }
             sb.append("</customTypes>");
         }
         if (enumTypes!= null) {
             sb.append("<enumTypes>");
-            sb.append(enumTypes);
+            for (int i = 0; (i<enumTypes.size()); i ++) {
+                sb.append("<enumType>");
+                sb.append(enumTypes.get(i));
+                sb.append("</enumType>");
+            }
             sb.append("</enumTypes>");
         }
         if (forcedTypes!= null) {
             sb.append("<forcedTypes>");
-            sb.append(forcedTypes);
+            for (int i = 0; (i<forcedTypes.size()); i ++) {
+                sb.append("<forcedType>");
+                sb.append(forcedTypes.get(i));
+                sb.append("</forcedType>");
+            }
             sb.append("</forcedTypes>");
         }
         return sb.toString();

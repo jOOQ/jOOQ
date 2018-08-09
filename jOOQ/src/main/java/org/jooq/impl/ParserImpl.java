@@ -148,6 +148,7 @@ import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.percentileCont;
 import static org.jooq.impl.DSL.percentileDisc;
+import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
@@ -4351,7 +4352,9 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDayIf(ctx)) != null)
                         return field;
-                    else if (parseFunctionNameIf(ctx, "DEGREE") || parseFunctionNameIf(ctx, "DEG"))
+                    else if (parseFunctionNameIf(ctx, "DEGREES")
+                          || parseFunctionNameIf(ctx, "DEGREE")
+                          || parseFunctionNameIf(ctx, "DEG"))
                         return deg((Field) parseFieldSumParenthesised(ctx));
 
                 if ((field = parseFieldDecodeIf(ctx)) != null)
@@ -4524,6 +4527,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldPowerIf(ctx)) != null)
                         return field;
+                    else if (parseFunctionNameIf(ctx, "PI") && parse(ctx, '(') && parse(ctx, ')'))
+                        return pi();
 
                 if (parseKeywordIf(ctx, "PRIOR"))
                     return prior(toField(ctx, parseConcat(ctx, type)));
@@ -4561,7 +4566,9 @@ final class ParserImpl implements Parser {
                         return field;
                     else if (parseKeywordIf(ctx, "ROWNUM"))
                         return rownum();
-                    else if (parseFunctionNameIf(ctx, "RADIAN") || parseFunctionNameIf(ctx, "RAD"))
+                    else if (parseFunctionNameIf(ctx, "RADIANS")
+                          || parseFunctionNameIf(ctx, "RADIAN")
+                          || parseFunctionNameIf(ctx, "RAD"))
                         return rad((Field) parseFieldSumParenthesised(ctx));
 
                 if (parseFunctionNameIf(ctx, "ROW"))
@@ -6792,12 +6799,15 @@ final class ParserImpl implements Parser {
         if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && parseIf(ctx, '(')) {
             List<Field<?>> arguments = new ArrayList<Field<?>>();
 
-            do {
-                arguments.add(parseField(ctx));
-            }
-            while (parseIf(ctx, ','));
+            if (!parseIf(ctx, ')')) {
+                do {
+                    arguments.add(parseField(ctx));
+                }
+                while (parseIf(ctx, ','));
 
-            parse(ctx, ')');
+                parse(ctx, ')');
+            }
+
             return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
         else {
@@ -7021,6 +7031,13 @@ final class ParserImpl implements Parser {
             character = ctx.characterNext();
 
         switch (character) {
+            case 'a':
+            case 'A':
+                if (parseKeywordOrIdentifierIf(ctx, "ARRAY"))
+                    return SQLDataType.OTHER.getArrayDataType();
+
+                break;
+
             case 'b':
             case 'B':
                 if (parseKeywordOrIdentifierIf(ctx, "BIGINT"))
@@ -7130,6 +7147,13 @@ final class ParserImpl implements Parser {
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
                 else if (parseKeywordOrIdentifierIf(ctx, "NVARCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
+
+                break;
+
+            case 'o':
+            case 'O':
+                if (parseKeywordOrIdentifierIf(ctx, "OTHER"))
+                    return SQLDataType.OTHER;
 
                 break;
 

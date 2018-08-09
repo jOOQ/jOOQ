@@ -474,64 +474,64 @@ public class Column implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (tableCatalog!= null) {
-            sb.append("<tableCatalog>");
+            sb.append("<table_catalog>");
             sb.append(tableCatalog);
-            sb.append("</tableCatalog>");
+            sb.append("</table_catalog>");
         }
         if (tableSchema!= null) {
-            sb.append("<tableSchema>");
+            sb.append("<table_schema>");
             sb.append(tableSchema);
-            sb.append("</tableSchema>");
+            sb.append("</table_schema>");
         }
         if (tableName!= null) {
-            sb.append("<tableName>");
+            sb.append("<table_name>");
             sb.append(tableName);
-            sb.append("</tableName>");
+            sb.append("</table_name>");
         }
         if (columnName!= null) {
-            sb.append("<columnName>");
+            sb.append("<column_name>");
             sb.append(columnName);
-            sb.append("</columnName>");
+            sb.append("</column_name>");
         }
         if (dataType!= null) {
-            sb.append("<dataType>");
+            sb.append("<data_type>");
             sb.append(dataType);
-            sb.append("</dataType>");
+            sb.append("</data_type>");
         }
         if (characterMaximumLength!= null) {
-            sb.append("<characterMaximumLength>");
+            sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);
-            sb.append("</characterMaximumLength>");
+            sb.append("</character_maximum_length>");
         }
         if (numericPrecision!= null) {
-            sb.append("<numericPrecision>");
+            sb.append("<numeric_precision>");
             sb.append(numericPrecision);
-            sb.append("</numericPrecision>");
+            sb.append("</numeric_precision>");
         }
         if (numericScale!= null) {
-            sb.append("<numericScale>");
+            sb.append("<numeric_scale>");
             sb.append(numericScale);
-            sb.append("</numericScale>");
+            sb.append("</numeric_scale>");
         }
         if (ordinalPosition!= null) {
-            sb.append("<ordinalPosition>");
+            sb.append("<ordinal_position>");
             sb.append(ordinalPosition);
-            sb.append("</ordinalPosition>");
+            sb.append("</ordinal_position>");
         }
         if (identityGeneration!= null) {
-            sb.append("<identityGeneration>");
+            sb.append("<identity_generation>");
             sb.append(identityGeneration);
-            sb.append("</identityGeneration>");
+            sb.append("</identity_generation>");
         }
         if (isNullable!= null) {
-            sb.append("<isNullable>");
+            sb.append("<is_nullable>");
             sb.append(isNullable);
-            sb.append("</isNullable>");
+            sb.append("</is_nullable>");
         }
         if (columnDefault!= null) {
-            sb.append("<columnDefault>");
+            sb.append("<column_default>");
             sb.append(columnDefault);
-            sb.append("</columnDefault>");
+            sb.append("</column_default>");
         }
         if (comment!= null) {
             sb.append("<comment>");

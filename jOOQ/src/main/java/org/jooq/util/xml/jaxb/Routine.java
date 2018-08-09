@@ -510,69 +510,69 @@ public class Routine implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (specificCatalog!= null) {
-            sb.append("<specificCatalog>");
+            sb.append("<specific_catalog>");
             sb.append(specificCatalog);
-            sb.append("</specificCatalog>");
+            sb.append("</specific_catalog>");
         }
         if (specificSchema!= null) {
-            sb.append("<specificSchema>");
+            sb.append("<specific_schema>");
             sb.append(specificSchema);
-            sb.append("</specificSchema>");
+            sb.append("</specific_schema>");
         }
         if (specificPackage!= null) {
-            sb.append("<specificPackage>");
+            sb.append("<specific_package>");
             sb.append(specificPackage);
-            sb.append("</specificPackage>");
+            sb.append("</specific_package>");
         }
         if (specificName!= null) {
-            sb.append("<specificName>");
+            sb.append("<specific_name>");
             sb.append(specificName);
-            sb.append("</specificName>");
+            sb.append("</specific_name>");
         }
         if (routineCatalog!= null) {
-            sb.append("<routineCatalog>");
+            sb.append("<routine_catalog>");
             sb.append(routineCatalog);
-            sb.append("</routineCatalog>");
+            sb.append("</routine_catalog>");
         }
         if (routineSchema!= null) {
-            sb.append("<routineSchema>");
+            sb.append("<routine_schema>");
             sb.append(routineSchema);
-            sb.append("</routineSchema>");
+            sb.append("</routine_schema>");
         }
         if (routinePackage!= null) {
-            sb.append("<routinePackage>");
+            sb.append("<routine_package>");
             sb.append(routinePackage);
-            sb.append("</routinePackage>");
+            sb.append("</routine_package>");
         }
         if (routineName!= null) {
-            sb.append("<routineName>");
+            sb.append("<routine_name>");
             sb.append(routineName);
-            sb.append("</routineName>");
+            sb.append("</routine_name>");
         }
         if (routineType!= null) {
-            sb.append("<routineType>");
+            sb.append("<routine_type>");
             sb.append(routineType);
-            sb.append("</routineType>");
+            sb.append("</routine_type>");
         }
         if (dataType!= null) {
-            sb.append("<dataType>");
+            sb.append("<data_type>");
             sb.append(dataType);
-            sb.append("</dataType>");
+            sb.append("</data_type>");
         }
         if (characterMaximumLength!= null) {
-            sb.append("<characterMaximumLength>");
+            sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);
-            sb.append("</characterMaximumLength>");
+            sb.append("</character_maximum_length>");
         }
         if (numericPrecision!= null) {
-            sb.append("<numericPrecision>");
+            sb.append("<numeric_precision>");
             sb.append(numericPrecision);
-            sb.append("</numericPrecision>");
+            sb.append("</numeric_precision>");
         }
         if (numericScale!= null) {
-            sb.append("<numericScale>");
+            sb.append("<numeric_scale>");
             sb.append(numericScale);
-            sb.append("</numericScale>");
+            sb.append("</numeric_scale>");
         }
         if (comment!= null) {
             sb.append("<comment>");

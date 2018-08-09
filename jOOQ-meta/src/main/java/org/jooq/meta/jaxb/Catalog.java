@@ -188,7 +188,11 @@ public class Catalog implements Serializable
         }
         if (schemata!= null) {
             sb.append("<schemata>");
-            sb.append(schemata);
+            for (int i = 0; (i<schemata.size()); i ++) {
+                sb.append("<schema>");
+                sb.append(schemata.get(i));
+                sb.append("</schema>");
+            }
             sb.append("</schemata>");
         }
         return sb.toString();

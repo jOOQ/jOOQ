@@ -313,39 +313,39 @@ public class Index implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (indexCatalog!= null) {
-            sb.append("<indexCatalog>");
+            sb.append("<index_catalog>");
             sb.append(indexCatalog);
-            sb.append("</indexCatalog>");
+            sb.append("</index_catalog>");
         }
         if (indexSchema!= null) {
-            sb.append("<indexSchema>");
+            sb.append("<index_schema>");
             sb.append(indexSchema);
-            sb.append("</indexSchema>");
+            sb.append("</index_schema>");
         }
         if (indexName!= null) {
-            sb.append("<indexName>");
+            sb.append("<index_name>");
             sb.append(indexName);
-            sb.append("</indexName>");
+            sb.append("</index_name>");
         }
         if (tableCatalog!= null) {
-            sb.append("<tableCatalog>");
+            sb.append("<table_catalog>");
             sb.append(tableCatalog);
-            sb.append("</tableCatalog>");
+            sb.append("</table_catalog>");
         }
         if (tableSchema!= null) {
-            sb.append("<tableSchema>");
+            sb.append("<table_schema>");
             sb.append(tableSchema);
-            sb.append("</tableSchema>");
+            sb.append("</table_schema>");
         }
         if (tableName!= null) {
-            sb.append("<tableName>");
+            sb.append("<table_name>");
             sb.append(tableName);
-            sb.append("</tableName>");
+            sb.append("</table_name>");
         }
         if (isUnique!= null) {
-            sb.append("<isUnique>");
+            sb.append("<is_unique>");
             sb.append(isUnique);
-            sb.append("</isUnique>");
+            sb.append("</is_unique>");
         }
         if (comment!= null) {
             sb.append("<comment>");

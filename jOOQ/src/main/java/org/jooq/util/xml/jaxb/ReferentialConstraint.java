@@ -249,34 +249,34 @@ public class ReferentialConstraint implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (constraintCatalog!= null) {
-            sb.append("<constraintCatalog>");
+            sb.append("<constraint_catalog>");
             sb.append(constraintCatalog);
-            sb.append("</constraintCatalog>");
+            sb.append("</constraint_catalog>");
         }
         if (constraintSchema!= null) {
-            sb.append("<constraintSchema>");
+            sb.append("<constraint_schema>");
             sb.append(constraintSchema);
-            sb.append("</constraintSchema>");
+            sb.append("</constraint_schema>");
         }
         if (constraintName!= null) {
-            sb.append("<constraintName>");
+            sb.append("<constraint_name>");
             sb.append(constraintName);
-            sb.append("</constraintName>");
+            sb.append("</constraint_name>");
         }
         if (uniqueConstraintCatalog!= null) {
-            sb.append("<uniqueConstraintCatalog>");
+            sb.append("<unique_constraint_catalog>");
             sb.append(uniqueConstraintCatalog);
-            sb.append("</uniqueConstraintCatalog>");
+            sb.append("</unique_constraint_catalog>");
         }
         if (uniqueConstraintSchema!= null) {
-            sb.append("<uniqueConstraintSchema>");
+            sb.append("<unique_constraint_schema>");
             sb.append(uniqueConstraintSchema);
-            sb.append("</uniqueConstraintSchema>");
+            sb.append("</unique_constraint_schema>");
         }
         if (uniqueConstraintName!= null) {
-            sb.append("<uniqueConstraintName>");
+            sb.append("<unique_constraint_name>");
             sb.append(uniqueConstraintName);
-            sb.append("</uniqueConstraintName>");
+            sb.append("</unique_constraint_name>");
         }
         return sb.toString();
     }

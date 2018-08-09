@@ -5823,8 +5823,8 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
 
-        // [#3450] [#4880] Must not print */ inside Javadoc
-        String escaped = comment.replace("/*", "/ *").replace("*/", "* /");
+        // [#3450] [#4880] [#7693] Must not print */ inside Javadoc
+        String escaped = JavaWriter.escapeJavadoc(comment);
         printParagraph(out, escaped, indent + " * ");
     }
 
@@ -6208,6 +6208,9 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 sqlDataTypeRef = SQLDataType.class.getCanonicalName() + ".OTHER";
+
+                if (sb.length() == 0)
+                    sb.append(sqlDataTypeRef);
             }
 
             if (!dataType.nullable())

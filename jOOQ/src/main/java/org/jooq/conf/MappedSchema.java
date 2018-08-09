@@ -186,7 +186,7 @@ public class MappedSchema
         }
         if (inputExpression!= null) {
             sb.append("<inputExpression>");
-            sb.append(inputExpression);
+            sb.append(inputExpression.pattern());
             sb.append("</inputExpression>");
         }
         if (output!= null) {
@@ -196,7 +196,11 @@ public class MappedSchema
         }
         if (tables!= null) {
             sb.append("<tables>");
-            sb.append(tables);
+            for (int i = 0; (i<tables.size()); i ++) {
+                sb.append("<table>");
+                sb.append(tables.get(i));
+                sb.append("</table>");
+            }
             sb.append("</tables>");
         }
         return sb.toString();
@@ -228,7 +232,7 @@ public class MappedSchema
                 return false;
             }
         } else {
-            if (!inputExpression.equals(other.inputExpression)) {
+            if (!inputExpression.pattern().equals(other.inputExpression.pattern())) {
                 return false;
             }
         }
@@ -258,7 +262,7 @@ public class MappedSchema
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((input == null)? 0 :input.hashCode()));
-        result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.hashCode()));
+        result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.pattern().hashCode()));
         result = ((prime*result)+((output == null)? 0 :output.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         return result;

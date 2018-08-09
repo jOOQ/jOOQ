@@ -488,62 +488,110 @@ public class InformationSchema implements Serializable
         StringBuilder sb = new StringBuilder();
         if (catalogs!= null) {
             sb.append("<catalogs>");
-            sb.append(catalogs);
+            for (int i = 0; (i<catalogs.size()); i ++) {
+                sb.append("<catalog>");
+                sb.append(catalogs.get(i));
+                sb.append("</catalog>");
+            }
             sb.append("</catalogs>");
         }
         if (schemata!= null) {
             sb.append("<schemata>");
-            sb.append(schemata);
+            for (int i = 0; (i<schemata.size()); i ++) {
+                sb.append("<schema>");
+                sb.append(schemata.get(i));
+                sb.append("</schema>");
+            }
             sb.append("</schemata>");
         }
         if (sequences!= null) {
             sb.append("<sequences>");
-            sb.append(sequences);
+            for (int i = 0; (i<sequences.size()); i ++) {
+                sb.append("<sequence>");
+                sb.append(sequences.get(i));
+                sb.append("</sequence>");
+            }
             sb.append("</sequences>");
         }
         if (tables!= null) {
             sb.append("<tables>");
-            sb.append(tables);
+            for (int i = 0; (i<tables.size()); i ++) {
+                sb.append("<table>");
+                sb.append(tables.get(i));
+                sb.append("</table>");
+            }
             sb.append("</tables>");
         }
         if (columns!= null) {
             sb.append("<columns>");
-            sb.append(columns);
+            for (int i = 0; (i<columns.size()); i ++) {
+                sb.append("<column>");
+                sb.append(columns.get(i));
+                sb.append("</column>");
+            }
             sb.append("</columns>");
         }
         if (tableConstraints!= null) {
-            sb.append("<tableConstraints>");
-            sb.append(tableConstraints);
-            sb.append("</tableConstraints>");
+            sb.append("<table_constraints>");
+            for (int i = 0; (i<tableConstraints.size()); i ++) {
+                sb.append("<table_constraint>");
+                sb.append(tableConstraints.get(i));
+                sb.append("</table_constraint>");
+            }
+            sb.append("</table_constraints>");
         }
         if (keyColumnUsages!= null) {
-            sb.append("<keyColumnUsages>");
-            sb.append(keyColumnUsages);
-            sb.append("</keyColumnUsages>");
+            sb.append("<key_column_usages>");
+            for (int i = 0; (i<keyColumnUsages.size()); i ++) {
+                sb.append("<key_column_usage>");
+                sb.append(keyColumnUsages.get(i));
+                sb.append("</key_column_usage>");
+            }
+            sb.append("</key_column_usages>");
         }
         if (referentialConstraints!= null) {
-            sb.append("<referentialConstraints>");
-            sb.append(referentialConstraints);
-            sb.append("</referentialConstraints>");
+            sb.append("<referential_constraints>");
+            for (int i = 0; (i<referentialConstraints.size()); i ++) {
+                sb.append("<referential_constraint>");
+                sb.append(referentialConstraints.get(i));
+                sb.append("</referential_constraint>");
+            }
+            sb.append("</referential_constraints>");
         }
         if (indexes!= null) {
             sb.append("<indexes>");
-            sb.append(indexes);
+            for (int i = 0; (i<indexes.size()); i ++) {
+                sb.append("<index>");
+                sb.append(indexes.get(i));
+                sb.append("</index>");
+            }
             sb.append("</indexes>");
         }
         if (indexColumnUsages!= null) {
-            sb.append("<indexColumnUsages>");
-            sb.append(indexColumnUsages);
-            sb.append("</indexColumnUsages>");
+            sb.append("<index_column_usages>");
+            for (int i = 0; (i<indexColumnUsages.size()); i ++) {
+                sb.append("<index_column_usage>");
+                sb.append(indexColumnUsages.get(i));
+                sb.append("</index_column_usage>");
+            }
+            sb.append("</index_column_usages>");
         }
         if (routines!= null) {
             sb.append("<routines>");
-            sb.append(routines);
+            for (int i = 0; (i<routines.size()); i ++) {
+                sb.append("<routine>");
+                sb.append(routines.get(i));
+                sb.append("</routine>");
+            }
             sb.append("</routines>");
         }
         if (parameters!= null) {
             sb.append("<parameters>");
-            sb.append(parameters);
+            for (int i = 0; (i<parameters.size()); i ++) {
+                sb.append("<parameter>");
+                sb.append(parameters.get(i));
+                sb.append("</parameter>");
+            }
             sb.append("</parameters>");
         }
         return sb.toString();

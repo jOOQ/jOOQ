@@ -149,14 +149,14 @@ public class Schema implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (catalogName!= null) {
-            sb.append("<catalogName>");
+            sb.append("<catalog_name>");
             sb.append(catalogName);
-            sb.append("</catalogName>");
+            sb.append("</catalog_name>");
         }
         if (schemaName!= null) {
-            sb.append("<schemaName>");
+            sb.append("<schema_name>");
             sb.append(schemaName);
-            sb.append("</schemaName>");
+            sb.append("</schema_name>");
         }
         if (comment!= null) {
             sb.append("<comment>");

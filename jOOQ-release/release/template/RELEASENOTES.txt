@@ -30,6 +30,28 @@ Bug Fixes
 #7661 - EVERY() aggregate function emulation doesn't yield NULL when aggregating empty sets
 
 
+Version 3.11.4 - August 9, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Bug Fixes
+---------
+#7676 - NPE in DefaultRecordMapper when returning it from custom RecordMapperProvider
+#7695 - Compilation errors in generated code for PostgreSQL's pg_catalog schema
+#7697 - Cannot parse OTHER data type
+#7698 - Cannot parse H2 style ARRAY data type
+#7699 - Compilation error in generated code when generated Javadoc contains unicode escape sequences
+#7701 - NPE in MockResultSet.withTZ() methods
+#7715 - ASEDatabase doesn't work with older Sybase ASE versions
+#7728 - Parser should support parsing pi() function
+#7729 - Support parsing DEGREES() as a synonym for DEGREE() and DEG(), and RADIANS() for RADIAN(), RAD()
+#7730 - Support parsing unknown, parameterless functions
+#7733 - XJC generated classes should compare Pattern.pattern() in generated equals() and hashCode() methods
+#7736 - XJC generated classes should generate XmlElementWrapper element for Lists
+#7738 - ArrayIndexOutOfBoundsException when using double quotes in plain SQL as string delimiters
+
 Version 3.11.2 - June 26, 2018
 ================================================================================
 

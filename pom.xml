@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.11.3</version>
+    <version>3.11.4</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -278,6 +278,10 @@
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-scala_2.12</module>
+
+
+
+
 
 
 

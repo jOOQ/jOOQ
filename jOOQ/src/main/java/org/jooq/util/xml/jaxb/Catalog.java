@@ -116,9 +116,9 @@ public class Catalog implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (catalogName!= null) {
-            sb.append("<catalogName>");
+            sb.append("<catalog_name>");
             sb.append(catalogName);
-            sb.append("</catalogName>");
+            sb.append("</catalog_name>");
         }
         if (comment!= null) {
             sb.append("<comment>");

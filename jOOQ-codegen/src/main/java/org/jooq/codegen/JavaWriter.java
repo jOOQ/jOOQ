@@ -77,7 +77,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
         if (javadoc) {
 
-            // [#3450] [#4575] Must not print */ inside Javadoc
+            // [#3450] [#4575] [#7693] Must not print */ inside Javadoc
             String escaped = escapeJavadoc(string);
             Object[] escapedArgs = Arrays.copyOf(args, args.length);
             for (int i = 0; i < escapedArgs.length; i++)
@@ -92,10 +92,15 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return this;
     }
 
-    private String escapeJavadoc(String string) {
+    static String escapeJavadoc(String string) {
 
-        // [#3450] [#4880] Must not print */ inside Javadoc
-        return string.replace("/*", "/ *").replace("*/", "* /");
+        // [#3450] [#4880] [#7693] Must not print */ inside Javadoc
+        return string
+            .replace("/*", "/ *")
+            .replace("*/", "* /")
+            .replace("\\u002a/", "\\u002a /")
+            .replace("*\\u002f", "* \\u002f")
+            .replace("\\u002a\\u002f", "\\u002a \\u002f");
     }
 
     public JavaWriter header(String header, Object... args) {

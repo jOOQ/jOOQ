@@ -296,7 +296,11 @@ public class Jdbc implements Serializable
         }
         if (properties!= null) {
             sb.append("<properties>");
-            sb.append(properties);
+            for (int i = 0; (i<properties.size()); i ++) {
+                sb.append("<property>");
+                sb.append(properties.get(i));
+                sb.append("</property>");
+            }
             sb.append("</properties>");
         }
         return sb.toString();

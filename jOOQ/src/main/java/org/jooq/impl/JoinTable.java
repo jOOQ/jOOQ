@@ -281,14 +281,20 @@ implements
                     NATURAL_LEFT_OUTER_JOIN,
                     NATURAL_RIGHT_OUTER_JOIN,
                     CROSS_APPLY,
-                    OUTER_APPLY).contains(translatedType))
+                    OUTER_APPLY).contains(translatedType)) {
+            ctx.formatIndentStart();
             toSQLJoinCondition(ctx);
-        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.family()))
-            ctx.formatSeparator()
+            ctx.formatIndentEnd();
+        }
+        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.family())) {
+            ctx.formatIndentStart()
+               .formatSeparator()
                .start(TABLE_JOIN_ON)
                .visit(K_ON)
                .sql(" 1 = 1")
-               .end(TABLE_JOIN_ON);
+               .end(TABLE_JOIN_ON)
+               .formatIndentEnd();
+        }
 
         ctx.end(translatedClause)
            .formatIndentEnd();

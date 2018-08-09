@@ -4933,7 +4933,8 @@ Field<T> nextval();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Reference the sequence in a SELECT statement:
-BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+Field<BigInteger> s = S_AUTHOR_ID.nextval();
+BigInteger nextID = create.select(s).fetchOne(s);
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
@@ -7811,7 +7812,8 @@ BigInteger currID = create.currval(S_AUTHOR_ID);]]></java><html>
 							</p>
 
 </html><java><![CDATA[// Reference the sequence in a SELECT statement:
-BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+Field<BigInteger> s = S_AUTHOR_ID.nextval();
+BigInteger nextID = create.select(s).fetchOne(s);
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)

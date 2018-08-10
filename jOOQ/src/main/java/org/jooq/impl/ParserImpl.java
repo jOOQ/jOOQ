@@ -3269,6 +3269,7 @@ final class ParserImpl implements Parser {
         Name indexName = parseIndexNameIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
+        parseKeywordIf(ctx, "USING BTREE");
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');

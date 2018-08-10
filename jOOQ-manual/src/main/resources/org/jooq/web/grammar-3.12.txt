@@ -122,7 +122,7 @@ break
 ;
 
 createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] [ indexName ] break
-  'ON' tableName '(' sortFields ')'
+  'ON' tableName [ 'USING' 'BTREE' ] '(' sortFields ')'
   [ 'INCLUDE' '(' identifiers ')' ]
   [ 'WHERE' condition ]
 ;

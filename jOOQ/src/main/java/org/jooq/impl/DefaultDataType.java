@@ -760,15 +760,12 @@ public class DefaultDataType<T> implements DataType<T> {
     public /* final */ T convert(Object object) {
 
         // [#1441] Avoid unneeded type conversions to improve performance
-        if (object == null) {
+        if (object == null)
             return null;
-        }
-        else if (object.getClass() == uType) {
+        else if (object.getClass() == uType)
             return (T) object;
-        }
-        else {
+        else
             return Convert.convert(object, uType);
-        }
     }
 
     @Override

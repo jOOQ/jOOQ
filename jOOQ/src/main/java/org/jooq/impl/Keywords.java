@@ -70,6 +70,7 @@ final class Keywords {
     static final Keyword K_BOOLEAN                          = keyword("boolean");
     static final Keyword K_BULK_COLLECT_INTO                = keyword("bulk collect into");
     static final Keyword K_BY                               = keyword("by");
+    static final Keyword K_CACHE                            = keyword("cache");
     static final Keyword K_CASCADE                          = keyword("cascade");
     static final Keyword K_CASE                             = keyword("case");
     static final Keyword K_CAST                             = keyword("cast");
@@ -90,6 +91,7 @@ final class Keywords {
     static final Keyword K_CROSS_JOIN_LATERAL               = keyword("cross join lateral");
     static final Keyword K_CURRENT_SCHEMA                   = keyword("current_schema");
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
+    static final Keyword K_CYCLE                            = keyword("cycle");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
     static final Keyword K_DATETIMEOFFSET                   = keyword("datetimeoffset");
@@ -159,6 +161,7 @@ final class Keywords {
     static final Keyword K_IMMEDIATE                        = keyword("immediate");
     static final Keyword K_IN                               = keyword("in");
     static final Keyword K_INCLUDE                          = keyword("include");
+    static final Keyword K_INCREMENT_BY                     = keyword("increment by");
     static final Keyword K_INDEX                            = keyword("index");
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INSERT                           = keyword("insert");
@@ -178,12 +181,15 @@ final class Keywords {
     static final Keyword K_LOCK_IN_SHARE_MODE               = keyword("lock in share mode");
     static final Keyword K_LOOP                             = keyword("loop");
     static final Keyword K_MATCHED                          = keyword("matched");
+    static final Keyword K_MAXVALUE                         = keyword("maxvalue");
     static final Keyword K_MERGE_INTO                       = keyword("merge into");
     static final Keyword K_MINUS                            = keyword("minus");
+    static final Keyword K_MINVALUE                         = keyword("minvalue");
     static final Keyword K_MODIFY                           = keyword("modify");
     static final Keyword K_NEW_TABLE                        = keyword("new table");
     static final Keyword K_NOCYCLE                          = keyword("nocycle");
     static final Keyword K_NONCLUSTERED                     = keyword("nonclustered");
+    static final Keyword K_NO                               = keyword("no");
     static final Keyword K_NOT                              = keyword("not");
     static final Keyword K_NOT_ENFORCED                     = keyword("not enforced");
     static final Keyword K_NOT_EXISTS                       = keyword("not exists");

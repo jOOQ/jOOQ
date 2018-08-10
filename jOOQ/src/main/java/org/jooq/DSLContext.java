@@ -83,6 +83,7 @@ import java.util.concurrent.Executor;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
 import javax.sql.DataSource;
 
 import org.jooq.conf.ParamType;
@@ -9002,7 +9003,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequence(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequence(String sequence);
+    CreateSequenceFlagsStep createSequence(String sequence);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -9010,7 +9011,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequence(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequence(Name sequence);
+    CreateSequenceFlagsStep createSequence(Name sequence);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -9018,7 +9019,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequence(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequence(Sequence<?> sequence);
+    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -9026,7 +9027,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequenceIfNotExists(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequenceIfNotExists(String sequence);
+    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -9034,7 +9035,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequenceIfNotExists(Name)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequenceIfNotExists(Name sequence);
+    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
@@ -9042,7 +9043,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createSequenceIfNotExists(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence);
+    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
 
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.

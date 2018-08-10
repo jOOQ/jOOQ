@@ -131,6 +131,12 @@ createSchemaStatement = 'CREATE SCHEMA' [ 'IF NOT EXISTS' ] schemaName
 ;
 
 createSequenceStatement = 'CREATE' ( 'SEQUENCE' | 'GENERATOR' ) [ 'IF NOT EXISTS' ] sequenceName
+  [ START [ WITH ] signedInteger ]
+  [ INCREMENT [ BY ] signedInteger ]
+  [ MINVALUE signedInteger | NO MINVALUE ]
+  [ MAXVALUE signedInteger | NO MAXVALUE ]
+  [ CYCLE | NO CYCLE ]
+  [ CACHE unsignedInteger | NO CACHE ]
 ;
 
 createViewStatement = 'CREATE' [ 'OR' ( 'ALTER' | 'REPLACE') ] 'VIEW' [ 'IF NOT EXISTS' ] tableName

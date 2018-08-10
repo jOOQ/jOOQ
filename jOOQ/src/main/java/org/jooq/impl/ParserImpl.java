@@ -304,6 +304,7 @@ import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
+import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
@@ -2246,9 +2247,58 @@ final class ParserImpl implements Parser {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Sequence<?> schemaName = parseSequenceName(ctx);
 
-        return ifNotExists
+        CreateSequenceFlagsStep s = ifNotExists
             ? ctx.dsl.createSequenceIfNotExists(schemaName)
             : ctx.dsl.createSequence(schemaName);
+
+        for (;;) {
+            if (parseKeywordIf(ctx, "START")) {
+                parseKeywordIf(ctx, "WITH");
+                s = s.startWith(parseUnsignedInteger(ctx));
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "INCREMENT")) {
+                parseKeywordIf(ctx, "BY");
+                s = s.incrementBy(parseUnsignedInteger(ctx));
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "MINVALUE")) {
+                s = s.minvalue(parseUnsignedInteger(ctx));
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "NO MINVALUE")) {
+                s = s.noMinvalue();
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "MAXVALUE")) {
+                s = s.maxvalue(parseUnsignedInteger(ctx));
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "NO MAXVALUE")) {
+                s = s.noMaxvalue();
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "CYCLE")) {
+                s = s.cycle();
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "NO CYCLE")) {
+                s = s.noCycle();
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "CACHE")) {
+                s = s.cache(parseUnsignedInteger(ctx));
+                continue;
+            }
+            else if (parseKeywordIf(ctx, "NO CACHE")) {
+                s = s.noCache();
+                continue;
+            }
+
+            break;
+        }
+
+        return s;
     }
 
     private static final DDLQuery parseAlterSequence(ParserContext ctx) {

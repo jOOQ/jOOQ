@@ -112,7 +112,7 @@ import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
-import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
@@ -3124,32 +3124,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateSequenceFinalStep createSequence(String sequence) {
+    public CreateSequenceFlagsStep createSequence(String sequence) {
         return createSequence(name(sequence));
     }
 
     @Override
-    public CreateSequenceFinalStep createSequence(Name sequence) {
+    public CreateSequenceFlagsStep createSequence(Name sequence) {
         return createSequence(sequence(sequence));
     }
 
     @Override
-    public CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
+    public CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return new CreateSequenceImpl(configuration(), sequence, false);
     }
 
     @Override
-    public CreateSequenceFinalStep createSequenceIfNotExists(String sequence) {
+    public CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
         return createSequenceIfNotExists(name(sequence));
     }
 
     @Override
-    public CreateSequenceFinalStep createSequenceIfNotExists(Name sequence) {
+    public CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return createSequenceIfNotExists(sequence(sequence));
     }
 
     @Override
-    public CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence) {
+    public CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return new CreateSequenceImpl(configuration(), sequence, true);
     }
 

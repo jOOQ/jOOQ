@@ -158,7 +158,7 @@ import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
-import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
@@ -7077,7 +7077,7 @@ public class DSL {
      * @see DSLContext#createSequence(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequence(String sequence) {
+    public static CreateSequenceFlagsStep createSequence(String sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -7087,7 +7087,7 @@ public class DSL {
      * @see DSLContext#createSequence(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequence(Name sequence) {
+    public static CreateSequenceFlagsStep createSequence(Name sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -7097,7 +7097,7 @@ public class DSL {
      * @see DSLContext#createSequence(Sequence)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
+    public static CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -7107,7 +7107,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequenceIfNotExists(String sequence) {
+    public static CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 
@@ -7117,7 +7117,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequenceIfNotExists(Name sequence) {
+    public static CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 
@@ -7127,7 +7127,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence) {
+    public static CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 

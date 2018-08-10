@@ -48,8 +48,14 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_CACHE;
 import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_CYCLE;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_INCREMENT_BY;
+import static org.jooq.impl.Keywords.K_MAXVALUE;
+import static org.jooq.impl.Keywords.K_MINVALUE;
+import static org.jooq.impl.Keywords.K_NO;
 import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_START_WITH;
@@ -59,7 +65,8 @@ import java.util.EnumSet;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateSequenceFlagsStep;
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
@@ -69,7 +76,7 @@ import org.jooq.Sequence;
 final class CreateSequenceImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE SEQUENCE behaviour
-    CreateSequenceFinalStep {
+    CreateSequenceFlagsStep {
 
     /**
      * Generated UID
@@ -81,12 +88,111 @@ final class CreateSequenceImpl extends AbstractQuery implements
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;
+    private Field<?>                         startWith;
+    private Field<?>                         incrementBy;
+    private Field<?>                         minvalue;
+    private boolean                          noMinvalue;
+    private Field<?>                         maxvalue;
+    private boolean                          noMaxvalue;
+    private boolean                          cycle;
+    private boolean                          noCycle;
+    private Field<?>                         cache;
+    private boolean                          noCache;
 
     CreateSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifNotExists) {
         super(configuration);
 
         this.sequence = sequence;
         this.ifNotExists = ifNotExists;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Sequence API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final CreateSequenceImpl startWith(Number constant) {
+        return startWith(DSL.val(constant));
+    }
+
+    @Override
+    public final CreateSequenceImpl startWith(Field<? extends Number> constant) {
+        this.startWith = constant;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl incrementBy(Number constant) {
+        return incrementBy(DSL.val(constant));
+    }
+
+    @Override
+    public final CreateSequenceImpl incrementBy(Field<? extends Number> constant) {
+        this.incrementBy = constant;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl minvalue(Number constant) {
+        return minvalue(DSL.val(constant));
+    }
+
+    @Override
+    public final CreateSequenceImpl minvalue(Field<? extends Number> constant) {
+        this.minvalue = constant;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl noMinvalue() {
+        this.noMinvalue = true;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl maxvalue(Number constant) {
+        return maxvalue(DSL.val(constant));
+    }
+
+    @Override
+    public final CreateSequenceImpl maxvalue(Field<? extends Number> constant) {
+        this.maxvalue = constant;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl noMaxvalue() {
+        this.noMaxvalue = true;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl cycle() {
+        this.cycle = true;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl noCycle() {
+        this.noCycle = true;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl cache(Number constant) {
+        return cache(DSL.val(constant));
+    }
+
+    @Override
+    public final CreateSequenceImpl cache(Field<? extends Number> constant) {
+        this.cache = constant;
+        return this;
+    }
+
+    @Override
+    public final CreateSequenceImpl noCache() {
+        this.noCache = true;
+        return this;
     }
 
     // ------------------------------------------------------------------------
@@ -123,8 +229,33 @@ final class CreateSequenceImpl extends AbstractQuery implements
         ctx.visit(sequence);
 
         // Some databases default to sequences starting with MIN_VALUE
-        if (REQUIRES_START_WITH.contains(ctx.family()))
+        if (startWith == null && REQUIRES_START_WITH.contains(ctx.family()))
             ctx.sql(' ').visit(K_START_WITH).sql(" 1");
+        else if (startWith != null)
+            ctx.sql(' ').visit(K_START_WITH).sql(' ').visit(startWith);
+
+        if (incrementBy != null)
+            ctx.sql(' ').visit(K_INCREMENT_BY).sql(' ').visit(incrementBy);
+
+        if (minvalue != null)
+            ctx.sql(' ').visit(K_MINVALUE).sql(' ').visit(minvalue);
+        else if (noMinvalue)
+            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_MINVALUE);
+
+        if (maxvalue != null)
+            ctx.sql(' ').visit(K_MAXVALUE).sql(' ').visit(maxvalue);
+        else if (noMaxvalue)
+            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_MAXVALUE);
+
+        if (cycle)
+            ctx.sql(' ').visit(K_CYCLE);
+        else if (noCycle)
+            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CYCLE);
+
+        if (cache != null)
+            ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
+        else if (noCache)
+            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CACHE);
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }

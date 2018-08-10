@@ -137,27 +137,27 @@
 
         </bindings>
 
-        <bindings if-exists="true" scd="~tns:Catalogs">
+        <bindings if-exists="true" scd="~tns:CatalogMappingsType">
 
-            <class ref="org.jooq.meta.jaxb.Catalogs"/>
-
-        </bindings>
-
-        <bindings if-exists="true" scd="~tns:Catalog">
-
-            <class ref="org.jooq.meta.jaxb.Catalog"/>
+            <class ref="org.jooq.meta.jaxb.CatalogMappingsType"/>
 
         </bindings>
 
-        <bindings if-exists="true" scd="~tns:Schemata">
+        <bindings if-exists="true" scd="~tns:CatalogMappingType">
 
-            <class ref="org.jooq.meta.jaxb.Schemata"/>
+            <class ref="org.jooq.meta.jaxb.CatalogMappingType"/>
 
         </bindings>
 
-        <bindings if-exists="true" scd="~tns:Schema">
+        <bindings if-exists="true" scd="~tns:SchemaMappingsType">
 
-            <class ref="org.jooq.meta.jaxb.Schema"/>
+            <class ref="org.jooq.meta.jaxb.SchemaMappingsType"/>
+
+        </bindings>
+
+        <bindings if-exists="true" scd="~tns:SchemaMappingType">
+
+            <class ref="org.jooq.meta.jaxb.SchemaMappingType"/>
 
         </bindings>
 

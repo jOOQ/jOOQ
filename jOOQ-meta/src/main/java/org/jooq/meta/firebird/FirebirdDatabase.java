@@ -82,7 +82,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
-import org.jooq.meta.jaxb.Schema;
+import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.util.firebird.FirebirdDataType;
 
 /**
@@ -93,11 +93,11 @@ public class FirebirdDatabase extends AbstractDatabase {
     public FirebirdDatabase() {
 
         // Firebird doesn't know schemata
-        Schema schema = new Schema();
+        SchemaMappingType schema = new SchemaMappingType();
         schema.setInputSchema("");
         schema.setOutputSchema("");
 
-        List<Schema> schemata = new ArrayList<Schema>();
+        List<SchemaMappingType> schemata = new ArrayList<SchemaMappingType>();
         schemata.add(schema);
 
         setConfiguredSchemata(schemata);

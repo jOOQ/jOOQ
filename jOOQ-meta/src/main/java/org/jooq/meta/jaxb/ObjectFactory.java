@@ -149,19 +149,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Catalog }
+     * Create an instance of {@link CatalogMappingType }
      *
      */
-    public Catalog createCatalog() {
-        return new Catalog();
+    public CatalogMappingType createCatalogMappingType() {
+        return new CatalogMappingType();
     }
 
     /**
-     * Create an instance of {@link Schema }
+     * Create an instance of {@link SchemaMappingType }
      *
      */
-    public Schema createSchema() {
-        return new Schema();
+    public SchemaMappingType createSchemaMappingType() {
+        return new SchemaMappingType();
     }
 
     /**

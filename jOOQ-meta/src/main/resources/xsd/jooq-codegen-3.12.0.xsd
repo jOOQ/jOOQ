@@ -631,14 +631,14 @@ This will be ignored if {@link #isOutputSchemaToDefault()} is set to true]]></jx
 which generates schema-less, unqualified tables, procedures, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1">
+      <element name="catalogs" type="tns:CatalogMappingsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A configuration element to configure several input and/or output
 catalogs for jooq-meta, in case you're using jooq-meta in a multi-catalog environment.
 <p>
 This configuration element cannot be used at the same time as the {@link #getSchemata()} configuration element.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1">
+      <element name="schemata" type="tns:SchemaMappingsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A configuration element to configure several input and/or output
 schemata for jooq-meta, in case you're using jooq-meta in a multi-schema environment.
 <p>
@@ -721,13 +721,13 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     </all>
   </complexType>
 
-  <complexType name="Catalogs">
+  <complexType name="CatalogMappingsType">
     <sequence>
-      <element name="catalog" type="tns:Catalog" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="catalog" type="tns:CatalogMappingType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
-  <complexType name="Catalog">
+  <complexType name="CatalogMappingType">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration of an input catalog and its mappings.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="inputCatalog" type="string" default="" minOccurs="1" maxOccurs="1">
@@ -742,19 +742,19 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[See also {@link Database#isOutputCatalogToDefault()}]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1">
+      <element name="schemata" type="tns:SchemaMappingsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The configuration of schemas inside of this catalog, if any.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
 
-  <complexType name="Schemata">
+  <complexType name="SchemaMappingsType">
     <sequence>
-      <element name="schema" type="tns:Schema" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="schema" type="tns:SchemaMappingType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
-  <complexType name="Schema">
+  <complexType name="SchemaMappingType">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Configuration of an input schema and its mappings.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="inputSchema" type="string" default="" minOccurs="1" maxOccurs="1">

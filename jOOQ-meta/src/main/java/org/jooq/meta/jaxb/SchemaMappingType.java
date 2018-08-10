@@ -24,13 +24,13 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Schema", propOrder = {
+@XmlType(name = "SchemaMappingType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class Schema implements Serializable
+public class SchemaMappingType implements Serializable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -114,17 +114,17 @@ public class Schema implements Serializable
         this.outputSchemaToDefault = value;
     }
 
-    public Schema withInputSchema(String value) {
+    public SchemaMappingType withInputSchema(String value) {
         setInputSchema(value);
         return this;
     }
 
-    public Schema withOutputSchema(String value) {
+    public SchemaMappingType withOutputSchema(String value) {
         setOutputSchema(value);
         return this;
     }
 
-    public Schema withOutputSchemaToDefault(Boolean value) {
+    public SchemaMappingType withOutputSchemaToDefault(Boolean value) {
         setOutputSchemaToDefault(value);
         return this;
     }
@@ -161,7 +161,7 @@ public class Schema implements Serializable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        Schema other = ((Schema) that);
+        SchemaMappingType other = ((SchemaMappingType) that);
         if (inputSchema == null) {
             if (other.inputSchema!= null) {
                 return false;

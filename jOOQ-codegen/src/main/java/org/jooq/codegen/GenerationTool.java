@@ -76,14 +76,14 @@ import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
 import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaVersionProvider;
-import org.jooq.meta.jaxb.Catalog;
+import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Logging;
 import org.jooq.meta.jaxb.Matchers;
 import org.jooq.meta.jaxb.Property;
-import org.jooq.meta.jaxb.Schema;
+import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
 // ...
@@ -368,15 +368,15 @@ public class GenerationTool {
             database = databaseClass.newInstance();
             database.setProperties(properties(d.getProperties()));
 
-            List<Catalog> catalogs = d.getCatalogs();
-            List<Schema> schemata = d.getSchemata();
+            List<CatalogMappingType> catalogs = d.getCatalogs();
+            List<SchemaMappingType> schemata = d.getSchemata();
 
             boolean catalogsEmpty = catalogs.isEmpty();
             boolean schemataEmpty = schemata.isEmpty();
 
             // For convenience, the catalog configuration can be set also directly in the <database/> element
             if (catalogsEmpty) {
-                Catalog catalog = new Catalog();
+                CatalogMappingType catalog = new CatalogMappingType();
                 catalog.setInputCatalog(trim(d.getInputCatalog()));
                 catalog.setOutputCatalog(trim(d.getOutputCatalog()));
                 catalog.setOutputCatalogToDefault(d.isOutputCatalogToDefault());
@@ -388,7 +388,7 @@ public class GenerationTool {
                 // For convenience and backwards-compatibility, the schema configuration can be set also directly
                 // in the <database/> element
                 if (schemataEmpty) {
-                    Schema schema = new Schema();
+                    SchemaMappingType schema = new SchemaMappingType();
                     schema.setInputSchema(trim(d.getInputSchema()));
                     schema.setOutputSchema(trim(d.getOutputSchema()));
                     schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
@@ -419,7 +419,7 @@ public class GenerationTool {
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
             }
 
-            for (Catalog catalog : catalogs) {
+            for (CatalogMappingType catalog : catalogs) {
                 if ("".equals(catalog.getOutputCatalog()))
                     log.warn("WARNING: Empty <outputCatalog/> should not be used to model default outputCatalogs. Use <outputCatalogToDefault>true</outputCatalogToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
 
@@ -434,7 +434,7 @@ public class GenerationTool {
 
 
 
-                for (Schema schema : catalog.getSchemata()) {
+                for (SchemaMappingType schema : catalog.getSchemata()) {
                     if (catalogsEmpty && schemataEmpty && StringUtils.isBlank(schema.getInputSchema())) {
                         if (!StringUtils.isBlank(j.getSchema()))
                             log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");

@@ -73,13 +73,13 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
-import org.jooq.meta.jaxb.Catalog;
+import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Nullability;
 import org.jooq.meta.jaxb.RegexFlag;
-import org.jooq.meta.jaxb.Schema;
+import org.jooq.meta.jaxb.SchemaMappingType;
 // ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -129,8 +129,8 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private List<Catalog>                                                    configuredCatalogs                   = new ArrayList<Catalog>();
-    private List<Schema>                                                     configuredSchemata                   = new ArrayList<Schema>();
+    private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<CatalogMappingType>();
+    private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<SchemaMappingType>();
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
@@ -504,7 +504,7 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
             else {
-                for (Catalog catalog : configuredCatalogs) {
+                for (CatalogMappingType catalog : configuredCatalogs) {
 
 
 
@@ -535,7 +535,7 @@ public abstract class AbstractDatabase implements Database {
             else if (configuredCatalogs.isEmpty()) {
                 inputSchemataPerCatalog.put("", inputSchemata);
 
-                for (Schema schema : configuredSchemata) {
+                for (SchemaMappingType schema : configuredSchemata) {
 
 
 
@@ -550,8 +550,8 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
             else {
-                for (Catalog catalog : configuredCatalogs) {
-                    for (Schema schema : catalog.getSchemata()) {
+                for (CatalogMappingType catalog : configuredCatalogs) {
+                    for (SchemaMappingType schema : catalog.getSchemata()) {
                         String inputSchema;
 
 
@@ -628,7 +628,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String getOutputCatalog(String inputCatalog) {
-        for (Catalog catalog : configuredCatalogs)
+        for (CatalogMappingType catalog : configuredCatalogs)
             if (inputCatalog.equals(catalog.getInputCatalog()))
                 return catalog.getOutputCatalog();
 
@@ -638,7 +638,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String getOutputSchema(String inputSchema) {
-        for (Schema schema : configuredSchemata)
+        for (SchemaMappingType schema : configuredSchemata)
             if (inputSchema.equals(schema.getInputSchema()))
                 return schema.getOutputSchema();
 
@@ -647,9 +647,9 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String getOutputSchema(String inputCatalog, String inputSchema) {
-        for (Catalog catalog : configuredCatalogs)
+        for (CatalogMappingType catalog : configuredCatalogs)
             if (inputCatalog.equals(catalog.getInputCatalog()))
-                for (Schema schema : catalog.getSchemata())
+                for (SchemaMappingType schema : catalog.getSchemata())
                     if (inputSchema.equals(schema.getInputSchema()))
                         return schema.getOutputSchema();
 
@@ -657,12 +657,12 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setConfiguredCatalogs(List<Catalog> catalogs) {
+    public final void setConfiguredCatalogs(List<CatalogMappingType> catalogs) {
         this.configuredCatalogs = catalogs;
     }
 
     @Override
-    public final void setConfiguredSchemata(List<Schema> schemata) {
+    public final void setConfiguredSchemata(List<SchemaMappingType> schemata) {
         this.configuredSchemata = schemata;
     }
 

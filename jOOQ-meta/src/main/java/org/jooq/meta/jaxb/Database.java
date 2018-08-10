@@ -132,10 +132,10 @@ public class Database implements Serializable
     protected List<Property> properties;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
-    protected List<Catalog> catalogs;
+    protected List<CatalogMappingType> catalogs;
     @XmlElementWrapper(name = "schemata")
     @XmlElement(name = "schema")
-    protected List<Schema> schemata;
+    protected List<SchemaMappingType> schemata;
     @XmlElementWrapper(name = "customTypes")
     @XmlElement(name = "customType")
     protected List<CustomType> customTypes;
@@ -1225,25 +1225,25 @@ public class Database implements Serializable
         this.properties = properties;
     }
 
-    public List<Catalog> getCatalogs() {
+    public List<CatalogMappingType> getCatalogs() {
         if (catalogs == null) {
-            catalogs = new ArrayList<Catalog>();
+            catalogs = new ArrayList<CatalogMappingType>();
         }
         return catalogs;
     }
 
-    public void setCatalogs(List<Catalog> catalogs) {
+    public void setCatalogs(List<CatalogMappingType> catalogs) {
         this.catalogs = catalogs;
     }
 
-    public List<Schema> getSchemata() {
+    public List<SchemaMappingType> getSchemata() {
         if (schemata == null) {
-            schemata = new ArrayList<Schema>();
+            schemata = new ArrayList<SchemaMappingType>();
         }
         return schemata;
     }
 
-    public void setSchemata(List<Schema> schemata) {
+    public void setSchemata(List<SchemaMappingType> schemata) {
         this.schemata = schemata;
     }
 
@@ -1502,44 +1502,44 @@ public class Database implements Serializable
         return this;
     }
 
-    public Database withCatalogs(Catalog... values) {
+    public Database withCatalogs(CatalogMappingType... values) {
         if (values!= null) {
-            for (Catalog value: values) {
+            for (CatalogMappingType value: values) {
                 getCatalogs().add(value);
             }
         }
         return this;
     }
 
-    public Database withCatalogs(Collection<Catalog> values) {
+    public Database withCatalogs(Collection<CatalogMappingType> values) {
         if (values!= null) {
             getCatalogs().addAll(values);
         }
         return this;
     }
 
-    public Database withCatalogs(List<Catalog> catalogs) {
+    public Database withCatalogs(List<CatalogMappingType> catalogs) {
         setCatalogs(catalogs);
         return this;
     }
 
-    public Database withSchemata(Schema... values) {
+    public Database withSchemata(SchemaMappingType... values) {
         if (values!= null) {
-            for (Schema value: values) {
+            for (SchemaMappingType value: values) {
                 getSchemata().add(value);
             }
         }
         return this;
     }
 
-    public Database withSchemata(Collection<Schema> values) {
+    public Database withSchemata(Collection<SchemaMappingType> values) {
         if (values!= null) {
             getSchemata().addAll(values);
         }
         return this;
     }
 
-    public Database withSchemata(List<Schema> schemata) {
+    public Database withSchemata(List<SchemaMappingType> schemata) {
         setSchemata(schemata);
         return this;
     }

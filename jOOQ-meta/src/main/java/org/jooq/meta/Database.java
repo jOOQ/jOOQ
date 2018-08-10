@@ -47,12 +47,12 @@ import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.meta.jaxb.Catalog;
+import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.RegexFlag;
-import org.jooq.meta.jaxb.Schema;
+import org.jooq.meta.jaxb.SchemaMappingType;
 
 /**
  * A general database model.
@@ -338,12 +338,12 @@ public interface Database  extends AutoCloseable  {
     /**
      * The input and output catalogs.
      */
-    void setConfiguredCatalogs(List<Catalog> catalogs);
+    void setConfiguredCatalogs(List<CatalogMappingType> catalogs);
 
     /**
      * The input and output schemata.
      */
-    void setConfiguredSchemata(List<Schema> schemata);
+    void setConfiguredSchemata(List<SchemaMappingType> schemata);
 
     /**
      * Database objects matching any of these regular expressions will not be

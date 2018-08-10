@@ -28,13 +28,13 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Catalog", propOrder = {
+@XmlType(name = "CatalogMappingType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class Catalog implements Serializable
+public class CatalogMappingType implements Serializable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -47,7 +47,7 @@ public class Catalog implements Serializable
     protected Boolean outputCatalogToDefault = false;
     @XmlElementWrapper(name = "schemata")
     @XmlElement(name = "schema")
-    protected List<Schema> schemata;
+    protected List<SchemaMappingType> schemata;
 
     /**
      * See also {@link Database#getInputCatalog()}
@@ -121,49 +121,49 @@ public class Catalog implements Serializable
         this.outputCatalogToDefault = value;
     }
 
-    public List<Schema> getSchemata() {
+    public List<SchemaMappingType> getSchemata() {
         if (schemata == null) {
-            schemata = new ArrayList<Schema>();
+            schemata = new ArrayList<SchemaMappingType>();
         }
         return schemata;
     }
 
-    public void setSchemata(List<Schema> schemata) {
+    public void setSchemata(List<SchemaMappingType> schemata) {
         this.schemata = schemata;
     }
 
-    public Catalog withInputCatalog(String value) {
+    public CatalogMappingType withInputCatalog(String value) {
         setInputCatalog(value);
         return this;
     }
 
-    public Catalog withOutputCatalog(String value) {
+    public CatalogMappingType withOutputCatalog(String value) {
         setOutputCatalog(value);
         return this;
     }
 
-    public Catalog withOutputCatalogToDefault(Boolean value) {
+    public CatalogMappingType withOutputCatalogToDefault(Boolean value) {
         setOutputCatalogToDefault(value);
         return this;
     }
 
-    public Catalog withSchemata(Schema... values) {
+    public CatalogMappingType withSchemata(SchemaMappingType... values) {
         if (values!= null) {
-            for (Schema value: values) {
+            for (SchemaMappingType value: values) {
                 getSchemata().add(value);
             }
         }
         return this;
     }
 
-    public Catalog withSchemata(Collection<Schema> values) {
+    public CatalogMappingType withSchemata(Collection<SchemaMappingType> values) {
         if (values!= null) {
             getSchemata().addAll(values);
         }
         return this;
     }
 
-    public Catalog withSchemata(List<Schema> schemata) {
+    public CatalogMappingType withSchemata(List<SchemaMappingType> schemata) {
         setSchemata(schemata);
         return this;
     }
@@ -209,7 +209,7 @@ public class Catalog implements Serializable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        Catalog other = ((Catalog) that);
+        CatalogMappingType other = ((CatalogMappingType) that);
         if (inputCatalog == null) {
             if (other.inputCatalog!= null) {
                 return false;

@@ -74,7 +74,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
-import org.jooq.meta.jaxb.Schema;
+import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 
 /**
@@ -87,11 +87,11 @@ public class SQLiteDatabase extends AbstractDatabase {
     public SQLiteDatabase() {
 
         // SQLite doesn't know schemata
-        Schema schema = new Schema();
+        SchemaMappingType schema = new SchemaMappingType();
         schema.setInputSchema("");
         schema.setOutputSchema("");
 
-        List<Schema> schemata = new ArrayList<Schema>();
+        List<SchemaMappingType> schemata = new ArrayList<SchemaMappingType>();
         schemata.add(schema);
 
         setConfiguredSchemata(schemata);

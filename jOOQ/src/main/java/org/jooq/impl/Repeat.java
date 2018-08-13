@@ -78,9 +78,9 @@ final class Repeat extends AbstractFunction<String> {
             // Emulation of REPEAT() for SQLite currently cannot be achieved
             // using RPAD() above, as RPAD() expects characters, not strings
             // Another option is documented here, though:
-            // http://stackoverflow.com/questions/11568496/how-to-simulate-repeat-in-sqlite
+            // https://stackoverflow.com/a/51792334/521799
             case SQLITE:
-                return DSL.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
+                return DSL.field("replace(hex(zeroblob({0})), '00', {1})", String.class, count, string);
 
 
 

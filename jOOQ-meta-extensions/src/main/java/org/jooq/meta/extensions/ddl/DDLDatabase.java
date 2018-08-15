@@ -91,6 +91,7 @@ public class DDLDatabase extends H2Database {
     private Connection              connection;
     private DSLContext              ctx;
     private Comparator<File>        fileComparator;
+    private boolean                 publicIsDefault;
 
     @Override
     protected DSLContext create0() {
@@ -98,6 +99,9 @@ public class DDLDatabase extends H2Database {
             String scripts = getProperties().getProperty("scripts");
             String encoding = getProperties().getProperty("encoding", "UTF-8");
             String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
+            String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
+
+            publicIsDefault = "none".equals(unqualifiedSchema);
 
             if ("alphanumeric".equals(sort))
                 fileComparator = new Comparator<File>() {
@@ -259,5 +263,26 @@ public class DDLDatabase extends H2Database {
                 it.remove();
 
         return result;
+    }
+
+    @Override
+    @Deprecated
+    public String getOutputSchema(String inputSchema) {
+        String outputSchema = super.getOutputSchema(inputSchema);
+
+        if (publicIsDefault && "PUBLIC".equals(outputSchema))
+            return "";
+
+        return outputSchema;
+    }
+
+    @Override
+    public String getOutputSchema(String inputCatalog, String inputSchema) {
+        String outputSchema = super.getOutputSchema(inputCatalog, inputSchema);
+
+        if (publicIsDefault && "PUBLIC".equals(outputSchema))
+            return "";
+
+        return outputSchema;
     }
 }

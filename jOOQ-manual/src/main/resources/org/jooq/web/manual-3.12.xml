@@ -19201,8 +19201,7 @@ CREATE TABLE book_to_book_store (
              Where:
              - ** matches any directory subtree
              - * matches any number of characters in a directory / file name
-             - ? matches a single character in a directory / file name
-          -->
+             - ? matches a single character in a directory / file name -->
         <property>
           <key>scripts</key>
           <value>src/main/resources/database.sql</value>
@@ -19212,11 +19211,21 @@ CREATE TABLE book_to_book_store (
 
              - semantic: sorts versions, e.g. v-3.10.0 is after v-3.9.0 (default)
              - alphanumeric: sorts strings, e.g. v-3.10.0 is before v-3.9.0
-             - none: doesn't sort directory contents after fetching them from the directory
-          -->
+             - none: doesn't sort directory contents after fetching them from the directory -->
         <property>
           <key>sort</key>
           <value>semantic</value>
+        </property>
+
+        <!-- The default schema for unqualified objects:
+
+             - public: all unqualified objects are located in the PUBLIC (upper case) schema
+             - none: all unqualified objects are located in the default schema (default)
+
+             This configuration can be overridden with the schema mapping feature -->
+        <property>
+          <key>unqualifiedSchema</key>
+          <value>none</value>
         </property>
       </properties>
     </database>

@@ -52,21 +52,6 @@ import static org.jooq.impl.Tools.getPropertyName;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
-import org.jooq.Attachable;
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.RecordMapper;
-import org.jooq.RecordMapperProvider;
-import org.jooq.RecordType;
-import org.jooq.conf.Settings;
-import org.jooq.exception.MappingException;
-import org.jooq.tools.Convert;
-import org.jooq.tools.StringUtils;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
-
 import java.beans.ConstructorProperties;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Array;
@@ -94,6 +79,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
+
+import org.jooq.Attachable;
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
+import org.jooq.conf.Settings;
+import org.jooq.exception.MappingException;
+import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types.

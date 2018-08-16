@@ -52,6 +52,21 @@ import static org.jooq.impl.Tools.getPropertyName;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
+import org.jooq.Attachable;
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
+import org.jooq.conf.Settings;
+import org.jooq.exception.MappingException;
+import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
+
 import java.beans.ConstructorProperties;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Array;
@@ -79,21 +94,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
-
-import org.jooq.Attachable;
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.RecordMapper;
-import org.jooq.RecordMapperProvider;
-import org.jooq.RecordType;
-import org.jooq.conf.Settings;
-import org.jooq.exception.MappingException;
-import org.jooq.tools.Convert;
-import org.jooq.tools.StringUtils;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types.
@@ -945,7 +945,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         private final Constructor<E>                  constructor;
         private final Class<?>[]                      parameterTypes;
-        private final Object[]                        parameterValues;
         private final List<String>                    propertyNames;
         private final boolean                         useAnnotations;
         private final List<java.lang.reflect.Field>[] members;
@@ -957,7 +956,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.propertyNames = propertyNames;
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.parameterTypes = constructor.getParameterTypes();
-            this.parameterValues = new Object[parameterTypes.length];
             this.members = new List[fields.length];
             this.methods = new Method[fields.length];
             this.propertyIndexes = new Integer[fields.length];
@@ -994,6 +992,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final E map(R record) {
             try {
+                Object[] parameterValues = new Object[parameterTypes.length];
                 for (int i = 0; i < fields.length; i++) {
                     if (propertyIndexes[i] != null) {
                         parameterValues[propertyIndexes[i]] = record.get(i);

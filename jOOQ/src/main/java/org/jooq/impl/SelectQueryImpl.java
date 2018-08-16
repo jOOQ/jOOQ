@@ -1664,8 +1664,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = EnumSet.of(SQLITE);
-    private static final EnumSet<SQLDialect> UNION_PARENTHESIS            = EnumSet.of(DERBY, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES        = EnumSet.of(SQLITE);
+    private static final EnumSet<SQLDialect> UNION_PARENTHESIS                   = EnumSet.of(DERBY, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = EnumSet.of(DERBY);
 
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)
@@ -1699,8 +1700,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             //         Set op subqueries or insert column lists
             || ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null
 
-            // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
-            || (ctx.family() == DERBY && ctx.subquery());
+            // [#7222] [#7711] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
+            || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.family()))
+            /* [/pro] */
+            ;
 
         if (')' == parenthesis) {
             ctx.formatIndentEnd()

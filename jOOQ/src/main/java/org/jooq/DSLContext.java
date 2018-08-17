@@ -8886,6 +8886,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
+     * Create a new DSL <code>CREATE TYPE</code> statement.
+     *
+     * @see DSL#createType(String)
+     */
+    @Support({ H2, POSTGRES })
+    CreateTypeStep createType(String type);
+
+    /**
+     * Create a new DSL <code>CREATE TYPE</code> statement.
+     *
+     * @see DSL#createType(Name)
+     */
+    @Support({ H2, POSTGRES })
+    CreateTypeStep createType(Name type);
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSL#createIndex()

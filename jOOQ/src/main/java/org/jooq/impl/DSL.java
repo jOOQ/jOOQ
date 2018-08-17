@@ -160,6 +160,7 @@ import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
+import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -6930,6 +6931,26 @@ public class DSL {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
+
+    /**
+     * Create a new DSL <code>CREATE TYPE</code> statement.
+     *
+     * @see DSLContext#createType(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateTypeStep createType(String type) {
+        return dsl().createType(type);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TYPE</code> statement.
+     *
+     * @see DSLContext#createType(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static CreateTypeStep createType(Name type) {
+        return dsl().createType(type);
+    }
 
     /**
      * Create a new DSL <code>CREATE INDEX</code> statement.

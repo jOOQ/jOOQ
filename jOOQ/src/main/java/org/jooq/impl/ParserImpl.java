@@ -1918,6 +1918,8 @@ final class ParserImpl implements Parser {
             return parseCreateTable(ctx, false);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
+        else if (parseKeywordIf(ctx, "TYPE"))
+            return parseCreateType(ctx);
         else if (parseKeywordIf(ctx, "GENERATOR"))
             return parseCreateSequence(ctx);
         else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
@@ -1951,6 +1953,7 @@ final class ParserImpl implements Parser {
                 "SEQUENCE",
                 "TABLE",
                 "TEMPORARY TABLE",
+                "TYPE",
                 "UNIQUE INDEX",
                 "VIEW");
     }
@@ -2761,6 +2764,23 @@ final class ParserImpl implements Parser {
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));
         else
             return storageStep;
+    }
+
+    private static final DDLQuery parseCreateType(ParserContext ctx) {
+        Name name = parseIdentifier(ctx);
+        parseKeyword(ctx, "AS ENUM");
+        List<String> values = new ArrayList<String>();
+        parse(ctx, '(');
+
+        if (!parseIf(ctx, ')')) {
+            do {
+                values.add(parseStringLiteral(ctx));
+            }
+            while (parseIf(ctx, ','));
+            parse(ctx, ')');
+        }
+
+        return ctx.dsl.createType(name).asEnum(values);
     }
 
     private static final Index parseIndexSpecification(ParserContext ctx, Table<?> table) {
@@ -7371,7 +7391,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        throw ctx.exception("Unknown data type");
+        return new DefaultDataType(ctx.dsl.dialect(), Object.class, parseIdentifier(ctx).toString());
     }
 
     private static final boolean parseKeywordOrIdentifierIf(ParserContext ctx, String keyword) {

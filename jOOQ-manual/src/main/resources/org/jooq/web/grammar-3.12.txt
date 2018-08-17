@@ -15,6 +15,7 @@ ddlStatement =
 | alterViewStatement
 | commentStatement
 | createTableStatement
+| createTypeStatement
 | createIndexStatement
 | createSchemaStatement
 | createSequenceStatement
@@ -119,6 +120,9 @@ createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT E
 break
 [ 'ON COMMIT' ( 'DELETE ROWS' | 'DROP' | 'PRESERVE ROWS' ) ]
 [ 'COMMENT' [ '=' ] stringLiteral ]
+;
+
+createTypeStatement = 'CREATE TYPE' typeName 'AS ENUM' '(' [ stringLiteral { ',' stringLiteral } ] ')'
 ;
 
 createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] [ indexName ] break
@@ -881,6 +885,9 @@ schemaName = name
 ;
 
 tableName = name
+;
+
+typeName = name
 ;
 
 indexName = name

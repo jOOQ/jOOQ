@@ -114,6 +114,7 @@ import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
+import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
 import org.jooq.DDLFlag;
@@ -3051,6 +3052,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
         return new CreateTableImpl<Record>(configuration(), table, true, false);
+    }
+
+    @Override
+    public CreateTypeStep createType(String type) {
+        return createType(name(type));
+    }
+
+    @Override
+    public CreateTypeStep createType(Name type) {
+        return new CreateTypeImpl(configuration(), type);
     }
 
     @Override

@@ -1530,8 +1530,28 @@ final class Tools {
 
         List<Field<?>> result = new ArrayList<Field<?>>(values.length);
 
-        for (int i = 0; i < values.length; i++)
-            result.add(field(values[i], type));
+        for (Object value : values)
+            result.add(field(value, type));
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param type The type to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Collection<?> values, DataType<?> type) {
+        if (values == null || type == null)
+            return new ArrayList<Field<?>>();
+
+        List<Field<?>> result = new ArrayList<Field<?>>(values.size());
+
+        for (Object value : values)
+            result.add(field(value, type));
 
         return result;
     }

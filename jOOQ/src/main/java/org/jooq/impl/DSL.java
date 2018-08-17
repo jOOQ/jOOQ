@@ -172,6 +172,7 @@ import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
+import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.False;
 import org.jooq.Field;
@@ -6950,6 +6951,106 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static CreateTypeStep createType(Name type) {
         return dsl().createType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropType(String type) {
+        return dsl().dropType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropType(Name type) {
+        return dsl().dropType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String...)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropType(String... type) {
+        return dsl().dropType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name...)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropType(Name... type) {
+        return dsl().dropType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Collection)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropType(Collection<?> type) {
+        return dsl().dropType(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropTypeIfExists(String type) {
+        return dsl().dropTypeIfExists(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropTypeIfExists(Name type) {
+        return dsl().dropTypeIfExists(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String...)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropTypeIfExists(String... type) {
+        return dsl().dropTypeIfExists(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name...)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropTypeIfExists(Name... type) {
+        return dsl().dropTypeIfExists(type);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Collection)
+     */
+    @Support({ H2, POSTGRES })
+    public static DropTypeStep dropTypeIfExists(Collection<?> type) {
+        return dsl().dropTypeIfExists(type);
     }
 
     /**

@@ -326,6 +326,8 @@ import org.jooq.DropSchemaFinalStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropTableFinalStep;
 import org.jooq.DropTableStep;
+import org.jooq.DropTypeFinalStep;
+import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrConstraint;
@@ -1986,6 +1988,8 @@ final class ParserImpl implements Parser {
             return parseDropTable(ctx, false);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseDropTable(ctx, true);
+        else if (parseKeywordIf(ctx, "TYPE"))
+            return parseDropType(ctx);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseDropIndex(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
@@ -1997,7 +2001,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseDropSchema(ctx);
         else
-            throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "VIEW");
+            throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "TYPE", "VIEW");
     }
 
     private static final Truncate<?> parseTruncate(ParserContext ctx) {
@@ -3272,6 +3276,28 @@ final class ParserImpl implements Parser {
            : temporary
            ? ctx.dsl.dropTemporaryTable(tableName)
            : ctx.dsl.dropTable(tableName);
+
+        s2 = cascade
+           ? s1.cascade()
+           : restrict
+           ? s1.restrict()
+           : s1;
+
+        return s2;
+    }
+
+    private static final DDLQuery parseDropType(ParserContext ctx) {
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        List<Name> typeNames = parseIdentifiers(ctx);
+        boolean cascade = parseKeywordIf(ctx, "CASCADE");
+        boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
+
+        DropTypeStep s1;
+        DropTypeFinalStep s2;
+
+        s1 = ifExists
+           ? ctx.dsl.dropTypeIfExists(typeNames)
+           : ctx.dsl.dropType(typeNames);
 
         s2 = cascade
            ? s1.cascade()

@@ -1179,6 +1179,18 @@ final class Tools {
         return result;
     }
 
+    static final List<Name> names(Collection<?> names) {
+        if (names == null)
+            return null;
+
+        List<Name> result = new ArrayList<Name>(names.size());
+
+        for (Object o : names)
+            result.add(o instanceof Name ? (Name) o : DSL.name(String.valueOf(o)));
+
+        return result;
+    }
+
     private static final IllegalArgumentException fieldExpected(Object value) {
         return new IllegalArgumentException("Cannot interpret argument of type " + value.getClass() + " as a Field: " + value);
     }

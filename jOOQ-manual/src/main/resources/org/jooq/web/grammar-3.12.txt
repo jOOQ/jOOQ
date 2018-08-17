@@ -21,6 +21,7 @@ ddlStatement =
 | createSequenceStatement
 | createViewStatement
 | dropTableStatement
+| dropTypeStatement
 | dropIndexStatement
 | dropViewStatement
 | dropSequenceStatement
@@ -148,6 +149,9 @@ createViewStatement = 'CREATE' [ 'OR' ( 'ALTER' | 'REPLACE') ] 'VIEW' [ 'IF NOT 
 ;
 
 dropTableStatement = 'DROP' [ 'TEMPORARY' ] 'TABLE' [ 'IF EXISTS' ] tableName [ 'CASCADE' | 'RESTRICT' ]
+;
+
+dropTypeStatement = 'DROP TYPE' [ 'IF EXISTS' ] typeName { ',' typeName } [ 'CASCADE' | 'RESTRICT' ]
 ;
 
 dropIndexStatement = 'DROP INDEX' [ 'IF EXISTS' ] indexName [ 'ON' tableName ]

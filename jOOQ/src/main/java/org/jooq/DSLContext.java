@@ -8902,6 +8902,86 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateTypeStep createType(Name type);
 
     /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropType(String type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropType(Name type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String...)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropType(String... type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name...)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropType(Name... type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Collection)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropType(Collection<?> type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropTypeIfExists(String type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropTypeIfExists(Name type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String...)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropTypeIfExists(String... type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name...)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropTypeIfExists(Name... type);
+
+    /**
+     * Create a new DSL <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Collection)
+     */
+    @Support({ H2, POSTGRES })
+    DropTypeStep dropTypeIfExists(Collection<?> type);
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSL#createIndex()

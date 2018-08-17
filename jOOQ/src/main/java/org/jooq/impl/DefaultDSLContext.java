@@ -126,6 +126,7 @@ import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
+import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -3062,6 +3063,56 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateTypeStep createType(Name type) {
         return new CreateTypeImpl(configuration(), type);
+    }
+
+    @Override
+    public DropTypeStep dropType(String type) {
+        return dropType(name(type));
+    }
+
+    @Override
+    public DropTypeStep dropType(Name type) {
+        return dropType(Arrays.asList(type));
+    }
+
+    @Override
+    public DropTypeStep dropType(String... type) {
+        return dropType(Tools.names(type));
+    }
+
+    @Override
+    public DropTypeStep dropType(Name... type) {
+        return dropType(Arrays.asList(type));
+    }
+
+    @Override
+    public DropTypeStep dropType(Collection<?> type) {
+        return new DropTypeImpl(configuration(), type, false);
+    }
+
+    @Override
+    public DropTypeStep dropTypeIfExists(String type) {
+        return dropTypeIfExists(name(type));
+    }
+
+    @Override
+    public DropTypeStep dropTypeIfExists(Name type) {
+        return dropTypeIfExists(Arrays.asList(type));
+    }
+
+    @Override
+    public DropTypeStep dropTypeIfExists(String... type) {
+        return dropTypeIfExists(Tools.names(type));
+    }
+
+    @Override
+    public DropTypeStep dropTypeIfExists(Name... type) {
+        return dropTypeIfExists(Arrays.asList(type));
+    }
+
+    @Override
+    public DropTypeStep dropTypeIfExists(Collection<?> type) {
+        return new DropTypeImpl(configuration(), type, true);
     }
 
     @Override

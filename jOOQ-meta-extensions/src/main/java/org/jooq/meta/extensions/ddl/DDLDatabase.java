@@ -145,18 +145,18 @@ public class DDLDatabase extends H2Database {
                     else if (scripts.contains("*") || scripts.contains("?")) {
                         file = new File(scripts.replaceAll("[*?].*", ""));
 
-                        if (file.exists()) {
-                            Pattern pattern = Pattern.compile(scripts
-                                .replace("\\", "/")
-                                .replace(".", "\\.")
-                                .replace("?", ".")
-                                .replace("**", ".+?")
-                                .replace("*", "[^/]*")
-                            );
+                        Pattern pattern = Pattern.compile("^.*?"
+                           + scripts
+                            .replace("\\", "/")
+                            .replace(".", "\\.")
+                            .replace("?", ".")
+                            .replace("**", ".+?")
+                            .replace("*", "[^/]*")
+                           + "$"
+                        );
 
-                            load(encoding, file, pattern);
-                            loaded = true;
-                        }
+                        load(encoding, file, pattern);
+                        loaded = true;
                     }
                 }
 
@@ -194,6 +194,11 @@ public class DDLDatabase extends H2Database {
                 for (File f : files)
                     load(encoding, f, pattern);
             }
+        }
+
+        // [#7767] Backtrack to a parent directory in case the current file pattern doesn't match yet
+        else if (!file.exists() && file.getParentFile() != null) {
+            load(encoding, file.getParentFile(), pattern);
         }
     }
 

@@ -127,6 +127,9 @@ public class DDLDatabase extends H2Database {
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
                 ctx = DSL.using(connection);
 
+                // [#7771] Ignore all parsed storage clauses when executing the statements
+                ctx.data("org.jooq.meta.extensions.ddl.ignore-storage-clauses", true);
+
                 InputStream in = null;
                 boolean loaded = false;
                 in = DDLDatabase.class.getResourceAsStream(scripts);

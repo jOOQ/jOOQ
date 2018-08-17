@@ -501,7 +501,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.formatSeparator()
                .visit(K_COMMENT).sql(' ').visit(comment);
 
-        if (storage != null)
+        // [#7772] This data() value should be available from ctx directly, not only from ctx.configuration()
+        if (storage != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(storage);
 

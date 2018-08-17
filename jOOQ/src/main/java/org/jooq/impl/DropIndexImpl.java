@@ -149,11 +149,15 @@ final class DropIndexImpl extends AbstractQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
+
+
+
+
+
         ctx.visit(index);
 
-        if (on != null)
-            if (REQUIRES_ON.contains(ctx.family()))
-                ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
+        if (on != null && REQUIRES_ON.contains(ctx.family()))
+            ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
     }
 
     @Override

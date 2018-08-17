@@ -109,6 +109,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -798,11 +799,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         /* non-final */ void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
-            ctx.statement().setNull(ctx.index(), sqltype(ctx.configuration()));
+            ctx.statement().setNull(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
 
         /* non-final */ void register0(BindingRegisterContext<U> ctx) throws SQLException {
-            ctx.statement().registerOutParameter(ctx.index(), sqltype(ctx.configuration()));
+            ctx.statement().registerOutParameter(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
 
         @SuppressWarnings("unused")
@@ -828,7 +829,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         abstract T get0(BindingGetResultSetContext<U> ctx) throws SQLException;
         abstract T get0(BindingGetStatementContext<U> ctx) throws SQLException;
         abstract T get0(BindingGetSQLInputContext<U> ctx) throws SQLException;
-        abstract int sqltype(Configuration configuration) throws SQLException;
+        abstract int sqltype(Statement statement, Configuration configuration) throws SQLException;
 
         // -----------------------------------------------------------------------------------------------------------------
         // Object API
@@ -903,8 +904,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) throws SQLException {
-            return delegatingBinding.sqltype(configuration);
+        final int sqltype(Statement statement, Configuration configuration) throws SQLException {
+            return delegatingBinding.sqltype(statement, configuration);
         }
     }
 
@@ -1050,7 +1051,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.ARRAY;
         }
 
@@ -1374,7 +1375,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.DECIMAL;
         }
     }
@@ -1433,7 +1434,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.DECIMAL;
         }
     }
@@ -1475,7 +1476,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
                 // [#1225] [#1227] TODO Put this logic into DataType
                 // Some dialects have trouble binding binary data as BLOB
@@ -1541,6 +1542,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Boolean value) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -1551,7 +1553,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            ctx.statement().setBoolean(ctx.index(), value);
+
+
+
+
+
+
+                default:
+                    ctx.statement().setBoolean(ctx.index(), value);
+                    break;
+            }
         }
 
         @Override
@@ -1589,8 +1600,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
-            return Types.BOOLEAN;
+        final int sqltype(Statement statement, Configuration configuration) throws SQLException {
+            switch (configuration.family()) {
+
+
+
+
+
+
+
+
+                default:
+                    return Types.BOOLEAN;
+            }
         }
     }
 
@@ -1636,7 +1658,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.TINYINT;
         }
     }
@@ -1770,7 +1792,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
                 // [#1225] [#1227] TODO Put this logic into DataType
                 // Some dialects have trouble binding binary data as BLOB
@@ -1828,7 +1850,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.CLOB;
         }
     }
@@ -1990,7 +2012,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -2059,7 +2081,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
     }
@@ -2119,7 +2141,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -2185,7 +2207,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
 
@@ -2290,7 +2312,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -2342,7 +2364,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.INTEGER;
         }
     }
@@ -2395,7 +2417,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.BIGINT;
         }
     }
@@ -2549,7 +2571,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -2653,7 +2675,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -2741,7 +2763,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.OTHER;
         }
 
@@ -2881,7 +2903,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.STRUCT;
         }
 
@@ -3108,7 +3130,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
 
 
@@ -3165,7 +3187,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.SMALLINT;
         }
     }
@@ -3248,7 +3270,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
 
 
 
@@ -3349,7 +3371,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.TIME;
         }
     }
@@ -3441,7 +3463,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.TIMESTAMP;
         }
     }
@@ -3490,7 +3512,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.SMALLINT;
         }
     }
@@ -3544,7 +3566,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.BIGINT;
         }
     }
@@ -3598,7 +3620,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.DECIMAL;
         }
     }
@@ -3647,7 +3669,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.INTEGER;
         }
     }
@@ -3753,7 +3775,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
                 case POSTGRES:
                     return Types.OTHER;
@@ -3820,7 +3842,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Configuration configuration) {
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
     }

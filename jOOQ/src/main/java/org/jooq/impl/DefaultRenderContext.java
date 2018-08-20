@@ -43,6 +43,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -459,7 +460,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         ||
 
             // [#2367] ... yet, do quote when an identifier is a SQLite keyword
-            (family == SQLITE && SQLITE_KEYWORDS.contains(literal.toUpperCase()))
+            (family == SQLITE && SQLITE_KEYWORDS.contains(literal.toUpperCase(renderLocale(configuration().settings()))))
 
         ||
 
@@ -468,9 +469,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         if (!needsQuote) {
             if (LOWER == cachedRenderNameStyle)
-                literal = literal.toLowerCase();
+                literal = literal.toLowerCase(renderLocale(configuration().settings()));
             else if (UPPER == cachedRenderNameStyle)
-                literal = literal.toUpperCase();
+                literal = literal.toUpperCase(renderLocale(configuration().settings()));
 
             sql(literal, true);
         }

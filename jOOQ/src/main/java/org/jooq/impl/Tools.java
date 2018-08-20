@@ -3349,15 +3349,12 @@ final class Tools {
     static final String getPropertyName(String methodName) {
         String name = methodName;
 
-        if (name.startsWith("is") && name.length() > 2) {
+        if (name.startsWith("is") && name.length() > 2)
             name = name.substring(2, 3).toLowerCase() + name.substring(3);
-        }
-        else if (name.startsWith("get") && name.length() > 3) {
+        else if (name.startsWith("get") && name.length() > 3)
             name = name.substring(3, 4).toLowerCase() + name.substring(4);
-        }
-        else if (name.startsWith("set") && name.length() > 3) {
+        else if (name.startsWith("set") && name.length() > 3)
             name = name.substring(3, 4).toLowerCase() + name.substring(4);
-        }
 
         return name;
     }

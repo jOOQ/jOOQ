@@ -9,11 +9,13 @@
 package org.jooq.conf;
 
 import java.io.Serializable;
+import java.util.Locale;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -46,6 +48,9 @@ public class Settings
     @XmlElement(defaultValue = "AS_IS")
     @XmlSchemaType(name = "string")
     protected RenderKeywordStyle renderKeywordStyle = RenderKeywordStyle.AS_IS;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(LocaleAdapter.class)
+    protected Locale renderLocale;
     @XmlElement(defaultValue = "false")
     protected Boolean renderFormatted = false;
     protected RenderFormatting renderFormatting;
@@ -256,6 +261,30 @@ public class Settings
      */
     public void setRenderKeywordStyle(RenderKeywordStyle value) {
         this.renderKeywordStyle = value;
+    }
+
+    /**
+     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public Locale getRenderLocale() {
+        return renderLocale;
+    }
+
+    /**
+     * Sets the value of the renderLocale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setRenderLocale(Locale value) {
+        this.renderLocale = value;
     }
 
     /**
@@ -1160,6 +1189,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderLocale(Locale value) {
+        setRenderLocale(value);
+        return this;
+    }
+
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
         return this;
@@ -1362,6 +1396,11 @@ public class Settings
             sb.append("<renderKeywordStyle>");
             sb.append(renderKeywordStyle);
             sb.append("</renderKeywordStyle>");
+        }
+        if (renderLocale!= null) {
+            sb.append("<renderLocale>");
+            sb.append(renderLocale);
+            sb.append("</renderLocale>");
         }
         if (renderFormatted!= null) {
             sb.append("<renderFormatted>");
@@ -1595,6 +1634,15 @@ public class Settings
             }
         } else {
             if (!renderKeywordStyle.equals(other.renderKeywordStyle)) {
+                return false;
+            }
+        }
+        if (renderLocale == null) {
+            if (other.renderLocale!= null) {
+                return false;
+            }
+        } else {
+            if (!renderLocale.equals(other.renderLocale)) {
                 return false;
             }
         }
@@ -1925,6 +1973,7 @@ public class Settings
         result = ((prime*result)+((renderMapping == null)? 0 :renderMapping.hashCode()));
         result = ((prime*result)+((renderNameStyle == null)? 0 :renderNameStyle.hashCode()));
         result = ((prime*result)+((renderKeywordStyle == null)? 0 :renderKeywordStyle.hashCode()));
+        result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));

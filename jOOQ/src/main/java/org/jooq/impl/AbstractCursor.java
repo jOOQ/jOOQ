@@ -41,6 +41,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.XMLFormat.RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -673,7 +674,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                     if (format.format())
                         writer.append(' ');
 
-                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(), writer);
+                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())), writer);
 
                     if (format.format())
                         writer.append(format.newline()).append(format.indentString(2));
@@ -886,7 +887,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                     writer.append(escapeXML(field.getName()));
                     writer.append("\"");
                     writer.append(" type=\"");
-                    writer.append(field.getDataType().getTypeName().toUpperCase());
+                    writer.append(field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
                     writer.append("\"/>");
                 }
 
@@ -1310,7 +1311,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                     }
 
                     eField.setAttribute("name", field.getName());
-                    eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
+                    eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
                     eFields.appendChild(eField);
                 }
 
@@ -1386,7 +1387,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                 }
 
                 attrs.addAttribute("", "", "name", "CDATA", field.getName());
-                attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
+                attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
 
                 handler.startElement("", "", "field", attrs);
                 handler.endElement("", "", "field");

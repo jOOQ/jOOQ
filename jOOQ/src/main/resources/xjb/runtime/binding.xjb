@@ -20,6 +20,11 @@
         <xjc:javaType name="java.util.regex.Pattern" adapter="org.jooq.conf.RegexAdapter"/>
     </jaxb:bindings>
 
+    <!-- [#7153] Locales -->
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:element[@name='renderLocale']">
+        <xjc:javaType name="java.util.Locale" adapter="org.jooq.conf.LocaleAdapter"/>
+    </jaxb:bindings>
+
     <!-- Annotate the following classes with @SuppressWarnings -->
     <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:complexType">
         <inheritance:extends>org.jooq.conf.SettingsBase</inheritance:extends>

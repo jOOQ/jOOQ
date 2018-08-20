@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_BEGIN;
@@ -589,9 +590,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderKeywordStyle.
                         if (style == UPPER)
-                            names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase();
+                            names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase(renderLocale(configuration().settings()));
                         else if (style == LOWER)
-                            names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase();
+                            names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase(renderLocale(configuration().settings()));
                         else
                             names[i] = returningResolvedAsterisks.get(i).getName();
                     }

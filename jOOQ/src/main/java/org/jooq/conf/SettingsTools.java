@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Locale;
 
 /**
  * Convenience methods for jOOQ runtime settings.
@@ -159,6 +160,14 @@ public final class SettingsTools {
      */
     public static final boolean reflectionCaching(Settings settings) {
         return defaultIfNull(settings.isReflectionCaching(), true);
+    }
+
+    /**
+     * The render locale that is applicable, or the default locale if no such
+     * locale is configured.
+     */
+    public static final Locale renderLocale(Settings settings) {
+        return defaultIfNull(settings.getRenderLocale(), Locale.getDefault());
     }
 
     /**

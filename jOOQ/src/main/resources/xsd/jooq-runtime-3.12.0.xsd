@@ -44,6 +44,10 @@ This is set to "QUOTED" by default for backwards-compatibility]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether SQL keywords should be rendered with upper or lower case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderLocale" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="renderFormatted" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered SQL should be pretty-printed.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

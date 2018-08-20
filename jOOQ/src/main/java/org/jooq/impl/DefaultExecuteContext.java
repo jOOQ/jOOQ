@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
@@ -555,33 +556,28 @@ class DefaultExecuteContext implements ExecuteContext {
 
             // Analyse SQL in plain SQL queries:
             else {
-                String s = query.getSQL().toLowerCase();
+                String s = query.getSQL().toLowerCase(renderLocale(configuration().settings()));
 
                 // TODO: Use a simple lexer to parse SQL here. Potentially, the
                 // SQL Console's SQL formatter could be used...?
-                if (s.matches("^(with\\b.*?\\bselect|select|explain)\\b.*?")) {
+                if (s.matches("^(with\\b.*?\\bselect|select|explain)\\b.*?"))
                     return ExecuteType.READ;
-                }
 
                 // These are sample DML statements. There may be many more
-                else if (s.matches("^(insert|update|delete|merge|replace|upsert|lock)\\b.*?")) {
+                else if (s.matches("^(insert|update|delete|merge|replace|upsert|lock)\\b.*?"))
                     return ExecuteType.WRITE;
-                }
 
                 // These are only sample DDL statements. There may be many more
-                else if (s.matches("^(create|alter|drop|truncate|grant|revoke|analyze|comment|flashback|enable|disable)\\b.*?")) {
+                else if (s.matches("^(create|alter|drop|truncate|grant|revoke|analyze|comment|flashback|enable|disable)\\b.*?"))
                     return ExecuteType.DDL;
-                }
 
                 // JDBC escape syntax for routines
-                else if (s.matches("^\\s*\\{\\s*(\\?\\s*=\\s*)call.*?")) {
+                else if (s.matches("^\\s*\\{\\s*(\\?\\s*=\\s*)call.*?"))
                     return ExecuteType.ROUTINE;
-                }
 
                 // Vendor-specific calling of routines / procedural blocks
-                else if (s.matches("^(call|begin|declare)\\b.*?")) {
+                else if (s.matches("^(call|begin|declare)\\b.*?"))
                     return ExecuteType.ROUTINE;
-                }
             }
         }
 

@@ -93,7 +93,6 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeMatchedSetMoreStep;
@@ -128,6 +127,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Constraint                       onConstraint;
     private UniqueKey<R>                     onConstraintUniqueKey;
     private QueryPartList<Field<?>>          onConflict;
+    private Condition                        onConflictWhereCondition;
     private final ConditionProviderImpl      condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
@@ -170,6 +170,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
         this.onConflict = new QueryPartList<Field<?>>(fields);
+    }
+
+    @Override
+    public void onConflictWhere(Condition condition) {
+        this.onConflictWhereCondition = condition;
     }
 
     @Override
@@ -352,6 +357,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                                .qualify(qualify);
 
                         ctx.sql(')');
+
+                        if (onConflictWhereCondition != null) {
+                            ctx.sql(' ')
+                               .visit(K_WHERE)
+                               .sql(' ')
+                               .qualify(false)
+                               .visit(onConflictWhereCondition)
+                               .qualify(qualify);
+                        }
                     }
 
                     ctx.sql(' ')
@@ -442,6 +456,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                            .visit(onConflict)
                            .qualify(qualify)
                            .sql(')');
+
+                        if (onConflictWhereCondition != null) {
+                            ctx.sql(' ')
+                                    .visit(K_WHERE)
+                                    .sql(' ')
+                                    .qualify(false)
+                                    .visit(onConflictWhereCondition)
+                                    .qualify(qualify);
+                        }
                     }
 
                     ctx.sql(' ')

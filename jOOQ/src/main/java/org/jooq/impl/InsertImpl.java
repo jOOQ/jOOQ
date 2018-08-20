@@ -57,6 +57,7 @@ import org.jooq.FieldLike;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
+import org.jooq.InsertOnConflictWhereDoUpdateStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
@@ -154,6 +155,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
     InsertOnConflictDoUpdateStep<R>,
+    InsertOnConflictWhereDoUpdateStep<R>,
     InsertOnConflictConditionStep<R>,
     InsertResultStep<R> {
 
@@ -643,6 +645,12 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final InsertImpl onConflictOnConstraint(UniqueKey<R> constraint) {
         getDelegate().onConflictOnConstraint(constraint);
+        return this;
+    }
+
+    @Override
+    public InsertOnConflictDoUpdateStep<R> onConflictWhere(Condition condition) {
+        getDelegate().onConflictWhere(condition);
         return this;
     }
 

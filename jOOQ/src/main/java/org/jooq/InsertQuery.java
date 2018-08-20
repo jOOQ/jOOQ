@@ -123,6 +123,18 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflict(Collection<? extends Field<?>> fields);
 
     /**
+     * Whether a <code>ON CONFLICT WHERE</code> clause should be added to
+     * this <code>INSERT</code> statement.
+     * <p>
+     * When setting this flag to <code>true</code>, be sure to also add the initial
+     * ON CONFLICT clause using the {@link #onConflict(Field...)} method.
+     *
+     * @see InsertOnDuplicateSetMoreStep#where(Condition)
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflictWhere(Condition condition);
+
+    /**
      * Whether use a <code>On CONFLICT</code> or
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.

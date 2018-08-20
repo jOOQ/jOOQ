@@ -3563,6 +3563,9 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
   <renderNameStyle>AS_IS</renderNameStyle>
 </settings>]]></xml><html>
 
+                                            <p>
+                                                The behaviour of this setting is influenced by the <reference id="settings-locale" title="renderLocale setting"/>.
+                                            </p>
                                         </html></content>
                                     </section>
 
@@ -3597,6 +3600,31 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
 </html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
   <renderKeywordStyle>UPPER</renderKeywordStyle>
 </settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-locale">
+                                        <title>Render Locale</title>
+                                        <content><html>
+                                            <p>
+                                                When doing locale sensitive operations, such as upper casing or lower casing a name (see <reference id="settings-name-style" title="Name styles"/>), then it may be important in some areas to be able to specify the <reference class="java.util.Locale" title="java.util.Locale"/> for the operation.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withRenderLocale(Locale.forLanguageTag("en-US")); // Defaults to Locale.getDefault()]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderLocale>en-US</renderLocale>
+</settings>]]></xml><html>
+
                                         </html></content>
                                     </section>
 

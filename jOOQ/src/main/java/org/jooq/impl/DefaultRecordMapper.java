@@ -993,6 +993,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         public final E map(R record) {
             try {
                 Object[] parameterValues = new Object[parameterTypes.length];
+
                 for (int i = 0; i < fields.length; i++) {
                     if (propertyIndexes[i] != null) {
                         parameterValues[propertyIndexes[i]] = record.get(i);

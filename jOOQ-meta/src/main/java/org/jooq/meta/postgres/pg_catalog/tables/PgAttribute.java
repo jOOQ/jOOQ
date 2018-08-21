@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgAttribute extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1311136073;
+    private static final long serialVersionUID = 1133024613;
 
     /**
      * The reference instance of <code>pg_catalog.pg_attribute</code>
@@ -108,6 +108,16 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, Boolean> ATTHASDEF = createField("atthasdef", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_attribute.atthasmissing</code>.
+     */
+    public final TableField<Record, Boolean> ATTHASMISSING = createField("atthasmissing", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_attribute.attidentity</code>.
+     */
+    public final TableField<Record, String> ATTIDENTITY = createField("attidentity", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_attribute.attisdropped</code>.
      */
     public final TableField<Record, Boolean> ATTISDROPPED = createField("attisdropped", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
@@ -141,6 +151,12 @@ public class PgAttribute extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_attribute.attfdwoptions</code>.
      */
     public final TableField<Record, String[]> ATTFDWOPTIONS = createField("attfdwoptions", org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+
+    /**
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     */
+    @java.lang.Deprecated
+    public final TableField<Record, Object> ATTMISSINGVAL = createField("attmissingval", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"anyarray\""), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_attribute</code> table reference

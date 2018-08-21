@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgIndex extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1218100290;
+    private static final long serialVersionUID = 1437046984;
 
     /**
      * The reference instance of <code>pg_catalog.pg_index</code>
@@ -51,6 +51,11 @@ public class PgIndex extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_index.indnatts</code>.
      */
     public final TableField<Record, Short> INDNATTS = createField("indnatts", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_index.indnkeyatts</code>.
+     */
+    public final TableField<Record, Short> INDNKEYATTS = createField("indnkeyatts", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisunique</code>.

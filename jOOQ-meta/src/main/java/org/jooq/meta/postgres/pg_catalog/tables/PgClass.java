@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgClass extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1567780362;
+    private static final long serialVersionUID = -1768594416;
 
     /**
      * The reference instance of <code>pg_catalog.pg_class</code>
@@ -133,11 +133,6 @@ public class PgClass extends TableImpl<Record> {
     public final TableField<Record, Boolean> RELHASOIDS = createField("relhasoids", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_class.relhaspkey</code>.
-     */
-    public final TableField<Record, Boolean> RELHASPKEY = createField("relhaspkey", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
-
-    /**
      * The column <code>pg_catalog.pg_class.relhasrules</code>.
      */
     public final TableField<Record, Boolean> RELHASRULES = createField("relhasrules", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
@@ -173,6 +168,16 @@ public class PgClass extends TableImpl<Record> {
     public final TableField<Record, String> RELREPLIDENT = createField("relreplident", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_class.relispartition</code>.
+     */
+    public final TableField<Record, Boolean> RELISPARTITION = createField("relispartition", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_class.relrewrite</code>.
+     */
+    public final TableField<Record, Long> RELREWRITE = createField("relrewrite", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_class.relfrozenxid</code>.
      */
     public final TableField<Record, Long> RELFROZENXID = createField("relfrozenxid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
@@ -191,6 +196,12 @@ public class PgClass extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_class.reloptions</code>.
      */
     public final TableField<Record, String[]> RELOPTIONS = createField("reloptions", org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+
+    /**
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     */
+    @java.lang.Deprecated
+    public final TableField<Record, Object> RELPARTBOUND = createField("relpartbound", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_class</code> table reference

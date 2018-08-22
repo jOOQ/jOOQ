@@ -642,6 +642,8 @@ term =
 | 'CURRENT_TIME'
 | 'CURRENT_TIMESTAMP'
 | 'CURRENT_USER'
+| 'CURDATE' '(' ')'
+| 'CURTIME' '(' ')'
 | dateLiteral
 | 'DATEADD' '(' datePart ',' field ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'

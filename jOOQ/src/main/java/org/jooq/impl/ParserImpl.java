@@ -4494,12 +4494,16 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (D.is(type))
-                    if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    if (parseKeywordIf(ctx, "CURRENT_DATE") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                        return currentDate();
+                    else if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTimestamp();
                     else if (parseKeywordIf(ctx, "CURRENT_TIME") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTime();
-                    else if (parseKeywordIf(ctx, "CURRENT_DATE") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if (parseFunctionNameIf(ctx, "CURDATE") && parse(ctx, '(') && parse(ctx, ')'))
                         return currentDate();
+                    else if (parseFunctionNameIf(ctx, "CURTIME") && parse(ctx, '(') && parse(ctx, ')'))
+                        return currentTime();
 
                 if ((field = parseFieldCaseIf(ctx)) != null)
                     return field;

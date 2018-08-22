@@ -91,6 +91,8 @@ final class Extract extends AbstractFunction<Integer> {
                         return dowSun0ToISO(DSL.field("{strftime}('%w', {0})", INTEGER, field));
                     case DAY_OF_WEEK:
                         return DSL.field("{strftime}('%w', {0})", INTEGER, field).add(one());
+                    case DAY_OF_YEAR:
+                        return DSL.field("{strftime}('%j', {0})", INTEGER, field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -145,7 +147,13 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
+
+
                 throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+
+
+
+
 
 
 

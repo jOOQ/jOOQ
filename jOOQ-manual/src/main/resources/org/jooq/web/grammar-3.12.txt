@@ -777,7 +777,21 @@ term =
 truthValue = 'TRUE' | 'FALSE' | 'NULL'
 ;
 
-datePart = 'YEAR' | 'MONTH' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND' | 'ISO_DAY_OF_WEEK' | 'ISODOW' | 'DAY_OF_WEEK'
+datePart =
+  ( 'YEAR' | 'YYYY' | 'YY' )
+| ( 'MONTH' | 'MM' | 'M' )
+| ( 'DAY' | 'DD' | 'D' )
+| ( 'HOUR' | 'HH' )
+| ( 'MINUTE' | 'MI' | 'N' )
+| ( 'SECOND' | 'SS' | 'S' )
+| ( 'MILLISECOND' | 'MS' )
+| ( 'MICROSECOND' | 'MCS' )
+| ( 'NANOSECOND' | 'NS' )
+| ( 'QUARTER' | 'QQ' | 'Q' )
+| ( 'WEEK ' | 'WW' | 'WK' )
+| ( 'ISO_DAY_OF_WEEK' | 'ISODOW' )
+| ( 'DAY_OF_WEEK' | 'DAYOFWEEK' | 'WEEKDAY' | 'W' )
+| ( 'DAY_OF_YEAR' | 'DAYOFYEAR' | 'DOY' | 'DY' | 'Y')
 ;
 
 keep = 'KEEP' '(' 'DENSE_RANK' ( 'FIRST' | 'LAST' ) 'ORDER BY' sortFields ')'

@@ -88,6 +88,7 @@ import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.date;
 import static org.jooq.impl.DSL.day;
 import static org.jooq.impl.DSL.dayOfWeek;
+import static org.jooq.impl.DSL.dayOfYear;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
@@ -4541,6 +4542,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldIsoDayOfWeekIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDayOfYearIf(ctx)) != null)
+                        return field;
                     else if (parseFunctionNameIf(ctx, "DEGREES")
                           || parseFunctionNameIf(ctx, "DEGREE")
                           || parseFunctionNameIf(ctx, "DEG"))
@@ -5478,7 +5481,7 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldDateAddIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "DATEADD")) {
             parse(ctx, '(');
-            DatePart part = parseDatePart2(ctx);
+            DatePart part = parseDatePart(ctx);
             parse(ctx, ',');
             Field<Number> interval = (Field<Number>) parseField(ctx, Type.N);
             parse(ctx, ',');
@@ -5515,31 +5518,24 @@ final class ParserImpl implements Parser {
     }
 
     private static final DatePart parseDatePart(ParserContext ctx) {
-        for (DatePart part : DatePart.values())
-            if (parseKeywordIf(ctx, part.name()))
-                return part;
-
-        if (parseKeywordIf(ctx, "ISODOW"))
-            return DatePart.ISO_DAY_OF_WEEK;
-
-        throw ctx.exception("Unsupported date part");
-    }
-
-    private static final DatePart parseDatePart2(ParserContext ctx) {
         char character = ctx.character();
 
         switch (character) {
             case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DAYOFYEAR") ||
+                    parseKeywordIf(ctx, "DAY_OF_YEAR") ||
+                    parseKeywordIf(ctx, "DOY") ||
                     parseKeywordIf(ctx, "DY"))
                     return DatePart.DAY_OF_YEAR;
+                else if (parseKeywordIf(ctx, "DAY_OF_WEEK") ||
+                    parseKeywordIf(ctx, "DAYOFWEEK") ||
+                    parseKeywordIf(ctx, "DW"))
+                    return DatePart.DAY_OF_WEEK;
                 else if (parseKeywordIf(ctx, "DAY") ||
                     parseKeywordIf(ctx, "DD") ||
                     parseKeywordIf(ctx, "D"))
                     return DatePart.DAY;
-                else if (parseKeywordIf(ctx, "DW"))
-                    return DatePart.DAY_OF_WEEK;
 
                 break;
 
@@ -5550,6 +5546,12 @@ final class ParserImpl implements Parser {
                     return DatePart.HOUR;
 
                 break;
+
+            case 'i':
+            case 'I':
+                if (parseKeywordIf(ctx, "ISODOW") ||
+                    parseKeywordIf(ctx, "ISO_DAY_OF_WEEK"))
+                    return DatePart.ISO_DAY_OF_WEEK;
 
             case 'm':
             case 'M':
@@ -6111,6 +6113,18 @@ final class ParserImpl implements Parser {
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
             return isoDayOfWeek(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDayOfYearIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DAYOFYEAR")
+                || parseFunctionNameIf(ctx, "DAY_OF_YEAR")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return dayOfYear(f1);
         }
 
         return null;

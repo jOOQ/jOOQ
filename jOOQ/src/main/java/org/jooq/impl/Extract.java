@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.jooq.Configuration;
@@ -87,6 +88,8 @@ final class Extract extends AbstractFunction<Integer> {
                         return DSL.field("{strftime}('%S', {0})", INTEGER, field);
 
                     // See: https://www.sqlite.org/lang_datefunc.html
+                    case EPOCH:
+                        return DSL.field("{strftime}('%s', {0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
                         return dowSun0ToISO(DSL.field("{strftime}('%w', {0})", INTEGER, field));
                     case DAY_OF_WEEK:
@@ -228,9 +231,16 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
+
+
+
+
+
             case MARIADB:
             case MYSQL:
                 switch (datePart) {
+                    case EPOCH:
+                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
                         return DSL.field("{weekday}({0})", INTEGER, field).add(one());
                     case DAY_OF_WEEK:

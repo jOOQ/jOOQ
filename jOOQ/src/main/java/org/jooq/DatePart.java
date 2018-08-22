@@ -167,11 +167,8 @@ public enum DatePart {
 
     /**
      * The epoch in seconds since 1970-01-01.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     EPOCH("epoch"),
 
     /**

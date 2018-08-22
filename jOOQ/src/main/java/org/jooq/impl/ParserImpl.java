@@ -92,6 +92,7 @@ import static org.jooq.impl.DSL.dayOfYear;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
+import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.exp;
@@ -4568,6 +4569,10 @@ final class ParserImpl implements Parser {
                     else if (parseFunctionNameIf(ctx, "EXP"))
                         return exp((Field) parseFieldSumParenthesised(ctx));
 
+                if (D.is(type))
+                    if ((field = parseFieldEpochIf(ctx)) != null)
+                        return field;
+
                 break;
 
             case 'f':
@@ -5539,6 +5544,13 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'e':
+            case 'E':
+                if (parseKeywordIf(ctx, "EPOCH"))
+                    return DatePart.EPOCH;
+
+                break;
+
             case 'h':
             case 'H':
                 if (parseKeywordIf(ctx, "HOUR") ||
@@ -6125,6 +6137,17 @@ final class ParserImpl implements Parser {
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
             return dayOfYear(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldEpochIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "EPOCH")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return epoch(f1);
         }
 
         return null;

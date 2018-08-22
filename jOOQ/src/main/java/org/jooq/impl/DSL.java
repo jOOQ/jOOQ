@@ -14704,6 +14704,43 @@ public class DSL {
     }
 
     /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(java.util.Date value) {
+        return extract(value, DatePart.EPOCH);
+    }
+
+
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(Temporal value) {
+        return extract(value, DatePart.EPOCH);
+    }
+
+
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(Field<?> field) {
+        return extract(field, DatePart.EPOCH);
+    }
+
+    /**
      * Get the year part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}

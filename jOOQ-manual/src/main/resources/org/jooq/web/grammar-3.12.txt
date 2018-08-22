@@ -653,6 +653,7 @@ term =
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
+| 'EPOCH' '(' field ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
@@ -787,6 +788,7 @@ datePart =
 | ( 'MILLISECOND' | 'MS' )
 | ( 'MICROSECOND' | 'MCS' )
 | ( 'NANOSECOND' | 'NS' )
+| 'EPOCH'
 | ( 'QUARTER' | 'QQ' | 'Q' )
 | ( 'WEEK ' | 'WW' | 'WK' )
 | ( 'ISO_DAY_OF_WEEK' | 'ISODOW' )

@@ -106,6 +106,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
@@ -127,7 +128,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Constraint                       onConstraint;
     private UniqueKey<R>                     onConstraintUniqueKey;
     private QueryPartList<Field<?>>          onConflict;
-    private Condition                        onConflictWhereCondition;
+    private final ConditionProviderImpl      onConflictWhereCondition;
     private final ConditionProviderImpl      condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
@@ -135,6 +136,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
+        this.onConflictWhereCondition = new ConditionProviderImpl();
         this.condition = new ConditionProviderImpl();
     }
 
@@ -170,11 +172,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
         this.onConflict = new QueryPartList<Field<?>>(fields);
-    }
-
-    @Override
-    public void onConflictWhere(Condition condition) {
-        this.onConflictWhereCondition = condition;
     }
 
     @Override
@@ -230,6 +227,21 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void addValuesForUpdate(Map<?, ?> map) {
         updateMap.set(map);
+    }
+
+    @Override
+    public void addOnConflictWhereConditions(Condition condition) {
+        onConflictWhereCondition.addConditions(condition);
+    }
+
+    @Override
+    public void addOnConflictWhereConditions(Condition... conditions) {
+        onConflictWhereCondition.addConditions(conditions);
+    }
+
+    @Override
+    public void addOnConflictWhereConditions(Collection<? extends Condition> conditions) {
+        onConflictWhereCondition.addConditions(conditions);
     }
 
     @Override
@@ -359,11 +371,14 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.sql(')');
 
                         if (onConflictWhereCondition != null) {
+                            ParamType paramType = ctx.paramType();
                             ctx.sql(' ')
                                .visit(K_WHERE)
                                .sql(' ')
                                .qualify(false)
+                               .paramType(ParamType.INLINED)
                                .visit(onConflictWhereCondition)
+                               .paramType(paramType)
                                .qualify(qualify);
                         }
                     }
@@ -458,12 +473,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                            .sql(')');
 
                         if (onConflictWhereCondition != null) {
+                            ParamType paramType = ctx.paramType();
                             ctx.sql(' ')
-                                    .visit(K_WHERE)
-                                    .sql(' ')
-                                    .qualify(false)
-                                    .visit(onConflictWhereCondition)
-                                    .qualify(qualify);
+                               .visit(K_WHERE)
+                               .sql(' ')
+                               .qualify(false)
+                               .paramType(ParamType.INLINED)
+                               .visit(onConflictWhereCondition)
+                               .paramType(paramType)
+                               .qualify(qualify);
                         }
                     }
 

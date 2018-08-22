@@ -123,18 +123,6 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflict(Collection<? extends Field<?>> fields);
 
     /**
-     * Whether a <code>ON CONFLICT WHERE</code> clause should be added to
-     * this <code>INSERT</code> statement.
-     * <p>
-     * When setting this flag to <code>true</code>, be sure to also add the initial
-     * ON CONFLICT clause using the {@link #onConflict(Field...)} method.
-     *
-     * @see InsertOnDuplicateSetMoreStep#where(Condition)
-     */
-    @Support({ POSTGRES_9_5 })
-    void onConflictWhere(Condition condition);
-
-    /**
      * Whether use a <code>On CONFLICT</code> or
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
@@ -259,6 +247,42 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     void addValuesForUpdate(Map<?, ?> map);
+
+    /**
+     * Adds a new index predicate condition to the query, connecting it to existing conditions
+     * with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addOnConflictWhereConditions(Condition condition);
+
+    /**
+     * Adds new index predicate conditions to the query, connecting them to existing conditions
+     * with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The conditions
+     */
+    @Support({ POSTGRES_9_5 })
+    void addOnConflictWhereConditions(Condition... conditions);
+
+    /**
+     * Adds new index predicate conditions to the query, connecting them to existing conditions
+     * with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The conditions
+     */
+    @Support({ POSTGRES_9_5 })
+    void addOnConflictWhereConditions(Collection<? extends Condition> conditions);
 
     /**
      * Adds a new condition to the query, connecting it to existing conditions

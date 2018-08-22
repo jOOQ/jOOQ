@@ -117,7 +117,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * data is available.
      */
     @Support
-    InsertOnConflictWhereDoUpdateStep<R> onConflict(Field<?>... keys);
+    InsertOnConflictTargetWhereStep<R> onConflict(Field<?>... keys);
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this insert query.
@@ -127,7 +127,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * data is available.
      */
     @Support
-    InsertOnConflictWhereDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
+    InsertOnConflictTargetWhereStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.

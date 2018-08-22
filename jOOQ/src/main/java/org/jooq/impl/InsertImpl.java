@@ -57,7 +57,7 @@ import org.jooq.FieldLike;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
-import org.jooq.InsertOnConflictWhereDoUpdateStep;
+import org.jooq.InsertOnConflictTargetWhereStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
@@ -155,7 +155,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
     InsertOnConflictDoUpdateStep<R>,
-    InsertOnConflictWhereDoUpdateStep<R>,
+    InsertOnConflictTargetWhereStep<R>,
     InsertOnConflictConditionStep<R>,
     InsertResultStep<R> {
 
@@ -168,6 +168,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private Field<?>[]        fields;
     private boolean           onDuplicateKeyUpdate;
     private boolean           returningResult;
+    private ConditionStep     conditionStep;
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(new InsertQueryImpl<R>(configuration, with, into));
@@ -632,47 +633,48 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl onConflictOnConstraint(Constraint constraint) {
+        conditionStep = ConditionStep.ON_CONFLICT;
         getDelegate().onConflictOnConstraint(constraint);
         return this;
     }
 
     @Override
     public final InsertImpl onConflictOnConstraint(Name constraint) {
+        conditionStep = ConditionStep.ON_CONFLICT;
         getDelegate().onConflictOnConstraint(constraint);
         return this;
     }
 
     @Override
     public final InsertImpl onConflictOnConstraint(UniqueKey<R> constraint) {
+        conditionStep = ConditionStep.ON_CONFLICT;
         getDelegate().onConflictOnConstraint(constraint);
         return this;
     }
 
     @Override
-    public InsertOnConflictDoUpdateStep<R> onConflictWhere(Condition condition) {
-        getDelegate().onConflictWhere(condition);
-        return this;
-    }
-
-    @Override
     public final InsertImpl onConflict(Field<?>... keys) {
+        conditionStep = ConditionStep.ON_CONFLICT;
         return onConflict(Arrays.asList(keys));
     }
 
     @Override
     public final InsertImpl onConflict(Collection<? extends Field<?>> keys) {
+        conditionStep = ConditionStep.ON_CONFLICT;
         getDelegate().onConflict(keys);
         return this;
     }
 
     @Override
     public final InsertImpl onConflictDoNothing() {
+        conditionStep = ConditionStep.ON_CONFLICT;
         onConflict().doNothing();
         return this;
     }
 
     @Override
     public final InsertImpl onDuplicateKeyUpdate() {
+        conditionStep = ConditionStep.DO_UPDATE;
         onDuplicateKeyUpdate = true;
         getDelegate().onDuplicateKeyUpdate(true);
         return this;
@@ -834,19 +836,43 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl where(Condition condition) {
-        getDelegate().addConditions(condition);
+        switch (conditionStep) {
+            case ON_CONFLICT:
+                getDelegate().addOnConflictWhereConditions(condition);
+                break;
+            case DO_UPDATE:
+                getDelegate().addConditions(condition);
+                break;
+        }
+
         return this;
     }
 
     @Override
     public final InsertImpl where(Condition... conditions) {
-        getDelegate().addConditions(conditions);
+        switch (conditionStep) {
+            case ON_CONFLICT:
+                getDelegate().addOnConflictWhereConditions(conditions);
+                break;
+            case DO_UPDATE:
+                getDelegate().addConditions(conditions);
+                break;
+        }
+
         return this;
     }
 
     @Override
     public final InsertImpl where(Collection<? extends Condition> conditions) {
-        getDelegate().addConditions(conditions);
+        switch (conditionStep) {
+            case ON_CONFLICT:
+                getDelegate().addOnConflictWhereConditions(conditions);
+                break;
+            case DO_UPDATE:
+                getDelegate().addConditions(conditions);
+                break;
+        }
+
         return this;
     }
 
@@ -1073,4 +1099,27 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return Optional.ofNullable(fetchOne());
     }
 
+    /**
+     * The {@link InsertImpl} current condition step
+     * <p>
+     * This enumeration models the step that is currently receiving new
+     * conditions via the {@link InsertImpl#where(Condition)},
+     * {@link InsertImpl#where(Field)}, etc methods
+     *
+     * @author Daan Vanden Bosch
+     */
+    private enum ConditionStep {
+
+        /**
+         * Additional conditions go to the <code>ON CONFLICT</code> clause that is
+         * currently being added.
+         */
+        ON_CONFLICT,
+
+        /**
+         * Additional conditions go to the <code>DO UPDATE</code> clause that is
+         * currently being added.
+         */
+        DO_UPDATE
+    }
 }

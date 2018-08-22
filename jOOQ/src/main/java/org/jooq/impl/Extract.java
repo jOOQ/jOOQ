@@ -224,7 +224,7 @@ final class Extract extends AbstractFunction<Integer> {
             case MYSQL:
                 switch (datePart) {
                     case ISO_DAY_OF_WEEK:
-                        return dowSun1ToISO(DSL.field("{dayofweek}({0})", INTEGER, field));
+                        return DSL.field("{weekday}({0})", INTEGER, field).add(one());
                     case DAY_OF_WEEK:
                         return DSL.field("{dayofweek}({0})", INTEGER, field);
                     case DAY_OF_YEAR:

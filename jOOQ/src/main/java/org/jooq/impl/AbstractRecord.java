@@ -930,6 +930,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
+        if (format == null)
+            format = JSONFormat.DEFAULT_FOR_RECORDS;
+
         if (format.header())
             log.debug("JSONFormat.header currently not supported for Record.formatJSON()");
 
@@ -952,6 +955,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatXML(Writer writer, XMLFormat format) {
+        if (format == null)
+            format = XMLFormat.DEFAULT_FOR_RECORDS;
+
         if (format.header())
             log.debug("XMLFormat.header currently not supported for Record.formatXML()");
 

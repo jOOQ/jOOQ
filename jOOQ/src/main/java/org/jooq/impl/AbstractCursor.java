@@ -49,7 +49,6 @@ import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
-import java.io.Serializable;
 import java.io.Writer;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -100,7 +99,7 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractCursor<R extends Record> extends AbstractFormattable implements Iterable<R>, Serializable {
+abstract class AbstractCursor<R extends Record> extends AbstractFormattable implements Iterable<R> {
 
     /**
      * Generated UID
@@ -420,6 +419,9 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
+        if (format == null)
+            format = JSONFormat.DEFAULT_FOR_RESULTS;
+
         try {
             String separator;
             int recordLevel = format.header() ? 2 : 1;
@@ -646,6 +648,9 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final void formatXML(Writer writer, XMLFormat format) {
+        if (format == null)
+            format = XMLFormat.DEFAULT_FOR_RESULTS;
+
         String newline = format.newline();
         int recordLevel = format.header() ? 2 : 1;
 
@@ -742,7 +747,12 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             }
             else {
                 writer.append(">");
-                writer.append(escapeXML(format0(value, false, false)));
+
+                if (value instanceof Formattable)
+                    ((Formattable) value).formatXML(writer, format);
+                else
+                    writer.append(escapeXML(format0(value, false, false)));
+
                 writer.append("</" + tag + ">");
             }
         }

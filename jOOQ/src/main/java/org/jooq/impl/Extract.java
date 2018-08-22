@@ -50,7 +50,6 @@ import java.sql.Timestamp;
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -97,7 +96,7 @@ final class Extract extends AbstractFunction<Integer> {
                     case DAY_OF_YEAR:
                         return DSL.field("{strftime}('%j', {0})", INTEGER, field);
                     default:
-                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+                        return getNativeFunction();
                 }
 
 
@@ -152,7 +151,13 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
-                throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+
+
+                return getNativeFunction();
+
+
+
+
 
 
 
@@ -241,6 +246,8 @@ final class Extract extends AbstractFunction<Integer> {
                 switch (datePart) {
                     case EPOCH:
                         return DSL.field("{unix_timestamp}({0})", INTEGER, field);
+                    case QUARTER:
+                        return DSL.field("{quarter}({0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
                         return DSL.field("{weekday}({0})", INTEGER, field).add(one());
                     case DAY_OF_WEEK:
@@ -255,6 +262,8 @@ final class Extract extends AbstractFunction<Integer> {
 
             case POSTGRES:
                 switch (datePart) {
+                    case QUARTER:
+                        return DSL.field("{extract}({quarter from} {0})", INTEGER, field);
                     case DAY_OF_WEEK:
                         return DSL.field("({extract}({dow from} {0}) + 1)", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
@@ -267,16 +276,21 @@ final class Extract extends AbstractFunction<Integer> {
 
             case HSQLDB:
                 switch (datePart) {
+                    case QUARTER:
+                        return DSL.field("{quarter}({0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
                         return dowSun1ToISO(DSL.field("{extract}({day_of_week from} {0})", INTEGER, field));
                     default:
                         return getNativeFunction();
                 }
-
-
-
-
             case H2:
+                switch (datePart) {
+                    case QUARTER:
+                        return DSL.field("{quarter}({0})", INTEGER, field);
+                    default:
+                        return getNativeFunction();
+                }
+
             default:
                 return getNativeFunction();
         }
@@ -295,6 +309,11 @@ final class Extract extends AbstractFunction<Integer> {
     }
 
     private final Field<Integer> getNativeFunction() {
-        return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
+        switch (datePart) {
+            case QUARTER:
+                return DSL.month(field).add(inline(2)).div(inline(3));
+            default:
+                return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
+        }
     }
 }

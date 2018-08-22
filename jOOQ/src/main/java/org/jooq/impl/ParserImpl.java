@@ -167,6 +167,7 @@ import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
 import static org.jooq.impl.DSL.privilege;
+import static org.jooq.impl.DSL.quarter;
 import static org.jooq.impl.DSL.rad;
 import static org.jooq.impl.DSL.rangeBetweenCurrentRow;
 import static org.jooq.impl.DSL.rangeBetweenFollowing;
@@ -4740,6 +4741,10 @@ final class ParserImpl implements Parser {
                     if (ctx.characterNext() == '\'')
                         return inline(parseStringLiteral(ctx));
 
+                if (D.is(type))
+                    if ((field = parseFieldQuarterIf(ctx)) != null)
+                        return field;
+
             case 'r':
             case 'R':
                 if (S.is(type))
@@ -6148,6 +6153,17 @@ final class ParserImpl implements Parser {
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
             return epoch(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldQuarterIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "QUARTER")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return quarter(f1);
         }
 
         return null;

@@ -173,11 +173,8 @@ public enum DatePart {
 
     /**
      * The quarter. Jan-Mar = 1, Apr-Jun = 2, Jul-Sep = 3, Oct-Dec = 4.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support
     QUARTER("quarter"),
 
     /**

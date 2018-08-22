@@ -14741,6 +14741,43 @@ public class DSL {
     }
 
     /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(java.util.Date value) {
+        return extract(value, DatePart.QUARTER);
+    }
+
+
+
+    /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(Temporal value) {
+        return extract(value, DatePart.QUARTER);
+    }
+
+
+
+    /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(Field<?> field) {
+        return extract(field, DatePart.QUARTER);
+    }
+
+    /**
      * Get the year part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}

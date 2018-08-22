@@ -709,6 +709,7 @@ term =
 | ( 'PERCENTILE_CONT' | 'PERCENTILE_DISC' ) '(' unsignedNumericLiteral ')' withinGroup [ over ]
 | ( 'POW' | 'POWER' ) '(' field ',' field ')'
 | 'PRIOR' concat
+| 'QUARTER' '(' field ')'
 | (
     'REGR_SLOPE'
   | 'REGR_INTERCEPT'

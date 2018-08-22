@@ -19515,9 +19515,7 @@ def xml = new groovy.xml.MarkupBuilder(writer)
 
 // Run the code generator
 // ----------------------
-org.jooq.codegen.GenerationTool.generate(
-    javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
-)
+org.jooq.util.GenerationTool.generate(writer.toString())
 ]]></java><html>
                         </html></content>
                     </section>

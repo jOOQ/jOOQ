@@ -4470,9 +4470,9 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldConcatIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "CURRENT_SCHEMA"))
+                    else if (parseKeywordIf(ctx, "CURRENT_SCHEMA") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentSchema();
-                    else if (parseKeywordIf(ctx, "CURRENT_USER"))
+                    else if (parseKeywordIf(ctx, "CURRENT_USER") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentUser();
 
                 if (N.is(type))

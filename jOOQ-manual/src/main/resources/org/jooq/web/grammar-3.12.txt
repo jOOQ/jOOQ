@@ -637,11 +637,11 @@ term =
 | 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'CURRVAL' '(' ( name | stringLiteral ) ')'
-| 'CURRENT_DATE'
-| 'CURRENT_SCHEMA'
-| 'CURRENT_TIME'
-| 'CURRENT_TIMESTAMP'
-| 'CURRENT_USER'
+| 'CURRENT_DATE' [ '(' ')' ]
+| 'CURRENT_SCHEMA' [ '(' ')' ]
+| 'CURRENT_TIME' [ '(' ')' ]
+| 'CURRENT_TIMESTAMP' [ '(' ')' ]
+| 'CURRENT_USER' [ '(' ')' ]
 | 'CURDATE' '(' ')'
 | 'CURTIME' '(' ')'
 | dateLiteral

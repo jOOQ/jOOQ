@@ -649,6 +649,7 @@ term =
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
 | 'DAYOFMONTH' '(' field ')'
+| 'DAYOFWEEK' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
@@ -776,7 +777,7 @@ term =
 truthValue = 'TRUE' | 'FALSE' | 'NULL'
 ;
 
-datePart = 'YEAR' | 'MONTH' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND'
+datePart = 'YEAR' | 'MONTH' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND' | 'ISO_DAY_OF_WEEK' | 'ISODOW' | 'DAY_OF_WEEK'
 ;
 
 keep = 'KEEP' '(' 'DENSE_RANK' ( 'FIRST' | 'LAST' ) 'ORDER BY' sortFields ')'

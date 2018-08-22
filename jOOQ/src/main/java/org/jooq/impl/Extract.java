@@ -38,7 +38,11 @@
 
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import java.sql.Timestamp;
 
@@ -58,7 +62,7 @@ final class Extract extends AbstractFunction<Integer> {
     private final DatePart    datePart;
 
     Extract(Field<?> field, DatePart datePart) {
-        super("extract", SQLDataType.INTEGER, field);
+        super("extract", INTEGER, field);
 
         this.field = field;
         this.datePart = datePart;
@@ -70,17 +74,23 @@ final class Extract extends AbstractFunction<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        return DSL.field("{strftime}('%Y', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%Y', {0})", INTEGER, field);
                     case MONTH:
-                        return DSL.field("{strftime}('%m', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%m', {0})", INTEGER, field);
                     case DAY:
-                        return DSL.field("{strftime}('%d', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%d', {0})", INTEGER, field);
                     case HOUR:
-                        return DSL.field("{strftime}('%H', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%H', {0})", INTEGER, field);
                     case MINUTE:
-                        return DSL.field("{strftime}('%M', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%M', {0})", INTEGER, field);
                     case SECOND:
-                        return DSL.field("{strftime}('%S', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%S', {0})", INTEGER, field);
+
+                    // See: https://www.sqlite.org/lang_datefunc.html
+                    case ISO_DAY_OF_WEEK:
+                        return dowSun0ToISO(DSL.field("{strftime}('%w', {0})", INTEGER, field));
+                    case DAY_OF_WEEK:
+                        return DSL.field("{strftime}('%w', {0})", INTEGER, field).add(one());
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -109,20 +119,43 @@ final class Extract extends AbstractFunction<Integer> {
             case DERBY:
                 switch (datePart) {
                     case YEAR:
-                        return function("year", SQLDataType.INTEGER, field);
+                        return function("year", INTEGER, field);
                     case MONTH:
-                        return function("month", SQLDataType.INTEGER, field);
+                        return function("month", INTEGER, field);
                     case DAY:
-                        return function("day", SQLDataType.INTEGER, field);
+                        return function("day", INTEGER, field);
                     case HOUR:
-                        return function("hour", SQLDataType.INTEGER, field);
+                        return function("hour", INTEGER, field);
                     case MINUTE:
-                        return function("minute", SQLDataType.INTEGER, field);
+                        return function("minute", INTEGER, field);
                     case SECOND:
-                        return function("second", SQLDataType.INTEGER, field);
-                    default:
-                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+                        return function("second", INTEGER, field);
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -189,21 +222,61 @@ final class Extract extends AbstractFunction<Integer> {
 
             case MARIADB:
             case MYSQL:
+                switch (datePart) {
+                    case ISO_DAY_OF_WEEK:
+                        return dowSun1ToISO(DSL.field("{dayofweek}({0})", INTEGER, field));
+                    case DAY_OF_WEEK:
+                        return DSL.field("{dayofweek}({0})", INTEGER, field);
+                    case DAY_OF_YEAR:
+                        return DSL.field("{dayofyear}({0})", INTEGER, field);
+                    default:
+                        return getNativeFunction();
+                }
+
+
+
             case POSTGRES:
                 switch (datePart) {
                     case DAY_OF_WEEK:
-                        return DSL.field("{extract}({isodow from} {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("({extract}({dow from} {0}) + 1)", INTEGER, field);
+                    case ISO_DAY_OF_WEEK:
+                        return DSL.field("{extract}({isodow from} {0})", INTEGER, field);
                     case DAY_OF_YEAR:
-                        return DSL.field("{extract}({doy from} {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{extract}({doy from} {0})", INTEGER, field);
                     default:
-                        // No break
+                        return getNativeFunction();
                 }
-            case HSQLDB:
-            case H2:
 
-            // A default implementation is necessary for hashCode() and toString()
+            case HSQLDB:
+                switch (datePart) {
+                    case ISO_DAY_OF_WEEK:
+                        return dowSun1ToISO(DSL.field("{extract}({day_of_week from} {0})", INTEGER, field));
+                    default:
+                        return getNativeFunction();
+                }
+
+
+
+
+            case H2:
             default:
-                return DSL.field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
+                return getNativeFunction();
         }
+    }
+
+    private final static Field<Integer> dowISOToSun1(Field<Integer> dow) {
+        return dow.mod(inline(7)).add(one());
+    }
+
+    private final static Field<Integer> dowSun1ToISO(Field<Integer> dow) {
+        return dow.add(inline(5)).mod(inline(7)).add(one());
+    }
+
+    private final static Field<Integer> dowSun0ToISO(Field<Integer> dow) {
+        return dow.add(inline(6)).mod(inline(7)).add(one());
+    }
+
+    private final Field<Integer> getNativeFunction() {
+        return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
     }
 }

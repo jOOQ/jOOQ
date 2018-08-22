@@ -87,6 +87,7 @@ import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.date;
 import static org.jooq.impl.DSL.day;
+import static org.jooq.impl.DSL.dayOfWeek;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
@@ -119,6 +120,7 @@ import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
+import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
 import static org.jooq.impl.DSL.lastValue;
@@ -4535,6 +4537,10 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDayIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDayOfWeekIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldIsoDayOfWeekIf(ctx)) != null)
+                        return field;
                     else if (parseFunctionNameIf(ctx, "DEGREES")
                           || parseFunctionNameIf(ctx, "DEGREE")
                           || parseFunctionNameIf(ctx, "DEG"))
@@ -4603,6 +4609,8 @@ final class ParserImpl implements Parser {
             case 'I':
                 if (D.is(type))
                     if ((field = parseFieldIntervalLiteralIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldIsoDayOfWeekIf(ctx)) != null)
                         return field;
 
                 if (N.is(type))
@@ -5511,6 +5519,9 @@ final class ParserImpl implements Parser {
             if (parseKeywordIf(ctx, part.name()))
                 return part;
 
+        if (parseKeywordIf(ctx, "ISODOW"))
+            return DatePart.ISO_DAY_OF_WEEK;
+
         throw ctx.exception("Unsupported date part");
     }
 
@@ -6074,6 +6085,32 @@ final class ParserImpl implements Parser {
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
             return day(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDayOfWeekIf(ParserContext ctx) {
+
+        // DB2 and MySQL support the non-ISO version where weeks go from Sunday = 1 to Saturday = 7
+        if (parseFunctionNameIf(ctx, "DAYOFWEEK")
+                || parseFunctionNameIf(ctx, "DAY_OF_WEEK")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return dayOfWeek(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldIsoDayOfWeekIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DAYOFWEEK_ISO")
+                || parseFunctionNameIf(ctx, "ISO_DAY_OF_WEEK")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return isoDayOfWeek(f1);
         }
 
         return null;

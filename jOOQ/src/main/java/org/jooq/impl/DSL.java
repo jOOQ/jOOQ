@@ -14815,6 +14815,80 @@ public class DSL {
     }
 
     /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(java.util.Date value) {
+        return extract(value, DatePart.DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(Temporal value) {
+        return extract(value, DatePart.DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(Field<?> field) {
+        return extract(field, DatePart.DAY_OF_WEEK);
+    }
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(java.util.Date value) {
+        return extract(value, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(Temporal value) {
+        return extract(value, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(Field<?> field) {
+        return extract(field, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+    /**
      * Get the hour part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}

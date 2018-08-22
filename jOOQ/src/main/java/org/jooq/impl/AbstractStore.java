@@ -54,7 +54,7 @@ import org.jooq.Record;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStore implements Attachable {
+abstract class AbstractStore extends AbstractFormattable implements Attachable {
 
     /**
      * Generated UID

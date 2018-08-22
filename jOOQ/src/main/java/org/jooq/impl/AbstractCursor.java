@@ -49,10 +49,7 @@ import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -103,7 +100,7 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractCursor<R extends Record> implements Formattable, Iterable<R>, Serializable {
+abstract class AbstractCursor<R extends Record> extends AbstractFormattable implements Iterable<R>, Serializable {
 
     /**
      * Generated UID
@@ -116,48 +113,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
     AbstractCursor(Configuration configuration, Fields<R> fields) {
         this.configuration = configuration;
         this.fields = fields;
-    }
-
-    @Override
-    public final String format() {
-        return format(TXTFormat.DEFAULT);
-    }
-
-    @Override
-    public final String format(int maxRecords) {
-        return format(TXTFormat.DEFAULT.maxRows(maxRecords));
-    }
-
-    @Override
-    public final String format(TXTFormat format) {
-        StringWriter writer = new StringWriter();
-        format(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void format(OutputStream stream) {
-        format(new OutputStreamWriter(stream));
-    }
-
-    @Override
-    public final void format(OutputStream stream, int maxRecords) {
-        format(new OutputStreamWriter(stream), maxRecords);
-    }
-
-    @Override
-    public final void format(OutputStream stream, TXTFormat format) {
-        format(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void format(Writer writer) {
-        format(writer, TXTFormat.DEFAULT);
-    }
-
-    @Override
-    public final void format(Writer writer, int maxRecords) {
-        format(writer, TXTFormat.DEFAULT.maxRows(maxRecords));
     }
 
     @Override
@@ -397,114 +352,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
     }
 
     @Override
-    public final String formatCSV() {
-        return formatCSV(true);
-    }
-
-    @Override
-    public final String formatCSV(boolean header) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, header);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream) {
-        formatCSV(stream, true);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, boolean header) {
-        formatCSV(new OutputStreamWriter(stream), header);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer) {
-        formatCSV(writer, true);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, boolean header) {
-        formatCSV(writer, header, ',', "\"\"");
-    }
-
-    @Override
-    public final String formatCSV(char delimiter) {
-        return formatCSV(true, delimiter);
-    }
-
-    @Override
-    public final String formatCSV(boolean header, char delimiter) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, delimiter);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, char delimiter) {
-        formatCSV(stream, true, delimiter);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, boolean header, char delimiter) {
-        formatCSV(new OutputStreamWriter(stream), delimiter);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, char delimiter) {
-        formatCSV(writer, true, delimiter);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, boolean header, char delimiter) {
-        formatCSV(writer, header, delimiter, "\"\"");
-    }
-
-    @Override
-    public final String formatCSV(char delimiter, String nullString) {
-        return formatCSV(true, delimiter, nullString);
-    }
-
-    @Override
-    public final String formatCSV(boolean header, char delimiter, String nullString) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, header, delimiter, nullString);
-        return writer.toString();
-    }
-
-    @Override
-    public final String formatCSV(CSVFormat format) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, char delimiter, String nullString) {
-        formatCSV(stream, true, delimiter, nullString);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, boolean header, char delimiter, String nullString) {
-        formatCSV(new OutputStreamWriter(stream), header, delimiter, nullString);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, CSVFormat format) {
-        formatCSV(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, char delimiter, String nullString) {
-        formatCSV(writer, true, delimiter, nullString);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, boolean header, char delimiter, String nullString) {
-        formatCSV(writer, new CSVFormat().header(header).delimiter(delimiter).nullString(nullString));
-    }
-
-    @Override
     public final void formatCSV(Writer writer, CSVFormat format) {
         try {
             if (format.header()) {
@@ -569,35 +416,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                        )
                      + format.quoteString();
         }
-    }
-
-    @Override
-    public final String formatJSON() {
-        StringWriter writer = new StringWriter();
-        formatJSON(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final String formatJSON(JSONFormat format) {
-        StringWriter writer = new StringWriter();
-        formatJSON(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatJSON(OutputStream stream) {
-        formatJSON(new OutputStreamWriter(stream));
-    }
-
-    @Override
-    public final void formatJSON(OutputStream stream, JSONFormat format) {
-        formatJSON(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatJSON(Writer writer) {
-        formatJSON(writer, JSONFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -768,11 +586,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
             ((Formattable) value).formatJSON(writer, format);
         }
 
-        // [#7355] Record should also implement Formattable
-        else if (value instanceof Record) {
-            ((Record) value).formatJSON(writer, format);
-        }
-
         else {
             JSONValue.writeJSONString(value, writer);
         }
@@ -829,33 +642,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
             writer.append(format.newline()).append(format.indentString(recordLevel));
 
         writer.append(']');
-    }
-
-    @Override
-    public final String formatXML() {
-        return formatXML(XMLFormat.DEFAULT_FOR_RESULTS);
-    }
-
-    @Override
-    public final String formatXML(XMLFormat format) {
-        StringWriter writer = new StringWriter();
-        formatXML(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatXML(OutputStream stream) {
-        formatXML(stream, XMLFormat.DEFAULT_FOR_RESULTS);
-    }
-
-    @Override
-    public final void formatXML(OutputStream stream, XMLFormat format) {
-        formatXML(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatXML(Writer writer) {
-        formatXML(writer, XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -962,35 +748,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
         }
 
         writer.append(newline).append(format.indentString(recordLevel)).append("</record>");
-    }
-
-    @Override
-    public final String formatChart() {
-        StringWriter writer = new StringWriter();
-        formatChart(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final String formatChart(ChartFormat format) {
-        StringWriter writer = new StringWriter();
-        formatChart(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatChart(OutputStream stream) {
-        formatChart(new OutputStreamWriter(stream));
-    }
-
-    @Override
-    public final void formatChart(OutputStream stream, ChartFormat format) {
-        formatChart(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatChart(Writer writer) {
-        formatChart(writer, ChartFormat.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")
@@ -1177,32 +934,8 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
     }
 
     @Override
-    public final String formatInsert() {
-        StringWriter writer = new StringWriter();
-        formatInsert(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatInsert(OutputStream stream) {
-        formatInsert(new OutputStreamWriter(stream));
-    }
-
-    @Override
     public final void formatInsert(Writer writer) {
         formatInsert(writer, null, fields.fields);
-    }
-
-    @Override
-    public final String formatInsert(Table<?> table, Field<?>... f) {
-        StringWriter writer = new StringWriter();
-        formatInsert(writer, table, f);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatInsert(OutputStream stream, Table<?> table, Field<?>... f) {
-        formatInsert(new OutputStreamWriter(stream), table, f);
     }
 
     @Override
@@ -1226,18 +959,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing INSERTs", e);
         }
-    }
-
-    @Override
-    public final String formatHTML() {
-        StringWriter writer = new StringWriter();
-        formatHTML(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatHTML(OutputStream stream) {
-        formatHTML(new OutputStreamWriter(stream));
     }
 
     @Override
@@ -1277,11 +998,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing HTML", e);
         }
-    }
-
-    @Override
-    public final Document intoXML() {
-        return intoXML(XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override
@@ -1359,11 +1075,6 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
         catch (ParserConfigurationException ignore) {
             throw new RuntimeException(ignore);
         }
-    }
-
-    @Override
-    public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
-        return intoXML(handler, XMLFormat.DEFAULT_FOR_RESULTS);
     }
 
     @Override

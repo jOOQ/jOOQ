@@ -6064,7 +6064,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldDayIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "DAY")) {
+        if (parseFunctionNameIf(ctx, "DAY")
+                || parseFunctionNameIf(ctx, "DAYOFMONTH")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');

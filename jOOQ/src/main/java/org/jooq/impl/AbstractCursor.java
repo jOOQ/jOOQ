@@ -741,7 +741,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
         }
     }
 
-    private static final void formatJSON0(Object value, Writer writer) throws java.io.IOException {
+    private static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[]) {
@@ -757,10 +757,20 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
                 if (i > 0)
                     writer.append(',');
 
-                formatJSON0(array[i], writer);
+                formatJSON0(array[i], writer, format);
             }
 
             writer.append(']');
+        }
+
+        // [#7782] Nested records should generate nested JSON data structures
+        else if (value instanceof Formattable) {
+            ((Formattable) value).formatJSON(writer, format);
+        }
+
+        // [#7355] Record should also implement Formattable
+        else if (value instanceof Record) {
+            ((Record) value).formatJSON(writer, format);
         }
 
         else {
@@ -787,7 +797,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
             if (format.format())
                 writer.append(' ');
 
-            formatJSON0(record.get(index), writer);
+            formatJSON0(record.get(index), writer, format);
             separator = ",";
         }
 
@@ -811,7 +821,7 @@ abstract class AbstractCursor<R extends Record> implements Formattable, Iterable
             if (format.format())
                 writer.append(format.newline()).append(format.indentString(recordLevel + 1));
 
-            formatJSON0(record.get(index), writer);
+            formatJSON0(record.get(index), writer, format);
             separator = ",";
         }
 

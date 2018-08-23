@@ -17377,6 +17377,14 @@ public class DSL {
     }
 
     /**
+     * The <code>mode(field)</code> aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static <T> AggregateFunction<T> mode(Field<T> field) {
+        return new org.jooq.impl.Function<T>(Term.MODE, nullSafeDataType(field), field);
+    }
+
+    /**
      * Get the median over a numeric field: median(field).
      */
     @Support({ CUBRID, HSQLDB, MARIADB, POSTGRES_9_4 })

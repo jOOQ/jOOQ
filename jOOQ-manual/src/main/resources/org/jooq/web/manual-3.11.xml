@@ -12168,7 +12168,7 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
 }]]></java><html>
 
                                     <p>
-                                        If you're using <reference id="codegen-database-forced-types" title="forcedTypes"/> in your code generation configuration, you can configure the application of an <code>EnumConverter</code> by adding <code>&lt;enumConverter&gt;true&lt;/enumConverter&gt;</code> to your <code>&lt;forcedType/&gt</code> configuration.
+                                        If you're using <reference id="codegen-database-forced-types" title="forcedTypes"/> in your code generation configuration, you can configure the application of an <code>EnumConverter</code> by adding <code>&lt;enumConverter&gt;true&lt;/enumConverter&gt;</code> to your <code>&lt;forcedType/&gt;</code> configuration.
                                     </p>
 
 									<h3>Using Converters in generated source code</h3>

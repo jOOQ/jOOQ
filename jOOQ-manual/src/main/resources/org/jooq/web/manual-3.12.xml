@@ -12209,6 +12209,10 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
     }
 }]]></java><html>
 
+                                    <p>
+                                        If you're using <reference id="codegen-database-forced-types" title="forcedTypes"/> in your code generation configuration, you can configure the application of an <code>EnumConverter</code> by adding <code>&lt;enumConverter&gt;true&lt;/enumConverter&gt;</code> to your <code>&lt;forcedType/&gt</code> configuration.
+                                    </p>
+
 									<h3>Using Converters in generated source code</h3>
 									<p>
 										jOOQ also allows for generated source code to reference your own custom converters, in order to permanently replace a <reference id="table-columns" title="table column's"/> &lt;T&gt; type by your own, custom &lt;U&gt; type. See the manual's section about <reference id="custom-data-types" title="custom data types"/> for details.
@@ -16989,6 +16993,72 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                             <p>
                                                 For more information about using converters, <reference id="custom-data-types" title="please refer to the manual's section about custom data type conversion"/>.
                                             </p>
+
+                                            <h3>Mapping to an enum user type with a converter</h3>
+
+                                            <p>
+                                                If your user type is a Java enum, you can use the <code>&lt;enumConverter/&gt;</code> convenience flag instead of an explicit converter per enum type. This will apply the built-in <reference class="org.jooq.impl.EnumConverter"/>.
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <generator>
+    <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
+      <forcedTypes>
+        <forcedType>
+
+          <!-- Specify the Java type of your custom type. This corresponds to the Converter's <U> type. -->
+          <userType>com.example.MyEnum</userType>
+
+          <!-- Apply the built in org.jooq.impl.EnumConverter. -->
+          <enumConverter>true</enumConverter>
+
+          <!-- These are the same as for type rewriting -->
+          <expression>.*\.MY_STATUS</expression>
+          <types>.*</types>
+        </forcedType>
+      </forcedTypes>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
+      .withForcedTypes(new ForcedType()
+        .withUserType("com.example.MyEnum")
+        .withEnumConverter(true)
+        .withExpression(".*\.MY_STATUS")
+        .withTypes(".*")))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  generator {
+    database {
+      // The first matching forcedType will be applied to the data type definition.
+      forcedTypes {
+        forcedType {
+          userType = 'com.example.MyEnum'
+          enumConverter = true
+          expression = '.*\.MY_STATUS'
+          types = '.*'
+        }
+      }
+    }
+  }
+}]]></java><html>
 
                                             <h3>Mapping to user type with a binding</h3>
 

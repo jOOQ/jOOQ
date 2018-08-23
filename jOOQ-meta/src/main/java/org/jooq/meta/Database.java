@@ -507,6 +507,21 @@ public interface Database  extends AutoCloseable  {
     void setIncludeTables(boolean includeTables);
 
     /**
+     * Whether tables (and views) should be included.
+     */
+    boolean getIncludeTables();
+
+    /**
+     * Whether invisible columns should be included.
+     */
+    void setIncludeInvisibleColumns(boolean includeInvisibleColumns);
+
+    /**
+     * Whether invisible columns should be included.
+     */
+    boolean getIncludeInvisibleColumns();
+
+    /**
      * Whether zero-scale decimal types should be treated as their most
      * appropriate, corresponding integer type.
      */
@@ -517,11 +532,6 @@ public interface Database  extends AutoCloseable  {
      * appropriate, corresponding integer type.
      */
     boolean getForceIntegerTypesOnZeroScaleDecimals();
-
-    /**
-     * Whether tables (and views) should be included.
-     */
-    boolean getIncludeTables();
 
     /**
      * [#3488] Add an additional filter to the database that is applied in

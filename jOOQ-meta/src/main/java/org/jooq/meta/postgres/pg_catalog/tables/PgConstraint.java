@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgConstraint extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -2126964844;
+    private static final long serialVersionUID = -928323374;
 
     /**
      * The reference instance of <code>pg_catalog.pg_constraint</code>
@@ -83,6 +83,11 @@ public class PgConstraint extends TableImpl<Record> {
     public final TableField<Record, Long> CONINDID = createField("conindid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_constraint.conparentid</code>.
+     */
+    public final TableField<Record, Long> CONPARENTID = createField("conparentid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_constraint.confrelid</code>.
      */
     public final TableField<Record, Long> CONFRELID = createField("confrelid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
@@ -121,6 +126,11 @@ public class PgConstraint extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_constraint.conkey</code>.
      */
     public final TableField<Record, Short[]> CONKEY = createField("conkey", org.jooq.impl.SQLDataType.SMALLINT.getArrayDataType(), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_constraint.conincluding</code>.
+     */
+    public final TableField<Record, Short[]> CONINCLUDING = createField("conincluding", org.jooq.impl.SQLDataType.SMALLINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.confkey</code>.

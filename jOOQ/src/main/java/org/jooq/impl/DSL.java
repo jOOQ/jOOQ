@@ -14704,6 +14704,80 @@ public class DSL {
     }
 
     /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(java.util.Date value) {
+        return extract(value, DatePart.EPOCH);
+    }
+
+
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(Temporal value) {
+        return extract(value, DatePart.EPOCH);
+    }
+
+
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> epoch(Field<?> field) {
+        return extract(field, DatePart.EPOCH);
+    }
+
+    /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(java.util.Date value) {
+        return extract(value, DatePart.QUARTER);
+    }
+
+
+
+    /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(Temporal value) {
+        return extract(value, DatePart.QUARTER);
+    }
+
+
+
+    /**
+     * Get the quarter of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#QUARTER}
+     */
+    @Support
+    public static Field<Integer> quarter(Field<?> field) {
+        return extract(field, DatePart.QUARTER);
+    }
+
+    /**
      * Get the year part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
@@ -14812,6 +14886,117 @@ public class DSL {
     @Support
     public static Field<Integer> day(Field<?> field) {
         return extract(field, DatePart.DAY);
+    }
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(java.util.Date value) {
+        return extract(value, DatePart.DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(Temporal value) {
+        return extract(value, DatePart.DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfWeek(Field<?> field) {
+        return extract(field, DatePart.DAY_OF_WEEK);
+    }
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(java.util.Date value) {
+        return extract(value, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(Temporal value) {
+        return extract(value, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+
+
+    /**
+     * Get the ISO day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#ISO_DAY_OF_WEEK}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> isoDayOfWeek(Field<?> field) {
+        return extract(field, DatePart.ISO_DAY_OF_WEEK);
+    }
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#DAY_OF_YEAR}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfYear(java.util.Date value) {
+        return extract(value, DatePart.DAY_OF_YEAR);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#DAY_OF_YEAR}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfYear(Temporal value) {
+        return extract(value, DatePart.DAY_OF_YEAR);
+    }
+
+
+
+    /**
+     * Get the day of week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DAY_OF_YEAR}
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> dayOfYear(Field<?> field) {
+        return extract(field, DatePart.DAY_OF_YEAR);
     }
 
     /**
@@ -17189,6 +17374,14 @@ public class DSL {
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * The <code>mode(field)</code> aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static <T> AggregateFunction<T> mode(Field<T> field) {
+        return new org.jooq.impl.Function<T>(Term.MODE, nullSafeDataType(field), field);
     }
 
     /**

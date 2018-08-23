@@ -42,7 +42,6 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -73,7 +72,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             record.get(ROUTINES.ROUTINE_NAME),
             null,
             record.get("overload", String.class),
-            record.get(PG_PROC.PROISAGG, boolean.class));
+            record.get("is_agg", boolean.class));
 
         if (!Arrays.asList("void", "record").contains(record.get("data_type"))) {
             SchemaDefinition typeSchema = null;

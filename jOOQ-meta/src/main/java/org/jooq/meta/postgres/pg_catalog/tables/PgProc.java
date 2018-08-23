@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgProc extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1042008844;
+    private static final long serialVersionUID = -112741665;
 
     /**
      * The reference instance of <code>pg_catalog.pg_proc</code>
@@ -78,14 +78,9 @@ public class PgProc extends TableImpl<Record> {
     public final TableField<Record, String> PROTRANSFORM = createField("protransform", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_proc.proisagg</code>.
+     * The column <code>pg_catalog.pg_proc.prokind</code>.
      */
-    public final TableField<Record, Boolean> PROISAGG = createField("proisagg", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
-
-    /**
-     * The column <code>pg_catalog.pg_proc.proiswindow</code>.
-     */
-    public final TableField<Record, Boolean> PROISWINDOW = createField("proiswindow", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, String> PROKIND = createField("prokind", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prosecdef</code>.

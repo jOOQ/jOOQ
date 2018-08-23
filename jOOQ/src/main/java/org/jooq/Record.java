@@ -38,8 +38,6 @@
 
 package org.jooq;
 
-import java.io.OutputStream;
-import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,10 +46,10 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+
 import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
-import org.jooq.exception.IOException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
@@ -103,7 +101,7 @@ import org.jooq.tools.Convert;
  * @author Lukas Eder
  * @see Result
  */
-public interface Record extends Attachable, Comparable<Record> {
+public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get this record's fields as a {@link Row}.
@@ -1298,153 +1296,6 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #fromArray(Object...)
      */
     void fromArray(Object[] array, int... fieldIndexes);
-
-    // -------------------------------------------------------------------------
-    // Formatting methods
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get a simple formatted representation of this result as a text table.
-     * <p>
-     * The format is the following:<p>
-     * <code><pre>
-     * +------+------+------+
-     * | COL1 | COL2 | COL3 |
-     * +------+------+------+
-     * | VAL1 | VAL2 | VAL3 |
-     * +------+------+------+
-     * </pre></code>
-     *
-     * @return The formatted result
-     */
-    String format();
-
-    /**
-     * Get a simple formatted representation of this result as a text data
-     * structure, according to the format.
-     *
-     * @return The formatted result
-     * @see TXTFormat
-     */
-    String format(TXTFormat format);
-
-    /**
-     * Like {@link #format()}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void format(OutputStream stream) throws IOException;
-
-    /**
-     * Like {@link #format(TXTFormat)}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void format(OutputStream stream, TXTFormat format) throws IOException;
-
-    /**
-     * Like {@link #format()}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void format(Writer writer) throws IOException;
-
-    /**
-     * Like {@link #format(TXTFormat)}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void format(Writer writer, TXTFormat format) throws IOException;
-
-    /**
-     * Get a simple formatted representation of this result as a JSON array.
-     * <p>
-     * The format is the following: <code><pre>
-     * [value-2-1,value-2-2,...,value-2-n]
-     * </pre></code>
-     *
-     * @return The formatted result
-     */
-    String formatJSON();
-
-    /**
-     * Get a simple formatted representation of this result as a JSON data
-     * structure, according to the format.
-     *
-     * @return The formatted result
-     * @see JSONFormat
-     */
-    String formatJSON(JSONFormat format);
-
-    /**
-     * Like {@link #formatJSON()}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatJSON(OutputStream stream) throws IOException;
-
-    /**
-     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatJSON(OutputStream stream, JSONFormat format) throws IOException;
-
-    /**
-     * Like {@link #formatJSON()}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatJSON(Writer writer) throws IOException;
-
-    /**
-     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatJSON(Writer writer, JSONFormat format) throws IOException;
-
-    /**
-     * Get this record formatted as XML.
-     *
-     * @see Result#formatXML()
-     */
-    String formatXML();
-
-    /**
-     * Get this record formatted as XML.
-     *
-     * @see Result#formatXML(XMLFormat)
-     */
-    String formatXML(XMLFormat format);
-
-    /**
-     * Like {@link #formatXML()}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatXML(OutputStream stream) throws IOException;
-
-    /**
-     * Like {@link #formatXML(XMLFormat)}, but the data is output onto an {@link OutputStream}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatXML(OutputStream stream, XMLFormat format) throws IOException;
-
-    /**
-     * Like {@link #formatXML()}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatXML(Writer writer) throws IOException;
-
-    /**
-     * Like {@link #formatXML(XMLFormat)}, but the data is output onto a {@link Writer}.
-     *
-     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
-     */
-    void formatXML(Writer writer, XMLFormat format) throws IOException;
 
     // -------------------------------------------------------------------------
     // Inherited methods

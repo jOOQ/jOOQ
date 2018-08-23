@@ -637,18 +637,23 @@ term =
 | 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'CURRVAL' '(' ( name | stringLiteral ) ')'
-| 'CURRENT_DATE'
-| 'CURRENT_SCHEMA'
-| 'CURRENT_TIME'
-| 'CURRENT_TIMESTAMP'
-| 'CURRENT_USER'
+| 'CURRENT_DATE' [ '(' ')' ]
+| 'CURRENT_SCHEMA' [ '(' ')' ]
+| 'CURRENT_TIME' [ '(' ')' ]
+| 'CURRENT_TIMESTAMP' [ '(' ')' ]
+| 'CURRENT_USER' [ '(' ')' ]
+| 'CURDATE' '(' ')'
+| 'CURTIME' '(' ')'
 | dateLiteral
 | 'DATEADD' '(' datePart ',' field ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
+| 'DAYOFMONTH' '(' field ')'
+| 'DAYOFWEEK' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
+| 'EPOCH' '(' field ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
@@ -704,6 +709,7 @@ term =
 | ( 'PERCENTILE_CONT' | 'PERCENTILE_DISC' ) '(' unsignedNumericLiteral ')' withinGroup [ over ]
 | ( 'POW' | 'POWER' ) '(' field ',' field ')'
 | 'PRIOR' concat
+| 'QUARTER' '(' field ')'
 | (
     'REGR_SLOPE'
   | 'REGR_INTERCEPT'
@@ -773,7 +779,22 @@ term =
 truthValue = 'TRUE' | 'FALSE' | 'NULL'
 ;
 
-datePart = 'YEAR' | 'MONTH' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND'
+datePart =
+  ( 'YEAR' | 'YYYY' | 'YY' )
+| ( 'MONTH' | 'MM' | 'M' )
+| ( 'DAY' | 'DD' | 'D' )
+| ( 'HOUR' | 'HH' )
+| ( 'MINUTE' | 'MI' | 'N' )
+| ( 'SECOND' | 'SS' | 'S' )
+| ( 'MILLISECOND' | 'MS' )
+| ( 'MICROSECOND' | 'MCS' )
+| ( 'NANOSECOND' | 'NS' )
+| 'EPOCH'
+| ( 'QUARTER' | 'QQ' | 'Q' )
+| ( 'WEEK ' | 'WW' | 'WK' )
+| ( 'ISO_DAY_OF_WEEK' | 'ISODOW' )
+| ( 'DAY_OF_WEEK' | 'DAYOFWEEK' | 'WEEKDAY' | 'W' )
+| ( 'DAY_OF_YEAR' | 'DAYOFYEAR' | 'DOY' | 'DY' | 'Y')
 ;
 
 keep = 'KEEP' '(' 'DENSE_RANK' ( 'FIRST' | 'LAST' ) 'ORDER BY' sortFields ')'

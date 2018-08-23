@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCollation extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 748348053;
+    private static final long serialVersionUID = -623132255;
 
     /**
      * The reference instance of <code>pg_catalog.pg_collation</code>
@@ -53,6 +53,11 @@ public class PgCollation extends TableImpl<Record> {
     public final TableField<Record, Long> COLLOWNER = createField("collowner", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_collation.collprovider</code>.
+     */
+    public final TableField<Record, String> COLLPROVIDER = createField("collprovider", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_collation.collencoding</code>.
      */
     public final TableField<Record, Integer> COLLENCODING = createField("collencoding", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
@@ -66,6 +71,11 @@ public class PgCollation extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_collation.collctype</code>.
      */
     public final TableField<Record, String> COLLCTYPE = createField("collctype", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_collation.collversion</code>.
+     */
+    public final TableField<Record, String> COLLVERSION = createField("collversion", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * Create a <code>pg_catalog.pg_collation</code> table reference

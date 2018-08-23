@@ -40,6 +40,7 @@ package org.jooq.meta.h2;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -97,8 +98,10 @@ public class H2TableDefinition extends AbstractTableDefinition {
             .from(COLUMNS)
             .where(Columns.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(Columns.TABLE_NAME.equal(getName()))
-            .orderBy(Columns.ORDINAL_POSITION)
-            .fetch()) {
+            .and(!getDatabase().getIncludeInvisibleColumns()
+                ? Columns.COLUMN_TYPE.notLike("%INVISIBLE%")
+                : noCondition())
+            .orderBy(Columns.ORDINAL_POSITION)) {
 
             // [#5331] AUTO_INCREMENT (MySQL style)
             // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)

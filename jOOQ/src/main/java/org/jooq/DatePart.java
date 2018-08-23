@@ -39,7 +39,16 @@
 package org.jooq;
 
 // ...
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 
 import java.time.temporal.ChronoField;
@@ -158,20 +167,14 @@ public enum DatePart {
 
     /**
      * The epoch in seconds since 1970-01-01.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     EPOCH("epoch"),
 
     /**
      * The quarter. Jan-Mar = 1, Apr-Jun = 2, Jul-Sep = 3, Oct-Dec = 4.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support
     QUARTER("quarter"),
 
     /**
@@ -185,22 +188,23 @@ public enum DatePart {
 
     /**
      * The day of the year. Corresponds to {@link ChronoField#DAY_OF_YEAR}.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DAY_OF_YEAR("day_of_year"),
 
     /**
-     * The ISO day of the week. 1 = Monday, 2 = Tuesday, ..., 7 = Sunday.
-     * Corresponds to {@link ChronoField#DAY_OF_WEEK} .
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
+     * The day of the week. 1 = Sunday, 2 = Monday, ..., 7 = Saturday.
+     * Corresponds to {@link ChronoField#DAY_OF_WEEK}, shifted by one day.
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DAY_OF_WEEK("day_of_week"),
+
+    /**
+     * The ISO day of the week. 1 = Monday, 2 = Tuesday, ..., 7 = Sunday.
+     * Corresponds to {@link ChronoField#DAY_OF_WEEK}.
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    ISO_DAY_OF_WEEK("iso_day_of_week"),
 
     /**
      * The timezone offset in seconds. Corresponds to

@@ -138,9 +138,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         if (field instanceof TableField) {
             Table<?> table = ((TableField<?, ?>) field).getTable();
 
-            if (table != null) {
+            if (table != null)
                 return table.getName();
-            }
         }
 
         return null;
@@ -199,9 +198,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
     @Override
     public final Field<?> field(int index) {
-        if (index >= 0 && index < fields.length) {
+        if (index >= 0 && index < fields.length)
             return fields[index];
-        }
 
         return null;
     }
@@ -300,9 +298,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         int size = fields.length;
         Class<?>[] result = new Class[size];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             result[i] = field(i).getType();
-        }
 
         return result;
     }
@@ -327,9 +324,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         int size = fields.length;
         DataType<?>[] result = new DataType[size];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             result[i] = field(i).getDataType();
-        }
 
         return result;
     }
@@ -352,9 +348,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
     final int[] indexesOf(Field<?>... f) {
         int[] result = new int[f.length];
 
-        for (int i = 0; i < f.length; i++) {
+        for (int i = 0; i < f.length; i++)
             result[i] = indexOrFail(this, f[i]);
-        }
 
         return result;
     }
@@ -372,9 +367,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
     final int[] indexesOf(Name... fieldNames) {
         int[] result = new int[fieldNames.length];
 
-        for (int i = 0; i < fieldNames.length; i++) {
+        for (int i = 0; i < fieldNames.length; i++)
             result[i] = indexOrFail(this, fieldNames[i]);
-        }
 
         return result;
     }

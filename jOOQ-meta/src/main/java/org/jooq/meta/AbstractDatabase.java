@@ -107,6 +107,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         excludes;
     private String[]                                                         includes                             = { ".*" };
     private boolean                                                          includeExcludeColumns;
+    private boolean                                                          includeInvisibleColumns              = true;
     private boolean                                                          includeTables                        = true;
     private boolean                                                          includeRoutines                      = true;
     private boolean                                                          includeTriggerRoutines               = false;
@@ -726,6 +727,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeExcludeColumns() {
         return includeExcludeColumns;
+    }
+
+    @Override
+    public final void setIncludeInvisibleColumns(boolean includeInvisibleColumns) {
+        this.includeInvisibleColumns = includeInvisibleColumns;
+    }
+
+    @Override
+    public final boolean getIncludeInvisibleColumns() {
+        return includeInvisibleColumns;
     }
 
     @Override

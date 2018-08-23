@@ -45,9 +45,6 @@ import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -61,6 +58,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.jooq.Attachable;
+import org.jooq.CSVFormat;
+import org.jooq.ChartFormat;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -103,6 +102,10 @@ import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.w3c.dom.Document;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * A general base class for all {@link Record} types
@@ -916,35 +919,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // -------------------------------------------------------------------------
 
     @Override
-    public final String format() {
-        StringWriter writer = new StringWriter();
-        format(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final String format(TXTFormat format) {
-        StringWriter writer = new StringWriter();
-        format(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void format(OutputStream stream) {
-        format(new OutputStreamWriter(stream));
-    }
-
-    @Override
-    public final void format(OutputStream stream, TXTFormat format) {
-        format(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void format(Writer writer) {
-        format(writer, TXTFormat.DEFAULT);
-    }
-
-    @Override
     public final void format(Writer writer, TXTFormat format) {
         Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
         result.add(AbstractRecord.this);
@@ -952,36 +926,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final String formatJSON() {
-        StringWriter writer = new StringWriter();
-        formatJSON(writer);
-        return writer.toString();
-    }
-
-    @Override
-    public final String formatJSON(JSONFormat format) {
-        StringWriter writer = new StringWriter();
-        formatJSON(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatJSON(OutputStream stream) {
-        formatJSON(new OutputStreamWriter(stream));
-    }
-
-    @Override
-    public final void formatJSON(OutputStream stream, JSONFormat format) {
-        formatJSON(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatJSON(Writer writer) {
-        formatJSON(writer, JSONFormat.DEFAULT_FOR_RECORDS);
-    }
+    public final void formatCSV(Writer writer, CSVFormat format)  {}
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
+        if (format == null)
+            format = JSONFormat.DEFAULT_FOR_RECORDS;
+
         if (format.header())
             log.debug("JSONFormat.header currently not supported for Record.formatJSON()");
 
@@ -1003,34 +954,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final String formatXML() {
-        return formatXML(XMLFormat.DEFAULT_FOR_RECORDS);
-    }
-
-    @Override
-    public final String formatXML(XMLFormat format) {
-        StringWriter writer = new StringWriter();
-        formatXML(writer, format);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatXML(OutputStream stream) {
-        formatXML(stream, XMLFormat.DEFAULT_FOR_RECORDS);
-    }
-
-    @Override
-    public final void formatXML(OutputStream stream, XMLFormat format) {
-        formatXML(new OutputStreamWriter(stream), format);
-    }
-
-    @Override
-    public final void formatXML(Writer writer) {
-        formatXML(writer, XMLFormat.DEFAULT_FOR_RECORDS);
-    }
-
-    @Override
     public final void formatXML(Writer writer, XMLFormat format) {
+        if (format == null)
+            format = XMLFormat.DEFAULT_FOR_RECORDS;
+
         if (format.header())
             log.debug("XMLFormat.header currently not supported for Record.formatXML()");
 
@@ -1040,6 +967,46 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);
         }
+    }
+
+    @Override
+    public final void formatHTML(Writer writer) {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        result.formatHTML(writer);
+    }
+
+    @Override
+    public final void formatChart(Writer writer, ChartFormat format) {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        result.formatChart(writer, format);
+    }
+
+    @Override
+    public final void formatInsert(Writer writer) {
+        formatInsert(writer, null, fields.fields.fields);
+    }
+
+    @Override
+    public final void formatInsert(Writer writer, Table<?> table, Field<?>... f) {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        result.formatInsert(writer, table, f);
+    }
+
+    @Override
+    public final Document intoXML(XMLFormat format) {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        return result.intoXML(format);
+    }
+
+    @Override
+    public final <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        return result.intoXML(handler, format);
     }
 
     // ------------------------------------------------------------------------

@@ -131,7 +131,7 @@ final class BatchSingle implements BatchBindStep {
     @SafeVarargs
 
     public final BatchSingle bind(Map<String, Object>... namedBindValues) {
-        List<Object> defaultValues = query.getBindValues();
+        List<Object> defaultValues = create.extractBindValues(query);
 
         Object[][] bindValues = new Object[namedBindValues.length][];
         for (int row = 0; row < bindValues.length; row++) {
@@ -140,11 +140,9 @@ final class BatchSingle implements BatchBindStep {
             for (Entry<String, Object> entry : namedBindValues[row].entrySet()) {
                 List<Integer> indexes = nameToIndexMapping.get(entry.getKey());
 
-                if (indexes != null) {
-                    for (int index : indexes) {
+                if (indexes != null)
+                    for (int index : indexes)
                         bindValues[row][index] = entry.getValue();
-                    }
-                }
             }
         }
 
@@ -172,12 +170,10 @@ final class BatchSingle implements BatchBindStep {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
-        if (executeStaticStatements(configuration.settings())) {
+        if (executeStaticStatements(configuration.settings()))
             return executeStatic();
-        }
-        else {
+        else
             return executePrepared();
-        }
     }
 
     private final void checkBindValues() {

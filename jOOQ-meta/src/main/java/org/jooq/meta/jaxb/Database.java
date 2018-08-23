@@ -78,6 +78,8 @@ public class Database implements Serializable
     protected Boolean includeUniqueKeys = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeForeignKeys = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean includeInvisibleColumns = true;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordVersionFields = "";
@@ -637,6 +639,30 @@ public class Database implements Serializable
      */
     public void setIncludeForeignKeys(Boolean value) {
         this.includeForeignKeys = value;
+    }
+
+    /**
+     * This flag indicates whether invisible columns should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeInvisibleColumns() {
+        return includeInvisibleColumns;
+    }
+
+    /**
+     * Sets the value of the includeInvisibleColumns property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeInvisibleColumns(Boolean value) {
+        this.includeInvisibleColumns = value;
     }
 
     /**
@@ -1381,6 +1407,11 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withIncludeInvisibleColumns(Boolean value) {
+        setIncludeInvisibleColumns(value);
+        return this;
+    }
+
     public Database withRecordVersionFields(String value) {
         setRecordVersionFields(value);
         return this;
@@ -1703,6 +1734,11 @@ public class Database implements Serializable
             sb.append("<includeForeignKeys>");
             sb.append(includeForeignKeys);
             sb.append("</includeForeignKeys>");
+        }
+        if (includeInvisibleColumns!= null) {
+            sb.append("<includeInvisibleColumns>");
+            sb.append(includeInvisibleColumns);
+            sb.append("</includeInvisibleColumns>");
         }
         if (recordVersionFields!= null) {
             sb.append("<recordVersionFields>");
@@ -2035,6 +2071,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (includeInvisibleColumns == null) {
+            if (other.includeInvisibleColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!includeInvisibleColumns.equals(other.includeInvisibleColumns)) {
+                return false;
+            }
+        }
         if (recordVersionFields == null) {
             if (other.recordVersionFields!= null) {
                 return false;
@@ -2294,6 +2339,7 @@ public class Database implements Serializable
         result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));
         result = ((prime*result)+((includeUniqueKeys == null)? 0 :includeUniqueKeys.hashCode()));
         result = ((prime*result)+((includeForeignKeys == null)? 0 :includeForeignKeys.hashCode()));
+        result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));
         result = ((prime*result)+((syntheticIdentities == null)? 0 :syntheticIdentities.hashCode()));

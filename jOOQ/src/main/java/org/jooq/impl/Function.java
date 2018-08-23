@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.percentileCont;
@@ -76,6 +77,7 @@ import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
+import static org.jooq.impl.Term.MODE;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
@@ -225,6 +227,9 @@ class Function<T> extends AbstractField<T> implements
 
 
 
+        else if (term == MODE && (                                                            ctx.family() == POSTGRES)) {
+            ctx.visit(mode().withinGroupOrderBy(DSL.field("{0}", arguments.get(0))));
+        }
         else if (term == MEDIAN && (                                                            ctx.family() == POSTGRES)) {
             Field<?>[] fields = new Field[arguments.size()];
             for (int i = 0; i < fields.length; i++)

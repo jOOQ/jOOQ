@@ -19585,7 +19585,7 @@ def xml = new groovy.xml.MarkupBuilder(writer)
 
 // Run the code generator
 // ----------------------
-org.jooq.util.GenerationTool.generate(writer.toString())
+org.jooq.codegen.GenerationTool.generate(writer.toString())
 ]]></java><html>
                         </html></content>
                     </section>

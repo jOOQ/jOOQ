@@ -309,25 +309,20 @@ public class DefaultDataType<T> implements DataType<T> {
         if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
             String normalised = DefaultDataType.normalise(typeName);
 
-            if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
+            if (TYPES_BY_NAME[ordinal].get(normalised) == null)
                 TYPES_BY_NAME[ordinal].put(normalised, this);
-            }
         }
 
-        if (TYPES_BY_TYPE[ordinal].get(type) == null) {
+        if (TYPES_BY_TYPE[ordinal].get(type) == null)
             TYPES_BY_TYPE[ordinal].put(type, this);
-        }
 
-        if (TYPES_BY_SQL_DATATYPE[ordinal].get(sqlDataType) == null) {
+        if (TYPES_BY_SQL_DATATYPE[ordinal].get(sqlDataType) == null)
             TYPES_BY_SQL_DATATYPE[ordinal].put(sqlDataType, this);
-        }
 
         // Global data types
-        if (dialect == null) {
-            if (SQL_DATATYPES_BY_TYPE.get(type) == null) {
+        if (dialect == null)
+            if (SQL_DATATYPES_BY_TYPE.get(type) == null)
                 SQL_DATATYPES_BY_TYPE.put(type, this);
-            }
-        }
 
         this.binding = binding != null ? binding : binding(type, isLob());
         this.tType = this.binding.converter().fromType();

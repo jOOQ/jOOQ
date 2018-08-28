@@ -625,25 +625,26 @@ Result<Record> result = create.fetch(rs);]]></java><html>
 							<section id="jooq-for-crud">
 								<title>jOOQ for CRUD</title>
 								<content><html>
-									<p>
-										This is probably the most complete use-case for jOOQ: Use all of jOOQ's features. Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
-									</p>
+                                    <p>
+                                        Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
+                                    </p>
 
 </html><java><![CDATA[// Fetch all authors
-for (AuthorRecord author : create.fetch(AUTHOR)) {
+AuthorRecord author : create.fetchOne(AUTHOR, AUTHOR.ID.eq(1));
 
-    // Skip previously distinguished authors
-    if ((int) author.getDistinguished() == 1)
-        continue;
+// Create a new author, if it doesn't exist yet
+if (author == null) {
+    author = create.newRecord(AUTHOR);
+    author.setId(1);
+    author.setFirstName("Dan");
+    author.setLastName("Brown");
+}
 
-    // Check if the author has written more than 5 books
-    if (author.fetchChildren(Keys.FK_BOOK_AUTHOR).size() > 5) {
+// Mark the author as a "distinguished" author and store it
+author.setDistinguished(1);
 
-        // Mark the author as a "distinguished" author
-        author.setDistinguished(1);
-        author.store();
-    }
-}]]></java><html>
+// Executes an update on existing authors, or insert on new ones
+author.store();]]></java><html>
 
 									<p>
                    						If you wish to use all of jOOQ's features, the following sections of the manual will be of interest to you (including all sub-sections):

@@ -53,7 +53,6 @@ import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -98,12 +97,9 @@ public class JDBCDatabase extends AbstractDatabase {
                     if (t != null) {
                         UniqueKey<?> key = table.getPrimaryKey();
 
-                        if (key != null) {
-                            for (Field<?> field : key.getFields()) {
-                                ColumnDefinition c = t.getColumn(field.getName());
-                                relations.addPrimaryKey("PK_" + key.getTable().getName(), c);
-                            }
-                        }
+                        if (key != null)
+                            for (Field<?> field : key.getFields())
+                                relations.addPrimaryKey("PK_" + key.getTable().getName(), t, t.getColumn(field.getName()));
                     }
                 }
             }

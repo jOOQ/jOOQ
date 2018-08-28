@@ -198,9 +198,8 @@ public class MySQLDatabase extends AbstractDatabase {
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
 
-            if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addPrimaryKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -215,9 +214,8 @@ public class MySQLDatabase extends AbstractDatabase {
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
 
-            if (table != null) {
-                relations.addUniqueKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -298,17 +296,20 @@ public class MySQLDatabase extends AbstractDatabase {
             String foreignKey = record.get(ReferentialConstraints.CONSTRAINT_NAME);
             String foreignKeyColumn = record.get(KeyColumnUsage.COLUMN_NAME);
             String foreignKeyTableName = record.get(ReferentialConstraints.TABLE_NAME);
-            String referencedKey = record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
-            String referencedTableName = record.get(ReferentialConstraints.REFERENCED_TABLE_NAME);
+            String uniqueKey = record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
+            String uniqueKeyTableName = record.get(ReferentialConstraints.REFERENCED_TABLE_NAME);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+            TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-            if (foreignKeyTable != null) {
-                ColumnDefinition column = foreignKeyTable.getColumn(foreignKeyColumn);
-
-                String key = getKeyName(referencedTableName, referencedKey);
-                relations.addForeignKey(foreignKey, key, column, uniqueKeySchema);
-            }
+            if (foreignKeyTable != null)
+                relations.addForeignKey(
+                    foreignKey,
+                    foreignKeyTable,
+                    foreignKeyTable.getColumn(foreignKeyColumn),
+                    getKeyName(uniqueKeyTableName, uniqueKey),
+                    uniqueKeyTable
+                );
         }
     }
 

@@ -1727,25 +1727,27 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
-        for (D definition : definitions) {
+        if (name == null)
+            return null;
+
+        for (D definition : definitions)
             if ((ignoreCase && definition.getName().equalsIgnoreCase(name)) ||
-                (!ignoreCase && definition.getName().equals(name))) {
+                (!ignoreCase && definition.getName().equals(name)))
 
                 return definition;
-            }
-        }
 
         return null;
     }
 
     protected static final <D extends Definition> D getDefinition(List<D> definitions, Name name, boolean ignoreCase) {
-        for (D definition : definitions) {
+        if (name == null)
+            return null;
+
+        for (D definition : definitions)
             if ((ignoreCase && definition.getQualifiedNamePart().equalsIgnoreCase(name)) ||
-                (!ignoreCase && definition.getQualifiedNamePart().equals(name))) {
+                (!ignoreCase && definition.getQualifiedNamePart().equals(name)))
 
                 return definition;
-            }
-        }
 
         return null;
     }

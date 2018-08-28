@@ -202,9 +202,8 @@ public class H2Database extends AbstractDatabase {
                 String columnName = record.get(Indexes.COLUMN_NAME);
 
                 TableDefinition table = getTable(schema, tableName);
-                if (table != null) {
-                    relations.addPrimaryKey(primaryKey, table.getColumn(columnName));
-                }
+                if (table != null)
+                    relations.addPrimaryKey(primaryKey, table, table.getColumn(columnName));
             }
         }
     }
@@ -220,9 +219,8 @@ public class H2Database extends AbstractDatabase {
                 String columnName = record.get(Indexes.COLUMN_NAME);
 
                 TableDefinition table = getTable(schema, tableName);
-                if (table != null) {
-                    relations.addUniqueKey(primaryKey, table.getColumn(columnName));
-                }
+                if (table != null)
+                    relations.addUniqueKey(primaryKey, table, table.getColumn(columnName));
             }
         }
     }
@@ -255,6 +253,7 @@ public class H2Database extends AbstractDatabase {
                     CrossReferences.FKTABLE_SCHEMA,
                     CrossReferences.FKCOLUMN_NAME,
                     Constraints.CONSTRAINT_NAME,
+                    Constraints.TABLE_NAME,
                     Constraints.CONSTRAINT_SCHEMA)
                 .from(CROSS_REFERENCES)
                 .join(CONSTRAINTS)
@@ -275,17 +274,23 @@ public class H2Database extends AbstractDatabase {
             SchemaDefinition uniqueKeySchema = getSchema(record.get(Constraints.CONSTRAINT_SCHEMA));
 
             if (foreignKeySchema != null && uniqueKeySchema != null) {
+                String foreignKey = record.get(CrossReferences.FK_NAME);
                 String foreignKeyTableName = record.get(CrossReferences.FKTABLE_NAME);
                 String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
-                String foreignKey = record.get(CrossReferences.FK_NAME);
                 String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
+                String uniqueKeyTableName = record.get(Constraints.TABLE_NAME);
 
                 TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
-                if (foreignKeyTable != null) {
-                    ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
+                TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-                    relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
-                }
+                if (foreignKeyTable != null && uniqueKeyTable != null)
+                    relations.addForeignKey(
+                        foreignKey,
+                        foreignKeyTable,
+                        foreignKeyTable.getColumn(foreignKeyColumn),
+                        uniqueKey,
+                        uniqueKeyTable
+                    );
             }
         }
     }

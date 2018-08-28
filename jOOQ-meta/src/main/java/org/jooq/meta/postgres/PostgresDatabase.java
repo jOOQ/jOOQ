@@ -238,9 +238,8 @@ public class PostgresDatabase extends AbstractDatabase {
             String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addPrimaryKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -253,9 +252,8 @@ public class PostgresDatabase extends AbstractDatabase {
             String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addUniqueKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -299,19 +297,25 @@ public class PostgresDatabase extends AbstractDatabase {
             SchemaDefinition uniqueKeySchema = getSchema(record.get("pktable_schem", String.class));
 
             String foreignKey = record.get("fk_name", String.class);
-            String foreignKeyTable = record.get("fktable_name", String.class);
+            String foreignKeyTableName = record.get("fktable_name", String.class);
             String foreignKeyColumn = record.get("fkcolumn_name", String.class);
             String uniqueKey = record.get("pk_name", String.class);
+            String uniqueKeyTableName = record.get("pktable_name", String.class);
 
-            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+            TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-            if (referencingTable != null) {
+            if (foreignKeyTable != null && uniqueKeyTable != null)
 
                 // [#986] Add the table name as a namespace prefix to the key
                 // name. In Postgres, foreign key names are only unique per table
-                ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
-            }
+                relations.addForeignKey(
+                    foreignKeyTableName + "__" + foreignKey,
+                    foreignKeyTable,
+                    foreignKeyTable.getColumn(foreignKeyColumn),
+                    uniqueKey,
+                    uniqueKeyTable
+                );
         }
     }
 

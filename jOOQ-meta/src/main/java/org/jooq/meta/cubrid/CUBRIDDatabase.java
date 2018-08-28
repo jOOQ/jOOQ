@@ -93,9 +93,8 @@ public class CUBRIDDatabase extends AbstractDatabase {
             String columnName = record.get(DB_INDEX_KEY.KEY_ATTR_NAME);
 
             TableDefinition table = getTable(getSchemata().get(0), tableName);
-            if (table != null) {
-                relations.addUniqueKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -107,9 +106,8 @@ public class CUBRIDDatabase extends AbstractDatabase {
             String columnName = record.get(DB_INDEX_KEY.KEY_ATTR_NAME);
 
             TableDefinition table = getTable(getSchemata().get(0), tableName);
-            if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addPrimaryKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -154,12 +152,19 @@ public class CUBRIDDatabase extends AbstractDatabase {
                             record.get("PKTABLE_NAME", String.class) +
                             "__" +
                             record.get("PK_NAME", String.class);
+                        String uniqueKeyTableName = record.get("PKTABLE_NAME", String.class);
 
-                        TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTableName);
-                        if (referencingTable != null) {
-                            ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
-                            relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchemata().get(0));
-                        }
+                        TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
+                        TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), uniqueKeyTableName);
+
+                        if (foreignKeyTable != null && uniqueKeyTable != null)
+                            relations.addForeignKey(
+                                foreignKeyName,
+                                foreignKeyTable,
+                                foreignKeyTable.getColumn(foreignKeyColumnName),
+                                uniqueKeyName,
+                                uniqueKeyTable
+                            );
                     }
                 }
             }

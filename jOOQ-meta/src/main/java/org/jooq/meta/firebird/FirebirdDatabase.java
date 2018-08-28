@@ -65,7 +65,6 @@ import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -111,10 +110,8 @@ public class FirebirdDatabase extends AbstractDatabase {
             String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
-            if (td != null) {
-                ColumnDefinition cd = td.getColumn(fieldName);
-                r.addPrimaryKey(key, cd);
-            }
+            if (td != null)
+                r.addPrimaryKey(key, td, td.getColumn(fieldName));
         }
     }
 
@@ -126,10 +123,8 @@ public class FirebirdDatabase extends AbstractDatabase {
             String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
-            if (td != null) {
-                ColumnDefinition cd = td.getColumn(fieldName);
-                r.addUniqueKey(key, cd);
-            }
+            if (td != null)
+                r.addUniqueKey(key, td, td.getColumn(fieldName));
         }
     }
 
@@ -182,13 +177,17 @@ public class FirebirdDatabase extends AbstractDatabase {
             String fkTable = record.get("fkTable", String.class);
             String fkField = record.get("fkField", String.class);
 
-            TableDefinition tdReferencing = getTable(getSchemata().get(0), fkTable, true);
-            TableDefinition tdReferenced = getTable(getSchemata().get(0), pkTable, true);
+            TableDefinition foreignKeyTable = getTable(getSchemata().get(0), fkTable, true);
+            TableDefinition primaryKeyTable = getTable(getSchemata().get(0), pkTable, true);
 
-            if (tdReferenced != null && tdReferencing != null) {
-                ColumnDefinition referencingColumn = tdReferencing.getColumn(fkField);
-                relations.addForeignKey(fkName, pkName, referencingColumn, getSchemata().get(0));
-            }
+            if (primaryKeyTable != null && foreignKeyTable != null)
+                relations.addForeignKey(
+                    fkName,
+                    foreignKeyTable,
+                    foreignKeyTable.getColumn(fkField),
+                    pkName,
+                    primaryKeyTable
+                );
         }
     }
 

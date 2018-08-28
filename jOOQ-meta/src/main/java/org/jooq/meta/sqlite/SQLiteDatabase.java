@@ -61,7 +61,6 @@ import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DomainDefinition;
@@ -198,10 +197,8 @@ public class SQLiteDatabase extends AbstractDatabase {
                     String key = "pk_" + tableName;
                     TableDefinition table = getTable(getSchemata().get(0), tableName);
 
-                    if (table != null) {
-                        ColumnDefinition column = table.getColumn(columnName);
-                        relations.addPrimaryKey(key, column);
-                    }
+                    if (table != null)
+                        relations.addPrimaryKey(key, table, table.getColumn(columnName));
                 }
             }
         }
@@ -228,9 +225,8 @@ public class SQLiteDatabase extends AbstractDatabase {
             String columnName = record.get("column_name", String.class);
 
             TableDefinition table = getTable(getSchemata().get(0), tableName);
-            if (table != null) {
-                relations.addUniqueKey(keyName, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(keyName, table, table.getColumn(columnName));
         }
     }
 
@@ -260,24 +256,28 @@ public class SQLiteDatabase extends AbstractDatabase {
                     "_" + record.get("table") +
                     "_" + sequence;
 
-                String foreignKeyTable = table.getName();
+                String foreignKeyTableName = table.getName();
                 String foreignKeyColumn = record.get("from", String.class);
 
                 // SQLite mixes up cases from the actual declaration and the
                 // reference definition! It's possible that a table is declared
                 // in lower case, and the foreign key in upper case. Hence,
                 // correct the foreign key
-                TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTable);
-                TableDefinition referencedTable = getTable(getSchemata().get(0), record.get("table", String.class), true);
+                TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
+                TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), record.get("table", String.class), true);
 
-                if (referencedTable != null) {
+                if (uniqueKeyTable != null && uniqueKeyTable != null) {
                     String uniqueKey =
-                        "pk_" + referencedTable.getName();
+                        "pk_" + uniqueKeyTable.getName();
 
-                    if (referencingTable != null) {
-                        ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                        relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, getSchemata().get(0));
-                    }
+                    if (foreignKeyTable != null)
+                        relations.addForeignKey(
+                            foreignKey,
+                            foreignKeyTable,
+                            foreignKeyTable.getColumn(foreignKeyColumn),
+                            uniqueKey,
+                            uniqueKeyTable
+                        );
                 }
             }
         }

@@ -39,6 +39,7 @@ package org.jooq.meta;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -53,48 +54,70 @@ public class DefaultRelations implements Relations {
 
     private static final JooqLogger                                         log              = JooqLogger.getLogger(DefaultRelations.class);
 
-    private Map<Key, UniqueKeyDefinition>                                   primaryKeys      = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, UniqueKeyDefinition>                                   uniqueKeys       = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, ForeignKeyDefinition>                                  foreignKeys      = new LinkedHashMap<Key, ForeignKeyDefinition>();
-    private Map<Key, CheckConstraintDefinition>                             checkConstraints = new LinkedHashMap<Key, CheckConstraintDefinition>();
+    private final Map<Key, UniqueKeyDefinition>                             primaryKeys      = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private final Map<Key, UniqueKeyDefinition>                             uniqueKeys       = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private final Map<Key, ForeignKeyDefinition>                            foreignKeys      = new LinkedHashMap<Key, ForeignKeyDefinition>();
+    private final Map<Key, CheckConstraintDefinition>                       checkConstraints = new LinkedHashMap<Key, CheckConstraintDefinition>();
+    private final Set<Key>                                                  incompleteKeys   = new HashSet<Key>();
 
     private transient Map<ColumnDefinition, UniqueKeyDefinition>            primaryKeysByColumn;
     private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      uniqueKeysByColumn;
     private transient Map<ColumnDefinition, List<ForeignKeyDefinition>>     foreignKeysByColumn;
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
-    public void addPrimaryKey(String keyName, ColumnDefinition column) {
+    public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column) {
+        Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit primary key references. Ignore
         // such primary keys
         if (column == null) {
-            log.info("Ignoring primary key", keyName + "(column unavailable)");
+            log.info("Ignoring primary key", keyName + " (column unavailable)");
+
+            // [#7826] Prevent incomplete keys from being generated
+            if (table != null) {
+                incompleteKeys.add(key);
+                primaryKeys.remove(key);
+                uniqueKeys.remove(key);
+            }
+
             return;
         }
 
-	    if (log.isDebugEnabled()) {
-	        log.debug("Adding primary key", keyName + " (" + column + ")");
-	    }
+        if (incompleteKeys.contains(key))
+            return;
 
-	    UniqueKeyDefinition key = getUniqueKey(keyName, column, true);
-        key.getKeyColumns().add(column);
+	    if (log.isDebugEnabled())
+	        log.debug("Adding primary key", keyName + " (" + column + ")");
+
+	    UniqueKeyDefinition result = getUniqueKey(keyName, table, column, true);
+        result.getKeyColumns().add(column);
 	}
 
-    public void addUniqueKey(String keyName, ColumnDefinition column) {
+    public void addUniqueKey(String keyName, TableDefinition table, ColumnDefinition column) {
+        Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit unique key references. Ignore
         // such unique keys
         if (column == null) {
-            log.info("Ignoring unique key", keyName + "(column unavailable)");
+            log.info("Ignoring unique key", keyName + " (column unavailable)");
+
+            // [#7826] Prevent incomplete keys from being generated
+            if (table != null) {
+                incompleteKeys.add(key);
+                uniqueKeys.remove(key);
+            }
+
             return;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Adding unique key", keyName + " (" + column + ")");
-        }
+        if (incompleteKeys.contains(key))
+            return;
 
-        UniqueKeyDefinition key = getUniqueKey(keyName, column, false);
-        key.getKeyColumns().add(column);
+        if (log.isDebugEnabled())
+            log.debug("Adding unique key", keyName + " (" + column + ")");
+
+        UniqueKeyDefinition result = getUniqueKey(keyName, table, column, false);
+        result.getKeyColumns().add(column);
     }
 
     public void overridePrimaryKey(UniqueKeyDefinition key) {
@@ -118,6 +141,9 @@ public class DefaultRelations implements Relations {
 
         // Add the new primary key
         Key mapKey = key(key.getTable(), key.getName());
+        if (incompleteKeys.contains(mapKey))
+            return;
+
         primaryKeys.put(mapKey, key);
         uniqueKeys.put(mapKey, key);
         log.info("Overriding primary key", "Table : " + key.getTable() +
@@ -125,61 +151,72 @@ public class DefaultRelations implements Relations {
                  ", new key : " + key.getName());
     }
 
-    private UniqueKeyDefinition getUniqueKey(String keyName, ColumnDefinition column, boolean isPK) {
-        UniqueKeyDefinition key = uniqueKeys.get(key(column, keyName));
+    private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK) {
+        Key key = key(table, keyName);
+        UniqueKeyDefinition result = uniqueKeys.get(key);
 
-        if (key == null) {
-            key = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, column.getContainer(), isPK);
-            uniqueKeys.put(key(column, keyName), key);
+        if (result == null) {
+            result = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, table, isPK);
+            uniqueKeys.put(key, result);
 
-            if (isPK) {
-                primaryKeys.put(key(column, keyName), key);
-            }
+            if (isPK)
+                primaryKeys.put(key, result);
         }
 
-        return key;
+        return result;
     }
 
     public void addForeignKey(
-            String foreignKeyName,
-            String uniqueKeyName,
-            ColumnDefinition foreignKeyColumn,
-            SchemaDefinition uniqueKeySchema) {
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable) {
 
 
         // [#2718] Column exclusions may hit foreign key references. Ignore
         // such foreign keys
+        Key key = key(foreignKeyTable, foreignKeyName);
         if (foreignKeyColumn == null) {
-            log.info("Ignoring foreign key", foreignKeyColumn + "(column unavailable)");
+            log.info("Ignoring foreign key", foreignKeyColumn + " (column unavailable)");
+
+            // [#7826] Prevent incomplete keys from being generated
+            if (foreignKeyTable != null) {
+                incompleteKeys.add(key);
+                foreignKeys.remove(key);
+            }
+
             return;
         }
 
+        if (incompleteKeys.contains(key))
+            return;
+
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
-        if (uniqueKeySchema == null) {
-            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeySchema);
+        if (uniqueKeyTable == null) {
+            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeyTable);
             return;
         }
 
         log.info("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName);
 
-        ForeignKeyDefinition foreignKey = foreignKeys.get(key(foreignKeyColumn, foreignKeyName));
+        ForeignKeyDefinition foreignKey = foreignKeys.get(key);
 
         if (foreignKey == null) {
-            UniqueKeyDefinition uniqueKey = uniqueKeys.get(key(uniqueKeySchema, uniqueKeyName));
+            UniqueKeyDefinition uniqueKey = uniqueKeys.get(key(uniqueKeyTable, uniqueKeyName));
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
                 foreignKey = new DefaultForeignKeyDefinition(foreignKeyColumn.getSchema(), foreignKeyName, foreignKeyColumn.getContainer(), uniqueKey);
-                foreignKeys.put(key(foreignKeyColumn, foreignKeyName), foreignKey);
+                foreignKeys.put(key, foreignKey);
 
                 uniqueKey.getForeignKeys().add(foreignKey);
             }
         }
 
-        if (foreignKey != null) {
+        if (foreignKey != null)
             foreignKey.getKeyColumns().add(foreignKeyColumn);
-        }
 	}
 
     public void addCheckConstraint(TableDefinition table, CheckConstraintDefinition constraint) {
@@ -191,11 +228,9 @@ public class DefaultRelations implements Relations {
 	    if (primaryKeysByColumn == null) {
 	        primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
 
-	        for (UniqueKeyDefinition primaryKey : primaryKeys.values()) {
-	            for (ColumnDefinition keyColumn : primaryKey.getKeyColumns()) {
+	        for (UniqueKeyDefinition primaryKey : primaryKeys.values())
+	            for (ColumnDefinition keyColumn : primaryKey.getKeyColumns())
 	                primaryKeysByColumn.put(keyColumn, primaryKey);
-	            }
-	        }
 	    }
 
 	    return primaryKeysByColumn.get(column);
@@ -228,9 +263,8 @@ public class DefaultRelations implements Relations {
     public List<UniqueKeyDefinition> getUniqueKeys(TableDefinition table) {
         Set<UniqueKeyDefinition> result = new LinkedHashSet<UniqueKeyDefinition>();
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (ColumnDefinition column : table.getColumns())
             result.addAll(getUniqueKeys(column));
-        }
 
         return new ArrayList<UniqueKeyDefinition>(result);
     }
@@ -239,9 +273,8 @@ public class DefaultRelations implements Relations {
     public List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
         Set<UniqueKeyDefinition> result = new LinkedHashSet<UniqueKeyDefinition>();
 
-        for (TableDefinition table : schema.getDatabase().getTables(schema)) {
+        for (TableDefinition table : schema.getDatabase().getTables(schema))
             result.addAll(getUniqueKeys(table));
-        }
 
         return new ArrayList<UniqueKeyDefinition>(result);
     }
@@ -279,9 +312,8 @@ public class DefaultRelations implements Relations {
     public List<ForeignKeyDefinition> getForeignKeys(TableDefinition table) {
         Set<ForeignKeyDefinition> result = new LinkedHashSet<ForeignKeyDefinition>();
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (ColumnDefinition column : table.getColumns())
             result.addAll(getForeignKeys(column));
-        }
 
         return new ArrayList<ForeignKeyDefinition>(result);
     }
@@ -307,25 +339,25 @@ public class DefaultRelations implements Relations {
         return list != null ? list : Collections.<CheckConstraintDefinition>emptyList();
     }
 
-    private static Key key(Definition definition, String keyName) {
-        return new Key(definition.getSchema(), keyName);
+    private static Key key(TableDefinition definition, String keyName) {
+        return new Key(definition, keyName);
     }
 
     /**
-     * A simple local wrapper for a key definition (schema + key name)
+     * A simple local wrapper for a key definition (table + key name)
      */
     private static class Key {
-        final SchemaDefinition schema;
+        final TableDefinition table;
         final String keyName;
 
-        Key(SchemaDefinition schema, String keyName) {
-            this.schema = schema;
+        Key(TableDefinition table, String keyName) {
+            this.table = table;
             this.keyName = keyName;
         }
 
         @Override
         public String toString() {
-            return "Key [schema=" + schema + ", keyName=" + keyName + "]";
+            return "Key [table=" + table + ", keyName=" + keyName + "]";
         }
 
         @Override
@@ -333,7 +365,7 @@ public class DefaultRelations implements Relations {
             final int prime = 31;
             int result = 1;
             result = prime * result + ((keyName == null) ? 0 : keyName.hashCode());
-            result = prime * result + ((schema == null) ? 0 : schema.hashCode());
+            result = prime * result + ((table == null) ? 0 : table.hashCode());
             return result;
         }
 
@@ -352,11 +384,11 @@ public class DefaultRelations implements Relations {
             }
             else if (!keyName.equals(other.keyName))
                 return false;
-            if (schema == null) {
-                if (other.schema != null)
+            if (table == null) {
+                if (other.table != null)
                     return false;
             }
-            else if (!schema.equals(other.schema))
+            else if (!table.equals(other.table))
                 return false;
             return true;
         }

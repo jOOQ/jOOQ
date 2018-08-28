@@ -70,7 +70,6 @@ import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -192,9 +191,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
             String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addPrimaryKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -207,9 +205,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
             String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addUniqueKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -240,14 +237,18 @@ public class HSQLDBDatabase extends AbstractDatabase {
             .select(
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
+                TABLE_CONSTRAINTS.TABLE_NAME,
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME,
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
-            .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+                .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .join(TABLE_CONSTRAINTS)
+                .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA))
+                .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME))
             .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
@@ -261,16 +262,22 @@ public class HSQLDBDatabase extends AbstractDatabase {
             SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
             String foreignKey = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String foreignKeyTable = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String foreignKeyTableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String uniqueKeyTableName = record.get(TABLE_CONSTRAINTS.TABLE_NAME);
 
-            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+            TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-            if (referencingTable != null) {
-                ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
-            }
+            if (foreignKeyTable != null && uniqueKeyTable != null)
+                relations.addForeignKey(
+                    foreignKey,
+                    foreignKeyTable,
+                    foreignKeyTable.getColumn(foreignKeyColumn),
+                    uniqueKey,
+                    uniqueKeyTable
+                );
         }
     }
 

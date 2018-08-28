@@ -387,9 +387,8 @@ public class XMLDatabase extends AbstractDatabase {
             String columnName = usage.getColumnName();
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addPrimaryKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addPrimaryKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -402,9 +401,8 @@ public class XMLDatabase extends AbstractDatabase {
             String columnName = usage.getColumnName();
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addUniqueKey(key, table.getColumn(columnName));
-            }
+            if (table != null)
+                relations.addUniqueKey(key, table, table.getColumn(columnName));
         }
     }
 
@@ -447,28 +445,42 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) {
-        for (ReferentialConstraint constraint : info().getReferentialConstraints()) {
-            if (getInputSchemata().contains(constraint.getConstraintSchema())) {
-
+        for (ReferentialConstraint fk : info().getReferentialConstraints()) {
+            if (getInputSchemata().contains(fk.getConstraintSchema())) {
                 for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
-                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
-                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName())) {
+                    if (    StringUtils.equals(fk.getConstraintCatalog(), usage.getConstraintCatalog())
+                         && StringUtils.equals(fk.getConstraintSchema(), usage.getConstraintSchema())
+                         && StringUtils.equals(fk.getConstraintName(), usage.getConstraintName())) {
 
-                        SchemaDefinition foreignKeySchema = getSchema(constraint.getConstraintSchema());
-                        SchemaDefinition uniqueKeySchema = getSchema(constraint.getUniqueConstraintSchema());
+                        SchemaDefinition foreignKeySchema = getSchema(fk.getConstraintSchema());
+                        SchemaDefinition uniqueKeySchema = getSchema(fk.getUniqueConstraintSchema());
 
                         String foreignKey = usage.getConstraintName();
-                        String foreignKeyTable = usage.getTableName();
+                        String foreignKeyTableName = usage.getTableName();
                         String foreignKeyColumn = usage.getColumnName();
-                        String uniqueKey = constraint.getUniqueConstraintName();
+                        String uniqueKey = fk.getUniqueConstraintName();
+                        String uniqueKeyTableName = null;
 
-                        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
-
-                        if (referencingTable != null) {
-                            ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                            relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                        for (TableConstraint uk : info().getTableConstraints()) {
+                            if (    StringUtils.equals(fk.getUniqueConstraintCatalog(), uk.getConstraintCatalog())
+                                 && StringUtils.equals(fk.getUniqueConstraintSchema(), uk.getConstraintSchema())
+                                 && StringUtils.equals(fk.getUniqueConstraintName(), uk.getConstraintName())) {
+                                uniqueKeyTableName = uk.getTableName();
+                                break;
+                            }
                         }
+
+                        TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+                        TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
+
+                        if (foreignKeyTable != null && uniqueKeyTable != null)
+                            relations.addForeignKey(
+                                foreignKey,
+                                foreignKeyTable,
+                                foreignKeyTable.getColumn(foreignKeyColumn),
+                                uniqueKey,
+                                uniqueKeyTable
+                            );
                     }
                 }
             }

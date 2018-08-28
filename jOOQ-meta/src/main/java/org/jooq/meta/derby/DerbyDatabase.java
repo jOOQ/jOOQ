@@ -63,7 +63,6 @@ import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -97,11 +96,9 @@ public class DerbyDatabase extends AbstractDatabase {
             String descriptor = record.get(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                for (int index : decode(descriptor)) {
-                    relations.addPrimaryKey(key, table.getColumn(index));
-                }
-            }
+            if (table != null)
+                for (int index : decode(descriptor))
+                    relations.addPrimaryKey(key, table, table.getColumn(index));
 	    }
 	}
 
@@ -117,11 +114,9 @@ public class DerbyDatabase extends AbstractDatabase {
             String descriptor = record.get(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                for (int index : decode(descriptor)) {
-                    relations.addUniqueKey(key, table.getColumn(index));
-                }
-            }
+            if (table != null)
+                for (int index : decode(descriptor))
+                    relations.addUniqueKey(key, table, table.getColumn(index));
         }
     }
 
@@ -158,6 +153,7 @@ public class DerbyDatabase extends AbstractDatabase {
 	    Field<String> fkSchema = field("fs.schemaname", String.class);
 	    Field<?> fkDescriptor = field("fg.descriptor");
 	    Field<String> ukName = field("pc.constraintname", String.class);
+        Field<String> ukTable = field("pt.tablename", String.class);
 	    Field<String> ukSchema = field("ps.schemaname", String.class);
 
 	    for (Record record : create().select(
@@ -166,6 +162,7 @@ public class DerbyDatabase extends AbstractDatabase {
 	            fkSchema,
 	            fkDescriptor,
 	            ukName,
+	            ukTable,
 	            ukSchema)
 	        .from("sys.sysconstraints   fc")
 	        .join("sys.sysforeignkeys   f ").on("f.constraintid = fc.constraintid")
@@ -173,7 +170,8 @@ public class DerbyDatabase extends AbstractDatabase {
 	        .join("sys.systables        ft").on("ft.tableid = fg.tableid")
 	        .join("sys.sysschemas       fs").on("ft.schemaid = fs.schemaid")
 	        .join("sys.sysconstraints   pc").on("pc.constraintid = f.keyconstraintid")
-	        .join("sys.sysschemas       ps").on("pc.schemaid = ps.schemaid")
+            .join("sys.systables        pt").on("pt.tableid = pc.tableid")
+	        .join("sys.sysschemas       ps").on("ps.schemaid = pt.schemaid")
             // [#6797] The cast is necessary if a non-standard collation is used
 	        .where("cast(fc.type as varchar(32672)) = 'F'")
 	        .fetch()) {
@@ -185,15 +183,20 @@ public class DerbyDatabase extends AbstractDatabase {
             String foreignKeyTableName = record.get(fkTable);
             List<Integer> foreignKeyIndexes = decode(record.get(fkDescriptor, String.class));
             String uniqueKeyName = record.get(ukName);
+            String uniqueKeyTableName = record.get(ukTable);
 
-	        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
-            if (referencingTable != null) {
-                for (int i = 0; i < foreignKeyIndexes.size(); i++) {
-                    ColumnDefinition column = referencingTable.getColumn(foreignKeyIndexes.get(i));
+	        TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+	        TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
-                }
-            }
+            if (foreignKeyTable != null && uniqueKeyTable != null)
+                for (int i = 0; i < foreignKeyIndexes.size(); i++)
+                    relations.addForeignKey(
+                        foreignKeyName,
+                        foreignKeyTable,
+                        foreignKeyTable.getColumn(foreignKeyIndexes.get(i)),
+                        uniqueKeyName,
+                        uniqueKeyTable
+                    );
 	    }
 	}
 

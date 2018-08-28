@@ -171,12 +171,12 @@ public class CatalogMappingType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (inputCatalog!= null) {
+        if ((inputCatalog!= null)&&(!"".equals(inputCatalog))) {
             sb.append("<inputCatalog>");
             sb.append(inputCatalog);
             sb.append("</inputCatalog>");
         }
-        if (outputCatalog!= null) {
+        if ((outputCatalog!= null)&&(!"".equals(outputCatalog))) {
             sb.append("<outputCatalog>");
             sb.append(outputCatalog);
             sb.append("</outputCatalog>");

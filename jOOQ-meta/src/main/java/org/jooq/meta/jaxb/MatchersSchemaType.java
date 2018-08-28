@@ -159,7 +159,7 @@ public class MatchersSchemaType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (expression!= null) {
+        if ((expression!= null)&&(!"".equals(expression))) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");
@@ -174,7 +174,7 @@ public class MatchersSchemaType implements Serializable
             sb.append(schemaIdentifier);
             sb.append("</schemaIdentifier>");
         }
-        if (schemaImplements!= null) {
+        if ((schemaImplements!= null)&&(!"".equals(schemaImplements))) {
             sb.append("<schemaImplements>");
             sb.append(schemaImplements);
             sb.append("</schemaImplements>");

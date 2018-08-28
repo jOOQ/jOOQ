@@ -190,7 +190,7 @@ public class Generator implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (name!= null) {
+        if ((name!= null)&&(!"".equals(name))) {
             sb.append("<name>");
             sb.append(name);
             sb.append("</name>");

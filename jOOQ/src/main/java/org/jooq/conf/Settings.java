@@ -1542,7 +1542,7 @@ public class Settings
             sb.append(inListPadBase);
             sb.append("</inListPadBase>");
         }
-        if (delimiter!= null) {
+        if ((delimiter!= null)&&(!"".equals(delimiter))) {
             sb.append("<delimiter>");
             sb.append(delimiter);
             sb.append("</delimiter>");

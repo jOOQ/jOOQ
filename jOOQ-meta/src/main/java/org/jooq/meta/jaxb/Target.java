@@ -168,17 +168,17 @@ public class Target implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (packageName!= null) {
+        if ((packageName!= null)&&(!"".equals(packageName))) {
             sb.append("<packageName>");
             sb.append(packageName);
             sb.append("</packageName>");
         }
-        if (directory!= null) {
+        if ((directory!= null)&&(!"".equals(directory))) {
             sb.append("<directory>");
             sb.append(directory);
             sb.append("</directory>");
         }
-        if (encoding!= null) {
+        if ((encoding!= null)&&(!"".equals(encoding))) {
             sb.append("<encoding>");
             sb.append(encoding);
             sb.append("</encoding>");

@@ -59,6 +59,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.UniqueKeyDefinition;
 // ...
 import org.jooq.tools.StringUtils;
 
@@ -138,6 +139,13 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         //         In order to have non-ambiguous identifiers, we need to include the table name.
         else if (definition instanceof IndexDefinition && asList(MYSQL, MARIADB).contains(definition.getDatabase().getDialect().family()))
             return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase() + "_" + definition.getOutputName().toUpperCase();
+
+
+
+
+
+
+
         else
             return definition.getOutputName().toUpperCase();
     }

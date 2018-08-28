@@ -630,7 +630,7 @@ Result<Record> result = create.fetch(rs);]]></java><html>
                                         Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
                                     </p>
 
-</html><java><![CDATA[// Fetch all authors
+</html><java><![CDATA[// Fetch an author
 AuthorRecord author : create.fetchOne(AUTHOR, AUTHOR.ID.eq(1));
 
 // Create a new author, if it doesn't exist yet

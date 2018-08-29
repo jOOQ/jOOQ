@@ -129,14 +129,14 @@ final class QualifiedName extends AbstractName {
         int nulls = 0;
 
         for (int i = 0; i < names.length; i++)
-            if (names[i] == null)
+            if (names[i] == null || names[i].equals(NO_NAME))
                 nulls++;
 
         if (nulls > 0) {
             result = new Name[names.length - nulls];
 
             for (int i = names.length - 1; i >= 0; i--)
-                if (names[i] == null)
+                if (names[i] == null || names[i].equals(NO_NAME))
                     nulls--;
                 else
                     result[i - nulls] = names[i];

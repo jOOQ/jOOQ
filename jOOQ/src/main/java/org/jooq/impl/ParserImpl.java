@@ -322,6 +322,8 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Delete;
+import org.jooq.DeleteLimitStep;
+import org.jooq.DeleteOrderByStep;
 import org.jooq.DeleteReturningStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
@@ -397,6 +399,8 @@ import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.Update;
 import org.jooq.UpdateFromStep;
+import org.jooq.UpdateLimitStep;
+import org.jooq.UpdateOrderByStep;
 import org.jooq.UpdateReturningStep;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateWhereStep;
@@ -1499,21 +1503,14 @@ final class ParserImpl implements Parser {
 
         parseKeywordIf(ctx, "FROM");
         Table<?> tableName = parseTableName(ctx);
-        boolean where = parseKeywordIf(ctx, "WHERE");
-        Condition condition = where ? parseCondition(ctx) : null;
 
-        DeleteWhereStep<?> s1;
-        DeleteReturningStep<?> s2;
+        DeleteWhereStep<?> s1 = with == null ? ctx.dsl.delete(tableName) : with.delete(tableName);
+        DeleteOrderByStep<?> s2 = parseKeywordIf(ctx, "WHERE") ? s1.where(parseCondition(ctx)) : s1;
+        DeleteLimitStep<?> s3 = parseKeywordIf(ctx, "ORDER BY") ? s2.orderBy(parseSortSpecification(ctx)) : s2;
+        DeleteReturningStep<?> s4 = parseKeywordIf(ctx, "LIMIT") ? s3.limit(parseUnsignedInteger(ctx)) : s3;
+        Delete<?> s5 = parseKeywordIf(ctx, "RETURNING") ? s4.returning(parseSelectList(ctx)) : s4;
 
-        s1 = (with == null ? ctx.dsl.delete(tableName) : with.delete(tableName));
-        s2 = where
-            ? s1.where(condition)
-            : s1;
-
-        if (parseKeywordIf(ctx, "RETURNING"))
-            return s2.returning(parseSelectList(ctx));
-        else
-            return s2;
+        return s5;
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
@@ -1647,19 +1644,13 @@ final class ParserImpl implements Parser {
         // TODO Row value expression updates
         Map<Field<?>, Object> map = parseSetClauseList(ctx);
         UpdateFromStep<?> s2 = s1.set(map);
-        UpdateWhereStep<?> s3 =
-              parseKeywordIf(ctx, "FROM")
-            ? s2.from(parseTables(ctx))
-            : s2;
+        UpdateWhereStep<?> s3 = parseKeywordIf(ctx, "FROM") ? s2.from(parseTables(ctx)) : s2;
+        UpdateOrderByStep<?> s4 = parseKeywordIf(ctx, "WHERE") ? s3.where(parseCondition(ctx)) : s3;
+        UpdateLimitStep<?> s5 = parseKeywordIf(ctx, "ORDER BY") ? s4.orderBy(parseSortSpecification(ctx)) : s4;
+        UpdateReturningStep<?> s6 = parseKeywordIf(ctx, "LIMIT") ? s5.limit(parseUnsignedInteger(ctx)) : s5;
+        Update<?> s7 = parseKeywordIf(ctx, "RETURNING") ? s6.returning(parseSelectList(ctx)) : s6;
 
-        UpdateReturningStep<?> s4 =
-              parseKeywordIf(ctx, "WHERE")
-            ? s3.where(parseCondition(ctx))
-            : s3;
-
-        return parseKeywordIf(ctx, "RETURNING")
-            ? s4.returning(parseSelectList(ctx))
-            : s4;
+        return s7;
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {

@@ -172,7 +172,7 @@ renameStatement = 'RENAME'
 | 'INDEX' indexName ( 'TO' | 'AS' ) indexName
 | 'SCHEMA' schemaName ( 'TO' | 'AS' ) schemaName
 | 'SEQUENCE' sequenceName ( 'TO' | 'AS' ) sequenceName
-| 'VIEW' tabelName ( 'TO' | 'AS' ) tableName
+| 'VIEW' tableName ( 'TO' | 'AS' ) tableName
 | [ 'TABLE' ] tableName ( 'TO' | 'AS' ) tableName
 )
 ;
@@ -242,6 +242,8 @@ updateStatement =
   ( 'UPDATE' | 'UPD' ) tableName
   'SET' setClauses
   [ 'WHERE' condition ]
+  [ 'ORDER BY' sortFields ]
+  [ 'LIMIT' unsignedInteger ]
   [ 'RETURNING' ( '*' | fields ) ]
 ;
 
@@ -255,6 +257,8 @@ deleteStatement =
   [ with ]
   ( 'DELETE' | 'DEL' ) [ 'FROM' ] tableName
   [ 'WHERE' condition ]
+  [ 'ORDER BY' sortFields ]
+  [ 'LIMIT' unsignedInteger ]
   [ 'RETURNING' ( '*' | fields ) ]
 ;
 

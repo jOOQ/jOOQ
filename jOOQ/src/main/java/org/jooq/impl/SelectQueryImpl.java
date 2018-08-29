@@ -2174,13 +2174,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addOrderBy(int... fieldIndexes) {
-        Field<?>[] fields = new Field[fieldIndexes.length];
-
-        for (int i = 0; i < fieldIndexes.length; i++) {
-            fields[i] = inline(fieldIndexes[i]);
-        }
-
-        addOrderBy(fields);
+        addOrderBy(Tools.inline(fieldIndexes));
     }
 
     @Override

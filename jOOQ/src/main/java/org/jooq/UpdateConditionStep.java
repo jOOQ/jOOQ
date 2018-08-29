@@ -73,7 +73,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface UpdateConditionStep<R extends Record> extends UpdateReturningStep<R> {
+public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the

@@ -52,6 +52,8 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Operator;
+import org.jooq.OrderField;
+import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -677,6 +679,35 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
+    }
+
+    @Override
+    public final UpdateImpl<R> orderBy(OrderField<?>... fields) {
+        getDelegate().addOrderBy(fields);
+        return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> orderBy(Collection<? extends OrderField<?>> fields) {
+        getDelegate().addOrderBy(fields);
+        return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> orderBy(int... fieldIndexes) {
+        return orderBy(Tools.inline(fieldIndexes));
+    }
+
+    @Override
+    public final UpdateImpl<R> limit(Number numberOfRows) {
+        getDelegate().addLimit(numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> limit(Param<? extends Number> numberOfRows) {
+        getDelegate().addLimit(numberOfRows);
+        return this;
     }
 
     @Override

@@ -40,7 +40,10 @@ package org.jooq;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -100,6 +103,38 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
     @Override
     @Support
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
+
+    /**
+     * Adds ordering fields.
+     *
+     * @param fields The ordering fields
+     */
+    @Support({ MARIADB, MYSQL })
+    void addOrderBy(OrderField<?>... fields);
+
+    /**
+     * Adds ordering fields.
+     *
+     * @param fields The ordering fields
+     */
+    @Support({ MARIADB, MYSQL })
+    void addOrderBy(Collection<? extends OrderField<?>> fields);
+
+    /**
+     * Limit the results of this select.
+     *
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ MARIADB, MYSQL })
+    void addLimit(Number numberOfRows);
+
+    /**
+     * Limit the results of this select using named parameters.
+     *
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ MARIADB, MYSQL })
+    void addLimit(Param<? extends Number> numberOfRows);
 
     // ------------------------------------------------------------------------
     // XXX: Methods for the DELETE .. RETURNING syntax

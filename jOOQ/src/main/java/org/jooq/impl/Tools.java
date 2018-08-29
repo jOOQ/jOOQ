@@ -1601,6 +1601,19 @@ final class Tools {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
+    static final Field<Integer>[] inline(int[] fieldIndexes) {
+        if (fieldIndexes == null)
+            return (Field<Integer>[]) EMPTY_FIELD;
+
+        Field<Integer>[] result = new Field[fieldIndexes.length];
+
+        for (int i = 0; i < fieldIndexes.length; i++)
+            result[i] = DSL.inline(fieldIndexes[i]);
+
+        return result;
+    }
+
     /**
      * A utility method that fails with an exception if
      * {@link Row#indexOf(Field)} doesn't return any index.

@@ -72,7 +72,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface DeleteWhereStep<R extends Record> extends DeleteReturningStep<R> {
+public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> {
 
     /**
      * Add conditions to the query, connecting them with each other with

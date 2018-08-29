@@ -60,6 +60,8 @@ import static org.jooq.SQLDialect.POSTGRES_10;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LIMIT;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
@@ -76,6 +78,8 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.OrderField;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -147,6 +151,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Row                              multiRow;
     private Row                              multiValue;
     private Select<?>                        multiSelect;
+    private final SortFieldList              orderBy;
+    private Param<?>                         limit;
 
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -154,6 +160,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         this.updateMap = new FieldMapForUpdate(table, UPDATE_SET_ASSIGNMENT);
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
+        this.orderBy = new SortFieldList();
     }
 
     @Override
@@ -456,6 +463,26 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         condition.addConditions(operator, conditions);
     }
 
+    @Override
+    public final void addOrderBy(OrderField<?>... fields) {
+        addOrderBy(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void addOrderBy(Collection<? extends OrderField<?>> fields) {
+        orderBy.addAll(Tools.sortFields(fields));
+    }
+
+    @Override
+    public final void addLimit(Number numberOfRows) {
+        addLimit(DSL.val(numberOfRows));
+    }
+
+    @Override
+    public final void addLimit(Param<? extends Number> numberOfRows) {
+        limit = numberOfRows;
+    }
+
     final Condition getWhere() {
         return condition.getWhere();
     }
@@ -609,11 +636,20 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                .visit(K_WHERE).sql(' ')
                .visit(getWhere());
 
-        ctx.end(UPDATE_WHERE)
-           .start(UPDATE_RETURNING);
+        ctx.end(UPDATE_WHERE);
 
+        if (!orderBy.isEmpty())
+            ctx.formatSeparator()
+               .visit(K_ORDER_BY).sql(' ')
+               .visit(orderBy);
+
+        if (limit != null)
+            ctx.formatSeparator()
+               .visit(K_LIMIT).sql(' ')
+               .visit(limit);
+
+        ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
-
         ctx.end(UPDATE_RETURNING);
     }
 

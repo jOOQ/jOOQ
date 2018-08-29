@@ -52,6 +52,8 @@ import org.jooq.DeleteResultStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.OrderField;
+import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -289,6 +291,35 @@ final class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
+    }
+
+    @Override
+    public final DeleteImpl<R> orderBy(OrderField<?>... fields) {
+        getDelegate().addOrderBy(fields);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> orderBy(Collection<? extends OrderField<?>> fields) {
+        getDelegate().addOrderBy(fields);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> orderBy(int... fieldIndexes) {
+        return orderBy(Tools.inline(fieldIndexes));
+    }
+
+    @Override
+    public final DeleteImpl<R> limit(Number numberOfRows) {
+        getDelegate().addLimit(numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> limit(Param<? extends Number> numberOfRows) {
+        getDelegate().addLimit(numberOfRows);
+        return this;
     }
 
     @Override

@@ -11,6 +11,37 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.11.5 - September 12, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Features and Improvements
+-------------------------
+#7750 - Support parsing CREATE INDEX .. ON .. USING btree (..)
+
+Bug Fixes
+---------
+#7744 - Potential NullPointerException in custom Converter when running INSERT statement
+#7762 - JZ0NK: Generated keys are not available in Sybase ASE when calling UpdatableRecord.store() on a table without identity
+#7768 - DDLDatabase scripts path wild cards do not work correctly
+#7770 - Parser cannot parse MySQL's DEFAULT CHARSET clause
+#7773 - DDLDatabase should ignore storage clauses
+#7777 - Race condition in cached ImmutablePOJOMapperWithParameterNames
+#7779 - SQLDialectNotSupportedException: The ON DUPLICATE KEY UPDATE clause cannot be emulated for DEFAULT when using the Batch API with named parameters
+#7784 - NullPointerException when aggregating row value expressions using ARRAY_AGG()
+#7786 - Column pg_prog.proisagg does not exist in PostgreSQL 11
+#7790 - Wrong type information associated to Row[N].operator(T1, ..., TN) predicates
+#7815 - Error during code generation when using DDLDatabase on a table with a MySQL enum type
+#7818 - Implement <includeUniqueKeys/>, <includePrimaryKeys/> and <includeForeignKeys/>
+#7822 - DDLDatabase does not generate enum types when parsing MySQL ENUM syntax
+#7828 - NPE when generating code for an index whose column(s) are not generated
+#7836 - AbstractMeta::get never returns an unqualified result
+#7837 - name("").append(name("a")) produces wrong result
+#7855 - Code generator fails to parse partial index when using DDLDatabase
+
+
 Version 3.11.4 - August 9, 2018
 ================================================================================
 

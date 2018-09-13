@@ -3003,15 +3003,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             final List<String> values = PostgresUtils.toPGObject(object.toString());
 
-            // [#6404] In the event of an unknown record type, derive the record length from actual values.
-            //         Unfortunately, few column types can be derived from this information. Some possibilities
-            //         for future jOOQ versions include:
-            //         - Integers
-            //         - Numbers
-            //         - Binary data (starts with \x)
-            //         - Temporal data
-            //         - Everything else: VARCHAR
-            if (fields == null && type == Record.class)
+            // [#6404] [#7691]
+            //   In the event of an unknown record type, derive the record length from actual values.
+            //   Unfortunately, few column types can be derived from this information. Some possibilities
+            //   for future jOOQ versions include:
+            //   - Integers
+            //   - Numbers
+            //   - Binary data (starts with \x)
+            //   - Temporal data
+            //   - Everything else: VARCHAR
+            if (fields == null && Record.class.isAssignableFrom(type))
                 fields = Tools.fields(values.size(), SQLDataType.VARCHAR);
 
             return Tools.newRecord(true, (Class<Record>) type, fields)

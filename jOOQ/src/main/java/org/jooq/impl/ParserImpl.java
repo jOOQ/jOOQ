@@ -2516,7 +2516,8 @@ final class ParserImpl implements Parser {
                 parseIf(ctx, '=');
                 storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
-            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null) {
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null
+                  || (keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARSET")) != null) {
                 parseIf(ctx, '=');
                 storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
@@ -3188,6 +3189,7 @@ final class ParserImpl implements Parser {
         Name indexName = parseIndexNameIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
+        parseKeywordIf(ctx, "USING BTREE");
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');

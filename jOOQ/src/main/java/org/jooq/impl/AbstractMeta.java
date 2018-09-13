@@ -152,7 +152,7 @@ abstract class AbstractMeta implements Meta, Serializable {
                 List<T> list = unqualified.get(u);
                 if (list == null) {
                     list = new ArrayList<T>();
-                    unqualified.get(u);
+                    unqualified.put(u, list);
                 }
 
                 list.add(object);

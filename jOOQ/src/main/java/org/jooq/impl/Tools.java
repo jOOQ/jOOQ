@@ -4227,6 +4227,7 @@ final class Tools {
 
 
 
+                case H2:
                 case MARIADB:
                 case MYSQL: {
                     ctx.visit(K_ENUM).sql('(');

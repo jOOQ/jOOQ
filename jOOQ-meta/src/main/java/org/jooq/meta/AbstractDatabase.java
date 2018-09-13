@@ -1216,7 +1216,7 @@ public abstract class AbstractDatabase implements Database {
         if (uniqueKeys == null) {
             uniqueKeys = new ArrayList<UniqueKeyDefinition>();
 
-            if (getIncludeUniqueKeys())
+            if (getIncludeUniqueKeys() || getIncludePrimaryKeys())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
                         for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys())
@@ -1862,21 +1862,24 @@ public abstract class AbstractDatabase implements Database {
         DefaultRelations result = new DefaultRelations();
 
         try {
-            loadPrimaryKeys(result);
+            if (getIncludePrimaryKeys())
+                loadPrimaryKeys(result);
         }
         catch (Exception e) {
             log.error("Error while fetching primary keys", e);
         }
 
         try {
-            loadUniqueKeys(result);
+            if (getIncludeUniqueKeys())
+                loadUniqueKeys(result);
         }
         catch (Exception e) {
             log.error("Error while fetching unique keys", e);
         }
 
         try {
-            loadForeignKeys(result);
+            if (getIncludeForeignKeys())
+                loadForeignKeys(result);
         }
         catch (Exception e) {
             log.error("Error while fetching foreign keys", e);
@@ -1890,14 +1893,16 @@ public abstract class AbstractDatabase implements Database {
         }
 
         try {
-            syntheticPrimaryKeys(result);
+            if (getIncludePrimaryKeys())
+                syntheticPrimaryKeys(result);
         }
         catch (Exception e) {
             log.error("Error while generating synthetic primary keys", e);
         }
 
         try {
-            overridePrimaryKeys(result);
+            if (getIncludePrimaryKeys())
+                overridePrimaryKeys(result);
         }
         catch (Exception e) {
             log.error("Error while overriding primary keys", e);

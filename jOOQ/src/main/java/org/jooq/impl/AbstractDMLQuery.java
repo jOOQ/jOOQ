@@ -687,7 +687,19 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
-                    rs = ctx.statement().getGeneratedKeys();
+                    try {
+                        rs = ctx.statement().getGeneratedKeys();
+                    }
+                    catch (SQLException e) {
+
+
+
+
+
+
+
+                        throw e;
+                    }
 
                     try {
                         List<Object> list = new ArrayList<Object>();

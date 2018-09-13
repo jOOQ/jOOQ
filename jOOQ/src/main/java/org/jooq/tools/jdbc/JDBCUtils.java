@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 import static org.jooq.SQLDialect.POSTGRES_11;
@@ -182,6 +183,8 @@ public class JDBCUtils {
 
         return dialect;
     }
+
+
 
 
 

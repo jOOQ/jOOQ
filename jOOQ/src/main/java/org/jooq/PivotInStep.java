@@ -38,7 +38,6 @@
 package org.jooq;
 
 // ...
-// ...
 
 import java.util.Collection;
 

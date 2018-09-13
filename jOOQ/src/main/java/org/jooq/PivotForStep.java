@@ -38,7 +38,6 @@
 package org.jooq;
 
 // ...
-// ...
 
 /**
  * This type is used for the Oracle <code>PIVOT</code> clause DSL API, pivoting

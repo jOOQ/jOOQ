@@ -11,7 +11,7 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
-Version 3.11.5 - September 12, 2018
+Version 3.11.5 - September 13, 2018
 ================================================================================
 
 This is a 3.11 patch release with bug fixes

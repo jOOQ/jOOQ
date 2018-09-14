@@ -9708,9 +9708,11 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
         // Depending on how you generate your SQL, you may need to explicitly distinguish
-        // between jOOQ generating bind variables or inlined literals. If so, use this check:
-        // ctx.render().paramType() == INLINED
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+        // between jOOQ generating bind variables or inlined literals.
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value())).sql("::json");
+        else
+            ctx.render().sql("?::json");
     }
 
     // Registering VARCHAR types for JDBC CallableStatement OUT parameters
@@ -15277,9 +15279,11 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
         // Depending on how you generate your SQL, you may need to explicitly distinguish
-        // between jOOQ generating bind variables or inlined literals. If so, use this check:
-        // ctx.render().paramType() == INLINED
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+        // between jOOQ generating bind variables or inlined literals.
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value())).sql("::json");
+        else
+            ctx.render().sql("?::json");
     }
 
     // Registering VARCHAR types for JDBC CallableStatement OUT parameters

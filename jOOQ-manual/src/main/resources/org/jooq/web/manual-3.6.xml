@@ -39,7 +39,7 @@
   * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
   * and Maintenance Agreement for more details: http://www.jooq.org/licensing
   -->
-<manual version="3.6" end-of-life="false">
+<manual version="3.6" end-of-life="true">
 	<section id="manual">
 		<title>The jOOQ User Manual. Multiple Pages</title>
 		<content><html>

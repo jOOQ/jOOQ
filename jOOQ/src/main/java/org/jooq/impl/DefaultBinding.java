@@ -2428,11 +2428,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])?(\\d)?(\\d)(:\\d{2})?)?");
 
     private static final OffsetTime offsetTime(String string) {
-        return string == null ? null : OffsetTime.parse(preparse(string, false));
+        return string == null ? null : OffsetTime.parse(preparse(avoid24h(string), false));
     }
+
 
     private static final OffsetDateTime offsetDateTime(String string) {
         return string == null ? null : OffsetDateTime.parse(preparse(string, true));
+    }
+
+    private static final String avoid24h(String formatted) {
+
+        // [#5895] HSQLDB seems to confuse 00:00:00+02:00 with 24:00:00+02:00
+        // https://sourceforge.net/p/hsqldb/bugs/1523/
+        return formatted.startsWith("24:")
+             ? formatted = "00:" + formatted.substring(2)
+             : formatted;
     }
 
     private static final String preparse(String formatted, boolean includeDate) {
@@ -2502,6 +2512,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (ctx.family() == H2)
                 ctx.render().visit(K_CAST).sql("('").sql(escape(format(value), ctx.render())).sql("' ")
                             .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
+
+            // [#5895] HSQLDB derives the specific data type from the literal
+            if (ctx.family() == HSQLDB)
+                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
 
 
 
@@ -2628,6 +2642,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetTime value) {
 
+            // [#5895] HSQLDB derives the specific data type from the literal
+            if (ctx.family() == HSQLDB)
+                ctx.render().visit(K_TIME).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
 
 
 
@@ -2636,7 +2653,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             // Some dialects implement SQL standard time literals
-            ctx.render().visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+            else
+                ctx.render().visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
         }
 
         @Override

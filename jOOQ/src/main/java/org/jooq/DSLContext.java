@@ -9927,7 +9927,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     BigInteger currval(String sequence) throws DataAccessException;
 
     /**
@@ -9936,7 +9936,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     BigInteger currval(Name sequence) throws DataAccessException;
 
     /**
@@ -9945,7 +9945,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

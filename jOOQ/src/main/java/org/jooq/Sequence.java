@@ -77,7 +77,7 @@ public interface Sequence<T extends Number> extends Named {
     /**
      * Get the current value of this sequence
      */
-    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Field<T> currval();
 
     /**

@@ -41,6 +41,7 @@ import static org.jooq.Clause.SEQUENCE;
 import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
@@ -162,13 +163,12 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
-                    if ("nextval".equals(method)) {
-                        String field = "next value for " + getQualifiedName(configuration);
-                        return DSL.field(field, getDataType());
-                    }
-                    else if (family == FIREBIRD) {
+                    if ("nextval".equals(method))
+                        return DSL.field("next value for " + getQualifiedName(configuration), getDataType());
+                    else if (family == HSQLDB)
+                        return DSL.field("current value for " + getQualifiedName(configuration), getDataType());
+                    else if (family == FIREBIRD)
                         return DSL.field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
-                    }
 
 
 

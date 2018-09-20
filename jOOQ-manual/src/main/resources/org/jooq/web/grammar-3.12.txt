@@ -764,6 +764,7 @@ term =
 | 'TRUNC' '(' field ',' stringLiteral ')'
 | 'TRUNC' '(' sum ',' sum ')'
 | truthValue
+| 'UNIX_TIMESTAMP' '(' field ')'
 | ( 'UPPER' | 'UCASE' ) '(' field ')'
 | 'VAR_POP' '(' field ')' [ over ]
 | 'VAR_SAMP' '(' field ')' [ over ]

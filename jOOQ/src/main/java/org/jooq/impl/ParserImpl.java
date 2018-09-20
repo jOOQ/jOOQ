@@ -4843,6 +4843,10 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldUpperIf(ctx)) != null)
                         return field;
 
+                if (D.is(type))
+                    if ((field = parseFieldUnixTimestampIf(ctx)) != null)
+                        return field;
+
                 break;
 
             case 'w':
@@ -6140,6 +6144,17 @@ final class ParserImpl implements Parser {
 
     private static final Field<?> parseFieldEpochIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "EPOCH")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return epoch(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldUnixTimestampIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "UNIX_TIMESTAMP")) {
             parse(ctx, '(');
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');

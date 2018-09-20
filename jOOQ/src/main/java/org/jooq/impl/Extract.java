@@ -276,6 +276,8 @@ final class Extract extends AbstractFunction<Integer> {
 
             case HSQLDB:
                 switch (datePart) {
+                    case EPOCH:
+                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
                     case QUARTER:
                         return DSL.field("{quarter}({0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:

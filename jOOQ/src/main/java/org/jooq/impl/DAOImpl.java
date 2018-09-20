@@ -342,8 +342,6 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     // XXX: Template methods for generated subclasses
     // ------------------------------------------------------------------------
 
-    protected abstract T getId(P object);
-
     @SuppressWarnings("unchecked")
     protected /* non-final */ T compositeKeyRecord(Object... values) {
         UniqueKey<R> key = table.getPrimaryKey();

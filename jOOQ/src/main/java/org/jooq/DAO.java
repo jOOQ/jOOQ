@@ -283,12 +283,18 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
 
     /**
-     * Get the underlying table
+     * Get the underlying table.
      */
     Table<R> getTable();
 
     /**
-     * Get the underlying POJO type
+     * Get the underlying POJO type.
      */
     Class<P> getType();
+
+    /**
+     * Extract the ID value from a POJO.
+     */
+    T getId(P object);
+
 }

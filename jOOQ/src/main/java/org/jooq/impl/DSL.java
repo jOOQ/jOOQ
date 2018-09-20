@@ -13037,7 +13037,7 @@ public class DSL {
      *
      * @see #translate(Field, Field, Field)
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<String> translate(Field<String> text, String from, String to) {
         return translate(text, Tools.field(from), Tools.field(to));
     }
@@ -13045,7 +13045,7 @@ public class DSL {
     /**
      * Get the translate(field, from, to) function.
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<String> translate(Field<String> text, Field<String> from, Field<String> to) {
         return new Translate(text, from, to);
     }

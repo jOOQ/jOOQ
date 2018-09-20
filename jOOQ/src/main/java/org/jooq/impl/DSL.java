@@ -15264,7 +15264,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     public static Field<OffsetTime> offsetTime(String value) {
         return Tools.field(Convert.convert(value, OffsetTime.class));
     }
@@ -15278,7 +15278,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetTime> offsetTime(OffsetTime value) {
         return offsetTime(Tools.field(value));
     }
@@ -15292,7 +15292,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     public static Field<OffsetTime> offsetTime(Field<OffsetTime> field) {
         return new DateOrTime<OffsetTime>(field, SQLDataType.OFFSETTIME);
     }
@@ -15306,7 +15306,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
         return Tools.field(Convert.convert(value, OffsetDateTime.class));
     }
@@ -15320,7 +15320,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
         return offsetDateTime(Tools.field(value));
     }
@@ -15334,7 +15334,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
         return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
     }

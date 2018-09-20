@@ -17367,6 +17367,9 @@ public class DSL {
      * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
      * numbers, and does some additional handling for zero and negative numbers.
      * <p>
+     * Note that this implementation may introduce rounding errors, even for
+     * integer multiplication.
+     * <p>
      * More information here: <a href=
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
@@ -17381,6 +17384,9 @@ public class DSL {
      * No database currently supports multiplicative aggregation natively. jOOQ
      * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
      * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * Note that this implementation may introduce rounding errors, even for
+     * integer multiplication.
      * <p>
      * More information here: <a href=
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.

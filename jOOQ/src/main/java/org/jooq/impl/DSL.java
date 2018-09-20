@@ -17361,6 +17361,36 @@ public class DSL {
     }
 
     /**
+     * Get the product over a numeric field: product(field).
+     * <p>
+     * No database currently supports multiplicative aggregation natively. jOOQ
+     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
+     * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * More information here: <a href=
+     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     */
+    @Support
+    public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
+        return new org.jooq.impl.Function<BigDecimal>(Term.PRODUCT, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * Get the sum over a numeric field: product(distinct field).
+     * <p>
+     * No database currently supports multiplicative aggregation natively. jOOQ
+     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
+     * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * More information here: <a href=
+     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     */
+    @Support
+    public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
+        return new org.jooq.impl.Function<BigDecimal>(Term.PRODUCT, true, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
      * Get the average over a numeric field: avg(field).
      */
     @Support

@@ -214,6 +214,12 @@ enum Term {
             return "octet_length";
         }
     },
+    PRODUCT {
+        @Override
+        public String translate(SQLDialect dialect) {
+            return "product";
+        }
+    },
     ROW_NUMBER {
         @Override
         public String translate(SQLDialect dialect) {

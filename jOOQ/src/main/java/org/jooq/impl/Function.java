@@ -53,10 +53,13 @@ import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DENSE_RANK;
 import static org.jooq.impl.Keywords.K_DISTINCT;
@@ -78,6 +81,7 @@ import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.MODE;
+import static org.jooq.impl.Term.PRODUCT;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
@@ -236,6 +240,40 @@ class Function<T> extends AbstractField<T> implements
                 fields[i] = DSL.field("{0}", arguments.get(i));
 
             ctx.visit(percentileCont(new BigDecimal("0.5")).withinGroupOrderBy(fields));
+        }
+        else if (term == PRODUCT) {
+            @SuppressWarnings({ "unchecked", "rawtypes" })
+            Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0));
+            Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
+
+            @SuppressWarnings("serial")
+            Field<BigDecimal> negativesSum = new CustomField<BigDecimal>("sum", SQLDataType.NUMERIC) {
+                @Override
+                public void accept(Context<?> c) {
+                    c.visit(distinct
+                        ? DSL.sumDistinct(negatives)
+                        : DSL.sum(negatives));
+
+                    toSQLFilterClause(c);
+                    toSQLOverClause(c);
+                }
+            };
+
+            @SuppressWarnings("serial")
+            Field<BigDecimal> logarithmsSum = new CustomField<BigDecimal>("sum", SQLDataType.NUMERIC) {
+                @Override
+                public void accept(Context<?> c) {
+                    c.visit(DSL.sum(DSL.ln(DSL.abs(f))));
+
+                    toSQLFilterClause(c);
+                    toSQLOverClause(c);
+                }
+            };
+
+            ctx.visit(
+                when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
+               .otherwise(one()).mul(DSL.exp(logarithmsSum))
+            );
         }
         else {
             toSQLArguments(ctx);

@@ -95,6 +95,10 @@ final class ExplainQuery {
                 result = ctx.fetch("{explain analyze} {0}", query);
                 break;
 
+            case HSQLDB:
+                result = ctx.fetch("{explain plan for} {0}", query);
+                break;
+
 
 
 
@@ -134,8 +138,11 @@ final class ExplainQuery {
 
 
 
-            case H2: {
-                // H2's EXPLAIN ANALYZE output is rather difficult to digest
+            // H2's EXPLAIN ANALYZE output is rather difficult to digest
+            case H2:
+
+            // HSQLDB's EXPLAIN PLAN FOR output doesn't contain any useful additional information
+            case HSQLDB: {
                 break;
             }
             case MARIADB:

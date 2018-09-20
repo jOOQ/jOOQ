@@ -713,6 +713,7 @@ term =
 | ( 'PERCENTILE_CONT' | 'PERCENTILE_DISC' ) '(' unsignedNumericLiteral ')' withinGroup [ over ]
 | ( 'POW' | 'POWER' ) '(' field ',' field ')'
 | 'PRIOR' concat
+| 'PRODUCT' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'QUARTER' '(' field ')'
 | (
     'REGR_SLOPE'
@@ -750,7 +751,7 @@ term =
 | 'STDDEV_SAMP' '(' field ')' [ over ]
 | 'STR_REPLACE' '(' field ',' field ',' field ')'
 | 'SUBSTRING' '(' field 'FROM' sum [ 'FOR' sum ] ')'
-| 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ]
+| 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'TAN' '(' sum ')'
 | 'TANH' '(' sum ')'
 | timeLiteral

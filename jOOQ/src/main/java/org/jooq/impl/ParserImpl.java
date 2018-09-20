@@ -167,6 +167,8 @@ import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.prior;
 import static org.jooq.impl.DSL.privilege;
+import static org.jooq.impl.DSL.product;
+import static org.jooq.impl.DSL.productDistinct;
 import static org.jooq.impl.DSL.quarter;
 import static org.jooq.impl.DSL.rad;
 import static org.jooq.impl.DSL.rangeBetweenCurrentRow;
@@ -6963,6 +6965,7 @@ final class ParserImpl implements Parser {
             case MAX:
             case MIN:
             case SUM:
+            case PRODUCT:
                 distinct = parseSetQuantifier(ctx);
                 break;
             default:
@@ -6982,6 +6985,8 @@ final class ParserImpl implements Parser {
                 return distinct ? minDistinct(arg) : min(arg);
             case SUM:
                 return distinct ? sumDistinct(arg) : sum(arg);
+            case PRODUCT:
+                return distinct ? productDistinct(arg) : product(arg);
             case MEDIAN:
                 return median(arg);
             case EVERY:
@@ -8187,6 +8192,8 @@ final class ParserImpl implements Parser {
             return ComputationalOperation.MIN;
         else if (parseFunctionNameIf(ctx, "SUM"))
             return ComputationalOperation.SUM;
+        else if (parseFunctionNameIf(ctx, "PRODUCT"))
+            return ComputationalOperation.PRODUCT;
         else if (parseFunctionNameIf(ctx, "MEDIAN"))
             return ComputationalOperation.MEDIAN;
         else if (parseFunctionNameIf(ctx, "EVERY") || parseFunctionNameIf(ctx, "BOOL_AND"))
@@ -8571,6 +8578,7 @@ final class ParserImpl implements Parser {
         MAX,
         MIN,
         SUM,
+        PRODUCT,
         EVERY,
         ANY,
         SOME,

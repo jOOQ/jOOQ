@@ -68,9 +68,8 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     final void addAll(Field<?>... fields) {
         SortField<?>[] result = new SortField[fields.length];
 
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++)
             result[i] = fields[i].asc();
-        }
 
         addAll(Arrays.asList(result));
     }

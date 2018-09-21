@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -77,15 +73,15 @@ import static org.jooq.SQLDialect.MYSQL;
 public interface UpdateLimitStep<R extends Record> extends UpdateReturningStep<R> {
 
     /**
-     * Add a <code>LIMIT</code> clause to the query
+     * Add a <code>LIMIT</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     UpdateReturningStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query using named parameters.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     UpdateReturningStep<R> limit(Param<? extends Number> numberOfRows);
 
 

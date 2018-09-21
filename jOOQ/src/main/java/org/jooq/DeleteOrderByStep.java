@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-
 import java.util.Collection;
 
 /**
@@ -77,19 +73,19 @@ import java.util.Collection;
 public interface DeleteOrderByStep<R extends Record> extends DeleteLimitStep<R> {
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     DeleteLimitStep<R> orderBy(OrderField<?>... fields);
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     DeleteLimitStep<R> orderBy(Collection<? extends OrderField<?>> fields);
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      * <p>
      * Indexes start at <code>1</code> in SQL!
      * <p>
@@ -97,6 +93,6 @@ public interface DeleteOrderByStep<R extends Record> extends DeleteLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     DeleteLimitStep<R> orderBy(int... fieldIndexes);
 }

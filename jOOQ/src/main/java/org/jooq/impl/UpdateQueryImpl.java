@@ -47,17 +47,28 @@ import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_10;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 // ...
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
@@ -130,7 +141,9 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.UniqueKey;
 import org.jooq.UpdateQuery;
 
 /**
@@ -144,6 +157,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
     private static final EnumSet<SQLDialect> SUPPORT_RVE_SET        = EnumSet.of(H2, HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_LIMIT       = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     private final FieldMapForUpdate          updateMap;
     private final TableList                  from;
@@ -152,7 +166,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Row                              multiValue;
     private Select<?>                        multiSelect;
     private final SortFieldList              orderBy;
-    private Param<?>                         limit;
+    private Param<? extends Number>          limit;
 
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -629,24 +643,43 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 break;
         }
 
-        ctx.start(UPDATE_WHERE);
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table.getKeys().isEmpty()) {
+            UniqueKey<?> key = table.getPrimaryKey() != null ? table.getPrimaryKey() : table.getKeys().get(0);
 
-        if (hasWhere())
-            ctx.formatSeparator()
-               .visit(K_WHERE).sql(' ')
-               .visit(getWhere());
+            @SuppressWarnings("unchecked")
+            TableField<?, Object>[] keyFields = (TableField<?, Object>[]) key.getFieldsArray();
 
-        ctx.end(UPDATE_WHERE);
+            ctx.start(UPDATE_WHERE)
+               .formatSeparator()
+               .visit(K_WHERE).sql(' ');
 
-        if (!orderBy.isEmpty())
-            ctx.formatSeparator()
-               .visit(K_ORDER_BY).sql(' ')
-               .visit(orderBy);
+            if (keyFields.length == 1)
+                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+            else
+                ctx.visit(row(keyFields).in(select(keyFields).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
 
-        if (limit != null)
-            ctx.formatSeparator()
-               .visit(K_LIMIT).sql(' ')
-               .visit(limit);
+            ctx.end(UPDATE_WHERE);
+        }
+        else {
+            ctx.start(UPDATE_WHERE);
+
+            if (hasWhere())
+                ctx.formatSeparator()
+                   .visit(K_WHERE).sql(' ')
+                   .visit(getWhere());
+
+            ctx.end(UPDATE_WHERE);
+
+            if (!orderBy.isEmpty())
+                ctx.formatSeparator()
+                   .visit(K_ORDER_BY).sql(' ')
+                   .visit(orderBy);
+
+            if (limit != null)
+                ctx.formatSeparator()
+                   .visit(K_LIMIT).sql(' ')
+                   .visit(limit);
+        }
 
         ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);

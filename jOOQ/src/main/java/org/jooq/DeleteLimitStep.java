@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-
 /**
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
@@ -75,14 +71,14 @@ import static org.jooq.SQLDialect.MYSQL;
 public interface DeleteLimitStep<R extends Record> extends DeleteReturningStep<R> {
 
     /**
-     * Add a <code>LIMIT</code> clause to the query
+     * Add a <code>LIMIT</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     DeleteReturningStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query using named parameters.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     DeleteReturningStep<R> limit(Param<? extends Number> numberOfRows);
 }

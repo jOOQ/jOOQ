@@ -40,10 +40,7 @@ package org.jooq;
 
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -109,7 +106,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @param fields The ordering fields
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addOrderBy(OrderField<?>... fields);
 
     /**
@@ -117,7 +114,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @param fields The ordering fields
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addOrderBy(Collection<? extends OrderField<?>> fields);
 
     /**
@@ -125,7 +122,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addLimit(Number numberOfRows);
 
     /**
@@ -133,7 +130,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addLimit(Param<? extends Number> numberOfRows);
 
     // ------------------------------------------------------------------------

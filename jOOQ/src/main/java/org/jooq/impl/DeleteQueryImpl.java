@@ -43,9 +43,32 @@ import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
 // ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
@@ -67,6 +90,8 @@ import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
 
 /**
  * @author Lukas Eder
@@ -76,10 +101,11 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     private static final long                serialVersionUID         = -1943687511774150929L;
     private static final Clause[]            CLAUSES                  = { DELETE };
     private static final EnumSet<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = EnumSet.of(MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_LIMIT         = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     private final ConditionProviderImpl      condition;
     private final SortFieldList              orderBy;
-    private Param<?>                         limit;
+    private Param<? extends Number>          limit;
 
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -167,25 +193,45 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
            .declareTables(true)
            .visit(table)
            .declareTables(declare)
-           .end(DELETE_DELETE)
-           .start(DELETE_WHERE);
+           .end(DELETE_DELETE);
 
-        if (hasWhere())
-            ctx.formatSeparator()
-               .visit(K_WHERE).sql(' ')
-               .visit(getWhere());
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table.getKeys().isEmpty()) {
+            UniqueKey<?> key = table.getPrimaryKey() != null ? table.getPrimaryKey() : table.getKeys().get(0);
 
-        ctx.end(DELETE_WHERE);
+            @SuppressWarnings("unchecked")
+            TableField<?, Object>[] keyFields = (TableField<?, Object>[]) key.getFieldsArray();
 
-        if (!orderBy.isEmpty())
-            ctx.formatSeparator()
-               .visit(K_ORDER_BY).sql(' ')
-               .visit(orderBy);
+            ctx.start(DELETE_WHERE)
+               .formatSeparator()
+               .visit(K_WHERE).sql(' ');
 
-        if (limit != null)
-            ctx.formatSeparator()
-               .visit(K_LIMIT).sql(' ')
-               .visit(limit);
+            if (keyFields.length == 1)
+                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+            else
+                ctx.visit(row(keyFields).in(select(keyFields).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+
+            ctx.end(DELETE_WHERE);
+        }
+        else {
+            ctx.start(DELETE_WHERE);
+
+            if (hasWhere())
+                ctx.formatSeparator()
+                   .visit(K_WHERE).sql(' ')
+                   .visit(getWhere());
+
+            ctx.end(DELETE_WHERE);
+
+            if (!orderBy.isEmpty())
+                ctx.formatSeparator()
+                   .visit(K_ORDER_BY).sql(' ')
+                   .visit(orderBy);
+
+            if (limit != null)
+                ctx.formatSeparator()
+                   .visit(K_LIMIT).sql(' ')
+                   .visit(limit);
+        }
 
         ctx.start(DELETE_RETURNING);
         toSQLReturning(ctx);

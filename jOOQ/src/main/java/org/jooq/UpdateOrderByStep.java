@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-
 import java.util.Collection;
 
 /**
@@ -79,19 +75,19 @@ import java.util.Collection;
 public interface UpdateOrderByStep<R extends Record> extends UpdateLimitStep<R> {
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     UpdateLimitStep<R> orderBy(OrderField<?>... fields);
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     UpdateLimitStep<R> orderBy(Collection<? extends OrderField<?>> fields);
 
     /**
-     * Add an <code>ORDER BY</code> clause to the query
+     * Add an <code>ORDER BY</code> clause to the query.
      * <p>
      * Indexes start at <code>1</code> in SQL!
      * <p>
@@ -99,7 +95,7 @@ public interface UpdateOrderByStep<R extends Record> extends UpdateLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     UpdateLimitStep<R> orderBy(int... fieldIndexes);
 
 }

@@ -40,14 +40,11 @@ package org.jooq;
 
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -419,7 +416,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param fields The ordering fields
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addOrderBy(OrderField<?>... fields);
 
     /**
@@ -427,7 +424,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param fields The ordering fields
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addOrderBy(Collection<? extends OrderField<?>> fields);
 
     /**
@@ -435,7 +432,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addLimit(Number numberOfRows);
 
     /**
@@ -443,7 +440,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ MARIADB, MYSQL })
+    @Support
     void addLimit(Param<? extends Number> numberOfRows);
 
     // ------------------------------------------------------------------------

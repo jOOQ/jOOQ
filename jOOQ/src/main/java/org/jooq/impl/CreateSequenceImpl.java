@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_CACHE;
@@ -85,6 +86,7 @@ final class CreateSequenceImpl extends AbstractQuery implements
     private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> REQUIRES_START_WITH      = EnumSet.of(DERBY);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_CACHE         = EnumSet.of(DERBY, HSQLDB);
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;
@@ -252,10 +254,11 @@ final class CreateSequenceImpl extends AbstractQuery implements
         else if (noCycle)
             ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CYCLE);
 
-        if (cache != null)
-            ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
-        else if (noCache)
-            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CACHE);
+        if (!NO_SUPPORT_CACHE.contains(ctx.family()))
+            if (cache != null)
+                ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
+            else if (noCache)
+                ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CACHE);
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }

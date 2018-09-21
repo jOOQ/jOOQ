@@ -80,37 +80,37 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep startWith(Number constant);
 
     /**
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep startWith(Field<? extends Number> constant);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep incrementBy(Number constant);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep incrementBy(Field<? extends Number> constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep minvalue(Number constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep minvalue(Field<? extends Number> constant);
 
     /**
@@ -122,13 +122,13 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Number constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Field<? extends Number> constant);
 
     /**
@@ -140,7 +140,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>CYCLE</code> clause to the sequence definition.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep cycle();
 
     /**

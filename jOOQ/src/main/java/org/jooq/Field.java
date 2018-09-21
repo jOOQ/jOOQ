@@ -1659,6 +1659,36 @@ extends
      * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
+     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     *
+     * @see DSL#escape(String, char)
+     * @see #like(String, char)
+     */
+    @Support
+    Condition startsWithIgnoreCase(T value);
+
+    /**
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     *
+     * @see DSL#escape(Field, char)
+     * @see #like(Field, char)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Condition startsWithIgnoreCase(Field<T> value);
+
+    /**
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
      * <p>
      * Note: This also works with numbers, for instance
@@ -1684,6 +1714,36 @@ extends
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition endsWith(Field<T> value);
+
+    /**
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     *
+     * @see DSL#escape(String, char)
+     * @see #like(String, char)
+     */
+    @Support
+    Condition endsWithIgnoreCase(T value);
+
+    /**
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || lower(escape(value, '\'))) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     *
+     * @see DSL#escape(Field, char)
+     * @see #like(Field, char)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Condition endsWithIgnoreCase(Field<T> value);
 
     // ------------------------------------------------------------------------
     // IN predicates

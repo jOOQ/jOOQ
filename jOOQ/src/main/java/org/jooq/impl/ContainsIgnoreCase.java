@@ -63,18 +63,24 @@ final class ContainsIgnoreCase<T> extends AbstractCondition {
 
     private final Field<T>        lhs;
     private final Field<T>        rhs;
+    private final boolean         leftWildcard;
+    private final boolean         rightWildcard;
     private final T               value;
 
-    ContainsIgnoreCase(Field<T> field, T value) {
+    ContainsIgnoreCase(Field<T> field, T value, boolean leftWildcard, boolean rightWildcard) {
         this.lhs = field;
         this.rhs = null;
         this.value = value;
+        this.leftWildcard = leftWildcard;
+        this.rightWildcard = rightWildcard;
     }
 
-    ContainsIgnoreCase(Field<T> field, Field<T> rhs) {
+    ContainsIgnoreCase(Field<T> field, Field<T> rhs, boolean leftWildcard, boolean rightWildcard) {
         this.lhs = field;
         this.rhs = rhs;
         this.value = null;
+        this.leftWildcard = leftWildcard;
+        this.rightWildcard = rightWildcard;
     }
 
     @Override
@@ -88,15 +94,20 @@ final class ContainsIgnoreCase<T> extends AbstractCondition {
     }
 
     private final Condition condition(Configuration configuration) {
-        Field<String> concat;
+        Field<?>[] array = new Field[1 + (leftWildcard ? 1 : 0) + (rightWildcard ? 1 : 0)];
 
-        if (rhs == null) {
-            concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
-        }
-        else {
-            concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));
-        }
+        int i = 0;
+        if (leftWildcard)
+            array[i++] = inline("%");
 
-        return lhs.likeIgnoreCase(concat, Tools.ESCAPE);
+        if (rhs == null)
+            array[i++] = Tools.escapeForLike(value, configuration);
+        else
+            array[i++] = Tools.escapeForLike(rhs, configuration);
+
+        if (rightWildcard)
+            array[i++] = inline("%");
+
+        return lhs.likeIgnoreCase(DSL.concat(array), Tools.ESCAPE);
     }
 }

@@ -866,12 +866,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         if (value instanceof Field)
             return containsIgnoreCase((Field) value);
         else
-            return new ContainsIgnoreCase<T>(this, value);
+            return new ContainsIgnoreCase<T>(this, value, true, true);
     }
 
     @Override
     public final Condition containsIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value);
+        return new ContainsIgnoreCase<T>(this, value, true, true);
     }
 
     @Override
@@ -902,6 +902,20 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
+    public final Condition startsWithIgnoreCase(T value) {
+        if (value instanceof Field)
+            return startsWithIgnoreCase((Field) value);
+        else
+            return new ContainsIgnoreCase<T>(this, value, true, false);
+    }
+
+    @Override
+    public final Condition startsWithIgnoreCase(Field<T> value) {
+        return new ContainsIgnoreCase<T>(this, value, true, false);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
     public final Condition endsWith(T value) {
         if (value instanceof Field)
             return endsWith((Field) value);
@@ -914,6 +928,20 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     public final Condition endsWith(Field<T> value) {
         Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
         return like(concat, Tools.ESCAPE);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Condition endsWithIgnoreCase(T value) {
+        if (value instanceof Field)
+            return endsWithIgnoreCase((Field) value);
+        else
+            return new ContainsIgnoreCase<T>(this, value, false, true);
+    }
+
+    @Override
+    public final Condition endsWithIgnoreCase(Field<T> value) {
+        return new ContainsIgnoreCase<T>(this, value, false, true);
     }
 
     private final boolean isAccidentalSelect(T[] values) {

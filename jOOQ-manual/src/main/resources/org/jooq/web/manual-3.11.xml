@@ -15707,7 +15707,7 @@ result.forEach((Object[] entities) -> {
                                                 <li><code>org.jooq.meta.oracle.OracleDatabase</code></li>
                                                 <li><code>org.jooq.meta.postgres.PostgresDatabase</code></li>
                                                 <li><code>org.jooq.meta.redshift.RedshiftDatabase</code></li>
-                                                <li><code>org.jooq.meta.sqlite.SQLiteDatabaes</code></li>
+                                                <li><code>org.jooq.meta.sqlite.SQLiteDatabase</code></li>
                                                 <li><code>org.jooq.meta.sqlserver.SQLServerDatabase</code></li>
                                                 <li><code>org.jooq.meta.sybase.SybaseDatabase</code></li>
                                                 <li><code>org.jooq.meta.vertica.VerticaDatabase</code></li>

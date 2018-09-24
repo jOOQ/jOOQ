@@ -1025,8 +1025,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryTerm(ctx, degree, null, null));
                     break;
                 default:
-                    ctx.internalError();
-                    break;
+                    throw ctx.internalError();
             }
         }
 
@@ -1049,8 +1048,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree, null));
                     break;
                 default:
-                    ctx.internalError();
-                    break;
+                    throw ctx.internalError();
             }
         }
 
@@ -8165,7 +8163,7 @@ final class ParserImpl implements Parser {
                 return CombineOperator.UNION;
             else
                 return CombineOperator.UNION;
-        else if (!intersectOnly && parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS"))
+        else if (!intersectOnly && (parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS")))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.EXCEPT_ALL;
             else if (parseKeywordIf(ctx, "DISTINCT"))

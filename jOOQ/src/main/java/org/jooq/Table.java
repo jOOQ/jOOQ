@@ -292,6 +292,32 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     @Support
     QualifiedAsterisk asterisk();
 
+    /**
+     * Get a <code>table.rowid</code> reference from this table.
+     * <p>
+     * A rowid value describes the physical location of a row on the disk, which
+     * can be used as a replacement for a primary key in some situations -
+     * especially within a query, e.g. to self-join a table:
+     * <p>
+     * <code><pre>
+     * -- Emulating this MySQL statement...
+     * DELETE FROM x ORDER BY x.y LIMIT 1
+     *
+     * -- ... in other databases
+     * DELETE FROM x
+     * WHERE x.rowid IN (
+     *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
+     * )
+     * </pre></code>
+     * <p>
+     * It is <em>not</em> recommended to use <code>rowid</code> values in client
+     * applications as actual row identifiers as the database system may move a
+     * row to a different physical location at any time, thus changing the rowid
+     * value. In general, use primary keys, instead.
+     */
+    @Support({ H2, POSTGRES, SQLITE })
+    Field<?> rowid();
+
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses
     // -------------------------------------------------------------------------

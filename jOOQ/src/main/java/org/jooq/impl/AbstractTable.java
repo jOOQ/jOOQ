@@ -171,14 +171,23 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return record.into(this);
     }
 
-    // ------------------------------------------------------------------------
-    // XXX: TableLike API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX: Expressions based on this table
+    // -------------------------------------------------------------------------
 
     @Override
     public final QualifiedAsterisk asterisk() {
         return new QualifiedAsteriskImpl(this);
     }
+
+    @Override
+    public final Field<?> rowid() {
+        return new Rowid(this);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: TableLike API
+    // ------------------------------------------------------------------------
 
     /**
      * Subclasses should override this method to provide the set of fields

@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.mode;
@@ -76,6 +77,7 @@ import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
@@ -247,7 +249,7 @@ class Function<T> extends AbstractField<T> implements
             Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
             @SuppressWarnings("serial")
-            Field<BigDecimal> negativesSum = new CustomField<BigDecimal>("sum", SQLDataType.NUMERIC) {
+            Field<BigDecimal> negativesSum = new CustomField<BigDecimal>("sum", NUMERIC) {
                 @Override
                 public void accept(Context<?> c) {
                     c.visit(distinct
@@ -260,10 +262,25 @@ class Function<T> extends AbstractField<T> implements
             };
 
             @SuppressWarnings("serial")
-            Field<BigDecimal> logarithmsSum = new CustomField<BigDecimal>("sum", SQLDataType.NUMERIC) {
+            Field<BigDecimal> zerosSum = new CustomField<BigDecimal>("sum", NUMERIC) {
                 @Override
                 public void accept(Context<?> c) {
-                    c.visit(DSL.sum(DSL.ln(DSL.abs(f))));
+                    c.visit(DSL.sum(choose(f).when(zero(), one())));
+
+                    toSQLFilterClause(c);
+                    toSQLOverClause(c);
+                }
+            };
+
+            @SuppressWarnings("serial")
+            Field<BigDecimal> logarithmsSum = new CustomField<BigDecimal>("sum", NUMERIC) {
+                @Override
+                public void accept(Context<?> c) {
+                    Field<BigDecimal> ln = DSL.ln(DSL.abs(DSL.nullif(f, zero())));
+
+                    c.visit(distinct
+                        ? DSL.sumDistinct(ln)
+                        : DSL.sum(ln));
 
                     toSQLFilterClause(c);
                     toSQLOverClause(c);
@@ -271,7 +288,8 @@ class Function<T> extends AbstractField<T> implements
             };
 
             ctx.visit(
-                when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
+                when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())
+               .when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
                .otherwise(one()).mul(DSL.exp(logarithmsSum))
             );
         }

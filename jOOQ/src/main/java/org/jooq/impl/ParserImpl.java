@@ -4471,9 +4471,9 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldConcatIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "CURRENT_SCHEMA") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_SCHEMA") || parseKeywordIf(ctx, "CURRENT SCHEMA")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentSchema();
-                    else if (parseKeywordIf(ctx, "CURRENT_USER") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_USER") || parseKeywordIf(ctx, "CURRENT USER")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentUser();
 
                 if (N.is(type))
@@ -4495,11 +4495,11 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (D.is(type))
-                    if (parseKeywordIf(ctx, "CURRENT_DATE") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    if ((parseKeywordIf(ctx, "CURRENT_DATE") || parseKeywordIf(ctx, "CURRENT DATE")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentDate();
-                    else if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_TIMESTAMP") || parseKeywordIf(ctx, "CURRENT TIMESTAMP")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTimestamp();
-                    else if (parseKeywordIf(ctx, "CURRENT_TIME") && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_TIME") || parseKeywordIf(ctx, "CURRENT TIME")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTime();
                     else if (parseFunctionNameIf(ctx, "CURDATE") && parse(ctx, '(') && parse(ctx, ')'))
                         return currentDate();

@@ -7677,7 +7677,7 @@ final class ParserImpl implements Parser {
             int precision = parseIf(ctx, '*') ? 38 : (int) (long) parseUnsignedInteger(ctx);
 
             if (parseIf(ctx, ','))
-                result = result.precision(precision, (int) (long) parseUnsignedInteger(ctx));
+                result = result.precision(precision, (int) (long) parseSignedInteger(ctx));
             else
                 result = result.precision(precision);
 

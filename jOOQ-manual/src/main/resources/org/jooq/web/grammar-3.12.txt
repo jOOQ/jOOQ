@@ -867,7 +867,7 @@ dataType =
 | 'CHARACTER' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'CLOB' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'DATE'
-| 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
+| 'DECIMAL' [ '(' ( '*' | unsignedInteger ) [ ',' unsignedInteger ] ')' ]
 | 'DOUBLE' [ 'PRECISION' ] [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')' [ 'COLLATE' collationName ]
 | 'FLOAT' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
@@ -883,8 +883,8 @@ dataType =
 | 'MEDIUMTEXT' [ 'COLLATE' collationName ]
 | 'NCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'NCLOB' [ 'COLLATE' collationName ]
-| 'NUMBER' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
-| 'NUMERIC' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
+| 'NUMBER' [ '(' ( '*' | unsignedInteger ) [ ',' unsignedInteger ] ')' ]
+| 'NUMERIC' [ '(' ( '*' | unsignedInteger ) [ ',' unsignedInteger ] ')' ]
 | 'NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'OTHER'
 | 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]

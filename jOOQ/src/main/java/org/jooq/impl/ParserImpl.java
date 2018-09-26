@@ -7674,7 +7674,7 @@ final class ParserImpl implements Parser {
 
     private static final DataType<?> parseDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
-            int precision = (int) (long) parseUnsignedInteger(ctx);
+            int precision = parseIf(ctx, '*') ? 38 : (int) (long) parseUnsignedInteger(ctx);
 
             if (parseIf(ctx, ','))
                 result = result.precision(precision, (int) (long) parseUnsignedInteger(ctx));

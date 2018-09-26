@@ -1638,7 +1638,13 @@ final class ParserImpl implements Parser {
             parseKeyword(ctx, "UPDATE");
 
         Table<?> tableName = parseTableName(ctx);
+        if (parseKeywordIf(ctx, "AS"))
+            tableName = tableName.as(parseIdentifier(ctx));
+        else if (!peekKeyword(ctx, "SET"))
+            tableName = tableName.as(parseIdentifierIf(ctx));
+
         UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));
+
         parseKeyword(ctx, "SET");
 
         // TODO Row value expression updates

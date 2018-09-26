@@ -63,11 +63,15 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 | 'ADD' [ 'COLUMN' ] column
 | 'ADD' '(' ( 'CONSTRAINT' constraintName constraint | constraint | column )
       { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
-| ( 'ALTER' | 'MODIFY' ) [ 'COLUMN' ] identifier
-  (
-    [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
-  | ( 'SET' | 'DROP' ) 'NOT NULL'
-  | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
+| ( 'ALTER' | 'MODIFY' )
+  ( [ 'COLUMN' ] identifier
+    (
+      [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
+    | ( 'SET' | 'DROP' ) 'NOT NULL'
+    | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
+    )
+  | column
+  | '(' column ')'
   )
 | 'COMMENT' [ '=' ] stringLiteral
 | 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]

@@ -3162,16 +3162,18 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseAlterTableAlterColumn(ParserContext ctx, AlterTableStep s1) {
+        boolean paren = parseIf(ctx, '(');
         TableField<?, ?> field = parseFieldName(ctx);
 
-        if (parseKeywordIf(ctx, "DROP NOT NULL"))
-            return s1.alter(field).dropNotNull();
-        else if (parseKeywordIf(ctx, "SET NOT NULL"))
-            return s1.alter(field).setNotNull();
-        else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO") || parseKeywordIf(ctx, "RENAME AS"))
-            return s1.renameColumn(field).to(parseFieldName(ctx));
-        else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
-            ;
+        if (!paren)
+            if (parseKeywordIf(ctx, "DROP NOT NULL"))
+                return s1.alter(field).dropNotNull();
+            else if (parseKeywordIf(ctx, "SET NOT NULL"))
+                return s1.alter(field).setNotNull();
+            else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO") || parseKeywordIf(ctx, "RENAME AS"))
+                return s1.renameColumn(field).to(parseFieldName(ctx));
+            else if (parseKeywordIf(ctx, "TYPE") || parseKeywordIf(ctx, "SET DATA TYPE"))
+                ;
 
         DataType<?> type = parseDataType(ctx);
 
@@ -3179,6 +3181,9 @@ final class ParserImpl implements Parser {
             type = type.nullable(true);
         else if (parseKeywordIf(ctx, "NOT NULL"))
             type = type.nullable(false);
+
+        if (paren)
+            parse(ctx, ')');
 
         return s1.alter(field).set(type);
     }

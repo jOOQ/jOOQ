@@ -146,6 +146,7 @@ public class PostgresDatabase extends AbstractDatabase {
     private static Boolean is84;
     private static Boolean is94;
     private static Boolean is11;
+    private static Boolean canUseRoutines;
     private static Boolean canCastToEnumType;
     private static Boolean canCombineArrays;
     private static Boolean canUseTupleInPredicates;
@@ -751,6 +752,9 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
+        if (!canUseRoutines())
+            return result;
+
         Routines r1 = ROUTINES.as("r1");
 
         // [#7785] The pg_proc.proisagg column has been replaced incompatibly in PostgreSQL 11
@@ -914,6 +918,23 @@ public class PostgresDatabase extends AbstractDatabase {
         }
 
         return canUseTupleInPredicates;
+    }
+
+    boolean canUseRoutines() {
+        if (canUseRoutines == null) {
+
+            // [#7892] The information_schema.routines table is not available in all PostgreSQL
+            //         style databases, e.g. CockroachDB
+            try {
+                create(true).fetchExists(ROUTINES);
+                canUseRoutines = true;
+            }
+            catch (DataAccessException e) {
+                canUseRoutines = false;
+            }
+        }
+
+        return canUseRoutines;
     }
 
     private List<String> enumLabels(String nspname, String typname) {

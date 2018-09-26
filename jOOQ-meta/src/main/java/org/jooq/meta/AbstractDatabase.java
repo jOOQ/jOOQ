@@ -1678,7 +1678,7 @@ public abstract class AbstractDatabase implements Database {
                     log.info("Routines fetched", fetchedSize(r, routines));
                 }
                 catch (Exception e) {
-                    log.error("Error while fetching functions", e);
+                    log.error("Error while fetching routines", e);
                 }
             }
             else

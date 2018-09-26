@@ -244,8 +244,9 @@ values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 
 updateStatement =
   [ with ]
-  ( 'UPDATE' | 'UPD' ) tableName
+  ( 'UPDATE' | 'UPD' ) tableName [ [ 'AS' ] identifier ]
   'SET' setClauses
+  [ 'FROM' tables ]
   [ 'WHERE' condition ]
   [ 'ORDER BY' sortFields ]
   [ 'LIMIT' unsignedInteger ]

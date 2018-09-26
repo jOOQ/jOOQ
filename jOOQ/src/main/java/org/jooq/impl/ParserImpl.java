@@ -3166,9 +3166,9 @@ final class ParserImpl implements Parser {
         TableField<?, ?> field = parseFieldName(ctx);
 
         if (!paren)
-            if (parseKeywordIf(ctx, "DROP NOT NULL"))
+            if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "NULL"))
                 return s1.alter(field).dropNotNull();
-            else if (parseKeywordIf(ctx, "SET NOT NULL"))
+            else if (parseKeywordIf(ctx, "SET NOT NULL") || parseKeywordIf(ctx, "NOT NULL"))
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "RENAME TO") || parseKeywordIf(ctx, "RENAME AS"))
                 return s1.renameColumn(field).to(parseFieldName(ctx));

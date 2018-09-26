@@ -68,6 +68,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
     (
       [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
     | ( 'SET' | 'DROP' ) 'NOT NULL'
+    | [ 'NOT' ] 'NULL'
     | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
     )
   | column

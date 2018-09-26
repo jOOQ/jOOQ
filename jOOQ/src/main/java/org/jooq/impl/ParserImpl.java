@@ -4326,13 +4326,46 @@ final class ParserImpl implements Parser {
         if (N.is(type) && r instanceof Field)
             for (;;)
                 if (parseIf(ctx, '+'))
-                    r = ((Field) r).add((Field) parseFactor(ctx, type));
+                    r = parseSumRightOperand(ctx, type, r, true);
                 else if (parseIf(ctx, '-'))
-                    r = ((Field) r).sub((Field) parseFactor(ctx, type));
+                    r = parseSumRightOperand(ctx, type, r, false);
                 else
                     break;
 
         return r;
+    }
+
+    private static final Field parseSumRightOperand(ParserContext ctx, Type type, FieldOrRow r, boolean add) {
+        Field f = (Field) parseFactor(ctx, type);
+        DatePart part;
+
+        if ((parseKeywordIf(ctx, "YEAR") || parseKeywordIf(ctx, "YEARS")) && ctx.requireProEdition())
+            part = DatePart.YEAR;
+        else if ((parseKeywordIf(ctx, "MONTH") || parseKeywordIf(ctx, "MONTHS")) && ctx.requireProEdition())
+            part = DatePart.MONTH;
+        else if ((parseKeywordIf(ctx, "DAY") || parseKeywordIf(ctx, "DAYS")) && ctx.requireProEdition())
+            part = DatePart.DAY;
+        else if ((parseKeywordIf(ctx, "HOUR") || parseKeywordIf(ctx, "HOURS")) && ctx.requireProEdition())
+            part = DatePart.HOUR;
+        else if ((parseKeywordIf(ctx, "MINUTE") || parseKeywordIf(ctx, "MINUTES")) && ctx.requireProEdition())
+            part = DatePart.MINUTE;
+        else if ((parseKeywordIf(ctx, "SECOND") || parseKeywordIf(ctx, "SECONDS")) && ctx.requireProEdition())
+            part = DatePart.SECOND;
+        else
+            part = null;
+
+
+
+
+
+
+
+
+
+            if (add)
+                return ((Field) r).add(f);
+            else
+                return ((Field) r).sub(f);
     }
 
     private static final FieldOrRow parseFactor(ParserContext ctx, Type type) {

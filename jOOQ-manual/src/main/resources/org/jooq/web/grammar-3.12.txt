@@ -974,7 +974,19 @@ timeLiteral = 'TIME' stringLiteral
 timestampLiteral = 'TIMESTAMP' stringLiteral
 ;
 
-intervalLiteral = 'INTERVAL' stringLiteral
+intervalLiteral =
+  'INTERVAL' stringLiteral
+| field
+  (
+    ( 'YEAR' | 'YEARS' )
+  | ( 'MONTH' | 'MONTHS' )
+  | ( 'DAY' | 'DAYS' )
+  | ( 'HOUR' | 'HOURS' )
+  | ( 'MINUTE' | 'MINUTES' )
+  | ( 'SECOND' | 'SECONDS' )
+  | ( 'MILLISECOND' | 'MILLISECONDS' )
+  | ( 'MICROSECOND' | 'MICROSECONDS' )
+  )
 ;
 
 signedInteger = todo

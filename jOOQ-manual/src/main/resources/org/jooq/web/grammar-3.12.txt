@@ -655,6 +655,7 @@ term =
 | 'CURTIME' '(' ')'
 | dateLiteral
 | 'DATEADD' '(' datePart ',' field ',' field ')'
+| 'DATEDIFF' '(' [ datePart ',' ] field ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
 | 'DAYOFMONTH' '(' field ')'

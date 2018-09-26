@@ -4530,6 +4530,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDateAddIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDateDiffIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
@@ -5499,6 +5501,20 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return DSL.dateAdd(date, interval, part);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDateDiffIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DATEDIFF")) {
+            parse(ctx, '(');
+            Field<Date> d1 = (Field<Date>) parseField(ctx, Type.D);
+            parse(ctx, ',');
+            Field<Date> d2 = (Field<Date>) parseField(ctx, Type.D);
+            parse(ctx, ')');
+
+            return DSL.dateDiff(d1, d2);
         }
 
         return null;

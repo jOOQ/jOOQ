@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 // ...
@@ -62,19 +63,17 @@ package org.jooq;
  */
 public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
 
+    /**
+     * Add an <code>IGNORE NULLS</code> clause to the window function. This
+     * might not be supported by all dialects.
+     */
+    @Support({ H2 })
+    WindowOverStep<T> ignoreNulls();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add a <code>RESPECT NULLS</code> clause to the window function. This
+     * might not be supported by all dialects.
+     */
+    @Support({ H2 })
+    WindowOverStep<T> respectNulls();
 }

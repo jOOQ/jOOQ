@@ -17870,7 +17870,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -17878,7 +17878,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -17886,7 +17886,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -17894,7 +17894,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -17902,7 +17902,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -17910,7 +17910,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
     }
@@ -17918,7 +17918,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
     }
@@ -17926,7 +17926,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
     }
@@ -17934,7 +17934,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
     }
@@ -17942,7 +17942,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
     }
@@ -17950,7 +17950,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
     }
@@ -17958,7 +17958,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rowsBetweenPreceding(number);
     }
@@ -17966,7 +17966,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
         return new WindowSpecificationImpl().rowsBetweenCurrentRow();
     }
@@ -17974,7 +17974,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
     }
@@ -17982,7 +17982,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
@@ -17990,7 +17990,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
     }
@@ -17998,7 +17998,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
     }
@@ -18006,7 +18006,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
     }
@@ -18014,7 +18014,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
     }
@@ -18022,7 +18022,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
     }
@@ -18030,7 +18030,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
     }
@@ -18038,7 +18038,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rangeBetweenPreceding(number);
     }
@@ -18046,7 +18046,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
         return new WindowSpecificationImpl().rangeBetweenCurrentRow();
     }
@@ -18054,7 +18054,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
     }
@@ -18062,7 +18062,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
     }
@@ -18168,7 +18168,7 @@ public class DSL {
     /**
      * The <code>rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<Integer> rank() {
         return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -18176,7 +18176,7 @@ public class DSL {
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<Integer> denseRank() {
         return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
@@ -18184,7 +18184,7 @@ public class DSL {
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new org.jooq.impl.Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
@@ -18192,7 +18192,7 @@ public class DSL {
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
@@ -18200,7 +18200,7 @@ public class DSL {
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<Integer> ntile(int number) {
         return new org.jooq.impl.Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
     }
@@ -18208,7 +18208,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
         return ratioToReport(Tools.field(number));
     }
@@ -18216,7 +18216,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
         return new RatioToReport(nullSafe(field));
     }
@@ -18224,7 +18224,7 @@ public class DSL {
     /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new org.jooq.impl.Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -18232,7 +18232,7 @@ public class DSL {
     /**
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new org.jooq.impl.Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -18240,7 +18240,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
     }
@@ -18248,7 +18248,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new org.jooq.impl.Function<T>("nth_value", nullSafeDataType(field), nullSafe(field), nullSafe(nth));
     }
@@ -18256,7 +18256,7 @@ public class DSL {
     /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new LeadLag<T>("lead", nullSafe(field));
     }
@@ -18264,7 +18264,7 @@ public class DSL {
     /**
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new LeadLag<T>("lead", nullSafe(field), offset);
     }
@@ -18274,7 +18274,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
@@ -18284,7 +18284,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>("lead", nullSafe(field), offset, nullSafe(defaultValue));
     }
@@ -18292,7 +18292,7 @@ public class DSL {
     /**
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new LeadLag<T>("lag", nullSafe(field));
     }
@@ -18300,7 +18300,7 @@ public class DSL {
     /**
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new LeadLag<T>("lag", nullSafe(field), offset);
     }
@@ -18310,7 +18310,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
@@ -18320,7 +18320,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>("lag", nullSafe(field), offset, nullSafe(defaultValue));
     }

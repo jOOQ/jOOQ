@@ -503,6 +503,7 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql('(');
         toSQLArguments0(ctx);
         ctx.sql(')');
+        toSQLArguments2(ctx);
     }
 
     final void toSQLArguments0(Context<?> ctx) {
@@ -543,25 +544,51 @@ class Function<T> extends AbstractField<T> implements
             if ((                                                            ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql(')');
 
+        if (ctx.family() != H2) {
+            if (TRUE.equals(fromLast))
+                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
+            else if (FALSE.equals(fromLast))
+                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
+
+            if (TRUE.equals(ignoreNulls)) {
+                switch (ctx.family()) {
 
 
 
 
 
+                    default:
+                        ctx.sql(' ').visit(K_IGNORE_NULLS);
+                        break;
+                }
+            }
+            else if (FALSE.equals(ignoreNulls)) {
+                switch (ctx.family()) {
 
 
 
 
 
+                    default:
+                        ctx.sql(' ').visit(K_RESPECT_NULLS);
+                        break;
+                }
+            }
+        }
+    }
 
+    final void toSQLArguments2(Context<?> ctx) {
+        if (ctx.family() == H2) {
+            if (TRUE.equals(fromLast))
+                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
+            else if (FALSE.equals(fromLast))
+                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
 
-
-
-
-
-
-
-
+            if (TRUE.equals(ignoreNulls))
+                ctx.sql(' ').visit(K_IGNORE_NULLS);
+            else if (FALSE.equals(ignoreNulls))
+                ctx.sql(' ').visit(K_RESPECT_NULLS);
+        }
     }
 
     final void toSQLFunctionName(Context<?> ctx) {
@@ -626,29 +653,29 @@ class Function<T> extends AbstractField<T> implements
 
 
 
+    @Override
+    public final WindowOverStep<T> ignoreNulls() {
+        ignoreNulls = true;
+        return this;
+    }
 
+    @Override
+    public final WindowOverStep<T> respectNulls() {
+        ignoreNulls = false;
+        return this;
+    }
 
+    @Override
+    public final WindowIgnoreNullsStep<T> fromFirst() {
+        fromLast = false;
+        return this;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final WindowIgnoreNullsStep<T> fromLast() {
+        fromLast = true;
+        return this;
+    }
 
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition c) {

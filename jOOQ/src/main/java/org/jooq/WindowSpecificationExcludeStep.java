@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL_8_0;
@@ -106,6 +107,6 @@ public interface WindowSpecificationExcludeStep extends WindowSpecificationFinal
     /**
      * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
-    @Support({ MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
     WindowSpecificationFinalStep excludeNoOthers();
 }

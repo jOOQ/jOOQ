@@ -102,7 +102,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -118,7 +118,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -129,7 +129,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -145,7 +145,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

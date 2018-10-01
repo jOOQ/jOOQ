@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+import static org.jooq.SQLDialect.H2;
 // ...
 
 /**
@@ -58,19 +59,17 @@ package org.jooq;
  */
 public interface WindowFromFirstLastStep<T> extends WindowIgnoreNullsStep<T> {
 
+    /**
+     * Add an <code>FROM FIRST</code> clause to the window function. This
+     * might not be supported by all dialects.
+     */
+    @Support({ H2 })
+    WindowIgnoreNullsStep<T> fromFirst();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add a <code>FROM LAST</code> clause to the window function. This
+     * might not be supported by all dialects.
+     */
+    @Support({ H2 })
+    WindowIgnoreNullsStep<T> fromLast();
 }

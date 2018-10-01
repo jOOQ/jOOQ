@@ -6724,12 +6724,11 @@ final class ParserImpl implements Parser {
             if (parseIf(ctx, ',')) {
                 f2 = (int) (long) parseUnsignedInteger(ctx);
 
-                if (parseIf(ctx, ',')) {
+                if (parseIf(ctx, ','))
                     f3 = (Field) parseField(ctx);
-                }
             }
-            parse(ctx, ')');
-            return parseWindowFunction(ctx, null, lead
+
+            WindowIgnoreNullsStep s1 = lead
                 ? f2 == null
                     ? lead(f1)
                     : f3 == null
@@ -6739,7 +6738,11 @@ final class ParserImpl implements Parser {
                     ? lag(f1)
                     : f3 == null
                         ? lag(f1, f2)
-                        : lag(f1, f2, f3), null);
+                        : lag(f1, f2, f3);
+
+            WindowOverStep<?> s2 = parseWindowRespectIgnoreNulls(ctx, s1, s1);
+            parse(ctx, ')');
+            return parseWindowFunction(ctx, null, s1, s2);
         }
 
         return null;
@@ -6749,8 +6752,10 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "FIRST_VALUE")) {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
+            WindowIgnoreNullsStep<Void> s1 = firstValue(arg);
+            WindowOverStep<?> s2 = parseWindowRespectIgnoreNulls(ctx, s1, s1);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, firstValue(arg), null);
+            return parseWindowFunction(ctx, null, s1, s2);
         }
 
         return null;
@@ -6760,8 +6765,10 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "LAST_VALUE")) {
             parse(ctx, '(');
             Field<Void> arg = (Field) parseField(ctx);
+            WindowIgnoreNullsStep<Void> s1 = lastValue(arg);
+            WindowOverStep<?> s2 = parseWindowRespectIgnoreNulls(ctx, s1, s1);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, null, lastValue(arg), null);
+            return parseWindowFunction(ctx, null, s1, s2);
         }
 
         return null;
@@ -6773,43 +6780,19 @@ final class ParserImpl implements Parser {
             Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
             int f2 = (int) (long) parseUnsignedInteger(ctx);
+            WindowFromFirstLastStep<?> s1 = nthValue(f1, f2);
+            WindowIgnoreNullsStep s2 = parseWindowFromFirstLast(ctx, s1, s1);
+            WindowOverStep<?> s3 = parseWindowRespectIgnoreNulls(ctx, s2, s2);
             parse(ctx, ')');
-            return parseWindowFunction(ctx, nthValue(f1, f2), null, null);
+            return parseWindowFunction(ctx, s1, s2, s3);
         }
 
         return null;
     }
 
     private static final Field<?> parseWindowFunction(ParserContext ctx, WindowFromFirstLastStep s1, WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
-        if (s1 != null) {
-            if (parseKeywordIf(ctx, "FROM FIRST") && ctx.requireProEdition())
-
-
-
-                ;
-            else if (parseKeywordIf(ctx, "FROM LAST") && ctx.requireProEdition())
-
-
-
-                ;
-            else
-                s2 = s1;
-        }
-
-        if (s2 != null) {
-            if (parseKeywordIf(ctx, "RESPECT NULLS") && ctx.requireProEdition())
-
-
-
-                ;
-            else if (parseKeywordIf(ctx, "IGNORE NULLS") && ctx.requireProEdition())
-
-
-
-                ;
-            else
-                s3 = s2;
-        }
+        s2 = parseWindowFromFirstLast(ctx, s1, s2);
+        s3 = parseWindowRespectIgnoreNulls(ctx, s2, s3);
 
         parseKeyword(ctx, "OVER");
         Object nameOrSpecification = parseWindowNameOrSpecification(ctx, true);
@@ -6822,6 +6805,30 @@ final class ParserImpl implements Parser {
             : s3.over();
 
         return result;
+    }
+
+    private static WindowOverStep<?> parseWindowRespectIgnoreNulls(ParserContext ctx, WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
+        if (s2 != null)
+            if (parseKeywordIf(ctx, "RESPECT NULLS"))
+                s3 = s2.respectNulls();
+            else if (parseKeywordIf(ctx, "IGNORE NULLS"))
+                s3 = s2.ignoreNulls();
+            else
+                s3 = s2;
+
+        return s3;
+    }
+
+    private static WindowIgnoreNullsStep parseWindowFromFirstLast(ParserContext ctx, WindowFromFirstLastStep s1, WindowIgnoreNullsStep s2) {
+        if (s1 != null)
+            if (parseKeywordIf(ctx, "FROM FIRST"))
+                s2 = s1.fromFirst();
+            else if (parseKeywordIf(ctx, "FROM LAST"))
+                s2 = s1.fromLast();
+            else
+                s2 = s1;
+
+        return s2;
     }
 
     private static final AggregateFunction<?> parseBinarySetFunctionIf(ParserContext ctx) {

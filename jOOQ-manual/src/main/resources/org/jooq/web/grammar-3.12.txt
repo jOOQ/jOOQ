@@ -670,7 +670,7 @@ term =
 | 'EVERY' '(' field ')' [ filter ] [ over ]
 | 'FLOOR' '(' sum ')'
 | 'FIELD' '(' field ',' field { ',' field } ')'
-| 'FIRST_VALUE' '(' field ')' over
+| 'FIRST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'GETDATE' '(' ')'
 | 'GREATEST' '(' fields ')'
 | 'GROUP_CONCAT' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] [ 'SEPARATOR' stringLiteral ] ')'
@@ -693,9 +693,9 @@ term =
 | 'LOG' '(' sum ',' unsignedInteger ')'
 | 'LEVEL'
 | 'LEAST' '(' fields ')'
-| 'LEAD' '(' field [ ',' unsignedInteger [ ',' field ] ] ')' over
-| 'LAG' '(' field [ ',' unsignedInteger [ ',' field ] ] ')' over
-| 'LAST_VALUE' '(' field ')' over
+| 'LEAD' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
+| 'LAG' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
+| 'LAST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'LISTAGG' '(' field [ ',' stringLiteral ] ')' withinGroup [ over ]
 | 'MIN' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'MAX' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
@@ -710,7 +710,7 @@ term =
 | 'NVL2' '(' field ',' field ',' field ')'
 | 'NULLIF' '(' field ',' field ')'
 | 'NTILE' '(' unsignedInteger ')' over
-| 'NTH_VALUE' '(' field ',' unsignedInteger ')' over
+| 'NTH_VALUE' '(' field ',' unsignedInteger [ 'FROM FIRST' | 'FROM LAST' ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'NEXT VALUE FOR' sequenceName
 | 'NEXTVAL' '(' ( name | stringLiteral ) ')'
 | 'OCTET_LENGTH' '(' field ')'

@@ -3709,7 +3709,6 @@ public class JavaGenerator extends AbstractGenerator {
         final SchemaDefinition schema = table.getSchema();
         final UniqueKeyDefinition primaryKey = table.getPrimaryKey();
 
-        final boolean updatable = generateRelations() && primaryKey != null;
         final String className = getStrategy().getJavaClassName(table);
         final String tableId = scala
             ? out.ref(getStrategy().getFullJavaIdentifier(table), 2)
@@ -4096,78 +4095,77 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        // [#1596] Updatable tables can provide fields for optimistic locking
-        // if properly configured
-        if (updatable) {
-            patternLoop: for (String pattern : database.getRecordVersionFields()) {
-                Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
+        // [#1596] Updatable tables can provide fields for optimistic locking if properly configured.
+        // [#7904] Records being updatable isn't a strict requirement. Version and timestamp values
+        //         can still be generated
+        versionLoop: for (String pattern : database.getRecordVersionFields()) {
+            Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
 
-                for (ColumnDefinition column : table.getColumns()) {
-                    if ((p.matcher(column.getName()).matches() ||
-                         p.matcher(column.getQualifiedName()).matches())) {
+            for (ColumnDefinition column : table.getColumns()) {
+                if ((p.matcher(column.getName()).matches() ||
+                     p.matcher(column.getQualifiedName()).matches())) {
 
-                        final String columnTypeFull = getJavaType(column.getType(resolver()));
-                        final String columnType = out.ref(columnTypeFull);
-                        final String columnId = getStrategy().getJavaIdentifier(column);
+                    final String columnTypeFull = getJavaType(column.getType(resolver()));
+                    final String columnType = out.ref(columnTypeFull);
+                    final String columnId = getStrategy().getJavaIdentifier(column);
 
-                        if (scala) {
-                            out.println();
+                    if (scala) {
+                        out.println();
 
-                            printDeprecationIfUnknownType(out, columnTypeFull);
-                            out.tab(1).println("override def getRecordVersion : %s[%s, %s] = {", TableField.class, recordType, columnType);
-                            out.tab(2).println("%s", columnId);
-                            out.tab(1).println("}");
-                        }
-                        else {
-                            if (printDeprecationIfUnknownType(out, columnTypeFull))
-                                out.tab(1).override();
-                            else
-                                out.tab(1).overrideInherit();
-
-                            out.tab(1).println("public %s<%s, %s> getRecordVersion() {", TableField.class, recordType, columnType);
-                            out.tab(2).println("return %s;", columnId);
-                            out.tab(1).println("}");
-                        }
-
-                        // Avoid generating this method twice
-                        break patternLoop;
+                        printDeprecationIfUnknownType(out, columnTypeFull);
+                        out.tab(1).println("override def getRecordVersion : %s[%s, %s] = {", TableField.class, recordType, columnType);
+                        out.tab(2).println("%s", columnId);
+                        out.tab(1).println("}");
                     }
+                    else {
+                        if (printDeprecationIfUnknownType(out, columnTypeFull))
+                            out.tab(1).override();
+                        else
+                            out.tab(1).overrideInherit();
+
+                        out.tab(1).println("public %s<%s, %s> getRecordVersion() {", TableField.class, recordType, columnType);
+                        out.tab(2).println("return %s;", columnId);
+                        out.tab(1).println("}");
+                    }
+
+                    // Avoid generating this method twice
+                    break versionLoop;
                 }
             }
+        }
 
-            timestampLoop: for (String pattern : database.getRecordTimestampFields()) {
-                Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
+        timestampLoop: for (String pattern : database.getRecordTimestampFields()) {
+            Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
 
-                for (ColumnDefinition column : table.getColumns()) {
-                    if ((p.matcher(column.getName()).matches() ||
-                         p.matcher(column.getQualifiedName()).matches())) {
+            for (ColumnDefinition column : table.getColumns()) {
+                if ((p.matcher(column.getName()).matches() ||
+                     p.matcher(column.getQualifiedName()).matches())) {
 
-                        final String columnTypeFull = getJavaType(column.getType(resolver()));
-                        final String columnType = out.ref(columnTypeFull);
-                        final String columnId = getStrategy().getJavaIdentifier(column);
+                    final String columnTypeFull = getJavaType(column.getType(resolver()));
+                    final String columnType = out.ref(columnTypeFull);
+                    final String columnId = getStrategy().getJavaIdentifier(column);
 
-                        if (scala) {
-                            out.println();
+                    if (scala) {
+                        out.println();
 
-                            printDeprecationIfUnknownType(out, columnTypeFull);
-                            out.tab(1).println("override def getRecordTimestamp : %s[%s, %s] = {", TableField.class, recordType, columnType);
-                            out.tab(2).println("%s", columnId);
-                            out.tab(1).println("}");
-                        }
-                        else {
-                            if (printDeprecationIfUnknownType(out, columnTypeFull))
-                                out.tab(1).override();
-                            else
-                                out.tab(1).overrideInherit();
-
-                            out.tab(1).println("public %s<%s, %s> getRecordTimestamp() {", TableField.class, recordType, columnType);
-                            out.tab(2).println("return %s;", columnId);
-                            out.tab(1).println("}");
-                        }
-
-                        // Avoid generating this method twice
-                        break timestampLoop;
+                        printDeprecationIfUnknownType(out, columnTypeFull);
+                        out.tab(1).println("override def getRecordTimestamp : %s[%s, %s] = {", TableField.class, recordType, columnType);
+                        out.tab(2).println("%s", columnId);
+                        out.tab(1).println("}");
                     }
+                    else {
+                        if (printDeprecationIfUnknownType(out, columnTypeFull))
+                            out.tab(1).override();
+                        else
+                            out.tab(1).overrideInherit();
+
+                        out.tab(1).println("public %s<%s, %s> getRecordTimestamp() {", TableField.class, recordType, columnType);
+                        out.tab(2).println("return %s;", columnId);
+                        out.tab(1).println("}");
+                    }
+
+                    // Avoid generating this method twice
+                    break timestampLoop;
                 }
             }
         }

@@ -158,7 +158,7 @@ renameStatement = 'RENAME'
 | 'INDEX' indexName ( 'TO' | 'AS' ) indexName
 | 'SCHEMA' schemaName ( 'TO' | 'AS' ) schemaName
 | 'SEQUENCE' sequenceName ( 'TO' | 'AS' ) sequenceName
-| 'VIEW' tabelName ( 'TO' | 'AS' ) tableName
+| 'VIEW' tableName ( 'TO' | 'AS' ) tableName
 | [ 'TABLE' ] tableName ( 'TO' | 'AS' ) tableName
 )
 ;

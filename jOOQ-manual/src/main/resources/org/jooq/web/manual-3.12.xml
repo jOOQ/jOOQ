@@ -627,24 +627,25 @@ Result<Record> result = create.fetch(rs);]]></java><html>
 								<title>jOOQ for CRUD</title>
 								<content><html>
 									<p>
-										This is probably the most complete use-case for jOOQ: Use all of jOOQ's features. Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
+										Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
 									</p>
 
-</html><java><![CDATA[// Fetch all authors
-for (AuthorRecord author : create.fetch(AUTHOR)) {
+</html><java><![CDATA[// Fetch an author
+AuthorRecord author : create.fetchOne(AUTHOR, AUTHOR.ID.eq(1));
 
-    // Skip previously distinguished authors
-    if ((int) author.getDistinguished() == 1)
-        continue;
+// Create a new author, if it doesn't exist yet
+if (author == null) {
+    author = create.newRecord(AUTHOR);
+    author.setId(1);
+    author.setFirstName("Dan");
+    author.setLastName("Brown");
+}
 
-    // Check if the author has written more than 5 books
-    if (author.fetchChildren(Keys.FK_BOOK_AUTHOR).size() > 5) {
+// Mark the author as a "distinguished" author and store it
+author.setDistinguished(1);
 
-        // Mark the author as a "distinguished" author
-        author.setDistinguished(1);
-        author.store();
-    }
-}]]></java><html>
+// Executes an update on existing authors, or insert on new ones
+author.store();]]></java><html>
 
 									<p>
                    						If you wish to use all of jOOQ's features, the following sections of the manual will be of interest to you (including all sub-sections):
@@ -3563,6 +3564,9 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
   <renderNameStyle>AS_IS</renderNameStyle>
 </settings>]]></xml><html>
 
+                                            <p>
+                                                The behaviour of this setting is influenced by the <reference id="settings-locale" title="renderLocale setting"/>.
+                                            </p>
                                         </html></content>
                                     </section>
 
@@ -3597,6 +3601,31 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
 </html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
   <renderKeywordStyle>UPPER</renderKeywordStyle>
 </settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
+                                    <section id="settings-locale">
+                                        <title>Render Locale</title>
+                                        <content><html>
+                                            <p>
+                                                When doing locale sensitive operations, such as upper casing or lower casing a name (see <reference id="settings-name-style" title="Name styles"/>), then it may be important in some areas to be able to specify the <reference class="java.util.Locale" title="java.util.Locale"/> for the operation.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withRenderLocale(Locale.forLanguageTag("en-US")); // Defaults to Locale.getDefault()]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <renderLocale>en-US</renderLocale>
+</settings>]]></xml><html>
+
                                         </html></content>
                                     </section>
 
@@ -8504,7 +8533,8 @@ Field<T> nextval();]]></java><html>
 									</p>
 
 </html><java><![CDATA[// Reference the sequence in a SELECT statement:
-BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+Field<BigInteger> s = S_AUTHOR_ID.nextval();
+BigInteger nextID = create.select(s).fetchOne(s);
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
@@ -10526,9 +10556,11 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
         // Depending on how you generate your SQL, you may need to explicitly distinguish
-        // between jOOQ generating bind variables or inlined literals. If so, use this check:
-        // ctx.render().paramType() == INLINED
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+        // between jOOQ generating bind variables or inlined literals.
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value())).sql("::json");
+        else
+            ctx.render().sql("?::json");
     }
 
     // Registering VARCHAR types for JDBC CallableStatement OUT parameters
@@ -12180,6 +12212,10 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
     }
 }]]></java><html>
 
+                                    <p>
+                                        If you're using <reference id="codegen-database-forced-types" title="forcedTypes"/> in your code generation configuration, you can configure the application of an <code>EnumConverter</code> by adding <code>&lt;enumConverter&gt;true&lt;/enumConverter&gt;</code> to your <code>&lt;forcedType/&gt;</code> configuration.
+                                    </p>
+
 									<h3>Using Converters in generated source code</h3>
 									<p>
 										jOOQ also allows for generated source code to reference your own custom converters, in order to permanently replace a <reference id="table-columns" title="table column's"/> &lt;T&gt; type by your own, custom &lt;U&gt; type. See the manual's section about <reference id="custom-data-types" title="custom data types"/> for details.
@@ -12520,7 +12556,8 @@ BigInteger currID = create.currval(S_AUTHOR_ID);]]></java><html>
 							</p>
 
 </html><java><![CDATA[// Reference the sequence in a SELECT statement:
-BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+Field<BigInteger> s = S_AUTHOR_ID.nextval();
+BigInteger nextID = create.select(s).fetchOne(s);
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
@@ -15714,7 +15751,7 @@ result.forEach((Object[] entities) -> {
                                                 <li><code>org.jooq.meta.oracle.OracleDatabase</code></li>
                                                 <li><code>org.jooq.meta.postgres.PostgresDatabase</code></li>
                                                 <li><code>org.jooq.meta.redshift.RedshiftDatabase</code></li>
-                                                <li><code>org.jooq.meta.sqlite.SQLiteDatabaes</code></li>
+                                                <li><code>org.jooq.meta.sqlite.SQLiteDatabase</code></li>
                                                 <li><code>org.jooq.meta.sqlserver.SQLServerDatabase</code></li>
                                                 <li><code>org.jooq.meta.sybase.SybaseDatabase</code></li>
                                                 <li><code>org.jooq.meta.vertica.VerticaDatabase</code></li>
@@ -16959,6 +16996,138 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
                                             <p>
                                                 For more information about using converters, <reference id="custom-data-types" title="please refer to the manual's section about custom data type conversion"/>.
                                             </p>
+
+                                            <h3>Mapping to user type with an inline converter</h3>
+
+                                            <p>
+                                                For convenience, you can inline your converter code directly into the configuration instead of providing a class reference.
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <generator>
+    <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
+      <forcedTypes>
+        <forcedType>
+
+          <!-- Specify the Java type of your custom type. This corresponds to the Converter's <U> type. -->
+          <userType>com.example.MyEnum</userType>
+
+          <!-- Associate that custom type with your inline converter. -->
+          <converter>org.jooq.Converter.ofNullable(Integer.class, MyEnum.class, i -> MyEnum.values()[i], MyEnum::ordinal)</converter>
+
+          <!-- These are the same as for type rewriting -->
+          <expression>.*\.DATE_OF_.*</expression>
+          <types>.*</types>
+        </forcedType>
+      </forcedTypes>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
+      .withForcedTypes(new ForcedType()
+        .withUserType("com.example.MyEnum")
+        .withConverter("org.jooq.Converter.ofNullable(Integer.class, MyEnum.class, i -> MyEnum.values()[i], MyEnum::ordinal)")
+        .withExpression(".*\.DATE_OF_.*")
+        .withTypes(".*")))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  generator {
+    database {
+      // The first matching forcedType will be applied to the data type definition.
+      forcedTypes {
+        forcedType {
+          userType = 'com.example.MyEnum'
+          converter = 'org.jooq.Converter.ofNullable(Integer.class, MyEnum.class, i -> MyEnum.values()[i], MyEnum::ordinal)'
+          expression = '.*\.DATE_OF_.*'
+          types = '.*'
+        }
+      }
+    }
+  }
+}]]></java><html>
+
+                                            <h3>Mapping to an enum user type with a converter</h3>
+
+                                            <p>
+                                                If your user type is a Java enum, you can use the <code>&lt;enumConverter/&gt;</code> convenience flag instead of an explicit converter per enum type. This will apply the built-in <reference class="org.jooq.impl.EnumConverter"/>.
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <generator>
+    <database>
+      <!-- The first matching forcedType will be applied to the data type definition. -->
+      <forcedTypes>
+        <forcedType>
+
+          <!-- Specify the Java type of your custom type. This corresponds to the Converter's <U> type. -->
+          <userType>com.example.MyEnum</userType>
+
+          <!-- Apply the built in org.jooq.impl.EnumConverter. -->
+          <enumConverter>true</enumConverter>
+
+          <!-- These are the same as for type rewriting -->
+          <expression>.*\.MY_STATUS</expression>
+          <types>.*</types>
+        </forcedType>
+      </forcedTypes>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      // The first matching forcedType will be applied to the data type definition.
+      .withForcedTypes(new ForcedType()
+        .withUserType("com.example.MyEnum")
+        .withEnumConverter(true)
+        .withExpression(".*\.MY_STATUS")
+        .withTypes(".*")))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  generator {
+    database {
+      // The first matching forcedType will be applied to the data type definition.
+      forcedTypes {
+        forcedType {
+          userType = 'com.example.MyEnum'
+          enumConverter = true
+          expression = '.*\.MY_STATUS'
+          types = '.*'
+        }
+      }
+    }
+  }
+}]]></java><html>
 
                                             <h3>Mapping to user type with a binding</h3>
 
@@ -18638,9 +18807,11 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
         // Depending on how you generate your SQL, you may need to explicitly distinguish
-        // between jOOQ generating bind variables or inlined literals. If so, use this check:
-        // ctx.render().paramType() == INLINED
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+        // between jOOQ generating bind variables or inlined literals.
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value())).sql("::json");
+        else
+            ctx.render().sql("?::json");
     }
 
     // Registering VARCHAR types for JDBC CallableStatement OUT parameters
@@ -19199,8 +19370,7 @@ CREATE TABLE book_to_book_store (
              Where:
              - ** matches any directory subtree
              - * matches any number of characters in a directory / file name
-             - ? matches a single character in a directory / file name
-          -->
+             - ? matches a single character in a directory / file name -->
         <property>
           <key>scripts</key>
           <value>src/main/resources/database.sql</value>
@@ -19210,11 +19380,21 @@ CREATE TABLE book_to_book_store (
 
              - semantic: sorts versions, e.g. v-3.10.0 is after v-3.9.0 (default)
              - alphanumeric: sorts strings, e.g. v-3.10.0 is before v-3.9.0
-             - none: doesn't sort directory contents after fetching them from the directory
-          -->
+             - none: doesn't sort directory contents after fetching them from the directory -->
         <property>
           <key>sort</key>
           <value>semantic</value>
+        </property>
+
+        <!-- The default schema for unqualified objects:
+
+             - public: all unqualified objects are located in the PUBLIC (upper case) schema
+             - none: all unqualified objects are located in the default schema (default)
+
+             This configuration can be overridden with the schema mapping feature -->
+        <property>
+          <key>unqualifiedSchema</key>
+          <value>none</value>
         </property>
       </properties>
     </database>
@@ -19532,9 +19712,7 @@ def xml = new groovy.xml.MarkupBuilder(writer)
 
 // Run the code generator
 // ----------------------
-org.jooq.codegen.GenerationTool.generate(
-    javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
-)
+org.jooq.codegen.GenerationTool.generate(writer.toString())
 ]]></java><html>
                         </html></content>
                     </section>

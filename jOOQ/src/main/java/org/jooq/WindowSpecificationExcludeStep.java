@@ -89,19 +89,19 @@ public interface WindowSpecificationExcludeStep extends WindowSpecificationFinal
     /**
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationFinalStep excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationFinalStep excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationFinalStep excludeTies();
 
     /**

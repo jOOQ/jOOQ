@@ -195,12 +195,12 @@ function printContent() {
     </xsl:template>
 
     <xsl:template match="section" mode="navigation">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <table cellpadding="0" cellspacing="0" border="0" width="936">
             <tr>
                 <td align="left" valign="top">
                     <xsl:apply-templates select="." mode="breadcrumb"/>
                 </td>
-                <td align="right" valign="top" style="white-space: nowrap; text-align: right">
+                <td align="right" valign="top" style="white-space: nowrap">
                     <xsl:apply-templates select="." mode="prev-next"/>
                 </td>
             </tr>

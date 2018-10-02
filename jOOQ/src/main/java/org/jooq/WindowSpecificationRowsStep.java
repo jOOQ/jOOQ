@@ -230,69 +230,69 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationExcludeStep groupsUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationExcludeStep groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationExcludeStep groupsCurrentRow();
 
     /**
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationExcludeStep groupsUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationExcludeStep groupsFollowing(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationRowsAndStep groupsBetweenPreceding(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationRowsAndStep groupsBetweenCurrentRow();
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     WindowSpecificationRowsAndStep groupsBetweenFollowing(int number);
 }

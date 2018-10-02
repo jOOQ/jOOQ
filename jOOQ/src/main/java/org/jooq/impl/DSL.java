@@ -18070,7 +18070,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
@@ -18078,7 +18078,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
@@ -18086,7 +18086,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
@@ -18094,7 +18094,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
@@ -18102,7 +18102,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
@@ -18110,7 +18110,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
     }
@@ -18118,7 +18118,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
     }
@@ -18126,7 +18126,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
     }
@@ -18134,7 +18134,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
     }
@@ -18142,7 +18142,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ POSTGRES_11 })
+    @Support({ H2, POSTGRES_11 })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }

@@ -15,13 +15,11 @@ ddlStatement =
 | alterViewStatement
 | commentStatement
 | createTableStatement
-| createTypeStatement
 | createIndexStatement
 | createSchemaStatement
 | createSequenceStatement
 | createViewStatement
 | dropTableStatement
-| dropTypeStatement
 | dropIndexStatement
 | dropViewStatement
 | dropSequenceStatement
@@ -63,16 +61,11 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 | 'ADD' [ 'COLUMN' ] column
 | 'ADD' '(' ( 'CONSTRAINT' constraintName constraint | constraint | column )
       { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
-| ( 'ALTER' | 'MODIFY' )
-  ( [ 'COLUMN' ] identifier
-    (
-      [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
-    | ( 'SET' | 'DROP' ) 'NOT NULL'
-    | [ 'NOT' ] 'NULL'
-    | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
-    )
-  | column
-  | '(' column ')'
+| ( 'ALTER' | 'MODIFY' ) [ 'COLUMN' ] identifier
+  (
+    [ [ 'SET DATA' ] 'TYPE' ] dataType [ [ 'NOT' ] 'NULL' ]
+  | ( 'SET' | 'DROP' ) 'NOT NULL'
+  | [ 'RENAME' ] ( 'TO' | 'AS' ) identifier
   )
 | 'COMMENT' [ '=' ] stringLiteral
 | 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
@@ -128,11 +121,8 @@ break
 [ 'COMMENT' [ '=' ] stringLiteral ]
 ;
 
-createTypeStatement = 'CREATE TYPE' typeName 'AS ENUM' '(' [ stringLiteral { ',' stringLiteral } ] ')'
-;
-
 createIndexStatement = 'CREATE' [ 'UNIQUE' ] 'INDEX' [ 'IF NOT EXISTS' ] [ indexName ] break
-  'ON' tableName [ 'USING' 'BTREE' ] '(' sortFields ')'
+  'ON' tableName '(' sortFields ')'
   [ 'INCLUDE' '(' identifiers ')' ]
   [ 'WHERE' condition ]
 ;
@@ -141,12 +131,6 @@ createSchemaStatement = 'CREATE SCHEMA' [ 'IF NOT EXISTS' ] schemaName
 ;
 
 createSequenceStatement = 'CREATE' ( 'SEQUENCE' | 'GENERATOR' ) [ 'IF NOT EXISTS' ] sequenceName
-  [ START [ WITH ] signedInteger ]
-  [ INCREMENT [ BY ] signedInteger ]
-  [ MINVALUE signedInteger | NO MINVALUE ]
-  [ MAXVALUE signedInteger | NO MAXVALUE ]
-  [ CYCLE | NO CYCLE ]
-  [ CACHE unsignedInteger | NO CACHE ]
 ;
 
 createViewStatement = 'CREATE' [ 'OR' ( 'ALTER' | 'REPLACE') ] 'VIEW' [ 'IF NOT EXISTS' ] tableName
@@ -154,9 +138,6 @@ createViewStatement = 'CREATE' [ 'OR' ( 'ALTER' | 'REPLACE') ] 'VIEW' [ 'IF NOT 
 ;
 
 dropTableStatement = 'DROP' [ 'TEMPORARY' ] 'TABLE' [ 'IF EXISTS' ] tableName [ 'CASCADE' | 'RESTRICT' ]
-;
-
-dropTypeStatement = 'DROP TYPE' [ 'IF EXISTS' ] typeName { ',' typeName } [ 'CASCADE' | 'RESTRICT' ]
 ;
 
 dropIndexStatement = 'DROP INDEX' [ 'IF EXISTS' ] indexName [ 'ON' tableName ]
@@ -177,7 +158,7 @@ renameStatement = 'RENAME'
 | 'INDEX' indexName ( 'TO' | 'AS' ) indexName
 | 'SCHEMA' schemaName ( 'TO' | 'AS' ) schemaName
 | 'SEQUENCE' sequenceName ( 'TO' | 'AS' ) sequenceName
-| 'VIEW' tableName ( 'TO' | 'AS' ) tableName
+| 'VIEW' tabelName ( 'TO' | 'AS' ) tableName
 | [ 'TABLE' ] tableName ( 'TO' | 'AS' ) tableName
 )
 ;
@@ -244,12 +225,9 @@ values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 
 updateStatement =
   [ with ]
-  ( 'UPDATE' | 'UPD' ) tableName [ [ 'AS' ] identifier ]
+  ( 'UPDATE' | 'UPD' ) tableName
   'SET' setClauses
-  [ 'FROM' tables ]
   [ 'WHERE' condition ]
-  [ 'ORDER BY' sortFields ]
-  [ 'LIMIT' unsignedInteger ]
   [ 'RETURNING' ( '*' | fields ) ]
 ;
 
@@ -263,8 +241,6 @@ deleteStatement =
   [ with ]
   ( 'DELETE' | 'DEL' ) [ 'FROM' ] tableName
   [ 'WHERE' condition ]
-  [ 'ORDER BY' sortFields ]
-  [ 'LIMIT' unsignedInteger ]
   [ 'RETURNING' ( '*' | fields ) ]
 ;
 
@@ -647,30 +623,24 @@ term =
 | 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'CURRVAL' '(' ( name | stringLiteral ) ')'
-| ( 'CURRENT' 'DATE' | 'CURRENT_DATE' ) [ '(' ')' ]
-| ( 'CURRENT' 'SCHEMA' | 'CURRENT_SCHEMA' ) [ '(' ')' ]
-| ( 'CURRENT' 'TIME' | 'CURRENT_TIME' ) [ '(' ')' ]
-| ( 'CURRENT' 'TIMESTAMP' | 'CURRENT_TIMESTAMP' ) [ '(' ')' ]
-| ( 'CURRENT' 'USER' | 'CURRENT_USER' ) [ '(' ')' ]
-| 'CURDATE' '(' ')'
-| 'CURTIME' '(' ')'
+| 'CURRENT_DATE'
+| 'CURRENT_SCHEMA'
+| 'CURRENT_TIME'
+| 'CURRENT_TIMESTAMP'
+| 'CURRENT_USER'
 | dateLiteral
 | 'DATEADD' '(' datePart ',' field ',' field ')'
-| 'DATEDIFF' '(' [ datePart ',' ] field ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
-| 'DAYOFMONTH' '(' field ')'
-| 'DAYOFWEEK' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
-| 'EPOCH' '(' field ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
 | 'EXP' '(' sum ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
 | 'FLOOR' '(' sum ')'
 | 'FIELD' '(' field ',' field { ',' field } ')'
-| 'FIRST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
+| 'FIRST_VALUE' '(' field ')' over
 | 'GETDATE' '(' ')'
 | 'GREATEST' '(' fields ')'
 | 'GROUP_CONCAT' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] [ 'SEPARATOR' stringLiteral ] ')'
@@ -693,9 +663,9 @@ term =
 | 'LOG' '(' sum ',' unsignedInteger ')'
 | 'LEVEL'
 | 'LEAST' '(' fields ')'
-| 'LEAD' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
-| 'LAG' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
-| 'LAST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
+| 'LEAD' '(' field [ ',' unsignedInteger [ ',' field ] ] ')' over
+| 'LAG' '(' field [ ',' unsignedInteger [ ',' field ] ] ')' over
+| 'LAST_VALUE' '(' field ')' over
 | 'LISTAGG' '(' field [ ',' stringLiteral ] ')' withinGroup [ over ]
 | 'MIN' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'MAX' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
@@ -710,7 +680,7 @@ term =
 | 'NVL2' '(' field ',' field ',' field ')'
 | 'NULLIF' '(' field ',' field ')'
 | 'NTILE' '(' unsignedInteger ')' over
-| 'NTH_VALUE' '(' field ',' unsignedInteger [ 'FROM FIRST' | 'FROM LAST' ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
+| 'NTH_VALUE' '(' field ',' unsignedInteger ')' over
 | 'NEXT VALUE FOR' sequenceName
 | 'NEXTVAL' '(' ( name | stringLiteral ) ')'
 | 'OCTET_LENGTH' '(' field ')'
@@ -720,8 +690,6 @@ term =
 | ( 'PERCENTILE_CONT' | 'PERCENTILE_DISC' ) '(' unsignedNumericLiteral ')' withinGroup [ over ]
 | ( 'POW' | 'POWER' ) '(' field ',' field ')'
 | 'PRIOR' concat
-| 'PRODUCT' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
-| 'QUARTER' '(' field ')'
 | (
     'REGR_SLOPE'
   | 'REGR_INTERCEPT'
@@ -758,7 +726,7 @@ term =
 | 'STDDEV_SAMP' '(' field ')' [ over ]
 | 'STR_REPLACE' '(' field ',' field ',' field ')'
 | 'SUBSTRING' '(' field 'FROM' sum [ 'FOR' sum ] ')'
-| 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
+| 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ]
 | 'TAN' '(' sum ')'
 | 'TANH' '(' sum ')'
 | timeLiteral
@@ -772,7 +740,6 @@ term =
 | 'TRUNC' '(' field ',' stringLiteral ')'
 | 'TRUNC' '(' sum ',' sum ')'
 | truthValue
-| 'UNIX_TIMESTAMP' '(' field ')'
 | ( 'UPPER' | 'UCASE' ) '(' field ')'
 | 'VAR_POP' '(' field ')' [ over ]
 | 'VAR_SAMP' '(' field ')' [ over ]
@@ -792,22 +759,7 @@ term =
 truthValue = 'TRUE' | 'FALSE' | 'NULL'
 ;
 
-datePart =
-  ( 'YEAR' | 'YYYY' | 'YY' )
-| ( 'MONTH' | 'MM' | 'M' )
-| ( 'DAY' | 'DD' | 'D' )
-| ( 'HOUR' | 'HH' )
-| ( 'MINUTE' | 'MI' | 'N' )
-| ( 'SECOND' | 'SS' | 'S' )
-| ( 'MILLISECOND' | 'MS' )
-| ( 'MICROSECOND' | 'MCS' )
-| ( 'NANOSECOND' | 'NS' )
-| 'EPOCH'
-| ( 'QUARTER' | 'QQ' | 'Q' )
-| ( 'WEEK ' | 'WW' | 'WK' )
-| ( 'ISO_DAY_OF_WEEK' | 'ISODOW' )
-| ( 'DAY_OF_WEEK' | 'DAYOFWEEK' | 'WEEKDAY' | 'W' )
-| ( 'DAY_OF_YEAR' | 'DAYOFYEAR' | 'DOY' | 'DY' | 'Y')
+datePart = 'YEAR' | 'MONTH' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND'
 ;
 
 keep = 'KEEP' '(' 'DENSE_RANK' ( 'FIRST' | 'LAST' ) 'ORDER BY' sortFields ')'
@@ -868,7 +820,7 @@ dataType =
 | 'CHARACTER' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'CLOB' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'DATE'
-| 'DECIMAL' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
+| 'DECIMAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'DOUBLE' [ 'PRECISION' ] [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')' [ 'COLLATE' collationName ]
 | 'FLOAT' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
@@ -884,8 +836,8 @@ dataType =
 | 'MEDIUMTEXT' [ 'COLLATE' collationName ]
 | 'NCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'NCLOB' [ 'COLLATE' collationName ]
-| 'NUMBER' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
-| 'NUMERIC' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
+| 'NUMBER' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
+| 'NUMERIC' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'OTHER'
 | 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
@@ -923,9 +875,6 @@ schemaName = name
 ;
 
 tableName = name
-;
-
-typeName = name
 ;
 
 indexName = name
@@ -975,19 +924,7 @@ timeLiteral = 'TIME' stringLiteral
 timestampLiteral = 'TIMESTAMP' stringLiteral
 ;
 
-intervalLiteral =
-  'INTERVAL' stringLiteral
-| field
-  (
-    ( 'YEAR' | 'YEARS' )
-  | ( 'MONTH' | 'MONTHS' )
-  | ( 'DAY' | 'DAYS' )
-  | ( 'HOUR' | 'HOURS' )
-  | ( 'MINUTE' | 'MINUTES' )
-  | ( 'SECOND' | 'SECONDS' )
-  | ( 'MILLISECOND' | 'MILLISECONDS' )
-  | ( 'MICROSECOND' | 'MICROSECONDS' )
-  )
+intervalLiteral = 'INTERVAL' stringLiteral
 ;
 
 signedInteger = todo

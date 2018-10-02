@@ -292,6 +292,9 @@ public interface ExecuteContext extends Scope {
      * {@link DataAccessException}. To have jOOQ throw your own custom
      * {@link RuntimeException}, use {@link #exception(RuntimeException)}
      * instead. This may have no effect, if called at the wrong moment.
+     * <p>
+     * If <code>null</code> is being passed, jOOQ will internally translate the
+     * "unavailable" exception to an unspecified {@link DataAccessException}.
      */
     void sqlException(SQLException e);
 

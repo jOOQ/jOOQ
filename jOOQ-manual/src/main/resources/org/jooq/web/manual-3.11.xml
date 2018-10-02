@@ -6278,6 +6278,29 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 										The above row value expressions usages are completely typesafe.
 									</p>
 
+                                    <h3>UPDATE .. FROM</h3>
+
+                                    <p>
+                                        Some databases, including PostgreSQL and SQL Server, support joining additional tables to an <code>UPDATE</code> statement using a vendor-specific <code>FROM</code> clause. This is supported as well by jOOQ:
+                                    </p>
+
+</html><code-pair>
+<sql><![CDATA[UPDATE BOOK_ARCHIVE
+SET
+  BOOK_ARCHIVE.TITLE = BOOK.TITLE
+FROM BOOK
+WHERE BOOK_ARCHIVE.ID = BOOK.ID]]></sql>
+<java><![CDATA[create.update(BOOK_ARCHIVE)
+      .set(BOOK_ARCHIVE.TITLE, BOOK.TITLE)
+      .from(BOOK)
+      .where(BOOK_ARCHIVE.ID.eq(BOOK.ID))
+      .execute();]]></java>
+</code-pair><html>
+
+                                    <p>
+                                        In many cases, such a joined update statement can be emulated using a correlated subquery, or using updatable views.
+                                    </p>
+
 									<h3>UPDATE .. RETURNING</h3>
 									<p>
 										The Firebird and Postgres databases support a <code>RETURNING</code> clause on their <code>UPDATE</code> statements, similar as the <code>RETURNING</code> clause in <reference id="insert-statement" title="INSERT statements"/>. This is useful to fetch trigger-generated values in one go. An example is given here:

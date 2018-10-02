@@ -2960,11 +2960,11 @@ public class JavaGenerator extends AbstractGenerator {
         // -------------------------------
         if (scala) {
             out.println();
-            out.tab(1).println("override protected def getId(o : %s) : %s = {", pType, tType);
+            out.tab(1).println("override def getId(o : %s) : %s = {", pType, tType);
         }
         else {
             out.tab(1).overrideInherit();
-            out.tab(1).println("protected %s getId(%s object) {", tType, pType);
+            out.tab(1).println("public %s getId(%s object) {", tType, pType);
         }
 
         if (keyColumns.size() == 1) {

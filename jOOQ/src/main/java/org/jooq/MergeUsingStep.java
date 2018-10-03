@@ -99,7 +99,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
      * statement
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -110,7 +110,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
      * Server, where derived tables need to be aliased.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
     MergeOnStep<R> usingDual();
 
     /**

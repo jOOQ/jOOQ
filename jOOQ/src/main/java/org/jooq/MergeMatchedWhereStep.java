@@ -38,6 +38,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 
@@ -96,7 +97,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
-    @Support({ CUBRID })
+    @Support({ CUBRID, H2 })
     MergeMatchedDeleteStep<R> where(Condition condition);
 
     /**
@@ -115,7 +116,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
-    @Support({ CUBRID })
+    @Support({ CUBRID, H2 })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
 
     /**
@@ -142,6 +143,6 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID })
+    @Support({ CUBRID, H2 })
     MergeMatchedDeleteStep<R> where(Boolean condition);
 }

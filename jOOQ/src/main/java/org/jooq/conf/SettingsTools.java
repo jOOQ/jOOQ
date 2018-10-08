@@ -245,7 +245,7 @@ public final class SettingsTools {
      * specified {@link Settings#getQueryPoolable()}.
      */
     public static final QueryPoolable getQueryPoolable(QueryPoolable poolable, Settings settings) {
-        return poolable != null
+        return poolable != null && poolable != QueryPoolable.DEFAULT
              ? poolable
              : settings.getQueryPoolable() != null
              ? settings.getQueryPoolable()

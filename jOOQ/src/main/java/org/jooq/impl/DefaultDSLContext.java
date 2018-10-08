@@ -3685,7 +3685,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public BigInteger currval(Name sequence) throws DataAccessException {
+    public BigInteger currval(Name sequence) {
         return currval(sequence(sequence));
     }
 
@@ -4135,7 +4135,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
-    public <T> List<T> fetchValues(Table<? extends Record1<T>> table) throws DataAccessException {
+    public <T> List<T> fetchValues(Table<? extends Record1<T>> table) {
         return fetchValues(selectFrom(table));
     }
 
@@ -4182,18 +4182,38 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public boolean fetchExists(Select<?> query) throws DataAccessException {
+    public int fetchCount(Table<?> table, Condition... conditions) {
+        return fetchCount(table, DSL.and(conditions));
+    }
+
+    @Override
+    public int fetchCount(Table<?> table, Collection<? extends Condition> conditions) {
+        return fetchCount(table, DSL.and(conditions));
+    }
+
+    @Override
+    public boolean fetchExists(Select<?> query) {
         return selectOne().whereExists(query).fetchOne() != null;
     }
 
     @Override
-    public boolean fetchExists(Table<?> table) throws DataAccessException {
+    public boolean fetchExists(Table<?> table) {
         return fetchExists(selectOne().from(table));
     }
 
     @Override
-    public boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException {
+    public boolean fetchExists(Table<?> table, Condition condition) {
         return fetchExists(selectOne().from(table).where(condition));
+    }
+
+    @Override
+    public boolean fetchExists(Table<?> table, Condition... conditions) {
+        return fetchExists(table, DSL.and(conditions));
+    }
+
+    @Override
+    public boolean fetchExists(Table<?> table, Collection<? extends Condition> conditions) {
+        return fetchExists(table, DSL.and(conditions));
     }
 
     @Override
@@ -4224,6 +4244,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <R extends Record> Result<R> fetch(Table<R> table, Condition... conditions) {
+        return fetch(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> Result<R> fetch(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetch(table, DSL.and(conditions));
+    }
+
+    @Override
     public <R extends Record> R fetchOne(Table<R> table) {
         return Tools.fetchOne(fetchLazy(table));
     }
@@ -4231,6 +4261,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
         return Tools.fetchOne(fetchLazy(table, condition));
+    }
+
+    @Override
+    public <R extends Record> R fetchOne(Table<R> table, Condition... conditions) {
+        return fetchOne(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> R fetchOne(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchOne(table, DSL.and(conditions));
     }
 
     @Override
@@ -4243,6 +4283,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Tools.fetchSingle(fetchLazy(table, condition));
     }
 
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition... conditions) {
+        return fetchSingle(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchSingle(table, DSL.and(conditions));
+    }
+
 
     @Override
     public <R extends Record> Optional<R> fetchOptional(Table<R> table) {
@@ -4252,6 +4302,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) {
         return Optional.ofNullable(fetchOne(table, condition));
+    }
+
+    @Override
+    public <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition... conditions) {
+        return fetchOptional(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> Optional<R> fetchOptional(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchOptional(table, DSL.and(conditions));
     }
 
 
@@ -4266,6 +4326,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <R extends Record> R fetchAny(Table<R> table, Condition... conditions) {
+        return fetchAny(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> R fetchAny(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchAny(table, DSL.and(conditions));
+    }
+
+    @Override
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table) {
         return selectFrom(table).fetchLazy();
     }
@@ -4273,6 +4343,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).fetchLazy();
+    }
+
+    @Override
+    public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition... conditions) {
+        return fetchLazy(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchLazy(table, DSL.and(conditions));
     }
 
 
@@ -4288,6 +4368,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Condition... conditions) {
+        return fetchAsync(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchAsync(table, DSL.and(conditions));
+    }
+
+    @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table) {
         return selectFrom(table).fetchAsync(executor);
     }
@@ -4298,6 +4388,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition... conditions) {
+        return fetchAsync(executor, table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchAsync(executor, table, DSL.and(conditions));
+    }
+
+    @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
         return selectFrom(table).stream();
     }
@@ -4305,6 +4405,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).stream();
+    }
+
+    @Override
+    public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition... conditions) {
+        return fetchStream(table, DSL.and(conditions));
+    }
+
+    @Override
+    public <R extends Record> Stream<R> fetchStream(Table<R> table, Collection<? extends Condition> conditions) {
+        return fetchStream(table, DSL.and(conditions));
     }
 
 

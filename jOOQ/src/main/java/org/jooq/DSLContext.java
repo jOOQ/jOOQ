@@ -10822,10 +10822,43 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This executes <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
      *
      * @param table The table whose records to count
+     * @param condition The condition to apply
      * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table that satisfy a condition.
+     * <p>
+     * This executes
+     * <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     * <p>
+     * Convenience API for calling {@link #fetchCount(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @param table The table whose records to count
+     * @param conditions The conditions to apply
+     * @return The number of records in the table that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount(Table<?> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table that satisfy a condition.
+     * <p>
+     * This executes
+     * <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     * <p>
+     * Convenience API for calling {@link #fetchCount(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @param table The table whose records to count
+     * @param conditions The conditions to apply
+     * @return The number of records in the table that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
      * Check if a {@link Select} would return any records, if it were executed.
@@ -10869,6 +10902,34 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;
+
+    /**
+     * Check if a table has any records that satisfy a condition.
+     * <p>
+     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     * <p>
+     * Convenience API for calling {@link #fetchExists(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @param table The table whose records to count
+     * @return Whether the table contains any records that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    boolean fetchExists(Table<?> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Check if a table has any records that satisfy a condition.
+     * <p>
+     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     * <p>
+     * Convenience API for calling {@link #fetchExists(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @param table The table whose records to count
+     * @return Whether the table contains any records that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    boolean fetchExists(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
      * Execute a {@link Query} in the context of this <code>DSLContext</code>.
@@ -10915,6 +10976,42 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
+     * Execute and return all records for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetch(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Result<R> fetch(Table<R> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Execute and return all records for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetch(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Result<R> fetch(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
+
+    /**
      * Execute and return zero or one record for
      * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
@@ -10943,6 +11040,42 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchOne(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The record or <code>null</code>, if no record was found.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> R fetchOne(Table<R> table, Condition... conditions) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchOne(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The record or <code>null</code>, if no record was found.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> R fetchOne(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute and return exactly one record for
@@ -10976,6 +11109,44 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> R fetchSingle(Table<R> table, Condition condition) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> R fetchSingle(Table<R> table, Condition... conditions) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> R fetchSingle(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
 
     /**
      * Execute and return zero or one record for
@@ -11007,6 +11178,42 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
 
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchOptional(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition... conditions) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchOptional(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> Optional<R> fetchOptional(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, TooManyRowsException;
+
 
     /**
      * Execute and return zero or one record for
@@ -11037,6 +11244,40 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAny(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The record or <code>null</code> if no record was returned
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> R fetchAny(Table<R> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAny(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The record or <code>null</code> if no record was returned
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> R fetchAny(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
+
+    /**
      * Execute and return all records lazily for
      * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
@@ -11063,6 +11304,40 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchLazy(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The cursor. This will never be <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchLazy(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The cursor. This will never be <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Cursor<R> fetchLazy(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
 
 
@@ -11096,6 +11371,40 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAsync(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Condition... condition);
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAsync(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Collection<? extends Condition> condition);
+
+    /**
+     * Execute and return all records asynchronously for
      * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
      * The result and its contained records are attached to this
@@ -11123,6 +11432,40 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition condition);
 
     /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAsync(Executor, Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition... conditions);
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchAsync(Executor, Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Collection<? extends Condition> conditions);
+
+    /**
      * Execute and return all records lazily for
      * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
@@ -11147,6 +11490,38 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) throws DataAccessException;
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchStream(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Stream<R> fetchStream(Table<R> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchStream(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Stream<R> fetchStream(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
 
     /**

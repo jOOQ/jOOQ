@@ -121,7 +121,7 @@ public class MatcherRule implements Serializable
             sb.append(transform);
             sb.append("</transform>");
         }
-        if ((expression!= null)&&(!"".equals(expression))) {
+        if (expression!= null) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");

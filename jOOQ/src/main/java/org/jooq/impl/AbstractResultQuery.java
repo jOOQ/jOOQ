@@ -145,6 +145,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @SuppressWarnings("unchecked")
     @Override
+    public final ResultQuery<R> poolable(boolean poolable) {
+        return (ResultQuery<R>) super.poolable(poolable);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public final ResultQuery<R> queryTimeout(int timeout) {
         return (ResultQuery<R>) super.queryTimeout(timeout);
     }

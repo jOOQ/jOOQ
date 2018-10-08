@@ -193,17 +193,17 @@ public class CustomType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
+        if (name!= null) {
             sb.append("<name>");
             sb.append(name);
             sb.append("</name>");
         }
-        if ((type!= null)&&(!"".equals(type))) {
+        if (type!= null) {
             sb.append("<type>");
             sb.append(type);
             sb.append("</type>");
         }
-        if ((converter!= null)&&(!"".equals(converter))) {
+        if (converter!= null) {
             sb.append("<converter>");
             sb.append(converter);
             sb.append("</converter>");
@@ -213,7 +213,7 @@ public class CustomType implements Serializable
             sb.append(enumConverter);
             sb.append("</enumConverter>");
         }
-        if ((binding!= null)&&(!"".equals(binding))) {
+        if (binding!= null) {
             sb.append("<binding>");
             sb.append(binding);
             sb.append("</binding>");

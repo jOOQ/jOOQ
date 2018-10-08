@@ -473,27 +473,27 @@ public class Column implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
+        if (tableCatalog!= null) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
             sb.append("</table_catalog>");
         }
-        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
+        if (tableSchema!= null) {
             sb.append("<table_schema>");
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
+        if (tableName!= null) {
             sb.append("<table_name>");
             sb.append(tableName);
             sb.append("</table_name>");
         }
-        if ((columnName!= null)&&(!"".equals(columnName))) {
+        if (columnName!= null) {
             sb.append("<column_name>");
             sb.append(columnName);
             sb.append("</column_name>");
         }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
+        if (dataType!= null) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -518,7 +518,7 @@ public class Column implements Serializable
             sb.append(ordinalPosition);
             sb.append("</ordinal_position>");
         }
-        if ((identityGeneration!= null)&&(!"".equals(identityGeneration))) {
+        if (identityGeneration!= null) {
             sb.append("<identity_generation>");
             sb.append(identityGeneration);
             sb.append("</identity_generation>");
@@ -528,12 +528,12 @@ public class Column implements Serializable
             sb.append(isNullable);
             sb.append("</is_nullable>");
         }
-        if ((columnDefault!= null)&&(!"".equals(columnDefault))) {
+        if (columnDefault!= null) {
             sb.append("<column_default>");
             sb.append(columnDefault);
             sb.append("</column_default>");
         }
-        if ((comment!= null)&&(!"".equals(comment))) {
+        if (comment!= null) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

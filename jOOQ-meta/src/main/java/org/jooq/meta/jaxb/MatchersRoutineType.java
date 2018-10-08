@@ -159,7 +159,7 @@ public class MatchersRoutineType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
+        if (expression!= null) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");
@@ -174,7 +174,7 @@ public class MatchersRoutineType implements Serializable
             sb.append(routineMethod);
             sb.append("</routineMethod>");
         }
-        if ((routineImplements!= null)&&(!"".equals(routineImplements))) {
+        if (routineImplements!= null) {
             sb.append("<routineImplements>");
             sb.append(routineImplements);
             sb.append("</routineImplements>");

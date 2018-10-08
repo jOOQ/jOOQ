@@ -170,6 +170,11 @@ IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other valu
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="queryPoolable" type="jooq-runtime:QueryPoolable" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC poolable property that should be applied to all
+jOOQ queries, for which no specific poolable flag was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="queryTimeout" type="int" minOccurs="0" maxOccurs="1" default="0">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC queryTimeout property that should be applied to all
 jOOQ queries, for which no specific queryTimeout was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -520,6 +525,20 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <!-- Unknown functions (parser or catalog) will be passed on as plain SQL -->
       <enumeration value="IGNORE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="QueryPoolable">
+    <restriction base="string">
+
+      <!-- Statements are poolable -->
+      <enumeration value="TRUE"/>
+
+      <!-- Statements are not poolable -->
+      <enumeration value="FALSE"/>
+
+      <!-- Statements may be poolable, according to JDBC's default behaviour -->
+      <enumeration value="DEFAULT"/>
     </restriction>
   </simpleType>
 </schema>

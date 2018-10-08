@@ -129,7 +129,7 @@ public class MatchersEnumType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
+        if (expression!= null) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");
@@ -139,7 +139,7 @@ public class MatchersEnumType implements Serializable
             sb.append(enumClass);
             sb.append("</enumClass>");
         }
-        if ((enumImplements!= null)&&(!"".equals(enumImplements))) {
+        if (enumImplements!= null) {
             sb.append("<enumImplements>");
             sb.append(enumImplements);
             sb.append("</enumImplements>");

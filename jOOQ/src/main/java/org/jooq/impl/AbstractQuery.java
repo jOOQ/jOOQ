@@ -73,6 +73,7 @@ import org.jooq.Query;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
+import org.jooq.conf.QueryPoolable;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
@@ -89,6 +90,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
     private Configuration           configuration;
     private int                     timeout;
+    private QueryPoolable           poolable = QueryPoolable.DEFAULT;
     private boolean                 keepStatement;
     transient PreparedStatement     statement;
     transient int                   statementExecutionCount;
@@ -230,6 +232,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      * {@inheritDoc}
      */
     @Override
+    public Query poolable(boolean p) {
+        this.poolable = p ? QueryPoolable.TRUE : QueryPoolable.FALSE;
+        return this;
+    }
+
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
     public Query queryTimeout(int t) {
         this.timeout = t;
         return this;
@@ -327,9 +340,14 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
                 // [#1856] [#4753] Set the query timeout onto the Statement
                 int t = SettingsTools.getQueryTimeout(timeout, ctx.settings());
-                if (t != 0) {
+                if (t != 0)
                     ctx.statement().setQueryTimeout(t);
-                }
+
+                QueryPoolable p = SettingsTools.getQueryPoolable(poolable, ctx.settings());
+                if (p == QueryPoolable.TRUE)
+                    ctx.statement().setPoolable(true);
+                else if (p == QueryPoolable.FALSE)
+                    ctx.statement().setPoolable(false);
 
                 if (
 

@@ -179,7 +179,7 @@ public class MappedSchema
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((input!= null)&&(!"".equals(input))) {
+        if (input!= null) {
             sb.append("<input>");
             sb.append(input);
             sb.append("</input>");
@@ -189,7 +189,7 @@ public class MappedSchema
             sb.append(inputExpression.pattern());
             sb.append("</inputExpression>");
         }
-        if ((output!= null)&&(!"".equals(output))) {
+        if (output!= null) {
             sb.append("<output>");
             sb.append(output);
             sb.append("</output>");

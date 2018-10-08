@@ -241,6 +241,18 @@ public final class SettingsTools {
     }
 
     /**
+     * Return <code>poolable</code> if it is not <code>null</code>, or the
+     * specified {@link Settings#getQueryPoolable()}.
+     */
+    public static final QueryPoolable getQueryPoolable(QueryPoolable poolable, Settings settings) {
+        return poolable != null
+             ? poolable
+             : settings.getQueryPoolable() != null
+             ? settings.getQueryPoolable()
+             : QueryPoolable.DEFAULT;
+    }
+
+    /**
      * Return <code>maxRows</code> if it is not <code>0</code>, or the specified
      * {@link Settings#getMaxRows()}.
      */

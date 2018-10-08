@@ -324,17 +324,17 @@ public class ForcedType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
+        if (name!= null) {
             sb.append("<name>");
             sb.append(name);
             sb.append("</name>");
         }
-        if ((userType!= null)&&(!"".equals(userType))) {
+        if (userType!= null) {
             sb.append("<userType>");
             sb.append(userType);
             sb.append("</userType>");
         }
-        if ((converter!= null)&&(!"".equals(converter))) {
+        if (converter!= null) {
             sb.append("<converter>");
             sb.append(converter);
             sb.append("</converter>");
@@ -344,22 +344,22 @@ public class ForcedType implements Serializable
             sb.append(enumConverter);
             sb.append("</enumConverter>");
         }
-        if ((binding!= null)&&(!"".equals(binding))) {
+        if (binding!= null) {
             sb.append("<binding>");
             sb.append(binding);
             sb.append("</binding>");
         }
-        if ((expression!= null)&&(!"".equals(expression))) {
+        if (expression!= null) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");
         }
-        if ((expressions!= null)&&(!"".equals(expressions))) {
+        if (expressions!= null) {
             sb.append("<expressions>");
             sb.append(expressions);
             sb.append("</expressions>");
         }
-        if ((types!= null)&&(!"".equals(types))) {
+        if (types!= null) {
             sb.append("<types>");
             sb.append(types);
             sb.append("</types>");

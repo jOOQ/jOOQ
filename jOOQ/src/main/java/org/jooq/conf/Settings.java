@@ -99,6 +99,9 @@ public class Settings
     protected Boolean mapJPAAnnotations = true;
     @XmlElement(defaultValue = "false")
     protected Boolean mapConstructorParameterNames = false;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected QueryPoolable queryPoolable = QueryPoolable.DEFAULT;
     @XmlElement(defaultValue = "0")
     protected Integer queryTimeout = 0;
     @XmlElement(defaultValue = "0")
@@ -850,6 +853,31 @@ public class Settings
     }
 
     /**
+     * The default JDBC poolable property that should be applied to all
+     * jOOQ queries, for which no specific poolable flag was specified.
+     *
+     * @return
+     *     possible object is
+     *     {@link QueryPoolable }
+     *
+     */
+    public QueryPoolable getQueryPoolable() {
+        return queryPoolable;
+    }
+
+    /**
+     * Sets the value of the queryPoolable property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link QueryPoolable }
+     *
+     */
+    public void setQueryPoolable(QueryPoolable value) {
+        this.queryPoolable = value;
+    }
+
+    /**
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
      *
@@ -1304,6 +1332,11 @@ public class Settings
         return this;
     }
 
+    public Settings withQueryPoolable(QueryPoolable value) {
+        setQueryPoolable(value);
+        return this;
+    }
+
     public Settings withQueryTimeout(Integer value) {
         setQueryTimeout(value);
         return this;
@@ -1512,6 +1545,11 @@ public class Settings
             sb.append(mapConstructorParameterNames);
             sb.append("</mapConstructorParameterNames>");
         }
+        if (queryPoolable!= null) {
+            sb.append("<queryPoolable>");
+            sb.append(queryPoolable);
+            sb.append("</queryPoolable>");
+        }
         if (queryTimeout!= null) {
             sb.append("<queryTimeout>");
             sb.append(queryTimeout);
@@ -1542,7 +1580,7 @@ public class Settings
             sb.append(inListPadBase);
             sb.append("</inListPadBase>");
         }
-        if ((delimiter!= null)&&(!"".equals(delimiter))) {
+        if (delimiter!= null) {
             sb.append("<delimiter>");
             sb.append(delimiter);
             sb.append("</delimiter>");
@@ -1844,6 +1882,15 @@ public class Settings
                 return false;
             }
         }
+        if (queryPoolable == null) {
+            if (other.queryPoolable!= null) {
+                return false;
+            }
+        } else {
+            if (!queryPoolable.equals(other.queryPoolable)) {
+                return false;
+            }
+        }
         if (queryTimeout == null) {
             if (other.queryTimeout!= null) {
                 return false;
@@ -1996,6 +2043,7 @@ public class Settings
         result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
         result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNames == null)? 0 :mapConstructorParameterNames.hashCode()));
+        result = ((prime*result)+((queryPoolable == null)? 0 :queryPoolable.hashCode()));
         result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));
         result = ((prime*result)+((fetchSize == null)? 0 :fetchSize.hashCode()));

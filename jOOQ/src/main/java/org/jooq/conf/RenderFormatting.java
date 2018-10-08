@@ -131,12 +131,12 @@ public class RenderFormatting
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((newline!= null)&&(!"".equals(newline))) {
+        if (newline!= null) {
             sb.append("<newline>");
             sb.append(newline);
             sb.append("</newline>");
         }
-        if ((indentation!= null)&&(!"".equals(indentation))) {
+        if (indentation!= null) {
             sb.append("<indentation>");
             sb.append(indentation);
             sb.append("</indentation>");

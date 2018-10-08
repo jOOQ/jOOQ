@@ -160,6 +160,12 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
 
     @SuppressWarnings("unchecked")
     @Override
+    public final Q poolable(boolean poolable) {
+        return (Q) delegate.poolable(poolable);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public final Q queryTimeout(int timeout) {
         return (Q) delegate.queryTimeout(timeout);
     }

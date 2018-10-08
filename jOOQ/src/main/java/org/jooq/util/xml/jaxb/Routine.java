@@ -509,42 +509,42 @@ public class Routine implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((specificCatalog!= null)&&(!"".equals(specificCatalog))) {
+        if (specificCatalog!= null) {
             sb.append("<specific_catalog>");
             sb.append(specificCatalog);
             sb.append("</specific_catalog>");
         }
-        if ((specificSchema!= null)&&(!"".equals(specificSchema))) {
+        if (specificSchema!= null) {
             sb.append("<specific_schema>");
             sb.append(specificSchema);
             sb.append("</specific_schema>");
         }
-        if ((specificPackage!= null)&&(!"".equals(specificPackage))) {
+        if (specificPackage!= null) {
             sb.append("<specific_package>");
             sb.append(specificPackage);
             sb.append("</specific_package>");
         }
-        if ((specificName!= null)&&(!"".equals(specificName))) {
+        if (specificName!= null) {
             sb.append("<specific_name>");
             sb.append(specificName);
             sb.append("</specific_name>");
         }
-        if ((routineCatalog!= null)&&(!"".equals(routineCatalog))) {
+        if (routineCatalog!= null) {
             sb.append("<routine_catalog>");
             sb.append(routineCatalog);
             sb.append("</routine_catalog>");
         }
-        if ((routineSchema!= null)&&(!"".equals(routineSchema))) {
+        if (routineSchema!= null) {
             sb.append("<routine_schema>");
             sb.append(routineSchema);
             sb.append("</routine_schema>");
         }
-        if ((routinePackage!= null)&&(!"".equals(routinePackage))) {
+        if (routinePackage!= null) {
             sb.append("<routine_package>");
             sb.append(routinePackage);
             sb.append("</routine_package>");
         }
-        if ((routineName!= null)&&(!"".equals(routineName))) {
+        if (routineName!= null) {
             sb.append("<routine_name>");
             sb.append(routineName);
             sb.append("</routine_name>");
@@ -554,7 +554,7 @@ public class Routine implements Serializable
             sb.append(routineType);
             sb.append("</routine_type>");
         }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
+        if (dataType!= null) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -574,7 +574,7 @@ public class Routine implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if ((comment!= null)&&(!"".equals(comment))) {
+        if (comment!= null) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

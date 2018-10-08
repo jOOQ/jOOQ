@@ -181,22 +181,22 @@ public class Table implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
+        if (tableCatalog!= null) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
             sb.append("</table_catalog>");
         }
-        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
+        if (tableSchema!= null) {
             sb.append("<table_schema>");
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
+        if (tableName!= null) {
             sb.append("<table_name>");
             sb.append(tableName);
             sb.append("</table_name>");
         }
-        if ((comment!= null)&&(!"".equals(comment))) {
+        if (comment!= null) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

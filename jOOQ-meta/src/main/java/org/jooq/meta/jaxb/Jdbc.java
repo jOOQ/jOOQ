@@ -264,32 +264,32 @@ public class Jdbc implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((driver!= null)&&(!"".equals(driver))) {
+        if (driver!= null) {
             sb.append("<driver>");
             sb.append(driver);
             sb.append("</driver>");
         }
-        if ((url!= null)&&(!"".equals(url))) {
+        if (url!= null) {
             sb.append("<url>");
             sb.append(url);
             sb.append("</url>");
         }
-        if ((schema!= null)&&(!"".equals(schema))) {
+        if (schema!= null) {
             sb.append("<schema>");
             sb.append(schema);
             sb.append("</schema>");
         }
-        if ((user!= null)&&(!"".equals(user))) {
+        if (user!= null) {
             sb.append("<user>");
             sb.append(user);
             sb.append("</user>");
         }
-        if ((username!= null)&&(!"".equals(username))) {
+        if (username!= null) {
             sb.append("<username>");
             sb.append(username);
             sb.append("</username>");
         }
-        if ((password!= null)&&(!"".equals(password))) {
+        if (password!= null) {
             sb.append("<password>");
             sb.append(password);
             sb.append("</password>");

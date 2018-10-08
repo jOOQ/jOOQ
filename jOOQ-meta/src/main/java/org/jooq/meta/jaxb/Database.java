@@ -1641,7 +1641,7 @@ public class Database implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
+        if (name!= null) {
             sb.append("<name>");
             sb.append(name);
             sb.append("</name>");
@@ -1655,12 +1655,12 @@ public class Database implements Serializable
             }
             sb.append("</regexFlags>");
         }
-        if ((includes!= null)&&(!"".equals(includes))) {
+        if (includes!= null) {
             sb.append("<includes>");
             sb.append(includes);
             sb.append("</includes>");
         }
-        if ((excludes!= null)&&(!"".equals(excludes))) {
+        if (excludes!= null) {
             sb.append("<excludes>");
             sb.append(excludes);
             sb.append("</excludes>");
@@ -1740,27 +1740,27 @@ public class Database implements Serializable
             sb.append(includeInvisibleColumns);
             sb.append("</includeInvisibleColumns>");
         }
-        if ((recordVersionFields!= null)&&(!"".equals(recordVersionFields))) {
+        if (recordVersionFields!= null) {
             sb.append("<recordVersionFields>");
             sb.append(recordVersionFields);
             sb.append("</recordVersionFields>");
         }
-        if ((recordTimestampFields!= null)&&(!"".equals(recordTimestampFields))) {
+        if (recordTimestampFields!= null) {
             sb.append("<recordTimestampFields>");
             sb.append(recordTimestampFields);
             sb.append("</recordTimestampFields>");
         }
-        if ((syntheticIdentities!= null)&&(!"".equals(syntheticIdentities))) {
+        if (syntheticIdentities!= null) {
             sb.append("<syntheticIdentities>");
             sb.append(syntheticIdentities);
             sb.append("</syntheticIdentities>");
         }
-        if ((syntheticPrimaryKeys!= null)&&(!"".equals(syntheticPrimaryKeys))) {
+        if (syntheticPrimaryKeys!= null) {
             sb.append("<syntheticPrimaryKeys>");
             sb.append(syntheticPrimaryKeys);
             sb.append("</syntheticPrimaryKeys>");
         }
-        if ((overridePrimaryKeys!= null)&&(!"".equals(overridePrimaryKeys))) {
+        if (overridePrimaryKeys!= null) {
             sb.append("<overridePrimaryKeys>");
             sb.append(overridePrimaryKeys);
             sb.append("</overridePrimaryKeys>");
@@ -1780,12 +1780,12 @@ public class Database implements Serializable
             sb.append(unsignedTypes);
             sb.append("</unsignedTypes>");
         }
-        if ((inputCatalog!= null)&&(!"".equals(inputCatalog))) {
+        if (inputCatalog!= null) {
             sb.append("<inputCatalog>");
             sb.append(inputCatalog);
             sb.append("</inputCatalog>");
         }
-        if ((outputCatalog!= null)&&(!"".equals(outputCatalog))) {
+        if (outputCatalog!= null) {
             sb.append("<outputCatalog>");
             sb.append(outputCatalog);
             sb.append("</outputCatalog>");
@@ -1795,12 +1795,12 @@ public class Database implements Serializable
             sb.append(outputCatalogToDefault);
             sb.append("</outputCatalogToDefault>");
         }
-        if ((inputSchema!= null)&&(!"".equals(inputSchema))) {
+        if (inputSchema!= null) {
             sb.append("<inputSchema>");
             sb.append(inputSchema);
             sb.append("</inputSchema>");
         }
-        if ((outputSchema!= null)&&(!"".equals(outputSchema))) {
+        if (outputSchema!= null) {
             sb.append("<outputSchema>");
             sb.append(outputSchema);
             sb.append("</outputSchema>");
@@ -1810,17 +1810,17 @@ public class Database implements Serializable
             sb.append(outputSchemaToDefault);
             sb.append("</outputSchemaToDefault>");
         }
-        if ((schemaVersionProvider!= null)&&(!"".equals(schemaVersionProvider))) {
+        if (schemaVersionProvider!= null) {
             sb.append("<schemaVersionProvider>");
             sb.append(schemaVersionProvider);
             sb.append("</schemaVersionProvider>");
         }
-        if ((catalogVersionProvider!= null)&&(!"".equals(catalogVersionProvider))) {
+        if (catalogVersionProvider!= null) {
             sb.append("<catalogVersionProvider>");
             sb.append(catalogVersionProvider);
             sb.append("</catalogVersionProvider>");
         }
-        if ((orderProvider!= null)&&(!"".equals(orderProvider))) {
+        if (orderProvider!= null) {
             sb.append("<orderProvider>");
             sb.append(orderProvider);
             sb.append("</orderProvider>");

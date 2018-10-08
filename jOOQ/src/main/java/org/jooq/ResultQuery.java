@@ -3754,6 +3754,12 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * {@inheritDoc}
      */
     @Override
+    ResultQuery<R> poolable(boolean poolable);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     ResultQuery<R> queryTimeout(int timeout);
 
     /**

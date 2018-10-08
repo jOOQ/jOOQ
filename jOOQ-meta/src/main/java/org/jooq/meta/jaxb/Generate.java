@@ -2160,7 +2160,7 @@ public class Generate implements Serializable
             sb.append(jpaAnnotations);
             sb.append("</jpaAnnotations>");
         }
-        if ((jpaVersion!= null)&&(!"".equals(jpaVersion))) {
+        if (jpaVersion!= null) {
             sb.append("<jpaVersion>");
             sb.append(jpaVersion);
             sb.append("</jpaVersion>");
@@ -2315,7 +2315,7 @@ public class Generate implements Serializable
             sb.append(varargSetters);
             sb.append("</varargSetters>");
         }
-        if ((fullyQualifiedTypes!= null)&&(!"".equals(fullyQualifiedTypes))) {
+        if (fullyQualifiedTypes!= null) {
             sb.append("<fullyQualifiedTypes>");
             sb.append(fullyQualifiedTypes);
             sb.append("</fullyQualifiedTypes>");

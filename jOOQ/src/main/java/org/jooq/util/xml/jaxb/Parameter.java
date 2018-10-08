@@ -467,22 +467,22 @@ public class Parameter implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((specificCatalog!= null)&&(!"".equals(specificCatalog))) {
+        if (specificCatalog!= null) {
             sb.append("<specific_catalog>");
             sb.append(specificCatalog);
             sb.append("</specific_catalog>");
         }
-        if ((specificSchema!= null)&&(!"".equals(specificSchema))) {
+        if (specificSchema!= null) {
             sb.append("<specific_schema>");
             sb.append(specificSchema);
             sb.append("</specific_schema>");
         }
-        if ((specificPackage!= null)&&(!"".equals(specificPackage))) {
+        if (specificPackage!= null) {
             sb.append("<specific_package>");
             sb.append(specificPackage);
             sb.append("</specific_package>");
         }
-        if ((specificName!= null)&&(!"".equals(specificName))) {
+        if (specificName!= null) {
             sb.append("<specific_name>");
             sb.append(specificName);
             sb.append("</specific_name>");
@@ -495,12 +495,12 @@ public class Parameter implements Serializable
             sb.append(parameterMode);
             sb.append("</parameter_mode>");
         }
-        if ((parameterName!= null)&&(!"".equals(parameterName))) {
+        if (parameterName!= null) {
             sb.append("<parameter_name>");
             sb.append(parameterName);
             sb.append("</parameter_name>");
         }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
+        if (dataType!= null) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -520,12 +520,12 @@ public class Parameter implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if ((parameterDefault!= null)&&(!"".equals(parameterDefault))) {
+        if (parameterDefault!= null) {
             sb.append("<parameter_default>");
             sb.append(parameterDefault);
             sb.append("</parameter_default>");
         }
-        if ((comment!= null)&&(!"".equals(comment))) {
+        if (comment!= null) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

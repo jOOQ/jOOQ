@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -129,7 +130,7 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * use this clause in all other databases supporting window functions. jOOQ
      * will inline window definitions where they are referenced.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     SelectOrderByStep<R> window(WindowDefinition... definitions);
 
     /**
@@ -143,6 +144,6 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * use this clause in all other databases supporting window functions. jOOQ
      * will inline window definitions where they are referenced.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

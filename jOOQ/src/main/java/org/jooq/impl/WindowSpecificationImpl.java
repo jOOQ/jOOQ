@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_AND;
@@ -93,7 +94,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
      * Generated UID
      */
     private static final long                serialVersionUID      = 2996016924769376361L;
-    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE = EnumSet.of(CUBRID, MYSQL);
+    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE = EnumSet.of(CUBRID, MYSQL, SQLITE);
 
     private final WindowDefinitionImpl       windowDefinition;
     private final QueryPartList<Field<?>>    partitionBy;

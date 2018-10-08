@@ -202,7 +202,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE           = EnumSet.of(CUBRID);
     private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE_QUALIFIED = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
     private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO             = EnumSet.of(HSQLDB, POSTGRES);
-    static final EnumSet<SQLDialect>             SUPPORT_WINDOW_CLAUSE           = EnumSet.of(H2, MYSQL, POSTGRES);
+    static final EnumSet<SQLDialect>             SUPPORT_WINDOW_CLAUSE           = EnumSet.of(H2, MYSQL, POSTGRES, SQLITE);
     private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 

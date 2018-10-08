@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -89,35 +90,35 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andFollowing(int number);
 
 }

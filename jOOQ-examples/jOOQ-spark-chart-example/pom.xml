@@ -107,7 +107,7 @@
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
-                        <version>9.4.1208</version>
+                        <version>42.2.5</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -148,7 +148,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4.1208</version>
+            <version>42.2.5</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>

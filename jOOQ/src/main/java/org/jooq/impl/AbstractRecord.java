@@ -926,7 +926,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final void formatCSV(Writer writer, CSVFormat format)  {}
+    public final void formatCSV(Writer writer, CSVFormat format)  {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        result.add(AbstractRecord.this);
+        result.formatCSV(writer, format);
+    }
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {

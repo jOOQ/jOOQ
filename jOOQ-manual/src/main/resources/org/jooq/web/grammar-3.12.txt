@@ -564,14 +564,13 @@ predicate =
       'NULL'
     | 'DISTINCT FROM' concat
     )
-  | 'IN' '('
+  | [ 'NOT' ]
     (
-      select
-    | fields
+    | 'IN' '(' ( select | fields ) ')'
+    | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
+    | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
+    | 'SIMILAR' 'TO' concat [ 'ESCAPE' characterLiteral ]
     )
-    ')'
-  | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
-  | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
   | '@>' concat
   ]
 | concat '*=' concat

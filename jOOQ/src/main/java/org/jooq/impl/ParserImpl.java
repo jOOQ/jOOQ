@@ -3672,6 +3672,18 @@ final class ParserImpl implements Parser {
                         ? ((Field) left).notLike(right)
                         : ((Field) left).like(right);
             }
+            else if (left instanceof Field && parseKeywordIf(ctx, "SIMILAR TO")) {
+                Field right = toField(ctx, parseConcat(ctx, null));
+                boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                return escape
+                    ? not
+                        ? ((Field) left).notSimilarTo(right, character)
+                        : ((Field) left).similarTo(right, character)
+                    : not
+                        ? ((Field) left).notSimilarTo(right)
+                        : ((Field) left).similarTo(right);
+            }
             else if (left instanceof RowN && ((RowN) left).size() == 2 && parseKeywordIf(ctx, "OVERLAPS")) {
                 return ((Row2) left).overlaps((Row2) parseRow(ctx, 2));
             }
@@ -6807,7 +6819,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static WindowOverStep<?> parseWindowRespectIgnoreNulls(ParserContext ctx, WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
+    private static final WindowOverStep<?> parseWindowRespectIgnoreNulls(ParserContext ctx, WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
         if (s2 != null)
             if (parseKeywordIf(ctx, "RESPECT NULLS"))
                 s3 = s2.respectNulls();
@@ -6819,7 +6831,7 @@ final class ParserImpl implements Parser {
         return s3;
     }
 
-    private static WindowIgnoreNullsStep parseWindowFromFirstLast(ParserContext ctx, WindowFromFirstLastStep s1, WindowIgnoreNullsStep s2) {
+    private static final WindowIgnoreNullsStep parseWindowFromFirstLast(ParserContext ctx, WindowFromFirstLastStep s1, WindowIgnoreNullsStep s2) {
         if (s1 != null)
             if (parseKeywordIf(ctx, "FROM FIRST"))
                 s2 = s1.fromFirst();

@@ -1340,6 +1340,82 @@ extends
     Condition notLikeRegex(Field<String> pattern);
 
     // ------------------------------------------------------------------------
+    // SIMILAR TO predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this similar to value</code>
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    LikeEscapeStep similarTo(Field<String> value);
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this similar to value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    Condition similarTo(Field<String> value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this similar to value</code>
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    LikeEscapeStep similarTo(String value);
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this similar to value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    Condition similarTo(String value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a field.
+     * <p>
+     * SQL: <code>this not similar to field</code>
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    LikeEscapeStep notSimilarTo(Field<String> field);
+
+    /**
+     * Create a condition to pattern-check this field against a field.
+     * <p>
+     * SQL: <code>this not similar to field escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    Condition notSimilarTo(Field<String> field, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this not similar to value</code>
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    LikeEscapeStep notSimilarTo(String value);
+
+    /**
+     * Create a condition to pattern-check this field against a value.
+     * <p>
+     * SQL: <code>this not similar to value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    Condition notSimilarTo(String value, char escape);
+
+    // ------------------------------------------------------------------------
     // LIKE predicates
     // ------------------------------------------------------------------------
 

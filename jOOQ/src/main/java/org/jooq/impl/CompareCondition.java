@@ -44,6 +44,8 @@ import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_SIMILAR_TO;
+import static org.jooq.Comparator.SIMILAR_TO;
 // ...
 // ...
 // ...
@@ -102,10 +104,9 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         Field<?> rhs = field2;
         Comparator op = comparator;
 
-        // [#1159] Some dialects cannot auto-convert the LHS operand to a
+        // [#1159] [#1725] Some dialects cannot auto-convert the LHS operand to a
         // VARCHAR when applying a LIKE predicate
-        // [#293] TODO: This could apply to other operators, too
-        if ((op == LIKE || op == NOT_LIKE)
+        if ((op == LIKE || op == NOT_LIKE || op == SIMILAR_TO || op == NOT_SIMILAR_TO)
                 && field1.getType() != String.class
                 && REQUIRES_CAST_ON_LIKE.contains(family)) {
 

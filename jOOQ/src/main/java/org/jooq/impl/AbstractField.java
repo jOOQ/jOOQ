@@ -52,6 +52,8 @@ import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_SIMILAR_TO;
+import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
@@ -734,6 +736,46 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
             return ((Field<Boolean>) this).equal(inline(false));
         else
             return cast(String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
+    }
+
+    @Override
+    public final LikeEscapeStep similarTo(String value) {
+        return similarTo(Tools.field(value));
+    }
+
+    @Override
+    public final Condition similarTo(String value, char escape) {
+        return similarTo(Tools.field(value), escape);
+    }
+
+    @Override
+    public final LikeEscapeStep similarTo(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field, getDataType()), SIMILAR_TO);
+    }
+
+    @Override
+    public final Condition similarTo(Field<String> field, char escape) {
+        return similarTo(field).escape(escape);
+    }
+
+    @Override
+    public final LikeEscapeStep notSimilarTo(String value) {
+        return notSimilarTo(Tools.field(value));
+    }
+
+    @Override
+    public final Condition notSimilarTo(String value, char escape) {
+        return notSimilarTo(Tools.field(value), escape);
+    }
+
+    @Override
+    public final LikeEscapeStep notSimilarTo(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_SIMILAR_TO);
+    }
+
+    @Override
+    public final Condition notSimilarTo(Field<String> field, char escape) {
+        return notSimilarTo(field).escape(escape);
     }
 
     @Override

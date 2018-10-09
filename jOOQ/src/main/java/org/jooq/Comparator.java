@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
+
 import org.jooq.impl.DSL;
 
 /**
@@ -94,6 +97,12 @@ public enum Comparator {
 
     @Support
     NOT_LIKE("not like", false, false),
+
+    @Support({ FIREBIRD, POSTGRES })
+    SIMILAR_TO("similar to", false, false),
+
+    @Support({ FIREBIRD, POSTGRES })
+    NOT_SIMILAR_TO("not similar to", false, false),
 
     @Support
     LIKE_IGNORE_CASE("ilike", false, false),

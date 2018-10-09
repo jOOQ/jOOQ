@@ -5,6 +5,7 @@ package org.jooq.meta.h2.information_schema.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -21,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CrossReferences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 854586497;
+    private static final long serialVersionUID = -1128530622;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>
@@ -119,6 +120,10 @@ public class CrossReferences extends TableImpl<Record> {
 
     private CrossReferences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    public <O extends Record> CrossReferences(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, CROSS_REFERENCES);
     }
 
     /**

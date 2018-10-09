@@ -5,6 +5,7 @@ package org.jooq.meta.h2.information_schema.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -21,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -443290501;
+    private static final long serialVersionUID = -1247184254;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.COLUMNS</code>
@@ -102,6 +103,21 @@ public class Columns extends TableImpl<Record> {
     public static final TableField<Record, Integer> NUMERIC_SCALE = createField("NUMERIC_SCALE", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.DATETIME_PRECISION</code>.
+     */
+    public static final TableField<Record, Integer> DATETIME_PRECISION = createField("DATETIME_PRECISION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.INTERVAL_TYPE</code>.
+     */
+    public static final TableField<Record, String> INTERVAL_TYPE = createField("INTERVAL_TYPE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.INTERVAL_PRECISION</code>.
+     */
+    public static final TableField<Record, Integer> INTERVAL_PRECISION = createField("INTERVAL_PRECISION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+
+    /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_SET_NAME</code>.
      */
     public static final TableField<Record, String> CHARACTER_SET_NAME = createField("CHARACTER_SET_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
@@ -162,6 +178,11 @@ public class Columns extends TableImpl<Record> {
     public static final TableField<Record, String> COLUMN_ON_UPDATE = createField("COLUMN_ON_UPDATE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_VISIBLE</code>.
+     */
+    public static final TableField<Record, String> IS_VISIBLE = createField("IS_VISIBLE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+
+    /**
      * No further instances allowed
      */
     private Columns() {
@@ -174,6 +195,10 @@ public class Columns extends TableImpl<Record> {
 
     private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, COLUMNS);
     }
 
     /**

@@ -5,6 +5,7 @@ package org.jooq.meta.h2.information_schema.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -21,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1226404694;
+    private static final long serialVersionUID = -1118138960;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -109,6 +110,10 @@ public class Sequences extends TableImpl<Record> {
 
     private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, SEQUENCES);
     }
 
     /**

@@ -5,6 +5,7 @@ package org.jooq.meta.h2.information_schema.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -21,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypeInfo extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 922808969;
+    private static final long serialVersionUID = -504092352;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.TYPE_INFO</code>
@@ -119,6 +120,10 @@ public class TypeInfo extends TableImpl<Record> {
 
     private TypeInfo(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    public <O extends Record> TypeInfo(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, TYPE_INFO);
     }
 
     /**

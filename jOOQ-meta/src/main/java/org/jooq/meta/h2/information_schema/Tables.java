@@ -7,6 +7,7 @@ package org.jooq.meta.h2.information_schema;
 import org.jooq.meta.h2.information_schema.tables.Columns;
 import org.jooq.meta.h2.information_schema.tables.Constraints;
 import org.jooq.meta.h2.information_schema.tables.CrossReferences;
+import org.jooq.meta.h2.information_schema.tables.Domains;
 import org.jooq.meta.h2.information_schema.tables.FunctionAliases;
 import org.jooq.meta.h2.information_schema.tables.FunctionColumns;
 import org.jooq.meta.h2.information_schema.tables.Indexes;
@@ -35,6 +36,11 @@ public class Tables {
      * The table <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>.
      */
     public static final CrossReferences CROSS_REFERENCES = org.jooq.meta.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
+
+    /**
+     * The table <code>INFORMATION_SCHEMA.DOMAINS</code>.
+     */
+    public static final Domains DOMAINS = org.jooq.meta.h2.information_schema.tables.Domains.DOMAINS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>.

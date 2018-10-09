@@ -5,6 +5,7 @@ package org.jooq.meta.h2.information_schema.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -21,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionAliases extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -162900236;
+    private static final long serialVersionUID = -819150211;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>
@@ -109,6 +110,10 @@ public class FunctionAliases extends TableImpl<Record> {
 
     private FunctionAliases(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""));
+    }
+
+    public <O extends Record> FunctionAliases(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, FUNCTION_ALIASES);
     }
 
     /**

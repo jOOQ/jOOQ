@@ -38,6 +38,7 @@
 package org.jooq.meta.h2;
 
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.meta.h2.information_schema.tables.Constraints.CONSTRAINTS;
@@ -89,6 +90,7 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.h2.information_schema.tables.Columns;
 import org.jooq.meta.h2.information_schema.tables.Constraints;
 import org.jooq.meta.h2.information_schema.tables.CrossReferences;
+import org.jooq.meta.h2.information_schema.tables.Domains;
 import org.jooq.meta.h2.information_schema.tables.FunctionAliases;
 import org.jooq.meta.h2.information_schema.tables.Indexes;
 import org.jooq.meta.h2.information_schema.tables.Schemata;
@@ -478,24 +480,33 @@ public class H2Database extends AbstractDatabase {
         if (!is1_4_197())
             return result;
 
-        Result<Record4<String, String, String, String>> records = create()
-            .select(
-                Columns.TABLE_SCHEMA,
-                Columns.TABLE_NAME,
-                Columns.COLUMN_NAME,
-                Columns.COLUMN_TYPE)
-            .from(COLUMNS)
-            .where(
-                Columns.COLUMN_TYPE.like("ENUM(%)%").and(
-                Columns.TABLE_SCHEMA.in(getInputSchemata())))
-            .orderBy(
-                Columns.TABLE_SCHEMA.asc(),
-                Columns.TABLE_NAME.asc(),
-                Columns.COLUMN_NAME.asc())
-            .fetch();
+        getInlineEnums(result);
+        getDomainEnums(result);
 
-        for (Record record : records) {
+        return result;
+    }
+
+    private void getInlineEnums(List<EnumDefinition> result) {
+
+        enumLoop:
+        for (Record record : create()
+                .select(
+                    Columns.TABLE_SCHEMA,
+                    Columns.TABLE_NAME,
+                    Columns.COLUMN_NAME,
+                    Columns.COLUMN_TYPE)
+                .from(COLUMNS)
+                .where(
+                    Columns.COLUMN_TYPE.like("ENUM(%)%").and(
+                    Columns.TABLE_SCHEMA.in(getInputSchemata())))
+                .orderBy(
+                    Columns.TABLE_SCHEMA.asc(),
+                    Columns.TABLE_NAME.asc(),
+                    Columns.COLUMN_NAME.asc())) {
+
             SchemaDefinition schema = getSchema(record.get(Columns.TABLE_SCHEMA));
+            if (schema == null)
+                continue enumLoop;
 
             String table = record.get(Columns.TABLE_NAME);
             String column = record.get(Columns.COLUMN_NAME);
@@ -522,17 +533,52 @@ public class H2Database extends AbstractDatabase {
                            ,true // Strict quotes
                         );
 
-                        for (String string : reader.next()) {
+                        for (String string : reader.next())
                             definition.addLiteral(string);
-                        }
 
                         result.add(definition);
                     }
                 }
             }
         }
+    }
 
-        return result;
+    private void getDomainEnums(List<EnumDefinition> result) {
+
+        enumLoop:
+        for (Record record : create()
+                .select(
+                    Domains.DOMAIN_SCHEMA,
+                    Domains.DOMAIN_NAME,
+                    Domains.SQL)
+                .from(Domains.DOMAINS)
+                .where(Domains.TYPE_NAME.eq(inline("ENUM")))
+                .and(Domains.DOMAIN_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    Domains.DOMAIN_SCHEMA,
+                    Domains.DOMAIN_NAME)) {
+
+            SchemaDefinition schema = getSchema(record.get(Domains.DOMAIN_SCHEMA));
+            if (schema == null)
+                continue enumLoop;
+
+            String name = record.get(Domains.DOMAIN_NAME);
+            String sql = record.get(Domains.SQL);
+
+            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
+
+            CSVReader reader = new CSVReader(
+                new StringReader(sql.replaceAll("(?i:(^.*as enum\\()|(\\).*$))", ""))
+               ,','  // Separator
+               ,'\'' // Quote character
+               ,true // Strict quotes
+            );
+
+            for (String string : reader.next())
+                definition.addLiteral(string);
+
+            result.add(definition);
+        }
     }
 
     @Override

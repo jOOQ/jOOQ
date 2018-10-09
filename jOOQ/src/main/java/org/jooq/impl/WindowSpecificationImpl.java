@@ -37,13 +37,20 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+// ...
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_CURRENT_ROW;
@@ -54,6 +61,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+import static org.jooq.impl.Tools.DataKey.DATA_RANKING_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
@@ -93,8 +101,9 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID      = 2996016924769376361L;
-    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE = EnumSet.of(CUBRID, MYSQL, SQLITE);
+    private static final long                serialVersionUID             = 2996016924769376361L;
+    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE        = EnumSet.of(CUBRID, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> REQUIRES_ORDER_BY_IN_RANKING = EnumSet.of(H2);
 
     private final WindowDefinitionImpl       windowDefinition;
     private final QueryPartList<Field<?>>    partitionBy;
@@ -151,6 +160,13 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             ctx.sql(glue)
                .visit(K_ORDER_BY).sql(' ')
                .visit(orderBy);
+
+            glue = " ";
+        }
+        else if (TRUE.equals(ctx.data(DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
+            ctx.sql(glue)
+               .visit(K_ORDER_BY).sql(' ')
+               .visit(field(select(one())));
 
             glue = " ";
         }

@@ -76,6 +76,16 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Term.CUME_DIST;
+import static org.jooq.impl.Term.DENSE_RANK;
+import static org.jooq.impl.Term.FIRST_VALUE;
+import static org.jooq.impl.Term.LAG;
+import static org.jooq.impl.Term.LAST_VALUE;
+import static org.jooq.impl.Term.LEAD;
+import static org.jooq.impl.Term.NTH_VALUE;
+import static org.jooq.impl.Term.NTILE;
+import static org.jooq.impl.Term.PERCENT_RANK;
+import static org.jooq.impl.Term.RANK;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -18170,7 +18180,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rank() {
-        return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER);
+        return new org.jooq.impl.Function<Integer>(RANK, SQLDataType.INTEGER);
     }
 
     /**
@@ -18178,7 +18188,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> denseRank() {
-        return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER);
+        return new org.jooq.impl.Function<Integer>(DENSE_RANK, SQLDataType.INTEGER);
     }
 
     /**
@@ -18186,7 +18196,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> percentRank() {
-        return new org.jooq.impl.Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
+        return new org.jooq.impl.Function<BigDecimal>(PERCENT_RANK, SQLDataType.NUMERIC);
     }
 
     /**
@@ -18194,7 +18204,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> cumeDist() {
-        return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
+        return new org.jooq.impl.Function<BigDecimal>(CUME_DIST, SQLDataType.NUMERIC);
     }
 
     /**
@@ -18202,7 +18212,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> ntile(int number) {
-        return new org.jooq.impl.Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
+        return new org.jooq.impl.Function<Integer>(NTILE, SQLDataType.INTEGER, inline(number));
     }
 
     /**
@@ -18226,7 +18236,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
-        return new org.jooq.impl.Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<T>(FIRST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18234,7 +18244,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
-        return new org.jooq.impl.Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<T>(LAST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18250,7 +18260,7 @@ public class DSL {
      */
     @Support({ FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
-        return new org.jooq.impl.Function<T>("nth_value", nullSafeDataType(field), nullSafe(field), nullSafe(nth));
+        return new org.jooq.impl.Function<T>(NTH_VALUE, nullSafeDataType(field), nullSafe(field), nullSafe(nth));
     }
 
     /**
@@ -18258,7 +18268,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
-        return new LeadLag<T>("lead", nullSafe(field));
+        return new LeadLag<T>(LEAD, nullSafe(field));
     }
 
     /**
@@ -18266,7 +18276,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new LeadLag<T>("lead", nullSafe(field), offset);
+        return new LeadLag<T>(LEAD, nullSafe(field), offset);
     }
 
     /**
@@ -18286,7 +18296,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        return new LeadLag<T>("lead", nullSafe(field), offset, nullSafe(defaultValue));
+        return new LeadLag<T>(LEAD, nullSafe(field), offset, nullSafe(defaultValue));
     }
 
     /**
@@ -18294,7 +18304,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
-        return new LeadLag<T>("lag", nullSafe(field));
+        return new LeadLag<T>(LAG, nullSafe(field));
     }
 
     /**
@@ -18302,7 +18312,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new LeadLag<T>("lag", nullSafe(field), offset);
+        return new LeadLag<T>(LAG, nullSafe(field), offset);
     }
 
     /**
@@ -18322,7 +18332,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        return new LeadLag<T>("lag", nullSafe(field), offset, nullSafe(defaultValue));
+        return new LeadLag<T>(LAG, nullSafe(field), offset, nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------

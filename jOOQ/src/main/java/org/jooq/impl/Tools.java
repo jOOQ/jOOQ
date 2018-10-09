@@ -497,6 +497,11 @@ final class Tools {
          * [#7467] In SQL Server, the TOP clause is sometimes preferred over the FETCH clause.
          */
         DATA_PREFER_TOP_OVER_FETCH,
+
+        /**
+         * [#1535] We're currently generating the window specification of a ranking function.
+         */
+        DATA_RANKING_FUNCTION,
     }
 
     /**

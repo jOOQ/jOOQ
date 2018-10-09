@@ -85,6 +85,7 @@ import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.MODE;
 import static org.jooq.impl.Term.PRODUCT;
 import static org.jooq.impl.Term.ROW_NUMBER;
+import static org.jooq.impl.Tools.DataKey.DATA_RANKING_FUNCTION;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
@@ -419,13 +420,42 @@ class Function<T> extends AbstractField<T> implements
             return;
 
         // [#1524] Don't render this clause where it is not supported
-        if (term == ROW_NUMBER && ctx.configuration().dialect() == HSQLDB)
+        if (term == ROW_NUMBER && ctx.family() == HSQLDB)
             return;
+
+        Boolean ranking = false;
+        Boolean previous = null;
+
+        if (term != null) {
+            switch (term) {
+                case CUME_DIST:
+                case DENSE_RANK:
+                case FIRST_VALUE:
+                case LAG:
+                case LEAD:
+                case LAST_VALUE:
+                case NTH_VALUE:
+                case NTILE:
+                case PERCENT_RANK:
+                case RANK:
+                case ROW_NUMBER:
+                    ranking = true;
+                    break;
+            }
+        }
 
         ctx.sql(' ')
            .visit(K_OVER)
-           .sql(' ')
-           .visit(window);
+           .sql(' ');
+
+        previous = (Boolean) ctx.data(DATA_RANKING_FUNCTION, ranking);
+
+        ctx.visit(window);
+
+        if (previous != null)
+            ctx.data(DATA_RANKING_FUNCTION, previous);
+        else
+            ctx.data().remove(DATA_RANKING_FUNCTION);
     }
 
     @SuppressWarnings("unchecked")

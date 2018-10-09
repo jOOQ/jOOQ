@@ -9147,19 +9147,19 @@ BOOK.PUBLISHED_IN.notBetweenSymmetric(1940).and(1920)]]></java>
 							    </content>
 							</section>
 
-						    <section id="like-predicate">
-							    <title>LIKE predicate</title>
-								<content><html>
-									<p>
-										<code>LIKE</code> predicates are popular for simple wildcard-enabled pattern matching. Supported wildcards in all SQL databases are:
-									</p>
-									<ul>
-										<li><strong>_</strong>: (single-character wildcard)</li>
-										<li><strong>%</strong>: (multi-character wildcard)</li>
-									</ul>
-									<p>
-										With jOOQ, the <code>LIKE</code> predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
-									</p>
+                            <section id="like-predicate">
+                                <title>LIKE predicate</title>
+                                <content><html>
+                                    <p>
+                                        <code>LIKE</code> predicates are popular for simple wildcard-enabled pattern matching. Supported wildcards in all SQL databases are:
+                                    </p>
+                                    <ul>
+                                        <li><strong>_</strong>: (single-character wildcard)</li>
+                                        <li><strong>%</strong>: (multi-character wildcard)</li>
+                                    </ul>
+                                    <p>
+                                        With jOOQ, the <code>LIKE</code> predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
+                                    </p>
 
 </html><code-pair>
 <sql><![CDATA[TITLE     LIKE '%abc%'
@@ -9168,10 +9168,10 @@ TITLE NOT LIKE '%abc%']]></sql>
 BOOK.TITLE.notLike("%abc%")]]></java>
 </code-pair><html>
 
-									<h3>Escaping operands with the LIKE predicate</h3>
-									<p>
-										Often, your pattern may contain any of the wildcard characters <code>"_"</code> and <code>"%"</code>, in case of which you may want to escape them. jOOQ does not automatically escape patterns in <code>like()</code> and <code>notLike()</code> methods. Instead, you can explicitly define an escape character as such:
-									</p>
+                                    <h3>Escaping operands with the LIKE predicate</h3>
+                                    <p>
+                                        Often, your pattern may contain any of the wildcard characters <code>"_"</code> and <code>"%"</code>, in case of which you may want to escape them. jOOQ does not automatically escape patterns in <code>like()</code> and <code>notLike()</code> methods. Instead, you can explicitly define an escape character as such:
+                                    </p>
 
 </html><code-pair>
 <sql><![CDATA[TITLE     LIKE '%The !%-Sign Book%' ESCAPE '!'
@@ -9180,17 +9180,17 @@ TITLE NOT LIKE '%The !%-Sign Book%' ESCAPE '!']]></sql>
 BOOK.TITLE.notLike("%The !%-Sign Book%", '!')]]></java>
 </code-pair><html>
 
-									<p>
-										In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters <code>"!_"</code> and <code>"!%"</code>, as well as to escape the escape character itself: <code>"!!"</code>
-									</p>
-									<p>
-										Please refer to your database manual for more details about escaping patterns with the <code>LIKE</code> predicate.
-									</p>
+                                    <p>
+                                        In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters <code>"!_"</code> and <code>"!%"</code>, as well as to escape the escape character itself: <code>"!!"</code>
+                                    </p>
+                                    <p>
+                                        Please refer to your database manual for more details about escaping patterns with the <code>LIKE</code> predicate.
+                                    </p>
 
-									<h3>jOOQ's convenience methods using the LIKE predicate</h3>
-									<p>
-										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using the <code>LIKE</code> predicate. Typical operations are "contains predicates", "starts with predicates", "ends with predicates", etc. Here is the full convenience API wrapping <code>LIKE</code> predicates:
-									</p>
+                                    <h3>jOOQ's convenience methods using the LIKE predicate</h3>
+                                    <p>
+                                        In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using the <code>LIKE</code> predicate. Typical operations are "contains predicates", "starts with predicates", "ends with predicates", etc. Here is the full convenience API wrapping <code>LIKE</code> predicates:
+                                    </p>
 
 </html><code-pair>
 <sql><![CDATA[-- case insensitivity
@@ -9211,11 +9211,53 @@ BOOK.TITLE.startsWith("abc")
 BOOK.TITLE.endsWith("abc")]]></java>
 </code-pair><html>
 
-									<p>
-										Note, that jOOQ escapes <code>%</code> and <code>_</code> characters in value in some of the above predicate implementations. For simplicity, this has been omitted in this manual.
-									</p>
-								</html></content>
-							</section>
+                                    <p>
+                                        Note, that jOOQ escapes <code>%</code> and <code>_</code> characters in value in some of the above predicate implementations. For simplicity, this has been omitted in this manual.
+                                    </p>
+                                </html></content>
+                            </section>
+
+                            <section id="similar-predicate">
+                                <title>SIMILAR TO predicate</title>
+                                <content><html>
+                                    <p>
+                                        <code>SIMILAR TO</code> predicates are popular for more complex wildcard and regular expression enabled pattern matching. Supported wildcards in all SQL databases are:
+                                    </p>
+                                    <ul>
+                                        <li><strong>_</strong>: (single-character wildcard)</li>
+                                        <li><strong>%</strong>: (multi-character wildcard)</li>
+                                    </ul>
+                                    <p>
+                                        With jOOQ, the <code>SIMILAR TO</code> predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
+                                    </p>
+
+</html><code-pair>
+<sql><![CDATA[TITLE     SIMILAR TO '%abc%'
+TITLE NOT SIMILAR TO '%abc%']]></sql>
+<java><![CDATA[BOOK.TITLE.similarTo("%abc%")
+BOOK.TITLE.notSimilarTo("%abc%")]]></java>
+</code-pair><html>
+
+                                    <h3>Escaping operands with the SIMILAR TO predicate</h3>
+                                    <p>
+                                        Often, your pattern may contain any of the wildcard characters <code>"_"</code> and <code>"%"</code>, in case of which you may want to escape them. jOOQ does not automatically escape patterns in <code>similarTo()</code> and <code>notSimilarTo()</code> methods. Instead, you can explicitly define an escape character as such:
+                                    </p>
+
+</html><code-pair>
+<sql><![CDATA[TITLE     SIMILAR TO '%The !%-Sign Book%' ESCAPE '!'
+TITLE NOT SIMILAR TO '%The !%-Sign Book%' ESCAPE '!']]></sql>
+<java><![CDATA[BOOK.TITLE.similarTo("%The !%-Sign Book%", '!')
+BOOK.TITLE.notSimilarTo("%The !%-Sign Book%", '!')]]></java>
+</code-pair><html>
+
+                                    <p>
+                                        In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters <code>"!_"</code> and <code>"!%"</code>, as well as to escape the escape character itself: <code>"!!"</code>
+                                    </p>
+                                    <p>
+                                        Please refer to your database manual for more details about escaping patterns with the <code>SIMILAR TO</code> predicate as well as what regular expression syntax is supported.
+                                    </p>
+                                </html></content>
+                            </section>
 
 						    <section id="in-predicate">
 							    <title>IN predicate</title>

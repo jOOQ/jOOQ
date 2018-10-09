@@ -395,7 +395,11 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         if ("".equals(value.toString()))
             return format.emptyString();
 
-        String result = format0(value, false, false);
+        // [#7802] Nested records should generate nested CSV data structures
+        String result = (value instanceof Formattable)
+            ? ((Formattable) value).formatCSV(format)
+            : format0(value, false, false);
+
         switch (format.quote()) {
             case NEVER:
                 return result;

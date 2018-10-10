@@ -948,12 +948,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         if (value instanceof Field)
             return startsWithIgnoreCase((Field) value);
         else
-            return new ContainsIgnoreCase<T>(this, value, true, false);
+            return new ContainsIgnoreCase<T>(this, value, false, true);
     }
 
     @Override
     public final Condition startsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value, true, false);
+        return new ContainsIgnoreCase<T>(this, value, false, true);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -978,12 +978,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         if (value instanceof Field)
             return endsWithIgnoreCase((Field) value);
         else
-            return new ContainsIgnoreCase<T>(this, value, false, true);
+            return new ContainsIgnoreCase<T>(this, value, true, false);
     }
 
     @Override
     public final Condition endsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value, false, true);
+        return new ContainsIgnoreCase<T>(this, value, true, false);
     }
 
     private final boolean isAccidentalSelect(T[] values) {

@@ -2792,6 +2792,62 @@ fun main(args: Array<String>) {
                         </html></content>
                     </section>
 
+                    <section id="jooq-and-jpa">
+                        <title>jOOQ and JPA</title>
+                        <content><html>
+                            <p>
+                                Just because you're using jOOQ doesn't mean you have to use it for everything!
+                            </p>
+                            <p>
+                                When introducing jOOQ into an existing application that uses JPA, the common question is always: "Should we replace JPA by jOOQ?" and "How do we proceed doing that?"
+                            </p>
+                            <p>
+                                Beware that jOOQ is not a replacement for JPA. Think of jOOQ as a complement. JPA (and ORMs in general) try to solve the <em>object graph persistence</em> problem. In short, this problem is about
+                            </p>
+
+                            <ul>
+                                <li>Loading an entity graph into client memory from a database</li>
+                                <li>Manipulating that graph in the client</li>
+                                <li>Storing the modification back to the database</li>
+                            </ul>
+
+                            <p>
+                                As the above graph gets more complex, a lot of tricky questions arise like:
+                            </p>
+
+                            <ul>
+                                <li>What's the optimal order of SQL DML operations for loading and storing entities?</li>
+                                <li>How can we batch the commands more efficiently?</li>
+                                <li>How can we keep the transaction footprint as low as possible without compromising on ACID?</li>
+                                <li>How can we implement optimistic locking?</li>
+                            </ul>
+
+                            <h3>jOOQ only has <em>some</em> of the answers.</h3>
+
+                            <p>
+                                While jOOQ does offer <reference id="crud-with-updatablerecords" title="updatable records that help running simple CRUD"/>, <reference id="batch-execution" title="a batch API"/>, <reference id="optimistic-locking" title="optimistic locking capabilities"/>, jOOQ mainly focuses on executing actual SQL statements.
+                            </p>
+
+                            <p>
+                                SQL is the preferred language of database interaction, when any of the following are given:
+                            </p>
+
+                            <ul>
+                                <li>You run reports and analytics on large data sets directly in the database</li>
+                                <li>You import / export data using ETL</li>
+                                <li>You run complex business logic as SQL queries</li>
+                            </ul>
+
+                            <p>
+                                Whenever SQL is a good fit, jOOQ is a good fit. Whenever you're operating and persisting the <em>object graph</em>, JPA is a good fit.
+                            </p>
+
+                            <p>
+                                And sometimes, <reference id="using-jooq-with-jpa" title="it's best to combine both"/>
+                            </p>
+                        </html></content>
+                    </section>
+
 					<section id="dependencies">
 						<title>Dependencies</title>
 						<content><html>

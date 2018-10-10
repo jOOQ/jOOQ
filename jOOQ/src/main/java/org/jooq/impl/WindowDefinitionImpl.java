@@ -124,8 +124,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
                     }
                 }
 
-                // Default to printing the name
-                ctx.visit(name);
+                // [#7296] This is an empty window specification if we reach this far
             }
         }
     }

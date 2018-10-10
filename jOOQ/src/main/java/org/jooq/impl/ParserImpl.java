@@ -1502,9 +1502,17 @@ final class ParserImpl implements Parser {
             parseKeyword(ctx, "DELETE");
 
         parseKeywordIf(ctx, "FROM");
-        Table<?> tableName = parseTableName(ctx);
+        Table<?> table = parseTableNameIf(ctx);
+        if (table == null) {
+            table = table(parseSelect(ctx));
 
-        DeleteWhereStep<?> s1 = with == null ? ctx.dsl.delete(tableName) : with.delete(tableName);
+            if (parseKeywordIf(ctx, "AS"))
+                table = table.as(parseIdentifier(ctx));
+            else if (!peekKeyword(ctx, "WHERE", "ORDER BY", "LIMIT", "RETURNING"))
+                table = table.as(parseIdentifierIf(ctx));
+        }
+
+        DeleteWhereStep<?> s1 = with == null ? ctx.dsl.delete(table) : with.delete(table);
         DeleteOrderByStep<?> s2 = parseKeywordIf(ctx, "WHERE") ? s1.where(parseCondition(ctx)) : s1;
         DeleteLimitStep<?> s3 = parseKeywordIf(ctx, "ORDER BY") ? s2.orderBy(parseSortSpecification(ctx)) : s2;
         DeleteReturningStep<?> s4 = parseKeywordIf(ctx, "LIMIT") ? s3.limit(parseUnsignedInteger(ctx)) : s3;
@@ -1518,8 +1526,17 @@ final class ParserImpl implements Parser {
             parseKeyword(ctx, "INSERT");
 
         parseKeywordIf(ctx, "INTO");
-        Table<?> tableName = parseTableName(ctx);
-        InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(tableName) : with.insertInto(tableName));
+        Table<?> table = parseTableNameIf(ctx);
+        if (table == null) {
+            table = table(parseSelect(ctx));
+
+            if (parseKeywordIf(ctx, "AS"))
+                table = table.as(parseIdentifier(ctx));
+            else if (!peekKeyword(ctx, "VALUES", "SELECT"))
+                table = table.as(parseIdentifierIf(ctx));
+        }
+
+        InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(table) : with.insertInto(table));
         Field<?>[] fields = null;
 
         if (parseIf(ctx, '(')) {
@@ -1637,13 +1654,16 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "UPD"))
             parseKeyword(ctx, "UPDATE");
 
-        Table<?> tableName = parseTableName(ctx);
-        if (parseKeywordIf(ctx, "AS"))
-            tableName = tableName.as(parseIdentifier(ctx));
-        else if (!peekKeyword(ctx, "SET"))
-            tableName = tableName.as(parseIdentifierIf(ctx));
+        Table<?> table = parseTableNameIf(ctx);
+        if (table == null)
+            table = table(parseSelect(ctx));
 
-        UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(tableName) : with.update(tableName));
+        if (parseKeywordIf(ctx, "AS"))
+            table = table.as(parseIdentifier(ctx));
+        else if (!peekKeyword(ctx, "SET"))
+            table = table.as(parseIdentifierIf(ctx));
+
+        UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(table) : with.update(table));
 
         parseKeyword(ctx, "SET");
 
@@ -7140,6 +7160,15 @@ final class ParserImpl implements Parser {
 
     private static final Table<?> parseTableName(ParserContext ctx) {
         return table(parseName(ctx));
+    }
+
+    private static final Table<?> parseTableNameIf(ParserContext ctx) {
+        Name name = parseNameIf(ctx);
+
+        if (name == null)
+            return null;
+
+        return table(name);
     }
 
     private static final Field<?> parseFieldNameOrSequenceExpression(ParserContext ctx) {

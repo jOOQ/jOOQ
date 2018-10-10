@@ -57,7 +57,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_DO_NOTHING;
@@ -177,7 +176,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         this.onConstraint = constraint;
 
         if (onConstraintUniqueKey == null) {
-            for (UniqueKey<R> key : table.getKeys()) {
+            for (UniqueKey<R> key : table().getKeys()) {
                 if (constraint.getName().equals(key.getName())) {
                     onConstraintUniqueKey = key;
                     break;
@@ -344,11 +343,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         //         where all UNIQUE keys are considered for conflicts. PostgreSQL
                         //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
                         //         column list or a constraint reference.
-                        else if (table.getPrimaryKey() == null)
+                        else if (table().getPrimaryKey() == null)
                             ctx.sql("[unknown primary key]");
                         else
                             ctx.qualify(false)
-                               .visit(new Fields<Record>(table.getPrimaryKey().getFields()))
+                               .visit(new Fields<Record>(table().getPrimaryKey().getFields()))
                                .qualify(qualify);
 
                         ctx.sql(')');
@@ -452,8 +451,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 // CUBRID can emulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
-                    FieldMapForUpdate update = new FieldMapForUpdate(table, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
-                    Field<?> field = table.field(0);
+                    FieldMapForUpdate update = new FieldMapForUpdate(table(), INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+                    Field<?> field = table().field(0);
                     update.put(field, field);
 
                     toSQLInsert(ctx);
@@ -540,7 +539,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.visit(K_INTO)
            .sql(' ')
            .declareTables(true)
-           .visit(table)
+           .visit(table(ctx))
            .declareTables(declareTables);
 
         insertMaps.toSQLReferenceKeys(ctx);
@@ -588,7 +587,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_VALUES)
                        .sql('(');
 
-                    int count = table.fields().length;
+                    int count = table().fields().length;
                     String separator = "";
 
                     for (int i = 0; i < count; i++) {
@@ -655,11 +654,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
         else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
-            return Collections.<List<? extends Field<?>>>singletonList(table.getPrimaryKey().getFields());
+            return Collections.<List<? extends Field<?>>>singletonList(table().getPrimaryKey().getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered
-        List<UniqueKey<R>> keys = table.getKeys();
+        List<UniqueKey<R>> keys = table().getKeys();
         List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>(keys.size());
         for (UniqueKey<R> key : keys)
             result.add(key.getFields());
@@ -685,7 +684,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     select(aliasedFields(map.values().toArray(EMPTY_FIELD), aliases))
                     .whereNotExists(
                         selectOne()
-                        .from(table)
+                        .from(table())
                         .where(matchByConflictingKeys(configuration, map))
                     );
 
@@ -696,30 +695,30 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             }
 
             return configuration.dsl()
-                .insertInto(table)
+                .insertInto(table())
                 .columns(insertMaps.fields())
-                .select(selectFrom(table(rows).as("t")));
+                .select(selectFrom(DSL.table(rows).as("t")));
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table);
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table());
         }
     }
 
     private final Merge<R> toMerge(Configuration configuration) {
         if ((onConflict != null && onConflict.size() > 0)
             || onConstraint != null
-            || !table.getKeys().isEmpty()) {
+            || !table().getKeys().isEmpty()) {
 
             // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = select == null
                 ? dual()
-                : table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+                : DSL.table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
 
             MergeOnConditionStep<R> on = select == null
-                ? configuration.dsl().mergeInto(table)
+                ? configuration.dsl().mergeInto(table())
                                      .usingDual()
                                      .on(matchByConflictingKeys(configuration, insertMaps.lastMap()))
-                : configuration.dsl().mergeInto(table)
+                : configuration.dsl().mergeInto(table())
                                      .using(t)
                                      .on(matchByConflictingKeys(configuration, t));
 
@@ -744,7 +743,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                             .values(t.fields());
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table());
         }
     }
 

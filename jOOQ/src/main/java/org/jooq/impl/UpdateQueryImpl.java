@@ -521,7 +521,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
            )
-           .visit(table)
+           .visit(table(ctx))
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
@@ -551,7 +551,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
             if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.family())) {
-                FieldMapForUpdate map = new FieldMapForUpdate(table, UPDATE_SET_ASSIGNMENT);
+                FieldMapForUpdate map = new FieldMapForUpdate(table(), UPDATE_SET_ASSIGNMENT);
 
                 for (int i = 0; i < multiRow.size(); i++) {
                     Field<?> k = multiRow.field(i);
@@ -643,8 +643,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 break;
         }
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table.getKeys().isEmpty()) {
-            UniqueKey<?> key = table.getPrimaryKey() != null ? table.getPrimaryKey() : table.getKeys().get(0);
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table().getKeys().isEmpty()) {
+            UniqueKey<?> key = table().getPrimaryKey() != null ? table().getPrimaryKey() : table().getKeys().get(0);
 
             @SuppressWarnings("unchecked")
             TableField<?, Object>[] keyFields = (TableField<?, Object>[]) key.getFieldsArray();
@@ -654,9 +654,9 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                .visit(K_WHERE).sql(' ');
 
             if (keyFields.length == 1)
-                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
             else
-                ctx.visit(row(keyFields).in(select(keyFields).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+                ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
 
             ctx.end(UPDATE_WHERE);
         }

@@ -204,8 +204,21 @@ implements
             ctx.visit(K_RECURSIVE)
                .sql(' ');
 
+        CommonTableExpressionList c = cte;
+
+
+
+
+
+
+
+
+
+
+
+
         ctx.declareCTE(true)
-           .visit(cte)
+           .visit(c)
            .declareCTE(false);
     }
 

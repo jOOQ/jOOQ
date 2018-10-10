@@ -184,19 +184,19 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         if (SPECIAL_DELETE_AS_SYNTAX.contains(ctx.family())) {
 
             // [#2579] [#6304] TableAlias discovery
-            if (Tools.alias(table) != null)
-                ctx.visit(table)
+            if (Tools.alias(table()) != null)
+                ctx.visit(table())
                    .sql(' ');
         }
 
         ctx.visit(K_FROM).sql(' ')
            .declareTables(true)
-           .visit(table)
+           .visit(table(ctx))
            .declareTables(declare)
            .end(DELETE_DELETE);
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table.getKeys().isEmpty()) {
-            UniqueKey<?> key = table.getPrimaryKey() != null ? table.getPrimaryKey() : table.getKeys().get(0);
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table().getKeys().isEmpty()) {
+            UniqueKey<?> key = table().getPrimaryKey() != null ? table().getPrimaryKey() : table().getKeys().get(0);
 
             @SuppressWarnings("unchecked")
             TableField<?, Object>[] keyFields = (TableField<?, Object>[]) key.getFieldsArray();
@@ -206,9 +206,9 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
                .visit(K_WHERE).sql(' ');
 
             if (keyFields.length == 1)
-                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
             else
-                ctx.visit(row(keyFields).in(select(keyFields).from(table).where(getWhere()).orderBy(orderBy).limit(limit)));
+                ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
 
             ctx.end(DELETE_WHERE);
         }

@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -84,6 +85,7 @@ import java.util.List;
 
 import org.jooq.Asterisk;
 import org.jooq.Binding;
+import org.jooq.CommonTableExpression;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
@@ -116,14 +118,15 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     /**
      * Generated UID
      */
-    private static final long                    serialVersionUID         = -7438014075226919192L;
-    private static final JooqLogger              log                      = JooqLogger.getLogger(AbstractQuery.class);
+    private static final long                    serialVersionUID                 = -7438014075226919192L;
+    private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
 
 
 
 
-    final WithImpl                               with;
-    final Table<R>                               table;
+
+    private final WithImpl                       with;
+    private final Table<R>                       table;
     final SelectFieldList<SelectFieldOrAsterisk> returning;
     final List<Field<?>>                         returningResolvedAsterisks;
     Result<Record>                               returnedResult;
@@ -205,6 +208,21 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 log.warn("API misuse", "Column " + field + " has been requested through the returning() clause, which is not present in table " + table + ". Use StoreQuery.getResult() or the returningResult() clause instead.");
     }
 
+    final Table<R> table() {
+        return table;
+    }
+
+    final Table<?> table(Context<?> ctx) {
+
+
+
+
+
+
+
+        return table();
+    }
+
     // @Override
     public final Result<?> getResult() {
         if (returnedResult == null)
@@ -215,8 +233,24 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (with != null)
-            ctx.visit(with).formatSeparator();
+        WithImpl w = with;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (w != null)
+            ctx.visit(w).formatSeparator();
 
         boolean previousDeclareFields = ctx.declareFields();
 
@@ -396,6 +430,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         {
             accept0(ctx);
         }
+
+
+
+
+
     }
 
     /**

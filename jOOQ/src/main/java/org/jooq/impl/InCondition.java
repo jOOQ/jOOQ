@@ -161,9 +161,9 @@ final class InCondition<T> extends AbstractCondition {
         }
     }
 
-    private static List<Field<?>> padded(Context<?> ctx, List<Field<?>> list) {
+    static <T> List<T> padded(Context<?> ctx, List<T> list) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
-            ? new PaddedList<Field<?>>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
+            ? new PaddedList<T>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
                 ? IN_LIMIT
                 : Integer.MAX_VALUE,
                   defaultIfNull(ctx.settings().getInListPadBase(), 2))
@@ -179,10 +179,9 @@ final class InCondition<T> extends AbstractCondition {
            .visit(comparator.toKeyword())
            .sql(" (");
 
-        if (subValues.size() > 1) {
+        if (subValues.size() > 1)
             ctx.formatIndentStart()
                .formatNewLine();
-        }
 
         String separator = "";
         for (Field<?> value : subValues) {
@@ -193,15 +192,14 @@ final class InCondition<T> extends AbstractCondition {
             separator = ", ";
         }
 
-        if (subValues.size() > 1) {
+        if (subValues.size() > 1)
             ctx.formatIndentEnd()
                .formatNewLine();
-        }
 
         ctx.sql(')');
     }
 
-    private static class PaddedList<T> extends AbstractList<T> {
+    static class PaddedList<T> extends AbstractList<T> {
         private final List<T> delegate;
         private final int     realSize;
         private final int     padSize;

@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.InCondition.padded;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -145,7 +146,7 @@ final class RowInCondition extends AbstractCondition {
                    .sql(' ')
                    .visit(comparator.toKeyword())
                    .sql(" (")
-                   .visit(right)
+                   .visit(new QueryPartList<Row>(padded(ctx, right)))
                    .sql(')');
             }
         }

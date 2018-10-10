@@ -82,6 +82,8 @@ final class RowInCondition extends AbstractCondition {
     private static final long                  serialVersionUID = -1806139685201770706L;
     private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
     private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
+
+    // Currently not yet supported in SQLite: https://www.sqlite.org/rowvalue.html
     private static final EnumSet<SQLDialect>   EMULATE_IN       = EnumSet.of(DERBY, FIREBIRD, SQLITE);
 
     private final Row                          left;

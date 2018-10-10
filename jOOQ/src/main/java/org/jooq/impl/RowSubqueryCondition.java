@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -87,7 +88,7 @@ final class RowSubqueryCondition extends AbstractCondition {
      */
     private static final long                serialVersionUID         = -1806139685201770706L;
     private static final Clause[]            CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
-    private static final EnumSet<SQLDialect> SUPPORT_NATIVE           = EnumSet.of(H2, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_NATIVE           = EnumSet.of(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 
 

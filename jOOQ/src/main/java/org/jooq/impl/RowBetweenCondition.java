@@ -187,7 +187,7 @@ implements
     private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
     private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
     private static final EnumSet<SQLDialect> NO_SUPPORT_SYMMETRIC          = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> EMULATE_BETWEEN               = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_BETWEEN               = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
 
     private final boolean         symmetric;
     private final boolean         not;

@@ -85,6 +85,8 @@ final class RowIsNull extends AbstractCondition {
     private static final long                serialVersionUID = -1806139685201770706L;
     private static final Clause[]            CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
     private static final Clause[]            CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
+
+    // Currently not yet supported in SQLite: https://www.sqlite.org/rowvalue.html
     private static final EnumSet<SQLDialect> EMULATE_NULL     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
     private final Row                        row;

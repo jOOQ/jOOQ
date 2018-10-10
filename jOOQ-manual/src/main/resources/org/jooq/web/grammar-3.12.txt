@@ -217,7 +217,7 @@ selectStatement = select
 
 insertStatement =
   [ with ]
-  ( 'INSERT' | 'INS' ) [ 'INTO' ] tableName
+  ( 'INSERT' | 'INS' ) [ 'INTO' ]  ( tableName | '(' select ')' [ [ 'AS' ] identifier ] )
   [ '(' identifiers ')' ]
   (
     values
@@ -244,7 +244,7 @@ values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
 
 updateStatement =
   [ with ]
-  ( 'UPDATE' | 'UPD' ) tableName [ [ 'AS' ] identifier ]
+  ( 'UPDATE' | 'UPD' )  ( tableName | '(' select ')' ) [ [ 'AS' ] identifier ]
   'SET' setClauses
   [ 'FROM' tables ]
   [ 'WHERE' condition ]
@@ -261,7 +261,7 @@ setClause = fieldName '=' field
 
 deleteStatement =
   [ with ]
-  ( 'DELETE' | 'DEL' ) [ 'FROM' ] tableName
+  ( 'DELETE' | 'DEL' ) [ 'FROM' ] ( tableName | '(' select ')' [ [ 'AS' ] identifier ] )
   [ 'WHERE' condition ]
   [ 'ORDER BY' sortFields ]
   [ 'LIMIT' unsignedInteger ]

@@ -188,7 +188,9 @@
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
+                        <!-- [java-9] -->
                         <release>10</release>
+                        <!-- [/java-9] -->
 
                         <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                         <source>10</source>

@@ -35,9 +35,6 @@
         <version.compiler.plugin>3.7.0</version.compiler.plugin>
         <version.surefire.plugin>2.10</version.surefire.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
-
-        <!-- maven-compiler-plugin -->
-        <maven.compiler.release>8</maven.compiler.release>
     </properties>
 
     <dependencyManagement>
@@ -129,7 +126,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.compiler.plugin}</version>
                 <configuration>
-                    <release>${maven.compiler.release}</release>
+                    <!-- [java-9] -->
+                    <release>10</release>
+                    <!-- [/java-9] -->
+
+                    <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
+                    <source>10</source>
+                    <target>10</target>
                 </configuration>
             </plugin>
 

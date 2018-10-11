@@ -84,7 +84,14 @@
                     <maxmem>1024m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
+                    <!-- [java-9] -->
                     <release>10</release>
+                    <!-- [/java-9] -->
+
+                    <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
+                    <source>10</source>
+                    <target>10</target>
+
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <!-- [#2413] Make compiler warnings a bit more visible

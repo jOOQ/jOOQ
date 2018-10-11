@@ -74,12 +74,17 @@ public class SQLDialectChecker extends AbstractChecker {
                     ExecutableElement elementFromUse = elementFromUse(node);
                     Support support = elementFromUse.getAnnotation(Support.class);
 
-                    // In the absence of a @Support annotation, or if no SQLDialect is supplied,
-                    // all jOOQ API method calls will type check.
-                    if (support != null && support.value().length > 0) {
+                    // In the absence of a @Support annotation, all jOOQ API method calls will type check.
+                    if (support != null) {
                         Element enclosing = enclosing(getPath(root, node));
 
-                        EnumSet<SQLDialect> supported = EnumSet.copyOf(asList(support.value()));
+                        // [#7929] "Empty" @Support annotations expand to all SQLDialects
+                        EnumSet<SQLDialect> supported = EnumSet.copyOf(
+                            support.value().length > 0
+                          ? asList(support.value())
+                          : asList(SQLDialect.values())
+                        );
+
                         EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
                         EnumSet<SQLDialect> required = EnumSet.noneOf(SQLDialect.class);
 

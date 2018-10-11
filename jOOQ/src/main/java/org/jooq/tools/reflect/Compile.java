@@ -33,6 +33,7 @@ import java.util.List;
 import javax.tools.FileObject;
 import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileManager;
 import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
@@ -46,7 +47,7 @@ import javax.tools.ToolProvider;
  */
 class Compile {
 
-    static Class<?> compile(String className, String content) {
+    static Class<?> compile(String className, String content, CompileOptions compileOptions) {
         Lookup lookup = MethodHandles.lookup();
         ClassLoader cl = lookup.lookupClass().getClassLoader();
 
@@ -82,7 +83,12 @@ class Compile {
                 }
 
                 options.addAll(Arrays.asList("-classpath", classpath.toString()));
-                compiler.getTask(out, fileManager, null, options, null, files).call();
+                CompilationTask task = compiler.getTask(out, fileManager, null, options, null, files);
+
+                if (!compileOptions.processors.isEmpty())
+                    task.setProcessors(compileOptions.processors);
+
+                task.call();
 
                 if (fileManager.o == null)
                     throw new ReflectException("Compilation error: " + out);

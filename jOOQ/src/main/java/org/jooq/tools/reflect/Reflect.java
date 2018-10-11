@@ -74,7 +74,32 @@ public class Reflect {
      * @throws ReflectException if anything went wrong compiling the class.
      */
     public static Reflect compile(String name, String content) throws ReflectException {
-        return on(Compile.compile(name, content));
+        return compile(name, content, new CompileOptions());
+    }
+
+    /**
+     * Compile a class at runtime and reflect on it.
+     * <p>
+     * For example:
+     * <code><pre>
+     * Supplier&lt;String> supplier = Reflect.compile(
+     *   "org.joor.Test",
+     *   "package org.joor;\n" +
+     *   "class Test implements java.util.function.Supplier&lt;String> {\n" +
+     *   "  public String get() {\n" +
+     *   "    return \"Hello World!\";\n" +
+     *   "  }\n" +
+     *   "}\n").create().get();
+     * </pre></code>
+     *
+     * @param name The qualified class name
+     * @param content The source code for the class
+     * @param options compiler options
+     * @return A wrapped {@link Class}
+     * @throws ReflectException if anything went wrong compiling the class.
+     */
+    public static Reflect compile(String name, String content, CompileOptions options) throws ReflectException {
+        return on(Compile.compile(name, content, options));
     }
 
 
@@ -743,7 +768,7 @@ public class Reflect {
      */
     @Override
     public String toString() {
-        return object.toString();
+        return String.valueOf(object);
     }
 
     // ---------------------------------------------------------------------

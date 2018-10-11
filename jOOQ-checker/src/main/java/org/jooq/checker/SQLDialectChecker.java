@@ -107,9 +107,6 @@ public class SQLDialectChecker extends AbstractChecker {
                         if (allowed.isEmpty())
                             error(node, "No jOOQ API usage is allowed at current scope. Use @Allow.");
 
-                        if (required.isEmpty())
-                            error(node, "No jOOQ API usage is allowed at current scope due to conflicting @Require specification.");
-
                         boolean allowedFail = true;
                         allowedLoop:
                         for (SQLDialect a : allowed) {

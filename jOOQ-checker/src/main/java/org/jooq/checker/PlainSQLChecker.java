@@ -38,9 +38,7 @@
 package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
-import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
 import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
-import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
 
 import java.io.PrintWriter;
 
@@ -75,8 +73,8 @@ public class PlainSQLChecker extends AbstractChecker {
                     // In the absence of a @PlainSQL annotation,
                     // all jOOQ API method calls will type check.
                     if (plainSQL != null) {
-                        Element enclosing = elementFromDeclaration(enclosingMethod(getPath(root, node)));
                         boolean allowed = false;
+                        Element enclosing = enclosing(getPath(root, node));
 
                         moveUpEnclosingLoop:
                         while (enclosing != null) {

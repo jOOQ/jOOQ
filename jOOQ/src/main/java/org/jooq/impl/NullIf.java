@@ -44,7 +44,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-public class NullIf<T> extends AbstractFunction<T> {
+final class NullIf<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

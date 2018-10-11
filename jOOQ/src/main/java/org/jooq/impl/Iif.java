@@ -45,7 +45,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-public class Iif<T> extends AbstractFunction<T> {
+final class Iif<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

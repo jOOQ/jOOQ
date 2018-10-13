@@ -1676,9 +1676,9 @@ extends
      * proper adding of wildcards and escaping.
      * <p>
      * This translates to
-     * <code>this not ilike ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code>
      * in {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
      * in all other dialects.
      * </p>
      *

@@ -44,6 +44,8 @@ public class Database implements Serializable
     @XmlList
     @XmlElement(defaultValue = "COMMENTS CASE_INSENSITIVE")
     protected List<RegexFlag> regexFlags;
+    @XmlElement(defaultValue = "true")
+    protected Boolean regexMatchesPartialQualification = true;
     @XmlElement(defaultValue = ".*")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String includes = ".*";
@@ -243,6 +245,30 @@ public class Database implements Serializable
             regexFlags = new ArrayList<RegexFlag>();
         }
         return this.regexFlags;
+    }
+
+    /**
+     * Whether regular expressions that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRegexMatchesPartialQualification() {
+        return regexMatchesPartialQualification;
+    }
+
+    /**
+     * Sets the value of the regexMatchesPartialQualification property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRegexMatchesPartialQualification(Boolean value) {
+        this.regexMatchesPartialQualification = value;
     }
 
     /**
@@ -1327,6 +1353,11 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withRegexMatchesPartialQualification(Boolean value) {
+        setRegexMatchesPartialQualification(value);
+        return this;
+    }
+
     public Database withIncludes(String value) {
         setIncludes(value);
         return this;
@@ -1655,6 +1686,11 @@ public class Database implements Serializable
             }
             sb.append("</regexFlags>");
         }
+        if (regexMatchesPartialQualification!= null) {
+            sb.append("<regexMatchesPartialQualification>");
+            sb.append(regexMatchesPartialQualification);
+            sb.append("</regexMatchesPartialQualification>");
+        }
         if (includes!= null) {
             sb.append("<includes>");
             sb.append(includes);
@@ -1924,6 +1960,15 @@ public class Database implements Serializable
             }
         } else {
             if (!regexFlags.equals(other.regexFlags)) {
+                return false;
+            }
+        }
+        if (regexMatchesPartialQualification == null) {
+            if (other.regexMatchesPartialQualification!= null) {
+                return false;
+            }
+        } else {
+            if (!regexMatchesPartialQualification.equals(other.regexMatchesPartialQualification)) {
                 return false;
             }
         }
@@ -2323,6 +2368,7 @@ public class Database implements Serializable
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((regexFlags == null)? 0 :regexFlags.hashCode()));
+        result = ((prime*result)+((regexMatchesPartialQualification == null)? 0 :regexMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
         result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
         result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));

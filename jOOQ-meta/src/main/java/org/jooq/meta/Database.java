@@ -580,6 +580,20 @@ public interface Database  extends AutoCloseable  {
     List<RegexFlag> getRegexFlags();
 
     /**
+     * Whether the regular expressions matching database objects should match
+     * partially qualified names as well as fully qualified and unqualified
+     * names.
+     */
+    void setRegexMatchesPartialQualification(boolean regexMatchesPartialQualification);
+
+    /**
+     * Whether the regular expressions matching database objects should match
+     * partially qualified names as well as fully qualified and unqualified
+     * names.
+     */
+    boolean getRegexMatchesPartialQualification();
+
+    /**
      * Table columns matching these regular expressions will be considered as
      * record version fields in generated code.
      */

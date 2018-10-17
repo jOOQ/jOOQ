@@ -505,6 +505,7 @@ public class GenerationTool {
 
             if (d.getRegexFlags() != null)
                 database.setRegexFlags(d.getRegexFlags());
+            database.setRegexMatchesPartialQualification(!FALSE.equals(d.isRegexMatchesPartialQualification()));
 
             SchemaVersionProvider svp = null;
             CatalogVersionProvider cvp = null;

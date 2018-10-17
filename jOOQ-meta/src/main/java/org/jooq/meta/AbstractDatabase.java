@@ -47,6 +47,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -103,6 +104,7 @@ public abstract class AbstractDatabase implements Database {
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private List<RegexFlag>                                                  regexFlags;
+    private boolean                                                          regexMatchesPartialQualification;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes                             = { ".*" };
@@ -351,6 +353,20 @@ public abstract class AbstractDatabase implements Database {
                 return false;
 
         return true;
+    }
+
+    final boolean matches(Pattern pattern, Definition definition) {
+        if (!getRegexMatchesPartialQualification())
+            return pattern.matcher(definition.getName()).matches()
+                || pattern.matcher(definition.getQualifiedName()).matches();
+
+        List<Name> parts = Arrays.asList(definition.getQualifiedNamePart().parts());
+
+        for (int i = parts.size() - 1; i >= 0; i--)
+            if (pattern.matcher(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName().toString()).matches())
+                return true;
+
+        return false;
     }
 
     final Pattern pattern(String regex) {
@@ -881,6 +897,16 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return regexFlags;
+    }
+
+    @Override
+    public final void setRegexMatchesPartialQualification(boolean regexMatchesPartialQualification) {
+        this.regexMatchesPartialQualification = regexMatchesPartialQualification;
+    }
+
+    @Override
+    public final boolean getRegexMatchesPartialQualification() {
+        return regexMatchesPartialQualification;
     }
 
     @Override
@@ -1819,12 +1845,7 @@ public abstract class AbstractDatabase implements Database {
         definitionsLoop: for (T definition : definitions) {
             if (e != null) {
                 for (String exclude : e) {
-                    Pattern p = pattern(exclude);
-
-                    if (exclude != null &&
-                            (p.matcher(definition.getName()).matches() ||
-                             p.matcher(definition.getQualifiedName()).matches())) {
-
+                    if (exclude != null && matches(pattern(exclude), definition)) {
                         if (log.isDebugEnabled())
                             log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of pattern " + exclude);
 
@@ -1835,11 +1856,7 @@ public abstract class AbstractDatabase implements Database {
 
             if (i != null) {
                 for (String include : i) {
-                    Pattern p = pattern(include);
-
-                    if (include != null &&
-                            (p.matcher(definition.getName()).matches() ||
-                             p.matcher(definition.getQualifiedName()).matches())) {
+                    if (include != null && matches(pattern(include), definition)) {
 
                         // [#3488] This allows for filtering out additional objects, in case the applicable
                         // code generation configuration might cause conflicts in resulting code

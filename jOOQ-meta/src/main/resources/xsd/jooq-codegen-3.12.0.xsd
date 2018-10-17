@@ -439,6 +439,10 @@ encoding=UTF-8</pre></li>
 The default value is "COMMENTS CASE_INSENSITIVE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="regexMatchesPartialQualification" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether regular expressions that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are generated from your schema.
 <p>

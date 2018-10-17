@@ -1412,14 +1412,9 @@ public abstract class AbstractDatabase implements Database {
                  ||  (nullability == Nullability.NULL && !definedType.isNullable())))
                 continue forcedTypeLoop;
 
-            if (expression != null) {
-                Pattern p = pattern(expression);
-
-                if (     !p.matcher(definition.getName()).matches()
-                      && !p.matcher(definition.getQualifiedName()).matches()) {
+            if (expression != null)
+                if (!matches(pattern(expression), definition))
                     continue forcedTypeLoop;
-                }
-            }
 
             if (types != null && definedType != null) {
                 Pattern p = pattern(types);

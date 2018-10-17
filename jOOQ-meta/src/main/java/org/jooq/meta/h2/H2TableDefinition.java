@@ -99,7 +99,9 @@ public class H2TableDefinition extends AbstractTableDefinition {
             .where(Columns.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(Columns.TABLE_NAME.equal(getName()))
             .and(!getDatabase().getIncludeInvisibleColumns()
-                ? Columns.COLUMN_TYPE.notLike("%INVISIBLE%")
+                ? ((H2Database) getDatabase()).is1_4_198()
+                    ? Columns.IS_VISIBLE.eq(inline("TRUE"))
+                    : Columns.COLUMN_TYPE.notLike(inline("%INVISIBLE%"))
                 : noCondition())
             .orderBy(Columns.ORDINAL_POSITION)) {
 

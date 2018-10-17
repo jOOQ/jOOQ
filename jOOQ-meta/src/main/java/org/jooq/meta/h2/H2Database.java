@@ -600,6 +600,7 @@ public class H2Database extends AbstractDatabase {
     }
 
     private static Boolean is1_4_197;
+    private static Boolean is1_4_198;
 
     boolean is1_4_197() {
         if (is1_4_197 == null) {
@@ -620,5 +621,26 @@ public class H2Database extends AbstractDatabase {
         }
 
         return is1_4_197;
+    }
+
+    boolean is1_4_198() {
+        if (is1_4_198 == null) {
+
+            // [#5874] The COLUMNS.IS_VISIBLE column was introduced in H2 1.4.198
+            try {
+                create(true)
+                    .select(Columns.IS_VISIBLE)
+                    .from(COLUMNS)
+                    .where(falseCondition())
+                    .fetch();
+
+                is1_4_198 = true;
+            }
+            catch (DataAccessException e) {
+                is1_4_198 = false;
+            }
+        }
+
+        return is1_4_198;
     }
 }

@@ -56,6 +56,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.sql.Statement;
@@ -1004,6 +1005,24 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             return ctx.resultSet().getURL(columnLabel);
         }
 
+
+
+        // ---------------------------------------------------------------------
+        // XXX: JDBC 4.1 methods
+        // ---------------------------------------------------------------------
+
+        @Override
+        public final <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+            return ctx.resultSet().getObject(columnIndex, type);
+        }
+
+        @Override
+        public final <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+            return ctx.resultSet().getObject(columnLabel, type);
+        }
+
+
+
         // ---------------------------------------------------------------------
         // XXX: Data modification
         // ---------------------------------------------------------------------
@@ -1551,6 +1570,38 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             logUpdate(columnLabel, x);
             ctx.resultSet().updateTimestamp(columnLabel, x);
         }
+
+
+
+        // ------------------------------------------------------------------------
+        // JDBC 4.2
+        // ------------------------------------------------------------------------
+
+        @Override
+        public void updateObject(int columnIndex, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+            logUpdate(columnIndex, x);
+            ctx.resultSet().updateObject(columnIndex, x, targetSqlType, scaleOrLength);
+        }
+
+        @Override
+        public void updateObject(String columnLabel, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
+            logUpdate(columnLabel, x);
+            ctx.resultSet().updateObject(columnLabel, x, targetSqlType, scaleOrLength);
+        }
+
+        @Override
+        public void updateObject(int columnIndex, Object x, SQLType targetSqlType) throws SQLException {
+            logUpdate(columnIndex, x);
+            ctx.resultSet().updateObject(columnIndex, x, targetSqlType);
+        }
+
+        @Override
+        public void updateObject(String columnLabel, Object x, SQLType targetSqlType) throws SQLException {
+            logUpdate(columnLabel, x);
+            ctx.resultSet().updateObject(columnLabel, x, targetSqlType);
+        }
+
+
     }
 
     /**

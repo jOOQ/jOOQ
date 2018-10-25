@@ -235,7 +235,7 @@ public class MiniJAXB {
                 Reflect.on(result).set(childName, adapter.unmarshal(childElement.getTextContent().trim()));
             }
             else {
-                Reflect.on(result).set(childElementName, Convert.convert(childElement.getTextContent().trim(), childType));
+                Reflect.on(result).set(childName, Convert.convert(childElement.getTextContent().trim(), childType));
             }
         }
     }

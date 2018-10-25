@@ -4182,6 +4182,10 @@ final class Tools {
 
 
 
+
+
+
+
             case FIREBIRD: {
                 endExecuteImmediate(ctx);
                 ctx.formatSeparator()

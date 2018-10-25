@@ -189,6 +189,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
+import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
 import org.jooq.Index;
 import org.jooq.Insert;
@@ -17684,24 +17685,27 @@ public class DSL {
      * <p>
      * This is natively supported by
      * <ul>
-     * <li> {@link SQLDialect#AURORA_MYSQL}</li>
-     * <li> {@link SQLDialect#CUBRID}</li>
-     * <li> {@link SQLDialect#H2}</li>
-     * <li> {@link SQLDialect#HSQLDB}</li>
-     * <li> {@link SQLDialect#MYSQL}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#AURORA_MYSQL}</li>
+     * <li>{@link SQLDialect#CUBRID}</li>
+     * <li>{@link SQLDialect#H2}</li>
+     * <li>{@link SQLDialect#HSQLDB}</li>
+     * <li>{@link SQLDialect#MYSQL}</li>
+     * <li>{@link SQLDialect#SQLITE}</li>
      * </ul>
      * <p>
      * It is emulated by the following dialects:
      * <ul>
-     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
-     * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
-     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
-     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * <li>{@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
+     * <li>{@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
+     * <li>{@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
+     * <li>{@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
      * @see #listAgg(Field)
+     * @deprecated - [#7956] - 3.12.0 - Use {@link #groupConcat(Field)} and
+     *             {@link GroupConcatSeparatorStep#separator(String)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
         return new GroupConcat(nullSafe(field)).separator(separator);

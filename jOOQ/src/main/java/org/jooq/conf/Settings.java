@@ -91,6 +91,8 @@ public class Settings
     protected Boolean fetchWarnings = true;
     @XmlElement(defaultValue = "0")
     protected Integer fetchServerOutputSize = 0;
+    @XmlElement(defaultValue = "true")
+    protected Boolean returnIdentityOnUpdatableRecord = true;
     @XmlElement(defaultValue = "false")
     protected Boolean returnAllOnUpdatableRecord = false;
     @XmlElement(defaultValue = "true")
@@ -752,6 +754,30 @@ public class Settings
     }
 
     /**
+     * Whether calls to store(), insert() and update() should return the identity column.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isReturnIdentityOnUpdatableRecord() {
+        return returnIdentityOnUpdatableRecord;
+    }
+
+    /**
+     * Sets the value of the returnIdentityOnUpdatableRecord property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setReturnIdentityOnUpdatableRecord(Boolean value) {
+        this.returnIdentityOnUpdatableRecord = value;
+    }
+
+    /**
      * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
      * <p>
      * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
@@ -1312,6 +1338,11 @@ public class Settings
         return this;
     }
 
+    public Settings withReturnIdentityOnUpdatableRecord(Boolean value) {
+        setReturnIdentityOnUpdatableRecord(value);
+        return this;
+    }
+
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
@@ -1524,6 +1555,11 @@ public class Settings
             sb.append("<fetchServerOutputSize>");
             sb.append(fetchServerOutputSize);
             sb.append("</fetchServerOutputSize>");
+        }
+        if (returnIdentityOnUpdatableRecord!= null) {
+            sb.append("<returnIdentityOnUpdatableRecord>");
+            sb.append(returnIdentityOnUpdatableRecord);
+            sb.append("</returnIdentityOnUpdatableRecord>");
         }
         if (returnAllOnUpdatableRecord!= null) {
             sb.append("<returnAllOnUpdatableRecord>");
@@ -1846,6 +1882,15 @@ public class Settings
                 return false;
             }
         }
+        if (returnIdentityOnUpdatableRecord == null) {
+            if (other.returnIdentityOnUpdatableRecord!= null) {
+                return false;
+            }
+        } else {
+            if (!returnIdentityOnUpdatableRecord.equals(other.returnIdentityOnUpdatableRecord)) {
+                return false;
+            }
+        }
         if (returnAllOnUpdatableRecord == null) {
             if (other.returnAllOnUpdatableRecord!= null) {
                 return false;
@@ -2039,6 +2084,7 @@ public class Settings
         result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));
         result = ((prime*result)+((fetchServerOutputSize == null)? 0 :fetchServerOutputSize.hashCode()));
+        result = ((prime*result)+((returnIdentityOnUpdatableRecord == null)? 0 :returnIdentityOnUpdatableRecord.hashCode()));
         result = ((prime*result)+((returnAllOnUpdatableRecord == null)? 0 :returnAllOnUpdatableRecord.hashCode()));
         result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
         result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));

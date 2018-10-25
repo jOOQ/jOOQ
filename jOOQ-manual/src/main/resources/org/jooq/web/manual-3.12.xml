@@ -3979,11 +3979,39 @@ author.store(); // The behaviour of this store call is governed by the updatable
                                         </html></content>
                                     </section>
 
+                                    <section id="settings-return-identity-on-store">
+                                        <title>Return Identity Value On Store</title>
+                                        <content><html>
+                                            <p>
+                                                When using the <reference id="crud-with-updatablerecords" title="updatable records feature"/>, jOOQ by default fetches the generated <reference id="identity-values" title="identity value"/>.
+                                            </p>
+
+                                            <p>
+                                                In some situations, it is desirable for this feature to be turned off using the following flag:
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withReturnIdentityOnUpdatableRecord(false); // Defaults to true]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <returnIdentityOnUpdatableRecord>false</returnIdentityOnUpdatableRecord>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
                                     <section id="settings-return-all-on-store">
                                         <title>Return All Columns On Store</title>
                                         <content><html>
                                             <p>
-                                                When using the <reference id="crud-with-updatablerecords" title="updatable records feature"/>, jOOQ always fetches the generated <reference id="identity-values" title="identity value"/>, if such a value is available.
+                                                When using the <reference id="crud-with-updatablerecords" title="updatable records feature"/>, jOOQ always fetches the generated <reference id="identity-values" title="identity value"/>, if such a value is available and if <reference id="settings-return-identity-on-store" title="the return identity on store"/> feature is enabled (it is, by default).
                                             </p>
 
                                             <p>

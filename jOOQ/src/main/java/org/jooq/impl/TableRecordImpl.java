@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -243,7 +244,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         Collection<Field<?>> key = null;
 
         if (configuration() != null)
-            if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE)))
+
+            // [#7966] Allow users to turning off the returning clause entirely
+            if (!FALSE.equals(configuration().settings().isReturnIdentityOnUpdatableRecord())
+                && !TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE)))
 
                 // [#1859] Return also non-key columns
                 if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))

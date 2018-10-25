@@ -149,6 +149,10 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether server output should be fetched after each query execution.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="returnIdentityOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return the identity column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="returnAllOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return all columns, not just identity columns.
 <p>

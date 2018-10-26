@@ -119,6 +119,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,8 +130,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Attachable;
@@ -2424,73 +2423,147 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
-        "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])?(\\d)?(\\d)(:\\d{2})?)?");
+    /**
+     * [#7986] OffsetDateTime.parse() is way too slow and not lenient enough to
+     * handle all the possible RDBMS output formats and quirks.
+     */
+    static final class OffsetDateTimeParser {
+        static final OffsetTime offsetTime(String string) {
+            if (string == null)
+                return null;
 
-    private static final OffsetTime offsetTime(String string) {
-        return string == null ? null : OffsetTime.parse(preparse(avoid24h(string), false));
-    }
-
-
-    private static final OffsetDateTime offsetDateTime(String string) {
-        return string == null ? null : OffsetDateTime.parse(preparse(string, true));
-    }
-
-    private static final String avoid24h(String formatted) {
-
-        // [#5895] HSQLDB seems to confuse 00:00:00+02:00 with 24:00:00+02:00
-        // https://sourceforge.net/p/hsqldb/bugs/1523/
-        return formatted.startsWith("24:")
-             ? formatted = "00:" + formatted.substring(2)
-             : formatted;
-    }
-
-    private static final String preparse(String formatted, boolean includeDate) {
-        Matcher m = LENIENT_OFFSET_PATTERN.matcher(formatted);
-
-        if (m.find()) {
-            StringBuilder sb = new StringBuilder();
-            String group1 = m.group(1);
-
-            if (includeDate && group1 != null) {
-                sb.append(group1);
-
-                // [#4338] SQL supports the alternative ISO 8601 date format, where a
-                // whitespace character separates date and time. java.time does not
-                sb.append('T');
-            }
-
-            sb.append(m.group(2));
-
-            if (m.group(3) == null)
-                sb.append(":00");
-
-            if (m.group(4) != null) {
-                if (m.group(5) != null)
-                    sb.append(m.group(5));
-                else
-                    sb.append('+');
-
-                String group6 = m.group(6);
-                String group8 = m.group(8);
-
-                // [#4965] Oracle might return a single-digit hour offset (and some spare space)
-                sb.append(group6 == null ? "0" : group6);
-                sb.append(m.group(7));
-
-                // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
-                sb.append(group8 == null ? ":00" : group8);
-            }
-            else {
-                sb.append("+00:00");
-            }
-
-            return sb.toString();
+            // Out parameter emulation
+            int[] position = { 0 };
+            return OffsetTime.of(parseLocalTime(string, position), parseOffset(string, position));
         }
 
-        // Probably a bug, let OffsetDateTime or OffsetTime report it
-        else {
-            return formatted;
+        static final OffsetDateTime offsetDateTime(String string) {
+            if (string == null)
+                return null;
+
+            // Out parameter emulation
+            int[] position = { 0 };
+
+            LocalDate d = parseLocalDate(string, position);
+
+            // [#4338] SQL supports the alternative ISO 8601 date format, where a
+            // whitespace character separates date and time. java.time does not
+            parseAnyChar(string, position, " T");
+            LocalTime t = parseLocalTime(string, position);
+
+            return OffsetDateTime.of(d, t, parseOffset(string, position));
+        }
+
+        static final LocalDate parseLocalDate(String string, int[] position) {
+            int year = parseInt(string, position, 4);
+
+            parseChar(string, position, '-');
+            int month = parseInt(string, position, 2);
+
+            parseChar(string, position, '-');
+            int day = parseInt(string, position, 2);
+
+            return LocalDate.of(year, month, day);
+        }
+
+        static final LocalTime parseLocalTime(String string, int[] position) {
+            int hour = parseInt(string, position, 2);
+
+            // [#5895] HSQLDB seems to confuse 00:00:00+02:00 with 24:00:00+02:00
+            // https://sourceforge.net/p/hsqldb/bugs/1523/
+            if (hour == 24)
+                hour = hour % 24;
+
+            parseChar(string, position, ':');
+            int minute = parseInt(string, position, 2);
+            int second = 0;
+            int nano = 0;
+
+            if (parseCharIf(string, position, ':')) {
+                second = parseInt(string, position, 2);
+
+                if (parseCharIf(string, position, '.')) {
+                    nano = 1000000 * parseInt(string, position, 3);
+
+                    if (Character.isDigit(string.charAt(position[0]))) {
+                        nano = nano + 1000 * parseInt(string, position, 3);
+
+                        if (Character.isDigit(string.charAt(position[0]))) {
+                            nano = nano + parseInt(string, position, 3);
+                        }
+                    }
+                }
+            }
+
+            return LocalTime.of(hour, minute, second, nano);
+        }
+
+        private static final ZoneOffset parseOffset(String string, int[] position) {
+            int offsetHours = 0;
+            int offsetMinutes = 0;
+
+            if (!parseCharIf(string, position, 'Z')) {
+
+                // [#4965] Oracle might return some spare space
+                while (parseCharIf(string, position, ' '))
+                    ;
+
+                boolean minus = parseCharIf(string, position, '-');
+                boolean plus = !minus && parseCharIf(string, position, '+');
+
+                if (minus || plus) {
+                    offsetHours = parseInt(string, position, 1);
+
+                    // [#4965] Oracle might return a single-digit hour offset
+                    if (Character.isDigit(string.charAt(position[0])))
+                        offsetHours = offsetHours * 10 + parseInt(string, position, 1);
+
+                    // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
+                    if (parseCharIf(string, position, ':'))
+                        offsetMinutes = parseInt(string, position, 2);
+                }
+            }
+
+            return ZoneOffset.ofHoursMinutes(offsetHours, offsetMinutes);
+        }
+
+        private static final void parseAnyChar(String string, int[] position, String expected) {
+            for (int i = 0; i < expected.length(); i++) {
+                if (string.charAt(position[0]) == expected.charAt(i)) {
+                    position[0] = position[0] + 1;
+                    return;
+                }
+            }
+
+            throw new IllegalArgumentException("Expected any of \"" + expected + "\" at position " + position[0] + " in " + string);
+        }
+
+        private static final boolean parseCharIf(String string, int[] position, char expected) {
+            boolean result = string.length() > position[0] && string.charAt(position[0]) == expected;
+            if (result)
+                position[0] = position[0] + 1;
+            return result;
+        }
+
+        private static final void parseChar(String string, int[] position, char expected) {
+            if (!parseCharIf(string, position, expected))
+                throw new IllegalArgumentException("Expected '" + expected + "' at position " + position[0] + " in " + string);
+        }
+
+        private static final int parseInt(String string, int[] position, int length) {
+            int result = 0;
+
+            for (int i = position[0] + length - 1, dec = 1; i >= position[0]; i--, dec = dec * 10) {
+                int digit = string.charAt(i) - '0';
+
+                if (digit >= 0 && digit < 10)
+                    result = result + dec * digit;
+                else
+                    throw new NumberFormatException("Not a number: " + string);
+            }
+
+            position[0] = position[0] + length;
+            return result;
         }
     }
 
@@ -2556,12 +2629,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final OffsetDateTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return offsetDateTime(ctx.resultSet().getString(ctx.index()));
+            return OffsetDateTimeParser.offsetDateTime(ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final OffsetDateTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return offsetDateTime(ctx.statement().getString(ctx.index()));
+            return OffsetDateTimeParser.offsetDateTime(ctx.statement().getString(ctx.index()));
         }
 
         @Override
@@ -2678,12 +2751,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final OffsetTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return offsetTime(ctx.resultSet().getString(ctx.index()));
+            return OffsetDateTimeParser.offsetTime(ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final OffsetTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return offsetTime(ctx.statement().getString(ctx.index()));
+            return OffsetDateTimeParser.offsetTime(ctx.statement().getString(ctx.index()));
         }
 
         @Override
@@ -2988,9 +3061,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type == LocalDateTime.class)
                 return (T) LocalDateTime.parse(string);
             else if (type == OffsetTime.class)
-                return (T) offsetTime(string);
+                return (T) OffsetDateTimeParser.offsetTime(string);
             else if (type == OffsetDateTime.class)
-                return (T) offsetDateTime(string);
+                return (T) OffsetDateTimeParser.offsetDateTime(string);
 
             else if (type == UByte.class)
                 return (T) UByte.valueOf(string);

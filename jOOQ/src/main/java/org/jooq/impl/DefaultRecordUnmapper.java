@@ -225,12 +225,10 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                     }
 
                     // Use only the first applicable method or member
-                    if (method != null) {
+                    if (method != null)
                         Tools.setValue(record, field, method.invoke(source));
-                    }
-                    else if (members.size() > 0) {
+                    else if (members.size() > 0)
                         setValue(record, source, members.get(0), field);
-                    }
                 }
 
                 return (R) record;

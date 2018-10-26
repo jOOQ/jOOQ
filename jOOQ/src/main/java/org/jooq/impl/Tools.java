@@ -3223,7 +3223,7 @@ final class Tools {
 
                             if (suffix != null) {
                                 try {
-                                    Method setter = type.getMethod("set" + suffix, method.getReturnType());
+                                    Method setter = type.getDeclaredMethod("set" + suffix, method.getReturnType());
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null)
@@ -3368,6 +3368,15 @@ final class Tools {
         for (Method method : type.getMethods())
             if ((method.getModifiers() & Modifier.STATIC) == 0)
                 result.add(method);
+
+        do {
+            for (Method method : type.getDeclaredMethods())
+                if ((method.getModifiers() & Modifier.STATIC) == 0)
+                    result.add(method);
+
+            type = type.getSuperclass();
+        }
+        while (type != null);
 
         return result;
     }

@@ -197,6 +197,9 @@
                                 <database>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
+                                <generate>
+                                    <generatedAnnotation>false</generatedAnnotation>
+                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>
                                     <directory>target/generated-sources/jooq-h2</directory>

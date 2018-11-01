@@ -514,7 +514,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table) {
-        return createField(name, type, table, null, null, null);
+        return createField(DSL.name(name), type, table, null, null, null);
     }
 
     /**
@@ -525,7 +525,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table, String comment) {
-        return createField(name, type, table, comment, null, null);
+        return createField(DSL.name(name), type, table, comment, null, null);
     }
 
     /**
@@ -536,7 +536,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     protected static final <R extends Record, T, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Converter<T, U> converter) {
-        return createField(name, type, table, comment, converter, null);
+        return createField(DSL.name(name), type, table, comment, converter, null);
     }
 
     /**
@@ -547,6 +547,116 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     protected static final <R extends Record, T, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Binding<T, U> binding) {
+        return createField(DSL.name(name), type, table, comment, null, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T, X, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding) {
+        return createField(DSL.name(name), type, table, comment, converter, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T> TableField<R, T> createField(String name, DataType<T> type) {
+        return createField(DSL.name(name), type, this, null, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T> TableField<R, T> createField(String name, DataType<T> type, String comment) {
+        return createField(DSL.name(name), type, this, comment, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<T, U> converter) {
+        return createField(DSL.name(name), type, this, comment, converter, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Binding<T, U> binding) {
+        return createField(DSL.name(name), type, this, comment, null, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, X, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<X, U> converter, Binding<T, X> binding) {
+        return createField(DSL.name(name), type, this, comment, converter, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T> TableField<R, T> createField(Name name, DataType<T> type, Table<R> table) {
+        return createField(name, type, table, null, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T> TableField<R, T> createField(Name name, DataType<T> type, Table<R> table, String comment) {
+        return createField(name, type, table, comment, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<T, U> converter) {
+        return createField(name, type, table, comment, converter, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Binding<T, U> binding) {
         return createField(name, type, table, comment, null, binding);
     }
 
@@ -558,7 +668,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     @SuppressWarnings("unchecked")
-    protected static final <R extends Record, T, X, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding) {
+    protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         final DataType<U> actualType =
             converter == null && binding == null
@@ -566,7 +676,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
           : type.asConvertedDataType(actualBinding);
 
         // [#5999] TODO: Allow for user-defined Names
-        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(DSL.name(name), actualType, table, DSL.comment(comment), actualBinding);
+        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(name, actualType, table, DSL.comment(comment), actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {
@@ -583,7 +693,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    protected final <T> TableField<R, T> createField(String name, DataType<T> type) {
+    protected final <T> TableField<R, T> createField(Name name, DataType<T> type) {
         return createField(name, type, this, null, null, null);
     }
 
@@ -594,7 +704,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    protected final <T> TableField<R, T> createField(String name, DataType<T> type, String comment) {
+    protected final <T> TableField<R, T> createField(Name name, DataType<T> type, String comment) {
         return createField(name, type, this, comment, null, null);
     }
 
@@ -605,7 +715,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<T, U> converter) {
+    protected final <T, U> TableField<R, U> createField(Name name, DataType<T> type, String comment, Converter<T, U> converter) {
         return createField(name, type, this, comment, converter, null);
     }
 
@@ -616,7 +726,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Binding<T, U> binding) {
+    protected final <T, U> TableField<R, U> createField(Name name, DataType<T> type, String comment, Binding<T, U> binding) {
         return createField(name, type, this, comment, null, binding);
     }
 
@@ -627,7 +737,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    protected final <T, X, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<X, U> converter, Binding<T, X> binding) {
+    protected final <T, X, U> TableField<R, U> createField(Name name, DataType<T> type, String comment, Converter<X, U> converter, Binding<T, X> binding) {
         return createField(name, type, this, comment, converter, binding);
     }
 

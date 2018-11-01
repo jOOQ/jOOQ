@@ -2015,15 +2015,15 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 printDeprecationIfUnknownType(out, attrTypeFull);
-                out.tab(1).println("private val %s : %s[%s, %s] = %s.createField(\"%s\", %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, attrName, attrTypeRef, escapeString(""), converter, binding);
+                out.tab(1).println("private val %s : %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, attrName, attrTypeRef, escapeString(""), converter, binding);
             }
             else {
                 if (!printDeprecationIfUnknownType(out, attrTypeFull))
                     out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
 
-                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
+                out.tab(1).println("public static final %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    UDTField.class, recordType, attrType, attrId, DSL.class, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
             }
         }
 
@@ -3782,15 +3782,15 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), columnComment(column, columnComment));
 
             if (scala) {
-                out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnId, TableField.class, recordType, columnType, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
+                out.tab(1).println("val %s : %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
-                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), converter, binding);
+                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(columnComment), converter, binding);
             }
         }
 

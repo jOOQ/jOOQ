@@ -114,6 +114,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -256,6 +257,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultOffsetDateTimeBinding(converter, isLob);
         else if (type == OffsetTime.class)
             return new DefaultOffsetTimeBinding(converter, isLob);
+        else if (type == Instant.class)
+            return new DefaultInstantBinding(converter, isLob);
 
         else if (type == Short.class || type == short.class)
             return new DefaultShortBinding(converter, isLob);
@@ -2784,6 +2787,58 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Replace the ISO standard Z character for UTC, as some databases don't like that
             return StringUtils.replace(val.format(DateTimeFormatter.ISO_OFFSET_TIME), "Z", "+00:00");
+        }
+    }
+
+    static final class DefaultInstantBinding<U> extends AbstractBinding<Instant, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long                               serialVersionUID = -1850495302106551527L;
+        private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
+            OffsetDateTime.class,
+            Instant.class,
+            o -> o.toInstant(),
+            i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+        );
+
+        private final DefaultOffsetDateTimeBinding<U>           delegate;
+
+        DefaultInstantBinding(Converter<Instant, U> converter, boolean isLob) {
+            super(converter, isLob);
+
+            delegate = new DefaultOffsetDateTimeBinding<U>(Converters.of(CONVERTER, converter()), isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, Instant value) throws SQLException {
+            delegate.set0(ctx, CONVERTER.to(value));
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, Instant value) throws SQLException {
+            delegate.set0(ctx, CONVERTER.to(value));
+        }
+
+        @Override
+        final Instant get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return CONVERTER.from(delegate.get0(ctx));
+        }
+
+        @Override
+        final Instant get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return CONVERTER.from(delegate.get0(ctx));
+        }
+
+        @Override
+        final Instant get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return CONVERTER.from(delegate.get0(ctx));
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) throws SQLException {
+            return delegate.sqltype(statement, configuration);
         }
     }
 

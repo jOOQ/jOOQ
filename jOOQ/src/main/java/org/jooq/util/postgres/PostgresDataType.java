@@ -43,6 +43,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.UUID;
@@ -113,6 +114,7 @@ public class PostgresDataType {
 
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE    = new DefaultDataType<OffsetDateTime>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp with time zone");
     public static final DataType<OffsetDateTime> TIMESTAMPTZ              = new DefaultDataType<OffsetDateTime>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamptz");
+    public static final DataType<Instant>        INSTANT                  = new DefaultDataType<Instant>(SQLDialect.POSTGRES, SQLDataType.INSTANT, "timestamp with time zone");
 
     public static final DataType<byte[]>         BYTEA                    = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.BLOB, "bytea");
     public static final DataType<YearToMonth>    INTERVALYEARTOMONTH      = new DefaultDataType<YearToMonth>(SQLDialect.POSTGRES, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");

@@ -453,6 +453,7 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#LOCALDATETIME}</li>
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
+     * <li> {@link SQLDataType#INSTANT}</li>
      * </ul>
      */
     boolean isDateTime();

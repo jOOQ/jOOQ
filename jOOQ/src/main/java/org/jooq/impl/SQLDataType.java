@@ -44,6 +44,7 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -493,6 +494,20 @@ public final class SQLDataType {
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE(int precision) {
         return TIMESTAMPWITHTIMEZONE.precision(precision);
     }
+
+    /**
+     * A {@link Types#TIMESTAMP_WITH_TIMEZONE} type that uses UTC as time zone.
+     * <p>
+     * Neither JDBC, nor most SQL databases support the <code>INSTANT</code>
+     * data type, which is often the only kind of timestamp which can be
+     * expected to behave across all server and client time zone settings. This
+     * implementation is backed by the database vendor's
+     * <code>TIMESTAMP WITH TIME ZONE</code> data type implementation, which may
+     * (e.g. Oracle) or may not (e.g. PostgreSQL) store the timestamp
+     * information. Irrespective of that storage, this type will always produce
+     * time zone agnostic instants in client code.
+     */
+    public static final DataType<Instant> INSTANT = new DefaultDataType<Instant>(null, Instant.class, "instant");
 
 
     // -------------------------------------------------------------------------

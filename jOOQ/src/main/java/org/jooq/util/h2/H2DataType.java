@@ -42,6 +42,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -105,6 +106,7 @@ public class H2DataType {
     public static final DataType<Timestamp>  DATETIME                  = new DefaultDataType<Timestamp>(SQLDialect.H2, SQLDataType.TIMESTAMP, "datetime");
 
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = new DefaultDataType<OffsetDateTime>(SQLDialect.H2, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp with time zone");
+    public static final DataType<Instant>    INSTANT                   = new DefaultDataType<Instant>(SQLDialect.H2, SQLDataType.INSTANT, "timestamp with time zone");
 
     public static final DataType<byte[]>     BINARY                    = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BINARY, "binary");
     public static final DataType<byte[]>     VARBINARY                 = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.VARBINARY, "varbinary");

@@ -872,7 +872,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
             }
 
-            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration());
+            ExecuteContext ctx2 = new DefaultExecuteContext(((DefaultExecuteContext) ctx).originalConfiguration());
             ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);

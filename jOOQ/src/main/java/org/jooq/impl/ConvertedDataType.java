@@ -96,13 +96,11 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
     @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {
-        if (getConverter().toType().isInstance(object)) {
+        if (getConverter().toType().isInstance(object))
             return (U) object;
-        }
 
         // [#3200] Try to convert arbitrary objects to T
-        else {
+        else
             return ((Converter<T, U>) getConverter()).from(delegate.convert(object));
-        }
     }
 }

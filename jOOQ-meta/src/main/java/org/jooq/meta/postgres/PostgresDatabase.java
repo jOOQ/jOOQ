@@ -96,6 +96,7 @@ import org.jooq.Select;
 import org.jooq.SortOrder;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -144,6 +145,8 @@ public class PostgresDatabase extends AbstractDatabase {
 
     private static Boolean is84;
     private static Boolean is94;
+    private static Boolean is11;
+    private static Boolean canUseRoutines;
     private static Boolean canCastToEnumType;
     private static Boolean canCombineArrays;
     private static Boolean canUseTupleInPredicates;
@@ -745,7 +748,16 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
+        if (!canUseRoutines())
+            return result;
+
         Routines r1 = ROUTINES.as("r1");
+
+        // [#7785] The pg_proc.proisagg column has been replaced incompatibly in PostgreSQL 11
+        Field<Boolean> isAgg = (is11()
+            ? field(PG_PROC.PROKIND.eq(inline("a")))
+            : field("{0}.proisagg", SQLDataType.BOOLEAN, PG_PROC)
+        ).as("is_agg");
 
         for (Record record : create().select(
                 r1.ROUTINE_SCHEMA,
@@ -770,7 +782,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(r1.SPECIFIC_NAME))
                 ).as("overload"),
 
-                PG_PROC.PROISAGG)
+                isAgg)
             .from(r1)
 
             // [#3375] Exclude table-valued functions as they're already generated as tables
@@ -848,6 +860,28 @@ public class PostgresDatabase extends AbstractDatabase {
         return is94;
     }
 
+    boolean is11() {
+        if (is11 == null) {
+
+            // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
+            //         pg_proc.proisagg was removed, incompatibly
+            try {
+                create(true)
+                    .select(PG_PROC.PROKIND)
+                    .from(PG_PROC)
+                    .where(falseCondition())
+                    .fetch();
+
+                is11 = true;
+            }
+            catch (DataAccessException e) {
+                is11 = false;
+            }
+        }
+
+        return is11;
+    }
+
     boolean canCombineArrays() {
         if (canCombineArrays == null) {
 
@@ -880,6 +914,23 @@ public class PostgresDatabase extends AbstractDatabase {
         }
 
         return canUseTupleInPredicates;
+    }
+
+    boolean canUseRoutines() {
+        if (canUseRoutines == null) {
+
+            // [#7892] The information_schema.routines table is not available in all PostgreSQL
+            //         style databases, e.g. CockroachDB
+            try {
+                create(true).fetchExists(ROUTINES);
+                canUseRoutines = true;
+            }
+            catch (DataAccessException e) {
+                canUseRoutines = false;
+            }
+        }
+
+        return canUseRoutines;
     }
 
     private List<String> enumLabels(String nspname, String typname) {

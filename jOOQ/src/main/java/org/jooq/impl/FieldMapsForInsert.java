@@ -274,6 +274,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     // The FieldMapsForInsert API
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     final void addFields(Collection<?> fields) {
         if (rows == 0)
             newRecord();
@@ -284,7 +285,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             Field<?> e = empty.get(f);
 
             if (e == null) {
-                e = DSL.val(null, f);
+                e = new LazyVal<Object>(null, (Field<Object>) f);
                 empty.put(f, e);
             }
 

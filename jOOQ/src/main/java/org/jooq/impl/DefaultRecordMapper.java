@@ -945,7 +945,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         private final Constructor<E>                  constructor;
         private final Class<?>[]                      parameterTypes;
-        private final Object[]                        parameterValues;
         private final List<String>                    propertyNames;
         private final boolean                         useAnnotations;
         private final List<java.lang.reflect.Field>[] members;
@@ -957,7 +956,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.propertyNames = propertyNames;
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.parameterTypes = constructor.getParameterTypes();
-            this.parameterValues = new Object[parameterTypes.length];
             this.members = new List[fields.length];
             this.methods = new Method[fields.length];
             this.propertyIndexes = new Integer[fields.length];
@@ -994,6 +992,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final E map(R record) {
             try {
+                Object[] parameterValues = new Object[parameterTypes.length];
+
                 for (int i = 0; i < fields.length; i++) {
                     if (propertyIndexes[i] != null) {
                         parameterValues[propertyIndexes[i]] = record.get(i);

@@ -93,7 +93,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
      * <li>Otherwise, take the string value of <code>value</code></li>
      * </ul>
      */
-    private static Name name(Object value, String paramName) {
+    static Name name(Object value, String paramName) {
         return DSL.name(
                paramName != null
              ? paramName

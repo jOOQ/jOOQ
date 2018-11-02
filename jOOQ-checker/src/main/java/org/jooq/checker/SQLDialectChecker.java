@@ -39,9 +39,7 @@ package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
 import static java.util.Arrays.asList;
-import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
 import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
-import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
 
 import java.io.PrintWriter;
 import java.util.EnumSet;
@@ -76,12 +74,17 @@ public class SQLDialectChecker extends AbstractChecker {
                     ExecutableElement elementFromUse = elementFromUse(node);
                     Support support = elementFromUse.getAnnotation(Support.class);
 
-                    // In the absence of a @Support annotation, or if no SQLDialect is supplied,
-                    // all jOOQ API method calls will type check.
-                    if (support != null && support.value().length > 0) {
-                        Element enclosing = elementFromDeclaration(enclosingMethod(getPath(root, node)));
+                    // In the absence of a @Support annotation, all jOOQ API method calls will type check.
+                    if (support != null) {
+                        Element enclosing = enclosing(getPath(root, node));
 
-                        EnumSet<SQLDialect> supported = EnumSet.copyOf(asList(support.value()));
+                        // [#7929] "Empty" @Support annotations expand to all SQLDialects
+                        EnumSet<SQLDialect> supported = EnumSet.copyOf(
+                            support.value().length > 0
+                          ? asList(support.value())
+                          : asList(SQLDialect.values())
+                        );
+
                         EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
                         EnumSet<SQLDialect> required = EnumSet.noneOf(SQLDialect.class);
 
@@ -108,9 +111,6 @@ public class SQLDialectChecker extends AbstractChecker {
 
                         if (allowed.isEmpty())
                             error(node, "No jOOQ API usage is allowed at current scope. Use @Allow.");
-
-                        if (required.isEmpty())
-                            error(node, "No jOOQ API usage is allowed at current scope due to conflicting @Require specification.");
 
                         boolean allowedFail = true;
                         allowedLoop:

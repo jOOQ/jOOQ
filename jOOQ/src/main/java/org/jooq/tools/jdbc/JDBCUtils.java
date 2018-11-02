@@ -112,6 +112,9 @@ public class JDBCUtils {
      * the URL (e.g. when using an JDBC-ODBC bridge), further actions may be
      * implemented in the future.
      *
+     * @return The appropriate {@link SQLDialect} or {@link SQLDialect#DEFAULT}
+     *         if no dialect could be derived from the connection. Never
+     *         <code>null</code>.
      * @see #dialect(String)
      */
     public static final SQLDialect dialect(Connection connection) {
@@ -263,6 +266,10 @@ public class JDBCUtils {
 
     /**
      * "Guess" the {@link SQLDialect} from a connection URL.
+     *
+     * @return The appropriate {@link SQLDialect} or {@link SQLDialect#DEFAULT}
+     *         if no dialect could be derived from the connection. Never
+     *         <code>null</code>.
      */
     public static final SQLDialect dialect(String url) {
         if (url == null)
@@ -336,6 +343,10 @@ public class JDBCUtils {
 
     /**
      * "Guess" the JDBC driver from a connection URL.
+     *
+     * @return The appropriate JDBC driver class or
+     *         <code>"java.sql.Driver"</code> if no driver class could be
+     *         derived from the URL. Never <code>null</code>.
      */
     public static final String driver(String url) {
         switch (dialect(url).family()) {

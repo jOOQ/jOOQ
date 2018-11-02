@@ -998,8 +998,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryTerm(ctx, degree, null, null));
                     break;
                 default:
-                    ctx.internalError();
-                    break;
+                    throw ctx.internalError();
             }
         }
 
@@ -1022,8 +1021,7 @@ final class ParserImpl implements Parser {
                     result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree, null));
                     break;
                 default:
-                    ctx.internalError();
-                    break;
+                    throw ctx.internalError();
             }
         }
 
@@ -2516,7 +2514,8 @@ final class ParserImpl implements Parser {
                 parseIf(ctx, '=');
                 storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
-            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null) {
+            else if ((keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARACTER SET")) != null
+                  || (keyword = parseAndGetKeywordIf(ctx, "DEFAULT CHARSET")) != null) {
                 parseIf(ctx, '=');
                 storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
@@ -3188,6 +3187,7 @@ final class ParserImpl implements Parser {
         Name indexName = parseIndexNameIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
+        parseKeywordIf(ctx, "USING BTREE");
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
@@ -3524,8 +3524,23 @@ final class ParserImpl implements Parser {
             return parseTableFactor(ctx);
     }
 
+    private static final <R extends Record> Table<R> t(TableLike<R> table) {
+        return t(table, false);
+    }
+
+    private static final <R extends Record> Table<R> t(TableLike<R> table, boolean dummyAlias) {
+        return
+            table instanceof Table
+          ? (Table<R>) table
+          : dummyAlias
+          ? table.asTable("x")
+          : table.asTable();
+    }
+
     private static final Table<?> parseTableFactor(ParserContext ctx) {
-        Table<?> result = null;
+
+        // [#7982] Postpone turning Select into a Table in case there is an alias
+        TableLike<?> result = null;
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
         // TOOD ONLY ( table primary )
@@ -3567,7 +3582,7 @@ final class ParserImpl implements Parser {
             if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
                 SelectQueryImpl<Record> select = parseSelect(ctx);
                 parse(ctx, ')');
-                result = table(parseQueryExpressionBody(ctx, null, null, select));
+                result = parseQueryExpressionBody(ctx, null, null, select);
             }
             else if (peekKeyword(ctx, "VALUES")) {
                 result = parseTableValueConstructor(ctx);
@@ -3695,9 +3710,9 @@ final class ParserImpl implements Parser {
             }
 
             if (columnAliases != null)
-                result = result.as(alias, columnAliases.toArray(EMPTY_NAME));
+                result = t(result, true).as(alias, columnAliases.toArray(EMPTY_NAME));
             else
-                result = result.as(alias);
+                result = t(result, true).as(alias);
         }
 
         if (parseKeywordIf(ctx, "WITH") && ctx.requireProEdition()) {
@@ -3710,7 +3725,7 @@ final class ParserImpl implements Parser {
 
         }
 
-        return result;
+        return t(result);
     }
 
 
@@ -7884,7 +7899,7 @@ final class ParserImpl implements Parser {
                 return CombineOperator.UNION;
             else
                 return CombineOperator.UNION;
-        else if (!intersectOnly && parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS"))
+        else if (!intersectOnly && (parseKeywordIf(ctx, "EXCEPT") || parseKeywordIf(ctx, "MINUS")))
             if (parseKeywordIf(ctx, "ALL"))
                 return CombineOperator.EXCEPT_ALL;
             else if (parseKeywordIf(ctx, "DISTINCT"))

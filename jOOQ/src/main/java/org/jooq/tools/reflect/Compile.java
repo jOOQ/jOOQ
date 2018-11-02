@@ -16,12 +16,16 @@ package org.jooq.tools.reflect;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.tools.FileObject;
@@ -44,9 +48,10 @@ class Compile {
 
     static Class<?> compile(String className, String content) {
         Lookup lookup = MethodHandles.lookup();
+        ClassLoader cl = lookup.lookupClass().getClassLoader();
 
         try {
-            return lookup.lookupClass().getClassLoader().loadClass(className);
+            return cl.loadClass(className);
         }
         catch (ClassNotFoundException ignore) {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -58,7 +63,26 @@ class Compile {
                 files.add(new CharSequenceJavaFileObject(className, content));
                 StringWriter out = new StringWriter();
 
-                compiler.getTask(null, fileManager, null, null, null, files).call();
+                List<String> options = new ArrayList<String>();
+                StringBuilder classpath = new StringBuilder();
+                String separator = System.getProperty("path.separator");
+                String prop = System.getProperty("java.class.path");
+
+                if (prop != null && !"".equals(prop))
+                    classpath.append(prop);
+
+                if (cl instanceof URLClassLoader) {
+                    for (URL url : ((URLClassLoader) cl).getURLs()) {
+                        if (classpath.length() > 0)
+                            classpath.append(separator);
+
+                        if ("file".equals(url.getProtocol()))
+                            classpath.append(new File(url.getFile()));
+                    }
+                }
+
+                options.addAll(Arrays.asList("-classpath", classpath.toString()));
+                compiler.getTask(out, fileManager, null, options, null, files).call();
 
                 if (fileManager.o == null)
                     throw new ReflectException("Compilation error: " + out);
@@ -67,7 +91,6 @@ class Compile {
 
                 // This works if we have private-access to the interfaces in the class hierarchy
                 // if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
-                    ClassLoader cl = lookup.lookupClass().getClassLoader();
                     byte[] b = fileManager.o.getBytes();
                     result = Reflect.on(cl).call("defineClass", className, b, 0, b.length).get();
                 // }

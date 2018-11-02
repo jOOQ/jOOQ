@@ -37,12 +37,22 @@
  */
 package org.jooq.checker;
 
+import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
+import static org.checkerframework.javacutil.TreeUtils.enclosingClass;
+import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.lang.model.element.Element;
+
 import org.checkerframework.framework.source.Result;
 import org.checkerframework.framework.source.SourceChecker;
+
+import com.sun.source.tree.ClassTree;
+import com.sun.source.tree.MethodTree;
+import com.sun.source.util.TreePath;
 
 /**
  * Common base class for checkers.
@@ -59,7 +69,7 @@ abstract class AbstractChecker extends SourceChecker {
         getChecker().report(Result.warning(message, node), node);
     }
 
-    void print(Printer printer) {
+    static void print(Printer printer) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("error.txt"))){
             writer.println("This is probably a bug in jOOQ-checker.");
             writer.println("Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new");
@@ -68,6 +78,16 @@ abstract class AbstractChecker extends SourceChecker {
             printer.print(writer);
         }
         catch (IOException ignore) {}
+    }
+
+    static Element enclosing(TreePath path) {
+        MethodTree enclosingMethod = enclosingMethod(path);
+
+        if (enclosingMethod != null)
+            return elementFromDeclaration(enclosingMethod);
+
+        ClassTree enclosingClass = enclosingClass(path);
+        return elementFromDeclaration(enclosingClass);
     }
 
     interface Printer {

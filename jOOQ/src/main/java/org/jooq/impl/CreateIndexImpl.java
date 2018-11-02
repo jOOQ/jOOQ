@@ -311,7 +311,7 @@ final class CreateIndexImpl extends AbstractQuery implements
                .qualify(true)
                .sql(')');
 
-        if (where != null)
+        if (where != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(K_WHERE)
                .sql(' ')

@@ -687,7 +687,19 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
-                    rs = ctx.statement().getGeneratedKeys();
+                    try {
+                        rs = ctx.statement().getGeneratedKeys();
+                    }
+                    catch (SQLException e) {
+
+
+
+
+
+
+
+                        throw e;
+                    }
 
                     try {
                         List<Object> list = new ArrayList<Object>();
@@ -820,7 +832,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
             }
 
-            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration());
+            ExecuteContext ctx2 = new DefaultExecuteContext(((DefaultExecuteContext) ctx).originalConfiguration());
             ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);

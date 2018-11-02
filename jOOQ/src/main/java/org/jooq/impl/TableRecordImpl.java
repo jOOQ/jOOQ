@@ -232,7 +232,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             }
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
-            if (REFRESH_GENERATED_KEYS.contains(configuration().family()) && this instanceof UpdatableRecord)
+            if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord())
+                    && REFRESH_GENERATED_KEYS.contains(configuration().family())
+                    && this instanceof UpdatableRecord)
                 ((UpdatableRecord<?>) this).refresh(key.toArray(EMPTY_FIELD));
         }
     }

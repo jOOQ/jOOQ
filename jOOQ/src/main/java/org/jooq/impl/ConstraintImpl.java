@@ -252,7 +252,7 @@ implements
                    .sql(')');
             }
 
-            if (getQualifiedName() == AbstractName.NO_NAME)
+            if (getQualifiedName() != AbstractName.NO_NAME)
                 ctx.formatIndentEnd();
         }
     }

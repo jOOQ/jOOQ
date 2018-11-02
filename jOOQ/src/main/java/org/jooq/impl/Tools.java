@@ -2380,8 +2380,10 @@ final class Tools {
      * Translate a {@link SQLException} to a {@link DataAccessException}
      */
     static final DataAccessException translate(String sql, SQLException e) {
-        String message = "SQL [" + sql + "]; " + e.getMessage();
-        return new DataAccessException(message, e);
+        if (e != null)
+            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+        else
+            return new DataAccessException("SQL [" + sql + "]; Unspecified SQLException");
     }
 
     /**
@@ -3143,7 +3145,7 @@ final class Tools {
 
                             if (suffix != null) {
                                 try {
-                                    Method setter = type.getMethod("set" + suffix, method.getReturnType());
+                                    Method setter = type.getDeclaredMethod("set" + suffix, method.getReturnType());
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null)
@@ -3288,6 +3290,15 @@ final class Tools {
         for (Method method : type.getMethods())
             if ((method.getModifiers() & Modifier.STATIC) == 0)
                 result.add(method);
+
+        do {
+            for (Method method : type.getDeclaredMethods())
+                if ((method.getModifiers() & Modifier.STATIC) == 0)
+                    result.add(method);
+
+            type = type.getSuperclass();
+        }
+        while (type != null);
 
         return result;
     }
@@ -4096,6 +4107,10 @@ final class Tools {
 
 
 
+
+
+
+
             case FIREBIRD: {
                 endExecuteImmediate(ctx);
                 ctx.formatSeparator()
@@ -4227,6 +4242,7 @@ final class Tools {
 
 
 
+                case H2:
                 case MARIADB:
                 case MYSQL: {
                     ctx.visit(K_ENUM).sql('(');

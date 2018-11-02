@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = 542648977;
+    private static final long serialVersionUID = -1247107780;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -50,57 +50,57 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.ID</code>.
      */
-    public final TableField<BookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<BookRecord, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.AUTHOR_ID</code>.
      */
-    public final TableField<BookRecord, Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BookRecord, Integer> AUTHOR_ID = createField(DSL.name("AUTHOR_ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.CO_AUTHOR_ID</code>.
      */
-    public final TableField<BookRecord, Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookRecord, Integer> CO_AUTHOR_ID = createField(DSL.name("CO_AUTHOR_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.DETAILS_ID</code>.
      */
-    public final TableField<BookRecord, Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookRecord, Integer> DETAILS_ID = createField(DSL.name("DETAILS_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.TITLE</code>.
      */
-    public final TableField<BookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
+    public final TableField<BookRecord, String> TITLE = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.PUBLISHED_IN</code>.
      */
-    public final TableField<BookRecord, Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookRecord, Integer> PUBLISHED_IN = createField(DSL.name("PUBLISHED_IN"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.LANGUAGE_ID</code>.
      */
-    public final TableField<BookRecord, Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookRecord, Integer> LANGUAGE_ID = createField(DSL.name("LANGUAGE_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.CONTENT_TEXT</code>.
      */
-    public final TableField<BookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<BookRecord, String> CONTENT_TEXT = createField(DSL.name("CONTENT_TEXT"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.CONTENT_PDF</code>.
      */
-    public final TableField<BookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<BookRecord, byte[]> CONTENT_PDF = createField(DSL.name("CONTENT_PDF"), org.jooq.impl.SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.REC_VERSION</code>.
      */
-    public final TableField<BookRecord, Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookRecord, Integer> REC_VERSION = createField(DSL.name("REC_VERSION"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
      */
-    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP.precision(6), this, "");
+    public final TableField<BookRecord, Timestamp> REC_TIMESTAMP = createField(DSL.name("REC_TIMESTAMP"), org.jooq.impl.SQLDataType.TIMESTAMP.precision(6), this, "");
 
     /**
      * Create a <code>PUBLIC.BOOK</code> table reference

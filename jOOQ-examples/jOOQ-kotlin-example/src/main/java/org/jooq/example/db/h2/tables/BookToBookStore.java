@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
 
-    private static final long serialVersionUID = 823886188;
+    private static final long serialVersionUID = 1363121807;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_TO_BOOK_STORE</code>
@@ -48,17 +48,17 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
      */
-    public final TableField<BookToBookStoreRecord, String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
+    public final TableField<BookToBookStoreRecord, String> BOOK_STORE_NAME = createField(DSL.name("BOOK_STORE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_ID</code>.
      */
-    public final TableField<BookToBookStoreRecord, Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BookToBookStoreRecord, Integer> BOOK_ID = createField(DSL.name("BOOK_ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.STOCK</code>.
      */
-    public final TableField<BookToBookStoreRecord, Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<BookToBookStoreRecord, Integer> STOCK = createField(DSL.name("STOCK"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>PUBLIC.BOOK_TO_BOOK_STORE</code> table reference

@@ -247,6 +247,7 @@
 
                         <!-- Avoid running into Java 8's very restrictive doclint issues -->
                         <additionalparam>-Xdoclint:none</additionalparam>
+                        <additionalOptions>-Xdoclint:none</additionalOptions>
                     </configuration>
                 </plugin>
 

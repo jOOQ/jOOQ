@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = 1357790873;
+    private static final long serialVersionUID = -626066612;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -48,7 +48,7 @@ public class BookStore extends TableImpl<BookStoreRecord> {
     /**
      * The column <code>PUBLIC.BOOK_STORE.NAME</code>.
      */
-    public final TableField<BookStoreRecord, String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
+    public final TableField<BookStoreRecord, String> NAME = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     /**
      * Create a <code>PUBLIC.BOOK_STORE</code> table reference

@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -1397252666;
+    private static final long serialVersionUID = -691260260;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -50,32 +50,32 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>PUBLIC.AUTHOR.ID</code>.
      */
-    public final TableField<AuthorRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<AuthorRecord, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.FIRST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<AuthorRecord, String> FIRST_NAME = createField(DSL.name("FIRST_NAME"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.LAST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<AuthorRecord, String> LAST_NAME = createField(DSL.name("LAST_NAME"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.DATE_OF_BIRTH</code>.
      */
-    public final TableField<AuthorRecord, Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "");
+    public final TableField<AuthorRecord, Date> DATE_OF_BIRTH = createField(DSL.name("DATE_OF_BIRTH"), org.jooq.impl.SQLDataType.DATE, this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.YEAR_OF_BIRTH</code>.
      */
-    public final TableField<AuthorRecord, Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<AuthorRecord, Integer> YEAR_OF_BIRTH = createField(DSL.name("YEAR_OF_BIRTH"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.ADDRESS</code>.
      */
-    public final TableField<AuthorRecord, String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<AuthorRecord, String> ADDRESS = createField(DSL.name("ADDRESS"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
      * Create a <code>PUBLIC.AUTHOR</code> table reference

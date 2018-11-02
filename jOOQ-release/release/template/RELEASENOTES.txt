@@ -19,29 +19,31 @@ This is a 3.11 patch release with bug fixes
 
 Features and Improvements
 -------------------------
-#7750 - Support parsing CREATE INDEX .. ON .. USING btree (..)
-#7857 - Upgrade maven-scala-plugin to scala-maven-plugin
+#7910 - ExecuteContext.sqlException(SQLException) should accept null
+#7955 - Document in Javadoc that JDBCUtils.dialect() and similar methods return DEFAULT, not null
 
 
 Bug Fixes
 ---------
-#7744 - Potential NullPointerException in custom Converter when running INSERT statement
-#7762 - JZ0NK: Generated keys are not available in Sybase ASE when calling UpdatableRecord.store() on a table without identity
-#7768 - DDLDatabase scripts path wild cards do not work correctly
-#7770 - Parser cannot parse MySQL's DEFAULT CHARSET clause
-#7773 - DDLDatabase should ignore storage clauses
-#7777 - Race condition in cached ImmutablePOJOMapperWithParameterNames
-#7779 - SQLDialectNotSupportedException: The ON DUPLICATE KEY UPDATE clause cannot be emulated for DEFAULT when using the Batch API with named parameters
-#7784 - NullPointerException when aggregating row value expressions using ARRAY_AGG()
-#7786 - Column pg_prog.proisagg does not exist in PostgreSQL 11
-#7790 - Wrong type information associated to Row[N].operator(T1, ..., TN) predicates
-#7815 - Error during code generation when using DDLDatabase on a table with a MySQL enum type
-#7818 - Implement <includeUniqueKeys/>, <includePrimaryKeys/> and <includeForeignKeys/>
-#7822 - DDLDatabase does not generate enum types when parsing MySQL ENUM syntax
-#7828 - NPE when generating code for an index whose column(s) are not generated
-#7836 - AbstractMeta::get never returns an unqualified result
-#7837 - name("").append(name("a")) produces wrong result
-#7855 - Code generator fails to parse partial index when using DDLDatabase
+#7880 - Cannot ORDER BY null in Derby, when Field.sortAsc() has no parameters
+#7883 - Single element array expressions must generate trailing comma in H2
+#7887 - Parser doesn't correctly recognise Oracle MINUS operation
+#7895 - Invalid javadoc created for deprecated data types
+#7896 - Missing information_schema.routines table error when running code generator on CockroachDB
+#7919 - Bad formatting of constraints in CREATE TABLE statements
+#7927 - jOOQ-checker does not type check in absence of Require annotation
+#7931 - Missing Support annotation on various DSL.val(), value(), inline() overloads
+#7933 - jOOQ-checker should not allow any jOOQ API usage in the absence of an Allow annotation
+#7935 - jOOQ checker fails with InternalUtils.symbol: tree is null error when checked code has no enclosing method
+#7943 - Excess SELECT statement run on UpdatableRecord.store(), insert(), update() on MySQL
+#7969 - Internal CursorResultSet does not implement JDBC 4.1 and 4.2 methods
+#7978 - CREATE INDEX IF NOT EXISTS should intercept error code 1913 in SQL Server
+#7983 - Unnecessary alias generation in parser for derived tables
+#7984 - Discover JPA annotations also from overridden super class methods
+#7988 - Significant time spent in OffsetDateTime.parse() when reading OffsetDateTime fields
+#8002 - NullPointerException in QueryPartList.removeNulls with Java 11 and immutable collections
+#8007 - INSERT .. RETURNING produces records with wrong attached Configuration
+#8009 - DAO methods do not profit from reflection cache when Settings.returnRecordToPojo = true
 
 
 Version 3.11.5 - September 13, 2018

@@ -4401,7 +4401,8 @@ final class Tools {
             ctx.sql(typeName);
         }
 
-        if (type.collation() != null)
+        // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
+        if (type.collation() != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
     }
 

@@ -8942,6 +8942,15 @@ create.selectFrom(BOOK).where("BOOK.ID = {0} AND TITLE = {1}", id, title).fetch(
 						    <section id="serializability">
 							    <title>Serializability</title>
 								<content><html>
+                                    <p>
+                                        A lot of jOOQ types extend and implement the <reference class="java.io.Serializable"/> interface for your convenience. Beware, however, that jOOQ will make no guarantees related to the serialisation format, and its backwards compatible evolution. This means that while it is generally safe to rely on jOOQ types being serialisable when two processes using the exact same jOOQ version transfer jOOQ state over some network, it is not safe to rely on persisting serialised jOOQ state to be deserialised again at a later time - <strong>even after a patch release upgrade</strong>!
+                                    </p>
+
+                                    <p>
+                                        As always with Java's serialisation, if you want reliable serialisation of Java objects, please use your own serialisation protocol, or use one of the <reference id="exporting" title="official export formats"/>.
+                                    </p>
+
+                                    <h3>What types are serializable?</h3>
 									<p>
 										The only transient, non-serializable element in any jOOQ object is the <reference id="dsl-context" title="Configuration's"/> underlying <reference class="java.sql.Connection"/>. When you want to execute queries after de-serialisation, or when you want to store/refresh/delete <reference id="crud-with-updatablerecords" title="Updatable Records"/>, you may have to "re-attach" them to a Configuration
 									</p>

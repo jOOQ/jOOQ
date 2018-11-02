@@ -51,7 +51,11 @@ import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
 // ...
+import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -90,6 +94,7 @@ import org.jooq.RecordType;
 import org.jooq.Row;
 import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -461,9 +466,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return Collections.emptyList();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other) {
         return other.getReferencesTo(this);
@@ -479,9 +481,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return Collections.emptyList();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Override
     public final <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other) {
@@ -1001,6 +1000,60 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final TableOnStep<R> leftAntiJoin(TableLike<?> table) {
         return (TableOnStep) join(table, LEFT_ANTI_JOIN);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: WHERE API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public /* non-final */ Table<R> where(Condition condition) {
+        return table(selectFrom(this).where(condition)).as(this);
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(Condition... conditions) {
+        return table(selectFrom(this).where(conditions)).as(this);
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(Collection<? extends Condition> conditions) {
+        return table(selectFrom(this).where(conditions)).as(this);
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(Field<Boolean> field) {
+        return where(condition(field));
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(SQL sql) {
+        return where(condition(sql));
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(String sql) {
+        return where(condition(sql));
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(String sql, Object... bindings) {
+        return where(condition(sql, bindings));
+    }
+
+    @Override
+    public /* non-final */ Table<R> where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
+    }
+
+    @Override
+    public /* non-final */ Table<R> whereExists(Select<?> select) {
+        return where(exists(select));
+    }
+
+    @Override
+    public /* non-final */ Table<R> whereNotExists(Select<?> select) {
+        return where(notExists(select));
     }
 
     // ------------------------------------------------------------------------

@@ -607,6 +607,161 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
 
     // -------------------------------------------------------------------------
+    // XXX: WHERE clauses on tables
+    // -------------------------------------------------------------------------
+
+    /**
+     * Add a <code>WHERE</code> clause to the table, connecting them with each
+     * other with {@link Operator#AND}.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> where(Condition condition);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table, connecting them with each
+     * other with {@link Operator#AND}.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> where(Condition... conditions);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table, connecting them with each
+     * other with {@link Operator#AND}.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> where(Collection<? extends Condition> conditions);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> where(Field<Boolean> field);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Table<R> where(SQL sql);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Table<R> where(String sql);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Table<R> where(String sql, Object... bindings);
+
+    /**
+     * Add a <code>WHERE</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Table<R> where(String sql, QueryPart... parts);
+
+    /**
+     * Add a <code>WHERE EXISTS</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> whereExists(Select<?> select);
+
+    /**
+     * Add a <code>WHERE NOT EXISTS</code> clause to the table.
+     * <p>
+     * The resulting table acts like a derived table that projects all of this
+     * table's columns and filters by the argument {@link Condition}. If
+     * syntactically reasonable, the derived table may be inlined to the query
+     * that selects from the resulting table.
+     */
+    @Support
+    Table<R> whereNotExists(Select<?> select);
+
+    // -------------------------------------------------------------------------
     // XXX: JOIN clauses on tables
     // -------------------------------------------------------------------------
 

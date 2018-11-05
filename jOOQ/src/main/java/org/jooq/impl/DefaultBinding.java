@@ -2515,6 +2515,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
                     if (parseCharIf(string, position, ':'))
                         offsetMinutes = parseInt(string, position, 2);
+
+                    if (minus) {
+                        offsetHours = -offsetHours;
+                        offsetMinutes = -offsetMinutes;
+                    }
                 }
             }
 

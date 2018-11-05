@@ -268,6 +268,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultTimeBinding(converter, isLob);
         else if (type == Timestamp.class)
             return new DefaultTimestampBinding(converter, isLob);
+        // [#8022] Support for the "synthetic" timestamp type
+        else if (type == java.util.Date.class)
+            return new DefaultTimestampBinding(Converters.of(TimestampToJavaUtilDateConverter.INSTANCE, (Converter<java.util.Date, java.util.Date>) converter), isLob);
         else if (type == UByte.class)
             return new DefaultUByteBinding(converter, isLob);
         else if (type == UInteger.class)
@@ -2872,7 +2875,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (b instanceof DefaultOtherBinding)
                 ctx.statement().setObject(ctx.index(), value);
             else
-                b.set0(ctx, value);
+                b.set0(ctx, b.converter().to(value));
         }
 
         @Override

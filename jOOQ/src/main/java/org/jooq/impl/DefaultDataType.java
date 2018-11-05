@@ -832,9 +832,8 @@ public class DefaultDataType<T> implements DataType<T> {
         else {
             DataType<?> result = null;
 
-            if (dialect != null) {
+            if (dialect != null)
                 result = TYPES_BY_TYPE[dialect.family().ordinal()].get(type);
-            }
 
             if (result == null) {
 
@@ -872,6 +871,10 @@ public class DefaultDataType<T> implements DataType<T> {
                 // If we have a "fallback" data type from an outer context
                 else if (fallbackDataType != null) {
                     return fallbackDataType;
+                }
+                // [#8022] Special handling
+                else if (java.util.Date.class == type) {
+                    return (DataType<T>) SQLDataType.TIMESTAMP;
                 }
 
                 // All other data types are illegal

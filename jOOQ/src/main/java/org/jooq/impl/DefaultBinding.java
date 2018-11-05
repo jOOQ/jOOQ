@@ -2460,17 +2460,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (parseCharIf(string, position, ':')) {
                 second = parseInt(string, position, 2);
 
-                if (parseCharIf(string, position, '.')) {
-                    nano = 1000000 * parseInt(string, position, 3);
-
-                    if (Character.isDigit(string.charAt(position[0]))) {
-                        nano = nano + 1000 * parseInt(string, position, 3);
-
-                        if (Character.isDigit(string.charAt(position[0]))) {
-                            nano = nano + parseInt(string, position, 3);
-                        }
-                    }
-                }
+                if (parseCharIf(string, position, '.'))
+                    nano = parseInt(string, position, 9, true);
             }
 
             return LocalTime.of(hour, minute, second, nano);
@@ -2499,6 +2490,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
                     if (parseCharIf(string, position, ':'))
                         offsetMinutes = parseInt(string, position, 2);
+
+                    if (minus) {
+                        offsetHours = -offsetHours;
+                        offsetMinutes = -offsetMinutes;
+                    }
                 }
             }
 
@@ -2518,8 +2514,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         private static final boolean parseCharIf(String string, int[] position, char expected) {
             boolean result = string.length() > position[0] && string.charAt(position[0]) == expected;
+
             if (result)
                 position[0] = position[0] + 1;
+
             return result;
         }
 
@@ -2528,19 +2526,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 throw new IllegalArgumentException("Expected '" + expected + "' at position " + position[0] + " in " + string);
         }
 
-        private static final int parseInt(String string, int[] position, int length) {
-            int result = 0;
+        private static final int parseInt(String string, int[] position, int maxLength) {
+            return parseInt(string, position, maxLength, false);
+        }
 
-            for (int i = position[0] + length - 1, dec = 1; i >= position[0]; i--, dec = dec * 10) {
-                int digit = string.charAt(i) - '0';
+        private static final int parseInt(String string, int[] position, int maxLength, boolean rightPad) {
+            int result = 0;
+            int pos = position[0];
+            int length;
+
+            for (length = 0; length < maxLength && length < string.length(); length++) {
+                int digit = string.charAt(pos + length) - '0';
 
                 if (digit >= 0 && digit < 10)
-                    result = result + dec * digit;
+                    result = result * 10 + digit;
                 else
-                    throw new NumberFormatException("Not a number: " + string);
+                    break;
             }
 
-            position[0] = position[0] + length;
+            if (rightPad && length < maxLength && result > 0)
+                for (int i = length; i < maxLength; i++)
+                    result = result * 10;
+
+            position[0] = pos + length;
             return result;
         }
     }

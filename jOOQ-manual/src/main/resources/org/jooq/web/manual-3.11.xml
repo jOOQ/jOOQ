@@ -3624,6 +3624,7 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
                                                 <li><code>AS_IS</code> (the default): Generate keywords as they are defined in the codebase (mostly lower case).</li>
                                                 <li><code>LOWER</code>: Generate keywords in lower case.</li>
                                                 <li><code>UPPER</code>: Generate keywords in upper case.</li>
+                                                <li><code>PASCAL</code>: Generate keywords in pascal case.</li>
                                             </ul>
 
                                             <p>

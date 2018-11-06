@@ -3595,29 +3595,43 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
                                             </ul>
 
                                             <p>
-                                                The <code>renderNameStyle</code> setting allows for overriding the name of all identifiers in jOOQ to a consistent style. Possible options are:
+                                                The <code>renderQuotedNames</code> and <code>renderNameCase</code> settings allow for overriding the name of all identifiers in jOOQ to a consistent style. Possible options are:
                                             </p>
 
+                                            <h3>RenderQuotedNames</h3>
+
                                             <ul>
-                                                <li><code>QUOTED</code> (the default): This will generate all names in their proper case with quotes around them.</li>
-                                                <li><code>AS_IS</code>: This will generate all names in their proper case without quotes.</li>
+                                                <li><code>ALWAYS</code>: This will quote all identifiers.</li>
+                                                <li><code>NEVER</code>: This will not quote any identifiers.</li>
+                                            </ul>
+
+                                            <h3>RenderNameCase</h3>
+
+                                            <ul>
+                                                <li><code>AS_IS</code>: This will generate all names in their proper case.</li>
                                                 <li><code>LOWER</code>: This will transform all names to lower case.</li>
                                                 <li><code>UPPER</code>: This will transform all names to upper case.</li>
                                             </ul>
+
+                                            <p>
+                                                The two flags are independent of one another. If your database supports quoted, case sensitive identifiers, then using <code>LOWER</code> or <code>UPPER</code> on quoted identifiers may not work.
+                                            </p>
 
                                             <p>
                                                 <strong>Programmatic configuration</strong>
                                             </p>
 
 </html><java><![CDATA[Settings settings = new Settings()
-    .withRenderNameStyle(RenderNameStyle.AS_IS); // Defaults to QUOTED]]></java><html>
+    .withRenderQuotedNames(RenderQuotedNames.NEVER); // Defaults to ALWAYS
+    .withRenderNameCase(RenderNameCase.LOWER);       // Defaults to AS_IS]]></java><html>
 
                                             <p>
                                                 <strong>XML configuration</strong>
                                             </p>
 
 </html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
-  <renderNameStyle>AS_IS</renderNameStyle>
+  <renderQuotedNames>NEVER</renderQuotedNames>
+  <renderNameCase>LOWER</renderNameCase>
 </settings>]]></xml><html>
 
                                             <p>
@@ -3634,13 +3648,14 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
                                             </p>
 
                                             <p>
-                                                Users may wish to adapt this and they have these options for the <code>renderKeywordStyle</code> setting:
+                                                Users may wish to adapt this and they have these options for the <code>renderKeywordCase</code> setting:
                                             </p>
 
                                             <ul>
                                                 <li><code>AS_IS</code> (the default): Generate keywords as they are defined in the codebase (mostly lower case).</li>
                                                 <li><code>LOWER</code>: Generate keywords in lower case.</li>
                                                 <li><code>UPPER</code>: Generate keywords in upper case.</li>
+                                                <li><code>PASCAL</code>: Generate keywords in pascal case.</li>
                                             </ul>
 
                                             <p>
@@ -3648,14 +3663,14 @@ SELECT [TABLE].[COLUMN] FROM [TABLE] -- SQL Server style]]></sql><html>
                                             </p>
 
 </html><java><![CDATA[Settings settings = new Settings()
-    .withRenderKeywordStyle(RenderKeywordStyle.UPPER); // Defaults to AS_IS]]></java><html>
+    .withRenderKeywordCase(RenderKeywordCase.UPPER); // Defaults to AS_IS]]></java><html>
 
                                             <p>
                                                 <strong>XML configuration</strong>
                                             </p>
 
 </html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
-  <renderKeywordStyle>UPPER</renderKeywordStyle>
+  <renderKeywordCase>UPPER</renderKeywordCase>
 </settings>]]></xml><html>
                                         </html></content>
                                     </section>

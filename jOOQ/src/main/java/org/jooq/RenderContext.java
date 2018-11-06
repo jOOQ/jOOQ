@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.conf.ParamType;
-import org.jooq.conf.RenderKeywordStyle;
+import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.Settings;
 
 /**
@@ -82,7 +82,7 @@ public interface RenderContext extends Context<RenderContext> {
     /**
      * Append a SQL keyword to the context's contained {@link StringBuilder}.
      * <p>
-     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}.
+     * Use this to have your SQL keyword rendered in {@link RenderKeywordCase}.
      */
     @Override
     RenderContext keyword(String keyword);

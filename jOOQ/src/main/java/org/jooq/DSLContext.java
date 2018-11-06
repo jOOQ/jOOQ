@@ -835,7 +835,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will render this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -952,7 +952,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetch("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1093,7 +1093,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1227,7 +1227,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1347,7 +1347,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1493,7 +1493,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1604,7 +1604,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchMany("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1723,7 +1723,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1846,7 +1846,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -1968,7 +1968,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -2095,7 +2095,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -2224,7 +2224,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -2350,7 +2350,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -2441,7 +2441,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * execute("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -2615,7 +2615,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * // The following query
      * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will render this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>

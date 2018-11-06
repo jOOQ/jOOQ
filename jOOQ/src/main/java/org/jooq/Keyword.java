@@ -44,7 +44,7 @@ import org.jooq.conf.Settings;
  * <p>
  * A <code>Keyword</code> is a {@link QueryPart} that renders a SQL keyword
  * according to the settings specified in
- * {@link Settings#getRenderKeywordStyle()}.
+ * {@link Settings#getRenderKeywordCase()}.
  *
  * @author Lukas Eder
  */

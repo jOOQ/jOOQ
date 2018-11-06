@@ -46,9 +46,10 @@ import org.jooq.Select;
 import org.jooq.academy.tools.Tools;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
-import org.jooq.conf.RenderKeywordStyle;
+import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderMapping;
-import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
@@ -71,15 +72,20 @@ public class Example_4_2_Settings {
         out.println(using(H2, new Settings().withRenderSchema(false)).render(select));
         out.println(using(H2, new Settings().withRenderSchema(true)).render(select));
 
-        Tools.title("A couple of settings at work - Name style");
-        out.println(using(H2, new Settings().withRenderNameStyle(RenderNameStyle.AS_IS)).render(select));
-        out.println(using(H2, new Settings().withRenderNameStyle(RenderNameStyle.UPPER)).render(select));
-        out.println(using(H2, new Settings().withRenderNameStyle(RenderNameStyle.LOWER)).render(select));
-        out.println(using(H2, new Settings().withRenderNameStyle(RenderNameStyle.QUOTED)).render(select));
+        Tools.title("A couple of settings at work - Name case");
+        out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.AS_IS)).render(select));
+        out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.UPPER)).render(select));
+        out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.LOWER)).render(select));
+        out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.PASCAL)).render(select));
 
-        Tools.title("A couple of settings at work - Keyword style");
-        out.println(using(H2, new Settings().withRenderKeywordStyle(RenderKeywordStyle.UPPER)).render(select));
-        out.println(using(H2, new Settings().withRenderKeywordStyle(RenderKeywordStyle.LOWER)).render(select));
+        Tools.title("A couple of settings at work - Name quoting");
+        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.ALWAYS)).render(select));
+        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.WHEN_NEEDED)).render(select));
+        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.NEVER)).render(select));
+
+        Tools.title("A couple of settings at work - Keyword case");
+        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.UPPER)).render(select));
+        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.LOWER)).render(select));
 
         Tools.title("A couple of settings at work - Mapping");
         out.println(using(H2, new Settings()

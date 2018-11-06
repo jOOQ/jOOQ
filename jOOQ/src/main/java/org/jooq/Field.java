@@ -159,8 +159,8 @@ extends
      * Create an alias for this field.
      * <p>
      * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
-     * quoted, and thus case-sensitive!
+     * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @param alias The alias name
      * @return The field alias
@@ -172,9 +172,9 @@ extends
      * Create an alias for this field.
      * <p>
      * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()} and the {@link Name}. By default,
-     * field aliases are quoted, and thus case-sensitive - use
-     * {@link DSL#unquotedName(String...)} for case-insensitive aliases.
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * field aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      * <p>
      * If the argument {@link Name#getName()} is qualified, then the
      * {@link Name#last()} part will be used.
@@ -187,10 +187,6 @@ extends
 
     /**
      * Create an alias for this field based on another field's name.
-     * <p>
-     * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
-     * quoted, and thus case-sensitive!
      *
      * @param otherField The other field whose name this field is aliased with.
      * @return The field alias.
@@ -203,8 +199,8 @@ extends
      * Create an alias for this field.
      * <p>
      * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
-     * quoted, and thus case-sensitive!
+     * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      * <p>
      * This works like {@link #as(String)}, except that field aliases are
      * provided by a function. This is useful, for instance, to prefix all

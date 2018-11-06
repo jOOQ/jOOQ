@@ -42,9 +42,18 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean renderSchema = true;
     protected RenderMapping renderMapping;
+    @XmlElement(defaultValue = "ALWAYS")
+    @XmlSchemaType(name = "string")
+    protected RenderQuotedNames renderQuotedNames = RenderQuotedNames.ALWAYS;
+    @XmlElement(defaultValue = "AS_IS")
+    @XmlSchemaType(name = "string")
+    protected RenderNameCase renderNameCase = RenderNameCase.AS_IS;
     @XmlElement(defaultValue = "QUOTED")
     @XmlSchemaType(name = "string")
     protected RenderNameStyle renderNameStyle = RenderNameStyle.QUOTED;
+    @XmlElement(defaultValue = "AS_IS")
+    @XmlSchemaType(name = "string")
+    protected RenderKeywordCase renderKeywordCase = RenderKeywordCase.AS_IS;
     @XmlElement(defaultValue = "AS_IS")
     @XmlSchemaType(name = "string")
     protected RenderKeywordStyle renderKeywordStyle = RenderKeywordStyle.AS_IS;
@@ -218,10 +227,68 @@ public class Settings
     }
 
     /**
+     * Whether rendered schema, table, column names, etc should be quoted.
+     * <p>
+     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
+     * <p>
+     * This setting does not affect any plain SQL usage.
+     *
+     * @return
+     *     possible object is
+     *     {@link RenderQuotedNames }
+     *
+     */
+    public RenderQuotedNames getRenderQuotedNames() {
+        return renderQuotedNames;
+    }
+
+    /**
+     * Sets the value of the renderQuotedNames property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderQuotedNames }
+     *
+     */
+    public void setRenderQuotedNames(RenderQuotedNames value) {
+        this.renderQuotedNames = value;
+    }
+
+    /**
+     * Whether the case of {@link org.jooq.Name} references should be modified in any way.
+     * <p>
+     * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
+     * <p>
+     * This setting does not affect any plain SQL usage.
+     *
+     * @return
+     *     possible object is
+     *     {@link RenderNameCase }
+     *
+     */
+    public RenderNameCase getRenderNameCase() {
+        return renderNameCase;
+    }
+
+    /**
+     * Sets the value of the renderNameCase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderNameCase }
+     *
+     */
+    public void setRenderNameCase(RenderNameCase value) {
+        this.renderNameCase = value;
+    }
+
+    /**
      * Whether rendered schema, table, column names, etc should be quoted
      * in rendered SQL, or transformed in any other way.
      * <p>
-     * This is set to "QUOTED" by default for backwards-compatibility
+     * This is set to "QUOTED" by default for backwards-compatibility.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      * @return
      *     possible object is
@@ -245,7 +312,33 @@ public class Settings
     }
 
     /**
-     * Whether SQL keywords should be rendered with upper or lower case.
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+     *
+     * @return
+     *     possible object is
+     *     {@link RenderKeywordCase }
+     *
+     */
+    public RenderKeywordCase getRenderKeywordCase() {
+        return renderKeywordCase;
+    }
+
+    /**
+     * Sets the value of the renderKeywordCase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderKeywordCase }
+     *
+     */
+    public void setRenderKeywordCase(RenderKeywordCase value) {
+        this.renderKeywordCase = value;
+    }
+
+    /**
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      * @return
      *     possible object is
@@ -1233,8 +1326,23 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderQuotedNames(RenderQuotedNames value) {
+        setRenderQuotedNames(value);
+        return this;
+    }
+
+    public Settings withRenderNameCase(RenderNameCase value) {
+        setRenderNameCase(value);
+        return this;
+    }
+
     public Settings withRenderNameStyle(RenderNameStyle value) {
         setRenderNameStyle(value);
+        return this;
+    }
+
+    public Settings withRenderKeywordCase(RenderKeywordCase value) {
+        setRenderKeywordCase(value);
         return this;
     }
 
@@ -1451,10 +1559,25 @@ public class Settings
             sb.append(renderMapping);
             sb.append("</renderMapping>");
         }
+        if (renderQuotedNames!= null) {
+            sb.append("<renderQuotedNames>");
+            sb.append(renderQuotedNames);
+            sb.append("</renderQuotedNames>");
+        }
+        if (renderNameCase!= null) {
+            sb.append("<renderNameCase>");
+            sb.append(renderNameCase);
+            sb.append("</renderNameCase>");
+        }
         if (renderNameStyle!= null) {
             sb.append("<renderNameStyle>");
             sb.append(renderNameStyle);
             sb.append("</renderNameStyle>");
+        }
+        if (renderKeywordCase!= null) {
+            sb.append("<renderKeywordCase>");
+            sb.append(renderKeywordCase);
+            sb.append("</renderKeywordCase>");
         }
         if (renderKeywordStyle!= null) {
             sb.append("<renderKeywordStyle>");
@@ -1693,12 +1816,39 @@ public class Settings
                 return false;
             }
         }
+        if (renderQuotedNames == null) {
+            if (other.renderQuotedNames!= null) {
+                return false;
+            }
+        } else {
+            if (!renderQuotedNames.equals(other.renderQuotedNames)) {
+                return false;
+            }
+        }
+        if (renderNameCase == null) {
+            if (other.renderNameCase!= null) {
+                return false;
+            }
+        } else {
+            if (!renderNameCase.equals(other.renderNameCase)) {
+                return false;
+            }
+        }
         if (renderNameStyle == null) {
             if (other.renderNameStyle!= null) {
                 return false;
             }
         } else {
             if (!renderNameStyle.equals(other.renderNameStyle)) {
+                return false;
+            }
+        }
+        if (renderKeywordCase == null) {
+            if (other.renderKeywordCase!= null) {
+                return false;
+            }
+        } else {
+            if (!renderKeywordCase.equals(other.renderKeywordCase)) {
                 return false;
             }
         }
@@ -2063,7 +2213,10 @@ public class Settings
         result = ((prime*result)+((renderCatalog == null)? 0 :renderCatalog.hashCode()));
         result = ((prime*result)+((renderSchema == null)? 0 :renderSchema.hashCode()));
         result = ((prime*result)+((renderMapping == null)? 0 :renderMapping.hashCode()));
+        result = ((prime*result)+((renderQuotedNames == null)? 0 :renderQuotedNames.hashCode()));
+        result = ((prime*result)+((renderNameCase == null)? 0 :renderNameCase.hashCode()));
         result = ((prime*result)+((renderNameStyle == null)? 0 :renderNameStyle.hashCode()));
+        result = ((prime*result)+((renderKeywordCase == null)? 0 :renderKeywordCase.hashCode()));
         result = ((prime*result)+((renderKeywordStyle == null)? 0 :renderKeywordStyle.hashCode()));
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));

@@ -33,15 +33,39 @@ available using synonyms]]></jxb:javadoc></jxb:property></appinfo></annotation>
 generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderQuotedNames" type="jooq-runtime:RenderQuotedNames" minOccurs="0" maxOccurs="1" default="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted.
+<p>
+This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
+<p>
+This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderNameCase" type="jooq-runtime:RenderNameCase" minOccurs="0" maxOccurs="1" default="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Name} references should be modified in any way.
+<p>
+Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
+<p>
+This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="renderNameStyle" type="jooq-runtime:RenderNameStyle" minOccurs="0" maxOccurs="1" default="QUOTED">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted
 in rendered SQL, or transformed in any other way.
 <p>
-This is set to "QUOTED" by default for backwards-compatibility]]></jxb:javadoc></jxb:property></appinfo></annotation>
+This is set to "QUOTED" by default for backwards-compatibility.
+<p>
+@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderKeywordCase" type="jooq-runtime:RenderKeywordCase" minOccurs="0" maxOccurs="1" default="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Keyword} references should be modified in any way.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="renderKeywordStyle" type="jooq-runtime:RenderKeywordStyle" minOccurs="0" maxOccurs="1" default="AS_IS">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether SQL keywords should be rendered with upper or lower case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+<p>
+@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="renderLocale" type="string" minOccurs="0" maxOccurs="1">
@@ -399,6 +423,57 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
            MySQL     : INFORMATION_SCHEMA.TABLES
            SQL Server: INFORMATION_SCHEMA.TABLES -->
       <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderQuotedNames">
+    <restriction base="string">
+
+      <!-- Always render object names quoted, as defined in the database.
+           Use this to stay on the safe side with case-sensitivity, special
+           characters, and keywords. For instance:
+           Oracle    : "SYS"."ALL_TAB_COLS"
+           MySQL     : `information_schema`.`TABLES`
+           SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
+      <enumeration value="ALWAYS"/>
+
+      <!-- Never quote names -->
+      <enumeration value="NEVER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderNameCase">
+    <restriction base="string">
+
+      <!-- Render object names, as defined in the database. For instance: schema.TABLE -->
+      <enumeration value="AS_IS"/>
+
+      <!-- Force rendering object names in lower case. For instance: schema.table -->
+      <enumeration value="LOWER"/>
+
+      <!-- Force rendering object names in upper case. For instance: SCHEMA.TABLE -->
+      <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderKeywordCase">
+    <restriction base="string">
+
+      <!-- Keywords are rendered "as is", i.e. mostly in lower case. For instance:
+           select .. from .. where .. -->
+      <enumeration value="AS_IS"/>
+
+      <!-- Keywords are rendered in lower case. For instance:
+           select .. from .. where .. -->
+      <enumeration value="LOWER"/>
+
+      <!-- Keywords are rendered in upper case. For instance:
+           SELECT .. FROM .. WHERE .. -->
+      <enumeration value="UPPER"/>
+
+      <!-- Keywords are rendered in Pascal Case. For instance:
+           Select .. From .. Where .. -->
+      <enumeration value="PASCAL"/>
     </restriction>
   </simpleType>
 

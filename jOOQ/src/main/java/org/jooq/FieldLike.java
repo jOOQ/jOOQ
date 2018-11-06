@@ -65,8 +65,8 @@ public interface FieldLike {
      * <code>SELECT y.*, (SELECT a FROM x) [alias] FROM y</code>
      * <p>
      * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
-     * quoted, and thus case-sensitive!
+     * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @return This result provider as a Field&lt;?&gt; object
      */
@@ -80,8 +80,8 @@ public interface FieldLike {
      * <code>SELECT y.*, (SELECT a FROM x) [alias] FROM y</code>
      * <p>
      * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
-     * quoted, and thus case-sensitive!
+     * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      * <p>
      * This works like {@link #asField(String)}, except that field aliases are
      * provided by a function. This is useful, for instance, to prefix all

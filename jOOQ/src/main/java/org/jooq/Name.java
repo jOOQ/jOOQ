@@ -65,7 +65,9 @@ import org.jooq.conf.Settings;
  * A SQL identifier <code>QueryPart</code>.
  * <p>
  * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in {@link Settings#getRenderNameStyle()}.
+ * according to the settings specified in
+ * {@link Settings#getRenderQuotedNames()} and
+ * {@link Settings#getRenderNameCase()}.
  *
  * @author Lukas Eder
  */

@@ -46,8 +46,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
-import static org.jooq.conf.RenderNameStyle.LOWER;
-import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -104,7 +102,8 @@ import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.conf.ExecuteWithoutWhere;
-import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
@@ -619,22 +618,22 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 case HSQLDB:
                 default: {
                     String[] names = new String[returningResolvedAsterisks.size()];
-                    RenderNameStyle style = configuration().settings().getRenderNameStyle();
+                    RenderNameCase style = SettingsTools.getRenderNameCase(configuration().settings());
 
-                    for (int i = 0; i < names.length; i++) {
-
-                        // [#2845] Field names should be passed to JDBC in the case
-                        // imposed by the user. For instance, if the user uses
-                        // PostgreSQL generated case-insensitive Fields (default to lower case)
-                        // and wants to query HSQLDB (default to upper case), they may choose
-                        // to overwrite casing using RenderKeywordStyle.
-                        if (style == UPPER)
+                    // [#2845] Field names should be passed to JDBC in the case
+                    // imposed by the user. For instance, if the user uses
+                    // PostgreSQL generated case-insensitive Fields (default to lower case)
+                    // and wants to query HSQLDB (default to upper case), they may choose
+                    // to overwrite casing using RenderNameCase.
+                    if (style == RenderNameCase.UPPER)
+                        for (int i = 0; i < names.length; i++)
                             names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase(renderLocale(configuration().settings()));
-                        else if (style == LOWER)
+                    else if (style == RenderNameCase.LOWER)
+                        for (int i = 0; i < names.length; i++)
                             names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase(renderLocale(configuration().settings()));
-                        else
+                    else
+                        for (int i = 0; i < names.length; i++)
                             names[i] = returningResolvedAsterisks.get(i).getName();
-                    }
 
                     ctx.statement(connection.prepareStatement(ctx.sql(), names));
                     return;

@@ -181,6 +181,74 @@ public final class SettingsTools {
     }
 
     /**
+     * Backwards compatible access to {@link RenderKeywordCase} and/or
+     * {@link RenderKeywordStyle} (the latter being deprecated).
+     */
+    public static final RenderKeywordCase getRenderKeywordCase(Settings settings) {
+        RenderKeywordCase result = settings.getRenderKeywordCase();
+
+        if (result == null || result == RenderKeywordCase.AS_IS) {
+            RenderKeywordStyle style = settings.getRenderKeywordStyle();
+
+            if (style != null) {
+                switch (style) {
+                    case AS_IS:  result = RenderKeywordCase.AS_IS;  break;
+                    case LOWER:  result = RenderKeywordCase.LOWER;  break;
+                    case UPPER:  result = RenderKeywordCase.UPPER;  break;
+                    case PASCAL: result = RenderKeywordCase.PASCAL; break;
+                    default:
+                        throw new UnsupportedOperationException("Unsupported style: " + style);
+                }
+            }
+            else {
+                result = RenderKeywordCase.AS_IS;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Backwards compatible access to {@link RenderNameCase} and/or
+     * {@link RenderNameStyle} (the latter being deprecated).
+     */
+    public static final RenderNameCase getRenderNameCase(Settings settings) {
+        RenderNameCase result = settings.getRenderNameCase();
+
+        if (result == null || result == RenderNameCase.AS_IS) {
+            RenderNameStyle style = settings.getRenderNameStyle();
+
+            if (style == RenderNameStyle.LOWER)
+                result = RenderNameCase.LOWER;
+            else if (style == RenderNameStyle.UPPER)
+                result = RenderNameCase.UPPER;
+            else
+                result = RenderNameCase.AS_IS;
+        }
+
+        return result;
+    }
+
+    /**
+     * Backwards compatible access to {@link RenderQuotedNames} and/or
+     * {@link RenderNameStyle} (the latter being deprecated).
+     */
+    public static final RenderQuotedNames getRenderQuotedNames(Settings settings) {
+        RenderQuotedNames result = settings.getRenderQuotedNames();
+
+        if (result == null || result == RenderQuotedNames.ALWAYS) {
+            RenderNameStyle style = settings.getRenderNameStyle();
+
+            if (style == null || style == RenderNameStyle.QUOTED)
+                result = RenderQuotedNames.ALWAYS;
+            else
+                result = RenderQuotedNames.NEVER;
+        }
+
+        return result;
+    }
+
+    /**
      * Lazy access to {@link Settings#getExecuteUpdateWithoutWhere()}.
      */
     public static final ExecuteWithoutWhere getExecuteUpdateWithoutWhere(Settings settings) {

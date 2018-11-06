@@ -359,7 +359,6 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
-import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -8888,7 +8887,7 @@ public class DSL {
      * <p>
      * A <code>Keyword</code> is a {@link QueryPart} that renders a SQL keyword
      * according to the settings specified in
-     * {@link Settings#getRenderKeywordStyle()}. It can be embedded in other
+     * {@link Settings#getRenderKeywordCase()}. It can be embedded in other
      * plain SQL <code>QueryParts</code> as shown in this example:
      * <p>
      * <code><pre>
@@ -8923,7 +8922,7 @@ public class DSL {
      * // This unqualified name here
      * name("book");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
      * </pre></code>
      *
@@ -8950,7 +8949,7 @@ public class DSL {
      * // This qualified name here
      * name("book", "title");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
      * </pre></code>
      *
@@ -8984,7 +8983,7 @@ public class DSL {
      * // This qualified name here
      * name(quotedName("book"), unquotedName("title"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [book].title
      * </pre></code>
      *
@@ -9011,7 +9010,7 @@ public class DSL {
      * // This qualified name here
      * name("book", "title");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
      * </pre></code>
      *
@@ -9178,16 +9177,12 @@ public class DSL {
      * Create a qualified schema, given its schema name.
      * <p>
      * This constructs a schema reference given the schema's qualified name.
-     * jOOQ will render the schema name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This schema...
      * schemaByName("MY_SCHEMA");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA]
      * </pre></code>
      *
@@ -9205,16 +9200,12 @@ public class DSL {
      * Create a qualified catalog, given its catalog name.
      * <p>
      * This constructs a catalog reference given the catalog's qualified name.
-     * jOOQ will render the catalog name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This catalog...
      * catalog(name("MY_CATALOG"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG]
      * </pre></code>
      */
@@ -9227,16 +9218,12 @@ public class DSL {
      * Create a qualified schema, given its schema name.
      * <p>
      * This constructs a schema reference given the schema's qualified name.
-     * jOOQ will render the schema name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This schema...
      * schema(name("MY_CATALOG", "MY_SCHEMA"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG].[MY_SCHEMA]
      * </pre></code>
      */
@@ -9249,16 +9236,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      *
@@ -9277,16 +9260,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      *
@@ -9306,16 +9285,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      *
@@ -9344,16 +9319,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
@@ -9366,16 +9337,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
@@ -9388,16 +9355,12 @@ public class DSL {
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
-     * jOOQ will render the sequence name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
@@ -9419,16 +9382,12 @@ public class DSL {
      * Create a qualified table, given its table name.
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
-     * will render the table name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This table...
      * tableByName("MY_SCHEMA", "MY_TABLE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
      *
@@ -9447,16 +9406,12 @@ public class DSL {
      * Create a qualified table, given its table name.
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
-     * will render the table name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This table...
      * tableByName("MY_SCHEMA", "MY_TABLE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
      * <p>
@@ -9472,16 +9427,12 @@ public class DSL {
      * Create a qualified table, given its table name.
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
-     * will render the table name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This table...
      * tableByName("MY_SCHEMA", "MY_TABLE");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
      * <p>
@@ -9497,16 +9448,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9534,16 +9481,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9572,16 +9515,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9610,16 +9549,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9641,16 +9576,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9672,16 +9603,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -9703,16 +9630,12 @@ public class DSL {
      * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
      * <p>
      * Example: <code><pre>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
@@ -10072,7 +9995,7 @@ public class DSL {
      * // The following query
      * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will render this SQL by default, using Oracle SQL dialect
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>
@@ -10253,7 +10176,7 @@ public class DSL {
      * // The following query
      * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
-     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * // Will render this SQL by default, using Oracle SQL dialect
      * select ?, 'test' from "DUAL"
      * </pre></code>
      * <p>

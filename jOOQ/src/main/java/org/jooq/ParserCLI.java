@@ -37,8 +37,8 @@
  */
 package org.jooq;
 
-import org.jooq.conf.RenderKeywordStyle;
-import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.RenderKeywordCase;
+import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -72,9 +72,9 @@ public final class ParserCLI {
         if (a.formatted)
             settings.setRenderFormatted(true);
         if (a.keywords != null)
-            settings.setRenderKeywordStyle(a.keywords);
+            settings.setRenderKeywordCase(a.keywords);
         if (a.name != null)
-            settings.setRenderNameStyle(a.name);
+            settings.setRenderNameCase(a.name);
 
         DSLContext ctx = DSL.using(a.toDialect, settings);
         try {
@@ -106,29 +106,29 @@ public final class ParserCLI {
             }
             else if ("-k".equals(args[i]) || "--keyword".equals(args[i])) {
                 try {
-                    result.keywords = RenderKeywordStyle.valueOf(args[++i]);
+                    result.keywords = RenderKeywordCase.valueOf(args[++i]);
                     continue argsLoop;
                 }
                 catch (IllegalArgumentException e) {
-                    invalid(args[i], RenderKeywordStyle.class);
+                    invalid(args[i], RenderKeywordCase.class);
                     throw e;
                 }
                 catch (ArrayIndexOutOfBoundsException e) {
-                    System.err.println("Flag -k / --keyword requires <RenderKeywordStyle> argument");
+                    System.err.println("Flag -k / --keyword requires <RenderKeywordCase> argument");
                     throw e;
                 }
             }
             else if ("-i".equals(args[i]) || "--identifier".equals(args[i])) {
                 try {
-                    result.keywords = RenderKeywordStyle.valueOf(args[++i]);
+                    result.keywords = RenderKeywordCase.valueOf(args[++i]);
                     continue argsLoop;
                 }
                 catch (IllegalArgumentException e) {
-                    invalid(args[i], RenderKeywordStyle.class);
+                    invalid(args[i], RenderKeywordCase.class);
                     throw e;
                 }
                 catch (ArrayIndexOutOfBoundsException e) {
-                    System.err.println("Flag -i / --identifier requires <RenderNameStyle> argument");
+                    System.err.println("Flag -i / --identifier requires <RenderNameCase> argument");
                     throw e;
                 }
             }
@@ -179,19 +179,19 @@ public final class ParserCLI {
 
     private static final void help() {
         System.out.println("Usage:");
-        System.out.println("  -f / --formatted                        Format output SQL");
-        System.out.println("  -h / --help                             Display this help");
-        System.out.println("  -k / --keyword    <RenderKeywordStyle>  Specify the output keyword style (org.jooq.conf.RenderKeywordStyle)");
-        System.out.println("  -i / --identifier <RenderNameStyle>     Specify the output identifier style (org.jooq.conf.RenderNameStyle)");
-        System.out.println("  -t / --to-dialect <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)");
-        System.out.println("  -s / --sql        <String>              Specify the input SQL string");
+        System.out.println("  -f / --formatted                       Format output SQL");
+        System.out.println("  -h / --help                            Display this help");
+        System.out.println("  -k / --keyword    <RenderKeywordCase>  Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
+        System.out.println("  -i / --identifier <RenderNameCase>     Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  -t / --to-dialect <SQLDialect>         Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("  -s / --sql        <String>             Specify the input SQL string");
     }
 
     public static final class Args {
-        String             sql;
-        RenderKeywordStyle keywords;
-        RenderNameStyle    name;
-        SQLDialect         toDialect;
-        boolean            formatted;
+        String            sql;
+        RenderKeywordCase keywords;
+        RenderNameCase    name;
+        SQLDialect        toDialect;
+        boolean           formatted;
     }
 }

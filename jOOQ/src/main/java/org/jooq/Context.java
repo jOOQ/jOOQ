@@ -41,7 +41,7 @@ import java.sql.PreparedStatement;
 
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
-import org.jooq.conf.RenderKeywordStyle;
+import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -253,7 +253,7 @@ public interface Context<C extends Context<C>> extends Scope {
     /**
      * Append a SQL keyword to the context's contained {@link StringBuilder}.
      * <p>
-     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}.
+     * Use this to have your SQL keyword rendered in {@link RenderKeywordCase}.
      *
      * @deprecated - 3.10.0 - [#4990] - Use {@link DSL#keyword(String)} instead.
      */

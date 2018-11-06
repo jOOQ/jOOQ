@@ -40,7 +40,8 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
-import org.jooq.conf.RenderKeywordStyle;
+import org.jooq.conf.RenderKeywordCase;
+import org.jooq.conf.SettingsTools;
 
 /**
  * A default {@link Keyword} implementation.
@@ -70,16 +71,16 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
 
     @Override
     public final void accept(Context<?> ctx) {
-        RenderKeywordStyle style = ctx.settings().getRenderKeywordStyle();
+        RenderKeywordCase style = SettingsTools.getRenderKeywordCase(ctx.settings());
 
-        if (RenderKeywordStyle.AS_IS == style)
-            ctx.sql(asIs, true);
-        else if (RenderKeywordStyle.UPPER == style)
-            ctx.sql(upper, true);
-        else if (RenderKeywordStyle.PASCAL == style)
-            ctx.sql(pascal, true);
-        else
-            ctx.sql(lower, true);
+        switch (style) {
+            case AS_IS:  ctx.sql(asIs, true);   break;
+            case LOWER:  ctx.sql(lower, true);  break;
+            case UPPER:  ctx.sql(upper, true);  break;
+            case PASCAL: ctx.sql(pascal, true); break;
+            default:
+                throw new UnsupportedOperationException("Unsupported style: " + style);
+        }
     }
 
     @Override

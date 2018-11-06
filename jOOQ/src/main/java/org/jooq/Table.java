@@ -326,8 +326,8 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * Create an alias for this table.
      * <p>
      * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
+     * {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @param alias The alias name
      * @return The table alias
@@ -339,8 +339,8 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * Create an alias for this table and its fields.
      * <p>
      * Note that the case-sensitivity of the returned table and columns depends
-     * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
+     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      * <p>
      * <h5>Derived column lists for table references</h5>
      * <p>
@@ -431,9 +431,9 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * Create an alias for this table.
      * <p>
      * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()} and the {@link Name}. By default,
-     * table aliases are quoted, and thus case-sensitive - use
-     * {@link DSL#unquotedName(String...)} for case-insensitive aliases.
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      * <p>
      * If the argument {@link Name#getName()} is qualified, then the
      * {@link Name#last()} part will be used.
@@ -448,9 +448,9 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * Create an alias for this table and its fields.
      * <p>
      * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()} and the {@link Name}. By default,
-     * table aliases are quoted, and thus case-sensitive - use
-     * {@link DSL#unquotedName(String...)} for case-insensitive aliases.
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      * <p>
      * If the argument {@link Name#getName()} is qualified, then the
      * {@link Name#last()} part will be used.
@@ -542,10 +542,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * Create an alias for this table based on another table's name.
-     * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
      *
      * @param otherTable The other table whose name this table is aliased with.
      * @return The table alias.
@@ -555,10 +551,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * Create an alias for this table based on another table's name.
-     * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
      *
      * @param otherTable The other table whose name this table is aliased with.
      * @param otherFields The other fields whose field name this table's fields

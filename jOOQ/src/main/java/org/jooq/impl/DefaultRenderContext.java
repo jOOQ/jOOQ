@@ -41,8 +41,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.conf.RenderNameStyle.LOWER;
-import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
@@ -71,9 +69,11 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.RenderFormatting;
-import org.jooq.conf.RenderKeywordStyle;
-import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.RenderKeywordCase;
+import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.DataKey;
@@ -102,8 +102,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                           skipUpdateCounts;
 
     // [#1632] Cached values from Settings
-    RenderKeywordStyle                    cachedRenderKeywordStyle;
-    RenderNameStyle                       cachedRenderNameStyle;
+    RenderKeywordCase                     cachedRenderKeywordCase;
+    RenderNameCase                        cachedRenderNameCase;
+    RenderQuotedNames                     cachedRenderQuotedNames;
     boolean                               cachedRenderFormatted;
 
     // [#6525] Cached values from Settings.renderFormatting
@@ -119,9 +120,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         this.sql = new StringBuilder();
         this.bindValues = new QueryPartList<Param<?>>();
-        this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
+        this.cachedRenderKeywordCase = SettingsTools.getRenderKeywordCase(settings);
         this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
-        this.cachedRenderNameStyle = settings.getRenderNameStyle();
+        this.cachedRenderNameCase = SettingsTools.getRenderNameCase(settings);
+        this.cachedRenderQuotedNames = SettingsTools.getRenderQuotedNames(settings);
 
         RenderFormatting formatting = settings.getRenderFormatting();
         if (formatting == null)
@@ -467,15 +469,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#1982] [#3360] ... yet, do quote when an identifier contains special characters
             (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
 
-        if (!needsQuote) {
-            if (LOWER == cachedRenderNameStyle)
-                literal = literal.toLowerCase(renderLocale(configuration().settings()));
-            else if (UPPER == cachedRenderNameStyle)
-                literal = literal.toUpperCase(renderLocale(configuration().settings()));
+        if (RenderNameCase.LOWER == cachedRenderNameCase)
+            literal = literal.toLowerCase(renderLocale(configuration().settings()));
+        else if (RenderNameCase.UPPER == cachedRenderNameCase)
+            literal = literal.toUpperCase(renderLocale(configuration().settings()));
 
-            sql(literal, true);
-        }
-        else {
+        if (needsQuote) {
             char[][][] quotes = QUOTES.get(family);
 
             char start = quotes[QUOTE_START_DELIMITER][0][0];
@@ -492,6 +491,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 sql(literal, true);
 
             sql(end);
+        }
+        else {
+            sql(literal, true);
         }
 
         return this;

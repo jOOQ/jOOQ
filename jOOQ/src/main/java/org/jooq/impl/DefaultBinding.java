@@ -2601,7 +2601,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                             .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
 
             // [#5895] HSQLDB derives the specific data type from the literal
-            if (ctx.family() == HSQLDB)
+            else if (ctx.family() == HSQLDB)
                 ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
 
 

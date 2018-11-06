@@ -160,6 +160,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1355,6 +1356,10 @@ final class Tools {
 
     static final Param<OffsetDateTime> field(OffsetDateTime value) {
         return val((Object) value, SQLDataType.OFFSETDATETIME);
+    }
+
+    static final Param<Instant> field(Instant value) {
+        return val((Object) value, SQLDataType.INSTANT);
     }
 
 

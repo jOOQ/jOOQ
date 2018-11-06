@@ -1329,6 +1329,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
 
         /**
@@ -2701,6 +2705,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private static final String format(OffsetDateTime val) {
 
             // Remove the ISO standard T character, as some databases don't like that
@@ -3130,6 +3148,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return (T) OffsetDateTimeParser.offsetTime(string);
             else if (type == OffsetDateTime.class)
                 return (T) OffsetDateTimeParser.offsetDateTime(string);
+            else if (type == Instant.class)
+                return (T) OffsetDateTimeParser.offsetDateTime(string).toInstant();
 
             else if (type == UByte.class)
                 return (T) UByte.valueOf(string);

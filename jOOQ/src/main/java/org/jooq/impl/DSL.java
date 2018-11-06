@@ -13796,6 +13796,16 @@ public class DSL {
         return currentTimestamp().cast(SQLDataType.OFFSETDATETIME);
     }
 
+    /**
+     * Get the current_timestamp() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Instant> currentInstant() {
+        return currentTimestamp().cast(SQLDataType.INSTANT);
+    }
+
 
     /**
      * Get the date difference in number of days.
@@ -15271,6 +15281,48 @@ public class DSL {
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
         return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
+    }
+
+    /**
+     * Convert a string value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Instant> instant(String value) {
+        return Tools.field(Convert.convert(value, Instant.class));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Instant> instant(Instant value) {
+        return instant(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Instant> instant(Field<Instant> field) {
+        return new DateOrTime<Instant>(field, SQLDataType.INSTANT);
     }
 
 
@@ -18740,6 +18792,17 @@ public class DSL {
         return value((Object) value, SQLDataType.OFFSETDATETIME);
     }
 
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<Instant> value(Instant value) {
+        return value((Object) value, SQLDataType.INSTANT);
+    }
+
 
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
@@ -19439,6 +19502,27 @@ public class DSL {
         return inline((Object) value, SQLDataType.OFFSETDATETIME);
     }
 
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<Instant> inline(Instant value) {
+        return inline((Object) value, SQLDataType.INSTANT);
+    }
+
 
     /**
      * Create a bind value that is always inlined.
@@ -19903,6 +19987,16 @@ public class DSL {
     @Support
     public static Param<OffsetDateTime> val(OffsetDateTime value) {
         return val((Object) value, SQLDataType.OFFSETDATETIME);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<Instant> val(Instant value) {
+        return val((Object) value, SQLDataType.INSTANT);
     }
 
 

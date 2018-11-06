@@ -56,6 +56,7 @@ import java.sql.Clob;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.Collection;
@@ -463,6 +464,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
             || tType == OffsetDateTime.class
             || tType == OffsetTime.class
+            || tType == Instant.class
 
         ;
     }
@@ -612,6 +614,8 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (tType == OffsetTime.class)
             return Types.VARCHAR;
         else if (tType == OffsetDateTime.class)
+            return Types.VARCHAR;
+        else if (tType == Instant.class)
             return Types.VARCHAR;
 
 

@@ -73,6 +73,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
@@ -441,6 +442,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      * unknown.
      */
     abstract int estimatedRowCount();
+
+
 
 
 

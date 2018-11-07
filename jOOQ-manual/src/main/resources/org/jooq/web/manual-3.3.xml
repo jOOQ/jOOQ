@@ -4871,8 +4871,25 @@ create.select().from(unnest(myTableFunction()).as("t", "a", "b"));
 create.select().from(values(
   row(1, 2),
   row(3, 4)
-).as("t", "a", "b"));]]></java>
-								</content>
+).as("t", "a", "b"));]]></java><html>
+
+                                    <h3>Unnamed derived tables</h3>
+
+                                    <p>
+                                        The <reference class="org.jooq.Table"/> type can reference a <reference id="nested-selects" title="derived table"/>:
+                                    </p>
+
+</html><code-pair>
+<sql><![CDATA[-- Derived table
+(SELECT 1 AS a)]]></sql>
+<java><![CDATA[// Derived table
+table(select(inline(1).as("a")));]]></java>
+</code-pair><html>
+
+                                    <p>
+                                        Most databases do not support unnamed derived tables, they require an explicit alias. If you do not provide jOOQ with such an explicit alias, an alias will be generated based on the derived table's content, to make sure the generated SQL will be syntactically correct. The generated alias is not specified and should not be referenced explicitly.
+                                    </p>
+                                </html></content>
 							</section>
 
 							<section id="joined-tables">
@@ -5286,9 +5303,36 @@ GROUP BY FIRST_NAME, LAST_NAME;</sql><html>
   									</p>
 
 </html><java>System.out.println("Author : " + record.getValue("author"));
-System.out.println("Books  : " + record.getValue("books"));</java>
+System.out.println("Books  : " + record.getValue("books"));</java><html>
 
-								</content>
+                                    <h3>Unnamed column expressions</h3>
+
+                                    <p>
+                                        In most SQL databases, aliasing of column expressions in top level selects is optional. The database will generate a column name that is roughly based on the expression for documentation purposes (e.g. when running the query in a tool like SQL Developer), but applications cannot rely on the name explicitly. This is not a problem as columns can still be referenced by index.
+                                    </p>
+
+                                    <p>
+                                        In a similar fashion, jOOQ will assume an unspecified, generated column name for column expressions, based on their content.
+                                    </p>
+
+
+</html><code-pair>
+<sql><![CDATA[-- Arithmetic expression
+1 + 2
+
+-- Correlated subquery
+(SELECT 1 AS a)]]></sql>
+<java><![CDATA[// Arithmetic expression
+inline(1).plus(inline(2));
+
+// Correlated subquery
+field(select(inline(1).as("a")));]]></java>
+</code-pair><html>
+
+                                    <p>
+                                        These unnamed expressions can be used both in SQL as well as with jOOQ. However, do note that jOOQ will use <reference class="org.jooq.Field" anchor="#getName--" title="Field.getName()"/> to extract this column name from the field, when referencing the field or when nesting it in derived tables. In order to stay in full control of any such column names, it is always a good idea to provide explicit aliasing for column expressions, both in SQL as well as in jOOQ.
+                                    </p>
+                                </html></content>
 							</section>
 
 							<section id="cast-expressions">

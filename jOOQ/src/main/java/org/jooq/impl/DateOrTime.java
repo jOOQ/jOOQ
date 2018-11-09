@@ -39,9 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.keyword;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -67,9 +64,9 @@ final class DateOrTime<T> extends AbstractFunction<T> {
     }
 
     private static String name(DataType<?> dataType) {
-        return dataType.getType() == Date.class
+        return dataType.isDate()
              ? "date"
-             : dataType.getType() == Time.class
+             : dataType.isTime()
              ? "time"
              : "timestamp";
     }
@@ -86,9 +83,9 @@ final class DateOrTime<T> extends AbstractFunction<T> {
 
             case SQLITE: {
                 String name =
-                      getDataType().getType() == Date.class
+                      getDataType().isDate()
                     ? "date"
-                    : getDataType().getType() == Time.class
+                    : getDataType().isTime()
                     ? "time"
                     : "datetime";
 

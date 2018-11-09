@@ -461,17 +461,26 @@ public interface DataType<T> extends Serializable {
     boolean isDateTime();
 
     /**
-     * Whether this data type is any date or time type.
+     * Whether this data type is any date type.
      * <p>
      * This applies to any of these types.
      * <ul>
-     * <li> {@link SQLDataType#DATE}</li>
-     * <li> {@link SQLDataType#LOCALDATE}</li>
+     * <li>{@link SQLDataType#DATE}</li>
+     * <li>{@link SQLDataType#LOCALDATE}</li>
      * </ul>
-     * <p>
-     * This is a combination of {@link #isDateTime()} or {@link #isInterval()}
      */
     boolean isDate();
+
+    /**
+     * Whether this data type is any time type.
+     * <p>
+     * This applies to any of these types.
+     * <ul>
+     * <li>{@link SQLDataType#TIME}</li>
+     * <li>{@link SQLDataType#LOCALTIME}</li>
+     * </ul>
+     */
+    boolean isTime();
 
     /**
      * Whether this data type is any date or time type.

@@ -42,8 +42,6 @@ import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import java.sql.Date;
-
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -159,7 +157,7 @@ final class DateAdd<T> extends AbstractFunction<T> {
 
                 // [#3824] Ensure that the output for DATE arithmetic will also
                 // be of type DATE, not TIMESTAMP
-                if (getDataType().getType() == Date.class)
+                if (getDataType().isDate())
                     return DSL.field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));
                 else
                     return DSL.field("({0} + ({1} || {2})::interval)", getDataType(), date, interval, inline(keyword));

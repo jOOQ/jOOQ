@@ -911,6 +911,15 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final boolean isDate() {
+        return java.sql.Date.class.isAssignableFrom(tType)
+
+            || java.time.LocalDate.class.isAssignableFrom(tType)
+
+        ;
+    }
+
+    @Override
     public final boolean isTemporal() {
         return isDateTime() || isInterval();
     }

@@ -191,7 +191,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final long                serialVersionUID          = -198499389344950496L;
     private static final EnumSet<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = EnumSet.of(MYSQL);
 
-    final AbstractBinding<T, U> delegate;
+    // Taken from org.postgresql.PGStatement                             9223372036825200000
+    private static final long                PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
+    private static final long                PG_DATE_NEGATIVE_INFINITY = -9223372036832400000L;
+
+    final AbstractBinding<T, U>              delegate;
 
     public final static <T, U> Binding<T, U> binding(Converter<T, U> converter) {
         return binding(converter, false);
@@ -1907,7 +1911,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Most dialects implement SQL standard date literals
             else
-                ctx.render().visit(K_DATE).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+                ctx.render().visit(K_DATE).sql(" '").sql(format(value, ctx.render())).sql('\'');
+        }
+
+        private final String format(Date value, RenderContext render) {
+            if (render.family() == POSTGRES)
+                if (value.getTime() == PG_DATE_POSITIVE_INFINITY)
+                    return "infinity";
+                else if (value.getTime() == PG_DATE_NEGATIVE_INFINITY)
+                    return "-infinity";
+
+            return escape(value, render);
         }
 
         @Override
@@ -2598,15 +2612,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetDateTime value) {
+            SQLDialect family = ctx.family();
 
             // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
-            if (ctx.family() == H2)
-                ctx.render().visit(K_CAST).sql("('").sql(escape(format(value), ctx.render())).sql("' ")
+            if (family == H2)
+                ctx.render().visit(K_CAST).sql("('").sql(escape(format(value, family), ctx.render())).sql("' ")
                             .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
 
             // [#5895] HSQLDB derives the specific data type from the literal
-            else if (ctx.family() == HSQLDB)
-                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+            else if (family == HSQLDB)
+                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
 
 
 
@@ -2620,17 +2635,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Some dialects implement SQL standard time literals
             else
-                ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+                ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, OffsetDateTime value) throws SQLException {
+            SQLDialect family = ctx.family();
 
 
 
 
 
-            ctx.statement().setString(ctx.index(), format(value));
+
+
+            ctx.statement().setString(ctx.index(), format(value, family));
         }
 
         @Override
@@ -2719,7 +2737,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        private static final String format(OffsetDateTime val) {
+        private static final String format(OffsetDateTime val, SQLDialect family) {
+            if (family == POSTGRES)
+                if (val.toEpochSecond() * 1000 == PG_DATE_POSITIVE_INFINITY)
+                    return "infinity";
+                else if (val.toEpochSecond() * 1000 == PG_DATE_NEGATIVE_INFINITY)
+                    return "-infinity";
 
             // Remove the ISO standard T character, as some databases don't like that
             String format = formatISO(val);
@@ -2838,6 +2861,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(converter, isLob);
 
             delegate = new DefaultOffsetDateTimeBinding<U>(Converters.of(CONVERTER, converter()), isLob);
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
+            delegate.sqlInline0(ctx, CONVERTER.to(value));
         }
 
         @Override
@@ -3600,7 +3628,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Most dialects implement SQL standard timestamp literals
             else
-                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(format(value, ctx.render())).sql('\'');
+        }
+
+        private final String format(Timestamp value, RenderContext render) {
+            if (render.family() == POSTGRES)
+                if (value.getTime() == PG_DATE_POSITIVE_INFINITY)
+                    return "infinity";
+                else if (value.getTime() == PG_DATE_NEGATIVE_INFINITY)
+                    return "-infinity";
+
+            return escape(value, render);
         }
 
         @Override

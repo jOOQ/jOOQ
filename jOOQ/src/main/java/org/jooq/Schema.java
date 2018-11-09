@@ -54,11 +54,6 @@ public interface Schema extends Named {
     Catalog getCatalog();
 
     /**
-     * The comment of this schema.
-     */
-    String getComment();
-
-    /**
      * Stream all tables contained in this schema.
      */
 

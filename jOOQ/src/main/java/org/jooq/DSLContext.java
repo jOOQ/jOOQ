@@ -11539,7 +11539,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException;
+    int executeInsert(TableRecord<?> record) throws DataAccessException;
 
     /**
      * Update a table.
@@ -11549,7 +11549,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException;
+    int executeUpdate(UpdatableRecord<?> record) throws DataAccessException;
 
     /**
      * Update a table.
@@ -11559,7 +11559,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException;
+    int executeUpdate(TableRecord<?> record, Condition condition) throws DataAccessException;
 
     /**
      * Delete a record from a table.
@@ -11569,7 +11569,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException;
+    int executeDelete(UpdatableRecord<?> record) throws DataAccessException;
 
     /**
      * Delete a record from a table.
@@ -11579,5 +11579,5 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException;
+    int executeDelete(TableRecord<?> record, Condition condition) throws DataAccessException;
 }

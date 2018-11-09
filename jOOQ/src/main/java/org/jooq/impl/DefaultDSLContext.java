@@ -4420,38 +4420,38 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
-    public <R extends TableRecord<R>> int executeInsert(R record) {
-        InsertQuery<R> insert = insertQuery(record.getTable());
+    public int executeInsert(TableRecord<?> record) {
+        InsertQuery insert = insertQuery(record.getTable());
         insert.setRecord(record);
         return insert.execute();
     }
 
     @Override
-    public <R extends UpdatableRecord<R>> int executeUpdate(R record) {
-        UpdateQuery<R> update = updateQuery(record.getTable());
+    public  int executeUpdate(UpdatableRecord<?> record) {
+        UpdateQuery update = updateQuery(record.getTable());
         Tools.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
         update.setRecord(record);
         return update.execute();
     }
 
     @Override
-    public <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) {
-        UpdateQuery<R> update = updateQuery(record.getTable());
+    public int executeUpdate(TableRecord<?> record, Condition condition) {
+        UpdateQuery update = updateQuery(record.getTable());
         update.addConditions(condition);
         update.setRecord(record);
         return update.execute();
     }
 
     @Override
-    public <R extends UpdatableRecord<R>> int executeDelete(R record) {
-        DeleteQuery<R> delete = deleteQuery(record.getTable());
+    public int executeDelete(UpdatableRecord<?> record) {
+        DeleteQuery delete = deleteQuery(record.getTable());
         Tools.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
         return delete.execute();
     }
 
     @Override
-    public <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) {
-        DeleteQuery<R> delete = deleteQuery(record.getTable());
+    public int executeDelete(TableRecord<?> record, Condition condition) {
+        DeleteQuery delete = deleteQuery(record.getTable());
         delete.addConditions(condition);
         return delete.execute();
     }

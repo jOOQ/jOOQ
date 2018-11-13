@@ -809,13 +809,9 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.visit(K_COMMENT).sql(' ').visit(comment);
         }
         else if (renameTo != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(ALTER_TABLE_RENAME)
-               .qualify(false)
                .visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
                .visit(renameTo)
-               .qualify(qualify)
                .end(ALTER_TABLE_RENAME);
         }
         else if (renameColumn != null) {

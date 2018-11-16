@@ -11,6 +11,18 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.11.7 - November 5, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Bug Fixes
+---------
+#8011 - DDLDatabase cannot handle tables containing COLLATE clauses
+#8013 - Regression in OffsetDateTime parser when PostgreSQL timestamps have fractional seconds of 1, 2, 4, 5 digit precision
+
+
 Version 3.11.6 - November 2, 2018
 ================================================================================
 
@@ -41,7 +53,6 @@ Bug Fixes
 #7983 - Unnecessary alias generation in parser for derived tables
 #7984 - Discover JPA annotations also from overridden super class methods
 #7988 - Significant time spent in OffsetDateTime.parse() when reading OffsetDateTime fields
-#8002 - NullPointerException in QueryPartList.removeNulls with Java 11 and immutable collections
 #8007 - INSERT .. RETURNING produces records with wrong attached Configuration
 #8009 - DAO methods do not profit from reflection cache when Settings.returnRecordToPojo = true
 

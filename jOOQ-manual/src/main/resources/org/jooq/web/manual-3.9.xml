@@ -10251,64 +10251,21 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
 										If a SQL clause is too complex to express with jOOQ, you can extend either one of the following types for use directly in a jOOQ query:
 									</p>
 
-</html><java><![CDATA[public abstract class CustomField<T> extends AbstractField<T> {}
-public abstract class CustomCondition extends AbstractCondition {}
-public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R> {}
-public abstract class CustomRecord<R extends TableRecord<R>> extends TableRecordImpl<R> {}]]></java><html>
-
-									<p>
-										These classes are declared public and covered by jOOQ's integration tests. When you extend these classes, you will have to provide your own implementations for the <reference id="queryparts" title="QueryParts'"/> <reference id="sql-rendering" title="accept()"/> method, as discussed before:
-									</p>
-
-</html><java><![CDATA[// This method must produce valid SQL. If your QueryPart contains other parts, you may delegate SQL generation to them
-// in the correct order, passing the render context.
-//
-// If context.inline() is true, you must inline all bind variables
-// If context.inline() is false, you must generate ? for your bind variables
-public void toSQL(RenderContext context);
-
-// This method must bind all bind variables to a PreparedStatement. If your QueryPart contains other QueryParts, $
-// you may delegate variable binding to them in the correct order, passing the bind context.
-//
-// Every QueryPart must ensure, that it starts binding its variables at context.nextIndex().
-public void bind(BindContext context) throws DataAccessException;]]></java><html>
+</html><java><![CDATA[public abstract void accept(Context<?> ctx);]]></java><html>
 
                                     <h3>
-                                        An example for implementing multiplication.
+                                        An example for implementing custom multiplication.
                                     </h3>
-									<p>
-										The above contract may be a bit tricky to understand at first. The best thing is to check out jOOQ source code and have a look at a couple of QueryParts, to see how it's done. Here's an example <reference class="org.jooq.impl.CustomField"/> showing how to create a field multiplying another field by 2
-									</p>
+
+                                    <p>
+                                        Here's an example <reference class="org.jooq.impl.CustomField"/> showing how to create a field multiplying another field by 2
+                                    </p>
 
 </html><java><![CDATA[// Create an anonymous CustomField, initialised with BOOK.ID arguments
 final Field<Integer> IDx2 = new CustomField<Integer>(BOOK.ID.getName(), BOOK.ID.getDataType()) {
     @Override
-    public void toSQL(RenderContext context) {
-
-        // In inline mode, render the multiplication directly
-        if (context.inline()) {
-            context.sql(BOOK.ID).sql(" * 2");
-        }
-
-        // In non-inline mode, render a bind value
-        else {
-            context.sql(BOOK.ID).sql(" * ?");
-        }
-    }
-
-    @Override
-    public void bind(BindContext context) {
-        try {
-
-            // Manually bind the value 2
-            context.statement().setInt(context.nextIndex(), 2);
-
-            // Alternatively, you could also write:
-            // context.bind(DSL.val(2));
-        }
-        catch (SQLException e) {
-            throw new DataAccessException("Bind error", e);
-        }
+    public void accept(Context<?> context) {
+        context.visit(BOOK.ID).sql(" * ").visit(DSL.val(2));
     }
 };
 

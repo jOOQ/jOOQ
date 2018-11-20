@@ -330,10 +330,14 @@ public class MiniJAXB {
      */
     public static String jaxbNamespaceBugWorkaround(String xml, Object annotated) {
         StringWriter test = new StringWriter();
-        JAXB.marshal(annotated, test);
 
-        if (!test.toString().contains("xmlns"))
-            xml = xml.replaceAll("xmlns=\"[^\"]*\"", "");
+        try {
+            JAXB.marshal(annotated, test);
+
+            if (!test.toString().contains("xmlns"))
+                xml = xml.replaceAll("xmlns=\"[^\"]*\"", "");
+        }
+        catch (Exception ignore) {}
 
         return xml;
     }

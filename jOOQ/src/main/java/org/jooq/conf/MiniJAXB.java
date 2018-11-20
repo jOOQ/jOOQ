@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -313,5 +314,27 @@ public class MiniJAXB {
         catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * This method is used internally by jOOQ to patch XML content in order to
+     * work around a bug in JAXB.
+     * <p>
+     * [#7579] [#8044] On JDK 9, 10, depending on how JAXB is loaded onto the
+     * classpath / module path, the xmlns seems to be considered for
+     * (un)marshalling, or not. This seems to be a bug in JAXB, with no known
+     * tracking ID as of yet.
+     * <p>
+     * The following quick fix tests the presence of the xmlns when marshalling,
+     * and if absent removes it prior to unmarshalling.
+     */
+    public static String jaxbNamespaceBugWorkaround(String xml, Object annotated) {
+        StringWriter test = new StringWriter();
+        JAXB.marshal(annotated, test);
+
+        if (!test.toString().contains("xmlns"))
+            xml = xml.replaceAll("xmlns=\"[^\"]*\"", "");
+
+        return xml;
     }
 }

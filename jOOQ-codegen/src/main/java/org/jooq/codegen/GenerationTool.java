@@ -90,6 +90,7 @@ import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 
 /**
@@ -925,6 +926,10 @@ public class GenerationTool {
                     return true;
                 }
             });
+
+            // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
+            xml = MiniJAXB.jaxbNamespaceBugWorkaround(xml, new InformationSchema());
+
             return (Configuration) unmarshaller.unmarshal(new StringReader(xml));
         }
         catch (Throwable t) {

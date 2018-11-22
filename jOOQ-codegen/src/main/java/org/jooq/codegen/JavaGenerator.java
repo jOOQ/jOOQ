@@ -2068,7 +2068,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s getSchema() {", Schema.class);
-            out.tab(2).println("return %s;", schemaId);
+            out.tab(2).println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
             out.tab(1).println("}");
         }
 

@@ -73,6 +73,11 @@ final class Extract extends AbstractFunction<Integer> {
         switch (configuration.family()) {
             case SQLITE:
                 switch (datePart) {
+                    case DECADE:
+                    case CENTURY:
+                    case MILLENNIUM:
+                        return getDefaultEmulation();
+
                     case YEAR:
                         return DSL.field("{strftime}('%Y', {0})", INTEGER, field);
                     case MONTH:
@@ -120,8 +125,18 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
+
+
+
+
+
             case DERBY:
                 switch (datePart) {
+                    case DECADE:
+                    case CENTURY:
+                    case MILLENNIUM:
+                        return getDefaultEmulation();
+
                     case YEAR:
                         return function("year", INTEGER, field);
                     case MONTH:
@@ -241,19 +256,40 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
                 switch (datePart) {
-                    case EPOCH:
-                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
-                    case QUARTER:
-                        return DSL.field("{quarter}({0})", INTEGER, field);
-                    case ISO_DAY_OF_WEEK:
-                        return DSL.field("{weekday}({0})", INTEGER, field).add(one());
+                    case DECADE:
+                    case CENTURY:
+                    case MILLENNIUM:
+                        return getDefaultEmulation();
+
                     case DAY_OF_WEEK:
                         return DSL.field("{dayofweek}({0})", INTEGER, field);
                     case DAY_OF_YEAR:
                         return DSL.field("{dayofyear}({0})", INTEGER, field);
+                    case EPOCH:
+                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
+                    case ISO_DAY_OF_WEEK:
+                        return DSL.field("{weekday}({0})", INTEGER, field).add(one());
+                    case QUARTER:
+                        return DSL.field("{quarter}({0})", INTEGER, field);
+
                     default:
                         return getNativeFunction();
                 }
@@ -262,33 +298,48 @@ final class Extract extends AbstractFunction<Integer> {
 
             case POSTGRES:
                 switch (datePart) {
-                    case QUARTER:
-                        return DSL.field("{extract}({quarter from} {0})", INTEGER, field);
                     case DAY_OF_WEEK:
                         return DSL.field("({extract}({dow from} {0}) + 1)", INTEGER, field);
-                    case ISO_DAY_OF_WEEK:
-                        return DSL.field("{extract}({isodow from} {0})", INTEGER, field);
                     case DAY_OF_YEAR:
                         return DSL.field("{extract}({doy from} {0})", INTEGER, field);
+                    case ISO_DAY_OF_WEEK:
+                        return DSL.field("{extract}({isodow from} {0})", INTEGER, field);
+
                     default:
                         return getNativeFunction();
                 }
 
             case HSQLDB:
                 switch (datePart) {
+                    case DECADE:
+                    case CENTURY:
+                    case MILLENNIUM:
+                    case TIMEZONE:
+                        return getDefaultEmulation();
+
                     case EPOCH:
                         return DSL.field("{unix_timestamp}({0})", INTEGER, field);
-                    case QUARTER:
-                        return DSL.field("{quarter}({0})", INTEGER, field);
                     case ISO_DAY_OF_WEEK:
                         return dowSun1ToISO(DSL.field("{extract}({day_of_week from} {0})", INTEGER, field));
+                    case QUARTER:
+                        return DSL.field("{quarter}({0})", INTEGER, field);
+                    case WEEK:
+                        return DSL.field("{week}({0})", INTEGER, field);
+
                     default:
                         return getNativeFunction();
                 }
             case H2:
                 switch (datePart) {
+                    case DECADE:
+                    case CENTURY:
+                    case MILLENNIUM:
+                    case TIMEZONE:
+                        return getDefaultEmulation();
+
                     case QUARTER:
                         return DSL.field("{quarter}({0})", INTEGER, field);
+
                     default:
                         return getNativeFunction();
                 }
@@ -310,12 +361,31 @@ final class Extract extends AbstractFunction<Integer> {
         return dow.add(inline(6)).mod(inline(7)).add(one());
     }
 
-    private final Field<Integer> getNativeFunction() {
+    private final Field<Integer> getDefaultEmulation() {
         switch (datePart) {
+            case DECADE:
+                return DSL.cast(DSL.year(field).div(inline(10)), INTEGER);
+            case CENTURY:
+                return DSL.cast(
+                    DSL.sign(DSL.year(field))
+                       .mul(DSL.abs(DSL.year(field)).add(inline(99)))
+                       .div(inline(100)), INTEGER);
+            case MILLENNIUM:
+                return DSL.cast(
+                    DSL.sign(DSL.year(field))
+                       .mul(DSL.abs(DSL.year(field)).add(inline(999)))
+                       .div(inline(1000)), INTEGER);
             case QUARTER:
                 return DSL.month(field).add(inline(2)).div(inline(3));
+            case TIMEZONE:
+                return DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))
+                    .add(DSL.extract(field, DatePart.TIMEZONE_MINUTE).mul(inline(60)));
             default:
-                return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
+                return getNativeFunction();
         }
+    }
+
+    private final Field<Integer> getNativeFunction() {
+        return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
     }
 }

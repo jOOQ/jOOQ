@@ -139,30 +139,21 @@ public enum DatePart {
     /**
      * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in
      * the 3rd.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support
     MILLENNIUM("millennium"),
 
     /**
      * The century. The year 2000 is in the 20th century, the year 2001 in the
      * 21st.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support
     CENTURY("century"),
 
     /**
      * The decade. The year divided by 10.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support
     DECADE("decade"),
 
     /**
@@ -179,11 +170,8 @@ public enum DatePart {
 
     /**
      * The week of the year.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, POSTGRES })
     WEEK("week"),
 
     /**
@@ -209,29 +197,20 @@ public enum DatePart {
     /**
      * The timezone offset in seconds. Corresponds to
      * {@link ChronoField#OFFSET_SECONDS}.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, POSTGRES })
     TIMEZONE("timezone"),
 
     /**
      * The time zone offset's hour part.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, POSTGRES })
     TIMEZONE_HOUR("timezone_hour"),
 
     /**
      * The time zone offset's minute part.
-     *
-     * @deprecated - 3.11 - [#2132] Support for this type is still experimental
      */
-    @Support({ POSTGRES })
-    @Deprecated
+    @Support({ H2, POSTGRES })
     TIMEZONE_MINUTE("timezone_minute"),
 
     ;

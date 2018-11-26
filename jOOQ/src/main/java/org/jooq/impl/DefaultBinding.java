@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.DefaultExecuteContext.targetPreparedStatement;
@@ -2123,10 +2124,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
-            // [#5249] [#6912] Special inlining of special floating point values
+            // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
                 if (                                                            ctx.family() == POSTGRES)
                     ctx.render().visit(inline("NaN")).sql("::float8");
+                else if (ctx.family() == HSQLDB)
+                    ctx.render().visit(sqrt(inline(-1)));
                 else
                     ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else
@@ -2294,10 +2297,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
-            // [#5249] [#6912] Special inlining of special floating point values
+            // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
                 if (                                                            ctx.family() == POSTGRES)
                     ctx.render().visit(inline("NaN")).sql("::float4");
+                else if (ctx.family() == HSQLDB)
+                    ctx.render().visit(sqrt(inline(-1)));
                 else
                     ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else

@@ -316,7 +316,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * value. In general, use primary keys, instead.
      */
     @Support({ H2, POSTGRES, SQLITE })
-    Field<?> rowid();
+    Field<RowId> rowid();
 
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses

@@ -92,6 +92,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Row;
+import org.jooq.RowId;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -186,8 +187,8 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
-    public final Field<?> rowid() {
-        return new Rowid(this);
+    public final Field<RowId> rowid() {
+        return new RowIdField(this);
     }
 
     // ------------------------------------------------------------------------

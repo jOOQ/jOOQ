@@ -56,6 +56,7 @@ import java.util.UUID;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -586,6 +587,11 @@ public final class SQLDataType {
      * The {@link Types#OTHER} type.
      */
     public static final DataType<Object> OTHER = new DefaultDataType<Object>(null, Object.class, "other");
+
+    /**
+     * The {@link Types#ROWID} type.
+     */
+    public static final DataType<RowId> ROWID = new DefaultDataType<RowId>(null, RowId.class, "rowid");
 
     /**
      * The {@link Types#STRUCT} type.

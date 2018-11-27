@@ -89,6 +89,8 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.ROWID;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
@@ -154,6 +156,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
@@ -265,6 +268,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Instant.class)
             return new DefaultInstantBinding(converter, isLob);
 
+        else if (type == RowId.class)
+            return new DefaultRowIdBinding(converter, isLob);
         else if (type == Short.class || type == short.class)
             return new DefaultShortBinding(converter, isLob);
         else if (type == String.class)
@@ -621,8 +626,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sqlCast(ctx, converted, dataType, 0, precision, scale);
             }
 
+            // [#7905] The ROWID type cannot be cast to
+            else if (ROWID == sqlDataType)
+                sql(ctx, converted);
+
             // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
-            else if (SQLDataType.OTHER == sqlDataType)
+            else if (OTHER == sqlDataType)
 
                 // If the bind value is set, it can be used to derive the cast type
                 if (converted != null)
@@ -3002,6 +3011,48 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             return object;
+        }
+    }
+
+    static final class DefaultRowIdBinding<U> extends AbstractBinding<RowId, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 5929968691245507756L;
+
+        DefaultRowIdBinding(Converter<RowId, U> converter, boolean isLob) {
+            super(converter, isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, RowId value) throws SQLException {
+            ctx.statement().setObject(ctx.index(), value.value());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, RowId value) throws SQLException {
+            throw new DataTypeException("Type " + type + " is not supported");
+        }
+
+        @Override
+        final RowId get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return new RowIdImpl(ctx.resultSet().getObject(ctx.index()));
+        }
+
+        @Override
+        final RowId get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            throw new DataTypeException("Type " + type + " is not supported");
+        }
+
+        @Override
+        final RowId get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            throw new DataTypeException("Type " + type + " is not supported");
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.ROWID;
         }
     }
 

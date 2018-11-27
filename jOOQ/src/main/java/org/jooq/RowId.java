@@ -35,53 +35,20 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.impl.DSL.unquotedName;
-
-import org.jooq.Context;
-import org.jooq.Table;
+import java.io.Serializable;
+import java.sql.Types;
 
 /**
+ * A data type corresponding to JDBC's {@link Types#ROWID}.
+ *
  * @author Lukas Eder
  */
-final class Rowid extends AbstractField<Object> {
+public interface RowId extends Serializable {
 
     /**
-     * Generated UID
+     * Get the database implementation specific representation of this row id.
      */
-    private static final long serialVersionUID = 1514220224208896376L;
-    private final Table<?>    table;
-
-    Rowid(Table<?> table) {
-        super(table.getQualifiedName().append(unquotedName("rowid")), SQLDataType.OTHER);
-
-        this.table = table;
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-            case H2:
-                ctx.visit(table.getQualifiedName().append(unquotedName("_rowid_")));
-                break;
-
-            case POSTGRES:
-                ctx.visit(table.getQualifiedName().append(unquotedName("ctid")));
-                break;
-
-
-
-
-
-
-
-
-
-            case SQLITE:
-            default:
-                ctx.visit(getQualifiedName());
-                break;
-        }
-    }
+    Object value();
 }

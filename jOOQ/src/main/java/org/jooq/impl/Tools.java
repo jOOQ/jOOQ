@@ -4306,6 +4306,9 @@ final class Tools {
     }
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
+        DataType<?> elementType = (type instanceof ArrayDataType)
+            ? ((ArrayDataType<?>) type).elementType
+            : type;
 
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {
@@ -4372,7 +4375,9 @@ final class Tools {
         }
 
         String typeName = type.getTypeName(ctx.configuration());
-        if (type.hasLength()) {
+
+        // [#8070] Make sure VARCHAR(n) ARRAY types are generated as such in HSQLDB
+        if (type.hasLength() || elementType.hasLength()) {
 
             // [#6289] [#7191] Some databases don't support lengths on binary types
             if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.family()))

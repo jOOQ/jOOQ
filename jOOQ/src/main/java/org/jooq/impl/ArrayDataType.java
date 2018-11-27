@@ -52,7 +52,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
      */
     private static final long serialVersionUID = 7883229760246533448L;
 
-    private final DataType<T> elementType;
+    final DataType<T>         elementType;
 
     public ArrayDataType(DataType<T> elementType) {
         super(null, elementType.getArrayType(), elementType.getTypeName(), elementType.getCastTypeName());

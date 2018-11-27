@@ -4527,6 +4527,12 @@ final class ParserImpl implements Parser {
             case '\'':
                 return inline(parseStringLiteral(ctx));
 
+            case '$':
+                if ((value = parseDollarQuotedStringLiteralIf(ctx)) != null)
+                    return inline((String) value);
+
+                break;
+
             case 'a':
             case 'A':
                 if (N.is(type))
@@ -7994,6 +8000,8 @@ final class ParserImpl implements Parser {
             return parseUnquotedStringLiteral(ctx, true);
         else if (peek(ctx, '\''))
             return parseUnquotedStringLiteral(ctx, false);
+        else if (peek(ctx, '$'))
+            return parseDollarQuotedStringLiteralIf(ctx);
         else
             return null;
     }
@@ -8083,6 +8091,69 @@ final class ParserImpl implements Parser {
         }
 
         throw ctx.exception("Quoted string literal not terminated");
+    }
+
+    private static final String parseDollarQuotedStringLiteralIf(ParserContext ctx) {
+        int previous = ctx.position();
+        parse(ctx, '$');
+
+        int openTokenStart = previous;
+        int openTokenEnd = previous;
+
+        int closeTokenStart = -1;
+        int closeTokenEnd = -1;
+
+        tokenLoop:
+        for (int i = ctx.position(); i < ctx.sql.length; i++) {
+            char c = ctx.character(i);
+
+            // "Good enough" approximation of PostgreSQL's syntax requirements
+            // for dollar quoted tokens. If formal definition is known, improve.
+            // No definition is available from this documentation:
+            // https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING
+            if (!Character.isJavaIdentifierPart(c))
+                return null;
+
+            openTokenEnd++;
+
+            if (c == '$')
+                break tokenLoop;
+        }
+
+        ctx.position(openTokenEnd + 1);
+
+        literalLoop:
+        for (int i = ctx.position(); i < ctx.sql.length; i++) {
+            char c = ctx.character(i);
+
+            if (c == '$') {
+                if (closeTokenStart == -1) {
+                    closeTokenStart = i;
+                }
+                else {
+                    closeTokenEnd = i;
+
+                    tokenCompare: {
+                        for (int j = openTokenStart; j <= openTokenEnd; j++)
+                            if (ctx.character(j) != ctx.character(closeTokenStart + (j - openTokenStart)))
+                                break tokenCompare;
+
+                        break literalLoop;
+                    }
+
+                    closeTokenStart = closeTokenEnd;
+                    closeTokenEnd = -1;
+                }
+            }
+        }
+
+        if (closeTokenEnd != -1) {
+            ctx.position(closeTokenEnd + 1);
+            return ctx.substring(openTokenEnd + 1, closeTokenStart);
+        }
+
+        ctx.position(previous);
+        return null;
     }
 
     private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping) {

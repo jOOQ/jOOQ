@@ -127,15 +127,6 @@ public enum DatePart {
 
 
 
-
-
-
-
-
-
-
-
-
     /**
      * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in
      * the 3rd.
@@ -171,7 +162,7 @@ public enum DatePart {
     /**
      * The week of the year.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     WEEK("week"),
 
     /**
@@ -198,19 +189,19 @@ public enum DatePart {
      * The timezone offset in seconds. Corresponds to
      * {@link ChronoField#OFFSET_SECONDS}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     TIMEZONE("timezone"),
 
     /**
      * The time zone offset's hour part.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     TIMEZONE_HOUR("timezone_hour"),
 
     /**
      * The time zone offset's minute part.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     TIMEZONE_MINUTE("timezone_minute"),
 
     ;

@@ -14685,6 +14685,117 @@ public class DSL {
     }
 
     /**
+     * Get the millennium of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#MILLENNIUM}
+     */
+    @Support
+    public static Field<Integer> millennium(java.util.Date value) {
+        return extract(value, DatePart.MILLENNIUM);
+    }
+
+
+
+    /**
+     * Get the millennium of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#MILLENNIUM}
+     */
+    @Support
+    public static Field<Integer> millennium(Temporal value) {
+        return extract(value, DatePart.MILLENNIUM);
+    }
+
+
+
+    /**
+     * Get the millennium of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#MILLENNIUM}
+     */
+    @Support
+    public static Field<Integer> millennium(Field<?> field) {
+        return extract(field, DatePart.MILLENNIUM);
+    }
+
+    /**
+     * Get the century of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#CENTURY}
+     */
+    @Support
+    public static Field<Integer> century(java.util.Date value) {
+        return extract(value, DatePart.CENTURY);
+    }
+
+
+
+    /**
+     * Get the century of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#CENTURY}
+     */
+    @Support
+    public static Field<Integer> century(Temporal value) {
+        return extract(value, DatePart.CENTURY);
+    }
+
+
+
+    /**
+     * Get the century of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#CENTURY}
+     */
+    @Support
+    public static Field<Integer> century(Field<?> field) {
+        return extract(field, DatePart.CENTURY);
+    }
+
+    /**
+     * Get the decade of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DECADE}
+     */
+    @Support
+    public static Field<Integer> decade(java.util.Date value) {
+        return extract(value, DatePart.DECADE);
+    }
+
+
+
+    /**
+     * Get the decade of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DECADE}
+     */
+    @Support
+    public static Field<Integer> decade(Temporal value) {
+        return extract(value, DatePart.DECADE);
+    }
+
+
+
+    /**
+     * Get the decade of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#DECADE}
+     */
+    @Support
+    public static Field<Integer> decade(Field<?> field) {
+        return extract(field, DatePart.DECADE);
+    }
+
+    /**
      * Get the quarter of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
@@ -14793,6 +14904,43 @@ public class DSL {
     @Support
     public static Field<Integer> month(Field<?> field) {
         return extract(field, DatePart.MONTH);
+    }
+
+    /**
+     * Get the week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#WEEK}
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<Integer> week(java.util.Date value) {
+        return extract(value, DatePart.WEEK);
+    }
+
+
+
+    /**
+     * Get the week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#WEEK}
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<Integer> week(Temporal value) {
+        return extract(value, DatePart.WEEK);
+    }
+
+
+
+    /**
+     * Get the week part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#WEEK}
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<Integer> week(Field<?> field) {
+        return extract(field, DatePart.WEEK);
     }
 
     /**
@@ -15052,6 +15200,191 @@ public class DSL {
     @Support
     public static Field<Integer> second(Field<?> field) {
         return extract(field, DatePart.SECOND);
+    }
+
+    /**
+     * Get the millisecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#MILLISECOND}
+     */
+    @Support
+    public static Field<Integer> millisecond(java.util.Date value) {
+        return extract(value, DatePart.MILLISECOND);
+    }
+
+
+
+    /**
+     * Get the millisecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#MILLISECOND}
+     */
+    @Support
+    public static Field<Integer> millisecond(Temporal value) {
+        return extract(value, DatePart.MILLISECOND);
+    }
+
+
+
+    /**
+     * Get the millisecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#MILLISECOND}
+     */
+    @Support
+    public static Field<Integer> millisecond(Field<?> field) {
+        return extract(field, DatePart.MILLISECOND);
+    }
+
+    /**
+     * Get the microsecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#MICROSECOND}
+     */
+    @Support
+    public static Field<Integer> microsecond(java.util.Date value) {
+        return extract(value, DatePart.MICROSECOND);
+    }
+
+
+
+    /**
+     * Get the microsecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#MICROSECOND}
+     */
+    @Support
+    public static Field<Integer> microsecond(Temporal value) {
+        return extract(value, DatePart.MICROSECOND);
+    }
+
+
+
+    /**
+     * Get the microsecond part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#MICROSECOND}
+     */
+    @Support
+    public static Field<Integer> microsecond(Field<?> field) {
+        return extract(field, DatePart.MICROSECOND);
+    }
+
+    /**
+     * Get the timezone part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#TIMEZONE}
+     */
+    @Support
+    public static Field<Integer> timezone(java.util.Date value) {
+        return extract(value, DatePart.TIMEZONE);
+    }
+
+
+
+    /**
+     * Get the timezone part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#TIMEZONE}
+     */
+    @Support
+    public static Field<Integer> timezone(Temporal value) {
+        return extract(value, DatePart.TIMEZONE);
+    }
+
+
+
+    /**
+     * Get the timezone part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#TIMEZONE}
+     */
+    @Support
+    public static Field<Integer> timezone(Field<?> field) {
+        return extract(field, DatePart.TIMEZONE);
+    }
+
+    /**
+     * Get the timezoneHour part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#TIMEZONE_HOUR}
+     */
+    @Support
+    public static Field<Integer> timezoneHour(java.util.Date value) {
+        return extract(value, DatePart.TIMEZONE_HOUR);
+    }
+
+
+
+    /**
+     * Get the timezoneHour part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#TIMEZONE_HOUR}
+     */
+    @Support
+    public static Field<Integer> timezoneHour(Temporal value) {
+        return extract(value, DatePart.TIMEZONE_HOUR);
+    }
+
+
+
+    /**
+     * Get the timezoneHour part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#TIMEZONE_HOUR}
+     */
+    @Support
+    public static Field<Integer> timezoneHour(Field<?> field) {
+        return extract(field, DatePart.TIMEZONE_HOUR);
+    }
+
+    /**
+     * Get the timezoneMinute part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#TIMEZONE_MINUTE}
+     */
+    @Support
+    public static Field<Integer> timezoneMinute(java.util.Date value) {
+        return extract(value, DatePart.TIMEZONE_MINUTE);
+    }
+
+
+
+    /**
+     * Get the timezoneMinute part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#TIMEZONE_MINUTE}
+     */
+    @Support
+    public static Field<Integer> timezoneMinute(Temporal value) {
+        return extract(value, DatePart.TIMEZONE_MINUTE);
+    }
+
+
+
+    /**
+     * Get the timezoneMinute part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Field, DatePart)}
+     * with {@link DatePart#TIMEZONE_MINUTE}
+     */
+    @Support
+    public static Field<Integer> timezoneMinute(Field<?> field) {
+        return extract(field, DatePart.TIMEZONE_MINUTE);
     }
 
     /**

@@ -64,6 +64,7 @@ import static org.jooq.impl.DSL.boolOr;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
+import static org.jooq.impl.DSL.century;
 import static org.jooq.impl.DSL.charLength;
 import static org.jooq.impl.DSL.check;
 import static org.jooq.impl.DSL.choose;
@@ -89,6 +90,7 @@ import static org.jooq.impl.DSL.date;
 import static org.jooq.impl.DSL.day;
 import static org.jooq.impl.DSL.dayOfWeek;
 import static org.jooq.impl.DSL.dayOfYear;
+import static org.jooq.impl.DSL.decade;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
@@ -143,7 +145,10 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.maxDistinct;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.median;
+import static org.jooq.impl.DSL.microsecond;
 import static org.jooq.impl.DSL.mid;
+import static org.jooq.impl.DSL.millennium;
+import static org.jooq.impl.DSL.millisecond;
 import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
@@ -233,6 +238,9 @@ import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
 import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
+import static org.jooq.impl.DSL.timezone;
+import static org.jooq.impl.DSL.timezoneHour;
+import static org.jooq.impl.DSL.timezoneMinute;
 import static org.jooq.impl.DSL.toDate;
 import static org.jooq.impl.DSL.toTimestamp;
 import static org.jooq.impl.DSL.translate;
@@ -244,6 +252,7 @@ import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
+import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
@@ -4579,6 +4588,8 @@ final class ParserImpl implements Parser {
                         return cot((Field) parseFieldSumParenthesised(ctx));
                     else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.CURRVAL)) != null)
                         return field;
+                    else if ((field = parseFieldCenturyIf(ctx)) != null)
+                        return field;
 
                 if (D.is(type))
                     if ((parseKeywordIf(ctx, "CURRENT_DATE") || parseKeywordIf(ctx, "CURRENT DATE")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
@@ -4621,6 +4632,8 @@ final class ParserImpl implements Parser {
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldDecadeIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldDayIf(ctx)) != null)
                         return field;
@@ -4759,7 +4772,12 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldMinuteIf(ctx)) != null)
                         return field;
-
+                    else if ((field = parseFieldMillenniumIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldMillisecondIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldMicrosecondIf(ctx)) != null)
+                        return field;
 
                 if (S.is(type))
                     if ((field = parseFieldMidIf(ctx)) != null)
@@ -4913,6 +4931,12 @@ final class ParserImpl implements Parser {
                         return tan((Field) parseFieldSumParenthesised(ctx));
                     else if ((field = parseFieldToNumberIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldTimezoneIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldTimezoneHourIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldTimezoneMinuteIf(ctx)) != null)
+                        return field;
 
                 if (D.is(type))
                     if ((field = parseFieldTimestampLiteralIf(ctx)) != null)
@@ -4946,6 +4970,8 @@ final class ParserImpl implements Parser {
             case 'W':
                 if (N.is(type))
                     if ((field = parseFieldWidthBucketIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldWeekIf(ctx)) != null)
                         return field;
 
                 break;
@@ -5633,6 +5659,13 @@ final class ParserImpl implements Parser {
         char character = ctx.character();
 
         switch (character) {
+            case 'c':
+            case 'C':
+                if (parseKeywordIf(ctx, "CENTURY"))
+                    return DatePart.CENTURY;
+
+                break;
+
             case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DAYOFYEAR") ||
@@ -5648,6 +5681,8 @@ final class ParserImpl implements Parser {
                     parseKeywordIf(ctx, "DD") ||
                     parseKeywordIf(ctx, "D"))
                     return DatePart.DAY;
+                else if (parseKeywordIf(ctx, "DECADE"))
+                    return DatePart.DECADE;
 
                 break;
 
@@ -5677,14 +5712,14 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "MINUTE") ||
                     parseKeywordIf(ctx, "MI"))
                     return DatePart.MINUTE;
-
-
-
-
-
-
-
-
+                else if (parseKeywordIf(ctx, "MILLENNIUM"))
+                    return DatePart.MILLENNIUM;
+                else if (parseKeywordIf(ctx, "MICROSECOND") ||
+                    parseKeywordIf(ctx, "MCS"))
+                    return DatePart.MICROSECOND;
+                else if (parseKeywordIf(ctx, "MILLISECOND") ||
+                    parseKeywordIf(ctx, "MS"))
+                    return DatePart.MILLISECOND;
                 else if (parseKeywordIf(ctx, "MONTH") ||
                     parseKeywordIf(ctx, "MM") ||
                     parseKeywordIf(ctx, "M"))
@@ -5696,11 +5731,9 @@ final class ParserImpl implements Parser {
             case 'N':
                 if (parseKeywordIf(ctx, "N"))
                     return DatePart.MINUTE;
-
-
-
-
-
+                else if (parseKeywordIf(ctx, "NANOSECOND") ||
+                    parseKeywordIf(ctx, "NS"))
+                    return DatePart.NANOSECOND;
 
                 break;
 
@@ -5719,6 +5752,17 @@ final class ParserImpl implements Parser {
                     parseKeywordIf(ctx, "SS") ||
                     parseKeywordIf(ctx, "S"))
                     return DatePart.SECOND;
+
+                break;
+
+            case 't':
+            case 'T':
+                if (parseKeywordIf(ctx, "TIMEZONE"))
+                    return DatePart.TIMEZONE;
+                else if (parseKeywordIf(ctx, "TIMEZONE_HOUR"))
+                    return DatePart.TIMEZONE_HOUR;
+                else if (parseKeywordIf(ctx, "TIMEZONE_MINUTE"))
+                    return DatePart.TIMEZONE_MINUTE;
 
                 break;
 
@@ -6255,6 +6299,105 @@ final class ParserImpl implements Parser {
             Field<Timestamp> f1 = (Field) parseField(ctx, D);
             parse(ctx, ')');
             return epoch(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldMillenniumIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "MILLENNIUM")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return millennium(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldCenturyIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "CENTURY")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return century(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDecadeIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DECADE")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return decade(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldMillisecondIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "MILLISECOND")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return millisecond(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldMicrosecondIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "MICROSECOND")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return microsecond(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldWeekIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "WEEK")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return week(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldTimezoneIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TIMEZONE")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return timezone(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldTimezoneHourIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TIMEZONE_HOUR")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return timezoneHour(f1);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldTimezoneMinuteIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TIMEZONE_MINUTE")) {
+            parse(ctx, '(');
+            Field<Timestamp> f1 = (Field) parseField(ctx, D);
+            parse(ctx, ')');
+            return timezoneMinute(f1);
         }
 
         return null;

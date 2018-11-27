@@ -633,6 +633,7 @@ term =
 | case
 | 'CAST' '(' field 'AS' castDataType ')'
 | ( 'CEIL' | 'CEILING' ) '(' sum ')'
+| 'CENTURY' '(' field ')'
 | 'CHARINDEX' '(' field ',' field ')'
 | 'CHAR_LENGTH' '(' field ')'
 | 'CHOOSE' '(' field { ',' field } ')'
@@ -660,6 +661,7 @@ term =
 | 'DAY' '(' field ')'
 | 'DAYOFMONTH' '(' field ')'
 | 'DAYOFWEEK' '(' field ')'
+| 'DECADE' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
@@ -696,9 +698,11 @@ term =
 | 'LAG' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'LAST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'LISTAGG' '(' field [ ',' stringLiteral ] ')' withinGroup [ over ]
-| 'MIN' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'MAX' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'MEDIAN' '(' field ')' [ filter ] [ over ]
+| 'MICROSECOND' '(' field ')'
+| 'MILLISECOND' '(' field ')'
+| 'MIN' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'MOD' '(' field ',' field ')'
 | 'MODE' '(' ')' withinGroup [ over ]
 | 'MONTH' '(' field ')'
@@ -762,6 +766,9 @@ term =
 | 'TANH' '(' sum ')'
 | timeLiteral
 | timestampLiteral
+| 'TIMEZONE' '(' field ')'
+| 'TIMEZONE_HOUR' '(' field ')'
+| 'TIMEZONE_MINUTE' '(' field ')'
 | 'TO_CHAR' '(' field ')'
 | 'TO_DATE' '(' field ',' field ')'
 | 'TO_NUMBER' '(' field ')'

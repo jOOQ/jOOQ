@@ -38,8 +38,12 @@
 
 package org.jooq.meta.postgres;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
@@ -75,7 +79,11 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
-                COLUMNS.CHARACTER_MAXIMUM_LENGTH,
+
+                // [#8067] A more robust / sophisticated decoding might be available
+                nvl(
+                    COLUMNS.CHARACTER_MAXIMUM_LENGTH,
+                    when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
@@ -89,6 +97,9 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .join(PG_CLASS)
                 .on(PG_CLASS.RELNAME.eq(COLUMNS.TABLE_NAME))
                 .and(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+            .join(PG_ATTRIBUTE)
+                .on(PG_ATTRIBUTE.ATTRELID.eq(oid(PG_CLASS)))
+                .and(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
             .leftOuterJoin(PG_DESCRIPTION)
                 .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))

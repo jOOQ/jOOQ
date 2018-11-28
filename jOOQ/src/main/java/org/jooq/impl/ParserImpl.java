@@ -1099,7 +1099,13 @@ final class ParserImpl implements Parser {
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
+            int parens;
+            for (parens = 0; parseIf(ctx, '('); parens++);
+
             limit = parseUnsignedInteger(ctx);
+
+            for (; parens > 0 && parse(ctx, ')'); parens--);
+
             percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
 
             if (parseKeywordIf(ctx, "START AT"))

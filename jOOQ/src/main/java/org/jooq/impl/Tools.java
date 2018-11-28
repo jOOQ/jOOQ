@@ -1974,11 +1974,22 @@ final class Tools {
             // from t_book where id = ?
             else if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_OPEN)) {
 
+                int nestedMultilineCommentLevel = 1;
+
                 // Consume the complete comment
-                for (; !peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_CLOSE); render.sql(sqlChars[i++]));
+                for (;;) {
+                    render.sql(sqlChars[i++]);
+
+                    if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_OPEN))
+                        nestedMultilineCommentLevel++;
+                    else if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_CLOSE))
+                        nestedMultilineCommentLevel--;
+
+                    if (nestedMultilineCommentLevel == 0)
+                        break;
+                }
 
                 // Consume the comment delimiter
-                render.sql(sqlChars[i++]);
                 render.sql(sqlChars[i]);
             }
 

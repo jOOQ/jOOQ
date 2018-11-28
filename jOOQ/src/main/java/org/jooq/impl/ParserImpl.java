@@ -8828,6 +8828,11 @@ final class ParserImpl implements Parser {
     }
 
     private static final int afterWhitespace(ParserContext ctx, int position) {
+
+        // [#8074] The SQL standard and some implementations (e.g. PostgreSQL,
+        //         SQL Server) support nesting block comments
+        int blockCommentNestLevel = 0;
+
         loop:
         for (int i = position; i < ctx.sql.length; i++) {
             switch (ctx.sql[i]) {
@@ -8841,19 +8846,32 @@ final class ParserImpl implements Parser {
                 case '/':
                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
                         i = i + 2;
+                        blockCommentNestLevel++;
 
                         while (i < ctx.sql.length) {
                             switch (ctx.sql[i]) {
+                                case '/':
+                                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
+                                        i = i + 2;
+                                        blockCommentNestLevel++;
+                                    }
+
+                                    break;
+
                                 case '+':
-                                    if (!ctx.ignoreHints() && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z')))
+                                    if (!ctx.ignoreHints() && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z'))) {
+                                        blockCommentNestLevel = 0;
                                         break loop;
+                                    }
 
                                     break;
 
                                 case '*':
                                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
                                         position = (i = i + 1) + 1;
-                                        continue loop;
+
+                                        if (--blockCommentNestLevel == 0)
+                                            continue loop;
                                     }
 
                                     break;
@@ -8894,6 +8912,9 @@ final class ParserImpl implements Parser {
                     break loop;
             }
         }
+
+        if (blockCommentNestLevel > 0)
+            throw ctx.exception("Nested block comment not properly closed");
 
         return position;
     }

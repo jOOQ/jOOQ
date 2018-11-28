@@ -4366,7 +4366,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseCollated(ParserContext ctx, Type type) {
-        FieldOrRow r = parseSum(ctx, type);
+        FieldOrRow r = parseNumericOp(ctx, type);
 
         if (S.is(type) && r instanceof Field)
             if (parseKeywordIf(ctx, "COLLATE"))
@@ -4375,10 +4375,27 @@ final class ParserImpl implements Parser {
         return r;
     }
 
-    private static final Field<?> parseFieldSumParenthesised(ParserContext ctx) {
+    private static final Field<?> parseFieldNumericOpParenthesised(ParserContext ctx) {
         parse(ctx, '(');
-        Field<?> r = toField(ctx, parseSum(ctx, N));
+        Field<?> r = toField(ctx, parseNumericOp(ctx, N));
         parse(ctx, ')');
+        return r;
+    }
+
+    // Any numeric operator of low precedence
+    // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
+    private static final FieldOrRow parseNumericOp(ParserContext ctx, Type type) {
+        FieldOrRow r = parseSum(ctx, type);
+
+        if (N.is(type) && r instanceof Field)
+            for (;;)
+                if (parseIf(ctx, "<<"))
+                    r = ((Field) r).shl((Field) parseSum(ctx, type));
+                else if (parseIf(ctx, ">>"))
+                    r = ((Field) r).shr((Field) parseSum(ctx, type));
+                else
+                    break;
+
         return r;
     }
 
@@ -4537,15 +4554,15 @@ final class ParserImpl implements Parser {
             case 'A':
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "ABS"))
-                        return abs((Field) parseFieldSumParenthesised(ctx));
+                        return abs((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldAsciiIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "ACOS"))
-                        return acos((Field) parseFieldSumParenthesised(ctx));
+                        return acos((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "ASIN"))
-                        return asin((Field) parseFieldSumParenthesised(ctx));
+                        return asin((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "ATAN"))
-                        return atan((Field) parseFieldSumParenthesised(ctx));
+                        return atan((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldAtan2If(ctx)) != null)
                         return field;
 
@@ -4561,7 +4578,7 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldBitLengthIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "BIT_COUNT"))
-                        return bitCount((Field) parseFieldSumParenthesised(ctx));
+                        return bitCount((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldBitwiseFunctionIf(ctx)) != null)
                         return field;
 
@@ -4583,15 +4600,15 @@ final class ParserImpl implements Parser {
                     else if ((field = parseFieldCharLengthIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "CEILING") || parseFunctionNameIf(ctx, "CEIL"))
-                        return ceil((Field) parseFieldSumParenthesised(ctx));
+                        return ceil((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "COSH"))
-                        return cosh((Field) parseFieldSumParenthesised(ctx));
+                        return cosh((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "COS"))
-                        return cos((Field) parseFieldSumParenthesised(ctx));
+                        return cos((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "COTH"))
-                        return coth((Field) parseFieldSumParenthesised(ctx));
+                        return coth((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "COT"))
-                        return cot((Field) parseFieldSumParenthesised(ctx));
+                        return cot((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.CURRVAL)) != null)
                         return field;
                     else if ((field = parseFieldCenturyIf(ctx)) != null)
@@ -4652,7 +4669,7 @@ final class ParserImpl implements Parser {
                     else if (parseFunctionNameIf(ctx, "DEGREES")
                           || parseFunctionNameIf(ctx, "DEGREE")
                           || parseFunctionNameIf(ctx, "DEG"))
-                        return deg((Field) parseFieldSumParenthesised(ctx));
+                        return deg((Field) parseFieldNumericOpParenthesised(ctx));
 
                 if ((field = parseFieldDecodeIf(ctx)) != null)
                     return field;
@@ -4671,7 +4688,7 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldExtractIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "EXP"))
-                        return exp((Field) parseFieldSumParenthesised(ctx));
+                        return exp((Field) parseFieldNumericOpParenthesised(ctx));
 
                 if (D.is(type))
                     if ((field = parseFieldEpochIf(ctx)) != null)
@@ -4683,7 +4700,7 @@ final class ParserImpl implements Parser {
             case 'F':
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "FLOOR"))
-                        return floor((Field) parseFieldSumParenthesised(ctx));
+                        return floor((Field) parseFieldNumericOpParenthesised(ctx));
 
                 if ((field = parseFieldFirstValueIf(ctx)) != null)
                     return field;
@@ -4754,7 +4771,7 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldLengthIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "LN"))
-                        return ln((Field) parseFieldSumParenthesised(ctx));
+                        return ln((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldLogIf(ctx)) != null)
                         return field;
                     else if (parseKeywordIf(ctx, "LEVEL"))
@@ -4881,7 +4898,7 @@ final class ParserImpl implements Parser {
                     else if (parseFunctionNameIf(ctx, "RADIANS")
                           || parseFunctionNameIf(ctx, "RADIAN")
                           || parseFunctionNameIf(ctx, "RAD"))
-                        return rad((Field) parseFieldSumParenthesised(ctx));
+                        return rad((Field) parseFieldNumericOpParenthesised(ctx));
 
                 if (parseFunctionNameIf(ctx, "ROW"))
                     return parseTuple(ctx);
@@ -4904,11 +4921,11 @@ final class ParserImpl implements Parser {
                     else if ((field = parseFieldSignIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "SQRT") || parseFunctionNameIf(ctx, "SQR"))
-                        return sqrt((Field) parseFieldSumParenthesised(ctx));
+                        return sqrt((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "SINH"))
-                        return sinh((Field) parseFieldSumParenthesised(ctx));
+                        return sinh((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "SIN"))
-                        return sin((Field) parseFieldSumParenthesised(ctx));
+                        return sin((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldShlIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldShrIf(ctx)) != null)
@@ -4932,9 +4949,9 @@ final class ParserImpl implements Parser {
 
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "TANH"))
-                        return tanh((Field) parseFieldSumParenthesised(ctx));
+                        return tanh((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "TAN"))
-                        return tan((Field) parseFieldSumParenthesised(ctx));
+                        return tan((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldToNumberIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldTimezoneIf(ctx)) != null)
@@ -5114,9 +5131,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldShlIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "SHL") || parseKeywordIf(ctx, "SHIFTLEFT")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return shl((Field) x, (Field) y);
@@ -5128,9 +5145,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldShrIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "SHR") || parseKeywordIf(ctx, "SHIFTRIGHT")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return shr((Field) x, (Field) y);
@@ -5152,79 +5169,79 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "BIT_AND") || parseKeywordIf(ctx, "BITAND") || parseKeywordIf(ctx, "BIN_AND")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitAnd((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_NAND") || parseKeywordIf(ctx, "BITNAND") || parseKeywordIf(ctx, "BIN_NAND")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitNand((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_OR") || parseKeywordIf(ctx, "BITOR") || parseKeywordIf(ctx, "BIN_OR")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitOr((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_NOR") || parseKeywordIf(ctx, "BITNOR") || parseKeywordIf(ctx, "BIN_NOR")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitNor((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_XOR") || parseKeywordIf(ctx, "BITXOR") || parseKeywordIf(ctx, "BIN_XOR")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitXor((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_XNOR") || parseKeywordIf(ctx, "BITXNOR") || parseKeywordIf(ctx, "BIN_XNOR")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitXNor((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIT_NOT") || parseKeywordIf(ctx, "BITNOT") || parseKeywordIf(ctx, "BIN_NOT")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return bitNot((Field) x);
         }
         else if (parseKeywordIf(ctx, "BIN_SHL")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return shl((Field) x, (Field) y);
         }
         else if (parseKeywordIf(ctx, "BIN_SHR")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return shr((Field) x, (Field) y);
@@ -5290,9 +5307,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldAtan2If(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "ATN2") || parseFunctionNameIf(ctx, "ATAN2")) {
             parse(ctx, '(');
-            Field<?> x = toField(ctx, parseSum(ctx, N));
+            Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field<?> y = toField(ctx, parseSum(ctx, N));
+            Field<?> y = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
 
             return atan2((Field) x, (Field) y);
@@ -5304,7 +5321,7 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldLogIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
-            Field<?> arg1 = toField(ctx, parseSum(ctx, N));
+            Field<?> arg1 = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
             long arg2 = parseUnsignedInteger(ctx);
             parse(ctx, ')');
@@ -5344,7 +5361,7 @@ final class ParserImpl implements Parser {
                 return DSL.trunc((Field) arg1, p);
             }
             else {
-                Field<?> arg2 = toField(ctx, parseSum(ctx, N));
+                Field<?> arg2 = toField(ctx, parseNumericOp(ctx, N));
                 parse(ctx, ')');
                 return DSL.trunc((Field) arg1, (Field) arg2);
             }
@@ -5359,7 +5376,7 @@ final class ParserImpl implements Parser {
             Integer arg2 = null;
 
             parse(ctx, '(');
-            arg1 = toField(ctx, parseSum(ctx, N));
+            arg1 = toField(ctx, parseNumericOp(ctx, N));
             if (parseIf(ctx, ','))
                 arg2 = (int) (long) parseUnsignedInteger(ctx);
 
@@ -5373,9 +5390,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldPowerIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "POWER") || parseFunctionNameIf(ctx, "POW")) {
             parse(ctx, '(');
-            Field arg1 = toField(ctx, parseSum(ctx, N));
+            Field arg1 = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
-            Field arg2 = toField(ctx, parseSum(ctx, N));
+            Field arg2 = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
             return DSL.power(arg1, arg2);
         }
@@ -5962,10 +5979,10 @@ final class ParserImpl implements Parser {
             Field<String> f1 = (Field) parseField(ctx, S);
             if (substr || !(keywords = parseKeywordIf(ctx, "FROM")))
                 parse(ctx, ',');
-            Field f2 = toField(ctx, parseSum(ctx, N));
+            Field f2 = toField(ctx, parseNumericOp(ctx, N));
             Field f3 =
                     ((keywords && parseKeywordIf(ctx, "FOR")) || (!keywords && parseIf(ctx, ',')))
-                ? (Field) toField(ctx, parseSum(ctx, N))
+                ? (Field) toField(ctx, parseNumericOp(ctx, N))
                 : null;
             parse(ctx, ')');
 
@@ -7036,9 +7053,9 @@ final class ParserImpl implements Parser {
             return null;
 
         parse(ctx, '(');
-        arg1 = (Field) toField(ctx, parseSum(ctx, N));
+        arg1 = (Field) toField(ctx, parseNumericOp(ctx, N));
         parse(ctx, ',');
-        arg2 = (Field) toField(ctx, parseSum(ctx, N));
+        arg2 = (Field) toField(ctx, parseNumericOp(ctx, N));
         parse(ctx, ')');
 
         switch (type) {

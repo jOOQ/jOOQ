@@ -511,7 +511,7 @@ tableFactor =
 ;
 
 tableFunction =
-  'GENERATE_SERIES' '(' sum ',' sum [ ',' sum ] ')'
+  'GENERATE_SERIES' '(' numericOp ',' numericOp [ ',' numericOp ] ')'
 ;
 
 tableHints = 'WITH' '(' tableHint { ',' tableHint } ')'
@@ -584,7 +584,10 @@ row2 = [ 'ROW' ] '(' field ',' field ')'
 concat = collated { '||' collated }
 ;
 
-collated = sum [ 'COLLATE' collation ]
+collated = numericOp [ 'COLLATE' collation ]
+;
+
+numericOp = sum { ( '<<' | '>>' ) sum }
 ;
 
 sum = factor { ( '+' | '-' ) factor }
@@ -604,12 +607,12 @@ term =
 | '?'
 | stringLiteral
 | 'ANY' '(' field ')' [ filter ] [ over ]
-| 'ACOS' '(' sum ')'
+| 'ACOS' '(' numericOp ')'
 | 'ARRAY_AGG' '(' [ 'DISTINCT' ] field [ 'ORDER BY' sortFields ] ')' [ filter ] [ over ]
 | 'ASCII' '(' field ')'
-| 'ASIN' '(' sum ')'
-| 'ATAN' '(' sum ')'
-| ( 'ATN2' | 'ATAN2' ) '(' sum ',' sum ')'
+| 'ASIN' '(' numericOp ')'
+| 'ATAN' '(' numericOp ')'
+| ( 'ATN2' | 'ATAN2' ) '(' numericOp ',' numericOp ')'
 | 'ARRAY' '[' [ fields ] ']'
 | 'AVG' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
 | 'BIN_AND' '(' field ',' field ')'
@@ -632,7 +635,7 @@ term =
 | 'BIT_XOR' '(' field ',' field ')'
 | case
 | 'CAST' '(' field 'AS' castDataType ')'
-| ( 'CEIL' | 'CEILING' ) '(' sum ')'
+| ( 'CEIL' | 'CEILING' ) '(' numericOp ')'
 | 'CENTURY' '(' field ')'
 | 'CHARINDEX' '(' field ',' field ')'
 | 'CHAR_LENGTH' '(' field ')'
@@ -640,10 +643,10 @@ term =
 | 'COALESCE' '(' fields ')'
 | 'CONCAT' '(' fields ')'
 | 'CONVERT' '(' dataType ',' field ')'
-| 'COS' '(' sum ')'
-| 'COSH' '(' sum ')'
-| 'COT' '(' sum ')'
-| 'COTH' '(' sum ')'
+| 'COS' '(' numericOp ')'
+| 'COSH' '(' numericOp ')'
+| 'COT' '(' numericOp ')'
+| 'COTH' '(' numericOp ')'
 | 'COUNT' '(' ( '*' | [ 'DISTINCT' | 'ALL' ] field ) ')' [ keep | filter ] [ over ]
 | 'CUME_DIST' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'CURRVAL' '(' ( name | stringLiteral ) ')'
@@ -664,12 +667,12 @@ term =
 | 'DECADE' '(' field ')'
 | 'DECODE' '(' field ',' field ',' field { ',' field } ')'
 | 'DENSE_RANK' ( '(' ')' over | '(' fields ')' withinGroup )
-| ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' sum ')'
+| ( 'DEG' | 'DEGREE' | 'DEGREES' ) '(' numericOp ')'
 | 'EPOCH' '(' field ')'
 | 'EXTRACT' '(' datePart 'FROM' field ')'
-| 'EXP' '(' sum ')'
+| 'EXP' '(' numericOp ')'
 | 'EVERY' '(' field ')' [ filter ] [ over ]
-| 'FLOOR' '(' sum ')'
+| 'FLOOR' '(' numericOp ')'
 | 'FIELD' '(' field ',' field { ',' field } ')'
 | 'FIRST_VALUE' '(' field [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
 | 'GETDATE' '(' ')'
@@ -690,8 +693,8 @@ term =
 | 'LEFT' '(' field ',' field ')'
 | 'LEN' '(' field ')'
 | 'LENGTH' '(' field ')'
-| 'LN' '(' sum ')'
-| 'LOG' '(' sum ',' unsignedInteger ')'
+| 'LN' '(' numericOp ')'
+| 'LOG' '(' numericOp ',' unsignedInteger ')'
 | 'LEVEL'
 | 'LEAST' '(' fields ')'
 | 'LEAD' '(' field [ ',' unsignedInteger [ ',' field ] ] [ 'RESPECT NULLS' | 'IGNORE NULLS' ] ')' over
@@ -735,7 +738,7 @@ term =
   | 'REGR_SXX'
   | 'REGR_SYY'
   | 'REGR_SXY'
-  ) '(' sum ',' sum ')'
+  ) '(' numericOp ',' numericOp ')'
 | ( 'REPLACE' | 'OREPLACE' ) '(' field ',' field [ ',' field ] ')'
 | 'REPEAT' '(' field ',' field ')'
 | 'REVERSE' '(' field ')'
@@ -746,24 +749,24 @@ term =
 | 'RANK' ( '(' ')' over | '(' fields ')' withinGroup )
 | 'ROUND' '(' field [ ',' unsignedInteger ] ')'
 | 'ROWNUM'
-| ( 'RAD' | 'RADIAN' | 'RADIANS' ) '(' sum ')'
+| ( 'RAD' | 'RADIAN' | 'RADIANS' ) '(' numericOp ')'
 | 'ROW' '(' fields ')'
-| ( 'SUBSTR' | 'SUBSTRING' ) '(' field ',' sum [ ',' sum ] ')'
+| ( 'SUBSTR' | 'SUBSTRING' ) '(' field ',' numericOp [ ',' numericOp ] ')'
 | 'SECOND' '(' field ')'
 | ( 'SHL' | 'SHIFTLEFT' ) '(' field ',' field ')'
 | ( 'SHR' | 'SHIFTRIGHT' ) '(' field ',' field ')'
 | 'SIGN' '(' field ')'
-| ( 'SQR' | 'SQRT' ) '(' sum ')'
-| 'SIN' '(' sum ')'
-| 'SINH' '(' sum ')'
+| ( 'SQR' | 'SQRT' ) '(' numericOp ')'
+| 'SIN' '(' numericOp ')'
+| 'SINH' '(' numericOp ')'
 | 'SPACE' '(' field ')'
 | 'STDDEV_POP' '(' field ')' [ over ]
 | 'STDDEV_SAMP' '(' field ')' [ over ]
 | 'STR_REPLACE' '(' field ',' field ',' field ')'
-| 'SUBSTRING' '(' field 'FROM' sum [ 'FOR' sum ] ')'
+| 'SUBSTRING' '(' field 'FROM' numericOp [ 'FOR' numericOp ] ')'
 | 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]
-| 'TAN' '(' sum ')'
-| 'TANH' '(' sum ')'
+| 'TAN' '(' numericOp ')'
+| 'TANH' '(' numericOp ')'
 | timeLiteral
 | timestampLiteral
 | 'TIMEZONE' '(' field ')'
@@ -776,7 +779,7 @@ term =
 | ( 'TRANSLATE' | 'OTRANSLATE' ) '(' field ',' field ',' field ')'
 | 'TRIM' '(' field ')'
 | 'TRUNC' '(' field ',' stringLiteral ')'
-| 'TRUNC' '(' sum ',' sum ')'
+| 'TRUNC' '(' numericOp ',' numericOp ')'
 | truthValue
 | 'UNIX_TIMESTAMP' '(' field ')'
 | ( 'UPPER' | 'UCASE' ) '(' field ')'
@@ -853,7 +856,7 @@ case = 'CASE'
 [ 'ELSE' field ] 'END'
 ;
 
-comparator = '=' | '!=' | '<>' | '>=' | '>' | '<=>' | '<=' | '<'
+comparator = '=' | '!=' | '<>' | '^=' | '>=' | '>' | '<=>' | '<=' | '<'
 ;
 
 castDataType =
@@ -961,6 +964,7 @@ name = identifier { '.' identifier }
 stringLiteral =
 (
   "'" character* "'"
+| '$' nonSpaceCharacter* '$' character* '$' nonSpaceCharacter* '$'
 | "q'[" characters* "]'"
 | "q'{" characters* "}'"
 | "q'(" characters* ")'"

@@ -8095,7 +8095,9 @@ final class ParserImpl implements Parser {
 
     private static final String parseDollarQuotedStringLiteralIf(ParserContext ctx) {
         int previous = ctx.position();
-        parse(ctx, '$');
+
+        if (!parseIf(ctx, '$'))
+            return null;
 
         int openTokenStart = previous;
         int openTokenEnd = previous;
@@ -8126,25 +8128,15 @@ final class ParserImpl implements Parser {
         for (int i = ctx.position(); i < ctx.sql.length; i++) {
             char c = ctx.character(i);
 
-            if (c == '$') {
-                if (closeTokenStart == -1) {
+            if (c == '$')
+                if (closeTokenStart == -1)
                     closeTokenStart = i;
-                }
-                else {
-                    closeTokenEnd = i;
-
-                    tokenCompare: {
-                        for (int j = openTokenStart; j <= openTokenEnd; j++)
-                            if (ctx.character(j) != ctx.character(closeTokenStart + (j - openTokenStart)))
-                                break tokenCompare;
-
-                        break literalLoop;
-                    }
-
+                else if (openTokenEnd - openTokenStart == (closeTokenEnd = i) - closeTokenStart)
+                    break literalLoop;
+                else
                     closeTokenStart = closeTokenEnd;
-                    closeTokenEnd = -1;
-                }
-            }
+            else if (closeTokenStart > -1 && ctx.character(i) != ctx.character(i - (closeTokenStart - openTokenStart)))
+                closeTokenStart = -1;
         }
 
         if (closeTokenEnd != -1) {

@@ -4452,7 +4452,7 @@ final class ParserImpl implements Parser {
 
         if (N.is(type) && r instanceof Field)
             for (;;)
-                if (parseIf(ctx, '^'))
+                if (!peek(ctx, "^=") && parseIf(ctx, '^'))
                     r = ((Field) r).pow(toField(ctx, parseUnaryOps(ctx, type)));
                 else
                     break;
@@ -8552,7 +8552,7 @@ final class ParserImpl implements Parser {
     private static final Comparator parseComparatorIf(ParserContext ctx) {
         if (parseIf(ctx, "="))
             return Comparator.EQUALS;
-        else if (parseIf(ctx, "!=") || parseIf(ctx, "<>"))
+        else if (parseIf(ctx, "!=") || parseIf(ctx, "<>") || parseIf(ctx, "^="))
             return Comparator.NOT_EQUALS;
         else if (parseIf(ctx, ">="))
             return Comparator.GREATER_OR_EQUAL;

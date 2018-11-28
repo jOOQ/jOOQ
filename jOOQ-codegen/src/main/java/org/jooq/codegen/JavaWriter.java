@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     private final Pattern             fullyQualifiedTypes;
     private final boolean             javadoc;
-    private final Set<String>         qualifiedTypes   = new TreeSet<String>();
+    private final Set<String>         qualifiedTypes   = new TreeSet<String>(qualifiedTypeComparator());
     private final Map<String, String> unqualifiedTypes = new TreeMap<String, String>();
     private final String              className;
     private final boolean             isJava;
@@ -159,6 +160,13 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     public void printImports() {
         println(IMPORT_STATEMENT);
+    }
+
+    /**
+     * Subclasses may override this to specify their own order of qualified types.
+     */
+    protected Comparator<String> qualifiedTypeComparator() {
+        return null;
     }
 
     @Override

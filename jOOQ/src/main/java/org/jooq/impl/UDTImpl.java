@@ -168,6 +168,21 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return fieldsRow().fields(fieldIndexes);
     }
 
+    @Override
+    public final int indexOf(Field<?> field) {
+        return fieldsRow().indexOf(field);
+    }
+
+    @Override
+    public final int indexOf(String fieldName) {
+        return fieldsRow().indexOf(fieldName);
+    }
+
+    @Override
+    public final int indexOf(Name fieldName) {
+        return fieldsRow().indexOf(fieldName);
+    }
+
     final Fields<R> fields0() {
         return fields;
     }

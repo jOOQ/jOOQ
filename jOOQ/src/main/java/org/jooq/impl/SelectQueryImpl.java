@@ -410,6 +410,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final int indexOf(Field<?> field) {
+        return asTable().indexOf(field);
+    }
+
+    @Override
+    public final int indexOf(String fieldName) {
+        return asTable().indexOf(fieldName);
+    }
+
+    @Override
+    public final int indexOf(Name fieldName) {
+        return asTable().indexOf(fieldName);
+    }
+
+    @Override
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query

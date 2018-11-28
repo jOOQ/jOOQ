@@ -310,6 +310,21 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public final int indexOf(Field<?> field) {
+        return fieldsRow().indexOf(field);
+    }
+
+    @Override
+    public final int indexOf(String fieldName) {
+        return fieldsRow().indexOf(fieldName);
+    }
+
+    @Override
+    public final int indexOf(Name fieldName) {
+        return fieldsRow().indexOf(fieldName);
+    }
+
+    @Override
     public final Table<R> asTable() {
         return this;
     }

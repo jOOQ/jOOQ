@@ -80,13 +80,10 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
-import org.jooq.RecordType;
 import org.jooq.Result;
-import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
@@ -102,7 +99,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     private final ExecuteContext                           ctx;
     private final ExecuteListener                          listener;
-    private final Field<?>[]                               cursorFields;
     private final boolean[]                                intern;
     private final boolean                                  keepResultSet;
     private final boolean                                  keepStatement;
@@ -131,7 +127,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.get(ctx));
-        this.cursorFields = fields;
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
@@ -205,63 +200,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
 
 
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final RecordType<R> recordType() {
-        return new RowImpl(cursorFields).fields;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Row fieldsRow() {
-        return new RowImpl(cursorFields);
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return fieldsRow().field(field);
-    }
-
-    @Override
-    public final Field<?> field(String name) {
-        return fieldsRow().field(name);
-    }
-
-    @Override
-    public final Field<?> field(Name name) {
-        return fieldsRow().field(name);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return index >= 0 && index < cursorFields.length ? cursorFields[index] : null;
-    }
-
-    @Override
-    public final Field<?>[] fields() {
-        return fieldsRow().fields();
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... fields) {
-        return fieldsRow().fields(fields);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... fieldNames) {
-        return fieldsRow().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... fieldNames) {
-        return fieldsRow().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... fieldIndexes) {
-        return fieldsRow().fields(fieldIndexes);
-    }
 
     @Override
     public final Iterator<R> iterator() {
@@ -400,7 +338,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(((DefaultExecuteContext) ctx).originalConfiguration(), cursorFields);
+        ResultImpl<R> result = new ResultImpl<R>(((DefaultExecuteContext) ctx).originalConfiguration(), fields.fields);
 
         ctx.result(result);
         listener.resultStart(ctx);
@@ -1666,7 +1604,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                     }
 
                     record = Tools.newRecord(true, (RecordFactory<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
-                                  .operate(new CursorRecordInitialiser(cursorFields, 0));
+                                  .operate(new CursorRecordInitialiser(fields.fields, 0));
 
                     rows++;
                 }

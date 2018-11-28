@@ -73,12 +73,16 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Formattable;
 import org.jooq.JSONFormat;
+import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.RecordType;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.TXTFormat;
 import org.jooq.Table;
@@ -113,6 +117,95 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         this.configuration = configuration;
         this.fields = fields;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: RecordType API of subtypes
+    // -------------------------------------------------------------------------
+
+    public final RecordType<R> recordType() {
+        return fields;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public final Row fieldsRow() {
+        return new RowImpl(fields);
+    }
+
+    public final <T> Field<T> field(Field<T> field) {
+        return fields.field(field);
+    }
+
+    public final Field<?> field(String name) {
+        return fields.field(name);
+    }
+
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return fields.field(name, dataType);
+    }
+
+    public final Field<?> field(Name name) {
+        return fields.field(name);
+    }
+
+    public final <T> Field<T> field(Name name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    public final <T> Field<T> field(Name name, DataType<T> dataType) {
+        return fields.field(name, dataType);
+    }
+
+    public final Field<?> field(int index) {
+        return fields.field(index);
+    }
+
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return fields.field(index, type);
+    }
+
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return fields.field(index, dataType);
+    }
+
+    public final Field<?>[] fields() {
+        return fields.fields().clone();
+    }
+
+    public final Field<?>[] fields(Field<?>... f) {
+        return fields.fields(f);
+    }
+
+    public final Field<?>[] fields(int... indexes) {
+        return fields.fields(indexes);
+    }
+
+    public final Field<?>[] fields(String... names) {
+        return fields.fields(names);
+    }
+
+    public final Field<?>[] fields(Name... names) {
+        return fields.fields(names);
+    }
+
+    public final int indexOf(Field<?> field) {
+        return fields.indexOf(field);
+    }
+
+    public final int indexOf(String fieldName) {
+        return fields.indexOf(fieldName);
+    }
+
+    public final int indexOf(Name fieldName) {
+        return fields.indexOf(fieldName);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Formattable API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void format(Writer writer, TXTFormat format) {

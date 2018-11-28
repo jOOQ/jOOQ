@@ -202,6 +202,33 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Get a field's index from this table.
+     *
+     * @param field The field to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this table.
+     */
+    int indexOf(Field<?> field);
+
+    /**
+     * Get a field's index from this table.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this table.
+     */
+    int indexOf(String fieldName);
+
+    /**
+     * Get a field's index from this table.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this table
+     */
+    int indexOf(Name fieldName);
+
+    /**
      * The underlying table representation of this object.
      * <p>
      * This method is useful for things like

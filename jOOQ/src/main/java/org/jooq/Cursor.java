@@ -168,6 +168,33 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Get a field's index from this cursor.
+     *
+     * @param field The field to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this cursor.
+     */
+    int indexOf(Field<?> field);
+
+    /**
+     * Get a field's index from this cursor.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this cursor.
+     */
+    int indexOf(String fieldName);
+
+    /**
+     * Get a field's index from this cursor.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this cursor
+     */
+    int indexOf(Name fieldName);
+
+    /**
      * Check whether this cursor has a next record.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last

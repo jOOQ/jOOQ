@@ -57,7 +57,6 @@ import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -86,9 +85,7 @@ import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
-import org.jooq.RecordType;
 import org.jooq.Result;
-import org.jooq.Row;
 import org.jooq.TXTFormat;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -151,91 +148,6 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     // -------------------------------------------------------------------------
     // XXX: Result API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final RecordType<R> recordType() {
-        return fields;
-    }
-
-    @Override
-    public final Row fieldsRow() {
-        return new RowImpl(fields);
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return fields.field(field);
-    }
-
-    @Override
-    public final Field<?> field(String name) {
-        return fields.field(name);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(Name name) {
-        return fields.field(name);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return fields.field(index);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, Class<T> type) {
-        return fields.field(index, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, DataType<T> dataType) {
-        return fields.field(index, dataType);
-    }
-
-    @Override
-    public final Field<?>[] fields() {
-        return fields.fields().clone();
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... f) {
-        return fields.fields(f);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... indexes) {
-        return fields.fields(indexes);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... names) {
-        return fields.fields(names);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... names) {
-        return fields.fields(names);
-    }
 
     @Override
     public final boolean isEmpty() {

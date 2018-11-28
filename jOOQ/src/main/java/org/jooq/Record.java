@@ -190,6 +190,33 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Get a field's index from this record.
+     *
+     * @param field The field to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this record.
+     */
+    int indexOf(Field<?> field);
+
+    /**
+     * Get a field's index from this record.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this record.
+     */
+    int indexOf(String fieldName);
+
+    /**
+     * Get a field's index from this record.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this record
+     */
+    int indexOf(Name fieldName);
+
+    /**
      * Get this record's values as a {@link Row}.
      */
     Row valuesRow();

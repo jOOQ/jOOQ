@@ -194,6 +194,33 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Get a field's index from this result.
+     *
+     * @param field The field to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this result.
+     */
+    int indexOf(Field<?> field);
+
+    /**
+     * Get a field's index from this result.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this result.
+     */
+    int indexOf(String fieldName);
+
+    /**
+     * Get a field's index from this result.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this result
+     */
+    int indexOf(Name fieldName);
+
+    /**
      * Convenience method to fetch a value at a given position in the result.
      *
      * @param <T> The value's field's generic type parameter

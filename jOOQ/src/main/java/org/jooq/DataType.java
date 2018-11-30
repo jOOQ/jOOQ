@@ -47,6 +47,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * A common interface to all dialect-specific data types.
@@ -495,6 +496,7 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#LOCALDATETIME}</li>
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
+     * <li> {@link YearToSecond}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>
      * </ul>
@@ -508,6 +510,7 @@ public interface DataType<T> extends Serializable {
      * <p>
      * This applies to any of these types.
      * <ul>
+     * <li> {@link YearToSecond}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>
      * </ul>

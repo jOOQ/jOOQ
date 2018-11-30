@@ -180,6 +180,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
 /**
@@ -291,6 +292,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultUShortBinding(converter, isLob);
         else if (type == UUID.class)
             return new DefaultUUIDBinding(converter, isLob);
+        else if (type == YearToSecond.class)
+            return new DefaultYearToSecondBinding(converter, isLob);
         else if (type == YearToMonth.class)
             return new DefaultYearToMonthBinding(converter, isLob);
 
@@ -4054,6 +4057,68 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 default:
                     return Types.VARCHAR;
             }
+        }
+    }
+
+    static final class DefaultYearToSecondBinding<U> extends AbstractBinding<YearToSecond, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 6417965474063152673L;
+
+        DefaultYearToSecondBinding(Converter<YearToSecond, U> converter, boolean isLob) {
+            super(converter, isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, YearToSecond value) throws SQLException {
+
+            // [#566] Interval data types are best bound as Strings
+            if (ctx.family() == POSTGRES)
+                ctx.statement().setObject(ctx.index(), toPGInterval(value));
+            else
+                ctx.statement().setString(ctx.index(), value.toString());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, YearToSecond value) throws SQLException {
+            ctx.output().writeString(value.toString());
+        }
+
+        @Override
+        final YearToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            if (ctx.family() == POSTGRES) {
+                Object object = ctx.resultSet().getObject(ctx.index());
+                return object == null ? null : PostgresUtils.toYearToSecond(object);
+            }
+            else {
+                String string = ctx.resultSet().getString(ctx.index());
+                return string == null ? null : YearToSecond.valueOf(string);
+            }
+        }
+
+        @Override
+        final YearToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            if (ctx.family() == POSTGRES) {
+                Object object = ctx.statement().getObject(ctx.index());
+                return object == null ? null : PostgresUtils.toYearToSecond(object);
+            }
+            else {
+                String string = ctx.statement().getString(ctx.index());
+                return string == null ? null : YearToSecond.valueOf(string);
+            }
+        }
+
+        @Override
+        final YearToSecond get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            String string = ctx.input().readString();
+            return string == null ? null : YearToSecond.valueOf(string);
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.VARCHAR;
         }
     }
 

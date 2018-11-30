@@ -64,6 +64,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 // ...
 // ...
 // ...
@@ -365,6 +366,11 @@ public final class SQLDataType {
     public static final DataType<Time> TIME(int precision) {
         return TIME.precision(precision);
     }
+
+    /**
+     * The SQL standard <code>INTERVAL YEAR TO SECOND</code> data type.
+     */
+    public static final DataType<YearToSecond> INTERVAL = new DefaultDataType<YearToSecond>(null, YearToSecond.class, "interval");
 
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type.

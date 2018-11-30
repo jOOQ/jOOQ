@@ -60,6 +60,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * Supported data types for the {@link SQLDialect#HSQLDB} dialect
@@ -117,14 +118,15 @@ public class HSQLDBDataType {
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = new DefaultDataType<OffsetDateTime>(SQLDialect.HSQLDB, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp with time zone");
     public static final DataType<Instant>     INSTANT                  = new DefaultDataType<Instant>(SQLDialect.HSQLDB, SQLDataType.INSTANT, "timestamp with time zone");
 
-    public static final DataType<byte[]>      LONGVARBINARY            = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.LONGVARBINARY, "longvarbinary");
-    public static final DataType<byte[]>      VARBINARY                = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.VARBINARY, "varbinary", "varbinary(32672)");
-    public static final DataType<byte[]>      BINARY                   = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BINARY, "binary");
-    public static final DataType<byte[]>      BLOB                     = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "blob");
-    public static final DataType<byte[]>      BINARYLARGEOBJECT        = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "binary large object", "blob");
-    public static final DataType<Object>      OTHER                    = new DefaultDataType<Object>(SQLDialect.HSQLDB, SQLDataType.OTHER, "other");
-    public static final DataType<YearToMonth> INTERVALYEARTOMONTH      = new DefaultDataType<YearToMonth>(SQLDialect.HSQLDB, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
-    public static final DataType<DayToSecond> INTERVALDAYTOSECOND      = new DefaultDataType<DayToSecond>(SQLDialect.HSQLDB, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
+    public static final DataType<byte[]>       LONGVARBINARY            = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.LONGVARBINARY, "longvarbinary");
+    public static final DataType<byte[]>       VARBINARY                = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.VARBINARY, "varbinary", "varbinary(32672)");
+    public static final DataType<byte[]>       BINARY                   = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BINARY, "binary");
+    public static final DataType<byte[]>       BLOB                     = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>       BINARYLARGEOBJECT        = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "binary large object", "blob");
+    public static final DataType<Object>       OTHER                    = new DefaultDataType<Object>(SQLDialect.HSQLDB, SQLDataType.OTHER, "other");
+    public static final DataType<YearToSecond> INTERVAL                 = new DefaultDataType<YearToSecond>(SQLDialect.HSQLDB, SQLDataType.INTERVAL, "interval");
+    public static final DataType<YearToMonth>  INTERVALYEARTOMONTH      = new DefaultDataType<YearToMonth>(SQLDialect.HSQLDB, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+    public static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new DefaultDataType<DayToSecond>(SQLDialect.HSQLDB, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.HSQLDB, SQLDataTypes

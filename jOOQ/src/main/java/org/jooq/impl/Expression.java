@@ -73,6 +73,7 @@ import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.regex.Pattern;
 
@@ -88,6 +89,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 final class Expression<T> extends AbstractFunction<T> {
 
@@ -136,7 +138,7 @@ final class Expression<T> extends AbstractFunction<T> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        SQLDialect family = configuration.dialect().family();
+        SQLDialect family = configuration.family();
 
         // ---------------------------------------------------------------------
         // XXX: Bitwise operators
@@ -207,7 +209,7 @@ final class Expression<T> extends AbstractFunction<T> {
              lhs.getDataType().isDateTime() &&
             (rhs.get(0).getDataType().isNumeric() ||
              rhs.get(0).getDataType().isInterval()))
-            return new DateExpression();
+            return new DateExpression<T>(lhs, operator, rhs.get(0));
 
         // ---------------------------------------------------------------------
         // XXX: Other operators
@@ -215,7 +217,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
         // Use the default operator expression for all other cases
         else
-            return new DefaultExpression();
+            return new DefaultExpression<T>(lhs, operator, rhs);
     }
 
     /**
@@ -234,79 +236,71 @@ final class Expression<T> extends AbstractFunction<T> {
         return (Field<Number>) rhs.get(0);
     }
 
-    @SuppressWarnings("unchecked")
-    private final YearToMonth rhsAsYTM() {
-        try {
-            return ((Param<YearToMonth>) rhs.get(0)).getValue();
-        }
-        catch (ClassCastException e) {
-            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private final DayToSecond rhsAsDTS() {
-        try {
-            return ((Param<DayToSecond>) rhs.get(0)).getValue();
-        }
-        catch (ClassCastException e) {
-            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private final Interval rhsAsInterval() {
-        try {
-            return ((Param<Interval>) rhs.get(0)).getValue();
-        }
-        catch (ClassCastException e) {
-            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
-        }
-    }
-
     // E.g. +2 00:00:00.000000000
     private static final Pattern TRUNC_TO_MICROS = Pattern.compile("([^.]*\\.\\d{0,6})\\d{0,3}");
 
     /**
      * Return the expression to be rendered when the RHS is an interval type
      */
-    private class DateExpression extends AbstractFunction<T> {
+    private static class DateExpression<T> extends AbstractFunction<T> {
 
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 3160679741902222262L;
+        private static final long        serialVersionUID = 3160679741902222262L;
 
-        DateExpression() {
+        private final Field<T>           lhs;
+        private final ExpressionOperator operator;
+        private final Field<?>           rhs;
+
+        DateExpression(Field<T> lhs, ExpressionOperator operator, Field<?> rhs) {
             super(operator.toSQL(), lhs.getDataType());
+
+            this.lhs = lhs;
+            this.operator = operator;
+            this.rhs = rhs;
         }
 
         @Override
         final Field<T> getFunction0(Configuration configuration) {
-            if (rhs.get(0).getDataType().isInterval())
+            if (rhs.getDataType().isInterval())
                 return getIntervalExpression(configuration);
             else
                 return getNumberExpression(configuration);
         }
 
+        private final Field<T> getYTSExpression(Configuration configuration) {
+            YearToSecond yts = rhsAsYTS();
+
+            return new DateExpression<T>(
+                new DateExpression<T>(lhs, operator, val(yts.getYearToMonth())),
+                operator,
+                val(yts.getDayToSecond())
+            );
+        }
+
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.dialect();
-            int sign = (operator == ADD) ? 1 : -1;
+            SQLDialect family = dialect.family();
 
-            switch (dialect.family()) {
+            int sign = (operator == ADD) ? 1 : -1;
+            switch (family) {
 
 
 
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
+                    if (rhs.getType() == YearToSecond.class)
+                        return getYTSExpression(configuration);
+
                     Interval interval = rhsAsInterval();
 
                     if (operator == SUBTRACT)
                         interval = interval.neg();
 
-                    if (rhs.get(0).getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToMonth.class)
                         return DSL.field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, SQLDataType.VARCHAR));
                     else if (dialect == CUBRID)
                         return DSL.field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, SQLDataType.VARCHAR));
@@ -322,9 +316,12 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case DERBY:
                 case HSQLDB: {
+                    if (rhs.getType() == YearToSecond.class)
+                        return getYTSExpression(configuration);
+
                     Field<T> result;
 
-                    if (rhs.get(0).getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToMonth.class)
                         result = DSL.field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
                             getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     else
@@ -340,21 +337,28 @@ final class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case FIREBIRD: {
-                    if (rhs.get(0).getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToSecond.class)
+                        return getYTSExpression(configuration);
+                    else if (rhs.getType() == YearToMonth.class)
                         return DSL.field("{dateadd}({month}, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     else
                         return DSL.field("{dateadd}({millisecond}, {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
                 }
 
                 case H2: {
-                    if (rhs.get(0).getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToSecond.class)
+                        return getYTSExpression(configuration);
+                    else if (rhs.getType() == YearToMonth.class)
                         return DSL.field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     else
                         return DSL.field("{dateadd}('ms', {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
                 }
 
                 case SQLITE: {
-                    boolean ytm = rhs.get(0).getType() == YearToMonth.class;
+                    if (rhs.getType() == YearToSecond.class)
+                        return getYTSExpression(configuration);
+
+                    boolean ytm = rhs.getType() == YearToMonth.class;
                     Field<?> interval = val(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
                     if (sign < 0)
@@ -493,9 +497,28 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case POSTGRES:
                 default:
-                    return new DefaultExpression();
+                    return new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs)));
             }
         }
 
@@ -626,20 +649,76 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case H2:
                 default:
-                    return new DefaultExpression();
+                    return new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs)));
             }
+        }
+
+        @SuppressWarnings("unchecked")
+        private final YearToSecond rhsAsYTS() {
+            try {
+                return ((Param<YearToSecond>) rhs).getValue();
+            }
+            catch (ClassCastException e) {
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        private final YearToMonth rhsAsYTM() {
+            try {
+                return ((Param<YearToMonth>) rhs).getValue();
+            }
+            catch (ClassCastException e) {
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        private final DayToSecond rhsAsDTS() {
+            try {
+                return ((Param<DayToSecond>) rhs).getValue();
+            }
+            catch (ClassCastException e) {
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        private final Interval rhsAsInterval() {
+            try {
+                return ((Param<Interval>) rhs).getValue();
+            }
+            catch (ClassCastException e) {
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+            }
+        }
+
+        /**
+         * In some expressions, the rhs can be safely assumed to be a single number
+         */
+        @SuppressWarnings("unchecked")
+        private final Field<Number> rhsAsNumber() {
+            return (Field<Number>) rhs;
         }
     }
 
-    private class DefaultExpression extends AbstractField<T> {
+    private static class DefaultExpression<T> extends AbstractField<T> {
 
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID    = -5105004317793995419L;
+        private static final long             serialVersionUID = -5105004317793995419L;
 
-        private DefaultExpression() {
+        private final Field<T>                lhs;
+        private final ExpressionOperator      operator;
+        private final QueryPartList<Field<?>> rhs;
+
+        DefaultExpression(Field<T> lhs, ExpressionOperator operator, QueryPartList<Field<?>> rhs) {
             super(operator.toName(), lhs.getDataType());
+
+            this.lhs = lhs;
+            this.operator = operator;
+            this.rhs = rhs;
         }
 
         @Override

@@ -434,6 +434,7 @@ import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * @author Lukas Eder
@@ -5592,6 +5593,10 @@ final class ParserImpl implements Parser {
 
         if (ym != null)
             return ym;
+
+        YearToSecond ys = YearToSecond.valueOf(string);
+        if (ys != null)
+            return ys;
 
         throw ctx.exception("Illegal interval literal");
     }

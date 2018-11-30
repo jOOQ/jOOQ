@@ -57,6 +57,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * A collection of utilities to cover the Postgres JDBC driver's missing
@@ -207,6 +208,20 @@ public class PostgresUtils {
     }
 
     /**
+     * Convert a jOOQ <code>YEAR TO SECOND</code> interval to a Postgres representation
+     */
+    public static Object toPGInterval(YearToSecond interval) {
+        return on("org.postgresql.util.PGInterval").create(
+            interval.getSign() * interval.getYears(),
+            interval.getSign() * interval.getMonths(),
+            interval.getSign() * interval.getDays(),
+            interval.getSign() * interval.getHours(),
+            interval.getSign() * interval.getMinutes(),
+            interval.getSign() * interval.getSeconds() +
+            interval.getSign() * interval.getNano() / 1000000000.0).get();
+    }
+
+    /**
      * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres representation
      */
     public static Object toPGInterval(YearToMonth interval) {
@@ -262,6 +277,13 @@ public class PostgresUtils {
         }
 
         return result;
+    }
+
+    /**
+     * Convert a Postgres interval to a jOOQ <code>YEAR TO SECOND</code> interval
+     */
+    public static YearToSecond toYearToSecond(Object pgInterval) {
+        return new YearToSecond(toYearToMonth(pgInterval), toDayToSecond(pgInterval));
     }
 
     /**

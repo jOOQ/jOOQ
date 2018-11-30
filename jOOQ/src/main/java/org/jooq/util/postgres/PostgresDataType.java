@@ -60,6 +60,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * Supported data types for the {@link SQLDialect#POSTGRES} dialect
@@ -117,6 +118,7 @@ public class PostgresDataType {
     public static final DataType<Instant>        INSTANT                  = new DefaultDataType<Instant>(SQLDialect.POSTGRES, SQLDataType.INSTANT, "timestamp with time zone");
 
     public static final DataType<byte[]>         BYTEA                    = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.BLOB, "bytea");
+    public static final DataType<YearToSecond>   INTERVAL                 = new DefaultDataType<YearToSecond>(SQLDialect.POSTGRES, SQLDataType.INTERVAL, "interval");
     public static final DataType<YearToMonth>    INTERVALYEARTOMONTH      = new DefaultDataType<YearToMonth>(SQLDialect.POSTGRES, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
     public static final DataType<DayToSecond>    INTERVALDAYTOSECOND      = new DefaultDataType<DayToSecond>(SQLDialect.POSTGRES, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 

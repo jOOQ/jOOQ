@@ -85,7 +85,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      * Generated UID
      */
     private static final long    serialVersionUID = -3853596481984643811L;
-    private static final Pattern PATTERN          = Pattern.compile("([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?");
+    private static final Pattern PATTERN          = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
 
     private final boolean        negative;
     private final int            days;

@@ -55,6 +55,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
 
 /**
  * Supported data types for the {@link SQLDialect#FIREBIRD} dialect
@@ -100,10 +101,11 @@ public class FirebirdDataType {
 
     // TODO Below are HSQLDB data types. Fix this
 
-    public static final DataType<Boolean>     BIT                   = new DefaultDataType<Boolean>(SQLDialect.FIREBIRD, SQLDataType.BIT, "bit");
-    public static final DataType<Object>      OTHER                 = new DefaultDataType<Object>(SQLDialect.FIREBIRD, SQLDataType.OTHER, "other");
-    public static final DataType<YearToMonth> INTERVALYEARTOMONTH   = new DefaultDataType<YearToMonth>(SQLDialect.FIREBIRD, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
-    public static final DataType<DayToSecond> INTERVALDAYTOSECOND   = new DefaultDataType<DayToSecond>(SQLDialect.FIREBIRD, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
+    public static final DataType<Boolean>      BIT                  = new DefaultDataType<Boolean>(SQLDialect.FIREBIRD, SQLDataType.BIT, "bit");
+    public static final DataType<Object>       OTHER                = new DefaultDataType<Object>(SQLDialect.FIREBIRD, SQLDataType.OTHER, "other");
+    public static final DataType<YearToSecond> INTERVAL             = new DefaultDataType<YearToSecond>(SQLDialect.FIREBIRD, SQLDataType.INTERVAL, "interval");
+    public static final DataType<YearToMonth>  INTERVALYEARTOMONTH  = new DefaultDataType<YearToMonth>(SQLDialect.FIREBIRD, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+    public static final DataType<DayToSecond>  INTERVALDAYTOSECOND  = new DefaultDataType<DayToSecond>(SQLDialect.FIREBIRD, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.FIREBIRD, SQLDataTypes

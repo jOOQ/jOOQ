@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -130,7 +129,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         this(days, hours, minutes, seconds, nano, false);
     }
 
-    private DayToSecond(int days, int hours, int minutes, int seconds, int nano, boolean negative) {
+    DayToSecond(int days, int hours, int minutes, int seconds, int nano, boolean negative) {
 
         // Perform normalisation. Specifically, Postgres may return intervals
         // such as 24:00:00, 25:13:15, etc...
@@ -169,7 +168,8 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      */
     public static DayToSecond valueOf(String string) {
         if (string != null) {
-            // Accept also doubles as the number of days
+
+            // Accept also doubles as the number of milliseconds
             try {
                 return valueOf(Double.valueOf(string));
             }
@@ -177,15 +177,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
                 Matcher matcher = PATTERN.matcher(string);
 
                 if (matcher.find()) {
-                    boolean negative = "-".equals(matcher.group(1));
-
-                    int days = Convert.convert(matcher.group(2), int.class);
-                    int hours = Convert.convert(matcher.group(3), int.class);
-                    int minutes = Convert.convert(matcher.group(4), int.class);
-                    int seconds = Convert.convert(matcher.group(5), int.class);
-                    int nano = Convert.convert(StringUtils.rightPad(matcher.group(6), 9, "0"), int.class);
-
-                    return new DayToSecond(days, hours, minutes, seconds, nano, negative);
+                    return YearToSecond.parseDS(matcher, 0);
                 }
 
 

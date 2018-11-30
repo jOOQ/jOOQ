@@ -100,7 +100,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         this(years, months, false);
     }
 
-    private YearToMonth(int years, int months, boolean negative) {
+    YearToMonth(int years, int months, boolean negative) {
 
         // Perform normalisation. Specifically, Postgres may return intervals
         // such as 0-13
@@ -127,11 +127,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
             Matcher matcher;
 
             if ((matcher = PATTERN_SQL.matcher(string)).find()) {
-                boolean negative = "-".equals(matcher.group(1));
-                int years = Integer.parseInt(matcher.group(2));
-                int months = Integer.parseInt(matcher.group(3));
-
-                return new YearToMonth(years, months, negative);
+                return YearToSecond.parseYM(matcher, 0);
             }
 
             if ((matcher = PATTERN_ISO.matcher(string)).find()) {

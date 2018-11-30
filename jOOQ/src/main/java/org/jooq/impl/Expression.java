@@ -261,6 +261,15 @@ final class Expression<T> extends AbstractFunction<T> {
             this.rhs = rhs;
         }
 
+        private final <U> Field<U> p(U u) {
+            Param<U> result = val(u);
+
+            if (((Param<?>) rhs).isInline())
+                result.setInline(true);
+
+            return result;
+        }
+
         @Override
         final Field<T> getFunction0(Configuration configuration) {
             if (rhs.getDataType().isInterval())
@@ -273,9 +282,9 @@ final class Expression<T> extends AbstractFunction<T> {
             YearToSecond yts = rhsAsYTS();
 
             return new DateExpression<T>(
-                new DateExpression<T>(lhs, operator, val(yts.getYearToMonth())),
+                new DateExpression<T>(lhs, operator, p(yts.getYearToMonth())),
                 operator,
-                val(yts.getDayToSecond())
+                p(yts.getDayToSecond())
             );
         }
 
@@ -323,12 +332,12 @@ final class Expression<T> extends AbstractFunction<T> {
 
                     if (rhs.getType() == YearToMonth.class)
                         result = DSL.field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
-                            getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
+                            getDataType(), p(sign * rhsAsYTM().intValue()), lhs);
                     else
                         result = DSL.field("{fn {timestampadd}({sql_tsi_second}, {0}, {fn {timestampadd}({sql_tsi_milli_second}, {1}, {2}) }) }",
                             getDataType(),
-                            val(sign * (long) rhsAsDTS().getTotalSeconds()),
-                            val(sign * (long) rhsAsDTS().getMilli()),
+                            p(sign * (long) rhsAsDTS().getTotalSeconds()),
+                            p(sign * (long) rhsAsDTS().getMilli()),
                             lhs);
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
@@ -340,18 +349,18 @@ final class Expression<T> extends AbstractFunction<T> {
                     if (rhs.getType() == YearToSecond.class)
                         return getYTSExpression(configuration);
                     else if (rhs.getType() == YearToMonth.class)
-                        return DSL.field("{dateadd}({month}, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
+                        return DSL.field("{dateadd}({month}, {0}, {1})", getDataType(), p(sign * rhsAsYTM().intValue()), lhs);
                     else
-                        return DSL.field("{dateadd}({millisecond}, {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
+                        return DSL.field("{dateadd}({millisecond}, {0}, {1})", getDataType(), p(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
                 }
 
                 case H2: {
                     if (rhs.getType() == YearToSecond.class)
                         return getYTSExpression(configuration);
                     else if (rhs.getType() == YearToMonth.class)
-                        return DSL.field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
+                        return DSL.field("{dateadd}('month', {0}, {1})", getDataType(), p(sign * rhsAsYTM().intValue()), lhs);
                     else
-                        return DSL.field("{dateadd}('ms', {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
+                        return DSL.field("{dateadd}('ms', {0}, {1})", getDataType(), p(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
                 }
 
                 case SQLITE: {
@@ -359,7 +368,7 @@ final class Expression<T> extends AbstractFunction<T> {
                         return getYTSExpression(configuration);
 
                     boolean ytm = rhs.getType() == YearToMonth.class;
-                    Field<?> interval = val(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
+                    Field<?> interval = p(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
                     if (sign < 0)
                         interval = interval.neg();

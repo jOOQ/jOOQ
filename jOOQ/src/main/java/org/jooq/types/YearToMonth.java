@@ -37,6 +37,7 @@
  */
 package org.jooq.types;
 
+import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,6 +146,19 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
 
         return null;
     }
+
+
+    @Override
+    public final Duration toDuration() {
+        long hours = years * 8766L  // 365.25 * 24
+                   + months * 720L; // 30 * 24
+
+        if (negative)
+            hours = -hours;
+
+        return Duration.ofHours(hours);
+    }
+
 
     // -------------------------------------------------------------------------
     // XXX Interval API

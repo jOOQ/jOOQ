@@ -39,6 +39,7 @@ package org.jooq.types;
 
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -219,13 +220,54 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         return result;
     }
 
+    /**
+     * Load a {@link Double} representation of a
+     * <code>INTERVAL DAY TO SECOND</code> by assuming standard 24 hour days and
+     * 60 second minutes.
+     *
+     * @param second The number of seconds
+     * @param nanos The number of nano seconds
+     * @return The loaded <code>INTERVAL DAY TO SECOND</code> object
+     */
+    public static DayToSecond valueOf(long second, int nanos) {
+        long abs = Math.abs(second);
+
+        int s = (int) (abs % 60L); abs = abs / 60L;
+        int m = (int) (abs % 60L); abs = abs / 60L;
+        int h = (int) (abs % 24L); abs = abs / 24L;
+        int d = (int) abs;
+
+        DayToSecond result = new DayToSecond(d, h, m, s, nanos);
+
+        if (second < 0)
+            result = result.neg();
+
+        return result;
+    }
+
 
     /**
      * Transform a {@link Duration} into a {@link DayToSecond} interval by
      * taking its number of milliseconds.
      */
     public static DayToSecond valueOf(Duration duration) {
-        return duration == null ? null : valueOf(duration.toMillis());
+        if (duration == null)
+            return null;
+
+        long s = duration.get(ChronoUnit.SECONDS);
+        int n = (int) duration.get(ChronoUnit.NANOS);
+
+        if (s < 0) {
+            n = 1_000_000_000 - n;
+            s++;
+        }
+
+        return valueOf(s, n);
+    }
+
+    @Override
+    public final Duration toDuration() {
+        return Duration.ofSeconds((long) getTotalSeconds(), getSign() * getNano());
     }
 
 

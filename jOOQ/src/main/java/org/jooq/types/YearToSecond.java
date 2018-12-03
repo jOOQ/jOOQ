@@ -125,6 +125,13 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
         return duration == null ? null : valueOf(duration.toMillis());
     }
 
+
+    @Override
+    public final Duration toDuration() {
+        return yearToMonth.toDuration().plus(dayToSecond.toDuration());
+    }
+
+
     /**
      * Transform a {@link Period} into a {@link YearToSecond} interval.
      */

@@ -38,6 +38,8 @@
 package org.jooq.types;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.YearMonth;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -174,4 +176,23 @@ public interface Interval extends Serializable {
      * @see Number#shortValue()
      */
     short shortValue();
+
+
+    /**
+     * Get a duration representation of this interval.
+     * <p>
+     * There is an obvious {@link Duration} representation for
+     * {@link DayToSecond} intervals. If the interval contains {@link YearMonth}
+     * information, then the corresponding duration will use:
+     * <p>
+     * <ul>
+     * <li>1 year = 365.25 days</li>
+     * <li>1 month = 30 days</li>
+     * </ul>
+     * <p>
+     * This corresponds to PostgreSQL's
+     * <code>EXTRACT(EPOCH FROM my_interval)</code> behaviour.
+     */
+    Duration toDuration();
+
 }

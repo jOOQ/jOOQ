@@ -734,13 +734,13 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
+    public /* non-final */ <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
         return asConvertedDataType(DefaultBinding.newBinding(converter, this, null));
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public final <U> DataType<U> asConvertedDataType(Binding<? super T, U> newBinding) {
+    public /* non-final */ <U> DataType<U> asConvertedDataType(Binding<? super T, U> newBinding) {
         if (binding == newBinding)
             return (DataType<U>) this;
 

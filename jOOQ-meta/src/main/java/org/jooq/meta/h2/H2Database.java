@@ -38,7 +38,10 @@
 package org.jooq.meta.h2;
 
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.meta.h2.information_schema.tables.Constraints.CONSTRAINTS;
@@ -431,6 +434,14 @@ public class H2Database extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
+        Field<Boolean> overloaded = field(select(field(DSL.exists(
+            select(one())
+            .from(FUNCTION_ALIASES.as("a"))
+            .where(field(name("a", FunctionAliases.ALIAS_SCHEMA.getName())).eq(FunctionAliases.ALIAS_SCHEMA))
+            .and(field(name("a", FunctionAliases.ALIAS_NAME.getName())).eq(FunctionAliases.ALIAS_NAME))
+            .and(field(name("a", FunctionAliases.COLUMN_COUNT.getName())).ne(FunctionAliases.COLUMN_COUNT))
+        )))).as("overloaded");
+
         for (Record record : create()
                 .select(
                     FunctionAliases.ALIAS_SCHEMA,
@@ -438,6 +449,8 @@ public class H2Database extends AbstractDatabase {
                     FunctionAliases.REMARKS,
                     FunctionAliases.DATA_TYPE,
                     FunctionAliases.RETURNS_RESULT,
+                    FunctionAliases.COLUMN_COUNT,
+                    overloaded,
                     TypeInfo.TYPE_NAME,
                     TypeInfo.PRECISION,
                     TypeInfo.MAXIMUM_SCALE)
@@ -459,8 +472,11 @@ public class H2Database extends AbstractDatabase {
                 String typeName = record.get(TypeInfo.TYPE_NAME);
                 Integer precision = record.get(TypeInfo.PRECISION);
                 Short scale = record.get(TypeInfo.MAXIMUM_SCALE);
+                String overload = record.get(overloaded)
+                    ? record.get(FunctionAliases.COLUMN_COUNT, String.class)
+                    : null;
 
-                result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale));
+                result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale, overload));
             }
         }
 

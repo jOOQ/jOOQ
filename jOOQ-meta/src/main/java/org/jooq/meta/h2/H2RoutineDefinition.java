@@ -38,6 +38,7 @@
 package org.jooq.meta.h2;
 
 
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.meta.h2.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
 
 import java.sql.SQLException;
@@ -63,7 +64,11 @@ import org.jooq.util.h2.H2DataType;
 public class H2RoutineDefinition extends AbstractRoutineDefinition {
 
     public H2RoutineDefinition(SchemaDefinition schema, String name, String comment, String typeName, Number precision, Number scale) {
-        super(schema, null, name, comment, null);
+        this(schema, name, comment, typeName, precision, scale, null);
+    }
+
+    public H2RoutineDefinition(SchemaDefinition schema, String name, String comment, String typeName, Number precision, Number scale, String overload) {
+        super(schema, null, name, comment, overload);
 
         if (!StringUtils.isBlank(typeName)) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -99,6 +104,9 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 // [#4193] recent versions of H2 produce a row for the function
                 // return value at position 0
                 .and(FunctionColumns.POS.gt(0))
+                .and(getOverload() == null
+                    ? noCondition()
+                    : FunctionColumns.COLUMN_COUNT.eq(FunctionColumns.COLUMN_COUNT.getDataType().convert(getOverload())))
                 .orderBy(FunctionColumns.POS.asc()).fetch()) {
 
             String paramName = record.get(FunctionColumns.COLUMN_NAME);

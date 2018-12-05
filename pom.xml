@@ -272,7 +272,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.4.2</version>
+                    <version>3.4.4</version>
                 </plugin>
 
                 <plugin>
@@ -318,6 +318,7 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-scala_2.12</module>
+
 
 
 

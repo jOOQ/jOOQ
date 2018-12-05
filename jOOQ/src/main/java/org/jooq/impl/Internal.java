@@ -37,11 +37,15 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Binding;
+import org.jooq.Converter;
+import org.jooq.DataType;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.OrderField;
+import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -123,6 +127,9 @@ public final class Internal {
         return result;
     }
 
+    /**
+     * Factory method for path aliases.
+     */
     public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
         Name name = DSL.name(path.getName());
 
@@ -136,6 +143,40 @@ public final class Internal {
         }
 
         return DSL.name("alias_" + Tools.hash(name));
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    public static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
+        return createParameter(name, type, isDefaulted, isUnnamed, null, null);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
+        return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
+        return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    @SuppressWarnings("unchecked")
+    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
+        final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        final DataType<U> actualType = converter == null && binding == null
+            ? (DataType<U>) type
+            : type.asConvertedDataType(actualBinding);
+
+        return new ParameterImpl<U>(name, actualType, actualBinding, isDefaulted, isUnnamed);
     }
 
     private Internal() {}

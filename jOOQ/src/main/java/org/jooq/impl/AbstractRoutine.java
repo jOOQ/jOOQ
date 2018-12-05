@@ -1523,7 +1523,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      *            {@link Parameter#isDefaulted()}
      * @param isUnnamed Whether the parameter is unnamed (see
      *            {@link Parameter#isUnnamed()}.
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, null);
     }
@@ -1538,7 +1541,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      *            {@link Parameter#isDefaulted()}
      * @param isUnnamed Whether the parameter is unnamed (see
      *            {@link Parameter#isUnnamed()}.
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
         return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
     }
@@ -1553,7 +1559,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      *            {@link Parameter#isDefaulted()}
      * @param isUnnamed Whether the parameter is unnamed (see
      *            {@link Parameter#isUnnamed()}.
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
     }
@@ -1568,7 +1577,10 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      *            {@link Parameter#isDefaulted()}
      * @param isUnnamed Whether the parameter is unnamed (see
      *            {@link Parameter#isUnnamed()}.
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);

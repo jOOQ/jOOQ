@@ -4979,7 +4979,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
                 out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                        paramId, Parameter.class, paramType, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             out.println("}");
@@ -5015,8 +5015,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                out.tab(1).println("public static final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        Parameter.class, paramType, paramId, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
         }
 

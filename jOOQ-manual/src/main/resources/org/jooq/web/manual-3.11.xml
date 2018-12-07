@@ -9940,7 +9940,7 @@ from (
                                         The Parser API can be used as a translator between source and target dialects programmatically, as we've seen in the <reference id="sql-parser-api" title="previous section about the parser API"/>. This functionality can also usefully be accessed on the command line as shown below:
                                     </p>
 
-</html><text><![CDATA[$ java -jar jooq-{jooq-version}.jar org.jooq.ParserCLI -h
+</html><text><![CDATA[$ java -cp jooq-{jooq-version}.jar org.jooq.ParserCLI -h
 Usage:
   -f / --formatted                        Format output SQL
   -h / --help                             Display this help
@@ -9949,7 +9949,7 @@ Usage:
   -t / --to-dialect <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)
   -s / --sql        <String>              Specify the input SQL string
 
-$ java -jar jooq-{jooq-version}.jar org.jooq.ParserCLI -t ORACLE -s "SELECT substring('abcde', 2, 3)"
+$ java -cp jooq-{jooq-version}.jar org.jooq.ParserCLI -t ORACLE -s "SELECT substring('abcde', 2, 3)"
 select substr('abcde', 2, 3) from dual;]]></text><html>
 
                                     <p>

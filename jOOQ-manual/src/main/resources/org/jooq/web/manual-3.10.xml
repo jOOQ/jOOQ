@@ -13935,11 +13935,16 @@ select 'A';
 > A
 @ rows: 1
 
-select 'A', 'B';
+select 'A', 'B' union all 'C', 'D';
 > A B
 > - -
 > A B
-@ rows: 1
+> C D
+@ rows: 2
+
+# Statements without result sets just leave that section empty
+update t set x = 1;
+@ rows: 3
 ]]></text><html>
 
                             <p>

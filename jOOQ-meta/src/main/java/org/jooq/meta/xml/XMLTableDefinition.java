@@ -43,6 +43,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -92,7 +93,8 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getNumericPrecision()),
                     unbox(column.getNumericScale()),
                     column.isIsNullable(),
-                    column.getColumnDefault()
+                    column.getColumnDefault(),
+                    DSL.name(column.getUdtName())
                 );
 
                 result.add(new DefaultColumnDefinition(

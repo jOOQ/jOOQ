@@ -165,6 +165,7 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
+                        column.setUdtName(type.getUserType());
                         if (co.isIdentity())
                             column.setIdentityGeneration("YES");
                         column.setIsNullable(type.isNullable());

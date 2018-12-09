@@ -36,6 +36,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="parameter_mode" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}ParameterMode"/&gt;
  *         &lt;element name="parameter_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
@@ -83,6 +84,9 @@ public class Parameter implements Serializable
     @XmlElement(name = "data_type")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String dataType;
+    @XmlElement(name = "udt_name")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String udtName;
     @XmlElement(name = "character_maximum_length")
     protected Integer characterMaximumLength;
     @XmlElement(name = "numeric_precision")
@@ -279,6 +283,30 @@ public class Parameter implements Serializable
         this.dataType = value;
     }
 
+    /**
+     * Gets the value of the udtName property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getUdtName() {
+        return udtName;
+    }
+
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setUdtName(String value) {
+        this.udtName = value;
+    }
+    
     /**
      * Gets the value of the characterMaximumLength property.
      *
@@ -505,6 +533,11 @@ public class Parameter implements Serializable
             sb.append(dataType);
             sb.append("</data_type>");
         }
+        if (udtName!= null) {
+            sb.append("<udt_name>");
+            sb.append(udtName);
+            sb.append("</udt_name>");
+        }
         if (characterMaximumLength!= null) {
             sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);
@@ -611,6 +644,15 @@ public class Parameter implements Serializable
                 return false;
             }
         }
+        if (udtName == null) {
+            if (other.udtName!= null) {
+                return false;
+            }
+        } else {
+            if (!udtName.equals(other.udtName)) {
+                return false;
+            }
+        }
         if (characterMaximumLength == null) {
             if (other.characterMaximumLength!= null) {
                 return false;
@@ -671,6 +713,7 @@ public class Parameter implements Serializable
         result = ((prime*result)+((parameterMode == null)? 0 :parameterMode.hashCode()));
         result = ((prime*result)+((parameterName == null)? 0 :parameterName.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
+        result = ((prime*result)+((udtName == null)? 0 :udtName.hashCode()));
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));

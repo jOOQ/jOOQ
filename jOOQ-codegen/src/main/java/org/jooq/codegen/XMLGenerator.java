@@ -383,6 +383,7 @@ public class XMLGenerator extends AbstractGenerator {
         else {
             routine.setRoutineType(RoutineType.FUNCTION);
             routine.setDataType(r.getReturnType().getType());
+            routine.setTypeUdtName(r.getReturnType().getUserType());
             routine.setCharacterMaximumLength(r.getReturnType().getLength());
             routine.setNumericPrecision(r.getReturnType().getPrecision());
             routine.setNumericScale(r.getReturnType().getScale());
@@ -419,6 +420,7 @@ public class XMLGenerator extends AbstractGenerator {
                     parameter.setParameterMode(ParameterMode.OUT);
 
                 parameter.setDataType(p.getType().getType());
+                parameter.setUdtName(p.getType().getUserType());
                 parameter.setCharacterMaximumLength(p.getType().getLength());
                 parameter.setNumericPrecision(p.getType().getPrecision());
                 parameter.setNumericScale(p.getType().getScale());

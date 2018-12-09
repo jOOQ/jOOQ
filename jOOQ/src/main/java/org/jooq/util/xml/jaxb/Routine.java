@@ -38,6 +38,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="routine_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="routine_type" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}RoutineType"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="type_udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
@@ -91,6 +92,9 @@ public class Routine implements Serializable
     @XmlElement(name = "data_type")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String dataType;
+    @XmlElement(name = "type_udt_name")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String typeUdtName;
     @XmlElement(name = "character_maximum_length")
     protected Integer characterMaximumLength;
     @XmlElement(name = "numeric_precision")
@@ -339,6 +343,30 @@ public class Routine implements Serializable
     public void setDataType(String value) {
         this.dataType = value;
     }
+    
+    /**
+     * Gets the value of the typeUdtName property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getTypeUdtName() {
+        return typeUdtName;
+    }
+
+    /**
+     * Sets the value of the typeUdtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setTypeUdtName(String value) {
+        this.typeUdtName = value;
+    }
 
     /**
      * Gets the value of the characterMaximumLength property.
@@ -559,6 +587,11 @@ public class Routine implements Serializable
             sb.append(dataType);
             sb.append("</data_type>");
         }
+        if (typeUdtName!= null) {
+            sb.append("<type_udt_name>");
+            sb.append(typeUdtName);
+            sb.append("</type_udt_name>");
+        }
         if (characterMaximumLength!= null) {
             sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);
@@ -684,6 +717,15 @@ public class Routine implements Serializable
                 return false;
             }
         }
+        if (typeUdtName == null) {
+            if (other.typeUdtName!= null) {
+                return false;
+            }
+        } else {
+            if (!typeUdtName.equals(other.typeUdtName)) {
+                return false;
+            }
+        }
         if (characterMaximumLength == null) {
             if (other.characterMaximumLength!= null) {
                 return false;
@@ -737,6 +779,7 @@ public class Routine implements Serializable
         result = ((prime*result)+((routineName == null)? 0 :routineName.hashCode()));
         result = ((prime*result)+((routineType == null)? 0 :routineType.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
+        result = ((prime*result)+((typeUdtName == null)? 0 :typeUdtName.hashCode()));
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));

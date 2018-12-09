@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import org.jooq.Name;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -79,7 +80,8 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                 routine.getNumericPrecision(),
                 routine.getNumericScale(),
                 null,
-                (String) null
+                (String) null,
+                DSL.name(routine.getTypeUdtName())
             );
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
@@ -140,7 +142,8 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                     parameter.getNumericPrecision(),
                     parameter.getNumericScale(),
                     null,
-                    parameter.getParameterDefault()
+                    parameter.getParameterDefault(),
+                    DSL.name(parameter.getUdtName())
                 );
 
                 ParameterDefinition p = new DefaultParameterDefinition(

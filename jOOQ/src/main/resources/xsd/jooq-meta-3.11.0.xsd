@@ -97,6 +97,7 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="column_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />

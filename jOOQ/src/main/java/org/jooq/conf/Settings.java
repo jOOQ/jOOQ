@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.jooq.SQLDialect;
 
 
 /**
@@ -135,6 +136,9 @@ public class Settings
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeDeleteWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
+    @XmlElement(type = String.class, defaultValue = "DEFAULT")
+    @XmlJavaTypeAdapter(SQLDialectAdapter.class)
+    protected SQLDialect parseDialect;
     @XmlElement(defaultValue = "IGNORE_ON_FAILURE")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.IGNORE_ON_FAILURE;
@@ -1240,6 +1244,30 @@ public class Settings
     }
 
     /**
+     * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public SQLDialect getParseDialect() {
+        return parseDialect;
+    }
+
+    /**
+     * Sets the value of the parseDialect property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setParseDialect(SQLDialect value) {
+        this.parseDialect = value;
+    }
+
+    /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
      * @return
@@ -1526,6 +1554,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseDialect(SQLDialect value) {
+        setParseDialect(value);
+        return this;
+    }
+
     public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
         setParseWithMetaLookups(value);
         return this;
@@ -1758,6 +1791,11 @@ public class Settings
             sb.append("<executeDeleteWithoutWhere>");
             sb.append(executeDeleteWithoutWhere);
             sb.append("</executeDeleteWithoutWhere>");
+        }
+        if (parseDialect!= null) {
+            sb.append("<parseDialect>");
+            sb.append(parseDialect);
+            sb.append("</parseDialect>");
         }
         if (parseWithMetaLookups!= null) {
             sb.append("<parseWithMetaLookups>");
@@ -2176,6 +2214,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseDialect == null) {
+            if (other.parseDialect!= null) {
+                return false;
+            }
+        } else {
+            if (!parseDialect.equals(other.parseDialect)) {
+                return false;
+            }
+        }
         if (parseWithMetaLookups == null) {
             if (other.parseWithMetaLookups!= null) {
                 return false;
@@ -2253,6 +2300,7 @@ public class Settings
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
+        result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));

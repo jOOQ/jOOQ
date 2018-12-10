@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
@@ -392,6 +393,7 @@ import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.RowN;
 import org.jooq.SQL;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
@@ -4150,13 +4152,25 @@ final class ParserImpl implements Parser {
                 result.add(qa);
             }
             else {
-                Field<?> field = parseField(ctx);
                 Name alias = null;
+                Field<?> field = null;
 
-                if (parseKeywordIf(ctx, "AS"))
-                    alias = parseIdentifier(ctx, true);
-                else if (!peekKeyword(ctx, KEYWORDS_IN_SELECT))
-                    alias = parseIdentifierIf(ctx, true);
+
+
+
+
+
+
+
+
+                if (field == null) {
+                    field = parseField(ctx);
+
+                    if (parseKeywordIf(ctx, "AS"))
+                        alias = parseIdentifier(ctx, true);
+                    else if (!peekKeyword(ctx, KEYWORDS_IN_SELECT))
+                        alias = parseIdentifierIf(ctx, true);
+                }
 
                 result.add(alias == null ? field : field.as(alias));
             }
@@ -9107,6 +9121,19 @@ final class ParserContext {
         this.sqlString = sqlString;
         this.sql = sqlString.toCharArray();
         this.bindings = bindings;
+    }
+
+    SQLDialect dialect() {
+        SQLDialect result = dsl.configuration().settings().getParseDialect();
+
+        if (result == null)
+            result = SQLDialect.DEFAULT;
+
+        return result;
+    }
+
+    SQLDialect family() {
+        return dialect().family();
     }
 
     boolean requireProEdition() {

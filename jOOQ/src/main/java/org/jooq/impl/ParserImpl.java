@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 // ...
+// ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
@@ -286,6 +288,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -444,9 +447,13 @@ import org.jooq.types.YearToSecond;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ParserImpl implements Parser {
 
-    private final DSLContext           dsl;
-    private final ParseWithMetaLookups metaLookups;
-    private final Meta                 meta;
+
+
+
+
+    private final DSLContext                 dsl;
+    private final ParseWithMetaLookups       metaLookups;
+    private final Meta                       meta;
 
     ParserImpl(Configuration configuration) {
         this.dsl = DSL.using(configuration);

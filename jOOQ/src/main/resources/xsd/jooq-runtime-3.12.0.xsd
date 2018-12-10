@@ -452,11 +452,17 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
       <!-- Render object names, as defined in the database. For instance: schema.TABLE -->
       <enumeration value="AS_IS"/>
 
-      <!-- Force rendering object names in lower case. For instance: schema.table -->
+      <!-- Force rendering object names in lower case. For instance: schema."table" -->
       <enumeration value="LOWER"/>
 
-      <!-- Force rendering object names in upper case. For instance: SCHEMA.TABLE -->
+      <!-- Force rendering object names in lower case, if unquoted. For instance schema."TABLE" -->
+      <enumeration value="LOWER_IF_UNQUOTED"/>
+
+      <!-- Force rendering object names in upper case. For instance: SCHEMA."TABLE" -->
       <enumeration value="UPPER"/>
+
+      <!-- Force rendering object names in upper case, if unquoted. For instance SCHEMA."table" -->
+      <enumeration value="UPPER_IF_UNQUOTED"/>
     </restriction>
   </simpleType>
 

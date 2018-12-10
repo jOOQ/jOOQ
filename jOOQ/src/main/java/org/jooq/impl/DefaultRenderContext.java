@@ -469,9 +469,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#1982] [#3360] ... yet, do quote when an identifier contains special characters
             (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
 
-        if (RenderNameCase.LOWER == cachedRenderNameCase)
+        if (RenderNameCase.LOWER == cachedRenderNameCase ||
+            RenderNameCase.LOWER_IF_UNQUOTED == cachedRenderNameCase && !quote())
             literal = literal.toLowerCase(renderLocale(configuration().settings()));
-        else if (RenderNameCase.UPPER == cachedRenderNameCase)
+        else if (RenderNameCase.UPPER == cachedRenderNameCase ||
+                 RenderNameCase.UPPER_IF_UNQUOTED == cachedRenderNameCase && !quote())
             literal = literal.toUpperCase(renderLocale(configuration().settings()));
 
         if (needsQuote) {

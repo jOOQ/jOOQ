@@ -36,11 +36,14 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="routine_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="routine_package" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="routine_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="routine_type" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}RoutineType"/&gt;
+ *         &lt;element name="routine_type" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}RoutineType"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="udt_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="udt_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -60,7 +63,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Routine implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(name = "specific_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String specificCatalog;
@@ -97,6 +100,15 @@ public class Routine implements Serializable
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
     protected Integer numericScale;
+    @XmlElement(name = "udt_catalog")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String udtCatalog;
+    @XmlElement(name = "udt_schema")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String udtSchema;
+    @XmlElement(name = "udt_name")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String udtName;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
@@ -413,6 +425,78 @@ public class Routine implements Serializable
     }
 
     /**
+     * Gets the value of the udtCatalog property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getUdtCatalog() {
+        return udtCatalog;
+    }
+
+    /**
+     * Sets the value of the udtCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setUdtCatalog(String value) {
+        this.udtCatalog = value;
+    }
+
+    /**
+     * Gets the value of the udtSchema property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getUdtSchema() {
+        return udtSchema;
+    }
+
+    /**
+     * Sets the value of the udtSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setUdtSchema(String value) {
+        this.udtSchema = value;
+    }
+
+    /**
+     * Gets the value of the udtName property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getUdtName() {
+        return udtName;
+    }
+
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setUdtName(String value) {
+        this.udtName = value;
+    }
+
+    /**
      * Gets the value of the comment property.
      *
      * @return
@@ -501,6 +585,21 @@ public class Routine implements Serializable
         return this;
     }
 
+    public Routine withUdtCatalog(String value) {
+        setUdtCatalog(value);
+        return this;
+    }
+
+    public Routine withUdtSchema(String value) {
+        setUdtSchema(value);
+        return this;
+    }
+
+    public Routine withUdtName(String value) {
+        setUdtName(value);
+        return this;
+    }
+
     public Routine withComment(String value) {
         setComment(value);
         return this;
@@ -573,6 +672,21 @@ public class Routine implements Serializable
             sb.append("<numeric_scale>");
             sb.append(numericScale);
             sb.append("</numeric_scale>");
+        }
+        if (udtCatalog!= null) {
+            sb.append("<udt_catalog>");
+            sb.append(udtCatalog);
+            sb.append("</udt_catalog>");
+        }
+        if (udtSchema!= null) {
+            sb.append("<udt_schema>");
+            sb.append(udtSchema);
+            sb.append("</udt_schema>");
+        }
+        if (udtName!= null) {
+            sb.append("<udt_name>");
+            sb.append(udtName);
+            sb.append("</udt_name>");
         }
         if (comment!= null) {
             sb.append("<comment>");
@@ -711,6 +825,33 @@ public class Routine implements Serializable
                 return false;
             }
         }
+        if (udtCatalog == null) {
+            if (other.udtCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!udtCatalog.equals(other.udtCatalog)) {
+                return false;
+            }
+        }
+        if (udtSchema == null) {
+            if (other.udtSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!udtSchema.equals(other.udtSchema)) {
+                return false;
+            }
+        }
+        if (udtName == null) {
+            if (other.udtName!= null) {
+                return false;
+            }
+        } else {
+            if (!udtName.equals(other.udtName)) {
+                return false;
+            }
+        }
         if (comment == null) {
             if (other.comment!= null) {
                 return false;
@@ -740,6 +881,9 @@ public class Routine implements Serializable
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
+        result = ((prime*result)+((udtCatalog == null)? 0 :udtCatalog.hashCode()));
+        result = ((prime*result)+((udtSchema == null)? 0 :udtSchema.hashCode()));
+        result = ((prime*result)+((udtName == null)? 0 :udtName.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }

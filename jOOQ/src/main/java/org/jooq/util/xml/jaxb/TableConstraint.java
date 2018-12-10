@@ -31,7 +31,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="constraint_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="constraint_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="constraint_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="constraint_type" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}TableConstraintType"/&gt;
+ *         &lt;element name="constraint_type" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableConstraintType"/&gt;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -54,7 +54,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class TableConstraint implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(name = "constraint_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String constraintCatalog;

@@ -140,4 +140,12 @@ public class ObjectFactory {
         return new Parameter();
     }
 
+    /**
+     * Create an instance of {@link ElementType }
+     *
+     */
+    public ElementType createElementType() {
+        return new ElementType();
+    }
+
 }

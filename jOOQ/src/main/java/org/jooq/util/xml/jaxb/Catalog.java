@@ -47,7 +47,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 public class Catalog implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElement(name = "catalog_name")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalogName;

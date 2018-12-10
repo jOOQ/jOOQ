@@ -18,19 +18,19 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 
 
 /**
- * <p>Java class for Column complex type.
+ * <p>Java class for ElementType complex type.
  *
  * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
- * &lt;complexType name="Column"&gt;
+ * &lt;complexType name="ElementType"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="column_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="object_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="object_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="object_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="object_type" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
@@ -38,11 +38,6 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *         &lt;element name="udt_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="ordinal_position" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="identity_generation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -52,28 +47,28 @@ import org.jooq.util.jaxb.tools.StringAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Column", propOrder = {
+@XmlType(name = "ElementType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class Column implements Serializable
+public class ElementType implements Serializable
 {
 
     private final static long serialVersionUID = 31200L;
-    @XmlElement(name = "table_catalog")
+    @XmlElement(name = "object_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String tableCatalog;
-    @XmlElement(name = "table_schema")
+    protected String objectCatalog;
+    @XmlElement(name = "object_schema")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String tableSchema;
-    @XmlElement(name = "table_name", required = true)
+    protected String objectSchema;
+    @XmlElement(name = "object_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String tableName;
-    @XmlElement(name = "column_name", required = true)
+    protected String objectName;
+    @XmlElement(name = "object_type", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String columnName;
+    protected String objectType;
     @XmlElement(name = "data_type", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String dataType;
@@ -92,113 +87,101 @@ public class Column implements Serializable
     @XmlElement(name = "udt_name")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String udtName;
-    @XmlElement(name = "ordinal_position")
-    protected Integer ordinalPosition;
-    @XmlElement(name = "identity_generation")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String identityGeneration;
-    @XmlElement(name = "is_nullable")
-    protected Boolean isNullable;
-    @XmlElement(name = "column_default")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String columnDefault;
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String comment;
 
     /**
-     * Gets the value of the tableCatalog property.
+     * Gets the value of the objectCatalog property.
      *
      * @return
      *     possible object is
      *     {@link String }
      *
      */
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getObjectCatalog() {
+        return objectCatalog;
     }
 
     /**
-     * Sets the value of the tableCatalog property.
+     * Sets the value of the objectCatalog property.
      *
      * @param value
      *     allowed object is
      *     {@link String }
      *
      */
-    public void setTableCatalog(String value) {
-        this.tableCatalog = value;
+    public void setObjectCatalog(String value) {
+        this.objectCatalog = value;
     }
 
     /**
-     * Gets the value of the tableSchema property.
+     * Gets the value of the objectSchema property.
      *
      * @return
      *     possible object is
      *     {@link String }
      *
      */
-    public String getTableSchema() {
-        return tableSchema;
+    public String getObjectSchema() {
+        return objectSchema;
     }
 
     /**
-     * Sets the value of the tableSchema property.
+     * Sets the value of the objectSchema property.
      *
      * @param value
      *     allowed object is
      *     {@link String }
      *
      */
-    public void setTableSchema(String value) {
-        this.tableSchema = value;
+    public void setObjectSchema(String value) {
+        this.objectSchema = value;
     }
 
     /**
-     * Gets the value of the tableName property.
+     * Gets the value of the objectName property.
      *
      * @return
      *     possible object is
      *     {@link String }
      *
      */
-    public String getTableName() {
-        return tableName;
+    public String getObjectName() {
+        return objectName;
     }
 
     /**
-     * Sets the value of the tableName property.
+     * Sets the value of the objectName property.
      *
      * @param value
      *     allowed object is
      *     {@link String }
      *
      */
-    public void setTableName(String value) {
-        this.tableName = value;
+    public void setObjectName(String value) {
+        this.objectName = value;
     }
 
     /**
-     * Gets the value of the columnName property.
+     * Gets the value of the objectType property.
      *
      * @return
      *     possible object is
      *     {@link String }
      *
      */
-    public String getColumnName() {
-        return columnName;
+    public String getObjectType() {
+        return objectType;
     }
 
     /**
-     * Sets the value of the columnName property.
+     * Sets the value of the objectType property.
      *
      * @param value
      *     allowed object is
      *     {@link String }
      *
      */
-    public void setColumnName(String value) {
-        this.columnName = value;
+    public void setObjectType(String value) {
+        this.objectType = value;
     }
 
     /**
@@ -369,228 +352,83 @@ public class Column implements Serializable
         this.udtName = value;
     }
 
-    /**
-     * Gets the value of the ordinalPosition property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
-    public Integer getOrdinalPosition() {
-        return ordinalPosition;
-    }
-
-    /**
-     * Sets the value of the ordinalPosition property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
-    public void setOrdinalPosition(Integer value) {
-        this.ordinalPosition = value;
-    }
-
-    /**
-     * Gets the value of the identityGeneration property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdentityGeneration() {
-        return identityGeneration;
-    }
-
-    /**
-     * Sets the value of the identityGeneration property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdentityGeneration(String value) {
-        this.identityGeneration = value;
-    }
-
-    /**
-     * Gets the value of the isNullable property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *
-     */
-    public Boolean isIsNullable() {
-        return isNullable;
-    }
-
-    /**
-     * Sets the value of the isNullable property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
-    public void setIsNullable(Boolean value) {
-        this.isNullable = value;
-    }
-
-    /**
-     * Gets the value of the columnDefault property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getColumnDefault() {
-        return columnDefault;
-    }
-
-    /**
-     * Sets the value of the columnDefault property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setColumnDefault(String value) {
-        this.columnDefault = value;
-    }
-
-    /**
-     * Gets the value of the comment property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * Sets the value of the comment property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setComment(String value) {
-        this.comment = value;
-    }
-
-    public Column withTableCatalog(String value) {
-        setTableCatalog(value);
+    public ElementType withObjectCatalog(String value) {
+        setObjectCatalog(value);
         return this;
     }
 
-    public Column withTableSchema(String value) {
-        setTableSchema(value);
+    public ElementType withObjectSchema(String value) {
+        setObjectSchema(value);
         return this;
     }
 
-    public Column withTableName(String value) {
-        setTableName(value);
+    public ElementType withObjectName(String value) {
+        setObjectName(value);
         return this;
     }
 
-    public Column withColumnName(String value) {
-        setColumnName(value);
+    public ElementType withObjectType(String value) {
+        setObjectType(value);
         return this;
     }
 
-    public Column withDataType(String value) {
+    public ElementType withDataType(String value) {
         setDataType(value);
         return this;
     }
 
-    public Column withCharacterMaximumLength(Integer value) {
+    public ElementType withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
-    public Column withNumericPrecision(Integer value) {
+    public ElementType withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
-    public Column withNumericScale(Integer value) {
+    public ElementType withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
-    public Column withUdtCatalog(String value) {
+    public ElementType withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
     }
 
-    public Column withUdtSchema(String value) {
+    public ElementType withUdtSchema(String value) {
         setUdtSchema(value);
         return this;
     }
 
-    public Column withUdtName(String value) {
+    public ElementType withUdtName(String value) {
         setUdtName(value);
-        return this;
-    }
-
-    public Column withOrdinalPosition(Integer value) {
-        setOrdinalPosition(value);
-        return this;
-    }
-
-    public Column withIdentityGeneration(String value) {
-        setIdentityGeneration(value);
-        return this;
-    }
-
-    public Column withIsNullable(Boolean value) {
-        setIsNullable(value);
-        return this;
-    }
-
-    public Column withColumnDefault(String value) {
-        setColumnDefault(value);
-        return this;
-    }
-
-    public Column withComment(String value) {
-        setComment(value);
         return this;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (tableCatalog!= null) {
-            sb.append("<table_catalog>");
-            sb.append(tableCatalog);
-            sb.append("</table_catalog>");
+        if (objectCatalog!= null) {
+            sb.append("<object_catalog>");
+            sb.append(objectCatalog);
+            sb.append("</object_catalog>");
         }
-        if (tableSchema!= null) {
-            sb.append("<table_schema>");
-            sb.append(tableSchema);
-            sb.append("</table_schema>");
+        if (objectSchema!= null) {
+            sb.append("<object_schema>");
+            sb.append(objectSchema);
+            sb.append("</object_schema>");
         }
-        if (tableName!= null) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
+        if (objectName!= null) {
+            sb.append("<object_name>");
+            sb.append(objectName);
+            sb.append("</object_name>");
         }
-        if (columnName!= null) {
-            sb.append("<column_name>");
-            sb.append(columnName);
-            sb.append("</column_name>");
+        if (objectType!= null) {
+            sb.append("<object_type>");
+            sb.append(objectType);
+            sb.append("</object_type>");
         }
         if (dataType!= null) {
             sb.append("<data_type>");
@@ -627,31 +465,6 @@ public class Column implements Serializable
             sb.append(udtName);
             sb.append("</udt_name>");
         }
-        if (ordinalPosition!= null) {
-            sb.append("<ordinal_position>");
-            sb.append(ordinalPosition);
-            sb.append("</ordinal_position>");
-        }
-        if (identityGeneration!= null) {
-            sb.append("<identity_generation>");
-            sb.append(identityGeneration);
-            sb.append("</identity_generation>");
-        }
-        if (isNullable!= null) {
-            sb.append("<is_nullable>");
-            sb.append(isNullable);
-            sb.append("</is_nullable>");
-        }
-        if (columnDefault!= null) {
-            sb.append("<column_default>");
-            sb.append(columnDefault);
-            sb.append("</column_default>");
-        }
-        if (comment!= null) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
         return sb.toString();
     }
 
@@ -666,40 +479,40 @@ public class Column implements Serializable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        Column other = ((Column) that);
-        if (tableCatalog == null) {
-            if (other.tableCatalog!= null) {
+        ElementType other = ((ElementType) that);
+        if (objectCatalog == null) {
+            if (other.objectCatalog!= null) {
                 return false;
             }
         } else {
-            if (!tableCatalog.equals(other.tableCatalog)) {
+            if (!objectCatalog.equals(other.objectCatalog)) {
                 return false;
             }
         }
-        if (tableSchema == null) {
-            if (other.tableSchema!= null) {
+        if (objectSchema == null) {
+            if (other.objectSchema!= null) {
                 return false;
             }
         } else {
-            if (!tableSchema.equals(other.tableSchema)) {
+            if (!objectSchema.equals(other.objectSchema)) {
                 return false;
             }
         }
-        if (tableName == null) {
-            if (other.tableName!= null) {
+        if (objectName == null) {
+            if (other.objectName!= null) {
                 return false;
             }
         } else {
-            if (!tableName.equals(other.tableName)) {
+            if (!objectName.equals(other.objectName)) {
                 return false;
             }
         }
-        if (columnName == null) {
-            if (other.columnName!= null) {
+        if (objectType == null) {
+            if (other.objectType!= null) {
                 return false;
             }
         } else {
-            if (!columnName.equals(other.columnName)) {
+            if (!objectType.equals(other.objectType)) {
                 return false;
             }
         }
@@ -766,51 +579,6 @@ public class Column implements Serializable
                 return false;
             }
         }
-        if (ordinalPosition == null) {
-            if (other.ordinalPosition!= null) {
-                return false;
-            }
-        } else {
-            if (!ordinalPosition.equals(other.ordinalPosition)) {
-                return false;
-            }
-        }
-        if (identityGeneration == null) {
-            if (other.identityGeneration!= null) {
-                return false;
-            }
-        } else {
-            if (!identityGeneration.equals(other.identityGeneration)) {
-                return false;
-            }
-        }
-        if (isNullable == null) {
-            if (other.isNullable!= null) {
-                return false;
-            }
-        } else {
-            if (!isNullable.equals(other.isNullable)) {
-                return false;
-            }
-        }
-        if (columnDefault == null) {
-            if (other.columnDefault!= null) {
-                return false;
-            }
-        } else {
-            if (!columnDefault.equals(other.columnDefault)) {
-                return false;
-            }
-        }
-        if (comment == null) {
-            if (other.comment!= null) {
-                return false;
-            }
-        } else {
-            if (!comment.equals(other.comment)) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -818,10 +586,10 @@ public class Column implements Serializable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
-        result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
-        result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
-        result = ((prime*result)+((columnName == null)? 0 :columnName.hashCode()));
+        result = ((prime*result)+((objectCatalog == null)? 0 :objectCatalog.hashCode()));
+        result = ((prime*result)+((objectSchema == null)? 0 :objectSchema.hashCode()));
+        result = ((prime*result)+((objectName == null)? 0 :objectName.hashCode()));
+        result = ((prime*result)+((objectType == null)? 0 :objectType.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
@@ -829,11 +597,6 @@ public class Column implements Serializable
         result = ((prime*result)+((udtCatalog == null)? 0 :udtCatalog.hashCode()));
         result = ((prime*result)+((udtSchema == null)? 0 :udtSchema.hashCode()));
         result = ((prime*result)+((udtName == null)? 0 :udtName.hashCode()));
-        result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
-        result = ((prime*result)+((identityGeneration == null)? 0 :identityGeneration.hashCode()));
-        result = ((prime*result)+((isNullable == null)? 0 :isNullable.hashCode()));
-        result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));
-        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }
 

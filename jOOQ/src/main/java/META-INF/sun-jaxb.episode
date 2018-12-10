@@ -3,7 +3,7 @@
 
 
 
-    <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd" if-exists="true" scd="x-schema::tns">
+    <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd" if-exists="true" scd="x-schema::tns">
 
         <schemaBindings map="false">
 
@@ -89,6 +89,12 @@
 
         </bindings>
 
+        <bindings if-exists="true" scd="~tns:ElementTypes">
+
+            <class ref="org.jooq.util.xml.jaxb.ElementTypes"/>
+
+        </bindings>
+
         <bindings if-exists="true" scd="~tns:Catalog">
 
             <class ref="org.jooq.util.xml.jaxb.Catalog"/>
@@ -161,6 +167,12 @@
 
         </bindings>
 
+        <bindings if-exists="true" scd="~tns:ElementType">
+
+            <class ref="org.jooq.util.xml.jaxb.ElementType"/>
+
+        </bindings>
+
         <bindings if-exists="true" scd="~tns:TableConstraintType">
 
             <typesafeEnumClass ref="org.jooq.util.xml.jaxb.TableConstraintType"/>
@@ -176,6 +188,12 @@
         <bindings if-exists="true" scd="~tns:ParameterMode">
 
             <typesafeEnumClass ref="org.jooq.util.xml.jaxb.ParameterMode"/>
+
+        </bindings>
+
+        <bindings if-exists="true" scd="~tns:ObjectType">
+
+            <typesafeEnumClass ref="org.jooq.util.xml.jaxb.ObjectType"/>
 
         </bindings>
 

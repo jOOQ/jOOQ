@@ -30,18 +30,19 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Catalogs" minOccurs="0"/&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Schemata" minOccurs="0"/&gt;
- *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Sequences" minOccurs="0"/&gt;
- *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Tables" minOccurs="0"/&gt;
- *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Columns" minOccurs="0"/&gt;
- *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}TableConstraints" minOccurs="0"/&gt;
- *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
- *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Indexes" minOccurs="0"/&gt;
- *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Routines" minOccurs="0"/&gt;
- *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd}Parameters" minOccurs="0"/&gt;
+ *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Catalogs" minOccurs="0"/&gt;
+ *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Schemata" minOccurs="0"/&gt;
+ *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Sequences" minOccurs="0"/&gt;
+ *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Tables" minOccurs="0"/&gt;
+ *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Columns" minOccurs="0"/&gt;
+ *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Indexes" minOccurs="0"/&gt;
+ *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Routines" minOccurs="0"/&gt;
+ *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Parameters" minOccurs="0"/&gt;
+ *         &lt;element name="element_types" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}ElementTypes" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -61,7 +62,7 @@ import javax.xml.bind.annotation.XmlType;
 public class InformationSchema implements Serializable
 {
 
-    private final static long serialVersionUID = 31100L;
+    private final static long serialVersionUID = 31200L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<Catalog> catalogs;
@@ -98,6 +99,9 @@ public class InformationSchema implements Serializable
     @XmlElementWrapper(name = "parameters")
     @XmlElement(name = "parameter")
     protected List<Parameter> parameters;
+    @XmlElementWrapper(name = "element_types")
+    @XmlElement(name = "element_type")
+    protected List<ElementType> elementTypes;
 
     public List<Catalog> getCatalogs() {
         if (catalogs == null) {
@@ -229,6 +233,17 @@ public class InformationSchema implements Serializable
 
     public void setParameters(List<Parameter> parameters) {
         this.parameters = parameters;
+    }
+
+    public List<ElementType> getElementTypes() {
+        if (elementTypes == null) {
+            elementTypes = new ArrayList<ElementType>();
+        }
+        return elementTypes;
+    }
+
+    public void setElementTypes(List<ElementType> elementTypes) {
+        this.elementTypes = elementTypes;
     }
 
     public InformationSchema withCatalogs(Catalog... values) {
@@ -483,6 +498,27 @@ public class InformationSchema implements Serializable
         return this;
     }
 
+    public InformationSchema withElementTypes(ElementType... values) {
+        if (values!= null) {
+            for (ElementType value: values) {
+                getElementTypes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withElementTypes(Collection<ElementType> values) {
+        if (values!= null) {
+            getElementTypes().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withElementTypes(List<ElementType> elementTypes) {
+        setElementTypes(elementTypes);
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -593,6 +629,15 @@ public class InformationSchema implements Serializable
                 sb.append("</parameter>");
             }
             sb.append("</parameters>");
+        }
+        if (elementTypes!= null) {
+            sb.append("<element_types>");
+            for (int i = 0; (i<elementTypes.size()); i ++) {
+                sb.append("<element_type>");
+                sb.append(elementTypes.get(i));
+                sb.append("</element_type>");
+            }
+            sb.append("</element_types>");
         }
         return sb.toString();
     }
@@ -717,6 +762,15 @@ public class InformationSchema implements Serializable
                 return false;
             }
         }
+        if (elementTypes == null) {
+            if (other.elementTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!elementTypes.equals(other.elementTypes)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -736,6 +790,7 @@ public class InformationSchema implements Serializable
         result = ((prime*result)+((indexColumnUsages == null)? 0 :indexColumnUsages.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((parameters == null)? 0 :parameters.hashCode()));
+        result = ((prime*result)+((elementTypes == null)? 0 :elementTypes.hashCode()));
         return result;
     }
 

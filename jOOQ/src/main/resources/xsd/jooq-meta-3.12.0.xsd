@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd"
     elementFormDefault="qualified">
 
     <element name="information_schema">
@@ -19,6 +19,7 @@
                 <element name="index_column_usages" type="tns:IndexColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
                 <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
+                <element name="element_types" type="tns:ElementTypes" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>
@@ -100,6 +101,9 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="ordinal_position" type="int" minOccurs="0" maxOccurs="1" />
             <element name="identity_generation" type="string" minOccurs="0" maxOccurs="1" />
             <element name="is_nullable" type="boolean" minOccurs="0" maxOccurs="1" />
@@ -232,6 +236,9 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
@@ -262,6 +269,9 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="parameter_default" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
@@ -272,6 +282,37 @@
             <enumeration value="IN"/>
             <enumeration value="INOUT"/>
             <enumeration value="OUT"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="ElementTypes">
+        <sequence>
+            <element name="element_type" type="tns:ElementType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="ElementType">
+        <all>
+            <element name="object_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="object_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="object_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="object_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <simpleType name="ObjectType">
+        <restriction base="string">
+            <enumeration value="DOMAIN"/>
+            <enumeration value="ROUTINE"/>
+            <enumeration value="TABLE"/>
+            <enumeration value="USER-DEFINED TYPE"/>
         </restriction>
     </simpleType>
 </schema>

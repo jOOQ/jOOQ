@@ -11916,6 +11916,18 @@ public class DSL {
 // [jooq-tools] END [row-field]
 
     /**
+     * EXPERIMENTAL: Turn a row value expression of arbitrary degree into a {@code Field}.
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be emulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Support
+    public static Field<Record> rowField(RowN row) {
+        return new RowField<RowN, Record>(row);
+    }
+
+    /**
      * Transform a subquery into a correlated subquery.
      */
     @Support

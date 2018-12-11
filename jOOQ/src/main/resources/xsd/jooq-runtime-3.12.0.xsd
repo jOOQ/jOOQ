@@ -33,7 +33,7 @@ available using synonyms]]></jxb:javadoc></jxb:property></appinfo></annotation>
 generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="renderQuotedNames" type="jooq-runtime:RenderQuotedNames" minOccurs="0" maxOccurs="1" default="ALWAYS">
+      <element name="renderQuotedNames" type="jooq-runtime:RenderQuotedNames" minOccurs="0" maxOccurs="1" default="EXPLICIT_DEFAULT_QUOTED">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted.
 <p>
 This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
@@ -440,6 +440,12 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
            MySQL     : `information_schema`.`TABLES`
            SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
       <enumeration value="ALWAYS"/>
+
+      <!-- Render object names quoted if they are constructed using DSL.quotedName() or DSL.name() -->
+      <enumeration value="EXPLICIT_DEFAULT_QUOTED"/>
+
+      <!-- Render object names quoted if they are constructed using DSL.quotedName() -->
+      <enumeration value="EXPLICIT_DEFAULT_UNQUOTED"/>
 
       <!-- Never quote names -->
       <enumeration value="NEVER"/>

@@ -43,9 +43,9 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean renderSchema = true;
     protected RenderMapping renderMapping;
-    @XmlElement(defaultValue = "ALWAYS")
+    @XmlElement(defaultValue = "EXPLICIT_DEFAULT_QUOTED")
     @XmlSchemaType(name = "string")
-    protected RenderQuotedNames renderQuotedNames = RenderQuotedNames.ALWAYS;
+    protected RenderQuotedNames renderQuotedNames = RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED;
     @XmlElement(defaultValue = "AS_IS")
     @XmlSchemaType(name = "string")
     protected RenderNameCase renderNameCase = RenderNameCase.AS_IS;

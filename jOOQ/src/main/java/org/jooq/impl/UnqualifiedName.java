@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.conf.RenderQuotedNames;
+import org.jooq.conf.SettingsTools;
 
 /**
  * The default implementation for an unqualified SQL identifier.
@@ -66,15 +68,17 @@ final class UnqualifiedName extends AbstractName {
 
     @Override
     public final void accept(Context<?> ctx) {
+        RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
+
         boolean previous = ctx.quote();
+        boolean current =
+             q == RenderQuotedNames.ALWAYS
+          || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == null || quoted)
+          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted != null && quoted;
 
-        if (quoted != null)
-            ctx.quote(quoted);
-
+        ctx.quote(current);
         ctx.literal(name);
-
-        if (quoted != null)
-            ctx.quote(previous);
+        ctx.quote(previous);
     }
 
     @Override

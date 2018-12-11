@@ -80,7 +80,6 @@ import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
-import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
@@ -179,7 +178,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : m == ParamCastMode.NEVER
             ? CastMode.NEVER
             : CastMode.DEFAULT;
-        this.quote = SettingsTools.getRenderQuotedNames(settings()) == RenderQuotedNames.ALWAYS;
         this.scopeStack = new ScopeStack();
     }
 

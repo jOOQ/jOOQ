@@ -236,11 +236,11 @@ public final class SettingsTools {
     public static final RenderQuotedNames getRenderQuotedNames(Settings settings) {
         RenderQuotedNames result = settings.getRenderQuotedNames();
 
-        if (result == null || result == RenderQuotedNames.ALWAYS) {
+        if (result == null || result == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED) {
             RenderNameStyle style = settings.getRenderNameStyle();
 
             if (style == null || style == RenderNameStyle.QUOTED)
-                result = RenderQuotedNames.ALWAYS;
+                result = RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED;
             else
                 result = RenderQuotedNames.NEVER;
         }

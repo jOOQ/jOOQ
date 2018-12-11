@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;simpleType name="RenderQuotedNames"&gt;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *     &lt;enumeration value="ALWAYS"/&gt;
+ *     &lt;enumeration value="EXPLICIT_DEFAULT_QUOTED"/&gt;
+ *     &lt;enumeration value="EXPLICIT_DEFAULT_UNQUOTED"/&gt;
  *     &lt;enumeration value="NEVER"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
@@ -32,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 public enum RenderQuotedNames {
 
     ALWAYS,
+    EXPLICIT_DEFAULT_QUOTED,
+    EXPLICIT_DEFAULT_UNQUOTED,
     NEVER;
 
     public String value() {

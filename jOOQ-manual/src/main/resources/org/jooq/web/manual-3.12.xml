@@ -19585,6 +19585,16 @@ CREATE TABLE book_to_book_store (
           <key>unqualifiedSchema</key>
           <value>none</value>
         </property>
+
+        <!-- The default name case for unquoted objects:
+
+             - as_is: unquoted object names are kept unquoted
+             - upper: unquoted object names are turned into upper case (most databases)
+             - lower: unquoted object names are turned into lower case (e.g. PostgreSQL) -->
+        <property>
+          <key>defaultNameCase</key>
+          <value>as_is</value>
+        </property>
       </properties>
     </database>
   </generator>
@@ -19604,7 +19614,13 @@ CREATE TABLE book_to_book_store (
           .withValue("src/main/resources/database.sql"),
         new Property()
           .withKey("sort")
-          .withValue("semantic")))));]]></java><html>
+          .withValue("semantic"),
+        new Property()
+          .withKey("unqualifiedSchema")
+          .withValue("none"),
+        new Property()
+          .withKey("defaultNameCase")
+          .withValue("as_is")))));]]></java><html>
 
                                     <p>
                                         <strong>Gradle configuration</strong>
@@ -19622,6 +19638,14 @@ CREATE TABLE book_to_book_store (
         property {
           key = 'sort'
           value = 'semantic'
+        }
+        property {
+          key = 'unqualifiedSchema'
+          value = 'none'
+        }
+        property {
+          key = 'defaultNameCase'
+          value = 'as_is'
         }
       }
     }

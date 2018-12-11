@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.extensions.ddl;
 
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
@@ -58,10 +59,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
+import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.VisitContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultVisitListener;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.extensions.tools.FileComparator;
@@ -100,6 +105,7 @@ public class DDLDatabase extends H2Database {
             String encoding = getProperties().getProperty("encoding", "UTF-8");
             String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
             String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
+            String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
 
             publicIsDefault = "none".equals(unqualifiedSchema);
 
@@ -129,6 +135,32 @@ public class DDLDatabase extends H2Database {
 
                 // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
                 ctx.data("org.jooq.meta.extensions.ddl.ignore-storage-clauses", true);
+
+                if (!"AS_IS".equals(defaultNameCase)) {
+                    ctx.configuration().set(new DefaultVisitListener() {
+                        @Override
+                        public void visitStart(VisitContext c) {
+                            if (c.queryPart() instanceof Name) {
+                                Name[] parts = ((Name) c.queryPart()).parts();
+                                boolean changed = false;
+
+                                for (int i = 0; i < parts.length; i++) {
+                                    if (parts[i].quoted() == Quoted.UNQUOTED) {
+                                        parts[i] = DSL.quotedName(
+                                            "UPPER".equals(defaultNameCase)
+                                          ? parts[i].first().toUpperCase(renderLocale(ctx.settings()))
+                                          : parts[i].first().toLowerCase(renderLocale(ctx.settings()))
+                                        );
+                                        changed = true;
+                                    }
+                                }
+
+                                if (changed)
+                                    c.queryPart(DSL.name(parts));
+                            }
+                        }
+                    });
+                }
 
                 InputStream in = null;
                 boolean loaded = false;
@@ -175,7 +207,7 @@ public class DDLDatabase extends H2Database {
             }
         }
 
-        return ctx;
+        return DSL.using(connection);
     }
 
     private void load(String encoding, File file, Pattern pattern) throws IOException {

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Name.Quoted.DEFAULT;
+import static org.jooq.Name.Quoted.MIXED;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.tools.StringUtils;
@@ -56,10 +59,10 @@ final class QualifiedName extends AbstractName {
     private final UnqualifiedName[] qualifiedName;
 
     QualifiedName(String[] qualifiedName) {
-        this(qualifiedName, null);
+        this(qualifiedName, DEFAULT);
     }
 
-    QualifiedName(String[] qualifiedName, Boolean quoted) {
+    QualifiedName(String[] qualifiedName, Quoted quoted) {
         this(names(qualifiedName, quoted));
     }
 
@@ -71,7 +74,7 @@ final class QualifiedName extends AbstractName {
         this.qualifiedName = qualifiedName;
     }
 
-    private static final UnqualifiedName[] names(String[] qualifiedName, Boolean quoted) {
+    private static final UnqualifiedName[] names(String[] qualifiedName, Quoted quoted) {
         String[] nonEmpty = nonEmpty(qualifiedName);
         UnqualifiedName[] result = new UnqualifiedName[nonEmpty.length];
 
@@ -198,6 +201,19 @@ final class QualifiedName extends AbstractName {
             return this;
         else
             return qualifiedName[qualifiedName.length - 1];
+    }
+
+    @Override
+    public final Quoted quoted() {
+        Quoted result = null;
+
+        for (UnqualifiedName name : qualifiedName)
+            if (result == null)
+                result = name.quoted();
+            else if (result != name.quoted())
+                return MIXED;
+
+        return result == null ? DEFAULT : result;
     }
 
     @Override

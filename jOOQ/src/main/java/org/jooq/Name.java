@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 
 /**
@@ -72,6 +73,42 @@ import org.jooq.conf.Settings;
  * @author Lukas Eder
  */
 public interface Name extends QueryPart {
+
+    /**
+     * A flag indicating whether the name is quoted or not.
+     * <p>
+     * Quoting of names can be overridden by
+     * {@link Settings#getRenderQuotedNames()}.
+     *
+     * @author Lukas Eder
+     */
+    enum Quoted {
+
+        /**
+         * The name is explicitly quoted.
+         */
+        QUOTED,
+
+        /**
+         * The name is explicitly not quoted.
+         */
+        UNQUOTED,
+
+        /**
+         * The name is not quoted explicitly.
+         * <p>
+         * The behaviour of this name's quoting is governed by
+         * {@link RenderQuotedNames#EXPLICIT_DEFAULT_QUOTED} and
+         * {@link RenderQuotedNames#EXPLICIT_DEFAULT_UNQUOTED}.
+         */
+        DEFAULT,
+
+        /**
+         * The {@link Name#qualified()} name has mixed values for individual
+         * {@link Name#quoted()} flags.
+         */
+        MIXED
+    }
 
     /**
      * Get the first segment of the qualified name (usually a {@link Catalog} or {@link Schema} name).
@@ -99,6 +136,11 @@ public interface Name extends QueryPart {
      * This name, unqualified.
      */
     Name unqualifiedName();
+
+    /**
+     * Whether this is a quoted name.
+     */
+    Quoted quoted();
 
     /**
      * This name, quoted.

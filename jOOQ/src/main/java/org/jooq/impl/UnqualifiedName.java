@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Name.Quoted.DEFAULT;
+import static org.jooq.Name.Quoted.QUOTED;
+import static org.jooq.Name.Quoted.UNQUOTED;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.conf.RenderQuotedNames;
@@ -55,13 +59,13 @@ final class UnqualifiedName extends AbstractName {
     private static final long serialVersionUID = 8562325639223483938L;
 
     private final String      name;
-    private final Boolean     quoted;
+    private final Quoted     quoted;
 
     UnqualifiedName(String name) {
-        this(name, null);
+        this(name, DEFAULT);
     }
 
-    UnqualifiedName(String name, Boolean quoted) {
+    UnqualifiedName(String name, Quoted quoted) {
         this.name = name;
         this.quoted = quoted;
     }
@@ -73,8 +77,8 @@ final class UnqualifiedName extends AbstractName {
         boolean previous = ctx.quote();
         boolean current =
              q == RenderQuotedNames.ALWAYS
-          || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == null || quoted)
-          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted != null && quoted;
+          || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
+          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED;
 
         ctx.quote(current);
         ctx.literal(name);
@@ -107,13 +111,18 @@ final class UnqualifiedName extends AbstractName {
     }
 
     @Override
+    public final Quoted quoted() {
+        return quoted;
+    }
+
+    @Override
     public final Name quotedName() {
-        return new UnqualifiedName(name, true);
+        return new UnqualifiedName(name, QUOTED);
     }
 
     @Override
     public final Name unquotedName() {
-        return new UnqualifiedName(name, false);
+        return new UnqualifiedName(name, UNQUOTED);
     }
 
     @Override

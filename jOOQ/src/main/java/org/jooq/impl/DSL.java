@@ -245,6 +245,7 @@ import org.jooq.MergeKeyStep9;
 import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
+import org.jooq.Name.Quoted;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
@@ -9032,7 +9033,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name quotedName(String unqualifiedName) {
-        return new UnqualifiedName(unqualifiedName, true);
+        return new UnqualifiedName(unqualifiedName, Quoted.QUOTED);
     }
 
     /**
@@ -9046,7 +9047,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name quotedName(String... qualifiedName) {
-        return new QualifiedName(qualifiedName, true);
+        return new QualifiedName(qualifiedName, Quoted.QUOTED);
     }
 
     /**
@@ -9074,7 +9075,7 @@ public class DSL {
      * @return A {@link QueryPart} that will render the SQL identifier
      */
     public static Name unquotedName(String unqualifiedName) {
-        return new UnqualifiedName(unqualifiedName, false);
+        return new UnqualifiedName(unqualifiedName, Quoted.UNQUOTED);
     }
 
     /**
@@ -9089,9 +9090,9 @@ public class DSL {
      */
     public static Name unquotedName(String... qualifiedName) {
         if (qualifiedName == null || qualifiedName.length != 1)
-            return new QualifiedName(qualifiedName, false);
+            return new QualifiedName(qualifiedName, Quoted.UNQUOTED);
         else
-            return new UnqualifiedName(qualifiedName[0], false);
+            return new UnqualifiedName(qualifiedName[0], Quoted.UNQUOTED);
     }
 
     /**

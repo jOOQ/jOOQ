@@ -4,7 +4,6 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
-import java.time.Year;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1433747065;
+    private static final long serialVersionUID = 1425273525;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -50,32 +49,33 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>PUBLIC.FILM.FILMID</code>.
      */
-    public final TableField<FilmRecord, Integer> FILMID = createField("FILMID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<FilmRecord, Integer> FILMID = createField(DSL.name("FILMID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.FILM.LENGTH</code>.
      */
-    public final TableField<FilmRecord, Integer> LENGTH = createField("LENGTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> LENGTH = createField(DSL.name("LENGTH"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>PUBLIC.FILM.RELEASE_YEAR</code>.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
-    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField("RELEASE_YEAR", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
+    @java.lang.Deprecated
+    public final TableField<FilmRecord, Object> RELEASE_YEAR = createField(DSL.name("RELEASE_YEAR"), org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
 
     /**
      * The column <code>PUBLIC.FILM.TITLE</code>.
      */
-    public final TableField<FilmRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<FilmRecord, String> TITLE = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>PUBLIC.FILM.LANGUAGE_LANGUAGEID</code>.
      */
-    public final TableField<FilmRecord, Integer> LANGUAGE_LANGUAGEID = createField("LANGUAGE_LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> LANGUAGE_LANGUAGEID = createField(DSL.name("LANGUAGE_LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>PUBLIC.FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
      */
-    public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField("ORIGINALLANGUAGE_LANGUAGEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField(DSL.name("ORIGINALLANGUAGE_LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>PUBLIC.FILM</code> table reference

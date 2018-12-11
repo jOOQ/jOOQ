@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -102517780;
+    private static final long serialVersionUID = -197980969;
 
     /**
      * The reference instance of <code>PUBLIC.ACTOR</code>
@@ -49,17 +49,17 @@ public class Actor extends TableImpl<ActorRecord> {
     /**
      * The column <code>PUBLIC.ACTOR.ACTORID</code>.
      */
-    public final TableField<ActorRecord, Integer> ACTORID = createField("ACTORID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.ACTOR.FIRSTNAME</code>.
      */
-    public final TableField<ActorRecord, String> FIRSTNAME = createField("FIRSTNAME", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<ActorRecord, String> FIRSTNAME = createField(DSL.name("FIRSTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>PUBLIC.ACTOR.LASTNAME</code>.
      */
-    public final TableField<ActorRecord, String> LASTNAME = createField("LASTNAME", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<ActorRecord, String> LASTNAME = createField(DSL.name("LASTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * Create a <code>PUBLIC.ACTOR</code> table reference

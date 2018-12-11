@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -2005425571;
+    private static final long serialVersionUID = 1565489533;
 
     /**
      * The reference instance of <code>PUBLIC.FILM_ACTOR</code>
@@ -48,12 +48,12 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     /**
      * The column <code>PUBLIC.FILM_ACTOR.FILMS_FILMID</code>.
      */
-    public final TableField<FilmActorRecord, Integer> FILMS_FILMID = createField("FILMS_FILMID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> FILMS_FILMID = createField(DSL.name("FILMS_FILMID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.FILM_ACTOR.ACTORS_ACTORID</code>.
      */
-    public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField("ACTORS_ACTORID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField(DSL.name("ACTORS_ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>PUBLIC.FILM_ACTOR</code> table reference

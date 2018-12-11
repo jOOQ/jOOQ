@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.3.1.Final</org.hibernate.version>
+        <org.hibernate.version>5.3.7.Final</org.hibernate.version>
     </properties>
 
     <dependencies>
@@ -38,10 +38,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <fork>true</fork>
-                    <maxmem>1024m</maxmem>
-                    <meminitial>256m</meminitial>
-                    <encoding>UTF-8</encoding>
                     <!-- [java-9] -->
                     <release>10</release>
                     <!-- [/java-9] -->
@@ -50,14 +46,34 @@
                     <source>10</source>
                     <target>10</target>
 
-                    <debug>true</debug>
-                    <debuglevel>lines,vars,source</debuglevel>
-                    <!-- [#2413] Make compiler warnings a bit more visible
-                         But don't fail (yet) -->
-                    <compilerArgs>
-                        <arg>-Xlint:varargs</arg>
-                    </compilerArgs>
+                    <!-- How to properly set things up in JDK 9+
+                         https://stackoverflow.com/a/51409471/521799 -->
+                    <compilerArguments>
+                        <AaddGeneratedAnnotation>false</AaddGeneratedAnnotation>
+                        <Adebug>true</Adebug>
+                    </compilerArguments>
+
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${org.hibernate.version}</version>
+                        </annotationProcessorPath>
+                        <annotationProcessorPath>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                            <version>2.3.0</version>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
                 </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                        <version>2.3.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

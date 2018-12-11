@@ -84,6 +84,7 @@ import static org.jooq.impl.Keywords.K_ON_COMMIT_DROP;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TEMPORARY;
+import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
 import static org.jooq.impl.Tools.begin;
@@ -475,9 +476,12 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 ctx.qualify(false);
 
                 for (Index index : indexes) {
-                    ctx.sql(',')
-                       .formatSeparator()
-                       .visit(K_INDEX);
+                    ctx.sql(',').formatSeparator();
+
+                    if (index.getUnique())
+                        ctx.visit(K_UNIQUE).sql(' ');
+
+                    ctx.visit(K_INDEX);
 
                     if (!"".equals(index.getName()))
                         ctx.sql(' ').visit(index.getUnqualifiedName());

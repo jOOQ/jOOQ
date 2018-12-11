@@ -307,7 +307,7 @@ index = ( 'KEY' | 'INDEX' ) [ identifier ] '(' sortFields ')'
 constraint =
 (
   'PRIMARY KEY' '(' fieldNames ')'
-| 'UNIQUE' [ 'KEY' | 'INDEX' ] '(' fieldNames ')'
+| 'UNIQUE' [ 'KEY' | 'INDEX' ] [ identifier ] '(' sortFields ')'
 | 'FOREIGN KEY' '(' fieldNames ')' 'REFERENCES' constraintReferenceSpecification
 | 'CHECK' '(' condition ')'
 ) [ 'ENABLE' ]

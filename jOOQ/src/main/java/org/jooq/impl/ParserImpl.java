@@ -2452,6 +2452,12 @@ final class ParserImpl implements Parser {
                     if (!parseKeywordIf(ctx, "KEY"))
                         parseKeywordIf(ctx, "INDEX");
 
+                    // [#7268] MySQL has some legacy syntax where an index name
+                    //         can override a constraint name
+                    Name index = parseIdentifierIf(ctx);
+                    if (index != null)
+                        constraint = constraint(index);
+
                     constraints.add(parseUniqueSpecification(ctx, constraint));
                     continue columnLoop;
                 }

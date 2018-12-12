@@ -19773,6 +19773,14 @@ CREATE TABLE book_to_book_store (
 
         <!-- Instead of providing an inline configuration here, you can specify an external XML configuration file here -->
         <configurationFile>${externalfile}</configurationFile>
+
+        <!-- Alternatively, you can provide several external configuration files. These will be merged by using
+             Maven's combine.children="append" policy
+        <configurationFiles>
+          <configurationFile>${file1}</configurationFile>
+          <configurationFile>${file2}</configurationFile>
+          <configurationFile>...</configurationFile>
+        </configurationFiles>
       </configuration>
   ...
 </plugin>]]></xml><html>

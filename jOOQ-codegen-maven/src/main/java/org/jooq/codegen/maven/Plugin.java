@@ -50,6 +50,7 @@ import java.net.URLClassLoader;
 import java.util.List;
 
 import org.jooq.codegen.GenerationTool;
+import org.jooq.conf.MiniJAXB;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Target;
 
@@ -84,12 +85,24 @@ public class Plugin extends AbstractMojo {
     private MavenProject                 project;
 
     /**
-     * An external configuration file that overrides anything in the Maven configuration
+     * An external configuration file that is appended to anything from the
+     * Maven configuration, using Maven's <code>combine.children="append"</code>
+     * semantics.
      */
     @Parameter(
         property = "jooq.codegen.configurationFile"
     )
     private String                       configurationFile;
+
+    /**
+     * An external set of configuration files that is appended to anything from
+     * the Maven configuration, using Maven's
+     * <code>combine.children="append"</code> semantics.
+     */
+    @Parameter(
+        property = "jooq.codegen.configurationFiles"
+    )
+    private List<String>                 configurationFiles;
 
     /**
      * Whether to skip the execution of the Maven Plugin for this module.
@@ -126,32 +139,11 @@ public class Plugin extends AbstractMojo {
             return;
         }
 
-        if (configurationFile != null) {
-            getLog().info("Reading external configuration");
-            File file = new File(configurationFile);
-
-            if (!file.isAbsolute())
-                file = new File(project.getBasedir(), configurationFile);
-
-            FileInputStream in = null;
-            try {
-                in = new FileInputStream(file);
-                Configuration configuration = GenerationTool.load(in);
-                generator = configuration.getGenerator();
-                jdbc = configuration.getJdbc();
-            }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            finally {
-                if (in != null) {
-                    try {
-                        in.close();
-                    }
-                    catch (IOException ignore) {}
-                }
-            }
-        }
+        if (configurationFiles != null && !configurationFiles.isEmpty())
+            for (String file : configurationFiles)
+                read(file);
+        else if (configurationFile != null)
+            read(configurationFile);
 
         // [#5286] There are a variety of reasons why the generator isn't set up
         //         correctly at this point. We'll log them all here.
@@ -218,6 +210,34 @@ public class Plugin extends AbstractMojo {
         }
 
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
+    }
+
+    private void read(String file) {
+        getLog().info("Reading external configuration: " + file);
+        File f = new File(file);
+
+        if (!f.isAbsolute())
+            f = new File(project.getBasedir(), file);
+
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(f);
+            Configuration configuration = GenerationTool.load(in);
+            logging = MiniJAXB.append(logging, configuration.getLogging());
+            jdbc = MiniJAXB.append(jdbc, configuration.getJdbc());
+            generator = MiniJAXB.append(generator, configuration.getGenerator());
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                }
+                catch (IOException ignore) {}
+            }
+        }
     }
 
     private URLClassLoader getClassLoader() throws MojoExecutionException {

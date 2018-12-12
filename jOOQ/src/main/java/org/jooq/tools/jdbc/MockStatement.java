@@ -218,7 +218,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     @Override
     public ResultSet getResultSet() throws SQLException {
         checkNotClosed();
-        return (result != null && resultIndex < result.length && result[resultIndex].data != null)
+        return (result != null && ++resultIndex < result.length && result[resultIndex].data != null)
             ? new MockResultSet(result[resultIndex].data, maxRows)
             : null;
     }

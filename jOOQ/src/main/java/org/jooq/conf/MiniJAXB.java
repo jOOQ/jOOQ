@@ -46,9 +46,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
@@ -68,6 +70,7 @@ import org.jooq.exception.ExceptionTools;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -90,6 +93,12 @@ public class MiniJAXB {
 
     private static final JooqLogger log = JooqLogger.getLogger(MiniJAXB.class);
     private static volatile Boolean jaxbAvailable;
+
+    public static String marshal(Object object) {
+        StringWriter writer = new StringWriter();
+        marshal(object, writer);
+        return writer.toString();
+    }
 
     public static void marshal(Object object, OutputStream out) {
         marshal(object, new OutputStreamWriter(out));
@@ -340,5 +349,62 @@ public class MiniJAXB {
         catch (Exception ignore) {}
 
         return xml;
+    }
+
+    /**
+     * Appends a <code>second</code> JAXB annotated object to a
+     * <code>first</code> one using Maven's
+     * <code>combine.children="append"</code> semantics.
+     *
+     * @return The modified <code>first</code> argument.
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static <T> T append(T first, T second) {
+        if (first == null)
+            return second;
+        if (second == null)
+            return first;
+
+        Class<T> klass = (Class<T>) first.getClass();
+        if (klass != second.getClass())
+            throw new IllegalArgumentException("Can only append identical types");
+
+        // We're assuming that XJC generated objects are all in the same package
+        Package pkg = klass.getPackage();
+        try {
+            T defaults = klass.getConstructor().newInstance();
+
+            for (Method setter : klass.getMethods()) {
+                if (setter.getName().startsWith("set")) {
+                    Method getter;
+
+                    try {
+                        getter = klass.getMethod("get" + setter.getName().substring(3));
+                    }
+                    catch (NoSuchMethodException e) {
+                        getter = klass.getMethod("is" + setter.getName().substring(3));
+                    }
+
+                    Class<?> childType = setter.getParameterTypes()[0];
+                    Object firstChild = getter.invoke(first);
+                    Object secondChild = getter.invoke(second);
+                    Object defaultChild = getter.invoke(defaults);
+
+                    if (Collection.class.isAssignableFrom(childType))
+                        ((List) firstChild).addAll((List) secondChild);
+                    else if (secondChild != null && (firstChild == null || firstChild.equals(defaultChild)))
+                        setter.invoke(first, secondChild);
+                    else if (secondChild != null && pkg == childType.getPackage())
+                        append(firstChild, secondChild);
+                    else
+                        ; // All other types cannot be merged
+                }
+            }
+        }
+        catch (Exception e) {
+            throw new ReflectException(e);
+        }
+
+        return first;
     }
 }

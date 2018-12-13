@@ -402,7 +402,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Reflect parameter = Reflect.on(parameters.get(i));
-                        parameterNames.add(parameter.call("getName").<String>get());
+                        // [#8004] Clean up kotlin field name for boolean types
+                        String name = parameter.call("getName").<String>get();
+                        parameterNames.add(getPropertyName(name));
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
                         parameterTypes[i] = (Class<?>) getJavaClass.invoke(jvmClassMappingKt.get(), typeClassifier);
                     }

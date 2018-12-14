@@ -35,10 +35,11 @@
  *
  *
  */
-package org.jooq.meta.extensions.tools;
+package org.jooq.meta.tools;
 
-import java.io.File;
+import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 /**
  * A comparator that compares file names semantically, just like the Windows
@@ -62,15 +63,35 @@ import java.util.Comparator;
  *
  * @author Lukas Eder
  */
-public final class FileComparator implements Comparator<File> {
+public final class FilenameComparator implements Comparator<String> {
 
-    public static final FileComparator INSTANCE = new FileComparator();
+    // Idea taken from here: https://codereview.stackexchange.com/a/37217/5314
+    private static final Pattern           NUMBERS  = Pattern.compile("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+    public static final FilenameComparator INSTANCE = new FilenameComparator();
 
     @Override
-    public final int compare(File o1, File o2) {
-        String s1 = o1 == null ? null : o1.getName();
-        String s2 = o2 == null ? null : o2.getName();
+    public final int compare(String o1, String o2) {
+        if (o1 == null || o2 == null)
+            return o1 == null ? o2 == null ? 0 : -1 : 1;
 
-        return FilenameComparator.INSTANCE.compare(s1, s2);
+        String[] split1 = NUMBERS.split(o1);
+        String[] split2 = NUMBERS.split(o2);
+
+        for (int i = 0; i < Math.min(split1.length, split2.length); i++) {
+            char c1 = split1[i].charAt(0);
+            char c2 = split2[i].charAt(0);
+            int cmp = 0;
+
+            if (c1 >= '0' && c1 <= '9' && c2 >= 0 && c2 <= '9')
+                cmp = new BigInteger(split1[i]).compareTo(new BigInteger(split2[i]));
+
+            if (cmp == 0)
+                cmp = split1[i].compareTo(split2[i]);
+
+            if (cmp != 0)
+                return cmp;
+        }
+
+        return split1.length - split2.length;
     }
 }

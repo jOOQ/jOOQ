@@ -48,5 +48,14 @@
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
         </dependency>
+
+
+
+
+
+
+
+
+
     </dependencies>
 </project>

@@ -42,13 +42,10 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -69,8 +66,9 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultVisitListener;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.extensions.tools.FileComparator;
 import org.jooq.meta.h2.H2Database;
+import org.jooq.meta.tools.FilePattern;
+import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
@@ -95,7 +93,6 @@ public class DDLDatabase extends H2Database {
 
     private Connection              connection;
     private DSLContext              ctx;
-    private Comparator<File>        fileComparator;
     private boolean                 publicIsDefault;
 
     @Override
@@ -108,18 +105,7 @@ public class DDLDatabase extends H2Database {
             String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
 
             publicIsDefault = "none".equals(unqualifiedSchema);
-
-            if ("alphanumeric".equals(sort))
-                fileComparator = new Comparator<File>() {
-                    @Override
-                    public int compare(File o1, File o2) {
-                        return o1.compareTo(o2);
-                    }
-                };
-            else if ("none".equals(sort))
-                fileComparator = null;
-            else
-                fileComparator = FileComparator.INSTANCE;
+            Comparator<File> fileComparator = FilePattern.fileComparator(sort);
 
             if (isBlank(scripts)) {
                 scripts = "";
@@ -162,41 +148,12 @@ public class DDLDatabase extends H2Database {
                     });
                 }
 
-                InputStream in = null;
-                boolean loaded = false;
-                in = DDLDatabase.class.getResourceAsStream(scripts);
-                if (in != null) {
-                    log.info("Reading from classpath: " + scripts);
-                    load(encoding, in);
-                    loaded = true;
-                }
-                else {
-                    File file = new File(scripts);
-
-                    if (file.exists()) {
-                        load(encoding, file, null);
-                        loaded = true;
+                FilePattern.load(encoding, scripts, fileComparator, new Loader() {
+                    @Override
+                    public void load(String e, InputStream in) {
+                        DDLDatabase.this.load(e, in);
                     }
-                    else if (scripts.contains("*") || scripts.contains("?")) {
-                        file = new File(scripts.replaceAll("[*?].*", ""));
-
-                        Pattern pattern = Pattern.compile("^.*?"
-                           + scripts
-                            .replace("\\", "/")
-                            .replace(".", "\\.")
-                            .replace("?", ".")
-                            .replace("**", ".+?")
-                            .replace("*", "[^/]*")
-                           + "$"
-                        );
-
-                        load(encoding, file, pattern);
-                        loaded = true;
-                    }
-                }
-
-                if (!loaded)
-                    log.error("Could not find script source : " + scripts);
+                });
             }
             catch (ParserException e) {
                 log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
@@ -208,33 +165,6 @@ public class DDLDatabase extends H2Database {
         }
 
         return DSL.using(connection);
-    }
-
-    private void load(String encoding, File file, Pattern pattern) throws IOException {
-        if (file.isFile()) {
-            if (pattern == null || pattern.matcher(file.getCanonicalPath().replace("\\", "/")).matches()) {
-                log.info("Reading from: " + file + " [*]");
-                load(encoding, new FileInputStream(file));
-            }
-        }
-        else if (file.isDirectory()) {
-            log.info("Reading from: " + file);
-
-            File[] files = file.listFiles();
-
-            if (files != null) {
-                if (fileComparator != null)
-                    Arrays.sort(files, fileComparator);
-
-                for (File f : files)
-                    load(encoding, f, pattern);
-            }
-        }
-
-        // [#7767] Backtrack to a parent directory in case the current file pattern doesn't match yet
-        else if (!file.exists() && file.getParentFile() != null) {
-            load(encoding, file.getParentFile(), pattern);
-        }
     }
 
     private void load(String encoding, InputStream in) {

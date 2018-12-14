@@ -45,14 +45,13 @@ import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,6 +102,8 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.tools.FilePattern;
+import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Index;
@@ -132,122 +133,115 @@ public class XMLDatabase extends AbstractDatabase {
         if (info == null) {
 
             // [#8115] Support old property name style for backwards compatibility reasons
-            String xml = getProperties().getProperty("xmlFile", getProperties().getProperty("xml-file"));
-            String xsl = getProperties().getProperty("xslFile", getProperties().getProperty("xsl-file"));
+            final String xml = getProperties().getProperty("xmlFiles",
+                getProperties().getProperty("xmlFile",
+                    getProperties().getProperty("xml-file")
+                )
+            );
+            final String xsl = getProperties().getProperty("xslFile",
+                getProperties().getProperty("xsl-file")
+            );
+            final String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
 
             if (xml == null)
                 throw new RuntimeException("Must provide an xmlFile property");
 
-            log.info("Using XML file", xml);
-
             try {
-                String content;
+                FilePattern.load("UTF-8", xml, FilePattern.fileComparator(sort), new Loader() {
+                    @Override
+                    public void load(String enc, InputStream in) throws Exception {
+                        String content;
 
-                if (StringUtils.isBlank(xsl)) {
-                    RandomAccessFile f = null;
+                        if (StringUtils.isBlank(xsl)) {
+                            byte[] bytes = bytes(in);
 
-                    try {
-                        URL url = XMLDatabase.class.getResource(xml);
-                        File file = url != null ? new File(url.toURI()) : new File(xml);
+                            // [#7414] Default to reading UTF-8
+                            content = new String(bytes, "UTF-8");
 
-                        f = new RandomAccessFile(file, "r");
-                        byte[] bytes = new byte[(int) f.length()];
-                        f.readFully(bytes);
+                            // [#7414] Alternatively, read the encoding from the XML file
+                            try {
+                                XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(content));
+                                String encoding = reader.getCharacterEncodingScheme();
 
-                        // [#7414] Default to reading UTF-8
-                        content = new String(bytes, "UTF-8");
+                                // Returned encoding can be null in the presence of a BOM
+                                // See https://stackoverflow.com/a/27147259/521799
+                                if (encoding != null && !"UTF-8".equals(encoding))
+                                    content = new String(bytes, encoding);
+                            }
+                            catch (XMLStreamException e) {
+                                log.warn("Could not open XML Stream: " + e.getMessage());
+                            }
+                            catch (UnsupportedEncodingException e) {
+                                log.warn("Unsupported encoding: " + e.getMessage());
+                            }
+                        }
+                        else {
+                            InputStream xslIs = null;
 
-                        // [#7414] Alternatively, read the encoding from the XML file
+                            try {
+                                log.info("Using XSL file", xsl);
+
+                                xslIs = XMLDatabase.class.getResourceAsStream(xsl);
+                                if (xslIs == null)
+                                    xslIs = new FileInputStream(xsl);
+
+                                StringWriter writer = new StringWriter();
+                                TransformerFactory factory = TransformerFactory.newInstance();
+                                Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
+
+                                transformer.transform(new StreamSource(in), new StreamResult(writer));
+                                content = writer.getBuffer().toString();
+                            }
+                            catch (TransformerException e) {
+                                throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
+                            }
+                            finally {
+                                if (xslIs != null) {
+                                    try {
+                                        xslIs.close();
+                                    }
+                                    catch (Exception ignore) {}
+                                }
+                            }
+                        }
+
+                        // TODO [#1201] Add better error handling here
+                        content = content.replaceAll(
+                            "<(\\w+:)?information_schema xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-meta-\\d+\\.\\d+\\.\\d+.xsd\">",
+                            "<$1information_schema xmlns$2=\"" + Constants.NS_META + "\">");
+
+                        content = content.replace(
+                            "<information_schema>",
+                            "<information_schema xmlns=\"" + Constants.NS_META + "\">");
+
+                        // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
+                        content = MiniJAXB.jaxbNamespaceBugWorkaround(content, new InformationSchema());
+
                         try {
-                            XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader( new StringReader(content) );
-                            String encoding = reader.getCharacterEncodingScheme();
+                            info = MiniJAXB.append(info, JAXB.unmarshal(new StringReader(content), InformationSchema.class));
+                        }
+                        catch (Throwable t) {
+                            if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
+                                ExceptionTools.getCause(t, Error.class) != null) {
 
-                            // Returned encoding can be null in the presence of a BOM
-                            // See https://stackoverflow.com/a/27147259/521799
-                            if (encoding != null && !"UTF-8".equals(encoding))
-                                content = new String(bytes, encoding);
-                        }
-                        catch (XMLStreamException e) {
-                            log.warn("Could not open XML Stream: " + e.getMessage());
-                        }
-                        catch (UnsupportedEncodingException e) {
-                            log.warn("Unsupported encoding: " + e.getMessage());
-                        }
-                    }
-                    finally {
-                        if (f != null) {
-                            try {
-                                f.close();
+                                info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
                             }
-                            catch (Exception ignore) {}
+                            else
+                                throw t;
                         }
                     }
-                }
-                else {
-                    InputStream xmlIs = null;
-                    InputStream xslIs = null;
 
-                    try {
-                        log.info("Using XSL file", xsl);
+                    private byte[] bytes(InputStream in) throws IOException {
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        int read;
+                        byte[] buffer = new byte[16384];
 
-                        xmlIs = XMLDatabase.class.getResourceAsStream(xml);
-                        if (xmlIs == null)
-                            xmlIs = new FileInputStream(xml);
+                        while ((read = in.read(buffer, 0, buffer.length)) != -1)
+                            bos.write(buffer, 0, read);
 
-                        xslIs = XMLDatabase.class.getResourceAsStream(xsl);
-                        if (xslIs == null)
-                            xslIs = new FileInputStream(xsl);
-
-                        StringWriter writer = new StringWriter();
-                        TransformerFactory factory = TransformerFactory.newInstance();
-                        Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
-
-                        transformer.transform(new StreamSource(xmlIs), new StreamResult(writer));
-                        content = writer.getBuffer().toString();
+                        return bos.toByteArray();
                     }
-                    catch (TransformerException e) {
-                        throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
-                    }
-                    finally {
-                        if (xmlIs != null) {
-                            try {
-                                xmlIs.close();
-                            }
-                            catch (Exception ignore) {}
-                        }
-                        if (xslIs != null) {
-                            try {
-                                xslIs.close();
-                            }
-                            catch (Exception ignore) {}
-                        }
-                    }
-                }
-
-                // TODO [#1201] Add better error handling here
-                content = content.replaceAll(
-                    "<(\\w+:)?information_schema xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-meta-\\d+\\.\\d+\\.\\d+.xsd\">",
-                    "<$1information_schema xmlns$2=\"" + Constants.NS_META + "\">");
-
-                content = content.replace(
-                    "<information_schema>",
-                    "<information_schema xmlns=\"" + Constants.NS_META + "\">");
-
-                // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
-                content = MiniJAXB.jaxbNamespaceBugWorkaround(content, new InformationSchema());
-
-                try {
-                    info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
-                }
-                catch (Throwable t) {
-                    if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-                        ExceptionTools.getCause(t, Error.class) != null) {
-
-                        info = MiniJAXB.unmarshal(content, InformationSchema.class);
-                    }
-                    else
-                        throw t;
-                }
+                });
             }
             catch (Exception e) {
                 throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);

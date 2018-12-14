@@ -126,27 +126,17 @@ public class XMLDatabase extends AbstractDatabase {
 
     private static final JooqLogger log        = JooqLogger.getLogger(XMLDatabase.class);
 
-    /**
-     * The property name for the XML file
-     */
-    public static final String      P_XML_FILE = "xml-file";
-
-    /**
-     * The property name for the XSL file that pre-processes the XML file
-     */
-    public static final String      P_XSL_FILE = "xsl-file";
-
-    /**
-     * The property name for the dialect name
-     */
-    public static final String      P_DIALECT  = "dialect";
-
     InformationSchema               info;
 
     private InformationSchema info() {
         if (info == null) {
-            String xml = getProperties().getProperty(P_XML_FILE);
-            String xsl = getProperties().getProperty(P_XSL_FILE);
+
+            // [#8115] Support old property name style for backwards compatibility reasons
+            String xml = getProperties().getProperty("xmlFile", getProperties().getProperty("xml-file"));
+            String xsl = getProperties().getProperty("xslFile", getProperties().getProperty("xsl-file"));
+
+            if (xml == null)
+                throw new RuntimeException("Must provide an xmlFile property");
 
             log.info("Using XML file", xml);
 
@@ -272,7 +262,7 @@ public class XMLDatabase extends AbstractDatabase {
         SQLDialect dialect = SQLDialect.DEFAULT;
 
         try {
-            dialect = SQLDialect.valueOf(getProperties().getProperty(P_DIALECT));
+            dialect = SQLDialect.valueOf(getProperties().getProperty("dialect"));
         }
         catch (Exception ignore) {}
 

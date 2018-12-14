@@ -15878,7 +15878,7 @@ result.forEach((Object[] entities) -> {
           <value>MYSQL</value>
         </property>
         <property>
-          <key>xml-file</key>
+          <key>xmlFile</key>
           <value>/path/to/database.xml</value>
         </property>
       </properties>
@@ -15896,7 +15896,7 @@ result.forEach((Object[] entities) -> {
       .withName("org.jooq.meta.xml.XMLDatabase")
       .withProperties(
         new Property().withKey("dialect").withValue("MYSQL"),
-        new Property().withKey("xml-file").withValue("/path/to/database.xml")))));]]></java><html>
+        new Property().withKey("xmlFile").withValue("/path/to/database.xml")))));]]></java><html>
 
                                             <p>
                                                 <strong>Gradle configuration</strong>
@@ -15912,7 +15912,7 @@ result.forEach((Object[] entities) -> {
           value = 'MYSQL'
         }
         property {
-          key = 'xml-file'
+          key = 'xmlFile'
           value = '/path/to/database.xml'
         }
       }
@@ -19451,7 +19451,7 @@ public class Book {
 
             <!-- Specify the location of your database file -->
             <property>
-                <key>xml-file</key>
+                <key>xmlFile</key>
                 <value>src/main/resources/database.xml</value>
             </property>
         </properties>
@@ -19471,7 +19471,7 @@ public class Book {
 
             <!-- Specify the location of your xsl file -->
             <property>
-                <key>xsl-file</key>
+                <key>xslFile</key>
                 <value>src/main/resources/transform-to-jooq-format.xsl</value>
             </property>
         </properties>

@@ -38,6 +38,7 @@
 package org.jooq.meta.xml;
 
 import static org.jooq.meta.xml.XMLDatabase.unbox;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,9 +79,9 @@ public class XMLTableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         for (Column column : info.getColumns()) {
-            if (StringUtils.equals(table.getTableCatalog(), column.getTableCatalog()) &&
-                StringUtils.equals(table.getTableSchema(), column.getTableSchema()) &&
-                StringUtils.equals(table.getTableName(), column.getTableName())) {
+            if (StringUtils.equals(defaultIfNull(table.getTableCatalog(), ""), defaultIfNull(column.getTableCatalog(), "")) &&
+                StringUtils.equals(defaultIfNull(table.getTableSchema(), ""), defaultIfNull(column.getTableSchema(), "")) &&
+                StringUtils.equals(defaultIfNull(table.getTableName(), ""), defaultIfNull(column.getTableName(), ""))) {
 
                 SchemaDefinition schema = getDatabase().getSchema(column.getTableSchema());
 

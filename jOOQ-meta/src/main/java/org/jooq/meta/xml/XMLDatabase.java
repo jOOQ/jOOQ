@@ -395,9 +395,9 @@ public class XMLDatabase extends AbstractDatabase {
             if (constraintType == constraint.getConstraintType()
                     && getInputSchemata().contains(constraint.getConstraintSchema()))
                 for (KeyColumnUsage usage : info().getKeyColumnUsages())
-                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
-                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName()))
+                    if (    StringUtils.equals(defaultIfNull(constraint.getConstraintCatalog(), ""), defaultIfNull(usage.getConstraintCatalog(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintSchema(), ""), defaultIfNull(usage.getConstraintSchema(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintName(), ""), defaultIfNull(usage.getConstraintName(), "")))
 
                         result.add(usage);
 
@@ -430,9 +430,9 @@ public class XMLDatabase extends AbstractDatabase {
         for (ReferentialConstraint fk : info().getReferentialConstraints()) {
             if (getInputSchemata().contains(fk.getConstraintSchema())) {
                 for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
-                    if (    StringUtils.equals(fk.getConstraintCatalog(), usage.getConstraintCatalog())
-                         && StringUtils.equals(fk.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(fk.getConstraintName(), usage.getConstraintName())) {
+                    if (    StringUtils.equals(defaultIfNull(fk.getConstraintCatalog(), ""), defaultIfNull(usage.getConstraintCatalog(), ""))
+                         && StringUtils.equals(defaultIfNull(fk.getConstraintSchema(), ""), defaultIfNull(usage.getConstraintSchema(), ""))
+                         && StringUtils.equals(defaultIfNull(fk.getConstraintName(), ""), defaultIfNull(usage.getConstraintName(), ""))) {
 
                         SchemaDefinition foreignKeySchema = getSchema(fk.getConstraintSchema());
                         SchemaDefinition uniqueKeySchema = getSchema(fk.getUniqueConstraintSchema());
@@ -444,9 +444,9 @@ public class XMLDatabase extends AbstractDatabase {
                         String uniqueKeyTableName = null;
 
                         for (TableConstraint uk : info().getTableConstraints()) {
-                            if (    StringUtils.equals(fk.getUniqueConstraintCatalog(), uk.getConstraintCatalog())
-                                 && StringUtils.equals(fk.getUniqueConstraintSchema(), uk.getConstraintSchema())
-                                 && StringUtils.equals(fk.getUniqueConstraintName(), uk.getConstraintName())) {
+                            if (    StringUtils.equals(defaultIfNull(fk.getUniqueConstraintCatalog(), ""), defaultIfNull(uk.getConstraintCatalog(), ""))
+                                 && StringUtils.equals(defaultIfNull(fk.getUniqueConstraintSchema(), ""), defaultIfNull(uk.getConstraintSchema(), ""))
+                                 && StringUtils.equals(defaultIfNull(fk.getUniqueConstraintName(), ""), defaultIfNull(uk.getConstraintName(), ""))) {
                                 uniqueKeyTableName = uk.getTableName();
                                 break;
                             }

@@ -67,7 +67,6 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
-import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
 // ...
 // ...
@@ -77,8 +76,6 @@ import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -144,7 +141,6 @@ implements
      */
     private static final long                serialVersionUID           = 8377996833996498178L;
     private static final Clause[]            CLAUSES                    = { TABLE, TABLE_JOIN };
-    private static final EnumSet<SQLDialect> SUPPORTS_STRAIGHT_JOIN     = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> EMULATE_NATURAL_JOIN       = EnumSet.of(CUBRID);
     private static final EnumSet<SQLDialect> EMULATE_NATURAL_OUTER_JOIN = EnumSet.of(CUBRID, H2);
     private static final EnumSet<SQLDialect> EMULATE_JOIN_USING         = EnumSet.of(CUBRID, H2);
@@ -157,7 +153,7 @@ implements
 
 
 
-    final JoinType                           type;
+    private final JoinType                   type;
     private final ConditionProviderImpl      condition;
     private final QueryPartList<Field<?>>    using;
 
@@ -362,8 +358,6 @@ implements
             return LEFT_OUTER_JOIN;
         else if (emulateNaturalRightOuterJoin(context))
             return RIGHT_OUTER_JOIN;
-        else if (emulateStraightJoin(context))
-            return JOIN;
         else
             return type;
     }
@@ -386,10 +380,6 @@ implements
 
     private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
         return type == NATURAL_RIGHT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
-    }
-
-    private final boolean emulateStraightJoin(Context<?> context) {
-        return type == STRAIGHT_JOIN && !SUPPORTS_STRAIGHT_JOIN.contains(context.family());
     }
 
     private final void toSQLJoinCondition(Context<?> context) {

@@ -2043,18 +2043,12 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
-     * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
      */
     @Support({ MYSQL })
     TableOnStep<Record> straightJoin(TableLike<?> table);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
-     * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2071,9 +2065,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -2088,9 +2079,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
-     * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2108,9 +2096,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -2126,9 +2111,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
-     * <p>
-     * MySQL natively supports this clause. Oracle can emulate it using a
-     * <code>+LEADING(a b)</code> hint.
      *
      * @see DSL#table(Name)
      */

@@ -1189,10 +1189,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
         if (Tools.isNotEmpty(distinctOn))
             context.visit(K_DISTINCT_ON).sql(" (").visit(distinctOn).sql(") ");
         else if (distinct)
@@ -1521,35 +1517,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.qualify(qualify);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private final void toSQLOrderBy(
             Context<?> ctx,

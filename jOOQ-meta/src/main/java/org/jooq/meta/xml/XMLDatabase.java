@@ -132,6 +132,9 @@ public class XMLDatabase extends AbstractDatabase {
     private InformationSchema info() {
         if (info == null) {
 
+            // [#8118] Regardless of failure, prevent NPEs from subsequent calls
+            info = new InformationSchema();
+
             // [#8115] Support old property name style for backwards compatibility reasons
             final String xml = getProperties().getProperty("xmlFiles",
                 getProperties().getProperty("xmlFile",

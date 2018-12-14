@@ -15877,9 +15877,29 @@ result.forEach((Object[] entities) -> {
           <key>dialect</key>
           <value>MYSQL</value>
         </property>
+
+        <!-- Specify the location of your XML file(s).
+             You may use ant-style file matching, e.g. /path/**/to/*.xml
+
+             Where:
+             - ** matches any directory subtree
+             - * matches any number of characters in a directory / file name
+             - ? matches a single character in a directory / file name
+          -->
         <property>
           <key>xmlFile</key>
           <value>/path/to/database.xml</value>
+        </property>
+
+        <!-- The sort order of the scripts within a directory, where:
+
+             - semantic: sorts versions, e.g. v-3.10.0 is after v-3.9.0 (default)
+             - alphanumeric: sorts strings, e.g. v-3.10.0 is before v-3.9.0
+             - none: doesn't sort directory contents after fetching them from the directory
+          -->
+        <property>
+          <key>sort</key>
+          <value>semantic</value>
         </property>
       </properties>
     </database>
@@ -15896,7 +15916,8 @@ result.forEach((Object[] entities) -> {
       .withName("org.jooq.meta.xml.XMLDatabase")
       .withProperties(
         new Property().withKey("dialect").withValue("MYSQL"),
-        new Property().withKey("xmlFile").withValue("/path/to/database.xml")))));]]></java><html>
+        new Property().withKey("xmlFile").withValue("/path/to/database.xml"),
+        new Property().withKey("sort").withValue("semantic")))));]]></java><html>
 
                                             <p>
                                                 <strong>Gradle configuration</strong>
@@ -15914,6 +15935,10 @@ result.forEach((Object[] entities) -> {
         property {
           key = 'xmlFile'
           value = '/path/to/database.xml'
+        }
+        property {
+          key = 'sort'
+          value = 'semantic'
         }
       }
     }

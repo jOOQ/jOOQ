@@ -45,6 +45,7 @@ import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_ANTI_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.LEFT_SEMI_JOIN;
+import static org.jooq.JoinType.NATURAL_FULL_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
@@ -1453,6 +1454,36 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final Table<Record> naturalRightOuterJoin(Name name) {
         return naturalRightOuterJoin(table(name));
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(TableLike<?> table) {
+        return join(table, NATURAL_FULL_OUTER_JOIN);
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(SQL sql) {
+        return naturalFullOuterJoin(table(sql));
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(String sql) {
+        return naturalFullOuterJoin(table(sql));
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(String sql, Object... bindings) {
+        return naturalFullOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts) {
+        return naturalFullOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final Table<Record> naturalFullOuterJoin(Name name) {
+        return naturalFullOuterJoin(table(name));
     }
 
     @Override

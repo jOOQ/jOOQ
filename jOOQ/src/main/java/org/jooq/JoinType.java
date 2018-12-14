@@ -38,7 +38,26 @@
 
 package org.jooq;
 
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
 // ...
 // ...
 // ...
@@ -73,13 +92,13 @@ public enum JoinType {
     /**
      * <code>RIGHT OUTER JOIN</code> two tables.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RIGHT_OUTER_JOIN("right outer join", true),
 
     /**
      * <code>FULL OUTER JOIN</code> two tables.
      */
-    @Support
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     FULL_OUTER_JOIN("full outer join", true),
 
     /**
@@ -97,8 +116,14 @@ public enum JoinType {
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join", false),
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> two tables.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    NATURAL_FULL_OUTER_JOIN("natural full outer join", false),
 
     /**
      * <code>CROSS APPLY</code> two tables.

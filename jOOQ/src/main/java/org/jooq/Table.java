@@ -1885,6 +1885,100 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Table<Record> naturalRightOuterJoin(Name name);
 
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    Table<Record> naturalFullOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    Table<Record> naturalFullOuterJoin(SQL sql);
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    Table<Record> naturalFullOuterJoin(String sql);
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    Table<Record> naturalFullOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    Table<Record> naturalFullOuterJoin(Name name);
+
     // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------

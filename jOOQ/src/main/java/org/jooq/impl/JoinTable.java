@@ -45,6 +45,7 @@ import static org.jooq.Clause.TABLE_JOIN_CROSS;
 import static org.jooq.Clause.TABLE_JOIN_CROSS_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_INNER;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL;
+import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_FULL;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_ON;
@@ -58,10 +59,12 @@ import static org.jooq.Clause.TABLE_JOIN_STRAIGHT;
 import static org.jooq.Clause.TABLE_JOIN_USING;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
+import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_ANTI_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.LEFT_SEMI_JOIN;
+import static org.jooq.JoinType.NATURAL_FULL_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
@@ -280,6 +283,7 @@ implements
                     NATURAL_JOIN,
                     NATURAL_LEFT_OUTER_JOIN,
                     NATURAL_RIGHT_OUTER_JOIN,
+                    NATURAL_FULL_OUTER_JOIN,
                     CROSS_APPLY,
                     OUTER_APPLY).contains(translatedType)) {
             ctx.formatIndentStart();
@@ -337,6 +341,7 @@ implements
             case FULL_OUTER_JOIN:          return TABLE_JOIN_OUTER_FULL;
             case NATURAL_LEFT_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_LEFT;
             case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
+            case NATURAL_FULL_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_FULL;
             case CROSS_APPLY:              return TABLE_JOIN_CROSS_APPLY;
             case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
             case LEFT_SEMI_JOIN:           return TABLE_JOIN_SEMI_LEFT;
@@ -358,6 +363,8 @@ implements
             return LEFT_OUTER_JOIN;
         else if (emulateNaturalRightOuterJoin(context))
             return RIGHT_OUTER_JOIN;
+        else if (emulateNaturalFullOuterJoin(context))
+            return FULL_OUTER_JOIN;
         else
             return type;
     }
@@ -380,6 +387,10 @@ implements
 
     private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
         return type == NATURAL_RIGHT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
+    }
+
+    private final boolean emulateNaturalFullOuterJoin(Context<?> context) {
+        return type == NATURAL_FULL_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
     }
 
     private final void toSQLJoinCondition(Context<?> context) {
@@ -427,7 +438,8 @@ implements
         // common fields in lhs and rhs of the JOIN clause
         else if (emulateNaturalJoin(context) ||
                  emulateNaturalLeftOuterJoin(context) ||
-                 emulateNaturalRightOuterJoin(context)) {
+                 emulateNaturalRightOuterJoin(context) ||
+                 emulateNaturalFullOuterJoin(context)) {
 
             boolean first = true;
             for (Field<?> field : lhs.fields()) {

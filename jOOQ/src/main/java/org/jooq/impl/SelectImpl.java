@@ -2059,6 +2059,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             case NATURAL_JOIN:
             case NATURAL_LEFT_OUTER_JOIN:
             case NATURAL_RIGHT_OUTER_JOIN:
+            case NATURAL_FULL_OUTER_JOIN:
             case CROSS_APPLY:
             case OUTER_APPLY: {
                 getQuery().addJoin(table, type);
@@ -2099,6 +2100,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final SelectImpl naturalRightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(TableLike<?> table) {
+        return join(table, JoinType.NATURAL_FULL_OUTER_JOIN);
     }
 
     @Override
@@ -2424,6 +2430,31 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final SelectImpl naturalRightOuterJoin(Name name) {
         return naturalRightOuterJoin(table(name));
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(SQL sql) {
+        return naturalFullOuterJoin(table(sql));
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(String sql) {
+        return naturalFullOuterJoin(table(sql));
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(String sql, Object... bindings) {
+        return naturalFullOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(String sql, QueryPart... parts) {
+        return naturalFullOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl naturalFullOuterJoin(Name name) {
+        return naturalFullOuterJoin(table(name));
     }
 
     @Override

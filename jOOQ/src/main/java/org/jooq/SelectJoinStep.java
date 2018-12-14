@@ -1449,6 +1449,119 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinStep<R> naturalRightOuterJoin(Name name);
 
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(TableLike)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     *
+     * @see Table#naturalFullOuterJoin(TableLike)
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    SelectJoinStep<R> naturalFullOuterJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(String)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#naturalFullOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    SelectJoinStep<R> naturalFullOuterJoin(SQL sql);
+
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(String)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#naturalFullOuterJoin(String)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    SelectJoinStep<R> naturalFullOuterJoin(String sql);
+
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(String, Object...)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see Table#naturalFullOuterJoin(String, Object...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    SelectJoinStep<R> naturalFullOuterJoin(String sql, Object... bindings);
+
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(String, QueryPart...)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see Table#naturalFullOuterJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
+    SelectJoinStep<R> naturalFullOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalFullOuterJoin(Name)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     *
+     * @see DSL#table(Name)
+     * @see Table#naturalFullOuterJoin(Name)
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    SelectJoinStep<R> naturalFullOuterJoin(Name name);
+
     // -------------------------------------------------------------------------
     // XXX: SEMI and ANTI JOIN
     // -------------------------------------------------------------------------

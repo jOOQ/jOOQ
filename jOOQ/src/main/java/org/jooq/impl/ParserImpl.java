@@ -8468,57 +8468,38 @@ final class ParserImpl implements Parser {
     }
 
     private static final JoinType parseJoinTypeIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CROSS JOIN"))
-            return JoinType.CROSS_JOIN;
-        else if (parseKeywordIf(ctx, "CROSS APPLY"))
-            return JoinType.CROSS_APPLY;
-        else if (parseKeywordIf(ctx, "CROSS JOIN"))
-            return JoinType.CROSS_JOIN;
-        else if (parseKeywordIf(ctx, "INNER")) {
-            parseKeyword(ctx, "JOIN");
-            return JoinType.JOIN;
+        if (parseKeywordIf(ctx, "CROSS")) {
+            if (parseKeywordIf(ctx, "JOIN"))
+                return JoinType.CROSS_JOIN;
+            else if (parseKeywordIf(ctx, "APPLY"))
+                return JoinType.CROSS_APPLY;
         }
+        else if (parseKeywordIf(ctx, "INNER") && parseKeyword(ctx, "JOIN"))
+            return JoinType.JOIN;
         else if (parseKeywordIf(ctx, "JOIN"))
             return JoinType.JOIN;
         else if (parseKeywordIf(ctx, "LEFT")) {
-            if (parseKeywordIf(ctx, "SEMI")) {
-                parseKeyword(ctx, "JOIN");
+            if (parseKeywordIf(ctx, "SEMI") && parseKeyword(ctx, "JOIN"))
                 return JoinType.LEFT_SEMI_JOIN;
-            }
-            else if (parseKeywordIf(ctx, "ANTI")) {
-                parseKeyword(ctx, "JOIN");
+            else if (parseKeywordIf(ctx, "ANTI") && parseKeyword(ctx, "JOIN"))
                 return JoinType.LEFT_ANTI_JOIN;
-            }
-            else {
-                parseKeywordIf(ctx, "OUTER");
-                parseKeyword(ctx, "JOIN");
+            else if ((parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
                 return JoinType.LEFT_OUTER_JOIN;
-            }
         }
-        else if (parseKeywordIf(ctx, "RIGHT")) {
-            parseKeywordIf(ctx, "OUTER");
-            parseKeyword(ctx, "JOIN");
+        else if (parseKeywordIf(ctx, "RIGHT") && (parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
             return JoinType.RIGHT_OUTER_JOIN;
-        }
-        else if (parseKeywordIf(ctx, "FULL")) {
-            parseKeywordIf(ctx, "OUTER");
-            parseKeyword(ctx, "JOIN");
+        else if (parseKeywordIf(ctx, "FULL") && (parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
             return JoinType.FULL_OUTER_JOIN;
-        }
         else if (parseKeywordIf(ctx, "OUTER APPLY"))
             return JoinType.OUTER_APPLY;
         else if (parseKeywordIf(ctx, "NATURAL")) {
-            if (parseKeywordIf(ctx, "LEFT")) {
-                parseKeywordIf(ctx, "OUTER");
-                parseKeyword(ctx, "JOIN");
+            if (parseKeywordIf(ctx, "LEFT") && (parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
                 return JoinType.NATURAL_LEFT_OUTER_JOIN;
-            }
-            else if (parseKeywordIf(ctx, "RIGHT")) {
-                parseKeywordIf(ctx, "OUTER");
-                parseKeyword(ctx, "JOIN");
+            else if (parseKeywordIf(ctx, "RIGHT") && (parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
                 return JoinType.NATURAL_RIGHT_OUTER_JOIN;
-            }
-            else if (parseKeywordIf(ctx, "JOIN"))
+            else if (parseKeywordIf(ctx, "FULL") && (parseKeywordIf(ctx, "OUTER") || true) && parseKeyword(ctx, "JOIN"))
+                return JoinType.NATURAL_FULL_OUTER_JOIN;
+            else if ((parseKeywordIf(ctx, "INNER") || true) && parseKeyword(ctx, "JOIN"))
                 return JoinType.NATURAL_JOIN;
         }
         else if (parseKeywordIf(ctx, "STRAIGHT_JOIN"))
@@ -8740,9 +8721,11 @@ final class ParserImpl implements Parser {
         return peekKeyword(ctx, string, true, false, true);
     }
 
-    private static final void parseKeyword(ParserContext ctx, String keyword) {
+    private static final boolean parseKeyword(ParserContext ctx, String keyword) {
         if (!parseKeywordIf(ctx, keyword))
             throw ctx.expected("Keyword '" + keyword + "'");
+
+        return true;
     }
 
     private static final boolean parseKeywordIf(ParserContext ctx, String keyword) {

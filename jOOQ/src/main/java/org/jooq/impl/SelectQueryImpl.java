@@ -2495,6 +2495,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case NATURAL_JOIN:
             case NATURAL_LEFT_OUTER_JOIN:
             case NATURAL_RIGHT_OUTER_JOIN:
+            case NATURAL_FULL_OUTER_JOIN:
 
 
 

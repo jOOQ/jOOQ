@@ -176,7 +176,7 @@ public class Plugin extends AbstractMojo {
 
             // [#2887] Patch relative paths to take plugin execution basedir into account
             if (!new File(generator.getTarget().getDirectory()).isAbsolute())
-                generator.getTarget().setDirectory(new File(project.getBasedir() + File.separator + generator.getTarget().getDirectory()).getCanonicalPath());
+                generator.getTarget().setDirectory(new File(project.getBasedir(), generator.getTarget().getDirectory()).getCanonicalPath());
 
             Configuration configuration = new Configuration();
             configuration.setLogging(logging);

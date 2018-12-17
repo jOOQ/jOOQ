@@ -408,7 +408,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         String name = parameter.call("getName").<String>get();
 
                         // [#8004] Clean up kotlin field name for boolean types
-                        if ("boolean".equals(type.getTypeName()) && name.startsWith("is")) {
+                        if ("boolean".equalsIgnoreCase(type.getTypeName()) && name.startsWith("is")) {
                             name = getPropertyName(name);
                         }
                         parameterNames.add(name);

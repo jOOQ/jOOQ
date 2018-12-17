@@ -38,14 +38,10 @@
 package org.jooq.tools.jdbc;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
@@ -55,6 +51,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -121,34 +118,36 @@ public class MockFileDatabase implements MockDataProvider {
 
     private static final JooqLogger              log = JooqLogger.getLogger(MockFileDatabase.class);
 
-    private final LineNumberReader               in;
+    private final MockFileDatabaseConfiguration  configuration;
     private final Map<String, List<MockResult>>  matchExactly;
     private final Map<Pattern, List<MockResult>> matchPattern;
     private final DSLContext                     create;
+
+    @Deprecated
     private String                               nullLiteral;
 
     public MockFileDatabase(File file) throws IOException {
-        this(file, "UTF-8");
+        this(new MockFileDatabaseConfiguration().source(file));
     }
 
     public MockFileDatabase(File file, String encoding) throws IOException {
-        this(new FileInputStream(file), encoding);
+        this(new MockFileDatabaseConfiguration().source(file, encoding));
     }
 
     public MockFileDatabase(InputStream stream) throws IOException {
-        this(stream, "UTF-8");
+        this(new MockFileDatabaseConfiguration().source(stream));
     }
 
     public MockFileDatabase(InputStream stream, String encoding) throws IOException {
-        this(new InputStreamReader(stream, encoding));
+        this(new MockFileDatabaseConfiguration().source(stream, encoding));
     }
 
     public MockFileDatabase(Reader reader) throws IOException {
-        this(new LineNumberReader(reader));
+        this(new MockFileDatabaseConfiguration().source(reader));
     }
 
     public MockFileDatabase(String string) throws IOException {
-        this(new StringReader(string));
+        this(new MockFileDatabaseConfiguration().source(string));
     }
 
     /**
@@ -157,14 +156,18 @@ public class MockFileDatabase implements MockDataProvider {
      * itself.
      *
      * @see DSLContext#fetchFromTXT(String, String)
+     * @deprecated - Use
+     *             {@link MockFileDatabaseConfiguration#nullLiteral(String)}
+     *             instead.
      */
+    @Deprecated
     public MockFileDatabase nullLiteral(String literal) {
         this.nullLiteral = literal;
         return this;
     }
 
-    private MockFileDatabase(LineNumberReader reader) throws IOException {
-        this.in = reader;
+    public MockFileDatabase(MockFileDatabaseConfiguration configuration) throws IOException {
+        this.configuration = configuration;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
         this.create = DSL.using(SQLDialect.DEFAULT);
@@ -257,8 +260,8 @@ public class MockFileDatabase implements MockDataProvider {
                     }
                 }
                 finally {
-                    if (in != null)
-                        in.close();
+                    if (configuration.in != null)
+                        configuration.in.close();
                 }
             }
 
@@ -267,17 +270,19 @@ public class MockFileDatabase implements MockDataProvider {
 
                 if (results == null) {
                     results = new ArrayList<MockResult>();
-                    matchExactly.put(previousSQL, results);
 
-//                    try {
-//                        Pattern p = Pattern.compile(previousSQL);
-//                        matchPattern.put(p, results);
-//                    }
-//                    catch (PatternSyntaxException ignore) {
-//                        if (log.isDebugEnabled()) {
-//                            log.debug("Not a pattern", previousSQL);
-//                        }
-//                    }
+                    if (configuration.patterns) {
+                        try {
+                            Pattern p = Pattern.compile(previousSQL);
+                            matchPattern.put(p, results);
+                        }
+                        catch (PatternSyntaxException e) {
+                            throw new MockFileDatabaseException("Not a pattern: " + previousSQL, e);
+                        }
+                    }
+                    else {
+                        matchExactly.put(previousSQL, results);
+                    }
                 }
 
                 MockResult mock = parse(line);
@@ -301,8 +306,11 @@ public class MockFileDatabase implements MockDataProvider {
                 String resultText = currentResult.toString();
                 MockResult result = resultText.isEmpty()
                     ? new MockResult(rows)
-                    : new MockResult(rows, nullLiteral == null
+                    : new MockResult(rows,
+                          configuration.nullLiteral == null && nullLiteral == null
                         ? create.fetchFromTXT(resultText)
+                        : configuration.nullLiteral != null
+                        ? create.fetchFromTXT(resultText, configuration.nullLiteral)
                         : create.fetchFromTXT(resultText, nullLiteral)
                       );
 
@@ -314,7 +322,7 @@ public class MockFileDatabase implements MockDataProvider {
 
             private String readLine() throws IOException {
                 while (true) {
-                    String line = in.readLine();
+                    String line = configuration.in.readLine();
 
                     if (line == null)
                         return line;
@@ -354,11 +362,17 @@ public class MockFileDatabase implements MockDataProvider {
             }
 
             // Check for the first pattern match
-            if (list == null)
-                for (Entry<Pattern, List<MockResult>> entry : matchPattern.entrySet())
+            if (list == null) {
+
+                patternLoop:
+                for (Entry<Pattern, List<MockResult>> entry : matchPattern.entrySet()) {
                     if (    entry.getKey().matcher(sql).matches()
-                         || entry.getKey().matcher(inlined).matches())
+                         || entry.getKey().matcher(inlined).matches()) {
                         list = entry.getValue();
+                        break patternLoop;
+                    }
+                }
+            }
 
             if (list == null)
                 throw new SQLException("Invalid SQL: " + sql);

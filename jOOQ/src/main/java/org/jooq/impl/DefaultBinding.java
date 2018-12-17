@@ -4002,7 +4002,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // java.util.UUID data type
                 case H2:
                 case POSTGRES:
-                    return (UUID) ctx.resultSet().getObject(ctx.index());
+                    return Convert.convert(ctx.resultSet().getObject(ctx.index()), UUID.class);
 
 
 

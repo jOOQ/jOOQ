@@ -14330,7 +14330,7 @@ update t set x = 1;
                                 The above database supports exactly two statements in total, and is completely stateless (e.g. an <code>INSERT</code> statement cannot be made to affect the results of a subsequent <code>SELECT</code> statement on the same table). It can be loaded through the <code>MockFileDatabase</code> can be used as follows:
                             </p>
 
-</html><java><![CDATA[// Initialise your data provider (implementation further down):
+</html><java><![CDATA[// Initialise your data provider:
 MockFileDatabase db = new MockFileDatabase(new File("/path/to/db.txt"));
 MockConnection connection = new MockConnection(provider);
 
@@ -14347,6 +14347,53 @@ Result<?> result = create.select(inline("C")).fetch();]]></java><html>
                             <p>
                                 In situations where the expected set of queries are well-defined, the <code>MockFileDatabase</code> can offer a very effective way of mocking parts of the database engine, without offering the complete functionality of the <reference id="mocking-connection" title="programmatic mocking connection"/>.
                             </p>
+
+                            <h3>Matching statements using regular expressions</h3>
+
+                            <p>
+                                Alternatively, regular expressions can be used to match statements in order of definition in the file.
+                            </p>
+
+</html><text><![CDATA[
+# Regardless of the number of columns, if selecting 'A' as the first column,
+# always return a single row containing columns A and B
+select 'A', .*;
+> A B
+> - -
+> A B
+@ rows: 1
+
+# All other select statements are assumed to return only a column A
+select .*;
+> A
+> -
+> A
+@ rows: 1
+]]></text><html>
+
+                            <p>
+                                The same rules apply as before. The first matching statement will be applied for any given input statement.
+                            </p>
+
+                            <p>
+                                This feature is "opt-in", so it has to be configured appropriately:
+                            </p>
+
+</html><java><![CDATA[// Initialise your data provider:
+MockFileDatabase db = new MockFileDatabase(new MockFileDatabaseConfiguration()
+    .source(new File("/path/to/db.txt"))
+    .patterns(true) // Turn on regular expressions here
+);
+MockConnection connection = new MockConnection(provider);
+
+// Pass the mock connection to a jOOQ DSLContext:
+DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+
+// This returns a column A only
+Result<?> result = create.select(inline("X")).fetch();
+
+// This returns columns A and B
+Result<?> result = create.select(inline("A"), inline("B"), inline("C")).fetch();]]></java><html>
                         </html></content>
                     </section>
 

@@ -5622,6 +5622,24 @@ final class ParserImpl implements Parser {
     private static final Interval parseIntervalLiteral(ParserContext ctx) {
         String string = parseStringLiteral(ctx);
 
+        try {
+            if (parseKeywordIf(ctx, "YEAR"))
+                return new YearToMonth(Integer.parseInt(string));
+            else if (parseKeywordIf(ctx, "MONTH"))
+                return new YearToMonth(0, Integer.parseInt(string));
+            else if (parseKeywordIf(ctx, "DAY"))
+                return new DayToSecond(Integer.parseInt(string));
+            else if (parseKeywordIf(ctx, "HOUR"))
+                return new DayToSecond(0, Integer.parseInt(string));
+            else if (parseKeywordIf(ctx, "MINUTE"))
+                return new DayToSecond(0, 0, Integer.parseInt(string));
+            else if (parseKeywordIf(ctx, "SECOND"))
+                return new DayToSecond(0, 0, 0, Integer.parseInt(string));
+        }
+        catch (NumberFormatException e) {
+            throw ctx.expected("Unsigned integer");
+        }
+
         DayToSecond ds = DayToSecond.valueOf(string);
         if (ds != null)
             return ds;

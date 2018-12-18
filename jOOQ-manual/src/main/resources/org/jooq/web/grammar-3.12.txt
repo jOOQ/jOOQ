@@ -476,8 +476,12 @@ tables = table { ',' table }
 table = lateral { unqualifiedJoin | innerJoin | outerJoin | semiAntiJoin }
 ;
 
+optionallyQualifiedJoin = 'CROSS JOIN'
+( table joinQualification | lateral )
+;
+
 unqualifiedJoin =
-( 'CROSS JOIN' | 'CROSS APPLY' | 'OUTER APPLY' | 'NATURAL' [ ( 'LEFT' | 'RIGHT' ) [ 'OUTER' ] ] 'JOIN' )
+( 'CROSS APPLY' | 'OUTER APPLY' | 'NATURAL' [ ( 'LEFT' | 'RIGHT' | 'FULL' ) [ 'OUTER' ] ] 'JOIN' )
 lateral
 ;
 

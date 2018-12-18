@@ -4132,22 +4132,32 @@ final class ParserImpl implements Parser {
             case STRAIGHT_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                if (parseKeywordIf(ctx, "ON")) {
+                if (parseKeywordIf(ctx, "ON"))
                     return s2.on(parseCondition(ctx));
-                }
-                else if (parseKeywordIf(ctx, "USING")) {
-                    parse(ctx, '(');
-                    Table result = s2.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
-                    parse(ctx, ')');
-
-                    return result;
-                }
+                else if (parseKeywordIf(ctx, "USING"))
+                    return parseJoinUsing(ctx, s2);
                 else
                     throw ctx.expected("ON", "USING");
+
+            case CROSS_JOIN:
+                if (parseKeywordIf(ctx, "ON"))
+                    return left.join(right).on(parseCondition(ctx));
+                else if (parseKeywordIf(ctx, "USING"))
+                    return parseJoinUsing(ctx, left.join(right));
+
+                // No break
 
             default:
                 return s0;
         }
+    }
+
+    private static final Table<?> parseJoinUsing(ParserContext ctx, TableOnStep<?> join) {
+        parse(ctx, '(');
+        Table result = join.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
+        parse(ctx, ')');
+
+        return result;
     }
 
     private static final List<SelectFieldOrAsterisk> parseSelectList(ParserContext ctx) {

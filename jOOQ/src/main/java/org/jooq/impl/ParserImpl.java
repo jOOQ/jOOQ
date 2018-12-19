@@ -8591,9 +8591,9 @@ final class ParserImpl implements Parser {
             return ComputationalOperation.EVERY;
         else if (parseFunctionNameIf(ctx, "ANY") || parseFunctionNameIf(ctx, "SOME") || parseFunctionNameIf(ctx, "BOOL_OR"))
             return ComputationalOperation.ANY;
-        else if (parseFunctionNameIf(ctx, "STDDEV_POP"))
+        else if (parseFunctionNameIf(ctx, "STDDEV_POP") || parseFunctionNameIf(ctx, "STDEVP"))
             return ComputationalOperation.STDDEV_POP;
-        else if (parseFunctionNameIf(ctx, "STDDEV_SAMP"))
+        else if (parseFunctionNameIf(ctx, "STDDEV_SAMP") || parseFunctionNameIf(ctx, "STDEV"))
             return ComputationalOperation.STDDEV_SAMP;
         else if (parseFunctionNameIf(ctx, "VAR_POP"))
             return ComputationalOperation.VAR_POP;

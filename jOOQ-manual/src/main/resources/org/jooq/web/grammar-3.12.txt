@@ -764,8 +764,8 @@ term =
 | 'SIN' '(' numericOp ')'
 | 'SINH' '(' numericOp ')'
 | 'SPACE' '(' field ')'
-| 'STDDEV_POP' '(' field ')' [ over ]
-| 'STDDEV_SAMP' '(' field ')' [ over ]
+| ( 'STDDEV_POP' | 'STDEVP' ) '(' field ')' [ over ]
+| ( 'STDDEV_SAMP' | 'STDEV' ) '(' field ')' [ over ]
 | 'STR_REPLACE' '(' field ',' field ',' field ')'
 | 'SUBSTRING' '(' field 'FROM' numericOp [ 'FOR' numericOp ] ')'
 | 'SUM' '(' [ 'DISTINCT' | 'ALL' ] field ')' [ keep | filter ] [ over ]

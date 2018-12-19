@@ -4696,6 +4696,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldDateDiffIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldDatePartIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
@@ -5735,6 +5737,20 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             DatePart part = parseDatePart(ctx);
             parseKeyword(ctx, "FROM");
+            Field<?> field = parseField(ctx);
+            parse(ctx, ')');
+
+            return extract(field, part);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldDatePartIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "DATEPART")) {
+            parse(ctx, '(');
+            DatePart part = parseDatePart(ctx);
+            parse(ctx, ',');
             Field<?> field = parseField(ctx);
             parse(ctx, ')');
 

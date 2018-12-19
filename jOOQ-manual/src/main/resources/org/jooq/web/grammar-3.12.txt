@@ -664,6 +664,7 @@ term =
 | dateLiteral
 | 'DATEADD' '(' datePart ',' field ',' field ')'
 | 'DATEDIFF' '(' [ datePart ',' ] field ',' field ')'
+| 'DATEPART' '(' datePart ',' field ')'
 | 'DATE_TRUNC' '(' stringLiteral ',' field ')'
 | 'DAY' '(' field ')'
 | 'DAYOFMONTH' '(' field ')'

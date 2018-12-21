@@ -718,6 +718,10 @@ public class GenerationTool {
                 generator.setGenerateEmptySchemas(g.getGenerate().isEmptySchemas());
             if (g.getGenerate().isPrimaryKeyTypes() != null)
                 generator.setGeneratePrimaryKeyTypes(g.getGenerate().isPrimaryKeyTypes());
+            if (g.getGenerate().getNewline() != null)
+                generator.setGenerateNewline(g.getGenerate().getNewline());
+            if (g.getGenerate().getIndentation() != null)
+                generator.setGenerateIndentation(g.getGenerate().getIndentation());
 
 
             // [#3669] Optional Database element

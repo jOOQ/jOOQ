@@ -163,6 +163,11 @@ public class Generate implements Serializable
     protected Boolean javaTimeTypes = false;
     @XmlElement(defaultValue = "false")
     protected Boolean primaryKeyTypes = false;
+    @XmlElement(defaultValue = "\\n")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String newline = "\\n";
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String indentation;
 
     /**
      * Generate index information.
@@ -1707,6 +1712,54 @@ public class Generate implements Serializable
         this.primaryKeyTypes = value;
     }
 
+    /**
+     * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getNewline() {
+        return newline;
+    }
+
+    /**
+     * Sets the value of the newline property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setNewline(String value) {
+        this.newline = value;
+    }
+
+    /**
+     * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getIndentation() {
+        return indentation;
+    }
+
+    /**
+     * Sets the value of the indentation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setIndentation(String value) {
+        this.indentation = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -2019,6 +2072,16 @@ public class Generate implements Serializable
 
     public Generate withPrimaryKeyTypes(Boolean value) {
         setPrimaryKeyTypes(value);
+        return this;
+    }
+
+    public Generate withNewline(String value) {
+        setNewline(value);
+        return this;
+    }
+
+    public Generate withIndentation(String value) {
+        setIndentation(value);
         return this;
     }
 
@@ -2339,6 +2402,16 @@ public class Generate implements Serializable
             sb.append("<primaryKeyTypes>");
             sb.append(primaryKeyTypes);
             sb.append("</primaryKeyTypes>");
+        }
+        if (newline!= null) {
+            sb.append("<newline>");
+            sb.append(newline);
+            sb.append("</newline>");
+        }
+        if (indentation!= null) {
+            sb.append("<indentation>");
+            sb.append(indentation);
+            sb.append("</indentation>");
         }
         return sb.toString();
     }
@@ -2922,6 +2995,24 @@ public class Generate implements Serializable
                 return false;
             }
         }
+        if (newline == null) {
+            if (other.newline!= null) {
+                return false;
+            }
+        } else {
+            if (!newline.equals(other.newline)) {
+                return false;
+            }
+        }
+        if (indentation == null) {
+            if (other.indentation!= null) {
+                return false;
+            }
+        } else {
+            if (!indentation.equals(other.indentation)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -2992,6 +3083,8 @@ public class Generate implements Serializable
         result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));
         result = ((prime*result)+((javaTimeTypes == null)? 0 :javaTimeTypes.hashCode()));
         result = ((prime*result)+((primaryKeyTypes == null)? 0 :primaryKeyTypes.hashCode()));
+        result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
+        result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         return result;
     }
 

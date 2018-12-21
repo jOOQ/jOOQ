@@ -81,8 +81,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private final String         encoding;
     private final StringBuilder  sb;
     private int                  indentTabs;
-    private String               tabString    = "    ";
-    private boolean              newline      = true;
+    private String               tabString     = "    ";
+    private String               newlineString = "\n";
+    private boolean              newline       = true;
 
     protected GeneratorWriter(File file) {
         this(file, null);
@@ -97,7 +98,11 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     public void tabString(String string) {
-        this.tabString = string;
+        this.tabString = string.replace("\\t", "\t");
+    }
+
+    public void newlineString(String string) {
+        this.newlineString = string.replace("\\n", "\n").replace("\\r", "\r");
     }
 
     public File file() {
@@ -124,7 +129,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     @SuppressWarnings("unchecked")
     public W print(String string, Object... args) {
-        string = string.replaceAll("\t", tabString);
+        string = string.replace("\n", newlineString).replace("\t", tabString);
 
         if (newline && indentTabs > 0) {
             for (int i = 0; i < indentTabs; i++)
@@ -205,7 +210,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
         // Don't add empty lines at the beginning of files
         if (sb.length() > 0) {
-            sb.append("\n");
+            sb.append(newlineString);
             newline = true;
         }
 

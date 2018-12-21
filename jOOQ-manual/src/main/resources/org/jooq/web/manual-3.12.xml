@@ -17871,6 +17871,51 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
                                         </html></content>
                                     </section>
+
+                                    <section id="codegen-whitespace">
+                                        <title>Whitespace (newlines and indentation)</title>
+                                        <content><html>
+                                            <p>
+                                                By default, jOOQ's code generator produces unix newline characters (\n) and 4 space indentation (Java) or 2 space indentation (Scala). This can be overridden by using the following configuration flags:
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <generator>
+    <generate>
+      <indentation>  </indentation>
+      <newline>\n</newline>
+    </generate>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withGenerate(new Generate()
+      .withIndentation("  ")
+      .withNewline("\n"))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  generator {
+    generate {
+      indentation = '  '
+      newline = '\n'
+    }
+  }
+}]]></java><html>
+                                        </html></content>
+                                    </section>
                                 </sections>
                             </section>
 

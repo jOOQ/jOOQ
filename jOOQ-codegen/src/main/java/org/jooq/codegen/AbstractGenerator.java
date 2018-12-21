@@ -124,6 +124,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateEmptyCatalogs              = false;
     boolean                            generateEmptySchemas               = false;
     boolean                            generatePrimaryKeyTypes            = false;
+    String                             generateNewline                    = "\n";
+    String                             generateIndentation;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                     = "UTF-8";
@@ -891,6 +893,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePrimaryKeyTypes(boolean generatePrimaryKeyTypes) {
         this.generatePrimaryKeyTypes = generatePrimaryKeyTypes;
+    }
+
+    @Override
+    public String generateNewline() {
+        return generateNewline;
+    }
+
+    @Override
+    public void setGenerateNewline(String newline) {
+        this.generateNewline = newline;
+    }
+
+    @Override
+    public String generateIndentation() {
+        return generateIndentation;
+    }
+
+    @Override
+    public void setGenerateIndentation(String indentation) {
+        this.generateIndentation = indentation;
     }
 
     // ----

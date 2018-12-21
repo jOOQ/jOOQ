@@ -764,6 +764,26 @@ public interface Generator {
     void setGeneratePrimaryKeyTypes(boolean generatePrimaryKeyTypes);
 
     /**
+     * The newline character(s) to be used in generated code.
+     */
+    String generateNewline();
+
+    /**
+     * The newline character(s) to be used in generated code.
+     */
+    void setGenerateNewline(String newline);
+
+    /**
+     * The indentation character(s) to be used in generated code.
+     */
+    String generateIndentation();
+
+    /**
+     * The indentation character(s) to be used in generated code.
+     */
+    void setGenerateIndentation(String indentation);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

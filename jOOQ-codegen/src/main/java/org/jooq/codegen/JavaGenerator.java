@@ -4731,7 +4731,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             StringBuilder sb1 = new StringBuilder();
-            String glue1 = "\n";
+            String glue1 = generateNewline();
 
             for (UniqueKeyDefinition uk : table.getUniqueKeys()) {
 
@@ -4756,7 +4756,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     sb1.append(scala ? ")" : "}").append(")");
 
-                    glue1 = ",\n";
+                    glue1 = "," + generateNewline();
                 }
             }
 
@@ -4769,7 +4769,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (StringUtils.isBlank(generateJPAVersion()) || "2.1".compareTo(generateJPAVersion()) <= 0) {
                 StringBuilder sb2 = new StringBuilder();
-                String glue2 = "\n";
+                String glue2 = generateNewline();
 
                 for (IndexDefinition index : table.getIndexes()) {
                     sb2.append(glue2);
@@ -4797,7 +4797,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
 
                     sb2.append("\")");
-                    glue2 = ",\n";
+                    glue2 = "," + generateNewline();
                 }
 
                 if (sb2.length() > 0) {
@@ -6375,7 +6375,14 @@ public class JavaGenerator extends AbstractGenerator {
     // [#3880] Users may need to call this method
     protected JavaWriter newJavaWriter(File file) {
         file = fixSuffix(file);
-        return new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc());
+        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc());
+
+        if (generateIndentation != null)
+            result.tabString(generateIndentation);
+        if (generateNewline != null)
+            result.newlineString(generateNewline);
+
+        return result;
     }
 
     protected File getFile(Definition definition) {

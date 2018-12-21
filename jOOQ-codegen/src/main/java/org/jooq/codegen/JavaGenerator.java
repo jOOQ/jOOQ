@@ -749,7 +749,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     printDeprecationIfUnknownType(out, columnTypeFull);
                     if (scala)
-                        out.tab(1).println("val IDENTITY_%s = Identities%s.IDENTITY_%s",
+                        out.tab(1).println("lazy val IDENTITY_%s = Identities%s.IDENTITY_%s",
                                 identityId, block, identityId);
                     else
                         out.tab(1).println("public static final %s<%s, %s> IDENTITY_%s = Identities%s.IDENTITY_%s;",
@@ -779,7 +779,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final int block = allUniqueKeys.size() / INITIALISER_SIZE;
 
                     if (scala)
-                        out.tab(1).println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
+                        out.tab(1).println("lazy val %s = UniqueKeys%s.%s", keyId, block, keyId);
                     else
                         out.tab(1).println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
 
@@ -808,7 +808,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final int block = allForeignKeys.size() / INITIALISER_SIZE;
 
                     if (scala)
-                        out.tab(1).println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
+                        out.tab(1).println("lazy val %s = ForeignKeys%s.%s", keyId, block, keyId);
                     else
                         out.tab(1).println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
 
@@ -908,7 +908,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final int block = allIndexes.size() / INITIALISER_SIZE;
 
                     if (scala)
-                        out.tab(1).println("val %s = Indexes%s.%s", keyId, block, keyId);
+                        out.tab(1).println("lazy val %s = Indexes%s.%s", keyId, block, keyId);
                     else
                         out.tab(1).println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
 
@@ -974,7 +974,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).println("val %s : %s = %s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
+            out.tab(2).println("lazy val %s : %s = %s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
                 getStrategy().getJavaIdentifier(index),
                 Index.class,
                 Internal.class,
@@ -1018,7 +1018,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printDeprecationIfUnknownType(out, identityTypeFull);
         if (scala)
-            out.tab(2).print("val %s : %s[%s, %s] = ",
+            out.tab(2).print("lazy val %s : %s[%s, %s] = ",
                 getStrategy().getJavaIdentifier(identity),
                 Identity.class,
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
@@ -1069,7 +1069,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).print("val %s : %s[%s] = ",
+            out.tab(2).print("lazy val %s : %s[%s] = ",
                 getStrategy().getJavaIdentifier(uniqueKey),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
@@ -1120,7 +1120,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-        	out.tab(2).println("val %s : %s[%s, %s] = %s.createForeignKey(%s, %s, \"%s\", [[%s]])",
+        	out.tab(2).println("lazy val %s : %s[%s, %s] = %s.createForeignKey(%s, %s, \"%s\", [[%s]])",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
@@ -1975,7 +1975,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String attrComment = StringUtils.defaultString(attribute.getComment());
 
                 out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
-                out.tab(1).println("val %s = %s.%s", attrId, udtId, attrId);
+                out.tab(1).println("lazy val %s = %s.%s", attrId, udtId, attrId);
             }
 
             out.println("}");
@@ -2015,7 +2015,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 printDeprecationIfUnknownType(out, attrTypeFull);
-                out.tab(1).println("private val %s : %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                out.tab(1).println("private lazy val %s : %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
                     attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, attrName, attrTypeRef, escapeString(""), converter, binding);
             }
             else {
@@ -2233,7 +2233,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("The type <code>%s</code>", udt.getQualifiedOutputName());
 
             if (scala)
-            	out.tab(1).println("val %s = %s", id, fullId);
+            	out.tab(1).println("lazy val %s = %s", id, fullId);
             else
                 out.tab(1).println("public static %s %s = %s;", className, id, fullId);
         }
@@ -2446,7 +2446,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             for (int i = 0; i < identifiers.size(); i++) {
-                out.tab(1).println("val %s : %s = %s.%s", identifiers.get(i), className, getStrategy().getJavaPackageName(e), identifiers.get(i));
+                out.tab(1).println("lazy val %s : %s = %s.%s", identifiers.get(i), className, getStrategy().getJavaPackageName(e), identifiers.get(i));
             }
 
             out.println();
@@ -2832,7 +2832,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc(comment);
 
                 if (scala)
-                	out.tab(1).println("val %s = %s", id, fullId);
+                	out.tab(1).println("lazy val %s = %s", id, fullId);
                 else
                 	out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
             }
@@ -3782,7 +3782,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), columnComment(column, columnComment));
 
             if (scala) {
-                out.tab(1).println("val %s : %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                out.tab(1).println("lazy val %s : %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
                         columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
             }
             else {
@@ -4418,7 +4418,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc("The sequence <code>%s</code>", sequence.getQualifiedOutputName());
 
             if (scala)
-                out.tab(1).println("val %s : %s[%s] = new %s[%s](\"%s\", %s, %s)", seqId, Sequence.class, seqType, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
+                out.tab(1).println("lazy val %s : %s[%s] = new %s[%s](\"%s\", %s, %s)", seqId, Sequence.class, seqType, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
             else
                 out.tab(1).println("public static final %s<%s> %s = new %s<%s>(\"%s\", %s, %s);", Sequence.class, seqType, seqId, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
         }
@@ -4449,7 +4449,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println("object %s {", className);
             out.tab(1).javadoc("The reference instance of <code>%s</code>", catalogName);
-            out.tab(1).println("val %s = new %s", catalogId, className);
+            out.tab(1).println("lazy val %s = new %s", catalogId, className);
             out.println("}");
             out.println();
         }
@@ -4483,7 +4483,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc(schemaComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", schemaId, schemaFullId);
+                        out.tab(1).println("lazy val %s = %s", schemaId, schemaFullId);
                     else
                         out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaFullId);
                 }
@@ -4541,7 +4541,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println("object %s {", className);
             out.tab(1).javadoc("The reference instance of <code>%s</code>", schemaName);
-            out.tab(1).println("val %s = new %s", schemaId, className);
+            out.tab(1).println("lazy val %s = new %s", schemaId, className);
             out.println("}");
             out.println();
         }
@@ -4570,7 +4570,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc(tableComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", tableId, tableFullId);
+                        out.tab(1).println("lazy val %s = %s", tableId, tableFullId);
                     else
                         out.tab(1).println("public final %s %s = %s;", tableClassName, tableId, tableFullId);
 
@@ -5701,7 +5701,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).javadoc("The reference instance of <code>%s</code>", definition.getQualifiedOutputName());
 
         if (scala)
-            out.tab(1).println("val %s = new %s", identifier, className);
+            out.tab(1).println("lazy val %s = new %s", identifier, className);
         else
             out.tab(1).println("public static final %s %s = new %s();", className, identifier, className);
     }

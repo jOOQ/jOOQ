@@ -875,15 +875,17 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 if (returningResolvedAsterisks.size() == 1 && new Fields<Record>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
-                        Tools.newRecord(true, table, originalConfiguration)
-                             .operate(new RecordOperation<R, RuntimeException>() {
+                        Tools.newRecord(
+                                true,
+                                RecordImpl.class,
+                                returningResolvedAsterisks.toArray(EMPTY_FIELD),
+                                originalConfiguration)
+                             .operate(new RecordOperation<RecordImpl, RuntimeException>() {
 
                                 @Override
-                                public R operate(R record) throws RuntimeException {
-                                    int index = record.fieldsRow().indexOf(field);
-
-                                    ((AbstractRecord) record).values[index] = id;
-                                    ((AbstractRecord) record).originals[index] = id;
+                                public RecordImpl operate(RecordImpl record) throws RuntimeException {
+                                    record.values[0] = id;
+                                    record.originals[0] = id;
 
                                     return record;
                                 }

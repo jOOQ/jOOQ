@@ -328,8 +328,11 @@ final class Expression<T> extends AbstractFunction<T> {
                         result = DSL.field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
                             getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     else
-                        result = DSL.field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }",
-                            getDataType(), val(sign * (long) rhsAsDTS().getTotalSeconds()), lhs);
+                        result = DSL.field("{fn {timestampadd}({sql_tsi_second}, {0}, {fn {timestampadd}({sql_tsi_milli_second}, {1}, {2}) }) }",
+                            getDataType(),
+                            val(sign * (long) rhsAsDTS().getTotalSeconds()),
+                            val(sign * (long) rhsAsDTS().getMilli()),
+                            lhs);
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE

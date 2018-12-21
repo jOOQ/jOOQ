@@ -283,7 +283,7 @@ public class MockFileDatabase implements MockDataProvider {
                 MockResult mock = parse(line);
                 results.add(mock);
 
-                if (log.isDebugEnabled()) {
+                if (mock.data != null && log.isDebugEnabled()) {
                     String comment = "Loaded Result";
 
                     for (String l : mock.data.format(5).split("\n")) {
@@ -298,13 +298,15 @@ public class MockFileDatabase implements MockDataProvider {
                 if (rowString.startsWith("@ rows:"))
                     rows = Integer.parseInt(rowString.substring(7).trim());
 
-                MockResult result = new MockResult(rows,
-                    nullLiteral == null
-                    ? create.fetchFromTXT(currentResult.toString())
-                    : create.fetchFromTXT(currentResult.toString(), nullLiteral)
-                );
+                String resultText = currentResult.toString();
+                MockResult result = resultText.isEmpty()
+                    ? new MockResult(rows)
+                    : new MockResult(rows, nullLiteral == null
+                        ? create.fetchFromTXT(resultText)
+                        : create.fetchFromTXT(resultText, nullLiteral)
+                      );
 
-                if (rows != result.data.size())
+                if (result.data != null && rows != result.data.size())
                     throw new MockFileDatabaseException("Rows mismatch. Declared: " + rows + ". Actual: " + result.data.size() + ".");
 
                 return result;

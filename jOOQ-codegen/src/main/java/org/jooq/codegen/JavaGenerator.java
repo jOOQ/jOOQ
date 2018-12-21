@@ -2065,7 +2065,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s getSchema() {", Schema.class);
-            out.tab(2).println("return %s;", schemaId);
+            out.tab(2).println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
             out.tab(1).println("}");
         }
 
@@ -4978,7 +4978,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
                 out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                        paramId, Parameter.class, paramType, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             out.println("}");
@@ -5014,8 +5014,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                out.tab(1).println("public static final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        Parameter.class, paramType, paramId, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
         }
 
@@ -5942,9 +5942,9 @@ public class JavaGenerator extends AbstractGenerator {
                 db,
                 type.getSchema(),
                 baseType.last(),
-                0,
-                0,
-                0,
+                type.getPrecision(),
+                type.getScale(),
+                type.getLength(),
                 true,
                 false,
                 null,

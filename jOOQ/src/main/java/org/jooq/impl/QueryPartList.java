@@ -208,15 +208,24 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         // [#2145] Collections that contain nulls are quite rare, so it is wise
         // to add a relatively cheap defender check to avoid unnecessary loops
-        if (c.contains(null)) {
+        boolean containsNulls;
+
+        try {
+            containsNulls = c.contains(null);
+        }
+
+        // [#7991] Some immutable collections do not allow for nulls to be contained
+        catch (NullPointerException ignore) {
+            containsNulls = false;
+        }
+
+        if (containsNulls) {
             List<T> list = new ArrayList<T>(c);
             Iterator<T> it = list.iterator();
 
-            while (it.hasNext()) {
-                if (it.next() == null) {
+            while (it.hasNext())
+                if (it.next() == null)
                     it.remove();
-                }
-            }
 
             return list;
         }

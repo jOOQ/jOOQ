@@ -80,6 +80,7 @@ import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.conf.MiniJAXB;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -241,16 +242,8 @@ public class XMLDatabase extends AbstractDatabase {
                     "<information_schema>",
                     "<information_schema xmlns=\"" + Constants.NS_META + "\">");
 
-                // [#7579] On JDK 9, 10, depending on how JAXB is loaded onto the classpath / module path,
-                //         the xmlns seems to be considered for (un)marshalling, or not. This seems to be
-                //         a bug in JAXB, with no known tracking ID as of yet.
-                //         The following quick fix tests the presence of the xmlns when marshalling, and if absent
-                //         removes it prior to unmarshalling.
-                StringWriter test = new StringWriter();
-                JAXB.marshal(new InformationSchema(), test);
-
-                if (!test.toString().contains("xmlns"))
-                    content = content.replaceAll("xmlns=\"[^\"]*\"", "");
+                // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
+                content = MiniJAXB.jaxbNamespaceBugWorkaround(content, new InformationSchema());
 
                 info = JAXB.unmarshal(new StringReader(content), InformationSchema.class);
             }
@@ -402,9 +395,9 @@ public class XMLDatabase extends AbstractDatabase {
             if (constraintType == constraint.getConstraintType()
                     && getInputSchemata().contains(constraint.getConstraintSchema()))
                 for (KeyColumnUsage usage : info().getKeyColumnUsages())
-                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
-                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName()))
+                    if (    StringUtils.equals(defaultIfNull(constraint.getConstraintCatalog(), ""), defaultIfNull(usage.getConstraintCatalog(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintSchema(), ""), defaultIfNull(usage.getConstraintSchema(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintName(), ""), defaultIfNull(usage.getConstraintName(), "")))
 
                         result.add(usage);
 
@@ -436,11 +429,10 @@ public class XMLDatabase extends AbstractDatabase {
     protected void loadForeignKeys(DefaultRelations relations) {
         for (ReferentialConstraint constraint : info().getReferentialConstraints()) {
             if (getInputSchemata().contains(constraint.getConstraintSchema())) {
-
                 for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
-                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
-                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
-                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName())) {
+                    if (    StringUtils.equals(defaultIfNull(constraint.getConstraintCatalog(), ""), defaultIfNull(usage.getConstraintCatalog(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintSchema(), ""), defaultIfNull(usage.getConstraintSchema(), ""))
+                         && StringUtils.equals(defaultIfNull(constraint.getConstraintName(), ""), defaultIfNull(usage.getConstraintName(), ""))) {
 
                         SchemaDefinition foreignKeySchema = getSchema(constraint.getConstraintSchema());
                         SchemaDefinition uniqueKeySchema = getSchema(constraint.getUniqueConstraintSchema());

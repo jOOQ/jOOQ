@@ -278,6 +278,9 @@ public interface InsertSetStep<R extends Record> {
     @Support
     InsertSetMoreStep<R> set(Map<?, ?> map);
 
+    @Support
+    InsertSetMoreStep<R> setAllMaps(Collection<Map<?, ?>> maps);
+
     /**
      * Set values in the <code>INSERT</code> statement.
      * <p>
@@ -290,6 +293,9 @@ public interface InsertSetStep<R extends Record> {
      */
     @Support
     InsertSetMoreStep<R> set(Record record);
+
+    @Support
+    InsertSetMoreStep<R> setAllRecords(Collection<Record> records);
 
     /**
      * Add values to the insert statement with implicit field names.
@@ -308,6 +314,9 @@ public interface InsertSetStep<R extends Record> {
      */
     @Support
     InsertValuesStepN<R> values(Collection<?> values);
+
+    @Support
+    InsertValuesStepN<R> allValues(Collection<Collection<?>> values);
 
     /**
      * Add an empty record with default values.

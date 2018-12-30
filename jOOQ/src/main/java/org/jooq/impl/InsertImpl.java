@@ -321,6 +321,14 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return values(values.toArray());
     }
 
+    @Override
+    public InsertImpl allValues(Collection<Collection<?>> values) {
+        InsertImpl insert = this;
+        for (Collection<?> row : values)
+            insert = newRecord().values(row);
+        return insert;
+    }
+
     private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
@@ -718,8 +726,24 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public InsertImpl setAllMaps(Collection<Map<?, ?>> maps) {
+        InsertImpl insert = this;
+        for (Map<?, ?> map : maps)
+            insert = newRecord().set(map);
+        return insert;
+    }
+
+    @Override
     public final InsertImpl set(Record record) {
         return set(Tools.mapOfChangedValues(record));
+    }
+
+    @Override
+    public InsertImpl setAllRecords(Collection<Record> records) {
+        InsertImpl insert = this;
+        for (Record record : records)
+            insert = newRecord().set(record);
+        return insert;
     }
 
     @Override

@@ -77,6 +77,9 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
     @Support
     InsertValuesStepN<R> values(Collection<?> values);
 
+    @Support
+    InsertValuesStepN<R> allValues(Collection<Collection<?>> values);
+
     /**
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement

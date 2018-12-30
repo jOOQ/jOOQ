@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -110,6 +111,9 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
     @Support
     InsertSetMoreStep<R> set(Map<?, ?> map);
 
+    @Support
+    InsertSetMoreStep<R> setAllMaps(Collection<Map<?, ?>> maps);
+
     /**
      * Set values in the <code>INSERT</code> statement.
      * <p>
@@ -120,6 +124,9 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      */
     @Support
     InsertSetMoreStep<R> set(Record record);
+
+    @Support
+    InsertSetMoreStep<R> setAllRecords(Collection<Record> records);
 
     /**
      * Add an additional record to the <code>INSERT</code> statement

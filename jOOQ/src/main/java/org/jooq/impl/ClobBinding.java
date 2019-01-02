@@ -37,10 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -139,12 +140,9 @@ public class ClobBinding implements Binding<String, String> {
     }
 
     private final Clob newClob(Configuration configuration, String string) throws SQLException {
-        Connection c = configuration.connectionProvider().acquire();
+        Clob clob;
 
-        try {
-            Clob clob = null;
-
-            switch (configuration.family()) {
+        switch (configuration.family()) {
 
 
 
@@ -156,17 +154,13 @@ public class ClobBinding implements Binding<String, String> {
 
 
 
-                default: {
-                    clob = c.createClob();
-                    break;
-                }
+            default: {
+                clob = localConnection().createClob();
+                break;
             }
+        }
 
-            clob.setString(1, string);
-            return clob;
-        }
-        finally {
-            configuration.connectionProvider().release(c);
-        }
+        clob.setString(1, string);
+        return clob;
     }
 }

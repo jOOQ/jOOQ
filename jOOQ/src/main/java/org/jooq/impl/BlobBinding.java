@@ -37,10 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Blob;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -139,12 +140,9 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     }
 
     private final Blob newBlob(Configuration configuration, byte[] bytes) throws SQLException {
-        Connection c = configuration.connectionProvider().acquire();
+        Blob blob;
 
-        try {
-            Blob blob = null;
-
-            switch (configuration.family()) {
+        switch (configuration.family()) {
 
 
 
@@ -156,17 +154,13 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
 
 
-                default: {
-                    blob = c.createBlob();
-                    break;
-                }
+            default: {
+                blob = localConnection().createBlob();
+                break;
             }
+        }
 
-            blob.setBytes(1, bytes);
-            return blob;
-        }
-        finally {
-            configuration.connectionProvider().release(c);
-        }
+        blob.setBytes(1, bytes);
+        return blob;
     }
 }

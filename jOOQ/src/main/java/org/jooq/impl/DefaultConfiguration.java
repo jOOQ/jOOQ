@@ -187,14 +187,21 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
+            configuration.metaProvider(),
             configuration.executorProvider(),
             configuration.transactionProvider(),
             configuration.recordMapperProvider(),
+            configuration.recordUnmapperProvider(),
             configuration.recordListenerProviders(),
             configuration.executeListenerProviders(),
             configuration.visitListenerProviders(),
             configuration.transactionListenerProviders(),
+            configuration.diagnosticsListenerProviders(),
+            configuration.unwrapperProvider(),
             configuration.converterProvider(),
+
+            configuration.clock(),
+
             configuration.dialect(),
             configuration.settings(),
             configuration.data()
@@ -226,10 +233,17 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
+            null,
             executeListenerProviders,
             null,
             null,
             null,
+            null,
+            null,
+
+            null,
+
             dialect,
             settings,
             data
@@ -260,12 +274,19 @@ public class DefaultConfiguration implements Configuration {
             connectionProvider,
             null,
             null,
+            null,
             recordMapperProvider,
+            null,
             null,
             executeListenerProviders,
             null,
             null,
             null,
+            null,
+            null,
+
+            null,
+
             dialect,
             settings,
             data
@@ -298,12 +319,19 @@ public class DefaultConfiguration implements Configuration {
             connectionProvider,
             null,
             null,
+            null,
             recordMapperProvider,
+            null,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
             null,
             null,
+            null,
+            null,
+
+            null,
+
             dialect,
             settings,
             data
@@ -336,13 +364,20 @@ public class DefaultConfiguration implements Configuration {
         this(
             connectionProvider,
             null,
+            null,
             transactionProvider,
             recordMapperProvider,
+            null,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
             null,
             null,
+            null,
+            null,
+
+            null,
+
             dialect,
             settings,
             data
@@ -376,13 +411,20 @@ public class DefaultConfiguration implements Configuration {
         this(
             connectionProvider,
             null,
+            null,
             transactionProvider,
             recordMapperProvider,
+            null,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
             null,
+            null,
+            null,
             converterProvider,
+
+            null,
+
             dialect,
             settings,
             data
@@ -419,14 +461,21 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
+            null,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
             null,
+            null,
+            null,
             converterProvider,
+
+            null,
+
             dialect,
             settings,
             data
@@ -473,6 +522,7 @@ public class DefaultConfiguration implements Configuration {
             executeListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
+            null,
             null,
             converterProvider,
 
@@ -528,6 +578,7 @@ public class DefaultConfiguration implements Configuration {
             executeListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
+            null,
             null,
             converterProvider,
 

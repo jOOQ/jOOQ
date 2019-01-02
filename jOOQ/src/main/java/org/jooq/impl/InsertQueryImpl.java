@@ -54,6 +54,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -771,7 +773,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 Field<Object> f = (Field<Object>) field;
                 Field<Object> v = (Field<Object>) map.get(f);
 
-                Condition other = f.eq(v);
+                Condition other =
+
+
+
+
+
+
+                    f.eq(v)
+                ;
                 and = (and == null) ? other : and.and(other);
             }
 
@@ -805,7 +815,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 Field<Object> f = (Field<Object>) field;
                 Field<Object> v = s.field(f);
 
-                Condition other = f.eq(v);
+                Condition other =
+
+
+
+
+
+
+                    f.eq(v)
+                ;
+
                 and = (and == null) ? other : and.and(other);
             }
 

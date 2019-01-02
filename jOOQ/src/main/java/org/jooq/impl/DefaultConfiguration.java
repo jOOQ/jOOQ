@@ -75,6 +75,8 @@ import org.jooq.SQLDialect;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
+import org.jooq.Unwrapper;
+import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -91,7 +93,6 @@ import org.jooq.impl.Tools.DataCacheKey;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public class DefaultConfiguration implements Configuration {
 
     /**
@@ -118,6 +119,7 @@ public class DefaultConfiguration implements Configuration {
     private transient VisitListenerProvider[]           visitListenerProviders;
     private transient TransactionListenerProvider[]     transactionListenerProviders;
     private transient DiagnosticsListenerProvider[]     diagnosticsListenerProviders;
+    private transient UnwrapperProvider                 unwrapperProvider;
     private transient ConverterProvider                 converterProvider;
 
     // [#7062] Apart from the possibility of containing user defined objects, the data
@@ -154,6 +156,11 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(SQLDialect dialect) {
         this(
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null,
@@ -539,7 +546,14 @@ public class DefaultConfiguration implements Configuration {
      * configuration properties in the future, without breaking client code.
      * Consider creating a configuration by chaining calls to various
      * <code>derive()</code> methods.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordUnmapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], TransactionListenerProvider[], DiagnosticsListenerProvider[], UnwrapperProvider, ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7, 3.8, 3.9, 3.10, 3.11 backwards-compatibility if
+     *             called with reflection from Spring configurations.
      */
+    @Deprecated
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
         MetaProvider metaProvider,
@@ -560,6 +574,59 @@ public class DefaultConfiguration implements Configuration {
         Settings settings,
         Map<Object, Object> data)
     {
+        this(
+            connectionProvider,
+            metaProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            null,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+
+    /**
+     * Create the actual configuration object.
+     * <p>
+     * This constructor has been made package-private to allow for adding new
+     * configuration properties in the future, without breaking client code.
+     * Consider creating a configuration by chaining calls to various
+     * <code>derive()</code> methods.
+     */
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        MetaProvider metaProvider,
+        ExecutorProvider executorProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordUnmapperProvider recordUnmapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        TransactionListenerProvider[] transactionListenerProviders,
+        DiagnosticsListenerProvider[] diagnosticsListenerProviders,
+        UnwrapperProvider unwrapperProvider,
+        ConverterProvider converterProvider,
+
+        Clock clock,
+
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
         set(connectionProvider);
         set(metaProvider);
         set(executorProvider);
@@ -571,6 +638,7 @@ public class DefaultConfiguration implements Configuration {
         set(visitListenerProviders);
         set(transactionListenerProviders);
         set(diagnosticsListenerProviders);
+        set(unwrapperProvider);
         set(converterProvider);
 
         set(clock);
@@ -625,6 +693,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -649,6 +718,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -678,6 +748,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -702,6 +773,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -731,6 +803,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -760,6 +833,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -789,6 +863,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -818,6 +893,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -847,6 +923,7 @@ public class DefaultConfiguration implements Configuration {
             newVisitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -876,6 +953,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             newTransactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -905,6 +983,37 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             newDiagnosticsListenerProviders,
+            unwrapperProvider,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(Unwrapper newUnwrapper) {
+        return derive(new UnwrapperWrapper(newUnwrapper));
+    }
+
+    @Override
+    public final Configuration derive(UnwrapperProvider newUnwrapperProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            metaProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            newUnwrapperProvider,
             converterProvider,
 
             clock,
@@ -929,6 +1038,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             newConverterProvider,
 
             clock,
@@ -954,6 +1064,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
             newClock,
             dialect,
@@ -977,6 +1088,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -1001,6 +1113,7 @@ public class DefaultConfiguration implements Configuration {
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
+            unwrapperProvider,
             converterProvider,
 
             clock,
@@ -1076,7 +1189,7 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(RecordMapper<?, ?> newRecordMapper) {
+    public final Configuration set(RecordMapper<?, ?> newRecordMapper) {
         return set(new RecordMapperWrapper(newRecordMapper));
     }
 
@@ -1087,7 +1200,7 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(RecordUnmapper<?, ?> newRecordUnmapper) {
+    public final Configuration set(RecordUnmapper<?, ?> newRecordUnmapper) {
         return set(new RecordUnmapperWrapper(newRecordUnmapper));
     }
 
@@ -1164,6 +1277,19 @@ public class DefaultConfiguration implements Configuration {
             ? newDiagnosticsListenerProviders
             : new DiagnosticsListenerProvider[0];
 
+        return this;
+    }
+
+    @Override
+    public final Configuration set(Unwrapper newUnwrapper) {
+        return newUnwrapper != null
+             ? set(new UnwrapperWrapper(newUnwrapper))
+             : set((UnwrapperProvider) null) ;
+    }
+
+    @Override
+    public final Configuration set(UnwrapperProvider newUnwrapperProvider) {
+        this.unwrapperProvider = newUnwrapperProvider;
         return this;
     }
 
@@ -1388,6 +1514,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final UnwrapperProvider unwrapperProvider() {
+        return unwrapperProvider != null
+             ? unwrapperProvider
+             : new DefaultUnwrapperProvider();
+    }
+
+    @Override
     public final ConverterProvider converterProvider() {
         return converterProvider;
     }
@@ -1476,6 +1609,10 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(cloneSerializables(transactionListenerProviders));
         oos.writeObject(cloneSerializables(diagnosticsListenerProviders));
 
+        oos.writeObject(unwrapperProvider instanceof Serializable
+            ? unwrapperProvider
+            : null);
+
         oos.writeObject(converterProvider instanceof Serializable
             ? converterProvider
             : null);
@@ -1520,6 +1657,7 @@ public class DefaultConfiguration implements Configuration {
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         diagnosticsListenerProviders = (DiagnosticsListenerProvider[]) ois.readObject();
+        unwrapperProvider = (UnwrapperProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
         data = new ConcurrentHashMap<Object, Object>();
 
@@ -1570,6 +1708,19 @@ public class DefaultConfiguration implements Configuration {
         @Override
         public <E, R extends Record> RecordUnmapper<E, R> provide(Class<? extends E> type, RecordType<R> recordType) {
             return (RecordUnmapper<E, R>) newRecordUnmapper;
+        }
+    }
+
+    private final class UnwrapperWrapper implements UnwrapperProvider {
+        private final Unwrapper newUnwrapper;
+
+        private UnwrapperWrapper(Unwrapper newUnwrapper) {
+            this.newUnwrapper = newUnwrapper;
+        }
+
+        @Override
+        public Unwrapper provide() {
+            return newUnwrapper;
         }
     }
 }

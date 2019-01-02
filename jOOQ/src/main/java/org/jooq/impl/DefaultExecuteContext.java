@@ -77,8 +77,6 @@ import org.jooq.Update;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 
 /**
  * A default implementation for the {@link ExecuteContext}.
@@ -301,36 +299,16 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     /**
-     * [#3696] We shouldn't infinitely attempt to unwrap connections.
-     */
-    private static int maxUnwrappedConnections = 256;
-
-    /**
-     * [#7589] No infinite attempts to unwrap statements, either.
-     */
-    private static int maxUnwrappedStatements  = 256;
-
-    /**
-     * Get the registered connection's "target connection" if applicable.
-     * <p>
-     * This will try to unwrap any native connection if it has been wrapped with
-     * any of:
-     * <ul>
-     * <li><code>org.springframework.jdbc.datasource.ConnectionProxy</code></li>
-     * <li><code>org.apache.commons.dbcp.DelegatingConnection</code></li>
-     * <li><code>org.jboss.jca.adapters.jdbc.WrappedConnection</code></li>
-     * <li>...</li>
-     * </ul>
+     * Get the registered connection's "target connection" through
+     * {@link Configuration#unwrapperProvider()} if applicable.
      * <p>
      * It can be safely assumed that such a connection is available once the
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
-    static final Connection localTargetConnection() {
+    static final Connection localTargetConnection(Configuration configuration) {
         Connection result = localConnection();
 
-        unwrappingLoop:
-        for (int i = 0; i < maxUnwrappedConnections; i++) {
 
 
 
@@ -352,48 +330,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
-
-
-
-
-
-
-
-
-            // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
-            try {
-                Connection r = Reflect.on(result).call("getTargetConnection").get();
-                if (result != r && r != null) {
-                    result = r;
-                    continue unwrappingLoop;
-                }
-            }
-            catch (ReflectException ignore) {}
-
-            // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingConnection
-            try {
-                Connection r = Reflect.on(result).call("getDelegate").get();
-                if (result != r && r != null) {
-                    result = r;
-                    continue unwrappingLoop;
-                }
-            }
-            catch (ReflectException ignore) {}
-
-            // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.WrappedConnection
-            try {
-                Connection r = Reflect.on(result).call("getUnderlyingConnection").get();
-                if (result != r && r != null) {
-                    result = r;
-                    continue unwrappingLoop;
-                }
-            }
-            catch (ReflectException ignore) {}
-
-            // No unwrapping method was found.
-            break;
-        }
-
+        log.info("Could not unwrap native Connection type. Consider implementing an org.jooq.UnwrapperProvider");
         return result;
     }
     /**
@@ -406,11 +343,9 @@ class DefaultExecuteContext implements ExecuteContext {
      * <li>...</li>
      * </ul>
      */
-    static final PreparedStatement targetPreparedStatement(PreparedStatement stmt) {
+    static final PreparedStatement targetPreparedStatement(Configuration configuration, PreparedStatement stmt) {
         PreparedStatement result = stmt;
 
-        unwrappingLoop:
-        for (int i = 0; i < maxUnwrappedStatements; i++) {
 
 
 
@@ -432,38 +367,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
-
-
-
-
-
-
-
-
-            // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingPreparedStatement
-            try {
-                PreparedStatement r = Reflect.on(result).call("getDelegate").get();
-                if (result != r && r != null) {
-                    result = r;
-                    continue unwrappingLoop;
-                }
-            }
-            catch (ReflectException ignore) {}
-
-            // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.WrappedStatement
-            try {
-                PreparedStatement r = Reflect.on(result).call("getUnderlyingStatement").get();
-                if (result != r && r != null) {
-                    result = r;
-                    continue unwrappingLoop;
-                }
-            }
-            catch (ReflectException ignore) {}
-
-            // No unwrapping method was found.
-            break;
-        }
-
+        log.info("Could not unwrap native PreparedStatement type. Consider implementing an org.jooq.UnwrapperProvider");
         return result;
     }
 

@@ -306,6 +306,12 @@ public interface Configuration extends Serializable {
     DiagnosticsListenerProvider[] diagnosticsListenerProviders();
 
     /**
+     * Get the configured <code>UnwrapperProvider</code> from this
+     * configuration.
+     */
+    UnwrapperProvider unwrapperProvider();
+
+    /**
      * Get this configuration's underlying record mapper provider.
      */
     RecordMapperProvider recordMapperProvider();
@@ -691,7 +697,7 @@ public interface Configuration extends Serializable {
     Configuration set(DiagnosticsListener... newDiagnosticsListeners);
 
     /**
-     * Change this configuration to hold a new diagnostics listener providers.
+     * Change this configuration to hold new diagnostics listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
@@ -701,6 +707,30 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
+
+    /**
+     * Change this configuration to hold a new unwrapper.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newUnwrapper The new unwrapper to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Unwrapper newUnwrapper);
+
+    /**
+     * Change this configuration to hold a new unwrapper provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newUnwrapperProvider The new unwrapper provider to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(UnwrapperProvider newUnwrapperProvider);
 
     /**
      * Change this configuration to hold a new converter provider.
@@ -986,6 +1016,25 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with a new unwrapper.
+     *
+     * @param newUnwrapper The new unwrapper to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Unwrapper newUnwrapper);
+
+    /**
+     * Create a derived configuration from this one, with a new unwrapper
+     * provider.
+     *
+     * @param newUnwrapperProvider The new unwrapper provider to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(UnwrapperProvider newUnwrapperProvider);
 
     /**
      * Create a derived configuration from this one, with new converter

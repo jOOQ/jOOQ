@@ -64,6 +64,8 @@ import org.jooq.SQLDialect;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
+import org.jooq.Unwrapper;
+import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -173,6 +175,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public DiagnosticsListenerProvider[] diagnosticsListenerProviders() {
         return delegate.diagnosticsListenerProviders();
+    }
+
+    @Override
+    public UnwrapperProvider unwrapperProvider() {
+        return delegate.unwrapperProvider();
     }
 
     @Override
@@ -313,6 +320,16 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(Unwrapper newUnwrapper) {
+        return delegate.set(newUnwrapper);
+    }
+
+    @Override
+    public Configuration set(UnwrapperProvider newUnwrapperProvider) {
+        return delegate.set(newUnwrapperProvider);
+    }
+
+    @Override
     public Configuration set(ConverterProvider newConverterProvider) {
         return delegate.set(newConverterProvider);
     }
@@ -442,6 +459,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return delegate.derive(newDiagnosticsListenerProviders);
+    }
+
+    @Override
+    public Configuration derive(Unwrapper newUnwrapper) {
+        return delegate.derive(newUnwrapper);
+    }
+
+    @Override
+    public Configuration derive(UnwrapperProvider newUnwrapperProvider) {
+        return delegate.derive(newUnwrapperProvider);
     }
 
     @Override

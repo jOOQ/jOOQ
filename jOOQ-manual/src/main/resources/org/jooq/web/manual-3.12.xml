@@ -3314,6 +3314,48 @@ configuration.set(
 								</html></content>
 							</section>
 
+                            <section id="custom-unwrappers">
+                                <title>Custom Unwrappers</title>
+                                <content><html>
+                                    <p>
+                                        JDBC knows the <reference class="java.sql.Wrapper"/> API, which is implemented by all JDBC types in order to be able to "unwrap" a native driver implementation for any given type. For example:
+                                    </p>
+
+</html><java><![CDATA[// This may be some proxy from a connection pool
+Connection c = getConnection();
+
+// Sometimes, we want the native driver connection instance
+OracleConnection oc = c.unwrap(OracleConnection.class);
+Array array = oc.createARRAY("ARRAY_TYPE", new Object[] { "a", "b" });]]></java><html>
+
+                                    <p>
+                                        jOOQ internally makes similar calls occasionally. For this, it needs to unwrap the native <reference class="java.sql.Connection"/> or <reference class="java.sql.PreparedStatement"/> instance. Unfortunately, not all third party libraries correctly implement the <code>Wrapper</code> API contract, so this unwrapping might not work. The <reference class="org.jooq.Unwrapper"/> SPI is designed to allow for custom implementations to be injected into jOOQ configurations:
+                                    </p>
+
+</html><java><![CDATA[// Your jOOQ configuration
+Configuration c1 = getConfiguration();
+Configuration c2 = c.derive(new Unwrapper() {
+    @Override
+    public <T> T unwrap(Wrapper wrapper, Class<T> iface) {
+        try {
+            if (wrapper instanceof Connection)
+                // ...
+            else if (wrapper instanceof Statement)
+                // ...
+            else
+                wrapper.unwrap(iface);
+        }
+        catch (SQLException e) {
+            // ...
+        }
+    }
+});
+
+// Work with the derived configuration, where needed
+DSL.using(c2).fetch("...");]]></java><html>
+                                </html></content>
+                            </section>
+
                             <section id="custom-settings">
                                 <title>Custom Settings</title>
                                 <content><html>

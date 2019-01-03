@@ -626,21 +626,16 @@ final class LoaderImpl<R extends Record> implements
     public final LoaderImpl<R> execute() throws IOException {
         checkFlags();
 
-        if (content == CONTENT_CSV) {
+        if (content == CONTENT_CSV)
             executeCSV();
-        }
-        else if (content == CONTENT_XML) {
+        else if (content == CONTENT_XML)
             throw new UnsupportedOperationException();
-        }
-        else if (content == CONTENT_JSON) {
+        else if (content == CONTENT_JSON)
             executeJSON();
-        }
-        else if (content == CONTENT_ARRAYS) {
+        else if (content == CONTENT_ARRAYS)
             executeRows();
-        }
-        else {
+        else
             throw new IllegalStateException();
-        }
 
         return this;
     }
@@ -729,8 +724,8 @@ final class LoaderImpl<R extends Record> implements
                     if (row.getClass() != Object[].class)
                         row = Arrays.copyOf(row, row.length, Object[].class);
 
-                	// [#5145] Lazy initialisation of fields off the first row
-                	//         in case LoaderFieldMapper was used.
+                    // [#5145] Lazy initialisation of fields off the first row
+                    //         in case LoaderFieldMapper was used.
                     if (fields == null)
                         fields0(row);
 

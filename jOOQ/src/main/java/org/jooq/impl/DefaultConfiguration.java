@@ -180,14 +180,20 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
+            configuration.metaProvider(),
             configuration.executorProvider(),
             configuration.transactionProvider(),
             configuration.recordMapperProvider(),
+            configuration.recordUnmapperProvider(),
             configuration.recordListenerProviders(),
             configuration.executeListenerProviders(),
             configuration.visitListenerProviders(),
             configuration.transactionListenerProviders(),
+            configuration.diagnosticsListenerProviders(),
             configuration.converterProvider(),
+
+            configuration.clock(),
+
             configuration.dialect(),
             configuration.settings(),
             configuration.data()
@@ -1230,6 +1236,20 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(MetaProvider)
+     */
+    public final void setMetaProvider(MetaProvider newMetaProvider) {
+        set(newMetaProvider);
+    }
+
+    /**
+     * @see #set(Executor)
+     */
+    public final void setExecutor(Executor newExecutor) {
+        set(newExecutor);
+    }
+
+    /**
      * @see #set(ExecutorProvider)
      */
     public final void setExecutorProvider(ExecutorProvider newExecutorProvider) {
@@ -1244,10 +1264,24 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(RecordMapper)
+     */
+    public final void setRecordMapper(RecordMapper<?, ?> newRecordMapper) {
+        set(newRecordMapper);
+    }
+
+    /**
      * @see #set(RecordMapperProvider)
      */
     public final void setRecordMapperProvider(RecordMapperProvider newRecordMapperProvider) {
         set(newRecordMapperProvider);
+    }
+
+    /**
+     * @see #set(RecordUnmapper)
+     */
+    public final void setRecordUnmapper(RecordUnmapper<?, ?> newRecordUnmapper) {
+        set(newRecordUnmapper);
     }
 
     /**
@@ -1258,10 +1292,24 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(RecordListener[])
+     */
+    public final void setRecordListener(RecordListener... newRecordListeners) {
+        set(newRecordListeners);
+    }
+
+    /**
      * @see #set(RecordListenerProvider[])
      */
     public final void setRecordListenerProvider(RecordListenerProvider... newRecordListenerProviders) {
         set(newRecordListenerProviders);
+    }
+
+    /**
+     * @see #set(ExecuteListener[])
+     */
+    public final void setExecuteListener(ExecuteListener... newExecuteListeners) {
+        set(newExecuteListeners);
     }
 
     /**
@@ -1272,10 +1320,24 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(VisitListener[])
+     */
+    public final void setVisitListener(VisitListener... newVisitListeners) {
+        set(newVisitListeners);
+    }
+
+    /**
      * @see #set(VisitListenerProvider[])
      */
     public final void setVisitListenerProvider(VisitListenerProvider... newVisitListenerProviders) {
         set(newVisitListenerProviders);
+    }
+
+    /**
+     * @see #set(TransactionListener[])
+     */
+    public final void setTransactionListener(TransactionListener... newTransactionListeners) {
+        set(newTransactionListeners);
     }
 
     /**
@@ -1284,6 +1346,29 @@ public class DefaultConfiguration implements Configuration {
     public final void setTransactionListenerProvider(TransactionListenerProvider... newTransactionListenerProviders) {
         set(newTransactionListenerProviders);
     }
+
+    /**
+     * @see #set(DiagnosticsListener[])
+     */
+    public final void setDiagnosticsListener(DiagnosticsListener... newDiagnosticsListener) {
+        set(newDiagnosticsListener);
+    }
+
+    /**
+     * @see #set(DiagnosticsListenerProvider[])
+     */
+    public final void setDiagnosticsListenerProvider(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
+        set(newDiagnosticsListenerProviders);
+    }
+
+
+    /**
+     * @see #set(Clock)
+     */
+    public final void setClock(Clock newClock) {
+        set(newClock);
+    }
+
 
     /**
      * @see #set(SQLDialect)

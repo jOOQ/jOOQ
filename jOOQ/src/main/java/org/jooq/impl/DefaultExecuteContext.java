@@ -317,7 +317,7 @@ class DefaultExecuteContext implements ExecuteContext {
      * <ul>
      * <li><code>org.springframework.jdbc.datasource.ConnectionProxy</code></li>
      * <li><code>org.apache.commons.dbcp.DelegatingConnection</code></li>
-     * <li><code>org.jboss.jca.adapters.jdbc.jdk8.WrappedConnectionJDK8</code></li>
+     * <li><code>org.jboss.jca.adapters.jdbc.WrappedConnection</code></li>
      * <li>...</li>
      * </ul>
      * <p>
@@ -379,7 +379,7 @@ class DefaultExecuteContext implements ExecuteContext {
             }
             catch (ReflectException ignore) {}
 
-            // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.jdk8.WrappedConnectionJDK8
+            // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.WrappedConnection
             try {
                 Connection r = Reflect.on(result).call("getUnderlyingConnection").get();
                 if (result != r && r != null) {
@@ -442,6 +442,16 @@ class DefaultExecuteContext implements ExecuteContext {
             // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingPreparedStatement
             try {
                 PreparedStatement r = Reflect.on(result).call("getDelegate").get();
+                if (result != r && r != null) {
+                    result = r;
+                    continue unwrappingLoop;
+                }
+            }
+            catch (ReflectException ignore) {}
+
+            // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.WrappedStatement
+            try {
+                PreparedStatement r = Reflect.on(result).call("getUnderlyingStatement").get();
                 if (result != r && r != null) {
                     result = r;
                     continue unwrappingLoop;

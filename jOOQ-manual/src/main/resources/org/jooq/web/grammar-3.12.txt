@@ -45,12 +45,28 @@ dmlStatement =
 
 proceduralStatement =
   query
+| declareStatement
+| assignmentStatement
 | nullStatement
 ;
 
 blockStatement =
-  [ 'EXECUTE BLOCK AS' ] 'BEGIN' proceduralStatement ';' { proceduralStatement ';' } 'END'
+  [ 'EXECUTE BLOCK AS' | 'DECLARE' ( declarationStatement ';' )+ ]
+  'BEGIN' ( proceduralStatement ';' )+ 'END'
 | 'DO' stringLiteral
+;
+
+declarationStatement =
+  identifier [ 'CONSTANT' ] dataType [ ( '=' | ':=' | 'DEFAULT' ) field ]
+;
+
+declareStatement =
+  'DECLARE' identifier dataType [ '=' field ]
+;
+
+assignmentStatement =
+  'SET' identifier '=' field
+| identifier ':=' field
 ;
 
 nullStatement = 'NULL'

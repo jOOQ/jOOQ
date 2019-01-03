@@ -94,6 +94,7 @@ import static org.jooq.impl.DSL.day;
 import static org.jooq.impl.DSL.dayOfWeek;
 import static org.jooq.impl.DSL.dayOfYear;
 import static org.jooq.impl.DSL.decade;
+import static org.jooq.impl.DSL.declare;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
@@ -253,6 +254,7 @@ import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.DSL.var;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
@@ -336,6 +338,7 @@ import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
+// ...
 import org.jooq.Delete;
 import org.jooq.DeleteLimitStep;
 import org.jooq.DeleteOrderByStep;
@@ -723,7 +726,9 @@ final class ParserImpl implements Parser {
 
             case 'd':
             case 'D':
-                if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
+                if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
+                    return parseBlock(ctx);
+                else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
                     return parseDelete(ctx, null);
                 else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
                     return parseDrop(ctx);
@@ -2179,10 +2184,18 @@ final class ParserImpl implements Parser {
     }
 
     private static final Block parseBlock(ParserContext ctx) {
-        parseKeywordIf(ctx, "EXECUTE BLOCK AS");
+        List<Statement> statements = new ArrayList<Statement>();
+
+        if (parseKeywordIf(ctx, "DECLARE") && ctx.requireProEdition())
+
+
+
+            ;
+        else
+            parseKeywordIf(ctx, "EXECUTE BLOCK AS");
+
         parseKeyword(ctx, "BEGIN");
 
-        List<Statement> statements = new ArrayList<Statement>();
         for (;;) {
             Statement statement = parseStatement(ctx);
             statements.add(statement);
@@ -2198,6 +2211,20 @@ final class ParserImpl implements Parser {
         return ctx.dsl.begin(statements);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private static final Block parseDo(ParserContext ctx) {
         parseKeyword(ctx, "DO");
         String block = parseStringLiteral(ctx);
@@ -2206,13 +2233,39 @@ final class ParserImpl implements Parser {
 
     private static final Statement parseStatement(ParserContext ctx) {
         switch (ctx.character()) {
+            case 'd':
+            case 'D':
+                if (peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 'n':
             case 'N':
                 if (peekKeyword(ctx, "NULL"))
                     return parseNullStatement(ctx);
 
                 break;
+
+            case 's':
+            case 'S':
+                if (peekKeyword(ctx, "SET") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
         }
+
+
+
+
+
+
 
         return parseQuery(ctx, false, false);
     }
@@ -2225,6 +2278,61 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // Statement clause parsing

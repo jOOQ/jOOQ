@@ -37,50 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_SET;
 
-// ...
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Field;
 
-/**
- * @author Lukas Eder
- */
-final class Assignment<T> extends AbstractStatement {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1567637930559064772L;
-    final AssignmentTarget<T> target;
-    final Field<T>            value;
 
-    Assignment(AssignmentTarget<T> target, Field<T> value) {
-        this.target = target;
-        this.value = value;
-    }
 
-    @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-            case MARIADB:
-            case MYSQL:
-            case SQLSERVER:
-                ctx.visit(K_SET).sql(' ').visit(target).sql(" = ").visit(value);
-                break;
 
-            case POSTGRES:
-            case ORACLE:
-            default:
-                ctx.visit(target).sql(" := ").visit(value);
-                break;
-        }
-    }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-}
-/* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            

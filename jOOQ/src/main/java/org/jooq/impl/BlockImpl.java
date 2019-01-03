@@ -208,10 +208,14 @@ final class BlockImpl extends AbstractQuery implements Block {
         accept2(ctx, statements);
     }
 
-    private static final boolean declaration(Statement statement) {
-        return statement instanceof Declaration
-            || statement instanceof Assignment && ((Assignment<?>) statement).target instanceof Declaration;
-    }
+
+
+
+
+
+
+
+
 
     private static final void accept2(Context<?> ctx, List<Statement> statements) {
         ctx.visit(K_BEGIN);

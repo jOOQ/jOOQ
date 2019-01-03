@@ -86,6 +86,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateJPAAnnotations             = false;
     String                             generateJPAVersion                 = "";
     boolean                            generateValidationAnnotations      = false;
+    boolean                            generateConstructorPropertiesAnnotations = false;
     boolean                            generateSpringAnnotations          = false;
     boolean                            generateQueues                     = true;
     boolean                            generateLinks                      = true;
@@ -479,6 +480,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
         this.generateValidationAnnotations = generateValidationAnnotations;
+    }
+
+    @Override
+    public boolean generateConstructorPropertiesAnnotations() {
+        return generateConstructorPropertiesAnnotations;
+    }
+
+    @Override
+    public void setGenerateConstructorPropertiesAnnotations(boolean generateConstructorPropertiesAnnotations) {
+        this.generateConstructorPropertiesAnnotations = generateConstructorPropertiesAnnotations;
     }
 
     @Override

@@ -327,6 +327,18 @@ public interface Generator {
     void setGenerateValidationAnnotations(boolean generateValidationAnnotations);
 
     /**
+     * Whether POJO constructors should be annotated with <code>@java.beans.ConstructorProperties</code>
+     * to declare parameter-property binding.
+     */
+    boolean generateConstructorPropertiesAnnotations();
+
+    /**
+     * Whether POJO constructors should be annotated with <code>@java.beans.ConstructorProperties</code>
+     * to declare parameter-property binding.
+     */
+    void setGenerateConstructorPropertiesAnnotations(boolean generateConstructorPropertiesAnnotations);
+
+    /**
      * Whether DAOs should be annotated with useful spring annotations such as
      * <code>@Repository</code> or <code>@Autowired</code>
      */

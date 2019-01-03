@@ -640,6 +640,8 @@ public class GenerationTool {
                 generator.setGenerateJPAVersion(g.getGenerate().getJpaVersion());
             if (g.getGenerate().isValidationAnnotations() != null)
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
+            if (g.getGenerate().isConstructorPropertyAnnotations() != null)
+                generator.setGenerateConstructorPropertiesAnnotations(g.getGenerate().isConstructorPropertyAnnotations());
             if (g.getGenerate().isSpringAnnotations() != null)
                 generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
             if (g.getGenerate().isQueues() != null)

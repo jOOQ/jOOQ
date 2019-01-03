@@ -3227,6 +3227,18 @@ public class JavaGenerator extends AbstractGenerator {
         else if (getTypedElements(tableOrUDT).size() > 0 &&
                  getTypedElements(tableOrUDT).size() < 256) {
             out.println();
+
+            if (generateConstructorPropertiesAnnotations()) {
+                out.tab(1).print("@java.beans.ConstructorProperties({");
+                String separator0 = "";
+                for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                    out.println(separator0);
+                    out.print("\"" + getStrategy().getJavaMemberName(column, Mode.POJO) + "\"");
+                    separator0 = ", ";
+                }
+                out.tab(1).println("})");
+            }
+
             out.tab(1).print("public %s(", className);
 
             String separator1 = "";

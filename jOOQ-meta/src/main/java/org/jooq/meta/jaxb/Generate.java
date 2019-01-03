@@ -95,6 +95,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "false")
     protected Boolean validationAnnotations = false;
     @XmlElement(defaultValue = "false")
+    protected Boolean constructorPropertiesAnnotations = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean springAnnotations = false;
     @XmlElement(defaultValue = "true")
     protected Boolean globalObjectReferences = true;
@@ -868,6 +870,31 @@ public class Generate implements Serializable
      */
     public void setValidationAnnotations(Boolean value) {
         this.validationAnnotations = value;
+    }
+
+    /**
+     * Annotate POJO constructors with <code>@java.beans.ConstructorProperties</code>
+     * to declare parameter-property binding.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isConstructorPropertiesAnnotations() {
+        return constructorPropertiesAnnotations;
+    }
+
+    /**
+     * Sets the value of the constructorPropertiesAnnotations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setConstructorPropertiesAnnotations(Boolean value) {
+        this.constructorPropertiesAnnotations = value;
     }
 
     /**
@@ -1905,6 +1932,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withConstructorPropertiesAnnotations(Boolean value) {
+        setConstructorPropertiesAnnotations(value);
+        return this;
+    }
+
     public Generate withSpringAnnotations(Boolean value) {
         setSpringAnnotations(value);
         return this;
@@ -2232,6 +2264,11 @@ public class Generate implements Serializable
             sb.append("<validationAnnotations>");
             sb.append(validationAnnotations);
             sb.append("</validationAnnotations>");
+        }
+        if (constructorPropertiesAnnotations != null) {
+            sb.append("<constructorPropertiesAnnotations>");
+            sb.append(constructorPropertiesAnnotations);
+            sb.append("</constructorPropertiesAnnotations>");
         }
         if (springAnnotations!= null) {
             sb.append("<springAnnotations>");
@@ -2689,6 +2726,15 @@ public class Generate implements Serializable
                 return false;
             }
         }
+        if (constructorPropertiesAnnotations == null) {
+            if (other.constructorPropertiesAnnotations!= null) {
+                return false;
+            }
+        } else {
+            if (!constructorPropertiesAnnotations.equals(other.constructorPropertiesAnnotations)) {
+                return false;
+            }
+        }
         if (springAnnotations == null) {
             if (other.springAnnotations!= null) {
                 return false;
@@ -3049,6 +3095,7 @@ public class Generate implements Serializable
         result = ((prime*result)+((jpaAnnotations == null)? 0 :jpaAnnotations.hashCode()));
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));
         result = ((prime*result)+((validationAnnotations == null)? 0 :validationAnnotations.hashCode()));
+        result = ((prime*result)+((constructorPropertiesAnnotations == null)? 0 :constructorPropertiesAnnotations.hashCode()));
         result = ((prime*result)+((springAnnotations == null)? 0 :springAnnotations.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));

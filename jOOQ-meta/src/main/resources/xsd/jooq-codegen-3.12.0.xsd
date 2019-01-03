@@ -1000,6 +1000,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JSR-303 validation annotations]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="constructorPropertiesAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJO constructors with @java.bean.ConstructorProperties]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate DAOs with useful spring annotations such as @Repository or @Autowired.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

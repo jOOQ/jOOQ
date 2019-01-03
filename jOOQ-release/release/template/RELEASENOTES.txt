@@ -10,6 +10,20 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.11.9 - January 3, 2018
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Bug Fixes
+---------
+#8146 - java.lang.NoSuchMethodException when calling setBinaryDouble on org.jboss.jca.adapters.jdbc.WrappedStatement
+#8152 - No-arg DefaultConfiguration.derive() does not correctly derive
+#8154 - DefaultConfiguration is missing some JavaBeans setters
+#8157 - Wrong Javadoc on LoaderOptionsStep.onDuplicateKeyUpdate()
+#8159 - ORA-38104 when using ON DUPLICATE KEY UPDATE in Oracle
+
 
 Version 3.11.8 - December 21, 2018
 ================================================================================

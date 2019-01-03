@@ -48,6 +48,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
@@ -59,14 +60,17 @@ import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 
 import org.jooq.Block;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 
@@ -81,6 +85,9 @@ final class BlockImpl extends AbstractQuery implements Block {
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final EnumSet<SQLDialect>      REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = EnumSet.of(FIREBIRD);
     private static final EnumSet<SQLDialect>      SUPPORTS_NULL_STATEMENT           = EnumSet.of(POSTGRES);
+
+
+
 
     private final Collection<? extends Statement> statements;
 
@@ -166,6 +173,47 @@ final class BlockImpl extends AbstractQuery implements Block {
     }
 
     private final void accept0(Context<?> ctx) {
+        accept1(ctx, new ArrayList<Statement>(statements));
+    }
+
+    private static final void accept1(Context<?> ctx, List<Statement> statements) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        accept2(ctx, statements);
+    }
+
+    private static final boolean declaration(Statement statement) {
+        return statement instanceof Declaration
+            || statement instanceof Assignment && ((Assignment<?>) statement).target instanceof Declaration;
+    }
+
+    private static final void accept2(Context<?> ctx, List<Statement> statements) {
         ctx.visit(K_BEGIN);
 
         if (ctx.family() == MARIADB)
@@ -194,7 +242,17 @@ final class BlockImpl extends AbstractQuery implements Block {
         }
         else {
             statementLoop:
-            for (Statement s : statements) {
+            for (int i = 0; i < statements.size(); i++) {
+                Statement s = statements.get(i);
+
+
+
+
+
+
+
+
+
                 if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.family()))
                     continue statementLoop;
 

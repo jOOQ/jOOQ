@@ -167,6 +167,7 @@ import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.QualifiedAsterisk;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -201,7 +202,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect>     EMULATE_SELECT_INTO_AS_CTAS     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE           = EnumSet.of(CUBRID);
     private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE_QUALIFIED = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
-    private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO             = EnumSet.of(HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO_TABLE       = EnumSet.of(HSQLDB, POSTGRES);
     static final EnumSet<SQLDialect>             SUPPORT_WINDOW_CLAUSE           = EnumSet.of(H2, MYSQL, POSTGRES, SQLITE);
     private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
@@ -1254,13 +1255,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ) {
             context.start(SELECT_INTO);
 
-            Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+            QueryPart actualInto = (QueryPart) context.data(DATA_SELECT_INTO_TABLE);
+
+
+
+
             if (actualInto == null)
                 actualInto = into;
 
             if (actualInto != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && SUPPORT_SELECT_INTO.contains(family)) {
+                    && (SUPPORT_SELECT_INTO_TABLE.contains(family) || !(actualInto instanceof Table))) {
 
                 context.formatSeparator()
                        .visit(K_INTO)

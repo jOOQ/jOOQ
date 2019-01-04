@@ -415,6 +415,13 @@ final class Tools {
          */
         DATA_SELECT_INTO_TABLE,
 
+
+
+
+
+
+
+
         /**
          * [#7139] No data must be selected in the <code>SELECT</code> statement.
          */

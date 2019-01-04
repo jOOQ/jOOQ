@@ -50,8 +50,7 @@ import org.jooq.Select;
 final class ScalarSubquery<T> extends AbstractField<T> {
 
     private static final long serialVersionUID = 3463144434073231750L;
-
-    private final Select<?>   query;
+    final Select<?>           query;
 
     ScalarSubquery(Select<?> query, DataType<T> type) {
         super(DSL.name("select"), type);

@@ -71,6 +71,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
 // ...
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 
@@ -176,6 +177,7 @@ final class BlockImpl extends AbstractQuery implements Block {
         accept1(ctx, new ArrayList<Statement>(statements));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private static final void accept1(Context<?> ctx, List<Statement> statements) {
 
 
@@ -205,7 +207,29 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         accept2(ctx, statements);
+    }
+
+    private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {
+        if (!(s instanceof Block))
+
+
+
+                ctx.sql(';');
     }
 
 
@@ -277,11 +301,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-                if (!(s instanceof Block))
-
-
-
-                    ctx.sql(';');
+                semicolonAfterStatement(ctx, s);
             }
         }
 

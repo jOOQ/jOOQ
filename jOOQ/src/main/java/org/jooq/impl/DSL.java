@@ -12028,26 +12028,82 @@ public class DSL {
         return decode().value(value);
     }
 
+    /**
+     * The T-SQL <code>CHOOSE()</code> function.
+     */
     @Support
     public static <T> Field<T> choose(int index, T... values) {
         return choose(val(index), (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
+    /**
+     * The T-SQL <code>CHOOSE()</code> function.
+     */
     @Support
     @SafeVarargs
     public static <T> Field<T> choose(int index, Field<T>... values) {
         return choose(val(index), values);
     }
 
+    /**
+     * The T-SQL <code>CHOOSE()</code> function.
+     */
     @Support
     public static <T> Field<T> choose(Field<Integer> index, T... values) {
         return choose(index, (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
+    /**
+     * The T-SQL <code>CHOOSE()</code> function.
+     */
     @Support
     @SafeVarargs
     public static <T> Field<T> choose(Field<Integer> index, Field<T>... values) {
         return new Choose<T>(index, values);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     *
+     * @see Case
+     */
+    @Support
+    public static Case case_() {
+        return decode();
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
+     *
+     * @see Case
+     */
+    @Support
+    public static <V> CaseValueStep<V> case_(V value) {
+        return decode().value(value);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
+     *
+     * @see Case
+     */
+    @Support
+    public static <V> CaseValueStep<V> case_(Field<V> value) {
+        return decode().value(value);
     }
 
     /**
@@ -12059,9 +12115,6 @@ public class DSL {
      *      ELSE            'three'
      * END
      * </pre></code>
-     * <p>
-     * Choose is used as a method name to avoid name clashes with Java's
-     * reserved literal "case".
      */
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, T result) {
@@ -12077,9 +12130,6 @@ public class DSL {
      *      ELSE            'three'
      * END
      * </pre></code>
-     * <p>
-     * Choose is used as a method name to avoid name clashes with Java's
-     * reserved literal "case".
      */
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
@@ -12095,9 +12145,6 @@ public class DSL {
      *      ELSE            'three'
      * END
      * </pre></code>
-     * <p>
-     * Choose is used as a method name to avoid name clashes with Java's
-     * reserved literal "case".
      */
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {

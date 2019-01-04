@@ -5525,10 +5525,10 @@ ORDER BY CASE TITLE
 ]]>&#160;</sql>
 <java><![CDATA[create.select()
       .from(BOOK)
-      .orderBy(choose(BOOK.TITLE)
+      .orderBy(case_(BOOK.TITLE)
                .when("1984", 0)
                .when("Animal Farm", 1)
-               .otherwise(2).asc())
+               .else_(2).asc())
       .fetch();]]></java></code-pair><html>
 
 											<p>
@@ -8661,18 +8661,18 @@ END]]></sql>
 <java><![CDATA[DSL
       .when(AUTHOR.FIRST_NAME.eq("Paulo"), "brazilian")
       .when(AUTHOR.FIRST_NAME.eq("George"), "english")
-      .otherwise("unknown");
+      .else_("unknown");
 
 // OR:
 
-DSL.choose(AUTHOR.FIRST_NAME)
+DSL.case_(AUTHOR.FIRST_NAME)
    .when("Paulo", "brazilian")
    .when("George", "english")
-   .otherwise("unknown");]]></java>
+   .else_("unknown");]]></java>
 </code-pair><html>
 
 								<p>
-									In jOOQ, both syntaxes are supported (The second one is emulated in Derby, which only knows the first one). Unfortunately, both case and else are reserved words in Java. jOOQ chose to use decode() from the Oracle <code>DECODE</code> function, or choose(), and otherwise(), which means the same as else.
+									In jOOQ, both syntaxes are supported (The second one is emulated in Derby, which only knows the first one). Unfortunately, both case and else are reserved words in Java. jOOQ chose to use decode() from the Oracle <code>DECODE</code> function, or choose() / case_(), and otherwise() / else_().
 								</p>
 
 								<p>
@@ -20753,18 +20753,18 @@ WHEN_MATCHED_THEN_UPDATE()</java>
                             </ul>
 
                             <p>
-                                jOOQ replaces those keywords by "synonyms":
+                                jOOQ uses a suffix on those keywords to prevent a collision:
                             </p>
 
 </html><code-pair>
 <sql>CASE .. ELSE
 PIVOT .. FOR .. IN ..</sql>
-<java>decode() .. otherwise()
-pivot(..).on(..).in(..)</java>
+<java>case_() .. else_()
+pivot(..).for_(..).in(..)</java>
 </code-pair><html>
 
                             <p>
-                                There is more future collision potential with:
+                                There is more future collision potential with, each resolved with a suffix:
                             </p>
                             <ul>
                                 <li><code>BOOLEAN</code></li>
@@ -20896,7 +20896,7 @@ for (Record record : create.select(
                 .and(PARAMETERS.SPECIFIC_NAME.eq(r1.SPECIFIC_NAME))
                 .and(upper(PARAMETERS.PARAMETER_MODE).ne("IN"))),
                     val("void"))
-           .otherwise(r1.DATA_TYPE).as("data_type"),
+           .else_(r1.DATA_TYPE).as("data_type"),
         r1.CHARACTER_MAXIMUM_LENGTH,
         r1.NUMERIC_PRECISION,
         r1.NUMERIC_SCALE,

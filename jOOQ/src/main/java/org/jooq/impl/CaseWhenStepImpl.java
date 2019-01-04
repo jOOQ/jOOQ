@@ -68,7 +68,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
     private final Field<V>       value;
     private final List<Field<V>> compareValues;
     private final List<Field<T>> results;
-    private Field<T>             otherwise;
+    private Field<T>             else_;
 
     CaseWhenStepImpl(Field<V> value, Field<V> compareValue, Field<T> result) {
         this(value, result.getDataType());
@@ -102,12 +102,22 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(Tools.field(result));
+        return else_(result);
     }
 
     @Override
     public final Field<T> otherwise(Field<T> result) {
-        this.otherwise = result;
+        return else_(result);
+    }
+
+    @Override
+    public final Field<T> else_(T result) {
+        return else_(Tools.field(result));
+    }
+
+    @Override
+    public final Field<T> else_(Field<T> result) {
+        this.else_ = result;
 
         return this;
     }
@@ -263,14 +273,14 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                 }
             }
 
-            if (otherwise != null)
+            if (else_ != null)
                 ctx.formatSeparator()
                    .visit(K_ELSE).sql(' ')
-                   .visit(otherwise);
+                   .visit(else_);
 
             ctx.formatIndentEnd();
 
-            if (size > 1 || otherwise != null)
+            if (size > 1 || else_ != null)
                 ctx.formatSeparator();
             else
                 ctx.sql(' ');

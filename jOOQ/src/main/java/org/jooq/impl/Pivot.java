@@ -83,7 +83,7 @@ implements
 
     private final Table<?>                  table;
     private final SelectFieldList<Field<?>> aggregateFunctions;
-    private Field<T>                        on;
+    private Field<T>                        for_;
     private SelectFieldList<Field<?>>       in;
 
     Pivot(Table<?> table, Field<?>... aggregateFunctions) {
@@ -170,7 +170,7 @@ implements
             // This loop finds all fields qualify for GROUP BY clauses
             for (Field<?> field : table.fields()) {
                 if (!aggregatedFields.contains(field)) {
-                    if (!on.equals(field)) {
+                    if (!for_.equals(field)) {
                         aliasedGroupingFields.add(pivot.field(field));
                         groupingFields.add(field);
                     }
@@ -190,7 +190,7 @@ implements
                     Select<?> aggregateSelect = using(configuration)
                             .select(aggregateFunction)
                             .from(table)
-                            .where(on.equal((Field<T>) inField))
+                            .where(for_.equal((Field<T>) inField))
                             .and(join);
 
                     aggregationSelects.add(aggregateSelect.asField(inField.getName() + "_" + aggregateFunction.getName()));
@@ -203,7 +203,7 @@ implements
                     .select(aliasedGroupingFields)
                     .select(aggregationSelects)
                     .from(pivot)
-                    .where(pivot.field(on).in(in.toArray(EMPTY_FIELD)))
+                    .where(pivot.field(for_).in(in.toArray(EMPTY_FIELD)))
                     .groupBy(aliasedGroupingFields)
                     .asTable();
 
@@ -321,6 +321,12 @@ implements
     // ------------------------------------------------------------------------
     // XXX: Pivot API
     // ------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 

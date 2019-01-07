@@ -123,5 +123,5 @@ public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
      * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    SelectIntoStep<Record> into(Table<?> table);
+    SelectFromStep<Record> into(Table<?> table);
 }

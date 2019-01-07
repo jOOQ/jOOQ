@@ -15400,6 +15400,7 @@ result.forEach((Object[] entities) -> {
       <includePrimaryKeys>false</includePrimaryKeys>
       <includeUniqueKeys>false</includeUniqueKeys>
       <includeForeignKeys>false</includeForeignKeys>
+      <includeIndexes>false</includeIndexes>
     </database>
   </generator>
 </configuration>]]></xml><html>
@@ -15418,7 +15419,8 @@ result.forEach((Object[] entities) -> {
       .withIncludeSequences(false)
       .withIncludePrimaryKeys(false)
       .withIncludeUniqueKeys(false)
-      .withIncludeForeignKeys(false))));]]></java><html>
+      .withIncludeForeignKeys(false)
+      .withIncludeIndexes(false))));]]></java><html>
 
                                             <p>
                                                 <strong>Gradle configuration</strong>
@@ -15435,6 +15437,7 @@ result.forEach((Object[] entities) -> {
       includePrimaryKeys = false
       includeUniqueKeys = false
       includeForeignKeys = false
+      includeIndexes = false
     }
   }
 }]]></java><html>

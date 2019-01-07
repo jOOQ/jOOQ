@@ -90,12 +90,15 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-    private final Collection<? extends Statement> statements;
 
-    BlockImpl(Configuration configuration, Collection<? extends Statement> statements) {
+    private final Collection<? extends Statement> statements;
+    private final boolean                         alwaysWrapInBeginEnd;
+
+    BlockImpl(Configuration configuration, Collection<? extends Statement> statements, boolean alwaysWrapInBeginEnd) {
         super(configuration);
 
         this.statements = statements;
+        this.alwaysWrapInBeginEnd = alwaysWrapInBeginEnd;
     }
 
     @Override
@@ -167,18 +170,27 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
             default: {
+                increment(ctx.data(), DATA_BLOCK_NESTING);
                 accept0(ctx);
+                decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
             }
         }
     }
 
     private final void accept0(Context<?> ctx) {
-        accept1(ctx, new ArrayList<Statement>(statements));
+        boolean wrapInBeginEnd =
+               alwaysWrapInBeginEnd
+
+
+
+        ;
+
+        accept1(ctx, new ArrayList<Statement>(statements), wrapInBeginEnd);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private static final void accept1(Context<?> ctx, List<Statement> statements) {
+    private static final void accept1(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
 
 
 
@@ -221,7 +233,9 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-        accept2(ctx, statements);
+
+
+        accept2(ctx, statements, wrapInBeginEnd);
     }
 
     private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {
@@ -241,13 +255,15 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-    private static final void accept2(Context<?> ctx, List<Statement> statements) {
-        ctx.visit(K_BEGIN);
+    private static final void accept2(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
+        if (wrapInBeginEnd) {
+            ctx.visit(K_BEGIN);
 
-        if (ctx.family() == MARIADB)
-            ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
+            if (ctx.family() == MARIADB)
+                ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
 
-        ctx.formatIndentStart();
+            ctx.formatIndentStart();
+        }
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
@@ -305,22 +321,24 @@ final class BlockImpl extends AbstractQuery implements Block {
             }
         }
 
-        ctx.formatIndentEnd()
-           .formatSeparator()
-           .visit(K_END);
+        if (wrapInBeginEnd) {
+            ctx.formatIndentEnd()
+               .formatSeparator()
+               .visit(K_END);
 
-        switch (ctx.family()) {
-            case FIREBIRD:
-                break;
-
-
-
+            switch (ctx.family()) {
+                case FIREBIRD:
+                    break;
 
 
 
 
-            default:
-                ctx.sql(';');
+
+
+
+                default:
+                    ctx.sql(';');
+            }
         }
     }
 

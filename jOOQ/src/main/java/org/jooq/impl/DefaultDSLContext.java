@@ -788,8 +788,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Block begin(Collection<? extends Statement> statements) {
-        return new BlockImpl(configuration(), statements);
+        return new BlockImpl(configuration(), statements, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL API

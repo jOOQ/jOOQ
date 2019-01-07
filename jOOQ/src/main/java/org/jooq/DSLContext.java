@@ -753,6 +753,28 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ FIREBIRD, MARIADB, POSTGRES })
     Block begin(Collection<? extends Statement> statements);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -------------------------------------------------------------------------
     // XXX Plain SQL API
     // -------------------------------------------------------------------------

@@ -4601,6 +4601,21 @@ final class Tools {
     }
 
     /**
+     * Whether a counter is currently at the top level or not.
+     *
+     * @see #increment(Map, DataKey)
+     * @see #decrement(Map, DataKey)
+     */
+    static final boolean toplevel(Map<Object, Object> data, DataKey key) {
+        Integer updateCounts = (Integer) data.get(key);
+
+        if (updateCounts == null)
+            throw new IllegalStateException();
+        else
+            return updateCounts == 1;
+    }
+
+    /**
      * Increment a counter and return true if the counter was zero prior to
      * incrementing.
      */

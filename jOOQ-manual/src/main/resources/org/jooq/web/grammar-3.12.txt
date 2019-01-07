@@ -43,16 +43,20 @@ dmlStatement =
 | updateStatement
 ;
 
+proceduralStatements = ( proceduralStatement ';' )+
+;
+
 proceduralStatement =
   query
 | declareStatement
 | assignmentStatement
+| ifStatement
 | nullStatement
 ;
 
 blockStatement =
   [ 'EXECUTE BLOCK AS' | 'DECLARE' ( declarationStatement ';' )+ ]
-  'BEGIN' ( proceduralStatement ';' )+ 'END'
+  'BEGIN' proceduralStatements 'END'
 | 'DO' stringLiteral
 ;
 
@@ -67,6 +71,13 @@ declareStatement =
 assignmentStatement =
   'SET' identifier '=' field
 | identifier ':=' field
+;
+
+ifStatement =
+  'IF' condition 'THEN' proceduralStatements
+  [ 'ELSIF' condition 'THEN' proceduralStatements ]
+  [ 'ELSE' proceduralStatements ]
+  'END IF'
 ;
 
 nullStatement = 'NULL'

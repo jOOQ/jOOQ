@@ -192,6 +192,7 @@ import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
+// ...
 import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.InsertSetStep;
@@ -9707,6 +9708,15 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
 
 
 

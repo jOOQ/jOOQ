@@ -124,6 +124,7 @@ import static org.jooq.impl.DSL.groupsPreceding;
 import static org.jooq.impl.DSL.groupsUnboundedFollowing;
 import static org.jooq.impl.DSL.groupsUnboundedPreceding;
 import static org.jooq.impl.DSL.hour;
+// ...
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
@@ -363,6 +364,7 @@ import org.jooq.GrantWithGrantOptionStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
+// ...
 import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
@@ -2195,6 +2197,14 @@ final class ParserImpl implements Parser {
             parseKeywordIf(ctx, "EXECUTE BLOCK AS");
 
         parseKeyword(ctx, "BEGIN");
+        statements.addAll(parseStatements(ctx, "END"));
+        parseKeyword(ctx, "END");
+        parse(ctx, ';');
+        return ctx.dsl.begin(statements);
+    }
+
+    private static List<Statement> parseStatements(ParserContext ctx, String... peek) {
+        List<Statement> statements = new ArrayList<Statement>();
 
         for (;;) {
             Statement statement = parseStatement(ctx);
@@ -2203,12 +2213,11 @@ final class ParserImpl implements Parser {
             if (!(statement instanceof Block))
                 parse(ctx, ';');
 
-            if (parseKeywordIf(ctx, "END"))
+            if (peekKeyword(ctx, peek))
                 break;
         }
 
-        parse(ctx, ';');
-        return ctx.dsl.begin(statements);
+        return statements;
     }
 
 
@@ -2236,6 +2245,16 @@ final class ParserImpl implements Parser {
             case 'd':
             case 'D':
                 if (peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
+            case 'i':
+            case 'I':
+                if (peekKeyword(ctx, "IF") && ctx.requireProEdition())
 
 
 
@@ -2278,6 +2297,32 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

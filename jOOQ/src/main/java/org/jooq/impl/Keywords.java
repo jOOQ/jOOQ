@@ -85,6 +85,7 @@ final class Keywords {
     static final Keyword K_COMMENT                          = keyword("comment");
     static final Keyword K_CONNECT_BY                       = keyword("connect by");
     static final Keyword K_CONSTRAINT                       = keyword("constraint");
+    static final Keyword K_CONTINUE                         = keyword("continue");
     static final Keyword K_CONTINUE_IDENTITY                = keyword("continue identity");
     static final Keyword K_CREATE                           = keyword("create");
     static final Keyword K_CREATE_SCHEMA                    = keyword("create schema");

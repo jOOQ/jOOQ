@@ -53,6 +53,7 @@ proceduralStatement =
 | ifStatement
 | loopStatement
 | whileStatement
+| continueStatement
 | exitStatement
 | nullStatement
 ;
@@ -89,6 +90,10 @@ loopStatement =
 
 whileStatement =
   'WHILE' condition 'LOOP' proceduralStatements 'END LOOP'
+;
+
+continueStatement =
+  'CONTINUE' [ 'WHEN' condition ]
 ;
 
 exitStatement =

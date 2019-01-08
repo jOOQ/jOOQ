@@ -76,6 +76,8 @@ import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
+import static org.jooq.impl.DSL.continueWhen;
+import static org.jooq.impl.DSL.continue_;
 import static org.jooq.impl.DSL.cos;
 import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;
@@ -145,7 +147,7 @@ import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
-import static org.jooq.impl.DSL.loop;
+// ...
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.lpad;
 import static org.jooq.impl.DSL.ltrim;
@@ -2246,6 +2248,16 @@ final class ParserImpl implements Parser {
 
     private static final Statement parseStatement(ParserContext ctx) {
         switch (ctx.character()) {
+            case 'c':
+            case 'C':
+                if (peekKeyword(ctx, "CONTINUE") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 'd':
             case 'D':
                 if (peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
@@ -2331,6 +2343,15 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
 
 
 

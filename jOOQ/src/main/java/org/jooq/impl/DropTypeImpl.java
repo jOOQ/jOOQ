@@ -45,7 +45,6 @@ import static org.jooq.impl.Keywords.K_TYPE;
 
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropTypeFinalStep;
@@ -106,10 +105,5 @@ final class DropTypeImpl extends AbstractQuery implements
             ctx.sql(' ').visit(K_CASCADE);
         else if (restrict)
             ctx.sql(' ').visit(K_RESTRICT);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

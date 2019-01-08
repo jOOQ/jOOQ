@@ -41,7 +41,6 @@ import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -233,11 +232,6 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
 
         ctx.visit(DSL.name(getName()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     /**

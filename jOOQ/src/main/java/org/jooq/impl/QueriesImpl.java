@@ -44,7 +44,6 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.jooq.Block;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
@@ -163,11 +162,6 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
             ctx.visit(query).sql(';');
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // ------------------------------------------------------------------------

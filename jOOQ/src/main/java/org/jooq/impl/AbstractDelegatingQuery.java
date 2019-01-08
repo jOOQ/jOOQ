@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Param;
@@ -87,13 +86,6 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     @Override
     public final void accept(Context<?> context) {
         context.visit(delegate);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-
-        // Delegate queries don't emit clauses themselves.
-        return null;
     }
 
     @Override

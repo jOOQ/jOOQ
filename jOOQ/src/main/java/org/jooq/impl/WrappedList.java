@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 
 /**
@@ -61,10 +60,5 @@ final class WrappedList extends AbstractQueryPart {
         ctx.sql('(')
            .visit(wrapped)
            .sql(')');
-}
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

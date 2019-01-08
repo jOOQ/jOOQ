@@ -47,7 +47,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateTypeFinalStep;
@@ -118,10 +117,5 @@ final class CreateTypeImpl extends AbstractQuery implements
            .visit(values)
            .sql(')')
            .paramType(previous);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

@@ -51,7 +51,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.CaseWhenStep;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -174,18 +173,6 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
         }
     }
 
-    private abstract class Base extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 6146002888421945901L;
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return null;
-        }
-    }
 
 
 
@@ -224,8 +211,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
 
 
-
-    private class Native extends Base {
+    private class Native extends AbstractQueryPart {
 
         /**
          * Generated UID

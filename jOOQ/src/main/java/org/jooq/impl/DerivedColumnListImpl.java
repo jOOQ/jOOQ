@@ -40,7 +40,6 @@ package org.jooq.impl;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
@@ -165,10 +164,5 @@ implements
 
             ctx.sql(')');
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

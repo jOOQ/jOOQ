@@ -45,7 +45,6 @@ import static org.jooq.impl.Keywords.K_SESSION;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_USE;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Schema;
@@ -94,10 +93,5 @@ final class SetSchema extends AbstractQuery {
                 ctx.visit(K_SET).sql(' ').visit(K_SCHEMA).sql(' ').visit(schema);
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

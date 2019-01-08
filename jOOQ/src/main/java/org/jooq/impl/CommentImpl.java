@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 
@@ -62,11 +61,6 @@ final class CommentImpl extends AbstractQueryPart implements Comment {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(inline(comment));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

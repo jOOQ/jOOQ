@@ -100,7 +100,6 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
@@ -643,11 +642,6 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
         if (FALSE.equals(withData))
             ctx.data().remove(DATA_SELECT_NO_DATA);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     private enum OnCommit {

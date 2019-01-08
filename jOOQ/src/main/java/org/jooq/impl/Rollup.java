@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
@@ -65,11 +64,6 @@ final class Rollup extends AbstractField<Object> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     private final QueryPart delegate(Configuration configuration) {
@@ -99,11 +93,6 @@ final class Rollup extends AbstractField<Object> {
             ctx.visit(arguments)
                .formatSeparator()
                .visit(K_WITH_ROLLUP);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return null;
         }
     }
 }

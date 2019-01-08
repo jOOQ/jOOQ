@@ -42,7 +42,6 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Index;
@@ -82,11 +81,6 @@ class IndexImpl extends AbstractNamed implements Index {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getQualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

@@ -43,7 +43,6 @@ import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.OrderField;
@@ -132,11 +131,6 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     @Override
     public final boolean declaresWindows() {
         return true;
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // ------------------------------------------------------------------------

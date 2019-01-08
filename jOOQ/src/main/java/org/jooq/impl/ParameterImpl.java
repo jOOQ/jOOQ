@@ -39,7 +39,6 @@
 package org.jooq.impl;
 
 import org.jooq.Binding;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -96,11 +95,6 @@ final class ParameterImpl<T> extends AbstractNamed implements Parameter<T> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getUnqualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

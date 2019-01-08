@@ -41,7 +41,6 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -147,11 +146,6 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(alias);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

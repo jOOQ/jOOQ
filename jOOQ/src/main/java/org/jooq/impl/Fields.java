@@ -395,11 +395,6 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         ctx.visit(new QueryPartList<Field<?>>(fields));
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     // -------------------------------------------------------------------------
     // XXX: List-like API
     // -------------------------------------------------------------------------

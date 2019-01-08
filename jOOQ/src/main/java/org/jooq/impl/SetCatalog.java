@@ -42,7 +42,6 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_USE;
 
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 
@@ -76,10 +75,5 @@ final class SetCatalog extends AbstractQuery {
                 ctx.visit(K_SET).sql(' ').visit(K_CATALOG).sql(' ').visit(catalog);
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

@@ -38,7 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -60,11 +59,6 @@ final class FieldAlias<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(alias);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

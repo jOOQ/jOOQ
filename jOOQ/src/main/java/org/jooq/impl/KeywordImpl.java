@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.conf.RenderKeywordCase;
@@ -81,10 +80,5 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
             default:
                 throw new UnsupportedOperationException("Unsupported style: " + style);
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

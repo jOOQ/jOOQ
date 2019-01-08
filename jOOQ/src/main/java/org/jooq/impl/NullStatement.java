@@ -44,7 +44,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 
 /**
@@ -79,10 +78,5 @@ final class NullStatement extends AbstractStatement {
                 ctx.visit(K_NULL).sql(';');
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

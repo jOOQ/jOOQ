@@ -265,11 +265,6 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     // -------------------------------------------------------------------------
     // The FieldMapsForInsert API
     // -------------------------------------------------------------------------

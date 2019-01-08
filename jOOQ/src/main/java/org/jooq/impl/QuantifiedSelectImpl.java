@@ -43,7 +43,6 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -100,11 +99,6 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
            .formatNewLine()
            .subquery(false)
            .sql(extraParentheses ? "))" : ")");
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     private final QueryPartInternal delegate(Configuration ctx) {

@@ -47,7 +47,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 
@@ -127,19 +126,12 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
         ctx.qualify(previous);
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     /**
      * Subclasses may override this method
      */
     @SuppressWarnings("unused")
     protected void toSQLEmptyList(Context<?> context) {
     }
-
-
 
     // -------------------------------------------------------------------------
     // Implementations from the List API

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Table;
@@ -57,11 +56,6 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

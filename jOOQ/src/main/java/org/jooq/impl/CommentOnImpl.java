@@ -194,11 +194,6 @@ implements
     }
 
     @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    @Override
     public final CommentOnImpl is(String c) {
         return is(comment(c));
     }

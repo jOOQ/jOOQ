@@ -43,7 +43,6 @@ import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_NULLS_FIRST;
 import static org.jooq.impl.Keywords.K_NULLS_LAST;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.SortField;
@@ -163,10 +162,5 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         if (order != SortOrder.DEFAULT)
            ctx.sql(' ')
               .visit(order.toKeyword());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

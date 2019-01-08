@@ -43,7 +43,6 @@ import static org.jooq.impl.DSL.noCondition;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Context;
@@ -123,11 +122,6 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getWhere());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

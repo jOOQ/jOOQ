@@ -74,7 +74,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
@@ -204,11 +203,6 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             ctx.sql(rows).sql(' ').visit(K_FOLLOWING);
         else
             ctx.visit(K_CURRENT_ROW);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

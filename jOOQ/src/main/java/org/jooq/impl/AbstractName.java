@@ -80,11 +80,6 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
     }
 
     @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    @Override
     public final WindowDefinition as() {
         return new WindowDefinitionImpl(this, null);
     }

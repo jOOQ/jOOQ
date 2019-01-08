@@ -122,7 +122,6 @@ final class DropViewImpl extends AbstractQuery implements
         ctx.end(DROP_VIEW_TABLE);
     }
 
-
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;

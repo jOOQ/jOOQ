@@ -60,7 +60,6 @@ import static org.jooq.impl.Keywords.K_WITH_TIES;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
@@ -365,11 +364,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
 
     /**
      * Whether this limit has a limit of zero

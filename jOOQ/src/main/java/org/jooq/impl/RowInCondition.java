@@ -102,11 +102,6 @@ final class RowInCondition extends AbstractCondition {
         ctx.visit(delegate(ctx.configuration()));
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     private final QueryPartInternal delegate(Configuration configuration) {
         if (EMULATE_IN.contains(configuration.family())) {
             List<Condition> conditions = new ArrayList<Condition>(right.size());

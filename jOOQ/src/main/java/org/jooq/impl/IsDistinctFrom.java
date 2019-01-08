@@ -65,7 +65,6 @@ import static org.jooq.impl.DSL.select;
 
 import java.util.EnumSet;
 
-import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -103,11 +102,6 @@ final class IsDistinctFrom<T> extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     /**

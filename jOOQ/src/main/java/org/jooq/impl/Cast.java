@@ -53,7 +53,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -101,11 +100,6 @@ final class Cast<T> extends AbstractFunction<T> {
                 return new Native();
         }
     }
-
-
-
-
-
 
 
 
@@ -284,11 +278,6 @@ final class Cast<T> extends AbstractFunction<T> {
                .sql(' ').visit(K_AS).sql(' ')
                .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
                .sql(')');
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return null;
         }
     }
 }

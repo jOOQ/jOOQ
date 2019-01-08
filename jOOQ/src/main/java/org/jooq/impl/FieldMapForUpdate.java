@@ -110,11 +110,6 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         }
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     final void set(Map<?, ?> map) {
         for (Entry<?, ?> entry : map.entrySet()) {
             Field<?> field = Tools.tableField(table, entry.getKey());

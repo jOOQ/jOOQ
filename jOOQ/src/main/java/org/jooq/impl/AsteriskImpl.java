@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import org.jooq.Asterisk;
-import org.jooq.Clause;
 import org.jooq.Context;
 
 /**
@@ -46,15 +45,14 @@ import org.jooq.Context;
  */
 final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
-    static final AsteriskImpl INSTANCE = new AsteriskImpl();
+    /**
+     * Generated UI
+     */
+    private static final long serialVersionUID = 6298415939984684260L;
+    static final AsteriskImpl INSTANCE         = new AsteriskImpl();
 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.sql('*');
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

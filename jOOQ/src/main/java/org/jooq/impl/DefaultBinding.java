@@ -2533,6 +2533,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final ZoneOffset parseOffset(String string, int[] position) {
             int offsetHours = 0;
             int offsetMinutes = 0;
+            int offsetSeconds = 0;
 
             if (!parseCharIf(string, position, 'Z')) {
 
@@ -2554,14 +2555,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (parseCharIf(string, position, ':'))
                         offsetMinutes = parseInt(string, position, 2);
 
+                    // [#8181] In some edge cases, there might also be a seconds offset
+                    if (parseCharIf(string, position, ':'))
+                        offsetSeconds = parseInt(string, position, 2);
+
                     if (minus) {
                         offsetHours = -offsetHours;
                         offsetMinutes = -offsetMinutes;
+                        offsetSeconds = -offsetSeconds;
                     }
                 }
             }
 
-            return ZoneOffset.ofHoursMinutes(offsetHours, offsetMinutes);
+            return ZoneOffset.ofHoursMinutesSeconds(offsetHours, offsetMinutes, offsetSeconds);
         }
 
         private static final void parseAnyChar(String string, int[] position, String expected) {

@@ -66,7 +66,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Block;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;

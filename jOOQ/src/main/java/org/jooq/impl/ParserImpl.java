@@ -76,8 +76,8 @@ import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
-import static org.jooq.impl.DSL.continueWhen;
-import static org.jooq.impl.DSL.continue_;
+// ...
+// ...
 import static org.jooq.impl.DSL.cos;
 import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;

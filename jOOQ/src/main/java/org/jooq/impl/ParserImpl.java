@@ -145,6 +145,7 @@ import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
+import static org.jooq.impl.DSL.loop;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.lpad;
 import static org.jooq.impl.DSL.ltrim;
@@ -2275,6 +2276,16 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'l':
+            case 'L':
+                if (peekKeyword(ctx, "LOOP") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 'n':
             case 'N':
                 if (peekKeyword(ctx, "NULL"))
@@ -2320,6 +2331,13 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
 
 
 

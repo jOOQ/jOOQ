@@ -260,6 +260,7 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DSL.while_;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_DELETE;
@@ -2278,6 +2279,16 @@ final class ParserImpl implements Parser {
                 ;
 
                 break;
+
+            case 'w':
+            case 'W':
+                if (peekKeyword(ctx, "WHILE") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
         }
 
 
@@ -2297,6 +2308,15 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -302,6 +302,7 @@ final class Keywords {
     static final Keyword K_VIEW                             = keyword("view");
     static final Keyword K_WHEN                             = keyword("when");
     static final Keyword K_WHERE                            = keyword("where");
+    static final Keyword K_WHILE                            = keyword("while");
     static final Keyword K_WINDOW                           = keyword("window");
     static final Keyword K_WITH                             = keyword("with");
     static final Keyword K_WITH_CHECK_OPTION                = keyword("with check option");

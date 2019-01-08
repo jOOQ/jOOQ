@@ -51,6 +51,7 @@ proceduralStatement =
 | declareStatement
 | assignmentStatement
 | ifStatement
+| whileStatement
 | nullStatement
 ;
 
@@ -78,6 +79,10 @@ ifStatement =
   [ 'ELSIF' condition 'THEN' proceduralStatements ]
   [ 'ELSE' proceduralStatements ]
   'END IF'
+;
+
+whileStatement =
+  'WHILE' condition 'LOOP' proceduralStatements 'END LOOP'
 ;
 
 nullStatement = 'NULL'

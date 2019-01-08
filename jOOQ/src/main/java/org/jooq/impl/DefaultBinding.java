@@ -131,6 +131,7 @@ import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -2492,7 +2493,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             parseAnyChar(string, position, " T");
             LocalTime t = parseLocalTime(string, position);
 
-            return OffsetDateTime.of(d, t, parseOffset(string, position));
+            ZoneOffset offset = parseOffset(string, position);
+
+            // [#8178] PostgreSQL doesn't support negative years but expects the
+            //         AD / BC notation
+            return parseBCIf(string, position)
+                 ? OffsetDateTime.of(d.withYear(1 - d.getYear()), t, offset)
+                 : OffsetDateTime.of(d, t, offset);
         }
 
         static final LocalDate parseLocalDate(String string, int[] position) {
@@ -2579,6 +2586,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             throw new IllegalArgumentException("Expected any of \"" + expected + "\" at position " + position[0] + " in " + string);
+        }
+
+        private static final boolean parseBCIf(String string, int[] position) {
+            return parseCharIf(string, position, ' ')
+                && parseCharIf(string, position, 'B')
+                && parseCharIf(string, position, 'C');
         }
 
         private static final boolean parseCharIf(String string, int[] position, char expected) {
@@ -2767,15 +2780,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (val.toEpochSecond() * 1000 == PG_DATE_NEGATIVE_INFINITY)
                     return "-infinity";
 
-            // Remove the ISO standard T character, as some databases don't like that
+            // [#8178] Replace negative dates by AD/BC notation in PostgreSQL
+            if (family == POSTGRES && val.getYear() <= 0)
+                return formatEra(val);
+
             String format = formatISO(val);
 
+            // Remove the ISO standard T character, as some databases don't like that
             // Replace the ISO standard Z character for UTC, as some databases don't like that
+            // TODO: Write a custom formatter rather than string replacing things
             return StringUtils.replace(format.substring(0, 10) + ' ' + format.substring(11), "Z", "+00:00");
         }
 
         private static final String formatISO(OffsetDateTime val) {
             return val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        }
+
+        private static final DateTimeFormatter ERA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnnnnnZZZZZ G", Locale.US);
+
+        private static final String formatEra(OffsetDateTime val) {
+            return val.format(ERA);
         }
     }
 

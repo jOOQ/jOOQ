@@ -101,6 +101,8 @@ import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.exists;
+// ...
+// ...
 import static org.jooq.impl.DSL.exp;
 import static org.jooq.impl.DSL.extract;
 import static org.jooq.impl.DSL.field;
@@ -260,7 +262,7 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.DSL.while_;
+// ...
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_DELETE;
@@ -2253,6 +2255,16 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'e':
+            case 'E':
+                if (peekKeyword(ctx, "EXIT") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 'i':
             case 'I':
                 if (peekKeyword(ctx, "IF") && ctx.requireProEdition())
@@ -2308,6 +2320,15 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -131,6 +131,7 @@ final class Keywords {
     static final Keyword K_EXECUTE_IMMEDIATE                = keyword("execute immediate");
     static final Keyword K_EXECUTE_STATEMENT                = keyword("execute statement");
     static final Keyword K_EXISTS                           = keyword("exists");
+    static final Keyword K_EXIT                             = keyword("exit");
     static final Keyword K_FALSE                            = keyword("false");
     static final Keyword K_FETCH_FIRST                      = keyword("fetch first");
     static final Keyword K_FETCH_NEXT                       = keyword("fetch next");

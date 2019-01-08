@@ -52,6 +52,7 @@ proceduralStatement =
 | assignmentStatement
 | ifStatement
 | whileStatement
+| exitStatement
 | nullStatement
 ;
 
@@ -83,6 +84,10 @@ ifStatement =
 
 whileStatement =
   'WHILE' condition 'LOOP' proceduralStatements 'END LOOP'
+;
+
+exitStatement =
+  'EXIT' [ 'WHEN' condition ]
 ;
 
 nullStatement = 'NULL'

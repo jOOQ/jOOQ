@@ -2272,6 +2272,15 @@ final class ParserImpl implements Parser {
 
 
 
+
+
+
+
+
+
+
+
+
     private static final Block parseDo(ParserContext ctx) {
         parseKeyword(ctx, "DO");
         String block = parseStringLiteral(ctx);
@@ -2303,6 +2312,16 @@ final class ParserImpl implements Parser {
             case 'e':
             case 'E':
                 if (peekKeyword(ctx, "EXIT") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
+            case 'g':
+            case 'G':
+                if (peekKeyword(ctx, "GOTO") && ctx.requireProEdition())
 
 
 
@@ -2375,6 +2394,11 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
 
 
 

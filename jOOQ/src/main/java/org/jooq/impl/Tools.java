@@ -1524,7 +1524,7 @@ final class Tools {
             return EMPTY_FIELD;
 
         int length = Math.min(values.length, fields.length);
-        Field<?>[] result = new Field[0];
+        Field<?>[] result = new Field[length];
 
         for (int i = 0; i < length; i++)
             result[i] = field(values[i], fields[i]);

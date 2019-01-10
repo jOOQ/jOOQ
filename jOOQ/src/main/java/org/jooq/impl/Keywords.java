@@ -248,6 +248,7 @@ final class Keywords {
     static final Keyword K_RESTART_WITH                     = keyword("restart with");
     static final Keyword K_RESTRICT                         = keyword("restrict");
     static final Keyword K_RETURNING                        = keyword("returning");
+    static final Keyword K_REVERSE                          = keyword("reverse");
     static final Keyword K_REVOKE                           = keyword("revoke");
     static final Keyword K_ROW                              = keyword("row");
     static final Keyword K_ROWCOUNT                         = keyword("rowcount");

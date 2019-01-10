@@ -190,6 +190,7 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+// ...
 import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
@@ -9712,6 +9713,40 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

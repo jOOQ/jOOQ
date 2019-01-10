@@ -110,6 +110,7 @@ import static org.jooq.impl.DSL.extract;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.floor;
+// ...
 import static org.jooq.impl.DSL.foreignKey;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.generateSeries;
@@ -278,6 +279,7 @@ import static org.jooq.impl.ParserImpl.Type.D;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.ParserImpl.Type.X;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
@@ -364,6 +366,8 @@ import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrConstraint;
 import org.jooq.FieldOrRow;
+// ...
+// ...
 import org.jooq.GrantOnStep;
 import org.jooq.GrantToStep;
 import org.jooq.GrantWithGrantOptionStep;
@@ -381,6 +385,7 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
+// ...
 // ...
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
@@ -2222,6 +2227,9 @@ final class ParserImpl implements Parser {
 
             stored = parsed = parseStatement(ctx);
 
+            if (parsed == null)
+                break;
+
 
 
 
@@ -2319,6 +2327,16 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'f':
+            case 'F':
+                if (peekKeyword(ctx, "FOR") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 'g':
             case 'G':
                 if (peekKeyword(ctx, "GOTO") && ctx.requireProEdition())
@@ -2394,6 +2412,33 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

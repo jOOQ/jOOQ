@@ -53,7 +53,9 @@ proceduralStatement = [ label ]
 | assignmentStatement
 | ifStatement
 | loopStatement
+| forStatement
 | whileStatement
+| gotoStatement
 | continueStatement
 | exitStatement
 | nullStatement
@@ -93,8 +95,17 @@ loopStatement =
   'LOOP' proceduralStatements 'END LOOP'
 ;
 
+forStatement =
+  'FOR' identifier 'IN' [ 'REVERSE' ] signedInteger '..' signedInteger [ 'BY' signedInteger ]
+  loopStatement
+;
+
 whileStatement =
-  'WHILE' condition 'LOOP' proceduralStatements 'END LOOP'
+  'WHILE' condition loopStatement
+;
+
+gotoStatement =
+  'GOTO' identifier
 ;
 
 continueStatement =

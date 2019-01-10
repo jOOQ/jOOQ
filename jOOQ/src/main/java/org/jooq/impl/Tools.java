@@ -1515,6 +1515,27 @@ final class Tools {
      * Be sure that a given set of objects are fields.
      *
      * @param values The argument objects
+     * @param fields The fields to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final Field<?>[] fieldsArray(Object[] values, Field<?>[] fields) {
+        if (values == null || fields == null)
+            return EMPTY_FIELD;
+
+        int length = Math.min(values.length, fields.length);
+        Field<?>[] result = new Field[0];
+
+        for (int i = 0; i < length; i++)
+            result[i] = field(values[i], fields[i]);
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
      * @param type The type to take the bind value types from
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
@@ -1609,6 +1630,27 @@ final class Tools {
 
         for (int i = 0; i < length; i++)
             result.add(field(values[i], types[i]));
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param types The types to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {
+        if (values == null || types == null)
+            return EMPTY_FIELD;
+
+        int length = Math.min(values.length, types.length);
+        Field<?>[] result = new Field[length];
+
+        for (int i = 0; i < length; i++)
+            result[i] = field(values[i], types[i]);
 
         return result;
     }

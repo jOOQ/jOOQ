@@ -328,117 +328,117 @@ implements
 
     @Override
     public final Condition and(T1 t1) {
-        return and(row(t1));
+        return and(new Object[] { t1 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2) {
-        return and(row(t1, t2));
+        return and(new Object[] { t1, t2 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3) {
-        return and(row(t1, t2, t3));
+        return and(new Object[] { t1, t2, t3 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4) {
-        return and(row(t1, t2, t3, t4));
+        return and(new Object[] { t1, t2, t3, t4 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return and(row(t1, t2, t3, t4, t5));
+        return and(new Object[] { t1, t2, t3, t4, t5 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return and(row(t1, t2, t3, t4, t5, t6));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
     }
 
     @Override
     public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+        return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
     @Override
     public final Condition and(Object... values) {
-        return and(row(values));
+        return and(row(Tools.fieldsArray(values, row.fields())));
     }
 
     @Override

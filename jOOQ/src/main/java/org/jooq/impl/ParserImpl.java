@@ -381,6 +381,7 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
+// ...
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
@@ -2213,10 +2214,22 @@ final class ParserImpl implements Parser {
         List<Statement> statements = new ArrayList<Statement>();
 
         for (;;) {
-            Statement statement = parseStatement(ctx);
-            statements.add(statement);
+            Statement parsed;
+            Statement stored;
 
-            if (!(statement instanceof Block))
+
+
+
+            stored = parsed = parseStatement(ctx);
+
+
+
+
+
+
+            statements.add(stored);
+
+            if (!(parsed instanceof Block))
                 parse(ctx, ';');
 
             if (peekKeyword(ctx, peek))
@@ -2225,6 +2238,25 @@ final class ParserImpl implements Parser {
 
         return statements;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2343,6 +2375,18 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -8932,6 +8976,15 @@ final class ParserImpl implements Parser {
         ctx.position(stop);
         parseWhitespaceIf(ctx);
         return ctx.substring(start, stop);
+    }
+
+    private static final boolean parse(ParserContext ctx, String string) {
+        boolean result = parseIf(ctx, string);
+
+        if (!result)
+            throw ctx.expected(string);
+
+        return result;
     }
 
     private static final boolean parseIf(ParserContext ctx, String string) {

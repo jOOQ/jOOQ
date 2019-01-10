@@ -46,7 +46,8 @@ dmlStatement =
 proceduralStatements = ( proceduralStatement ';' )+
 ;
 
-proceduralStatement =
+proceduralStatement = [ label ]
+(
   query
 | declareStatement
 | assignmentStatement
@@ -56,6 +57,10 @@ proceduralStatement =
 | continueStatement
 | exitStatement
 | nullStatement
+)
+;
+
+label = '<<' identifier '>>'
 ;
 
 blockStatement =
@@ -93,11 +98,11 @@ whileStatement =
 ;
 
 continueStatement =
-  'CONTINUE' [ 'WHEN' condition ]
+  'CONTINUE' [ identifier ] [ 'WHEN' condition ]
 ;
 
 exitStatement =
-  'EXIT' [ 'WHEN' condition ]
+  'EXIT' [ identifier ] [ 'WHEN' condition ]
 ;
 
 nullStatement = 'NULL'

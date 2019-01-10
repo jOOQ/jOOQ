@@ -166,6 +166,7 @@ import org.jooq.ConstraintForeignKeyReferencesStep8;
 import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
+// ...
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
@@ -185,6 +186,7 @@ import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
+// ...
 import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
@@ -220,6 +222,7 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Keyword;
+// ...
 // ...
 // ...
 import org.jooq.Merge;
@@ -9709,6 +9712,44 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

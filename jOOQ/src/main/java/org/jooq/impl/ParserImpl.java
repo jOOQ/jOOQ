@@ -2214,11 +2214,22 @@ final class ParserImpl implements Parser {
 
 
 
-        parse(ctx, ';');
+        parseIf(ctx, ';');
         return ctx.dsl.begin(statements);
     }
 
-    private static List<Statement> parseStatements(ParserContext ctx, String... peek) {
+    private static final void parseSemicolonAfterNonBlocks(ParserContext ctx, Statement result) {
+        if (!(result instanceof Block))
+            parseIf(ctx, ';');
+    }
+
+    private static final Statement parseStatementAndSemicolon(ParserContext ctx) {
+        Statement result = parseStatement(ctx);
+        parseSemicolonAfterNonBlocks(ctx, result);
+        return result;
+    }
+
+    private static final List<Statement> parseStatements(ParserContext ctx, String... peek) {
         List<Statement> statements = new ArrayList<Statement>();
 
         for (;;) {
@@ -2239,16 +2250,23 @@ final class ParserImpl implements Parser {
 
 
             statements.add(stored);
-
-            if (!(parsed instanceof Block))
-                parse(ctx, ';');
-
+            parseSemicolonAfterNonBlocks(ctx, parsed);
             if (peekKeyword(ctx, peek))
                 break;
         }
 
         return statements;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2415,6 +2433,17 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -9400,6 +9429,7 @@ final class ParserImpl implements Parser {
 
     private static final String[] KEYWORDS_IN_SELECT  = {
         "CONNECT BY",
+        "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
@@ -9430,6 +9460,7 @@ final class ParserImpl implements Parser {
         "CONNECT BY",
         "CROSS APPLY",
         "CROSS JOIN",
+        "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",

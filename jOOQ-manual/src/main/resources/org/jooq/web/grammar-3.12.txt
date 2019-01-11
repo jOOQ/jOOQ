@@ -62,7 +62,7 @@ proceduralStatement = [ label ]
 )
 ;
 
-label = '<<' identifier '>>'
+label = '<<' identifier '>>' | identifier ':'
 ;
 
 labelReference = identifier
@@ -88,10 +88,16 @@ assignmentStatement =
 ;
 
 ifStatement =
-  'IF' condition 'THEN' proceduralStatements
+  'IF' condition
+(
+  'THEN' proceduralStatements
   [ 'ELSIF' condition 'THEN' proceduralStatements ]
   [ 'ELSE' proceduralStatements ]
   'END IF'
+) | (
+  proceduralStatement
+  [ 'ELSE' proceduralStatement ]
+)
 ;
 
 loopStatement =

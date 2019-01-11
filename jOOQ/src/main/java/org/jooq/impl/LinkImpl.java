@@ -37,46 +37,48 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Context;
-// ...
-import org.jooq.Name;
-import org.jooq.Schema;
 
-/**
- * @author Lukas Eder
- */
-final class LinkImpl extends AbstractQueryPart implements Link {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 9053077332162914298L;
 
-    private final Schema schema;
-    private final String name;
 
-    LinkImpl(String name, Schema schema) {
-        this.name = name;
-        this.schema = schema;
-    }
 
-    LinkImpl(Name name) {
-        throw new RuntimeException();
-    }
 
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(DSL.name(name()));
-    }
 
-    @Override
-    public final Schema schema() {
-        return schema;
-    }
 
-    @Override
-    public final String name() {
-        return name;
-    }
-}
-/* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

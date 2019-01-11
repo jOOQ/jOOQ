@@ -526,7 +526,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (!param.isInline()) {
                 bindValues.add(param);
 
-                switch (family()) {
+                Integer threshold = settings().getInlineThreshold();
+                if (threshold != null && threshold > 0) {
+                    checkForceInline(threshold);
+                }
+                else {
+                    switch (family()) {
 
 
 
@@ -554,17 +559,18 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
-                    // [#5701] Tests were conducted with PostgreSQL 9.5 and pgjdbc 9.4.1209
-                    case POSTGRES:
-                        checkForceInline(32767);
-                        break;
+                        // [#5701] Tests were conducted with PostgreSQL 9.5 and pgjdbc 9.4.1209
+                        case POSTGRES:
+                            checkForceInline(32767);
+                            break;
 
-                    case SQLITE:
-                        checkForceInline(999);
-                        break;
+                        case SQLITE:
+                            checkForceInline(999);
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

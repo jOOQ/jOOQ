@@ -127,6 +127,18 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The type of statement that is to be executed.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="inlineThreshold" type="int" minOccurs="0" maxOccurs="1" default="0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
+<li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
+<li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+<li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
+<li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
+<li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+<li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
+<li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+</ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default logging ExecuteListeners.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

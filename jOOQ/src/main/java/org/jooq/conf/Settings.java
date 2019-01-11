@@ -80,6 +80,8 @@ public class Settings
     @XmlElement(defaultValue = "PREPARED_STATEMENT")
     @XmlSchemaType(name = "string")
     protected StatementType statementType = StatementType.PREPARED_STATEMENT;
+    @XmlElement(defaultValue = "0")
+    protected Integer inlineThreshold = 0;
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
     @XmlElement(defaultValue = "false")
@@ -602,6 +604,38 @@ public class Settings
      */
     public void setStatementType(StatementType value) {
         this.statementType = value;
+    }
+
+    /**
+     * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
+     * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
+     * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
+     * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
+     * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * </ul>
+     *
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *
+     */
+    public Integer getInlineThreshold() {
+        return inlineThreshold;
+    }
+
+    /**
+     * Sets the value of the inlineThreshold property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
+    public void setInlineThreshold(Integer value) {
+        this.inlineThreshold = value;
     }
 
     /**
@@ -1424,6 +1458,11 @@ public class Settings
         return this;
     }
 
+    public Settings withInlineThreshold(Integer value) {
+        setInlineThreshold(value);
+        return this;
+    }
+
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
@@ -1661,6 +1700,11 @@ public class Settings
             sb.append("<statementType>");
             sb.append(statementType);
             sb.append("</statementType>");
+        }
+        if (inlineThreshold!= null) {
+            sb.append("<inlineThreshold>");
+            sb.append(inlineThreshold);
+            sb.append("</inlineThreshold>");
         }
         if (executeLogging!= null) {
             sb.append("<executeLogging>");
@@ -1980,6 +2024,15 @@ public class Settings
                 return false;
             }
         }
+        if (inlineThreshold == null) {
+            if (other.inlineThreshold!= null) {
+                return false;
+            }
+        } else {
+            if (!inlineThreshold.equals(other.inlineThreshold)) {
+                return false;
+            }
+        }
         if (executeLogging == null) {
             if (other.executeLogging!= null) {
                 return false;
@@ -2274,6 +2327,7 @@ public class Settings
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
         result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));
+        result = ((prime*result)+((inlineThreshold == null)? 0 :inlineThreshold.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));

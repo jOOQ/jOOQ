@@ -328,8 +328,11 @@ final class Tools {
          * flag is set when static statements have too many bind variables. Known
          * values are:
          * <ul>
+         * <li>{@link SQLDialect#ACCESS} : 768</li>
          * <li>{@link SQLDialect#ASE} : 2000</li>
          * <li>{@link SQLDialect#INGRES} : 1024</li>
+         * <li>{@link SQLDialect#ORACLE} : 32767</li>
+         * <li>{@link SQLDialect#POSTGRES} : 32767</li>
          * <li>{@link SQLDialect#SQLITE} : 999</li>
          * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
          * </ul>

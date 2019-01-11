@@ -2211,6 +2211,9 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "BEGIN");
         statements.addAll(parseStatements(ctx, "END"));
         parseKeyword(ctx, "END");
+
+
+
         parse(ctx, ';');
         return ctx.dsl.begin(statements);
     }
@@ -2412,6 +2415,8 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
 
 
 

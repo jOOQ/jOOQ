@@ -51,10 +51,10 @@ proceduralStatement = [ label ]
   query
 | declareStatement
 | assignmentStatement
-| ifStatement
-| loopStatement
-| forStatement
-| whileStatement
+| ifStatement [ labelReference ]
+| loopStatement [ labelReference ]
+| forStatement [ labelReference ]
+| whileStatement [ labelReference ]
 | gotoStatement
 | continueStatement
 | exitStatement
@@ -63,6 +63,9 @@ proceduralStatement = [ label ]
 ;
 
 label = '<<' identifier '>>'
+;
+
+labelReference = identifier
 ;
 
 blockStatement =

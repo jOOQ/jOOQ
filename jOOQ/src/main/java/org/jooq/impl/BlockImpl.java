@@ -231,9 +231,6 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-
-
-
         accept2(ctx, statements, wrapInBeginEnd);
     }
 

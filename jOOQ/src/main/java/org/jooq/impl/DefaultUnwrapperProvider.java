@@ -165,30 +165,28 @@ final class DefaultUnwrapperProvider implements UnwrapperProvider {
 
 
 
-                // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingPreparedStatement
-                try {
-                    PreparedStatement r = Reflect.on(result).call("getDelegate").get();
-                    if (result != r && r != null) {
-                        result = r;
-                        continue unwrappingLoop;
-                    }
-                }
-                catch (ReflectException ignore) {}
 
-                // [#7641] Unwrap nested org.jboss.jca.adapters.jdbc.WrappedStatement
-                try {
-                    PreparedStatement r = Reflect.on(result).call("getUnderlyingStatement").get();
-                    if (result != r && r != null) {
-                        result = r;
-                        continue unwrappingLoop;
-                    }
-                }
-                catch (ReflectException ignore) {}
 
-                // No unwrapping method was found.
-                break;
-            }
-            /* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             return (T) result;
         }

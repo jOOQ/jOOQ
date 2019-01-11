@@ -82,6 +82,11 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override // Avoid AbstractTable implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.family()) {
             case CUBRID:

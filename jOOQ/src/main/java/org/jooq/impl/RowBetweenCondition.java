@@ -704,6 +704,11 @@ implements
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
         // These casts are safe for RowImpl
         RowN r = (RowN) row;

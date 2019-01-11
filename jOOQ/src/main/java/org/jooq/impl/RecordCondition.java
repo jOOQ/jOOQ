@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -75,5 +76,10 @@ final class RecordCondition extends AbstractCondition {
         }
 
         ctx.visit(condition);
+    }
+
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

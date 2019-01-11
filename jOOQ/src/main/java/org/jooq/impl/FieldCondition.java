@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -63,6 +64,11 @@ final class FieldCondition extends AbstractCondition {
     @Override
     public void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
+    }
+
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {

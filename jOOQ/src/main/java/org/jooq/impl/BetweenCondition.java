@@ -127,6 +127,11 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
         if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family()))
             return not

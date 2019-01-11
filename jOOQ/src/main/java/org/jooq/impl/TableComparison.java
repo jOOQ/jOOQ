@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.sql;
 
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Record;
@@ -80,5 +81,10 @@ final class TableComparison<R extends Record> extends AbstractCondition {
                 break;
             }
         }
+    }
+
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

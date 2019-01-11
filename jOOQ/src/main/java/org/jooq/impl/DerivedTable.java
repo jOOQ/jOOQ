@@ -94,4 +94,9 @@ final class DerivedTable<R extends Record> extends AbstractTable<R> {
            .formatNewLine()
            .subquery(false);
     }
+
+    @Override // Avoid AbstractTable implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
 }

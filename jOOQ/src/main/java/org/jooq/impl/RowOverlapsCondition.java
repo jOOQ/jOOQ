@@ -96,6 +96,11 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
         Field<T1> left1 = left.field1();
         Field<T2> left2 = left.field2();

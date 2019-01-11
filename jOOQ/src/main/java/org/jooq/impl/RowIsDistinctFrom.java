@@ -64,6 +64,7 @@ import static org.jooq.impl.DSL.select;
 
 import java.util.EnumSet;
 
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -100,6 +101,11 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
+    }
+
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 
     /**

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 
@@ -65,5 +66,10 @@ final class SQLCondition extends AbstractCondition {
         ctx.sql('(');
         ctx.visit(delegate);
         ctx.sql(')');
+    }
+
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

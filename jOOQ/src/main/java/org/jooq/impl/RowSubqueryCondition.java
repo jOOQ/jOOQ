@@ -117,6 +117,11 @@ final class RowSubqueryCondition extends AbstractCondition {
         ctx.visit(delegate(ctx));
     }
 
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPartInternal delegate(Context<?> ctx) {
         final Configuration configuration = ctx.configuration();
         final RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;

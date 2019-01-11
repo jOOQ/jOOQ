@@ -102,6 +102,11 @@ final class RowIsNull extends AbstractCondition {
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.

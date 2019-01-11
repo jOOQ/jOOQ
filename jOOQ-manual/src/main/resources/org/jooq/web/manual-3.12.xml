@@ -3842,6 +3842,48 @@ DSL.using(configuration)
                                         </html></content>
                                     </section>
 
+                                    <section id="settings-inline-threshold">
+                                        <title>Inline Threshold</title>
+                                        <content><html>
+                                            <p>
+                                                Previous sections showed how the SQL generation of <reference id="bind-values" title="bind values"/> can be controlled, e.g. by forcing them to be inlined, or by running a static JDBC statement.
+                                            </p>
+
+                                            <p>
+                                                Sometimes, inlining needs to be enforced dynamically, depending on the query content. This is the case when there are a great number of bind variables. Known vendor-specific limits are:
+                                            </p>
+
+                                            <ul>
+                                                <li>Access : 768</li>
+                                                <li>Ingres : 1024</li>
+                                                <li>Oracle : 32767</li>
+                                                <li>PostgreSQL : 32767</li>
+                                                <li>SQLite : 999</li>
+                                                <li>SQL Server : 2100</li>
+                                                <li>Sybase ASE : 2000</li>
+                                            </ul>
+
+                                            <p>
+                                                By default, jOOQ will automatically inline all bind variables in any SQL statement, once these thresholds have been reached. However, it is possible to override this default and provide a setting to re-define a global threshold for all dialects.
+                                            </p>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[Settings settings = new Settings()
+    .withInlineThreshold(100); // Defaults to 0, which means the default thresholds are applied]]></java><html>
+
+                                            <p>
+                                                <strong>XML configuration</strong>
+                                            </p>
+
+</html><xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
+  <inlineThreshold>100</inlineThreshold>
+</settings>]]></xml><html>
+                                        </html></content>
+                                    </section>
+
                                     <section id="settings-execute-logging">
                                         <title>Execute Logging</title>
                                         <content><html>

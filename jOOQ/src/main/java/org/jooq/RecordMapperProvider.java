@@ -50,7 +50,7 @@ import org.jooq.impl.DefaultRecordMapperProvider;
  * <h3><code>Cursor</code></h3>
  * <ul>
  * <li>{@link Cursor#fetchInto(Class)}</li>
- * <li>{@link Cursor#fetchOneInto(Class)}</li>
+ * <li>{@link Cursor#fetchNextInto(Class)}</li>
  * </ul>
  * <h3><code>Record</code></h3>
  * <ul>

@@ -278,7 +278,7 @@ final class Expression<T> extends AbstractFunction<T> {
                 return getNumberExpression(configuration);
         }
 
-        private final Field<T> getYTSExpression(Configuration configuration) {
+        private final Field<T> getYTSExpression() {
             YearToSecond yts = rhsAsYTS();
 
             return new DateExpression<T>(
@@ -302,7 +302,7 @@ final class Expression<T> extends AbstractFunction<T> {
                 case MARIADB:
                 case MYSQL: {
                     if (rhs.getType() == YearToSecond.class)
-                        return getYTSExpression(configuration);
+                        return getYTSExpression();
 
                     Interval interval = rhsAsInterval();
 
@@ -326,7 +326,7 @@ final class Expression<T> extends AbstractFunction<T> {
                 case DERBY:
                 case HSQLDB: {
                     if (rhs.getType() == YearToSecond.class)
-                        return getYTSExpression(configuration);
+                        return getYTSExpression();
 
                     Field<T> result;
 
@@ -347,7 +347,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case FIREBIRD: {
                     if (rhs.getType() == YearToSecond.class)
-                        return getYTSExpression(configuration);
+                        return getYTSExpression();
                     else if (rhs.getType() == YearToMonth.class)
                         return DSL.field("{dateadd}({month}, {0}, {1})", getDataType(), p(sign * rhsAsYTM().intValue()), lhs);
                     else
@@ -356,7 +356,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case H2: {
                     if (rhs.getType() == YearToSecond.class)
-                        return getYTSExpression(configuration);
+                        return getYTSExpression();
                     else if (rhs.getType() == YearToMonth.class)
                         return DSL.field("{dateadd}('month', {0}, {1})", getDataType(), p(sign * rhsAsYTM().intValue()), lhs);
                     else
@@ -365,7 +365,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case SQLITE: {
                     if (rhs.getType() == YearToSecond.class)
-                        return getYTSExpression(configuration);
+                        return getYTSExpression();
 
                     boolean ytm = rhs.getType() == YearToMonth.class;
                     Field<?> interval = p(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());

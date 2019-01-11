@@ -39,10 +39,12 @@ public final class CompileOptions {
         this.processors = processors;
     }
 
+    @SuppressWarnings("hiding")
     public CompileOptions processors(Processor... processors) {
         return processors(Arrays.asList(processors));
     }
 
+    @SuppressWarnings("hiding")
     public CompileOptions processors(List<? extends Processor> processors) {
         return new CompileOptions(processors);
     }

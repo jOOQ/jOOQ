@@ -62,10 +62,6 @@ public interface QueryPart extends Serializable {
      * <code>QueryPart</code> instances are not attached to a
      * {@link Configuration}, and thus there is no guarantee that the SQL string
      * will make sense in the context of a specific database.
-     * <p>
-     * If you wish to gain more control over the concrete SQL rendering of this
-     * <code>QueryPart</code>, use {@link DSLContext#renderContext()} to obtain
-     * a configurable render context for SQL rendering.
      *
      * @return A SQL string representation of this <code>QueryPart</code>
      */

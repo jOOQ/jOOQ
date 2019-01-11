@@ -582,8 +582,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     void scopeStart0() {}
-    void scopeMarkStart0(QueryPart part) {}
-    void scopeMarkEnd0(QueryPart part) {}
+    void scopeMarkStart0(@SuppressWarnings("unused") QueryPart part) {}
+    void scopeMarkEnd0(@SuppressWarnings("unused") QueryPart part) {}
     void scopeEnd0() {}
 
     @Override

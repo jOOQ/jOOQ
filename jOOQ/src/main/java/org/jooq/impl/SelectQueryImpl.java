@@ -1090,7 +1090,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // synthetic parentheses
         boolean wrapQueryExpressionInDerivedTable;
         boolean wrapQueryExpressionBodyInDerivedTable = false;
-        boolean applySeekOnDerivedTable = applySeekOnDerivedTable(context);
+        boolean applySeekOnDerivedTable = applySeekOnDerivedTable();
 
 
         wrapQueryExpressionInDerivedTable = false
@@ -1602,7 +1602,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ctx.visit(actualLimit);
     }
 
-    private final boolean applySeekOnDerivedTable(Context<?> ctx) {
+    private final boolean applySeekOnDerivedTable() {
         return !getSeek().isEmpty() && !getOrderBy().isEmpty() && !unionOp.isEmpty();
     }
 

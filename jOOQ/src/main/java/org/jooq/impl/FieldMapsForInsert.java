@@ -61,7 +61,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;

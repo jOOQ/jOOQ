@@ -51,6 +51,7 @@ public interface VisitContext extends Scope {
      * The most recent clause that was encountered through
      * {@link Context#start(Clause)}.
      */
+    @SuppressWarnings("javadoc")
     Clause clause();
 
     /**
@@ -61,6 +62,7 @@ public interface VisitContext extends Scope {
      * {@link Context#end(Clause)}. In other words, <code>VisitContext</code>
      * contains a stack of clauses.
      */
+    @SuppressWarnings("javadoc")
     Clause[] clauses();
 
     /**

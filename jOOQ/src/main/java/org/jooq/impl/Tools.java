@@ -347,6 +347,7 @@ final class Tools {
          * {@link Clause#FIELD_REFERENCE} may contain a
          * {@link Clause#TABLE_REFERENCE}.
          */
+        @SuppressWarnings("javadoc")
         DATA_OMIT_CLAUSE_EVENT_EMISSION,
 
         /**
@@ -358,6 +359,7 @@ final class Tools {
          * practice should no longer be pursued, as such "sub-renderers" will emit /
          * divert {@link Clause} events.
          */
+        @SuppressWarnings("javadoc")
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
 
         /**
@@ -416,7 +418,9 @@ final class Tools {
         /**
          * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
          */
+        @SuppressWarnings("javadoc")
         DATA_SELECT_INTO_TABLE,
+
 
 
 
@@ -433,6 +437,7 @@ final class Tools {
         /**
          * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.
          */
+        @SuppressWarnings("javadoc")
         DATA_OMIT_INTO_CLAUSE,
 
         /**

@@ -115,10 +115,10 @@ final class ArrayTable extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAliases = fieldAliases;
-        this.field = init(arrayType, alias, fieldAliases);
+        this.field = init(arrayType, alias);
     }
 
-    private static final Fields<Record> init(Class<?> arrayType, Name alias, Name[] fields) {
+    private static final Fields<Record> init(Class<?> arrayType, Name alias) {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field

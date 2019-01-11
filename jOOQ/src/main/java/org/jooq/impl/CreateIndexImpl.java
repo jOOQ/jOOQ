@@ -139,8 +139,8 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
-    public final CreateIndexImpl on(Table<?> t, Collection<? extends OrderField<?>> fields) {
-        return on(t, fields.toArray(EMPTY_ORDERFIELD));
+    public final CreateIndexImpl on(Table<?> t, Collection<? extends OrderField<?>> f) {
+        return on(t, f.toArray(EMPTY_ORDERFIELD));
     }
 
     @Override
@@ -180,8 +180,8 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
-    public final CreateIndexImpl include(Collection<? extends Field<?>> fields) {
-        return include(fields.toArray(EMPTY_FIELD));
+    public final CreateIndexImpl include(Collection<? extends Field<?>> f) {
+        return include(f.toArray(EMPTY_FIELD));
     }
 
     @Override

@@ -45,7 +45,6 @@ import java.sql.SQLWarning;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;

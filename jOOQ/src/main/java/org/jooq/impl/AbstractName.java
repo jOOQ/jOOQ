@@ -41,9 +41,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;

@@ -456,7 +456,7 @@ final class LoaderImpl<R extends Record> implements
     }
 
     @Override
-    public final LoaderImpl<R> loadXML(InputSource source) {
+    public final LoaderImpl<R> loadXML(InputSource s) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
     }

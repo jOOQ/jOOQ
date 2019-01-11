@@ -137,7 +137,7 @@ public final class ChartFormat {
     }
 
     /**
-     * The new chart type, defaulting to {@link Area}.
+     * The new chart type, defaulting to {@link Type#AREA}.
      */
     public ChartFormat type(Type newType) {
         return new ChartFormat(
@@ -490,6 +490,7 @@ public final class ChartFormat {
         /**
          * The areas are located in front of one another.
          */
+        @SuppressWarnings("hiding")
         DEFAULT,
 
         /**

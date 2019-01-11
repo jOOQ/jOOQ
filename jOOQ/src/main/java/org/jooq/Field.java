@@ -3491,7 +3491,7 @@ extends
 
     /**
      * @see DSL#extract(Field, DatePart)
-     * @deprecated - 3.11 - [#7538] - Use {@link DSL#extract(DatePart)} instead.
+     * @deprecated - 3.11 - [#7538] - Use {@link DSL#extract(Field, DatePart)} instead.
      */
     @Deprecated
     @Support

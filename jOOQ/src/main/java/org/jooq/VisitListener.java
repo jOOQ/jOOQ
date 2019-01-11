@@ -93,6 +93,7 @@ import java.util.EventListener;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("javadoc")
 public interface VisitListener extends EventListener {
 
     /**

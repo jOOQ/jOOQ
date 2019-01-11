@@ -59,7 +59,6 @@ import static org.jooq.impl.Keywords.K_VIEW;
 
 import java.util.EnumSet;
 
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.CommentOnFinalStep;
 import org.jooq.CommentOnIsStep;

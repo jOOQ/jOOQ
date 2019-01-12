@@ -5822,7 +5822,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (!scala)
-            out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
+            out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\", \"overrides\" })", out.ref("java.lang.SuppressWarnings"));
     }
 
     private String readVersion(File file, String type) {

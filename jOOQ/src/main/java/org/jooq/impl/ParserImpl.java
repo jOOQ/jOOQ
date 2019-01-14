@@ -96,7 +96,7 @@ import static org.jooq.impl.DSL.day;
 import static org.jooq.impl.DSL.dayOfWeek;
 import static org.jooq.impl.DSL.dayOfYear;
 import static org.jooq.impl.DSL.decade;
-import static org.jooq.impl.DSL.declare;
+// ...
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
@@ -261,7 +261,7 @@ import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.DSL.var;
+// ...
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;

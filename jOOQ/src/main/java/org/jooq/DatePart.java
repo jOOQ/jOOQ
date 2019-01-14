@@ -107,25 +107,23 @@ public enum DatePart {
     // XXX: Vendor-specific date parts
     // ------------------------------------------------------------------------
 
+    /**
+     * The millisecond.
+     */
+    @Support({ H2, HSQLDB })
+    MILLISECOND("millisecond"),
 
+    /**
+     * The microsecond.
+     */
+    @Support({ H2, HSQLDB })
+    MICROSECOND("microsecond"),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * The nanosecond.
+     */
+    @Support({ H2, HSQLDB })
+    NANOSECOND("nanosecond"),
 
     /**
      * The millennium. The year 2000 is in the 2nd millennium, the year 2001 in

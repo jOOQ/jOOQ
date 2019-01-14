@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -46,7 +47,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
-import static org.jooq.impl.Tools.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -578,7 +579,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     private final void checkForceInline(int max) throws ForceInlineSignal {
         if (bindValues.size() > max)
-            if (Boolean.TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
+            if (TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
                 throw new ForceInlineSignal();
     }
 

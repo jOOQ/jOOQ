@@ -127,19 +127,18 @@ import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
-import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
-import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
-import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
-import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -182,6 +181,7 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.StringUtils;
 
@@ -490,7 +490,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
         Object localWindowDefinitions = context.data(DATA_WINDOW_DEFINITIONS);
         try {
-            if (renderTrailingLimit != null)
+            if (TRUE.equals(renderTrailingLimit))
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
             // [#5127] Lazy initialise this map
@@ -498,7 +498,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.data(DATA_WINDOW_DEFINITIONS, null);
 
             if (into != null
-                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
                     && EMULATE_SELECT_INTO_AS_CTAS.contains(family)) {
 
                 context.data(DATA_OMIT_INTO_CLAUSE, true);
@@ -518,7 +518,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.sql('(')
                        .formatIndentStart()
                        .formatNewLine()
-                       .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+                       .data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
             }
 
             switch (dialect) {
@@ -1217,11 +1217,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
         // in the context of a row value expression predicate have to render
         // arrays explicitly, as the subquery doesn't form an implicit RVE
-        else if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
+        else if (context.subquery() && dialect == H2 && TRUE.equals(context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY))) {
             Object data = context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
 
             try {
-                context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                context.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
                 context.sql('(')
                        .visit(getSelect1())
                        .sql(')');
@@ -1264,7 +1264,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 actualInto = into;
 
             if (actualInto != null
-                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
                     && (SUPPORT_SELECT_INTO_TABLE.contains(family) || !(actualInto instanceof Table))) {
 
                 context.formatSeparator()
@@ -1326,7 +1326,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         context.start(SELECT_WHERE);
         ConditionProviderImpl where = getWhere();
 
-        if (TRUE.equals(context.data().get(DataKey.DATA_SELECT_NO_DATA)))
+        if (TRUE.equals(context.data().get(BooleanDataKey.DATA_SELECT_NO_DATA)))
             context.formatSeparator()
                    .visit(K_WHERE)
                    .sql(' ')
@@ -1598,7 +1598,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .formatNewLine()
                .sql(") x");
 
-        if (ctx.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
+        if (TRUE.equals(ctx.data().get(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE)) && actualLimit.isApplicable())
             ctx.visit(actualLimit);
     }
 
@@ -1720,7 +1720,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             // [#2995] Ambiguity may need to be resolved when parentheses could mean both:
             //         Set op subqueries or insert column lists
-            || ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null
+            || TRUE.equals(ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST))
 
             // [#7222] [#7711] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
             || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.family()))

@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;
 // ...
@@ -53,8 +54,8 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeExceptions;
-import static org.jooq.impl.Tools.DataKey.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -357,7 +358,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                     executePreparedStatements(c.settings()) &&
 
                     // [#1520] Renderers may enforce static statements, too
-                    !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
+                    !TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
 
                     listener.bindStart(ctx);
                     if (rendered.bindValues != null)

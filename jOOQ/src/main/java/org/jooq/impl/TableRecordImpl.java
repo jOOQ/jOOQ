@@ -52,7 +52,7 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.settings;
-import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;

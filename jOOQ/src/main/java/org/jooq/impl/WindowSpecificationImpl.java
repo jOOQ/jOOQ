@@ -61,7 +61,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
-import static org.jooq.impl.Tools.DataKey.DATA_RANKING_FUNCTION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;

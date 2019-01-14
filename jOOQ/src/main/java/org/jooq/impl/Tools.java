@@ -289,7 +289,7 @@ final class Tools {
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
-    enum DataKey {
+    enum BooleanDataKey {
 
         /**
          * [#1537] This constant is used internally by jOOQ to omit the RETURNING
@@ -362,14 +362,10 @@ final class Tools {
         @SuppressWarnings("javadoc")
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
 
-        /**
-         * [#531] The local window definitions.
-         * <p>
-         * The window definitions declared in the <code>WINDOW</code> clause are
-         * needed in the <code>SELECT</code> clause when emulating them by inlining
-         * window specifications.
-         */
-        DATA_WINDOW_DEFINITIONS,
+
+
+
+
 
 
 
@@ -388,46 +384,12 @@ final class Tools {
         DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT,
 
         /**
-         * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
-         * a new transaction.
-         */
-        DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS,
-
-        /**
-         * [#1629] The {@link DefaultConnectionProvider} instance to be used during
-         * the transaction.
-         */
-        DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION,
-
-        /**
-         * [#2080] When emulating OFFSET pagination in certain databases, synthetic
-         * aliases are generated that must be referenced also in
-         * <code>ORDER BY</code> clauses, in lieu of their corresponding original
-         * aliases.
-         */
-        DATA_OVERRIDE_ALIASES_IN_ORDER_BY,
-
-        /**
          * [#2080] When emulating OFFSET pagination in certain databases, synthetic
          * aliases are generated that must be referenced also in
          * <code>ORDER BY</code> clauses, in lieu of their corresponding original
          * aliases.
          */
         DATA_UNALIAS_ALIASES_IN_ORDER_BY,
-
-        /**
-         * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
-         */
-        @SuppressWarnings("javadoc")
-        DATA_SELECT_INTO_TABLE,
-
-
-
-
-
-
-
-
 
         /**
          * [#7139] No data must be selected in the <code>SELECT</code> statement.
@@ -462,41 +424,12 @@ final class Tools {
         DATA_COLLECT_SEMI_ANTI_JOIN,
 
         /**
-         * [#1206] The collected Semi / Anti JOIN predicates.
-         */
-        DATA_COLLECTED_SEMI_ANTI_JOIN,
-
-        /**
          * [#2995] An <code>INSERT INTO t SELECT</code> statement. Without any
          * explicit column list, the <code>SELECT</code> statement must not be
          * wrapped in parentheses (which would be interpreted as the column
          * list's parentheses).
          */
         DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * The level of anonymous block nesting, in case we're generating a block.
-         */
-        DATA_BLOCK_NESTING,
 
         /**
          * [#3579] [#6431] [#7222] There are nested set operations in the current
@@ -510,14 +443,81 @@ final class Tools {
         DATA_EMULATE_BULK_INSERT_RETURNING,
 
         /**
-         * [#7467] In SQL Server, the TOP clause is sometimes preferred over the FETCH clause.
-         */
-        DATA_PREFER_TOP_OVER_FETCH,
-
-        /**
          * [#1535] We're currently generating the window specification of a ranking function.
          */
         DATA_RANKING_FUNCTION,
+
+    }
+
+    enum DataKey {
+
+        /**
+         * The level of anonymous block nesting, in case we're generating a block.
+         */
+        DATA_BLOCK_NESTING,
+
+        /**
+         * [#531] The local window definitions.
+         * <p>
+         * The window definitions declared in the <code>WINDOW</code> clause are
+         * needed in the <code>SELECT</code> clause when emulating them by inlining
+         * window specifications.
+         */
+        DATA_WINDOW_DEFINITIONS,
+
+        /**
+         * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
+         * a new transaction.
+         */
+        DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS,
+
+        /**
+         * [#1629] The {@link DefaultConnectionProvider} instance to be used during
+         * the transaction.
+         */
+        DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION,
+
+        /**
+         * [#2080] When emulating OFFSET pagination in certain databases, synthetic
+         * aliases are generated that must be referenced also in
+         * <code>ORDER BY</code> clauses, in lieu of their corresponding original
+         * aliases.
+         */
+        DATA_OVERRIDE_ALIASES_IN_ORDER_BY,
+
+        /**
+         * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
+         */
+        @SuppressWarnings("javadoc")
+        DATA_SELECT_INTO_TABLE,
+
+        /**
+         * [#1206] The collected Semi / Anti JOIN predicates.
+         */
+        DATA_COLLECTED_SEMI_ANTI_JOIN,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

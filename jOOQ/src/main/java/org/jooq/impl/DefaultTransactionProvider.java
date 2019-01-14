@@ -37,7 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
+import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
 import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
@@ -121,7 +122,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
     private final boolean autoCommit(Configuration configuration) {
         Boolean autoCommit = (Boolean) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT);
 
-        if (autoCommit == null) {
+        if (!TRUE.equals(autoCommit)) {
             autoCommit = connection(configuration).getAutoCommit();
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT, autoCommit);
         }

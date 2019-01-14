@@ -47,8 +47,8 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
-import static org.jooq.impl.Tools.DataKey.DATA_NESTED_SET_OPERATIONS;
-import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
@@ -235,7 +235,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
      * <code>AbstractContext</code>.
      */
     private final Clause[] clause(QueryPart part) {
-        if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null)
+        if (part instanceof QueryPartInternal && !TRUE.equals(data(DATA_OMIT_CLAUSE_EVENT_EMISSION)))
             return ((QueryPartInternal) part).clauses(this);
 
         return null;

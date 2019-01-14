@@ -130,7 +130,7 @@ import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityBeforeNull;
-import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Arrays;
 import java.util.Collection;

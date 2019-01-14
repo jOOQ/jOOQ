@@ -38,8 +38,9 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Tools.DataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,7 +105,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         else {
             String separator = "";
-            boolean indent = (size() > 1) && ctx.data(DATA_LIST_ALREADY_INDENTED) == null;
+            boolean indent = (size() > 1) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
 
             if (indent)
                 ctx.formatIndentStart();

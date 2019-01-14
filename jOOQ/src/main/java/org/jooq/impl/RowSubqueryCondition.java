@@ -59,7 +59,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.EnumSet;
 
@@ -234,7 +234,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false);
-                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                ctx.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
                 ctx.sql(extraParentheses ? "))" : ")");
             }
 
@@ -244,7 +244,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 ctx.subquery(true)
                    .visit(rightQuantified)
                    .subquery(false);
-                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                ctx.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
             }
         }
 

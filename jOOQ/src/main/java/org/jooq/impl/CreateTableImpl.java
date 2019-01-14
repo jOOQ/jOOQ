@@ -91,8 +91,8 @@ import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_NO_DATA;
 
 import java.util.ArrayList;
 import java.util.Arrays;

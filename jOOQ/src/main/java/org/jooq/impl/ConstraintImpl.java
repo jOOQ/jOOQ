@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONSTRAINT;
 // ...
 import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
@@ -58,7 +59,7 @@ import static org.jooq.impl.Keywords.K_REFERENCES;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldsByName;
-import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -166,7 +167,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.data(DATA_CONSTRAINT_REFERENCE) != null) {
+        if (TRUE.equals(ctx.data(DATA_CONSTRAINT_REFERENCE))) {
             if (getQualifiedName() == AbstractName.NO_NAME)
                 throw new DataAccessException("Cannot ALTER or DROP CONSTRAINT without name");
 

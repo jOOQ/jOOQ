@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
@@ -95,8 +96,8 @@ import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -233,7 +234,7 @@ implements
         switch (translatedType) {
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                if (ctx.data(DATA_COLLECT_SEMI_ANTI_JOIN) != null) {
+                if (TRUE.equals(ctx.data(DATA_COLLECT_SEMI_ANTI_JOIN))) {
 
                     @SuppressWarnings("unchecked")
                     List<Condition> semiAntiJoinPredicates = (List<Condition>) ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN);

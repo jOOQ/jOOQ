@@ -75,7 +75,7 @@ import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1439,7 +1439,7 @@ implements
            .formatNewLine();
         ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
         ctx.visit(using);
-        ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+        ctx.data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
         ctx.formatIndentEnd()
            .declareTables(false);
 

@@ -77,8 +77,8 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fieldNames;
-import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
-import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
 import java.util.ArrayList;
 import java.util.Arrays;

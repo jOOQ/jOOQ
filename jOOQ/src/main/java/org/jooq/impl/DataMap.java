@@ -37,16 +37,20 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
+
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Scope;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 
 /**
@@ -56,53 +60,80 @@ import org.jooq.impl.Tools.DataKey;
  */
 final class DataMap extends AbstractMap<Object, Object> {
 
-    final EnumMap<DataKey, Object>   internal;
-    Map<Object, Object>              external;
+    final EnumSet<BooleanDataKey>    internalSet;
+    final EnumMap<DataKey, Object>   internalMap;
+    Map<Object, Object>              externalMap;
     final Set<Entry<Object, Object>> entrySet;
 
     DataMap() {
-        internal = new EnumMap<DataKey, Object>(DataKey.class);
+        internalSet = EnumSet.noneOf(BooleanDataKey.class);
+        internalMap = new EnumMap<DataKey, Object>(DataKey.class);
         entrySet = new EntrySet();
     }
 
     @Override
     public final int size() {
-        return internal().size() + external(false).size();
+        return internalSet.size() + internalMap().size() + external(false).size();
     }
 
     @Override
     public final boolean isEmpty() {
-        return internal().isEmpty() && external(false).isEmpty();
+        return internalSet.isEmpty() && internalMap().isEmpty() && external(false).isEmpty();
     }
 
     @Override
     public final boolean containsKey(Object key) {
-        return delegate(key, false).containsKey(key);
+        return key instanceof BooleanDataKey
+             ? internalSet.contains(key)
+             : delegate(key, false).containsKey(key);
     }
 
     @Override
     public final boolean containsValue(Object value) {
-        return internal().containsValue(value) || external(false).containsValue(value);
+        if (value instanceof Boolean)
+            if ((Boolean) value && internalSet.size() > 0)
+                return true;
+            else if (!((Boolean) value) && internalSet.size() < BooleanDataKey.values().length)
+                return true;
+
+        return internalMap().containsValue(value) || external(false).containsValue(value);
     }
 
     @Override
     public final Object get(Object key) {
-        return delegate(key, false).get(key);
+        return key instanceof BooleanDataKey
+             ? internalSet.contains(key)
+                 ? (Boolean) true
+                 : (Boolean) null
+             : delegate(key, false).get(key);
     }
 
     @Override
     public final Object put(Object key, Object value) {
-        return delegate(key, true).put(key, value);
+        return key instanceof BooleanDataKey
+             ? TRUE.equals(value)
+                 ? internalSet.add((BooleanDataKey) key)
+                     ? (Boolean) null
+                     : TRUE
+                 : internalSet.remove(key)
+                     ? TRUE
+                     : (Boolean) null
+             : delegate(key, true).put(key, value);
     }
 
     @Override
     public final Object remove(Object key) {
-        return delegate(key, true).remove(key);
+        return key instanceof BooleanDataKey
+             ? internalSet.remove(key)
+                 ? TRUE
+                 : (Boolean) null
+             : delegate(key, true).remove(key);
     }
 
     @Override
     public final void clear() {
-        internal().clear();
+        internalSet.clear();
+        internalMap().clear();
         external(true).clear();
     }
 
@@ -112,41 +143,48 @@ final class DataMap extends AbstractMap<Object, Object> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final Map<Object, Object> internal() {
-        return (Map) internal;
+    private final Map<Object, Object> internalMap() {
+        return (Map) internalMap;
     }
 
     private final Map<Object, Object> external(boolean initialise) {
-        if (external == null) {
+        if (externalMap == null) {
             if (initialise)
-                external = new HashMap<Object, Object>();
+                externalMap = new HashMap<Object, Object>();
             else
                 return Collections.emptyMap();
         }
 
-        return external;
+        return externalMap;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final Map<Object, Object> delegate(Object key, boolean initialise) {
-        return key instanceof DataKey ? (Map) internal() : external(initialise);
+        return key instanceof DataKey ? (Map) internalMap() : external(initialise);
     }
 
     private class EntrySet extends AbstractSet<Entry<Object, Object>> {
         @Override
         public final Iterator<Entry<Object, Object>> iterator() {
             return new Iterator<Entry<Object, Object>>() {
-                final Iterator<Entry<Object, Object>> internalIterator = internal().entrySet().iterator();
-                final Iterator<Entry<Object, Object>> externalIterator = external(false).entrySet().iterator();
+                final Iterator<BooleanDataKey>        internalSetIterator = internalSet.iterator();
+                final Iterator<Entry<Object, Object>> internalMapIterator = internalMap().entrySet().iterator();
+                final Iterator<Entry<Object, Object>> externalMapIterator = external(false).entrySet().iterator();
 
                 @Override
                 public final boolean hasNext() {
-                    return internalIterator.hasNext() || externalIterator.hasNext();
+                    return internalSetIterator.hasNext()
+                        || internalMapIterator.hasNext()
+                        || externalMapIterator.hasNext();
                 }
 
                 @Override
                 public final Entry<Object, Object> next() {
-                    return internalIterator.hasNext() ? internalIterator.next() : externalIterator.next();
+                    return internalSetIterator.hasNext()
+                         ? new SimpleImmutableEntry<Object, Object>(internalSetIterator.next(), true)
+                         : internalMapIterator.hasNext()
+                         ? internalMapIterator.next()
+                         : externalMapIterator.next();
                 }
 
                 @Override

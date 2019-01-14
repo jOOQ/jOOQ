@@ -57,8 +57,8 @@ import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
-import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.util.ArrayList;
 import java.util.Collection;

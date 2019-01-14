@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.RenderContext.CastMode.NEVER;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
@@ -58,7 +59,6 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TOP;
 import static org.jooq.impl.Keywords.K_WITH_TIES;
 import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.Tools.DataKey.DATA_PREFER_TOP_OVER_FETCH;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -66,6 +66,7 @@ import org.jooq.Param;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder

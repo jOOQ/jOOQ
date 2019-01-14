@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
-import static org.jooq.impl.Tools.DataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
 import org.jooq.Converter;

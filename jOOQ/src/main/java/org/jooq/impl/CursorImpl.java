@@ -40,7 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.impl.Tools.recordFactory;
-import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.io.InputStream;
 import java.io.Reader;

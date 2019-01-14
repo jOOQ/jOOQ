@@ -71,7 +71,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import java.util.EnumSet;
 

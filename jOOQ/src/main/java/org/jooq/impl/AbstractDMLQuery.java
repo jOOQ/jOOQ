@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
@@ -65,7 +66,7 @@ import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.DataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -106,6 +107,7 @@ import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;

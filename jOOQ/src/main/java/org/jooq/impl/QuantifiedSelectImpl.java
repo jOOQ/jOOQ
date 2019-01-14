@@ -37,11 +37,12 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -81,13 +82,12 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
     @Override
     public final void accept(Context<?> ctx) {
-        Object data = ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
-        boolean extraParentheses = data != null && (false
+        boolean extraParentheses = false;
 
 
 
-            )
-            ;
+
+
 
         ctx.visit(quantifier.toKeyword())
            .sql(extraParentheses ? " ((" : " (")

@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

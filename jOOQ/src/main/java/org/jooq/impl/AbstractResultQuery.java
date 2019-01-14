@@ -51,7 +51,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
-import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;

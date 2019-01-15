@@ -2617,7 +2617,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             int pos = position[0];
             int length;
 
-            for (length = 0; length < maxLength && length < string.length(); length++) {
+            for (length = 0; length < maxLength && (pos + length) < string.length(); length++) {
                 int digit = string.charAt(pos + length) - '0';
 
                 if (digit >= 0 && digit < 10)

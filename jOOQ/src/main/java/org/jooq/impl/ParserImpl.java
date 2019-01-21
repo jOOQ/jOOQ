@@ -6001,7 +6001,134 @@ final class ParserImpl implements Parser {
         return null;
     }
 
+    private static final Interval parsePostgresIntervalLiteralIf(ParserContext ctx) {
+        int position = ctx.position();
+
+        p:
+        if (parseIf(ctx, '\'')) {
+            parseIf(ctx, '@');
+
+            Number year = null;
+            Number month = null;
+            Number day = null;
+            Number hour = null;
+            Number minute = null;
+            Number second = null;
+
+            do {
+
+                boolean minus = parseIf(ctx, '-');
+                if (!minus)
+                    parseIf(ctx, '+');
+
+                Number n = parseUnsignedNumericLiteralIf(ctx, minus ? Sign.MINUS : Sign.NONE);
+                if (n == null)
+                    break p;
+
+                switch (ctx.character()) {
+                    case 'D':
+                    case 'd':
+                        if (parseKeywordIf(ctx, "D") ||
+                            parseKeywordIf(ctx, "DAY") ||
+                            parseKeywordIf(ctx, "DAYS"))
+                            if (day == null)
+                                day = n;
+                            else
+                                throw ctx.exception("Day part already defined");
+
+                        break;
+
+                    case 'H':
+                    case 'h':
+                        if (parseKeywordIf(ctx, "H") ||
+                            parseKeywordIf(ctx, "HOUR") ||
+                            parseKeywordIf(ctx, "HOURS"))
+                            if (hour == null)
+                                hour = n;
+                            else
+                                throw ctx.exception("Hour part already defined");
+
+                        break;
+
+                    case 'M':
+                    case 'm':
+                        if (parseKeywordIf(ctx, "M") ||
+                            parseKeywordIf(ctx, "MIN") ||
+                            parseKeywordIf(ctx, "MINS") ||
+                            parseKeywordIf(ctx, "MINUTE") ||
+                            parseKeywordIf(ctx, "MINUTES"))
+                            if (minute == null)
+                                minute = n;
+                            else
+                                throw ctx.exception("Minute part already defined");
+
+                        else if (parseKeywordIf(ctx, "MON") ||
+                                 parseKeywordIf(ctx, "MONS") ||
+                                 parseKeywordIf(ctx, "MONTH") ||
+                                 parseKeywordIf(ctx, "MONTHS"))
+                            if (month == null)
+                                month = n;
+                            else
+                                throw ctx.exception("Month part already defined");
+
+                        break;
+
+                    case 'S':
+                    case 's':
+                        if (parseKeywordIf(ctx, "S") ||
+                            parseKeywordIf(ctx, "SEC") ||
+                            parseKeywordIf(ctx, "SECS") ||
+                            parseKeywordIf(ctx, "SECOND") ||
+                            parseKeywordIf(ctx, "SECONDS"))
+                            if (second == null)
+                                second = n;
+                            else
+                                throw ctx.exception("Second part already defined");
+
+                        break;
+
+                    case 'Y':
+                    case 'y':
+                        if (parseKeywordIf(ctx, "Y") ||
+                            parseKeywordIf(ctx, "YEAR") ||
+                            parseKeywordIf(ctx, "YEARS"))
+                            if (year == null)
+                                year = n;
+                            else
+                                throw ctx.exception("Year part already defined");
+
+                        break;
+
+                    default:
+                        break p;
+                }
+            }
+            while (!parseIf(ctx, '\''));
+
+            int months = (month == null ? 0 : month.intValue())
+                       + (year  == null ? 0 : (int) (year.doubleValue() * 12));
+
+            double seconds = (month  == null ? 0.0 : ((month.doubleValue() % 1.0) * 30 * 86400))
+                           + (day    == null ? 0.0 : ((day.doubleValue() * 86400)))
+                           + (hour   == null ? 0.0 : ((hour.doubleValue() * 3600)))
+                           + (minute == null ? 0.0 : ((minute.doubleValue() * 60)))
+                           + (second == null ? 0.0 : ((second.doubleValue())));
+
+            return new YearToSecond(
+                new YearToMonth(0, months),
+                new DayToSecond(0, 0, 0, (int) seconds, (int) ((seconds % 1.0) * 1000000000))
+            );
+        }
+
+        ctx.position(position);
+        return null;
+    }
+
     private static final Interval parseIntervalLiteral(ParserContext ctx) {
+        Interval result = parsePostgresIntervalLiteralIf(ctx);
+        if (result != null)
+            return result;
+
         String string = parseStringLiteral(ctx);
 
         try {

@@ -90,8 +90,8 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
     private final DayToSecond dayToSecond;
 
     public YearToSecond(YearToMonth yearToMonth, DayToSecond dayToSecond) {
-        this.yearToMonth = yearToMonth == null ? new YearToMonth(0) : yearToMonth;
-        this.dayToSecond = dayToSecond == null ? new DayToSecond(0) : dayToSecond;
+        this.yearToMonth = yearToMonth == null ? new YearToMonth() : yearToMonth;
+        this.dayToSecond = dayToSecond == null ? new DayToSecond() : dayToSecond;
     }
 
     /**
@@ -334,9 +334,13 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + ((dayToSecond == null) ? 0 : dayToSecond.hashCode());
-        result = prime * result + ((yearToMonth == null) ? 0 : yearToMonth.hashCode());
+        int result = 0;
+        int h1 = dayToSecond.hashCode();
+        int h2 = yearToMonth.hashCode();
+        if (h1 != 0)
+            result = prime * result + h1;
+        if (h2 != 0)
+            result = prime * result + h2;
         return result;
     }
 
@@ -346,22 +350,34 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        YearToSecond other = (YearToSecond) obj;
-        if (dayToSecond == null) {
-            if (other.dayToSecond != null)
+        if (getClass() == obj.getClass()) {
+            YearToSecond other = (YearToSecond) obj;
+            if (dayToSecond == null) {
+                if (other.dayToSecond != null)
+                    return false;
+            }
+            else if (!dayToSecond.equals(other.dayToSecond))
                 return false;
-        }
-        else if (!dayToSecond.equals(other.dayToSecond))
-            return false;
-        if (yearToMonth == null) {
-            if (other.yearToMonth != null)
+            if (yearToMonth == null) {
+                if (other.yearToMonth != null)
+                    return false;
+            }
+            else if (!yearToMonth.equals(other.yearToMonth))
                 return false;
+            return true;
         }
-        else if (!yearToMonth.equals(other.yearToMonth))
+        else if (obj instanceof YearToMonth) {
+            YearToMonth other = (YearToMonth) obj;
+            return getDayToSecond().intValue() == 0 &&
+                   getYearToMonth().equals(other);
+        }
+        else if (obj instanceof DayToSecond) {
+            DayToSecond other = (DayToSecond) obj;
+            return getYearToMonth().intValue() == 0 &&
+                   getDayToSecond().equals(other);
+        }
+        else
             return false;
-        return true;
     }
 
     @Override

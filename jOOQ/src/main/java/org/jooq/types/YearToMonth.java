@@ -90,6 +90,13 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     /**
      * Create a new year-month interval.
      */
+    public YearToMonth() {
+        this(0, 0, false);
+    }
+
+    /**
+     * Create a new year-month interval.
+     */
     public YearToMonth(int years) {
         this(years, 0, false);
     }
@@ -237,9 +244,11 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     @Override
     public final int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + months;
-        result = prime * result + years;
+        int result = 0;
+        if (months != 0)
+            result = prime * result + months;
+        if (years != 0)
+            result = prime * result + years;
         return result;
     }
 
@@ -249,14 +258,18 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (getClass() == obj.getClass()) {
+            YearToMonth other = (YearToMonth) obj;
+            if (months != other.months)
+                return false;
+            if (years != other.years)
+                return false;
+            return true;
+        }
+        else if (obj instanceof YearToSecond)
+            return obj.equals(this);
+        else
             return false;
-        YearToMonth other = (YearToMonth) obj;
-        if (months != other.months)
-            return false;
-        if (years != other.years)
-            return false;
-        return true;
     }
 
     @Override

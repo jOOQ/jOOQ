@@ -96,7 +96,14 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     private final int            nano;
 
     /**
-     * Create a new day-hour interval.
+     * Create a new interval.
+     */
+    public DayToSecond() {
+        this(0, 0, 0, 0, 0, false);
+    }
+
+    /**
+     * Create a new day interval.
      */
     public DayToSecond(int days) {
         this(days, 0, 0, 0, 0, false);
@@ -110,21 +117,21 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     }
 
     /**
-     * Create a new day-hour interval.
+     * Create a new day-minute interval.
      */
     public DayToSecond(int days, int hours, int minutes) {
         this(days, hours, minutes, 0, 0, false);
     }
 
     /**
-     * Create a new day-hour interval.
+     * Create a new day-second interval.
      */
     public DayToSecond(int days, int hours, int minutes, int seconds) {
         this(days, hours, minutes, seconds, 0, false);
     }
 
     /**
-     * Create a new day-hour interval.
+     * Create a new day-nanoseconds interval.
      */
     public DayToSecond(int days, int hours, int minutes, int seconds, int nano) {
         this(days, hours, minutes, seconds, nano, false);
@@ -494,12 +501,17 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     @Override
     public final int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + days;
-        result = prime * result + hours;
-        result = prime * result + minutes;
-        result = prime * result + nano;
-        result = prime * result + seconds;
+        int result = 0;
+        if (days != 0)
+            result = prime * result + days;
+        if (hours != 0)
+            result = prime * result + hours;
+        if (minutes != 0)
+            result = prime * result + minutes;
+        if (nano != 0)
+            result = prime * result + nano;
+        if (seconds != 0)
+            result = prime * result + seconds;
         return result;
     }
 
@@ -509,20 +521,24 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (getClass() == obj.getClass()) {
+            DayToSecond other = (DayToSecond) obj;
+            if (days != other.days)
+                return false;
+            if (hours != other.hours)
+                return false;
+            if (minutes != other.minutes)
+                return false;
+            if (nano != other.nano)
+                return false;
+            if (seconds != other.seconds)
+                return false;
+            return true;
+        }
+        else if (obj instanceof YearToSecond)
+            return obj.equals(this);
+        else
             return false;
-        DayToSecond other = (DayToSecond) obj;
-        if (days != other.days)
-            return false;
-        if (hours != other.hours)
-            return false;
-        if (minutes != other.minutes)
-            return false;
-        if (nano != other.nano)
-            return false;
-        if (seconds != other.seconds)
-            return false;
-        return true;
     }
 
     @Override

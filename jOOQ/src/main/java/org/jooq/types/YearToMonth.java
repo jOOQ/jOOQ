@@ -105,7 +105,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
 
         // Perform normalisation. Specifically, Postgres may return intervals
         // such as 0-13
-        if (months >= 12) {
+        if (Math.abs(months) >= 12) {
             years += (months / 12);
             months %= 12;
         }

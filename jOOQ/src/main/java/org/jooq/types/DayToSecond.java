@@ -134,19 +134,19 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
         // Perform normalisation. Specifically, Postgres may return intervals
         // such as 24:00:00, 25:13:15, etc...
-        if (nano >= 1000000000) {
+        if (Math.abs(nano) >= 1000000000) {
             seconds += (nano / 1000000000);
             nano %= 1000000000;
         }
-        if (seconds >= 60) {
+        if (Math.abs(seconds) >= 60) {
             minutes += (seconds / 60);
             seconds %= 60;
         }
-        if (minutes >= 60) {
+        if (Math.abs(minutes) >= 60) {
             hours += (minutes / 60);
             minutes %= 60;
         }
-        if (hours >= 24) {
+        if (Math.abs(hours) >= 24) {
             days += (hours / 24);
             hours %= 24;
         }

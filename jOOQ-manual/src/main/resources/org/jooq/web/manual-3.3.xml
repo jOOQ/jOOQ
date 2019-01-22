@@ -5330,7 +5330,7 @@ field(select(inline(1).as("a")));]]></java>
 </code-pair><html>
 
                                     <p>
-                                        These unnamed expressions can be used both in SQL as well as with jOOQ. However, do note that jOOQ will use <reference class="org.jooq.Field" anchor="#getName--" title="Field.getName()"/> to extract this column name from the field, when referencing the field or when nesting it in derived tables. In order to stay in full control of any such column names, it is always a good idea to provide explicit aliasing for column expressions, both in SQL as well as in jOOQ.
+                                        These unnamed expressions can be used both in SQL as well as with jOOQ. However, do note that jOOQ will use <reference class="org.jooq.Field" anchor="#getName()" title="Field.getName()"/> to extract this column name from the field, when referencing the field or when nesting it in derived tables. In order to stay in full control of any such column names, it is always a good idea to provide explicit aliasing for column expressions, both in SQL as well as in jOOQ.
                                     </p>
                                 </html></content>
 							</section>
@@ -7587,7 +7587,7 @@ WHERE LAST_NAME = :lastName]]></sql>
                                             Globally, by using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Configuration.
                                         </li>
                                         <li>
-                                            Per query locally, by using the <reference class="org.jooq.Query" anchor="#getSQL-org.jooq.conf.ParamType-" title="Query.getSQL(ParamType)"/> method.
+                                            Per query locally, by using the <reference class="org.jooq.Query" anchor="#getSQL(org.jooq.conf.ParamType)" title="Query.getSQL(ParamType)"/> method.
                                         </li>
                                         <li>
                                             Per value locally, by using <reference class="org.jooq.impl.DSL" anchor="#inline(java.lang.Object)" title="DSL.inline()"/> methods.
@@ -8192,7 +8192,7 @@ for (int i = 0; i < result.size(); i++)
 
                         <html>
                             <p>
-                                Unlike in JDBC, where <reference class="java.sql.ResultSet" anchor="#absolute-int-" title="java.sql.ResultSet#absolute(int)"/> positions the underlying cursor at the one-based index, we Java developers really don't like that way of thinking. As can be seen in the above loop, we iterate over this result as we do over any other Java collection.
+                                Unlike in JDBC, where <reference class="java.sql.ResultSet" anchor="#absolute(int)" title="java.sql.ResultSet#absolute(int)"/> positions the underlying cursor at the one-based index, we Java developers really don't like that way of thinking. As can be seen in the above loop, we iterate over this result as we do over any other Java collection.
                             </p>
 
                             <h3>All JDBC API is one-based</h3>

@@ -143,12 +143,15 @@
                             </xsl:when>
 
                             <xsl:when test="@class and starts-with(@class, 'org.jooq')">
-                                <xsl:text>http://www.jooq.org/javadoc/</xsl:text>
+                                <xsl:text>https://www.jooq.org/javadoc/</xsl:text>
                                 <xsl:value-of select="$minorVersion"/>
                                 <xsl:text>.x/</xsl:text>
                                 <xsl:value-of select="translate(@class, '.', '/')"/>
                                 <xsl:text>.html</xsl:text>
                                 <xsl:choose>
+                                    <!-- TODO: When will we switch the Javadoc tool?
+                                    <xsl:when test="$minorVersion = '3.4' or $minorVersion = '3.5' or $minorVersion = '3.6' or $minorVersion = '3.7' or $minorVersion = '3.8' or $minorVersion = '3.9' or $minorVersion = '3.10' or $minorVersion = '3.11'">
+                                    -->
                                     <xsl:when test="$minorVersion > '3.3'">
                                         <xsl:call-template name="java-8-javadoc-anchor">
                                             <xsl:with-param name="anchor" select="@anchor"/>
@@ -167,13 +170,25 @@
                                 <xsl:value-of select="@anchor"/>
                             </xsl:when>
 
-                            <xsl:when test="@class and (starts-with(@class, 'java') or starts-with(@class, 'org.w3c.dom'))">
-                                <xsl:text>http://download.oracle.com/javase/8/docs/api/</xsl:text>
+                            <xsl:when test="@class and (starts-with(@class, 'java.sql') or starts-with(@class, 'javax.sql'))">
+                                <xsl:text>https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/</xsl:text>
                                 <xsl:value-of select="translate(@class, '.', '/')"/>
                                 <xsl:text>.html</xsl:text>
-                                <xsl:call-template name="java-8-javadoc-anchor">
-                                    <xsl:with-param name="anchor" select="@anchor"/>
-                                </xsl:call-template>
+                                <xsl:with-param name="anchor" select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and (starts-with(@class, 'javax.xml') or starts-with(@class, 'org.w3c.dom'))">
+                                <xsl:text>https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.html</xsl:text>
+                                <xsl:with-param name="anchor" select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and (starts-with(@class, 'java') or starts-with(@class, 'javax'))">
+                                <xsl:text>https://docs.oracle.com/en/java/javase/11/docs/api/java.base/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.html</xsl:text>
+                                <xsl:with-param name="anchor" select="@anchor"/>
                             </xsl:when>
 
                             <xsl:when test="@ticket">

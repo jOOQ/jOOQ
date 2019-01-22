@@ -4166,9 +4166,9 @@ author.store(); // The behaviour of this store call is governed by the updatable
                                             </p>
 
                                             <ul>
-                                                <li><code>queryTimeout</code>: Corresponds to <reference class="org.jooq.Query" anchor="#queryTimeout-int-" title="Query.queryTimeout()"/> or <reference class="java.sql.Statement" anchor="#setQueryTimeout-int-" title="Statement.setQueryTimeout()"/></li>
-                                                <li><code>maxRows</code>: Corresponds to <reference class="org.jooq.Query" anchor="#maxRows-int-" title="ResultQuery.maxRows()"/> or <reference class="java.sql.Statement" anchor="#setMaxRows-int-" title="Statement.setMaxRows()"/></li>
-                                                <li><code>fetchSize</code>: Corresponds to <reference class="org.jooq.Query" anchor="#fetchSize-int-" title="ResultQuery.fetchSize()"/> or <reference class="java.sql.Statement" anchor="#setFetchSize-int-" title="Statement.setFetchSize()"/></li>
+                                                <li><code>queryTimeout</code>: Corresponds to <reference class="org.jooq.Query" anchor="#queryTimeout(int)" title="Query.queryTimeout()"/> or <reference class="java.sql.Statement" anchor="#setQueryTimeout(int)" title="Statement.setQueryTimeout()"/></li>
+                                                <li><code>maxRows</code>: Corresponds to <reference class="org.jooq.Query" anchor="#maxRows(int)" title="ResultQuery.maxRows()"/> or <reference class="java.sql.Statement" anchor="#setMaxRows(int)" title="Statement.setMaxRows()"/></li>
+                                                <li><code>fetchSize</code>: Corresponds to <reference class="org.jooq.Query" anchor="#fetchSize(int)" title="ResultQuery.fetchSize()"/> or <reference class="java.sql.Statement" anchor="#setFetchSize(int)" title="Statement.setFetchSize()"/></li>
                                             </ul>
 
                                             <p>
@@ -4599,7 +4599,7 @@ FROM "a"
                                     <h3>Recursive common table expressions</h3>
 
                                     <p>
-                                        The various SQL dialects do not agree on the use of <code>RECURSIVE</code> when writing recursive common table expressions. When using jOOQ, always use the <reference class="org.jooq.DSLContext" title="DSLContext.withRecursive()" anchor="#withRecursive-org.jooq.CommonTableExpression...-"/> or <reference class="org.jooq.impl.DSL" title="DSL.withRecursive()" anchor="#withRecursive-org.jooq.CommonTableExpression...-"/> methods, and jOOQ will render the <code>RECURSIVE</code> keyword, if needed.
+                                        The various SQL dialects do not agree on the use of <code>RECURSIVE</code> when writing recursive common table expressions. When using jOOQ, always use the <reference class="org.jooq.DSLContext" title="DSLContext.withRecursive()" anchor="#withRecursive(org.jooq.CommonTableExpression...)"/> or <reference class="org.jooq.impl.DSL" title="DSL.withRecursive()" anchor="#withRecursive(org.jooq.CommonTableExpression...)"/> methods, and jOOQ will render the <code>RECURSIVE</code> keyword, if needed.
                                     </p>
                                 </html></content>
                             </section>
@@ -4731,7 +4731,7 @@ Select<?> select2 = create.selectOne().fetch();]]></java>
 
                                             <h3>SELECT *</h3>
                                             <p>
-                                                jOOQ supports the asterisk operator in projections both as a qualified asterisk (through <reference class="org.jooq.Table" anchor="#asterisk--" title="Table.asterisk()"/>) and as an unqualified asterisk (through <reference class="org.jooq.impl.DSL" anchor="asterisk--" title="DSL.asterisk()"/>). It is also possible to omit the projection entirely, in case of which an asterisk may appear in generated SQL, if not all column names are known to jOOQ.
+                                                jOOQ supports the asterisk operator in projections both as a qualified asterisk (through <reference class="org.jooq.Table" anchor="#asterisk()" title="Table.asterisk()"/>) and as an unqualified asterisk (through <reference class="org.jooq.impl.DSL" anchor="asterisk()" title="DSL.asterisk()"/>). It is also possible to omit the projection entirely, in case of which an asterisk may appear in generated SQL, if not all column names are known to jOOQ.
                                             </p>
 
 </html><java><![CDATA[// Explicitly selects all columns available from BOOK - No asterisk
@@ -5467,7 +5467,7 @@ ORDER BY first_name DESC
 </code-pair><html>
 
                                             <p>
-                                                Note that in order to create such a window definition, we need to first create a <reference id="names" title="name reference"/> using <reference class="org.jooq.impl.DSL" title="DSL.name()" anchor="#name-java.lang.String...-"/>.
+                                                Note that in order to create such a window definition, we need to first create a <reference id="names" title="name reference"/> using <reference class="org.jooq.impl.DSL" title="DSL.name()" anchor="#name(java.lang.String...)"/>.
                                             </p>
                                             <p>
                                                 Even if only PostgreSQL and Sybase SQL Anywhere natively support this great feature, jOOQ can emulate it by expanding any <reference class="org.jooq.WindowDefinition" /> and <reference class="org.jooq.WindowSpecification"/> types that you pass to the <code>window()</code> method - if the database supports window functions at all.
@@ -6276,7 +6276,7 @@ VALUES (
       .execute();</java></code-pair><html>
 
 											<p>
-												The <code>DEFAULT</code> keyword (or <reference class="org.jooq.impl.DSL" anchor="#defaultValue--" title="DSL#defaultValue()"/> method) can also be used for individual columns only, although that will have the same effect as leaving the column away entirely.
+												The <code>DEFAULT</code> keyword (or <reference class="org.jooq.impl.DSL" anchor="#defaultValue()" title="DSL#defaultValue()"/> method) can also be used for individual columns only, although that will have the same effect as leaving the column away entirely.
 											</p>
 										</html></content>
 									</section>
@@ -7698,7 +7698,7 @@ field(select(inline(1).as("a")));]]></java>
 </code-pair><html>
 
                                     <p>
-                                        These unnamed expressions can be used both in SQL as well as with jOOQ. However, do note that jOOQ will use <reference class="org.jooq.Field" anchor="#getName--" title="Field.getName()"/> to extract this column name from the field, when referencing the field or when nesting it in derived tables. In order to stay in full control of any such column names, it is always a good idea to provide explicit aliasing for column expressions, both in SQL as well as in jOOQ.
+                                        These unnamed expressions can be used both in SQL as well as with jOOQ. However, do note that jOOQ will use <reference class="org.jooq.Field" anchor="#getName()" title="Field.getName()"/> to extract this column name from the field, when referencing the field or when nesting it in derived tables. In order to stay in full control of any such column names, it is always a good idea to provide explicit aliasing for column expressions, both in SQL as well as in jOOQ.
                                     </p>
 								</html></content>
 							</section>
@@ -7801,7 +7801,7 @@ Field<Integer> field2 = val("1").coerce(Integer.class);]]></java><html>
                                     </p>
 
                                     <p>
-                                        To accommodate most use-cases jOOQ 3.11 introduced the <reference class="org.jooq.Collation"/> type, which can be attached to a <reference class="org.jooq.DataType"/> through <reference class="org.jooq.DataType" anchor="#collate-org.jooq.Collation-" title="DataType.collate(Collation)"/>, or to a <reference class="org.jooq.Field"/> through <reference class="org.jooq.Field" anchor="#collate-org.jooq.Collation-" title="Field.collate(Collation)"/>, for example:
+                                        To accommodate most use-cases jOOQ 3.11 introduced the <reference class="org.jooq.Collation"/> type, which can be attached to a <reference class="org.jooq.DataType"/> through <reference class="org.jooq.DataType" anchor="#collate(org.jooq.Collation)" title="DataType.collate(Collation)"/>, or to a <reference class="org.jooq.Field"/> through <reference class="org.jooq.Field" anchor="#collate(org.jooq.Collation)" title="Field.collate(Collation)"/>, for example:
                                     </p>
 
 </html><code-pair>
@@ -9699,7 +9699,7 @@ AND language_id = 1]]></sql></code-pair><html>
                                     </ul>
 
                                     <p>
-                                        jOOQ knows a simple API called <reference class="org.jooq.impl.DSL" title="DSL.condition(Record)" anchor="#condition-org.jooq.Record-"/>, which translates a <reference class="org.jooq.Record"/> to a <reference class="org.jooq.Condition"/>:
+                                        jOOQ knows a simple API called <reference class="org.jooq.impl.DSL" title="DSL.condition(Record)" anchor="#condition(org.jooq.Record)"/>, which translates a <reference class="org.jooq.Record"/> to a <reference class="org.jooq.Condition"/>:
                                     </p>
 
 </html><java><![CDATA[BookRecord book = new BookRecord();
@@ -9718,7 +9718,7 @@ DSL.using(configuration)
 Result<BookRecord> books2 = DSL.using(configuration).fetchByExample(book);]]></java><html>
 
                                     <p>
-                                        The latter API call makes use of the convenience API <reference class="org.jooq.DSLContext" title="DSLContext.fetchByExample(TableRecord)" anchor="#fetchByExample-org.jooq.TableRecord-"/>.
+                                        The latter API call makes use of the convenience API <reference class="org.jooq.DSLContext" title="DSLContext.fetchByExample(TableRecord)" anchor="#fetchByExample(org.jooq.TableRecord)"/>.
                                     </p>
                                 </html></content>
                             </section>
@@ -9982,7 +9982,7 @@ field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", Strin
 // argument "string" is used only once:                              \-----------------------------/]]></java><html>
 
                             <p>
-                                For convenience, there is also a <reference class="org.jooq.impl.DSL" anchor="#list-org.jooq.QueryPart...-" title="DSL.list(QueryPart...)"/> API that allows for wrapping a comma-separated list of query parts in a single template argument:
+                                For convenience, there is also a <reference class="org.jooq.impl.DSL" anchor="#list(org.jooq.QueryPart...)" title="DSL.list(QueryPart...)"/> API that allows for wrapping a comma-separated list of query parts in a single template argument:
                             </p>
 
 </html><java><![CDATA[Field<String> a = val("a");
@@ -10027,7 +10027,7 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
                         <title>SQL Parser</title>
                         <content><html>
                             <p>
-                                A full-fledged SQL parser is available from <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> and from <reference class="org.jooq.DSLContext" anchor="#parsingConnection--" title="DSLContext.parsingConnection()"/> (see <reference id="parsing-connection" title="the manual's section about parsing connections for the latter"/>).
+                                A full-fledged SQL parser is available from <reference class="org.jooq.DSLContext" anchor="#parser()" title="DSLContext.parser()"/> and from <reference class="org.jooq.DSLContext" anchor="#parsingConnection()" title="DSLContext.parsingConnection()"/> (see <reference id="parsing-connection" title="the manual's section about parsing connections for the latter"/>).
                             </p>
                         </html></content>
 
@@ -10042,7 +10042,7 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
                                     </p>
 
                                     <p>
-                                        With this parser, the whole set of jOOQ functionality will now also be made available to anyone who is not using jOOQ directly, including JDBC and/or JPA users, e.g. through the <reference id="parsing-connection" title="parsing connection"/>, which proxies all JDBC Connection calls to the jOOQ parser before forwarding them to the database, or through the <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/> API, which allows for a more low-level access to the parser directly, e.g. for tool building on top of jOOQ.
+                                        With this parser, the whole set of jOOQ functionality will now also be made available to anyone who is not using jOOQ directly, including JDBC and/or JPA users, e.g. through the <reference id="parsing-connection" title="parsing connection"/>, which proxies all JDBC Connection calls to the jOOQ parser before forwarding them to the database, or through the <reference class="org.jooq.DSLContext" anchor="#parser()" title="DSLContext.parser()"/> API, which allows for a more low-level access to the parser directly, e.g. for tool building on top of jOOQ.
                                     </p>
 
                                     <p>
@@ -10056,14 +10056,14 @@ condition("my_column IN ({0})", list(a, b, c));    // Using a single template ar
                                     </p>
 
                                     <ul>
-                                        <li><reference class="org.jooq.Parser" anchor="#parse-java.lang-String-" title="Parser.parse(String)"/>: This produces the <reference class="org.jooq.Queries"/> type, containing a batch of queries.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseQuery-java.lang-String-" title="Parser.parseQuery(String)"/>: This produces the <reference class="org.jooq.Query"/> type, containing a single query.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseResultQuery-java.lang-String-" title="Parser.parseResultQuery(String)"/>: This produces the <reference class="org.jooq.ResultQuery"/> type, containing a single query.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseTable-java.lang-String-" title="Parser.parseTable(String)"/>: This produces the <reference class="org.jooq.Table"/> type, containing a table expression.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseField-java.lang-String-" title="Parser.parseField(String)"/>: This produces the <reference class="org.jooq.Field"/> type, containing a field expression.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseRow-java.lang-String-" title="Parser.parseRow(String)"/>: This produces the <reference class="org.jooq.Row"/> type, containing a row expression.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseCondition-java.lang-String-" title="Parser.parseCondition(String)"/>: This produces the <reference class="org.jooq.Condition"/> type, containing a condition expression.</li>
-                                        <li><reference class="org.jooq.Parser" anchor="#parseName-java.lang-String-" title="Parser.parseName(String)"/>: This produces the <reference class="org.jooq.Name"/> type, containing a name expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parse(java.lang-String)" title="Parser.parse(String)"/>: This produces the <reference class="org.jooq.Queries"/> type, containing a batch of queries.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseQuery(java.lang-String)" title="Parser.parseQuery(String)"/>: This produces the <reference class="org.jooq.Query"/> type, containing a single query.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseResultQuery(java.lang-String)" title="Parser.parseResultQuery(String)"/>: This produces the <reference class="org.jooq.ResultQuery"/> type, containing a single query.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseTable(java.lang-String)" title="Parser.parseTable(String)"/>: This produces the <reference class="org.jooq.Table"/> type, containing a table expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseField(java.lang-String)" title="Parser.parseField(String)"/>: This produces the <reference class="org.jooq.Field"/> type, containing a field expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseRow(java.lang-String)" title="Parser.parseRow(String)"/>: This produces the <reference class="org.jooq.Row"/> type, containing a row expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseCondition(java.lang-String)" title="Parser.parseCondition(String)"/>: This produces the <reference class="org.jooq.Condition"/> type, containing a condition expression.</li>
+                                        <li><reference class="org.jooq.Parser" anchor="#parseName(java.lang-String)" title="Parser.parseName(String)"/>: This produces the <reference class="org.jooq.Name"/> type, containing a name expression.</li>
                                     </ul>
 
                                     <p>
@@ -10238,7 +10238,7 @@ AUTHOR.TITLE
                             <h3>Creating custom names</h3>
 
                             <p>
-                                Custom, qualified or unqualified names can be created very easily using the <reference class="org.jooq.impl.DSL" title="DSL.name()" anchor="#name-java.lang.String...-"/> constructor:
+                                Custom, qualified or unqualified names can be created very easily using the <reference class="org.jooq.impl.DSL" title="DSL.name()" anchor="#name(java.lang.String...)"/> constructor:
                             </p>
 
 </html><java><![CDATA[// Unqualified name
@@ -10409,7 +10409,7 @@ WHERE LAST_NAME = :lastName]]></sql>
 											Globally, by using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Configuration.
 										</li>
                                         <li>
-                                            Per query locally, by using the <reference class="org.jooq.Query" anchor="#getSQL-org.jooq.conf.ParamType-" title="Query.getSQL(ParamType)"/> method.
+                                            Per query locally, by using the <reference class="org.jooq.Query" anchor="#getSQL(org.jooq.conf.ParamType)" title="Query.getSQL(ParamType)"/> method.
                                         </li>
 										<li>
 											Per value locally, by using <reference class="org.jooq.impl.DSL" anchor="#inline(java.lang.Object)" title="DSL.inline()"/> methods.
@@ -10488,8 +10488,8 @@ create.fetch("SELECT * FROM BOOK WHERE ID = 5 AND TITLE = 'Animal Farm'");]]></j
 								A <reference class="org.jooq.Query" /> and all its contained objects is a <reference class="org.jooq.QueryPart" />. QueryParts essentially provide this functionality:
 							</p>
 							<ul>
-								<li>they can <reference id="sql-rendering" title="render SQL"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#accept-org.jooq.Context-" title="accept(Context)"/> method</li>
-								<li>they can <reference id="variable-binding" title="bind variables"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#accept-org.jooq.Context-" title="accept(Context)"/> method</li>
+								<li>they can <reference id="sql-rendering" title="render SQL"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#accept(org.jooq.Context)" title="accept(Context)"/> method</li>
+								<li>they can <reference id="variable-binding" title="bind variables"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#accept(org.jooq.Context)" title="accept(Context)"/> method</li>
 							</ul>
 
 							<p>
@@ -10506,7 +10506,7 @@ create.fetch("SELECT * FROM BOOK WHERE ID = 5 AND TITLE = 'Animal Farm'");]]></j
 							    <title>SQL rendering</title>
 								<content><html>
 									<p>
-										Every <reference class="org.jooq.QueryPart"/> must implement the <reference class="org.jooq.QueryPartInternal" anchor="#accept-org.jooq.Context-" title="accept(Context)"/> method to render its SQL string to a <reference class="org.jooq.RenderContext"/>. This RenderContext has two purposes:
+										Every <reference class="org.jooq.QueryPart"/> must implement the <reference class="org.jooq.QueryPartInternal" anchor="#accept(org.jooq.Context)" title="accept(Context)"/> method to render its SQL string to a <reference class="org.jooq.RenderContext"/>. This RenderContext has two purposes:
 									</p>
 									<ul>
 										<li>It provides some information about the "state" of SQL rendering.</li>
@@ -10649,7 +10649,7 @@ having count(*) = 2]]></sql>
 							    <title>Variable binding</title>
 								<content><html>
 									<p>
-										Every <reference class="org.jooq.QueryPart"/> must implement the <reference class="org.jooq.QueryPartInternal" anchor="#accept-org.jooq.Context-" title="accept(Context&lt;?&gt;)"/> method. This Context has two purposes (among many others):
+										Every <reference class="org.jooq.QueryPart"/> must implement the <reference class="org.jooq.QueryPartInternal" anchor="#accept(org.jooq.Context)" title="accept(Context&lt;?&gt;)"/> method. This Context has two purposes (among many others):
 									</p>
 									<ul>
 										<li>It provides some information about the "state" of the variable binding in process.</li>
@@ -11242,7 +11242,7 @@ for (int i = 0; i < result.size(); i++)
 
                         <html>
                             <p>
-                                Unlike in JDBC, where <reference class="java.sql.ResultSet" anchor="#absolute-int-" title="java.sql.ResultSet#absolute(int)"/> positions the underlying cursor at the one-based index, we Java developers really don't like that way of thinking. As can be seen in the above loop, we iterate over this result as we do over any other Java collection.
+                                Unlike in JDBC, where <reference class="java.sql.ResultSet" anchor="#absolute(int)" title="java.sql.ResultSet#absolute(int)"/> positions the underlying cursor at the one-based index, we Java developers really don't like that way of thinking. As can be seen in the above loop, we iterate over this result as we do over any other Java collection.
                             </p>
 
                             <h3>All JDBC API is one-based</h3>
@@ -11643,7 +11643,7 @@ System.out.println("Published in: " + book.getPublishedIn());]]></java><html>
                    						Sometimes, you may want to explicitly select only a subset of your columns, but still use strongly typed records. Alternatively, you may want to join a one-to-one relationship and receive the two individual strongly typed records after the join.
                    					</p>
                    					<p>
-                   						In both of the above cases, you can map your <reference class="org.jooq.Record"/> "into" a <reference class="org.jooq.TableRecord"/> type by using <reference class="org.jooq.Record" anchor="#into-org.jooq.Table-" title="Record.into(Table)"/>.
+                   						In both of the above cases, you can map your <reference class="org.jooq.Record"/> "into" a <reference class="org.jooq.TableRecord"/> type by using <reference class="org.jooq.Record" anchor="#into(org.jooq.Table)" title="Record.into(Table)"/>.
                    					</p>
 
 </html><java><![CDATA[// Join two tables
@@ -12688,7 +12688,7 @@ try (ResultQuery<Record> query = create.selectOne().keepStatement(true)) {
 }]]></java><html>
 
 							<p>
-								The above example shows how a query can be executed twice against the same underlying <code>PreparedStatement</code>. Notice how the <code>Query</code> must now be treated like a resource, i.e. it must be managed in a try-with-resources statement, or <reference class="org.jooq.Query" anchor="#close--" title="Query.close()"/> must be called explicitly.
+								The above example shows how a query can be executed twice against the same underlying <code>PreparedStatement</code>. Notice how the <code>Query</code> must now be treated like a resource, i.e. it must be managed in a try-with-resources statement, or <reference class="org.jooq.Query" anchor="#close()" title="Query.close()"/> must be called explicitly.
 							</p>
 						</html></content>
 					</section>
@@ -13947,7 +13947,7 @@ bookDao.delete(book);]]></java>
                             </p>
                             <ul>
                                 <li>You can issue vendor-specific <code>COMMIT</code>, <code>ROLLBACK</code> and other statements directly in your database.</li>
-                                <li>You can call JDBC's <reference class="java.sql.Connection" anchor="#commit--" title="Connection.commit()"/>, <reference class="java.sql.Connection" anchor="#rollback--" title="Connection.rollback()"/> and other methods on your JDBC driver.</li>
+                                <li>You can call JDBC's <reference class="java.sql.Connection" anchor="#commit()" title="Connection.commit()"/>, <reference class="java.sql.Connection" anchor="#rollback()" title="Connection.rollback()"/> and other methods on your JDBC driver.</li>
                                 <li>You can use third-party transaction management libraries like Spring TX. Examples shown in the <reference id="jooq-with-spring" title="jOOQ with Spring examples section"/>.</li>
                                 <li>You can use a JTA-compliant Java EE transaction manager from your container.</li>
                             </ul>
@@ -14013,7 +14013,7 @@ public interface TransactionalCallable<T> {
 }]]></java><html>
 
                             <p>
-                                Such transactional code can be passed to <reference class="org.jooq.DSLContext" anchor="#transaction-org.jooq.TransactionalRunnable-" title="transaction(TransactionRunnable)"/> or <reference class="org.jooq.DSLContext" anchor="#transactionResult-org.jooq.TransactionalCallable-" title="transactionResult(TransactionCallable)"/> methods.
+                                Such transactional code can be passed to <reference class="org.jooq.DSLContext" anchor="#transaction(org.jooq.TransactionalRunnable)" title="transaction(TransactionRunnable)"/> or <reference class="org.jooq.DSLContext" anchor="#transactionResult(org.jooq.TransactionalCallable)" title="transactionResult(TransactionCallable)"/> methods.
                             </p>
 
                             <h3>Rollbacks</h3>
@@ -14463,7 +14463,7 @@ update t set x = 1;
                                 <li><code>MockFileDatabase</code> comments are any line with a leading hash (<code>"#"</code>) symbol. They are ignored when reading the file</li>
                                 <li>SQL comments are part of the SQL statement</li>
                                 <li>A SQL statement always starts on a new line and ends with a semi colon (<code>;</code>), which is the last symbol on the line (apart from whitespace)</li>
-                                <li>If the statement has a result set, it immediately succeeds the SQL statement and is prefixed by angle brackets and a whitespace (<code>"&gt; "</code>). Any format that is accepted by <reference class="org.jooq.DSLContext" title="DSLContext.fetchFromTXT()" anchor="#fetchFromTXT-java.lang.String-"/> is accepted.</li>
+                                <li>If the statement has a result set, it immediately succeeds the SQL statement and is prefixed by angle brackets and a whitespace (<code>"&gt; "</code>). Any format that is accepted by <reference class="org.jooq.DSLContext" title="DSLContext.fetchFromTXT()" anchor="#fetchFromTXT(java.lang.String)"/> is accepted.</li>
                                 <li>The statement is always terminated by the row count, which is prefixed by an at symbol, the "rows" keyword, and a double colon (<code>"@ rows:"</code>).</li>
                             </ul>
 
@@ -14542,7 +14542,7 @@ Result<?> result = create.select(inline("A"), inline("B"), inline("C")).fetch();
                         <title>Parsing Connection</title>
                         <content><html>
                             <p>
-                                As previously discussed in the <reference id="sql-parser" title="manual's section about the SQL parser"/>, jOOQ exposes a full-fledged SQL parser through <reference class="org.jooq.DSLContext" anchor="#parser--" title="DSLContext.parser()"/>, and often more interestingly: Through <reference class="org.jooq.DSLContext" anchor="#parsingConnection--" title="DSLContext.parsingConnection()"/>.
+                                As previously discussed in the <reference id="sql-parser" title="manual's section about the SQL parser"/>, jOOQ exposes a full-fledged SQL parser through <reference class="org.jooq.DSLContext" anchor="#parser()" title="DSLContext.parser()"/>, and often more interestingly: Through <reference class="org.jooq.DSLContext" anchor="#parsingConnection()" title="DSLContext.parsingConnection()"/>.
                             </p>
 
                             <p>
@@ -14642,7 +14642,7 @@ try (Connection c = DSL.using(configuration.derive(new MyDiagnosticsListener()))
                                 <title>Too Many Rows</title>
                                 <content><html>
                                     <p>
-                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyRowsFetched()" anchor="#tooManyRowsFetched-DiagnosticsContext-"/>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyRowsFetched()" anchor="#tooManyRowsFetched(DiagnosticsContext)"/>
                                     </p>
 
                                     <p>
@@ -14690,7 +14690,7 @@ try (Connection c = DSL.using(configuration.derive(new TooManyRows()))
                                 <title>Too Many Columns</title>
                                 <content><html>
                                     <p>
-                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyColumnsFetched()" anchor="#tooManyColumnsFetched-DiagnosticsContext-"/>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="tooManyColumnsFetched()" anchor="#tooManyColumnsFetched(DiagnosticsContext)"/>
                                     </p>
 
                                     <p>
@@ -14747,7 +14747,7 @@ try (Connection c = DSL.using(configuration.derive(new TooManyColumns()))
                                 <title>Duplicate Statements</title>
                                 <content><html>
                                     <p>
-                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="duplicateStatements()" anchor="#duplicateStatements-DiagnosticsContext-"/>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="duplicateStatements()" anchor="#duplicateStatements(DiagnosticsContext)"/>
                                     </p>
 
                                     <p>
@@ -14837,7 +14837,7 @@ void run(String sql) {
                                 <title>Repeated statements</title>
                                 <content><html>
                                     <p>
-                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="repeatedStatements()" anchor="#repeatedStatements-DiagnosticsContext-"/>
+                                        The SPI method handling this event is <reference class="org.jooq.DiagnosticsListener" title="repeatedStatements()" anchor="#repeatedStatements(DiagnosticsContext)"/>
                                     </p>
 
                                     <p>
@@ -14903,11 +14903,11 @@ try (Connection c = DSL.using(configuration.derive(new RepeatedStatement()))
                                 <title>WasNull calls</title>
                                 <content><html>
                                     <p>
-                                        The SPI methods handling these events are <reference class="org.jooq.DiagnosticsListener" title="unnecessaryWasNullCall()" anchor="#missingWasNullCall-DiagnosticsContext-"/>
+                                        The SPI methods handling these events are <reference class="org.jooq.DiagnosticsListener" title="unnecessaryWasNullCall()" anchor="#missingWasNullCall(DiagnosticsContext)"/>
                                     </p>
 
                                     <p>
-                                        This problem appears only when using the JDBC API directly, as both jOOQ and most ORMs abstract over this JDBC legacy correctly. In JDBC, when fetching a primitive types (and some types are available only in their primitive form), a subsequent call to <reference class="java.sql.ResultSet" title="ResultSet.wasNull()" anchor="#wasNull--"/> is required, to see if the previous primitive type was really a <code>NULL</code> value, not a <code>0</code> or <code>false</code> value.
+                                        This problem appears only when using the JDBC API directly, as both jOOQ and most ORMs abstract over this JDBC legacy correctly. In JDBC, when fetching a primitive types (and some types are available only in their primitive form), a subsequent call to <reference class="java.sql.ResultSet" title="ResultSet.wasNull()" anchor="#wasNull()"/> is required, to see if the previous primitive type was really a <code>NULL</code> value, not a <code>0</code> or <code>false</code> value.
                                     </p>
 
                                     <h3>Why is it bad?</h3>

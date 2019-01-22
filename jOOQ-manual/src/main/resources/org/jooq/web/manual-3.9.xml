@@ -11794,8 +11794,8 @@ Cursor<Record> result = create.fetchLazy(rs, BOOK.ID, BOOK.TITLE);]]></java><htm
                                     </p>
 
 </html><java><![CDATA[Record record = ...
-int i = result.get(0, int.class);
-String s = result.get(1, String.class);]]></java><html>
+int i = record.get(0, int.class);
+String s = record.get(1, String.class);]]></java><html>
                                 </html></content>
                             </section>
 

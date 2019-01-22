@@ -324,10 +324,13 @@ public final class Convert {
     /**
      * Convert an object to a type. These are the conversion rules:
      * <ul>
-     * <li><code>null</code> is always converted to <code>null</code>,
-     * regardless of the target type.</li>
+     * <li><code>null</code> is always converted to <code>null</code>, or the
+     * primitive default value, or {@link Optional#empty()}, regardless of the
+     * target type.</li>
      * <li>Identity conversion (converting a value to its own type) is always
      * possible.</li>
+     * <li>Primitive types can be converted to their wrapper types and vice
+     * versa</li>
      * <li>All types can be converted to <code>String</code></li>
      * <li>All types can be converted to <code>Object</code></li>
      * <li>All <code>Number</code> types can be converted to other
@@ -364,10 +367,6 @@ public final class Convert {
      * can be converted into each other.</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
-     * <li>Primitive target types behave like their wrapper types, except that
-     * <code>null</code> is converted into the initialisation value (e.g.
-     * <code>0</code> for <code>int</code>, <code>false</code> for
-     * <code>boolean</code>)</li>
      * <li><code>byte[]</code> can be converted into <code>String</code>, using
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if

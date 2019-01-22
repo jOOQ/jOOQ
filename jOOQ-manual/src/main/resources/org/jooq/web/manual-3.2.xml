@@ -8382,8 +8382,65 @@ Cursor<Record> result = create.fetchLazy(rs, BOOK.ID, BOOK.TITLE);]]></java><htm
 								</html></content>
 							</section>
 
-							<section id="data-type-conversion">
-								<title>Data type conversion</title>
+                            <section id="auto-type-conversion">
+                                <title>Auto data type conversion</title>
+                                <content><html>
+                                    <p>
+                                        Many native SQL data types can be automatically converted from one another, such as <code>VARCHAR</code> to <code>INTEGER</code> and vice versa.
+                                    </p>
+
+                                    <p>
+                                        The jOOQ API also supports a variety of such auto conversions through the <reference class="org.jooq.tools.Convert"/> utility API, which implements the following rules:
+                                    </p>
+
+                                    <ul>
+                                        <li><code>null</code> is always converted to <code>null</code>, or the primitive default value, or <code>Optional.empty()</code>, regardless of the target type.</li>
+                                        <li>Identity conversion (converting a value to its own type) is always possible.</li>
+                                        <li>Primitive types can be converted to their wrapper types and vice versa</li>
+                                        <li>All types can be converted to String</li>
+                                        <li>All types can be converted to Object</li>
+                                        <li>All Number types can be converted to other Number types</li>
+                                        <li>All <code>Number</code> or <code>String</code> types can be converte to <code>Boolean</code>. Possible (case-insensitive) values for
+                                          <code>true</code>:
+                                          <ul>
+                                          <li><code>1</code></li>
+                                          <li><code>1.0</code></li>
+                                          <li><code>y</code></li>
+                                          <li><code>yes</code></li>
+                                          <li><code>true</code></li>
+                                          <li><code>on</code></li>
+                                          <li><code>enabled</code></li>
+                                          </ul>
+                                          <br/>
+                                          Possible (case-insensitive) values for <code>false</code>:
+                                          <ul>
+                                          <li><code>0</code></li>
+                                          <li><code>0.0</code></li>
+                                          <li><code>n</code></li>
+                                          <li><code>no</code></li>
+                                          <li><code>false</code></li>
+                                          <li><code>off</code></li>
+                                          <li><code>disabled</code></li>
+                                          </ul>
+                                          <br/>
+                                          All other values evaluate to <code>null</code></li>
+                                        <li>All <reference class="java.util.Date"/> subtypes (<reference class="java.sql.Date"/>, <reference class="java.sql.Time"/>, <reference class="java.sql.Timestamp"/>), as well as most <reference class="java.time.temporal.Temporal"/> subtypes (<reference class="java.time.LocalDate"/>, <reference class="java.time.LocalTime"/>, <reference class="java.time.LocalDateTime"/>, <reference class="java.time.OffsetTime"/>, <reference class="java.time.OffsetDateTime"/>, as well as <reference class="java.time.Instant"/>) can be converted into each other.</li>
+                                        <li><code>byte[]</code> can be converted into <code>String</code>, using the platform's default charset</li>
+                                        <li><code>Object[]</code> can be converted into any other array type, if array elements can be converted, too</li>
+                                    </ul>
+
+                                    <p>
+                                        This auto conversion can be applied explicitly, but is also available through a variety of API, in particular anywhere a <reference class="java.lang.Class"/> reference can be provided, such as:
+                                    </p>
+
+</html><java><![CDATA[Record record = ...
+int i = result.get(0, int.class);
+String s = result.get(1, String.class);]]></java><html>
+                                </html></content>
+                            </section>
+
+                            <section id="data-type-conversion">
+                                <title>Custom data type conversion</title>
 								<content><html>
 									<p>
 										Apart from a few extra features (<reference id="codegen-udts" title="user-defined types"/>), jOOQ only supports basic types as supported by the JDBC API. In your application, you may choose to transform these data types into your own ones, without writing too much boiler-plate code. This can be done using jOOQ's <reference class="org.jooq.Converter"/> types. A converter essentially allows for two-way conversion between two Java data types &lt;T&gt; and &lt;U&gt;. By convention, the &lt;T&gt; type corresponds to the type in your database whereas the &lt;U&gt; type corresponds to your own user type. The Converter API is given here:

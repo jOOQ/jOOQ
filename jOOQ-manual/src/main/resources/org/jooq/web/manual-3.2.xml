@@ -10587,7 +10587,13 @@ GenerationTool.main(configuration);]]></java><html>
 </html><java><![CDATA[/**
  * It is recommended that you extend the DefaultGeneratorStrategy. Most of the
  * GeneratorStrategy API is already declared final. You only need to override any
- * of the following methods, for whatever generation behaviour you'd like to achieve
+ * of the following methods, for whatever generation behaviour you'd like to achieve.
+ *
+ * Also, the DefaultGeneratorStrategy takes care of disambiguating quite a few object
+ * names in case of conflict. For example, MySQL indexes do not really have a name, so
+ * a synthetic, non-ambiguous name is generated based on the table. If you override
+ * the default behaviour, you must ensure that this disambiguation still takes place
+ * for generated code to be compilable.
  *
  * Beware that most methods also receive a "Mode" object, to tell you whether a
  * TableDefinition is being rendered as a Table, Record, POJO, etc. Depending on

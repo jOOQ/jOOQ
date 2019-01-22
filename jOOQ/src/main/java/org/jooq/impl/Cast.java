@@ -257,6 +257,20 @@ final class Cast<T> extends AbstractFunction<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private class Native extends AbstractQueryPart {
 
         /**

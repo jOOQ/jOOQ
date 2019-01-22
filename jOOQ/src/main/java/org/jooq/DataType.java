@@ -473,6 +473,17 @@ public interface DataType<T> extends Serializable {
     boolean isDate();
 
     /**
+     * Whether this data type is any timestamp type.
+     * <p>
+     * This applies to any of these types.
+     * <ul>
+     * <li>{@link SQLDataType#TIMESTAMP}</li>
+     * <li>{@link SQLDataType#LOCALDATETIME}</li>
+     * </ul>
+     */
+    boolean isTimestamp();
+
+    /**
      * Whether this data type is any time type.
      * <p>
      * This applies to any of these types.

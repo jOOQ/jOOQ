@@ -1,6 +1,6 @@
 /*
 
-Sakila for DB2 is a port of the Sakila example database available for MySQL, which was originally developed by Mike Hillyer of the MySQL AB documentation team.
+Sakila for DB2 is a port of the Sakila example database available for MySQL, which was originally developed by Mike Hillyer of the MySQL AB documentation team. 
 This project is designed to help database administrators to decide which database to use for development of new products
 The user can run the same SQL against different kind of databases and compare the performance
 
@@ -24,7 +24,7 @@ CREATE INDEX idx_actor_last_name ON actor(last_name);
 CREATE OR REPLACE TRIGGER actor_before_update
 BEFORE UPDATE ON actor
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -39,7 +39,7 @@ CREATE TABLE country (
 CREATE OR REPLACE TRIGGER country_before_update
 BEFORE UPDATE ON country
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -56,7 +56,7 @@ CREATE TABLE city (
 CREATE OR REPLACE TRIGGER city_before_update
 BEFORE UPDATE ON city
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -79,7 +79,7 @@ CREATE INDEX idx_fk_city_id ON address(city_id);
 CREATE OR REPLACE TRIGGER address_before_update
 BEFORE UPDATE ON address
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -94,7 +94,7 @@ CREATE TABLE language (
 CREATE OR REPLACE TRIGGER language_before_update
 BEFORE UPDATE ON language
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -109,7 +109,7 @@ CREATE TABLE category (
 CREATE OR REPLACE TRIGGER category_before_update
 BEFORE UPDATE ON category
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -135,7 +135,7 @@ CREATE INDEX idx_customer_last_name ON customer(last_name);
 CREATE OR REPLACE TRIGGER customer_before_update
 BEFORE UPDATE ON customer
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -173,9 +173,9 @@ CREATE INDEX idx_fk_language_id ON film (language_id);
 CREATE INDEX idx_fk_original_language_id ON film (original_language_id);
 
 CREATE OR REPLACE TRIGGER film_before_update
-BEFORE UPDATE ON film
+BEFORE UPDATE ON film 
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -193,9 +193,9 @@ CREATE INDEX idx_fk_film_actor_film ON film_actor (film_id);
 CREATE INDEX idx_fk_film_actor_actor ON film_actor (actor_id);
 
 CREATE OR REPLACE TRIGGER film_actor_before_update
-BEFORE UPDATE ON film_actor
+BEFORE UPDATE ON film_actor 
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -216,7 +216,7 @@ CREATE INDEX idx_fk_film_category_category ON film_category(category_id);
 CREATE OR REPLACE TRIGGER film_category_before_update
 BEFORE UPDATE ON film_category
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -242,9 +242,9 @@ CREATE INDEX idx_fk_film_id ON inventory(film_id);
 CREATE INDEX idx_fk_film_id_store_id ON inventory(store_id,film_id);
 
 CREATE OR REPLACE TRIGGER inventory_before_update
-BEFORE UPDATE ON inventory
+BEFORE UPDATE ON inventory 
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -270,9 +270,9 @@ CREATE INDEX idx_fk_staff_store_id ON staff(store_id);
 CREATE INDEX idx_fk_staff_address_id ON staff(address_id);
 
 CREATE OR REPLACE TRIGGER staff_before_update
-BEFORE UPDATE ON staff
+BEFORE UPDATE ON staff 
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -293,7 +293,7 @@ CREATE INDEX idx_fk_store_address ON store(address_id);
 CREATE OR REPLACE TRIGGER store_before_update
 BEFORE UPDATE ON store
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -317,7 +317,7 @@ CREATE INDEX idx_fk_customer_id ON payment(customer_id);
 CREATE OR REPLACE TRIGGER payment_before_update
 BEFORE UPDATE ON payment
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -344,7 +344,7 @@ CREATE UNIQUE INDEX   idx_rental_uq  ON rental (rental_date,inventory_id,custome
 CREATE OR REPLACE TRIGGER rental_before_update
 BEFORE UPDATE ON rental
 REFERENCING NEW AS new
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
   SET new.last_update = current_date;
 END;
@@ -411,7 +411,7 @@ INNER JOIN address a ON s.address_id = a.address_id
 INNER JOIN city c ON a.city_id = c.city_id
 INNER JOIN country cy ON c.country_id = cy.country_id
 INNER JOIN staff m ON s.manager_staff_id = m.staff_id
-GROUP BY
+GROUP BY  
   s.store_id
 , c.city||','||cy.country
 , m.first_name||' '||m.last_name;
@@ -419,8 +419,8 @@ GROUP BY
 CREATE OR REPLACE VIEW sales_by_film_category
 AS
 SELECT
-c.name AS category
-, SUM(p.amount) AS total_sales
+c.name AS category 
+, SUM(p.amount) AS total_sales 
 FROM payment p
 INNER JOIN rental r ON p.rental_id = r.rental_id
 INNER JOIN inventory i ON r.inventory_id = i.inventory_id

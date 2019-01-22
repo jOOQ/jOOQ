@@ -718,7 +718,7 @@ term =
 | 'CHOOSE' '(' field { ',' field } ')'
 | 'COALESCE' '(' fields ')'
 | 'CONCAT' '(' fields ')'
-| 'CONVERT' '(' dataType ',' field ')'
+| 'CONVERT' '(' dataType ',' field [ ',' unsignedInteger ] ')'
 | 'COS' '(' numericOp ')'
 | 'COSH' '(' numericOp ')'
 | 'COT' '(' numericOp ')'

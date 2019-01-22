@@ -7281,9 +7281,17 @@ final class ParserImpl implements Parser {
             DataType<?> type = parseDataType(ctx);
             parse(ctx, ',');
             Field<?> field = parseField(ctx);
+            Long style = null;
+            if (parseIf(ctx, ',') && ctx.requireProEdition())
+                style = parseUnsignedInteger(ctx);
             parse(ctx, ')');
 
-            return cast(field, type);
+            if (style == null)
+                return cast(field, type);
+
+
+
+
         }
 
         return null;

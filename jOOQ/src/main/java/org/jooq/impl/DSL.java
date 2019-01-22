@@ -12166,6 +12166,40 @@ public class DSL {
         return nullSafe(field).coerce(as);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Cast a value to the type of another field.
      *

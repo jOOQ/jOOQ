@@ -37,9 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A {@link Query} that can merge data in the database.
+ * <p>
+ * Instances can be created using {@link DSL#mergeInto(Table)} and overloads.
  *
  * @author Lukas Eder
  */

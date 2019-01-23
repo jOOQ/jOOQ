@@ -61,6 +61,7 @@ import java.util.function.Function;
 
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 
 /**
  * A SQL identifier <code>QueryPart</code>.
@@ -69,6 +70,8 @@ import org.jooq.conf.Settings;
  * according to the settings specified in
  * {@link Settings#getRenderQuotedNames()} and
  * {@link Settings#getRenderNameCase()}.
+ * <p>
+ * Instances can be created using {@link DSL#name(String)} and overloads.
  *
  * @author Lukas Eder
  */

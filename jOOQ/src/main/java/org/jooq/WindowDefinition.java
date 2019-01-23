@@ -50,13 +50,16 @@ package org.jooq;
  * <p>
  * The <code>WINDOW</code> clause is only natively supported by
  * <ul>
- * <li> {@link SQLDialect#POSTGRES}</li>
- * <li> {@link SQLDialect#SYBASE}</li>
+ * <li>{@link SQLDialect#POSTGRES}</li>
+ * <li>{@link SQLDialect#SYBASE}</li>
  * </ul>
  * <p>
  * If your database supports window functions, but not the <code>WINDOW</code>
  * clause, jOOQ will inline window definitions into their respective window
  * functions.
+ * <p>
+ * Instances can be created using {@link Name#as(WindowSpecification)} and
+ * overloads.
  *
  * @author Lukas Eder
  */

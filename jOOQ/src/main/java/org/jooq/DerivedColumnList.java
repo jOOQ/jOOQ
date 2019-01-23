@@ -57,7 +57,9 @@ import static org.jooq.SQLDialect.POSTGRES;
  * optional derived column list.
  * <p>
  * An example of a correlation name with derived column list is:
- * <code>table(column1, column2)</code>
+ * <code>table(column1, column2)</code>.
+ * <p>
+ * Instances can be created using {@link Name#fields(String...)} and overloads.
  *
  * @author Lukas Eder
  */

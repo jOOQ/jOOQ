@@ -41,6 +41,8 @@ package org.jooq;
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
  * clauses.
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

@@ -40,6 +40,8 @@ package org.jooq;
 /**
  * A statement that can be placed inside of a {@link Block}, but not executed on
  * its own.
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

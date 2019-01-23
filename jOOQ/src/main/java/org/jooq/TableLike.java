@@ -42,7 +42,9 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * An object that can behave like a table (a table-like object)
+ * An object that can behave like a table (a table-like object).
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @param <R> The record type
  * @author Lukas Eder

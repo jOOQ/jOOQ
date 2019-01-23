@@ -40,7 +40,10 @@ package org.jooq;
 /**
  * A container for stored procedures and functions
  * <p>
- * This is only supported in the {@link SQLDialect#ORACLE} dialect
+ * This is only supported in the {@link SQLDialect#ORACLE} dialect.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @author Lukas Eder
  */

@@ -41,6 +41,9 @@ package org.jooq;
 
 /**
  * A parameter to a stored procedure or function.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <T> The parameter type
  * @author Lukas Eder

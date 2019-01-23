@@ -37,9 +37,13 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A {@link Query} that can update data in the database.
+ * <p>
+ * Instances can be created using {@link DSL#update(Table)}, or
+ * {@link DSLContext#updateQuery(Table)} and overloads.
  *
  * @author Lukas Eder
  */

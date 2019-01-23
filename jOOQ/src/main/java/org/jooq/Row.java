@@ -39,12 +39,16 @@ package org.jooq;
 
 import java.util.stream.Stream;
 
+import org.jooq.impl.DSL;
+
 /**
  * A model type for a row value expression.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be emulated on all databases. See relevant row
  * value expression method Javadocs for details.
+ * <p>
+ * Instances can be created using {@link DSL#row(Object...)} and overloads.
  *
  * @author Lukas Eder
  */

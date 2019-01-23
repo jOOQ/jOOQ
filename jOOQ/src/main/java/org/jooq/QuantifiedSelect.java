@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A participant of a quantified comparison predicate
@@ -47,7 +48,10 @@ package org.jooq;
  * <li><code>ANY (SELECT 1 FROM DUAL)</code></li>
  * <li><code>ALL (SELECT 1 FROM DUAL)</code></li>
  * </ul>
- * These predicates can be used exclusively with methods, such as {@link Field}
+ * These predicates can be used exclusively with methods, such as {@link Field}.
+ * <p>
+ * Instances can be created using {@link DSL#any(Select)} and
+ * {@link DSL#all(Select)}.
  *
  * @author Lukas Eder
  */

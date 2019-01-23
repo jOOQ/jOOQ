@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A meta model for SQL comments on tables, fields, etc.
+ * <p>
+ * Instances can be created using {@link DSL#comment(String)} and overloads.
  *
  * @author Lukas Eder
  */

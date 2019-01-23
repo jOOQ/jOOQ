@@ -53,7 +53,10 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A query for data updating
+ * A query for data updating.
+ * <p>
+ * Instances can be created using {@link DSLContext#updateQuery(Table)} and
+ * overloads.
  *
  * @param <R> The record type of the table being updated
  * @author Lukas Eder

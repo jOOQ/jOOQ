@@ -44,6 +44,9 @@ import java.util.List;
 /**
  * A <code>Key</code> is an object representing a <code>UNIQUE KEY</code>, a
  * <code>PRIMARY KEY</code>, or a <code>FOREIGN KEY</code>.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <R> The <code>KEY</code>'s owner table record
  * @author Lukas Eder

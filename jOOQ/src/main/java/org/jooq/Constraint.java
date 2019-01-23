@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A DDL constraint.
+ * <p>
+ * Instances can be created using {@link DSL#constraint(Name)} and overloads.
  *
  * @author Lukas Eder
  */

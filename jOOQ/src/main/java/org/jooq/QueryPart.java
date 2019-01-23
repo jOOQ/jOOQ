@@ -43,9 +43,6 @@ import org.jooq.conf.Settings;
 
 /**
  * The common base type for all objects that can be used for query composition.
- * <p>
- * All <code>QueryPart</code> implementations can be cast to
- * {@link QueryPartInternal} in order to access the internal API.
  *
  * @author Lukas Eder
  */

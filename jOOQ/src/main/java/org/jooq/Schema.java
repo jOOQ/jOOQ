@@ -41,8 +41,12 @@ package org.jooq;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.jooq.impl.DSL;
+
 /**
  * An object representing a database schema.
+ * <p>
+ * Instances can be created using {@link DSL#schema(Name)} and overloads.
  *
  * @author Lukas Eder
  */

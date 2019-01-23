@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 
 /**
  * A SQL keyword <code>QueryPart</code>.
@@ -45,6 +46,8 @@ import org.jooq.conf.Settings;
  * A <code>Keyword</code> is a {@link QueryPart} that renders a SQL keyword
  * according to the settings specified in
  * {@link Settings#getRenderKeywordCase()}.
+ * <p>
+ * Instances can be created using {@link DSL#keyword(String)} and overloads.
  *
  * @author Lukas Eder
  */

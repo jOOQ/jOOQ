@@ -44,6 +44,9 @@ import org.jooq.tools.Convert;
 
 /**
  * A named parameter and/or bind value.
+ * <p>
+ * Instances can be created using {@link DSL#param(String, Object)},
+ * {@link DSL#val(Object)}, {@link DSL#inline(Object)} and respective overloads.
  *
  * @author Lukas Eder
  * @see DSL#param(String, Object)

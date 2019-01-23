@@ -75,7 +75,9 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
 /**
- * A table to be used in queries
+ * A table to be used in queries.
+ * <p>
+ * Instances can be created using {@link DSL#table(Name)} and overloads.
  *
  * @param <R> The record type associated with this table
  * @author Lukas Eder

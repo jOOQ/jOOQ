@@ -52,8 +52,12 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
+import org.jooq.impl.DSL;
+
 /**
  * A type representing sequences in databases that support this.
+ * <p>
+ * Instances can be created using {@link DSL#sequence(Name)} and overloads.
  *
  * @author Lukas Eder
  */

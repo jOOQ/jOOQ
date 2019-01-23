@@ -65,7 +65,10 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * A query for data insertion
+ * A query for data insertion.
+ * <p>
+ * Instances can be created using {@link DSLContext#insertQuery(Table)} and
+ * overloads.
  *
  * @param <R> The record type of the table being inserted into
  * @author Lukas Eder

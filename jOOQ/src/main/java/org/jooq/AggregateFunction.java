@@ -41,11 +41,16 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.impl.DSL;
+
 
 /**
  * An aggregate function is a special field that is usually used in a
  * <code>GROUP BY</code> context. It is also the base for window function
  * construction.
+ * <p>
+ * Instances can be created using various {@link DSL} methods and their
+ * overloads, such as {@link DSL#count()} or {@link DSL#countDistinct(Field)}.
  *
  * @author Lukas Eder
  */

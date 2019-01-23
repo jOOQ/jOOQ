@@ -74,7 +74,9 @@ import java.util.Collection;
 import org.jooq.exception.DataAccessException;
 
 /**
- * A query for data selection
+ * A query for data selection.
+ * <p>
+ * Instances can be created using {@link DSLContext#selectQuery()} and overloads.
  *
  * @author Lukas Eder
  */

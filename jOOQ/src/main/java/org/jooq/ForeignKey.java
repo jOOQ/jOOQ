@@ -44,6 +44,9 @@ import org.jooq.exception.DataAccessException;
 /**
  * A <code>ForeignKey</code> is an object referencing a {@link UniqueKey}. It
  * represents a <code>FOREIGN KEY</code> relationship between two tables.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <R> The <code>FOREIGN KEY</code>'s owner table record
  * @param <O> The referenced <code>KEY</code>'s owner table record

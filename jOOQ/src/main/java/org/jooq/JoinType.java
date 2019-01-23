@@ -65,7 +65,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import org.jooq.impl.DSL;
 
 /**
- * The type of join
+ * The type of join.
  *
  * @author Lukas Eder
  */

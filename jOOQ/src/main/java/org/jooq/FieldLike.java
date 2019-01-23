@@ -42,7 +42,9 @@ import java.util.function.Function;
 import org.jooq.conf.Settings;
 
 /**
- * An object that can behave like a field (a field-like object)
+ * An object that can behave like a field (a field-like object).
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

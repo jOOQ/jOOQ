@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A predicate that always yields <code>true</code>.
+ * <p>
+ * Instances can be created using {@link DSL#trueCondition()}.
  *
  * @author Lukas Eder
  */

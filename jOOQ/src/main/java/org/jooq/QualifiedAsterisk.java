@@ -41,6 +41,8 @@ package org.jooq;
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
  * clauses.
+ * <p>
+ * Instances can be created using {@link Table#asterisk()}.
  *
  * @author Lukas Eder
  */

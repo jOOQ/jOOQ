@@ -39,6 +39,8 @@ package org.jooq;
 
 /**
  * A common base type for all qualifiable, named objects.
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

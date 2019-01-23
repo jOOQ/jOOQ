@@ -50,6 +50,8 @@ package org.jooq;
  * ROLLUP ( a, (b,c), d )
  * </code>
  * </pre>
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

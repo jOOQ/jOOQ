@@ -42,6 +42,8 @@ package org.jooq;
  * both types alike.
  * <p>
  * This is useful for DDL statements.
+ * <p>
+ * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
  */

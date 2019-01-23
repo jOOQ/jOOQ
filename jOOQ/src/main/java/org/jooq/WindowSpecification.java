@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A window specification.
  * <p>
@@ -52,6 +54,10 @@ package org.jooq;
  *    .rowsBetweenUnboundedPreceding()
  *    .andCurrentRow();
  * </pre></code>
+ * <p>
+ * Instances can be created using {@link DSL#partitionBy(Field...)},
+ * {@link DSL#orderBy(OrderField...)}, and overloads as well as rows / range /
+ * groups related methods in {@link DSL}.
  *
  * @author Lukas Eder
  */

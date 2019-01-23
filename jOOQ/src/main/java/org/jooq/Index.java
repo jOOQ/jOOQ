@@ -39,8 +39,12 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jooq.impl.DSL;
+
 /**
  * A DDL index definition.
+ * <p>
+ * Instances can be created using {@link DSL#index(Name)} and overloads.
  *
  * @author Lukas Eder
  */

@@ -64,6 +64,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultRecordMapper;
 
 /**
@@ -89,6 +90,9 @@ import org.jooq.impl.DefaultRecordMapper;
  * {@link ResultQuery#fetchSize(int)}, might incur additional database
  * roundtrips. If this causes problems, {@link ResultQuery#fetchAny()} may be
  * preferred.
+ * <p>
+ * Instances can be created using {@link DSL#resultQuery(String)} and overloads,
+ * or by creating a subtype.
  *
  * @author Lukas Eder
  */

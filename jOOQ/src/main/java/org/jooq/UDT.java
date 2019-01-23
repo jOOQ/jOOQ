@@ -40,7 +40,10 @@ package org.jooq;
 import java.util.stream.Stream;
 
 /**
- * UDT definition
+ * UDT definition.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <R> The record type
  * @author Lukas Eder

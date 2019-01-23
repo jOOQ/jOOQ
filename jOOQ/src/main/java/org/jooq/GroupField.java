@@ -37,10 +37,14 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>GROUP BY</code>
- * clauses
+ * clauses.
+ * <p>
+ * Instances can be created using {@link DSL#groupingSets(Field[][])} and
+ * related methods, or by creating a subtype.
  *
  * @author Lukas Eder
  */

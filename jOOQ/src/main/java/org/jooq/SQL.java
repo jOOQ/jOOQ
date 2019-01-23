@@ -91,6 +91,8 @@ import org.jooq.impl.DSL;
  * positions (outside of comments, string literals, quoted name literals) and
  * substitute the appropriate bind value into the template.</li>
  * </ul>
+ * <p>
+ * Instances can be created using {@link DSL#sql(String)} and overloads.
  *
  * @author Lukas Eder
  */

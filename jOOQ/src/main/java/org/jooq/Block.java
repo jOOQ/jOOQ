@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
- * A query that models an anonymous procedural block
+ * A query that models an anonymous procedural block.
+ * <p>
+ * Instances can be created using {@link DSL#begin(Statement...)} and overloads.
  *
  * @author Lukas Eder
  */

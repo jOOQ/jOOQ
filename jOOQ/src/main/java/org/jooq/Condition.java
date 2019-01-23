@@ -42,7 +42,11 @@ import org.jooq.impl.DSL;
 
 
 /**
- * A condition to be used in a query's where part
+ * A condition to be used in a query's where part.
+ * <p>
+ * Instances can be created using {@link DSL#condition(Field)} and overloads, or
+ * by calling a comparison operator method on {@link Field}, such as
+ * {@link Field#eq(Field)}.
  *
  * @author Lukas Eder
  */

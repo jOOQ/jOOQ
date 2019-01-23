@@ -37,10 +37,13 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
  * clauses.
+ * <p>
+ * Instances can be created using {@link DSL#asterisk()}.
  *
  * @author Lukas Eder
  */

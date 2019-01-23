@@ -75,10 +75,21 @@ import org.jooq.types.Interval;
 // ...
 
 /**
- * A field used in tables and conditions
+ * A field used in tables and conditions.
  * <p>
  * Note that all fields qualify as {@link GroupField}, i.e. they can always be
- * used in <code>GROUP BY</code> clauses
+ * used in <code>GROUP BY</code> clauses.
+ * <p>
+ * Instances can be created using a variety of ways, including:
+ * <ul>
+ * <li>{@link DSL#field(String)} and overloads for plain SQL field
+ * expression.</li>
+ * <li>{@link DSL#field(Name)} and overloads for field identifier
+ * references.</li>
+ * <li>{@link DSL#field(Condition)} for predicates as fields.</li>
+ * <li>{@link DSL#field(Select)} for correlated subqueries.</li>
+ * <li>Fields referenced from generated tables</li>
+ * </ul>
  *
  * @param <T> The field type
  * @author Lukas Eder

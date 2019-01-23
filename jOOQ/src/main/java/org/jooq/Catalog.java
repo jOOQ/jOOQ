@@ -40,8 +40,12 @@ package org.jooq;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.jooq.impl.DSL;
+
 /**
  * An object representing a database catalog.
+ * <p>
+ * Instances can be created using {@link DSL#catalog(Name)} and overloads.
  *
  * @author Lukas Eder
  */

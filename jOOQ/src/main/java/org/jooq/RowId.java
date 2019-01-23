@@ -42,6 +42,8 @@ import java.sql.Types;
 
 /**
  * A data type corresponding to JDBC's {@link Types#ROWID}.
+ * <p>
+ * Instances can be created using {@link Table#rowid()}.
  *
  * @author Lukas Eder
  */

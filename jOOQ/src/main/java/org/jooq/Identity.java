@@ -44,6 +44,9 @@ import java.io.Serializable;
  * column as understood by the SQL:2003 standard. In most RDBMS, this is
  * actually called an <code>IDENTITY</code> column. Some RDMBS such as MySQL
  * call it <code>AUTO_INCREMENT</code> columns.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <R> The <code>IDENTITY</code>'s owner table record
  * @param <T> The <code>IDENTITY</code>'s field type

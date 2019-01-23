@@ -41,9 +41,12 @@ import java.sql.Statement;
 import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DSL;
 
 /**
  * A wrapper for a collection of queries.
+ * <p>
+ * Instances can be created using {@link DSL#queries(Query...)} and overloads.
  *
  * @author Lukas Eder
  */

@@ -52,7 +52,10 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 
 /**
- * Any query
+ * Any query.
+ * <p>
+ * Instances can be created using {@link DSL#query(String)} and overloads,
+ * or by creating a subtype.
  *
  * @author Lukas Eder
  */

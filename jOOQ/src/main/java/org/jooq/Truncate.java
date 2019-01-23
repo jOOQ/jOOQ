@@ -37,9 +37,13 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A {@link Query} that can truncate a table in the database.
+ * <p>
+ * Instances can be created using {@link DSL#truncate(Table)}, or
+ * {@link DSLContext#truncate(Table)} and overloads.
  *
  * @author Lukas Eder
  */

@@ -62,9 +62,13 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 
 /**
- * A {@link Query} that can provide a {@link Result} after execution
+ * A {@link Query} that can provide a {@link Result} after execution.
+ * <p>
+ * Instances can be created using {@link DSL#select(SelectFieldOrAsterisk...)},
+ * or {@link DSLContext#selectQuery()} and overloads.
  *
  * @param <R> The record type being returned by this query
  * @author Lukas Eder

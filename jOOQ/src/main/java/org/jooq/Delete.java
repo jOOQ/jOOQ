@@ -37,9 +37,14 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A {@link Query} that can delete data in the database.
+ * <p>
+ * Instances can be created using {@link DSL#deleteFrom(Table)},
+ * {@link DSLContext#deleteFrom(Table)}, or
+ * {@link DSLContext#deleteQuery(Table)} and overloads.
  *
  * @author Lukas Eder
  */

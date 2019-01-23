@@ -39,7 +39,10 @@ package org.jooq;
 
 
 /**
- * A wrapper for a {@link Field} and a {@link SortField}
+ * A wrapper for a {@link Field} and a {@link SortField}.
+ * <p>
+ * Instances can be created using {@link Field#asc()}, {@link Field#desc()} and
+ * related methods.
  *
  * @param <T> The field type
  * @author Lukas Eder

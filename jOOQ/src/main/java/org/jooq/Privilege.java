@@ -37,7 +37,13 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
+ * A privilege for use in <code>GRANT</code> statements.
+ * <p>
+ * Instances can be created using {@link DSL#privilege(String)} and overloads.
+ *
  * @author Timur Shaidullin
  */
 public interface Privilege extends QueryPart {

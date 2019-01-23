@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
  * A collation.
+ * <p>
+ * Instances can be created using {@link DSL#collation(Name)} and overloads.
  *
  * @author Lukas Eder
  */

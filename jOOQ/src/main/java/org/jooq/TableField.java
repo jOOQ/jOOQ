@@ -39,7 +39,10 @@
 package org.jooq;
 
 /**
- * A field contained in a table
+ * A field contained in a table.
+ * <p>
+ * Instances of this type cannot be created directly. They are available from
+ * generated code.
  *
  * @param <R> The record type
  * @param <T> The field type

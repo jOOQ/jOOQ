@@ -40,6 +40,8 @@ package org.jooq;
 /**
  * A common table expression is a table that can be supplied to
  * <code>WITH</code> clauses.
+ * <p>
+ * Instances can be created using {@link Name#as(Select)}.
  *
  * @author Lukas Eder
  */

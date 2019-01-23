@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 /**
- * The Role to be used by GRANT statement.
+ * The Role to be used by the <code>GRANT</code> statement.
+ * <p>
+ * Instances can be created using {@link DSL#role(Name)} and overloads.
  *
  * @author Timur Shaidullin
  */

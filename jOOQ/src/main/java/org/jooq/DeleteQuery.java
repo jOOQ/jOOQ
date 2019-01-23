@@ -47,7 +47,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A query used for deletion of data
+ * A query used for deletion of data.
+ * <p>
+ * Instances can be created using {@link DSLContext#deleteQuery(Table)}.
  *
  * @param <R> The record type of the table being deleted from
  * @author Lukas Eder

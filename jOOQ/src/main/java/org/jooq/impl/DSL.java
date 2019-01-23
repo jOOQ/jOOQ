@@ -7978,6 +7978,53 @@ public class DSL {
      * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      *
+     * @see DSLContext#truncate(String)
+     */
+    @Support
+    public static TruncateIdentityStep<Record> truncate(String table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>DELETE</code> statement.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * truncate(table);
+     * </pre></code>
+     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <p>
+     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
+     * supported, it is emulated using an equivalent <code>DELETE</code>
+     * statement. This is particularly true for these dialects:
+     * <ul>
+     * <li> {@link SQLDialect#FIREBIRD}</li>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SQLITE}</li>
+     * </ul>
+     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
+     * <p>
+     * Some statements also support extensions of the <code>TRUNCATE</code>
+     * statement, such as Postgres:
+     * <p>
+     * <code><pre>
+     * truncate(table)
+     *   .restartIdentity()
+     *   .cascade()
+     * </pre></code>
+     * <p>
+     * These vendor-specific extensions are currently not emulated for those
+     * dialects that do not support them natively.
+     *
      * @see DSLContext#truncate(Name)
      */
     @Support

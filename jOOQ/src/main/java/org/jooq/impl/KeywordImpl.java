@@ -47,7 +47,7 @@ import org.jooq.conf.SettingsTools;
  *
  * @author Lukas Eder
  */
-public class KeywordImpl extends AbstractQueryPart implements Keyword {
+final class KeywordImpl extends AbstractQueryPart implements Keyword {
 
     /**
      * Generated UID

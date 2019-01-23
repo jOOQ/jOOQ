@@ -125,9 +125,17 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * Use the <code>WINDOW</code> clause to specify window definitions for
      * reuse among several window functions.
      * <p>
-     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
-     * to support the SQL standard <code>WINDOW</code> clause, but you can still
-     * use this clause in all other databases supporting window functions. jOOQ
+     * The <code>WINDOW</code> clause is only natively supported by
+     * <ul>
+     * <li>{@link SQLDialect#AURORA_POSTGRES}</li>
+     * <li>{@link SQLDialect#H2}</li>
+     * <li>{@link SQLDialect#MYSQL}</li>
+     * <li>{@link SQLDialect#POSTGRES}</li>
+     * <li>{@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#SYBASE}</li>
+     * </ul>
+     * <p>
+     * If you are using any other dialect, you can still use this clause. jOOQ
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
@@ -139,9 +147,17 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * Use the <code>WINDOW</code> clause to specify window definitions for
      * reuse among several window functions.
      * <p>
-     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
-     * to support the SQL standard <code>WINDOW</code> clause, but you can still
-     * use this clause in all other databases supporting window functions. jOOQ
+     * The <code>WINDOW</code> clause is only natively supported by
+     * <ul>
+     * <li>{@link SQLDialect#AURORA_POSTGRES}</li>
+     * <li>{@link SQLDialect#H2}</li>
+     * <li>{@link SQLDialect#MYSQL}</li>
+     * <li>{@link SQLDialect#POSTGRES}</li>
+     * <li>{@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#SYBASE}</li>
+     * </ul>
+     * <p>
+     * If you are using any other dialect, you can still use this clause. jOOQ
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })

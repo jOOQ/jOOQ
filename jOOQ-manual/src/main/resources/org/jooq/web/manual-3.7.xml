@@ -4917,8 +4917,15 @@ HAVING COUNT(*) >= 4
                                         <title>The WINDOW clause</title>
                                         <content><html>
                                             <p>
-                                                The SQL:2003 standard as well as PostgreSQL and Sybase SQL Anywhere support a <code>WINDOW</code> clause that allows for specifying <code>WINDOW</code> frames for reuse in <reference id="select-clause" title="SELECT clauses" /> and <reference id="order-by-clause" title="ORDER BY clauses" />.
+                                                The SQL:2003 standard supports a <code>WINDOW</code> clause that allows for specifying <code>WINDOW</code> frames for reuse in <reference id="select-clause" title="SELECT clauses" /> and <reference id="order-by-clause" title="ORDER BY clauses" />. It is natively supported by:
                                             </p>
+                                            <ul>
+                                                <li>H2</li>
+                                                <li>MySQL</li>
+                                                <li>PostgreSQL</li>
+                                                <li>SQLite</li>
+                                                <li>Sybase SQL Anywhere</li>
+                                            </ul>
 
 </html><code-pair>
 <sql><![CDATA[

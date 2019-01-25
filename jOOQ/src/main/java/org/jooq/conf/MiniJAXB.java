@@ -179,7 +179,7 @@ public class MiniJAXB {
                 else {
                     jaxbAvailable = true;
                     log.debug("JAXB is available from the classpath / module path");
-                    throw t;
+                    throw new ConfigurationException("Error while reading xml", t);
                 }
             }
         }

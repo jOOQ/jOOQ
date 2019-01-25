@@ -43,6 +43,7 @@ import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -86,48 +87,41 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 class DefaultExecuteContext implements ExecuteContext {
 
-    private static final JooqLogger                       log             = JooqLogger.getLogger(DefaultExecuteContext.class);
+    private static final JooqLogger                   log       = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
-    private final Configuration                           originalConfiguration;
-    private final Configuration                           derivedConfiguration;
-    private final Map<Object, Object>                     data;
-    private final Query                                   query;
-    private final Routine<?>                              routine;
-    private String                                        sql;
+    private final Configuration                       originalConfiguration;
+    private final Configuration                       derivedConfiguration;
+    private final Map<Object, Object>                 data;
+    private final Query                               query;
+    private final Routine<?>                          routine;
+    private String                                    sql;
 
-    private final boolean                                 batch;
-    private final Query[]                                 batchQueries;
-    private final String[]                                batchSQL;
-    private final int[]                                   batchRows;
+    private final boolean                             batch;
+    private final Query[]                             batchQueries;
+    private final String[]                            batchSQL;
+    private final int[]                               batchRows;
 
     // Transient attributes (created afresh per execution)
-    transient ConnectionProvider                          connectionProvider;
-    private transient Connection                          connection;
-    private transient SettingsEnabledConnection           wrappedConnection;
-    private transient PreparedStatement                   statement;
-    private transient int                                 statementExecutionCount;
-    private transient ResultSet                           resultSet;
-    private transient Record                              record;
-    private transient Result<?>                           result;
-    private transient int                                 rows            = -1;
-    private transient RuntimeException                    exception;
-    private transient SQLException                        sqlException;
-    private transient SQLWarning                          sqlWarning;
-    private transient String[]                            serverOutput;
+    transient ConnectionProvider                      connectionProvider;
+    private transient Connection                      connection;
+    private transient SettingsEnabledConnection       wrappedConnection;
+    private transient PreparedStatement               statement;
+    private transient int                             statementExecutionCount;
+    private transient ResultSet                       resultSet;
+    private transient Record                          record;
+    private transient Result<?>                       result;
+    private transient int                             rows      = -1;
+    private transient RuntimeException                exception;
+    private transient SQLException                    sqlException;
+    private transient SQLWarning                      sqlWarning;
+    private transient String[]                        serverOutput;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<List<Blob>>          BLOBS           = new ThreadLocal<List<Blob>>();
-    private static final ThreadLocal<List<Clob>>          CLOBS           = new ThreadLocal<List<Clob>>();
-    private static final ThreadLocal<List<SQLXML>>        SQLXMLS         = new ThreadLocal<List<SQLXML>>();
-    private static final ThreadLocal<List<Array>>         ARRAYS          = new ThreadLocal<List<Array>>();
-    private static final ThreadLocal<List<Closeable>>     CLOSEABLES      = new ThreadLocal<List<Closeable>>();
-
-    private static final ThreadLocal<List<AutoCloseable>> AUTO_CLOSEABLES = new ThreadLocal<List<AutoCloseable>>();
-
+    private static final ThreadLocal<List<Closeable>> RESOURCES = new ThreadLocal<List<Closeable>>();
 
     /**
      * Clean up blobs, clobs and the local configuration.
@@ -163,55 +157,13 @@ class DefaultExecuteContext implements ExecuteContext {
      *      href="http://stackoverflow.com/q/11439543/521799">http://stackoverflow.com/q/11439543/521799</a>
      */
     static final void clean() {
-        List<Blob> blobs = BLOBS.get();
-        List<Clob> clobs = CLOBS.get();
-        List<SQLXML> xmls = SQLXMLS.get();
-        List<Array> arrays = ARRAYS.get();
-        List<Closeable> closeables = CLOSEABLES.get();
+        List<Closeable> resources = RESOURCES.get();
 
-        List<AutoCloseable> autoCloseables = AUTO_CLOSEABLES.get();
+        if (resources != null) {
+            for (Closeable resource : resources)
+                JDBCUtils.safeClose(resource);
 
-
-        if (blobs != null) {
-            for (Blob blob : blobs)
-                JDBCUtils.safeFree(blob);
-
-            BLOBS.remove();
-        }
-
-        if (clobs != null) {
-            for (Clob clob : clobs)
-                JDBCUtils.safeFree(clob);
-
-            CLOBS.remove();
-        }
-
-        if (xmls != null) {
-            for (SQLXML xml : xmls)
-                JDBCUtils.safeFree(xml);
-
-            SQLXMLS.remove();
-        }
-
-        if (arrays != null) {
-            for (Array array : arrays)
-                JDBCUtils.safeFree(array);
-
-            ARRAYS.remove();
-        }
-
-        if (closeables != null) {
-            for (Closeable closeable : closeables)
-                JDBCUtils.safeClose(closeable);
-
-            CLOSEABLES.remove();
-        }
-
-        if (autoCloseables != null) {
-            for (AutoCloseable closeable : autoCloseables)
-                JDBCUtils.safeClose(closeable);
-
-            AUTO_CLOSEABLES.remove();
+            RESOURCES.remove();
         }
 
         LOCAL_CONFIGURATION.remove();
@@ -222,68 +174,80 @@ class DefaultExecuteContext implements ExecuteContext {
     /**
      * Register a blob for later cleanup with {@link #clean()}
      */
-    static final void register(Blob blob) {
-        List<Blob> list = BLOBS.get();
-
-        if (list == null) {
-            list = new ArrayList<Blob>();
-            BLOBS.set(list);
-        }
-
-        list.add(blob);
+    static final void register(final Blob blob) {
+        register(new Closeable() {
+            @Override
+            public void close() throws IOException {
+                try {
+                    blob.free();
+                }
+                catch (SQLException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
     }
 
     /**
      * Register a clob for later cleanup with {@link #clean()}
      */
-    static final void register(Clob clob) {
-        List<Clob> list = CLOBS.get();
-
-        if (list == null) {
-            list = new ArrayList<Clob>();
-            CLOBS.set(list);
-        }
-
-        list.add(clob);
+    static final void register(final Clob clob) {
+        register(new Closeable() {
+            @Override
+            public void close() throws IOException {
+                try {
+                    clob.free();
+                }
+                catch (SQLException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
     }
 
     /**
      * Register an xml for later cleanup with {@link #clean()}
      */
-    static final void register(SQLXML xml) {
-        List<SQLXML> list = SQLXMLS.get();
-
-        if (list == null) {
-            list = new ArrayList<SQLXML>();
-            SQLXMLS.set(list);
-        }
-
-        list.add(xml);
+    static final void register(final SQLXML xml) {
+        register(new Closeable() {
+            @Override
+            public void close() throws IOException {
+                try {
+                    xml.free();
+                }
+                catch (SQLException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
     }
 
     /**
      * Register an array for later cleanup with {@link #clean()}
      */
-    static final void register(Array array) {
-        List<Array> list = ARRAYS.get();
-
-        if (list == null) {
-            list = new ArrayList<Array>();
-            ARRAYS.set(list);
-        }
-
-        list.add(array);
+    static final void register(final Array array) {
+        register(new Closeable() {
+            @Override
+            public void close() throws IOException {
+                try {
+                    array.free();
+                }
+                catch (SQLException e) {
+                    throw new IOException(e);
+                }
+            }
+        });
     }
 
     /**
      * Register a closeable for later cleanup with {@link #clean()}
      */
     static final void register(Closeable closeable) {
-        List<Closeable> list = CLOSEABLES.get();
+        List<Closeable> list = RESOURCES.get();
 
         if (list == null) {
             list = new ArrayList<Closeable>();
-            CLOSEABLES.set(list);
+            RESOURCES.set(list);
         }
 
         list.add(closeable);
@@ -293,15 +257,21 @@ class DefaultExecuteContext implements ExecuteContext {
     /**
      * Register a closeable for later cleanup with {@link #clean()}
      */
-    static final void register(AutoCloseable closeable) {
-        List<AutoCloseable> list = AUTO_CLOSEABLES.get();
-
-        if (list == null) {
-            list = new ArrayList<AutoCloseable>();
-            AUTO_CLOSEABLES.set(list);
-        }
-
-        list.add(closeable);
+    static final void register(final AutoCloseable closeable) {
+        if (closeable instanceof Closeable)
+            register((Closeable) closeable);
+        else
+            register(new Closeable() {
+                @Override
+                public void close() throws IOException {
+                    try {
+                        closeable.close();
+                    }
+                    catch (Exception e) {
+                        throw new IOException(e);
+                    }
+                }
+            });
     }
 
 

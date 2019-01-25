@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.select;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -60,7 +61,12 @@ final class Dual extends AbstractTable<Record> {
 
 
 
+
+
+
     static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
+
+
 
 
 

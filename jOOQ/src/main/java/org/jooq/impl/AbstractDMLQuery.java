@@ -96,6 +96,7 @@ import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Param;
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -122,6 +123,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      */
     private static final long                    serialVersionUID                 = -7438014075226919192L;
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
+
+
 
 
 
@@ -444,6 +447,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      * unknown.
      */
     abstract int estimatedRowCount();
+
 
 
 

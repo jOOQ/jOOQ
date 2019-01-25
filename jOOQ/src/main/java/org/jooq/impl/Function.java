@@ -103,6 +103,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
@@ -302,6 +303,7 @@ class Function<T> extends AbstractField<T> implements
             toSQLOverClause(ctx);
         }
     }
+
 
 
 
@@ -651,6 +653,11 @@ class Function<T> extends AbstractField<T> implements
         withinGroupOrderBy.addAll(Tools.sortFields(fields));
         return this;
     }
+
+
+
+
+
 
 
 

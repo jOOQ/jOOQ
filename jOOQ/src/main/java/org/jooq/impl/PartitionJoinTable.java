@@ -46,6 +46,7 @@ import java.util.Collection;
 import org.jooq.Field;
 import org.jooq.JoinType;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
@@ -58,6 +59,34 @@ import org.jooq.TableOuterJoinStep;
  * @author Lukas Eder
  */
 final class PartitionJoinTable implements TableOuterJoinStep<Record> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

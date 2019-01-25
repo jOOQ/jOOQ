@@ -72,6 +72,7 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -184,6 +185,9 @@ final class AlterViewImpl extends AbstractQuery implements
 
         accept1(ctx);
     }
+
+
+
 
 
 

@@ -145,6 +145,7 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Operator;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -236,6 +237,7 @@ implements
      */
     private static final long                serialVersionUID = -8835479296876774391L;
     private static final Clause[]            CLAUSES          = { MERGE };
+
 
 
 
@@ -1381,6 +1383,7 @@ implements
                .sql(')');
         }
     }
+
 
 
 

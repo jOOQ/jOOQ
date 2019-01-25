@@ -93,6 +93,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
 import org.jooq.Name;
+// ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -1442,6 +1443,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     public final Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, comparator);
     }
+
 
 
 

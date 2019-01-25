@@ -87,7 +87,8 @@ import org.jooq.Index;
 import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
-import org.jooq.PivotForStep;
+// ...
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -998,6 +999,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: DIVISION API
     // ------------------------------------------------------------------------
@@ -1141,6 +1158,8 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public final TableOnStep<Record> innerJoin(Name name) {
         return innerJoin(table(name));
     }
+
+
 
 
 

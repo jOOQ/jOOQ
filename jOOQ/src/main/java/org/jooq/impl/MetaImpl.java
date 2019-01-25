@@ -114,6 +114,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -141,6 +142,7 @@ final class MetaImpl extends AbstractMeta {
     private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
+
 
 
 
@@ -654,6 +656,7 @@ final class MetaImpl extends AbstractMeta {
 
             return references;
         }
+
 
 
 

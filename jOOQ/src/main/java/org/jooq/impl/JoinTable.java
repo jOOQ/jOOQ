@@ -114,6 +114,7 @@ import org.jooq.JoinType;
 import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Operator;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
@@ -152,6 +153,8 @@ implements
 
     final Table<?>                           lhs;
     final Table<?>                           rhs;
+
+
 
 
 
@@ -525,6 +528,8 @@ implements
     // ------------------------------------------------------------------------
     // Join API
     // ------------------------------------------------------------------------
+
+
 
 
 

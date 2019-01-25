@@ -74,6 +74,7 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Nullability;
+// ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
@@ -718,6 +719,7 @@ public class DefaultDataType<T> implements DataType<T> {
     public final DataType<T[]> getArrayDataType() {
         return new ArrayDataType<T>(this);
     }
+
 
 
 

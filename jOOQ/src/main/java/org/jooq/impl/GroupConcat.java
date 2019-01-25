@@ -52,6 +52,7 @@ import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.Name;
 import org.jooq.OrderField;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.WindowDefinition;
@@ -106,6 +107,10 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
         else
             return result.withinGroupOrderBy(orderBy);
     }
+
+
+
+
 
 
 

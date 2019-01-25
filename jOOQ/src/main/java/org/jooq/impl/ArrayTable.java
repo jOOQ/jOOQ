@@ -50,6 +50,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
+// ...
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.UDTRecord;
@@ -245,6 +246,7 @@ final class ArrayTable extends AbstractTable<Record> {
             ctx.sql(" = ").visit(array).sql(')');
         }
     }
+
 
 
 

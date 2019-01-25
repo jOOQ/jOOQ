@@ -71,6 +71,7 @@ import org.jooq.Context;
 import org.jooq.DDLQuery;
 // ...
 import org.jooq.Field;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 
@@ -85,6 +86,8 @@ final class BlockImpl extends AbstractQuery implements Block {
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final EnumSet<SQLDialect>      REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = EnumSet.of(FIREBIRD);
     private static final EnumSet<SQLDialect>      SUPPORTS_NULL_STATEMENT           = EnumSet.of(POSTGRES);
+
+
 
 
 
@@ -241,6 +244,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
                 ctx.sql(';');
     }
+
 
 
 

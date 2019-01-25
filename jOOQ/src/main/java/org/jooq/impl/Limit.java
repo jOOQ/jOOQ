@@ -63,6 +63,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
+// ...
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -88,6 +89,7 @@ final class Limit extends AbstractQueryPart {
     private Field<?>                    offsetPlusOne     = ONE;
     private boolean                     rendersParams;
     private boolean                     withTies;
+
 
 
 
@@ -366,6 +368,7 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
     /**
      * Whether this limit has a limit of zero
      */
@@ -448,6 +451,8 @@ final class Limit extends AbstractQueryPart {
         this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams |= numberOfRows.isInline();
     }
+
+
 
 
 

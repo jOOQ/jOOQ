@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 
 /**
@@ -119,6 +120,7 @@ enum Term {
             return "char_length";
         }
     },
+
 
 
 

@@ -260,6 +260,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
+// ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -8543,6 +8544,7 @@ public class DSL {
 
 
 
+
     /**
      * A synonym for {@link #unnest(Field)}.
      *
@@ -8586,6 +8588,7 @@ public class DSL {
     public static Table<?> unnest(Object[] array) {
         return unnest(val(array));
     }
+
 
 
 
@@ -9760,6 +9763,30 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -12212,6 +12239,8 @@ public class DSL {
     public static <T> Field<T> coerce(Field<?> field, DataType<T> as) {
         return nullSafe(field).coerce(as);
     }
+
+
 
 
 
@@ -16013,6 +16042,7 @@ public class DSL {
 
 
 
+
     /**
      * Create a GROUPING(field) aggregation field to be used along with
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
@@ -17466,6 +17496,10 @@ public class DSL {
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new org.jooq.impl.Function<T[]>(Term.ARRAY_AGG, true, field.getDataType().getArrayDataType(), nullSafe(field));
     }
+
+
+
+
 
 
 

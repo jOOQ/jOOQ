@@ -70,6 +70,7 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
+// ...
 import org.jooq.Query;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -557,6 +558,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
         return result;
     }
+
 
 
 

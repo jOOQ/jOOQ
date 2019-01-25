@@ -64,6 +64,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
+// ...
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -184,6 +185,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
     }
+
 
 
 

@@ -156,6 +156,7 @@ import org.jooq.FieldOrConstraint;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Nullability;
+// ...
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -193,6 +194,9 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
+
+
+
     private final Table<?>                   table;
     private final boolean                    ifExists;
     private boolean                          ifExistsColumn;
@@ -209,6 +213,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private Field<?>                         addColumn;
     private DataType<?>                      addColumnType;
     private Constraint                       addConstraint;
+
 
 
 
@@ -457,6 +462,9 @@ final class AlterTableImpl extends AbstractQuery implements
         addConstraint = constraint;
         return this;
     }
+
+
+
 
 
 
@@ -1268,6 +1276,9 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
     }
+
+
+
 
 
 

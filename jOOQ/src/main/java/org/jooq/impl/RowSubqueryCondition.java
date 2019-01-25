@@ -69,6 +69,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
@@ -89,6 +90,7 @@ final class RowSubqueryCondition extends AbstractCondition {
     private static final long                serialVersionUID         = -1806139685201770706L;
     private static final Clause[]            CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
     private static final EnumSet<SQLDialect> SUPPORT_NATIVE           = EnumSet.of(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+
 
 
 

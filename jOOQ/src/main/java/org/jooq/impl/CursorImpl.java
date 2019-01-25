@@ -80,6 +80,7 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+// ...
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -108,6 +109,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     private transient CursorResultSet                      rs;
     private transient DefaultBindingGetResultSetContext<?> rsContext;
+
+
 
 
 
@@ -148,6 +151,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         else
             this.intern = null;
     }
+
 
 
 

@@ -189,6 +189,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Privilege;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -790,6 +791,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Block begin(Collection<? extends Statement> statements) {
         return new BlockImpl(configuration(), statements, true);
     }
+
+
 
 
 

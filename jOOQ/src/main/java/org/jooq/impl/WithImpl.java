@@ -63,6 +63,7 @@ import org.jooq.Field;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -165,6 +166,7 @@ implements
      */
     private static final long                                               serialVersionUID     = -1813359431778402705L;
     private static final Clause[]                                           CLAUSES              = { WITH };
+
 
 
 

@@ -69,6 +69,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.ForeignKey;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -89,6 +90,7 @@ import org.jooq.conf.StatementType;
  */
 @SuppressWarnings("unchecked")
 abstract class AbstractContext<C extends Context<C>> extends AbstractScope implements Context<C> {
+
 
 
 

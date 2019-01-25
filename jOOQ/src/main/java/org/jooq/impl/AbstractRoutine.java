@@ -112,6 +112,7 @@ import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Param;
 import org.jooq.Parameter;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -153,9 +154,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
     private final List<Parameter<?>>          outParameters;
+
 
 
 
@@ -164,6 +167,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
+
+
+
+
+
 
 
 
@@ -392,6 +400,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             }
         }
     }
+
 
 
 
@@ -859,6 +868,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
     private final void toSQLBegin(RenderContext context) {
 
 
@@ -889,6 +900,15 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             context.sql("{ ");
         }
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1273,6 +1293,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
     @Override
     public final Parameter<T> getReturnParameter() {
         return returnParameter;
@@ -1291,6 +1312,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         //         Some data types also need casting because expressions are automatically promoted to a "higher" type
         return isOverloaded() || parameter.getType() == Byte.class || parameter.getType() == Short.class;
     }
+
+
+
+
+
+
+
 
 
 
@@ -1369,6 +1397,12 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
+
+
+
     private final boolean resultParameter(Parameter<?> parameter) {
         return parameter.equals(getReturnParameter()) || getOutParameters().contains(parameter);
     }
@@ -1402,6 +1436,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         addParameter(parameter);
         returnParameter = parameter;
     }
+
 
 
 

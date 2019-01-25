@@ -111,4 +111,5 @@ public interface SelectLimitPercentAfterOffsetStep<R extends Record> extends Sel
 
 
 
+
 }

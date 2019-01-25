@@ -57,6 +57,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 
@@ -100,6 +101,7 @@ final class Cast<T> extends AbstractFunction<T> {
                 return new Native();
         }
     }
+
 
 
 
@@ -233,6 +235,7 @@ final class Cast<T> extends AbstractFunction<T> {
             super.accept(ctx);
         }
     }
+
 
 
 

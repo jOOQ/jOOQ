@@ -283,6 +283,9 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
 
 
+
+
+
     // -------------------------------------------------------------------------
     // XXX: Expressions based on this table
     // -------------------------------------------------------------------------
@@ -942,6 +945,8 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      */
     @Support
     TableOnStep<Record> innerJoin(Name name);
+
+
 
 
 
@@ -2575,6 +2580,9 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
 
 
+
+
+
     /**
      * Create a new <code>TABLE</code> reference from this table, applying
      * relational division.
@@ -2671,6 +2679,16 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      */
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);
+
+
+
+
+
+
+
+
+
+
 
 
 

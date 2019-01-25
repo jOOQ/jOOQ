@@ -72,6 +72,7 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
@@ -90,6 +91,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     private static final long                serialVersionUID     = 8904572826501186329L;
     private static final Clause[]            CLAUSES              = { ALTER_SEQUENCE };
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+
 
 
 
@@ -178,6 +180,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
                 break;
         }
     }
+
 
 
 

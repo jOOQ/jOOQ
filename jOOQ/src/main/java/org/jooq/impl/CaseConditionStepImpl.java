@@ -53,6 +53,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Select;
@@ -142,6 +143,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
                 return new Native();
         }
     }
+
 
 
 

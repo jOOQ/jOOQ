@@ -47,6 +47,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Package;
+// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Schema;
@@ -67,6 +68,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     private final Schema          schema;
     private final Fields<R>       fields;
+
 
 
 
@@ -101,6 +103,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     public /* non-final */ Schema getSchema() {
         return schema;
     }
+
 
 
 

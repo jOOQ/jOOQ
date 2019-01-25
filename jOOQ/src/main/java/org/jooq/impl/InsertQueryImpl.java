@@ -102,6 +102,7 @@ import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
 import org.jooq.Operator;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -620,6 +621,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             ctx.visit(insertMaps);
         }
     }
+
 
 
 

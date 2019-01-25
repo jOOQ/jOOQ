@@ -153,6 +153,7 @@ import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+// ...
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -528,6 +529,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long                serialVersionUID                    = -7965247586545864991L;
         private static final EnumSet<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB);
+
 
 
 
@@ -1351,6 +1353,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
 
         /**
@@ -1535,6 +1538,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
         DefaultBooleanBinding(Converter<Boolean, U> converter, boolean isLob) {
             super(converter, isLob);
         }
@@ -1697,6 +1701,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long                serialVersionUID = -727202499908007757L;
         private static final EnumSet<SQLDialect> INLINE_AS_X_APOS = EnumSet.of(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+
 
 
 
@@ -2743,6 +2748,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
             return Types.VARCHAR;
         }
+
+
+
 
 
 

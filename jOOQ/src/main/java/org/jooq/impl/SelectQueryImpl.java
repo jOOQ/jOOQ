@@ -165,6 +165,7 @@ import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -220,6 +221,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
     private final WithImpl                               with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
     private Table<?>                                     into;
@@ -232,6 +240,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private ForUpdateLockMode                            forUpdateLockMode;
     private ForUpdateWaitMode                            forUpdateWaitMode;
     private int                                          forUpdateWait;
+
+
 
 
 
@@ -1059,6 +1069,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
@@ -1686,6 +1697,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES        = EnumSet.of(SQLITE);
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS                   = EnumSet.of(DERBY, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = EnumSet.of(DERBY);
@@ -1889,6 +1901,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     @Override
     public final void setWithTies(boolean withTies) {
         getLimit().setWithTies(withTies);
@@ -1937,6 +1950,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     @Override
     public final void setForUpdateNoWait() {
         setForUpdate(true);
@@ -1959,6 +1973,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.forUpdateWaitMode = null;
         this.forUpdateWait = 0;
     }
+
+
 
 
 
@@ -2444,6 +2460,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
         addJoin0(table, type, conditions, null);
     }
+
+
 
 
 

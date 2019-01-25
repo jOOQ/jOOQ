@@ -91,6 +91,7 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
+// ...
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -153,6 +154,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private static final long                serialVersionUID       = -660460731970074719L;
     private static final Clause[]            CLAUSES                = { UPDATE };
+
 
 
 

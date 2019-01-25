@@ -51,6 +51,7 @@ import java.util.EnumSet;
 
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.SQLDialect;
 
 /**
@@ -64,6 +65,7 @@ final class Neg<T> extends AbstractField<T> {
      */
     private static final long                serialVersionUID = 7624782102883057433L;
     private static final EnumSet<SQLDialect> EMULATE_BIT_NOT  = EnumSet.of(H2, HSQLDB);
+
 
 
 

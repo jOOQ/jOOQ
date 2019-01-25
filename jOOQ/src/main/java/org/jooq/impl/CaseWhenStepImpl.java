@@ -55,6 +55,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+// ...
 import org.jooq.QueryPart;
 
 final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
@@ -172,6 +173,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                 return new Native();
         }
     }
+
 
 
 

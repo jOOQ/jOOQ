@@ -112,6 +112,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
@@ -141,6 +142,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK       = EnumSet.of(POSTGRES);
+
+
 
 
 
@@ -558,6 +561,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.sql(' ')
                .visit(K_WITH_DATA);
     }
+
 
 
 

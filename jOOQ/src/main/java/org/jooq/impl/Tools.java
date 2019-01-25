@@ -208,6 +208,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
+// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -377,6 +378,8 @@ final class Tools {
 
 
 
+
+
         /**
          * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
          * a new transaction.
@@ -495,6 +498,9 @@ final class Tools {
          * [#1206] The collected Semi / Anti JOIN predicates.
          */
         DATA_COLLECTED_SEMI_ANTI_JOIN,
+
+
+
 
 
 
@@ -708,6 +714,7 @@ final class Tools {
 
         return rows;
     }
+
 
 
 
@@ -2719,6 +2726,10 @@ final class Tools {
 
 
 
+
+
+
+
     static final DSLContext CTX    = DSL.using(new DefaultConfiguration());
     static final ParserImpl PARSER = (ParserImpl) CTX.parser();
 
@@ -2809,6 +2820,8 @@ final class Tools {
             return null;
         }
     }
+
+
 
 
 
@@ -3662,6 +3675,7 @@ final class Tools {
             }
         }
     }
+
 
 
 

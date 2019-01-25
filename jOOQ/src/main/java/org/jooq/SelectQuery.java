@@ -227,6 +227,8 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
 
 
+
+
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause.
@@ -803,6 +805,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
 
 
+
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
@@ -966,6 +969,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
 
 
+
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will not wait
@@ -1027,6 +1031,8 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ POSTGRES })
     void setForKeyShare(boolean forKeyShare);
+
+
 
 
 

@@ -400,6 +400,7 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Parser;
 import org.jooq.Privilege;
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -463,6 +464,7 @@ import org.jooq.types.YearToSecond;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ParserImpl implements Parser {
+
 
 
 
@@ -626,6 +628,7 @@ final class ParserImpl implements Parser {
         ctx.done("Unexpected content after end of name input");
         return result;
     }
+
 
 
 
@@ -2310,6 +2313,10 @@ final class ParserImpl implements Parser {
 
 
 
+
+
+
+
     private static final Block parseDo(ParserContext ctx) {
         parseKeyword(ctx, "DO");
         String block = parseStringLiteral(ctx);
@@ -2433,6 +2440,18 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4356,6 +4375,7 @@ final class ParserImpl implements Parser {
 
         return t(result);
     }
+
 
 
 

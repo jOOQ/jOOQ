@@ -66,6 +66,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -131,6 +132,8 @@ implements
             }
         }
     }
+
+
 
 
 

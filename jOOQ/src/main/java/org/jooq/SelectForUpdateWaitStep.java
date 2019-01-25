@@ -118,6 +118,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
 
 
 
+
     /**
      * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.

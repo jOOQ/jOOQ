@@ -42,6 +42,7 @@ import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
+import java.io.Closeable;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -85,44 +86,48 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 class DefaultExecuteContext implements ExecuteContext {
 
-    private static final JooqLogger                log     = JooqLogger.getLogger(DefaultExecuteContext.class);
+    private static final JooqLogger                       log             = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
-    private final Configuration                    originalConfiguration;
-    private final Configuration                    derivedConfiguration;
-    private final Map<Object, Object>              data;
-    private final Query                            query;
-    private final Routine<?>                       routine;
-    private String                                 sql;
+    private final Configuration                           originalConfiguration;
+    private final Configuration                           derivedConfiguration;
+    private final Map<Object, Object>                     data;
+    private final Query                                   query;
+    private final Routine<?>                              routine;
+    private String                                        sql;
 
-    private final boolean                          batch;
-    private final Query[]                          batchQueries;
-    private final String[]                         batchSQL;
-    private final int[]                            batchRows;
+    private final boolean                                 batch;
+    private final Query[]                                 batchQueries;
+    private final String[]                                batchSQL;
+    private final int[]                                   batchRows;
 
     // Transient attributes (created afresh per execution)
-    transient ConnectionProvider                   connectionProvider;
-    private transient Connection                   connection;
-    private transient SettingsEnabledConnection    wrappedConnection;
-    private transient PreparedStatement            statement;
-    private transient int                          statementExecutionCount;
-    private transient ResultSet                    resultSet;
-    private transient Record                       record;
-    private transient Result<?>                    result;
-    private transient int                          rows    = -1;
-    private transient RuntimeException             exception;
-    private transient SQLException                 sqlException;
-    private transient SQLWarning                   sqlWarning;
-    private transient String[]                     serverOutput;
+    transient ConnectionProvider                          connectionProvider;
+    private transient Connection                          connection;
+    private transient SettingsEnabledConnection           wrappedConnection;
+    private transient PreparedStatement                   statement;
+    private transient int                                 statementExecutionCount;
+    private transient ResultSet                           resultSet;
+    private transient Record                              record;
+    private transient Result<?>                           result;
+    private transient int                                 rows            = -1;
+    private transient RuntimeException                    exception;
+    private transient SQLException                        sqlException;
+    private transient SQLWarning                          sqlWarning;
+    private transient String[]                            serverOutput;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<List<Blob>>   BLOBS   = new ThreadLocal<List<Blob>>();
-    private static final ThreadLocal<List<Clob>>   CLOBS   = new ThreadLocal<List<Clob>>();
-    private static final ThreadLocal<List<SQLXML>> SQLXMLS = new ThreadLocal<List<SQLXML>>();
-    private static final ThreadLocal<List<Array>>  ARRAYS  = new ThreadLocal<List<Array>>();
+    private static final ThreadLocal<List<Blob>>          BLOBS           = new ThreadLocal<List<Blob>>();
+    private static final ThreadLocal<List<Clob>>          CLOBS           = new ThreadLocal<List<Clob>>();
+    private static final ThreadLocal<List<SQLXML>>        SQLXMLS         = new ThreadLocal<List<SQLXML>>();
+    private static final ThreadLocal<List<Array>>         ARRAYS          = new ThreadLocal<List<Array>>();
+    private static final ThreadLocal<List<Closeable>>     CLOSEABLES      = new ThreadLocal<List<Closeable>>();
+
+    private static final ThreadLocal<List<AutoCloseable>> AUTO_CLOSEABLES = new ThreadLocal<List<AutoCloseable>>();
+
 
     /**
      * Clean up blobs, clobs and the local configuration.
@@ -162,6 +167,10 @@ class DefaultExecuteContext implements ExecuteContext {
         List<Clob> clobs = CLOBS.get();
         List<SQLXML> xmls = SQLXMLS.get();
         List<Array> arrays = ARRAYS.get();
+        List<Closeable> closeables = CLOSEABLES.get();
+
+        List<AutoCloseable> autoCloseables = AUTO_CLOSEABLES.get();
+
 
         if (blobs != null) {
             for (Blob blob : blobs)
@@ -189,6 +198,20 @@ class DefaultExecuteContext implements ExecuteContext {
                 JDBCUtils.safeFree(array);
 
             ARRAYS.remove();
+        }
+
+        if (closeables != null) {
+            for (Closeable closeable : closeables)
+                JDBCUtils.safeClose(closeable);
+
+            CLOSEABLES.remove();
+        }
+
+        if (autoCloseables != null) {
+            for (AutoCloseable closeable : autoCloseables)
+                JDBCUtils.safeClose(closeable);
+
+            AUTO_CLOSEABLES.remove();
         }
 
         LOCAL_CONFIGURATION.remove();
@@ -251,6 +274,36 @@ class DefaultExecuteContext implements ExecuteContext {
 
         list.add(array);
     }
+
+    /**
+     * Register a closeable for later cleanup with {@link #clean()}
+     */
+    static final void register(Closeable closeable) {
+        List<Closeable> list = CLOSEABLES.get();
+
+        if (list == null) {
+            list = new ArrayList<Closeable>();
+            CLOSEABLES.set(list);
+        }
+
+        list.add(closeable);
+    }
+
+
+    /**
+     * Register a closeable for later cleanup with {@link #clean()}
+     */
+    static final void register(AutoCloseable closeable) {
+        List<AutoCloseable> list = AUTO_CLOSEABLES.get();
+
+        if (list == null) {
+            list = new ArrayList<AutoCloseable>();
+            AUTO_CLOSEABLES.set(list);
+        }
+
+        list.add(closeable);
+    }
+
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling Configuration lifecycle

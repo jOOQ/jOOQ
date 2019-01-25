@@ -47,7 +47,7 @@ import org.jooq.Converter;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSetSQLOutputContext<U> extends AbstractScope implements BindingSetSQLOutputContext<U> {
+class DefaultBindingSetSQLOutputContext<U> extends AbstractResourceManagingScope implements BindingSetSQLOutputContext<U> {
 
     private final SQLOutput output;
     private final U         value;

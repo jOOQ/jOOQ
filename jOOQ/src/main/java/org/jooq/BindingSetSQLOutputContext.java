@@ -45,7 +45,7 @@ import java.sql.SQLOutput;
  *
  * @author Lukas Eder
  */
-public interface BindingSetSQLOutputContext<U> extends Scope {
+public interface BindingSetSQLOutputContext<U> extends ResourceManagingScope {
 
     /**
      * The {@link SQLOutput} to which a bind variable should be bound.

@@ -80,6 +80,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
+import java.io.Closeable;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -469,6 +470,38 @@ public class JDBCUtils {
         safeClose(resultSet);
         safeClose(statement);
     }
+
+    /**
+     * Safely close a closeable.
+     * <p>
+     * This method will silently ignore if <code>closeable</code> is
+     * <code>null</code>, or if {@link Closeable#close()} throws an exception.
+     */
+    public static final void safeClose(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            }
+            catch (Exception ignore) {}
+        }
+    }
+
+
+    /**
+     * Safely close a closeable.
+     * <p>
+     * This method will silently ignore if <code>closeable</code> is
+     * <code>null</code>, or if {@link AutoCloseable#close()} throws an exception.
+     */
+    public static final void safeClose(AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            }
+            catch (Exception ignore) {}
+        }
+    }
+
 
     /**
      * Safely free a blob.

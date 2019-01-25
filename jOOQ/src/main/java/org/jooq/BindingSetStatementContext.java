@@ -45,7 +45,7 @@ import java.sql.PreparedStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingSetStatementContext<U> extends Scope {
+public interface BindingSetStatementContext<U> extends ResourceManagingScope {
 
     /**
      * The {@link PreparedStatement} to which a bind variable should be bound.

@@ -40,7 +40,19 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A privilege for use in <code>GRANT</code> statements.
+ * A privilege for use in <code>GRANT</code> and <code>REVOKE</code> statements.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .grant(privilege("SELECT"))
+ *    .on(ACTOR)
+ *    .to(user("MY_USER"))
+ *    .execute();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#privilege(String)} and overloads.
  *

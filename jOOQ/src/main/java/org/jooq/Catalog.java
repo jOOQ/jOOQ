@@ -43,7 +43,36 @@ import java.util.stream.Stream;
 import org.jooq.impl.DSL;
 
 /**
- * An object representing a database catalog.
+ * A catalog.
+ * <p>
+ * Standard SQL object identifiers come in 3 parts:
+ * <code>[catalog].[schema].[object]</code>. The catalog is an object that
+ * groups a set of {@link Schema} instances, which again group a set of objects,
+ * where objects can be {@link Table}, {@link Sequence}, {@link Routine} and
+ * many other types of objects.
+ * <p>
+ * If your RDBMS supports catalogs, and jOOQ supports using catalogs with your
+ * RDBMS, then generated catalog references can be used to fully qualify objects
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(CATALOG.SCHEMA.ACTOR.FIRST_NAME, CATALOG.SCHEMA.ACTOR.LAST_NAME)
+ *    .from(CATALOG.SCHEMA.ACTOR)
+ *    .fetch();
+ * </pre></code>
+ * <p>
+ * <strong>Compatibility:</strong>
+ * <p>
+ * jOOQ supports catalogs in {@link SQLDialect#SQLSERVER} and related dialects,
+ * such as {@link SQLDialect#SQLDATAWAREHOUSE}. Database products like
+ * {@link SQLDialect#MYSQL} and related dialects, such as
+ * {@link SQLDialect#MARIADB} use catalogs ("databases") instead of schemas, and
+ * lack schema support. For historic reasons, jOOQ treats MySQL catalogs as
+ * schemas and does not support any catalog qualifier in MySQL.
  * <p>
  * Instances can be created using {@link DSL#catalog(Name)} and overloads.
  *

@@ -40,7 +40,7 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A predicate that always yields <code>false</code>.
+ * A {@link Condition} that always yields <code>false</code>.
  * <p>
  * Instances can be created using {@link DSL#falseCondition()}.
  *

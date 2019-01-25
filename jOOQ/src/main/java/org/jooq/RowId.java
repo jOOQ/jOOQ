@@ -43,6 +43,11 @@ import java.sql.Types;
 /**
  * A data type corresponding to JDBC's {@link Types#ROWID}.
  * <p>
+ * In certain RDBMS, referencing a row by its <code>ROWID</code> may be quicker
+ * than looking it up by a primary key. This can be particularly useful when
+ * self joining a table in a {@link Merge} statement and comparing the two
+ * versions of the table by <code>ROWID</code>.
+ * <p>
  * Instances can be created using {@link Table#rowid()}.
  *
  * @author Lukas Eder

@@ -40,8 +40,24 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A <code>QueryPart</code> to be used exclusively in <code>GROUP BY</code>
- * clauses.
+ * An expression to be used exclusively in <code>GROUP BY</code> clauses.
+ * <p>
+ * The <code>SELECT .. GROUP BY</code> clause accepts a variety of expressions,
+ * mostly ordinary {@link Field} expressions, but also some special expressions
+ * usable only in the <code>GROUP BY</code> clause, such as
+ * {@link DSL#groupingSets(Field[][])}.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.LAST_NAME)
+ *    .from(ACTOR)
+ *    .groupBy(ACTOR.LAST_NAME) // GroupField reference here
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#groupingSets(Field[][])} and
  * related methods, or by creating a subtype.

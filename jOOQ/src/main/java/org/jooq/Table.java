@@ -75,7 +75,35 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
 /**
- * A table to be used in queries.
+ * A table.
+ * <p>
+ * Like {@link Field}, a {@link Table} is a basic building block of any
+ * {@link Query}, as they all operate on at least one table. There are many
+ * different types of tables, including:
+ * <p>
+ * <ul>
+ * <li>Generated table references</li>
+ * <li>Plain SQL tables created with {@link DSL#table(String)}</li>
+ * <li>Table references created with {@link DSL#table(Name)}</li>
+ * <li>Derived tables created with {@link DSL#table(Select)}</li>
+ * <li>Join expressions created e.g. with {@link Table#join(TableLike)}</li>
+ * <li>Common table expressions ({@link CommonTableExpression})</li>
+ * <li>Unnested arrays referenced through {@link DSL#unnest(Field)} and
+ * overloads</li>
+ * <li>Table valued functions as provided by the code generator</li>
+ * <li>Etc.</li>
+ * </ul>
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
+ *    .from(ACTOR) // Table reference
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#table(Name)} and overloads.
  *
@@ -293,6 +321,8 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * Create a qualified asterisk expression from this table
      * (<code>table.*</code>) for use with <code>SELECT</code>.
+     *
+     * @see DSL#asterisk()
      */
     @Support
     QualifiedAsterisk asterisk();

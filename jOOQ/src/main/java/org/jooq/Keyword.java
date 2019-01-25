@@ -41,11 +41,25 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
 /**
- * A SQL keyword <code>QueryPart</code>.
+ * A SQL keyword.
  * <p>
  * A <code>Keyword</code> is a {@link QueryPart} that renders a SQL keyword
  * according to the settings specified in
- * {@link Settings#getRenderKeywordCase()}.
+ * {@link Settings#getRenderKeywordCase()}. It is useful mostly in jOOQ's
+ * internals and for users who wish to make extensive use of "plain SQL
+ * templating".
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * Field&lt;Integer> field = field(
+ *     "{0}({1} {2} {3})",
+ *     SQLDataType.INTEGER,
+ *     keyword("extract"), keyword("year"), keyword("from"), ACTOR.LAST_UPDATE
+ * );
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#keyword(String)} and overloads.
  *

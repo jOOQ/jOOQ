@@ -40,15 +40,21 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A participant of a quantified comparison predicate
+ * A quantified select for use in quantified comparison predicates.
  * <p>
- * A <code>QuantifiedSelect</code> models the right hand side of a quantified
- * comparison predicate. Examples of such predicates:
- * <ul>
- * <li><code>ANY (SELECT 1 FROM DUAL)</code></li>
- * <li><code>ALL (SELECT 1 FROM DUAL)</code></li>
- * </ul>
- * These predicates can be used exclusively with methods, such as {@link Field}.
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select()
+ *    .from(CUSTOMER)
+ *    .where(row(CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME).eq(any(
+ *        select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME).from(ACTOR)
+ *    )))
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#any(Select)} and
  * {@link DSL#all(Select)}.

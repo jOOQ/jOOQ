@@ -38,12 +38,51 @@
 package org.jooq;
 
 import org.jooq.conf.ParamType;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.Convert;
 
 /**
  * A named parameter and/or bind value.
+ * <p>
+ * A lot of jOOQ API accepts user input values, such as for example when
+ * creating a {@link Condition} using {@link Field#eq(Object)}, where a column
+ * expression is being compared with a value.
+ * <p>
+ * Behind the scenes, jOOQ wraps the value in a bind value expression using
+ * {@link DSL#val(Object)}. The generated SQL of such an expression depends on
+ * things like {@link Settings#getStatementType()} or {@link ParamType} being
+ * passed to configurations or {@link Query#getSQL(ParamType)} calls, etc. By
+ * default, a parameter marker <code>?</code> is generated.
+ * <p>
+ * Users can create parameters explicitly using {@link DSL} API, which is useful
+ * in a few cases where the value cannot be passed to jOOQ directly, e.g.
+ * <ul>
+ * <li>When the value is at the left hand side of an operator</li>
+ * <li>When {@link Field} references and {@link Param} values are mixed</li>
+ * </ul>
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * // The bind value is the first operand of an expression, in case of which it
+ * // needs to be wrapped in a Param explicitly
+ * using(configuration)
+ *    .select()
+ *    .from(RENTALS)
+ *    .where(val(LocalDateTime.now()).between(RENTALS.RENTAL_DATE).and(RENTALS.DUE_DATE))
+ *    .fetch();
+ *
+ * // The bind value is mixed with other types of Field expressions in a statement
+ * using(configuration)
+ *    .insertInto(ACTOR)
+ *    .columns(ACTOR.FIRST_NAME, ACTOR.LAST_NAME, ACTOR.LAST_UPDATE)
+ *    .values(val("John"), val("Doe"), currentTimestamp())
+ *    .execute();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#param(String, Object)},
  * {@link DSL#val(Object)}, {@link DSL#inline(Object)} and respective overloads.

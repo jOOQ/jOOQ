@@ -38,8 +38,23 @@
 package org.jooq;
 
 /**
+ * A common table expression.
+ * <p>
  * A common table expression is a table that can be supplied to
- * <code>WITH</code> clauses.
+ * <code>WITH</code> clauses. It may or may not be defined recursively.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * Table<?> t = name("t").fields("v").as(select(one()));
+ *
+ * using(configuration)
+ *    .select()
+ *    .from(t)
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link Name#as(Select)}.
  *

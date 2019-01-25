@@ -40,7 +40,23 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A meta model for SQL comments on tables, fields, etc.
+ * A comment.
+ * <p>
+ * Most RDBMS support commenting (i.e. documenting) stored objects, such as
+ * {@link Schema}, {@link Table}, {@link Field}, and other objects. Such
+ * comments can be modelled in DDL statements as well as retrieved from meta
+ * data through the {@link Comment} type.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .commentOnTable(TABLE)
+ *    .is(comment("My Comment"))
+ *    .execute();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#comment(String)} and overloads.
  *

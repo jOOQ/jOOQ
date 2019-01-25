@@ -53,11 +53,25 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 
 /**
- * A <code>DerivedColumnList</code> is a name of a table expression with
- * optional derived column list.
+ * A derived column list.
  * <p>
- * An example of a correlation name with derived column list is:
- * <code>table(column1, column2)</code>.
+ * Thist type models a table name and an optional "derived column list", which
+ * can be used to name both tables and columns in one go, e.g. when aliasing a
+ * derived table or a {@link CommonTableExpression}.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * Table<?> t = name("t").fields("v").as(select(one()));
+ * //           ^^^^^^^^^^^^^^^^^^^^^ -- DerivedColumnList
+ *
+ * using(configuration)
+ *    .select()
+ *    .from(t)
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link Name#fields(String...)} and overloads.
  *

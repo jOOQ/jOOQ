@@ -65,7 +65,18 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link Query} that can provide a {@link Result} after execution.
+ * A <code>SELECT</code> statement.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
+ *    .from(ACTOR)
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#select(SelectFieldOrAsterisk...)},
  * or {@link DSLContext#selectQuery()} and overloads.

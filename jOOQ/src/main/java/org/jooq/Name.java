@@ -64,12 +64,25 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
 /**
- * A SQL identifier <code>QueryPart</code>.
+ * An identifier.
  * <p>
- * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in
+ * A <code>Name</code> or identifier is a {@link QueryPart} that renders a SQL
+ * identifier according to the settings specified in
  * {@link Settings#getRenderQuotedNames()} and
  * {@link Settings#getRenderNameCase()}.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(
+ *         field(name("FIRST_NAME"), SQLDataType.VARCHAR),
+ *         field(name("LAST_NAME"), SQLDataType.VARCHAR))
+ *    .from(table(name("ACTOR")))
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#name(String)} and overloads.
  *

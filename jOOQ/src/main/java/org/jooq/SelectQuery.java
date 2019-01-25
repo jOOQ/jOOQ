@@ -74,7 +74,11 @@ import java.util.Collection;
 import org.jooq.exception.DataAccessException;
 
 /**
- * A query for data selection.
+ * A <code>SELECT</code> statement (model API).
+ * <p>
+ * This type is the model API representation of a {@link Select} statement,
+ * which can be mutated after creation. The advantage of this API compared to
+ * the DSL API is a more simple approach to writing dynamic SQL.
  * <p>
  * Instances can be created using {@link DSLContext#selectQuery()} and overloads.
  *

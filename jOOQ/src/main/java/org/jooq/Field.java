@@ -75,10 +75,42 @@ import org.jooq.types.Interval;
 // ...
 
 /**
- * A field used in tables and conditions.
+ * A column expression.
  * <p>
- * Note that all fields qualify as {@link GroupField}, i.e. they can always be
- * used in <code>GROUP BY</code> clauses.
+ * Column expressions or fields can be used in a variety of SQL statements and
+ * clauses, including (non-exhaustive list):
+ * <ul>
+ * <li><code>SELECT</code> clause, e.g. through {@link DSL#select(SelectField)}
+ * (every {@link Field} is a subtype of {@link SelectField})</li>
+ * <li><code>WHERE</code> clause, e.g. through
+ * {@link SelectWhereStep#where(Field)} (<code>Field&lt;Boolean></code> can
+ * behave like a {@link Condition}, regardless if your RDBMS supports the
+ * <code>BOOLEAN</code> type)</li>
+ * <li><code>GROUP BY</code> clause, e.g. through
+ * {@link SelectGroupByStep#groupBy(GroupField...)} (every {@link Field} is a
+ * subtype of {@link GroupField})</li>
+ * <li><code>HAVING</code> clause, e.g. through
+ * {@link SelectHavingStep#having(Field)}<code></li>
+ * <li><code>ORDER BY</code> clause, e.g. through
+ * {@link SelectOrderByStep#orderBy(OrderField)} (every {@link Field} is a
+ * subtype of {@link OrderField})</li>
+ * <li>When creating a {@link Condition}, e.g. through {@link Field#eq(Field)}</li>
+ * <li>As a function argument, e.g. through {@link DSL#abs(Field)}</li>
+ * <li>Many more...</li>
+ * </ul>
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.LAST_NAME)  // Field reference
+ *    .from(ACTOR)
+ *    .groupBy(ACTOR.LAST_NAME) // Field reference
+ *    .orderBy(ACTOR.LAST_NAME) // Field reference
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using a variety of ways, including:
  * <ul>

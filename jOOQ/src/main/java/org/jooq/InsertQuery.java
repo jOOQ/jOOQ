@@ -65,7 +65,11 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * A query for data insertion.
+ * An <code>INSERT</code> statement (model API).
+ * <p>
+ * This type is the model API representation of a {@link Insert} statement,
+ * which can be mutated after creation. The advantage of this API compared to
+ * the DSL API is a more simple approach to writing dynamic SQL.
  * <p>
  * Instances can be created using {@link DSLContext#insertQuery(Table)} and
  * overloads.

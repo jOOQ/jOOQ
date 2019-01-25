@@ -63,7 +63,32 @@ import org.jooq.impl.DSL;
 import java.util.Collection;
 
 /**
- * A model type for a row value expression with degree <code>20</code>.
+ * A row value expression.
+ * <p>
+ * Row value expressions are mainly useful for use in predicates, when comparing
+ * several values in one go, which can be more elegant than expanding the row
+ * value expression predicate in other equivalent syntaxes. This is especially
+ * true for non-equality predicates. For instance, the following two predicates
+ * are equivalent in SQL:
+ * <p>
+ * <code><pre>
+ * (A, B) > (X, Y)
+ * (A > X) OR (A = X AND B > Y)
+ * </pre></code>
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select()
+ *    .from(CUSTOMER)
+ *    .where(row(CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME).in(
+ *        select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME).from(ACTOR)
+ *    ))
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be emulated on all databases. See relevant row

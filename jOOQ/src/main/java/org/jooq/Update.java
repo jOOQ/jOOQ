@@ -40,7 +40,19 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link Query} that can update data in the database.
+ * An <code>UPDATE</code> statement.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .update(CUSTOMER)
+ *    .set(CUSTOMER.STATUS, "Gold")
+ *    .where(CUSTOMER.ID.eq(1))
+ *    .execute();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#update(Table)}, or
  * {@link DSLContext#updateQuery(Table)} and overloads.

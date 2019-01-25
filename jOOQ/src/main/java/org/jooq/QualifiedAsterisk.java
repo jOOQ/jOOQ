@@ -39,8 +39,25 @@ package org.jooq;
 
 
 /**
- * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
- * clauses.
+ * A qualified asterisk.
+ * <p>
+ * Asterisks (qualified and unqualified) are expressions that can be used
+ * exclusively in <code>SELECT</code> clauses and a few other clauses that
+ * explicitly allow for asterisks, including <code>RETURNING</code> on DML
+ * statements. Asterisks are syntax sugar in SQL, which are expanded to a column
+ * list by the parser once all the columns in the <code>FROM</code> clause are
+ * known.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.asterisk())
+ *    .from(ACTOR)
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link Table#asterisk()}.
  *

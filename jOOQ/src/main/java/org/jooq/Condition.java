@@ -42,7 +42,36 @@ import org.jooq.impl.DSL;
 
 
 /**
- * A condition to be used in a query's where part.
+ * A condition or predicate.
+ * <p>
+ * Conditions can be used in a variety of SQL clauses. They're mainly used in a
+ * {@link Select} statement's <code>WHERE</code> clause, but can also appear in
+ * (non-exhaustive list):
+ * <ul>
+ * <li><code>SELECT .. WHERE</code>, e.g. via
+ * {@link SelectWhereStep#where(Condition)}</li>
+ * <li><code>SELECT .. HAVING</code>, e.g. via
+ * {@link SelectHavingStep#having(Condition)}</li>
+ * <li>In a <code>CASE</code> expression, e.g. via {@link DSL#case_()} and
+ * {@link Case#when(Condition, Field)}</li>
+ * <li>As an ordinary column expression, e.g. via
+ * {@link DSL#field(Condition)}</li>
+ * <li>In filtered aggregate functions, e.g. via
+ * {@link AggregateFilterStep#filterWhere(Condition)}</li>
+ * <li>... and many more</li>
+ * </ul>
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select()
+ *    .from(ACTOR)
+ *    .where(ACTOR.ACTOR_ID.eq(1)) // The eq operator produces a Condition from two Fields
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#condition(Field)} and overloads, or
  * by calling a comparison operator method on {@link Field}, such as

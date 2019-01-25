@@ -39,7 +39,23 @@ package org.jooq;
 
 
 /**
- * A wrapper for a {@link Field} and a {@link SortField}.
+ * A sort specification.
+ * <p>
+ * The SQL <code>ORDER BY</code> clause accepts expressions based on
+ * {@link Field}, which may be enhanced by <code>ASC</code> or <code>DESC</code>
+ * as well as <code>NULLS FIRST</code> or <code>NULLS LAST</code>.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
+ *    .from(ACTOR)
+ *    .orderBy(ACTOR.LAST_UPDATE.desc().nullsLast())
+ *    .fetch();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link Field#asc()}, {@link Field#desc()} and
  * related methods.

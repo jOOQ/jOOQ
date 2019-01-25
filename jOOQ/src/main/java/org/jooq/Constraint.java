@@ -42,6 +42,21 @@ import org.jooq.impl.DSL;
 /**
  * A DDL constraint.
  * <p>
+ * Constraint definitions can be used in DDL statements in order to specify the
+ * constraint, or in some DML statements that reference a given constraint.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .alterTable(ACTOR)
+ *    .add(constraint("actor_unique_name")
+ *        .unique(ACTOR.FIRST_NAME, ACTOR.LAST_NAME))
+ *    .execute();
+ * </pre></code>
+ * <p>
  * Instances can be created using {@link DSL#constraint(Name)} and overloads.
  *
  * @author Lukas Eder

@@ -40,7 +40,39 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A query that models an anonymous procedural block.
+ * A procedural block.
+ * <p>
+ * Many RDBMS support procedural languages and in those languages, blocks are an
+ * essential means of grouping logic and creating scope. Some databases support
+ * executing anonymous blocks, in case of which the jOOQ <code>Block</code> can
+ * be executed like any other {@link Query}. This works in a similar way as a
+ * {@link Batch} containing multiple queries, but unlike a {@link Batch}, a
+ * {@link Block} can contain procedural code as well.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * // Wrapping SQL statements only
+ * using(configuration)
+ *    .begin(
+ *        insertInto(TABLE1).columns(TABLE1.COL).values(1),
+ *        insertInto(TABLE2).columns(TABLE2.COL).values(2),
+ *        insertInto(TABLE3).columns(TABLE3.COL).values(3)
+ *    )
+ *    .execute();
+ *
+ * // Wrapping procedural code
+ * Variable&lt;Integer> i = var("i", SQLDataType.INTEGER);
+ * using(configuration)
+ *    .begin(
+ *        for_(i).in(1, 3).loop(
+ *            insertInto(TABLE1).columns(TABLE1.COL).values(i)
+ *        )
+ *    )
+ *    .execute();
+ * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#begin(Statement...)} and overloads.
  *

@@ -42,6 +42,24 @@ import org.jooq.impl.DSL;
 /**
  * A collation.
  * <p>
+ * In SQL, a collation is a set of objects defining character encoding and/or
+ * sort order of character data. jOOQ supports the collation type in various SQL
+ * clauses of DDL and DML statements.
+ * <p>
+ * <strong>Example:</strong>
+ * <p>
+ * <code><pre>
+ * // Assuming import static org.jooq.impl.DSL.*;
+ *
+ * using(configuration)
+ *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
+ *    .from(ACTOR)
+ *    .orderBy(
+ *        ACTOR.FIRST_NAME.collate(collation("utf8_german2_ci")),
+ *        ACTOR.LAST_NAME.collate(collation("utf8_german2_ci")))
+ *    .fetch();
+ * </pre></code>
+ * <p>
  * Instances can be created using {@link DSL#collation(Name)} and overloads.
  *
  * @author Lukas Eder

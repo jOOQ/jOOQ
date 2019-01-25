@@ -857,7 +857,7 @@ CREATE TABLE `author` (
 
     <database>
       <!-- The database type. The format here is:
-           org.util.[database].[database]Database -->
+           org.jooq.util.[database].[database]Database -->
       <name>org.jooq.util.mysql.MySQLDatabase</name>
 
       <!-- The database schema (or in the absence of schema support, in your RDBMS this
@@ -14620,7 +14620,7 @@ result.forEach((Object[] entities) -> {
   <generator>
     <database>
       <!-- The database dialect from jooq-meta. Available dialects are
-           named org.util.[database].[database]Database.
+           named org.jooq.util.[database].[database]Database.
 
            Natively supported values are:
 

@@ -1516,7 +1516,7 @@ public void bind(BindContext context) throws DataAccessException;</java><html>
   <generator>
     <database>
       <!-- The database dialect from jooq-meta. Available dialects are
-           named org.util.[database].[database]Database. Known values are:
+           named org.jooq.util.[database].[database]Database. Known values are:
 
            org.jooq.util.ase.ASEDatabase (to be used with Sybase ASE)
            org.jooq.util.cubrid.CUBRIDDatabase

@@ -786,7 +786,7 @@ CREATE TABLE `author` (
 
     <database>
       <!-- The database type. The format here is:
-           org.util.[database].[database]Database -->
+           org.jooq.util.[database].[database]Database -->
       <name>org.jooq.util.mysql.MySQLDatabase</name>
 
       <!-- The database schema (or in the absence of schema support, in your RDBMS this
@@ -10187,7 +10187,7 @@ Finishing                : Total: 4.814ms, +3.375ms
   <generator>
     <database>
       <!-- The database dialect from jooq-meta. Available dialects are
-           named org.util.[database].[database]Database. Known values are:
+           named org.jooq.util.[database].[database]Database. Known values are:
 
            org.jooq.util.ase.ASEDatabase (to be used with Sybase ASE)
            org.jooq.util.cubrid.CUBRIDDatabase

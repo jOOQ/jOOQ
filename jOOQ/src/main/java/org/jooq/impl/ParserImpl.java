@@ -8054,14 +8054,14 @@ final class ParserImpl implements Parser {
         if (identifier == null)
             return null;
 
-        if (parseIf(ctx, '.')) {
+        // Avoid .. token in indexed for loops:
+        // FOR i IN identifier1 .. identifier2 LOOP <...> END LOOP;
+        if (peek(ctx, '.') && !peek(ctx, "..")) {
             List<Name> result = new ArrayList<Name>();
             result.add(identifier);
 
-            do {
+            while (parseIf(ctx, '.'))
                 result.add(parseIdentifier(ctx));
-            }
-            while (parseIf(ctx, '.'));
 
             return DSL.name(result.toArray(EMPTY_NAME));
         }

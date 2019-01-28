@@ -85,10 +85,12 @@ class DefaultBindingGetResultSetContext<U> extends AbstractScope implements Bind
 
     @Override
     public final <T> BindingGetResultSetContext<T> convert(final Converter<? super T, ? extends U> converter) {
+        final DefaultBindingGetResultSetContext<U> outer = this;
+
         return new DefaultBindingGetResultSetContext<T>(configuration, data, resultSet, index) {
             @Override
             public void value(T v) {
-                value = converter.from(v);
+                outer.value(converter.from(v));
             }
         };
     }

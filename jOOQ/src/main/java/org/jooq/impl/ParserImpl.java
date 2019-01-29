@@ -3521,6 +3521,10 @@ final class ParserImpl implements Parser {
 
             parse(ctx, ')');
         }
+        else if (parseKeywordIf(ctx, "COLUMN IF NOT EXISTS")
+              || parseKeywordIf(ctx, "IF NOT EXISTS")) {
+            return s1.addColumnIfNotExists(parseAlterTableAddField(ctx));
+        }
         else {
             list.add(parseAlterTableAddFieldOrConstraint(ctx));
         }
@@ -3554,77 +3558,80 @@ final class ParserImpl implements Parser {
             return parseCheckSpecification(ctx, constraint);
         else if (constraint != null)
             throw ctx.expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
-        else {
-            parseKeywordIf(ctx, "COLUMN");
 
-            // The below code is taken from CREATE TABLE, with minor modifications as
-            // https://github.com/jOOQ/jOOQ/issues/5317 has not yet been implemented
-            // Once implemented, we might be able to factor out the common logic into
-            // a new parseXXX() method.
+        parseKeywordIf(ctx, "COLUMN");
+        return parseAlterTableAddField(ctx);
+    }
 
-            Name fieldName = parseIdentifier(ctx);
-            DataType type = parseDataType(ctx);
-            Comment fieldComment = null;
+    private static Field<?> parseAlterTableAddField(ParserContext ctx) {
 
-            boolean nullable = false;
-            boolean defaultValue = false;
-            boolean onUpdate = false;
-            boolean unique = false;
-            boolean comment = false;
+        // The below code is taken from CREATE TABLE, with minor modifications as
+        // https://github.com/jOOQ/jOOQ/issues/5317 has not yet been implemented
+        // Once implemented, we might be able to factor out the common logic into
+        // a new parseXXX() method.
 
-            for (;;) {
-                if (!nullable) {
-                    if (parseKeywordIf(ctx, "NULL")) {
-                        type = type.nullable(true);
-                        nullable = true;
-                        continue;
-                    }
-                    else if (parseKeywordIf(ctx, "NOT NULL")) {
-                        type = type.nullable(false);
-                        nullable = true;
-                        continue;
-                    }
+        Name fieldName = parseIdentifier(ctx);
+        DataType type = parseDataType(ctx);
+        Comment fieldComment = null;
+
+        boolean nullable = false;
+        boolean defaultValue = false;
+        boolean onUpdate = false;
+        boolean unique = false;
+        boolean comment = false;
+
+        for (;;) {
+            if (!nullable) {
+                if (parseKeywordIf(ctx, "NULL")) {
+                    type = type.nullable(true);
+                    nullable = true;
+                    continue;
                 }
-
-                if (!defaultValue) {
-                    if (parseKeywordIf(ctx, "DEFAULT")) {
-                        type = type.defaultValue(toField(ctx, parseConcat(ctx, null)));
-                        defaultValue = true;
-                        continue;
-                    }
+                else if (parseKeywordIf(ctx, "NOT NULL")) {
+                    type = type.nullable(false);
+                    nullable = true;
+                    continue;
                 }
-
-                if (!onUpdate) {
-                    if (parseKeywordIf(ctx, "ON UPDATE")) {
-
-                        // [#6132] TODO: Support this feature in the jOOQ DDL API
-                        parseConcat(ctx, null);
-                        onUpdate = true;
-                        continue;
-                    }
-                }
-
-                if (!unique)
-                    if (parseKeywordIf(ctx, "PRIMARY KEY"))
-                        throw ctx.notImplemented("Inline primary key specification");
-                    else if (parseKeywordIf(ctx, "UNIQUE"))
-                        throw ctx.notImplemented("Inline unique key specification");
-
-                if (parseKeywordIf(ctx, "CHECK"))
-                    throw ctx.notImplemented("Inline check constraint specification");
-
-                if (!comment) {
-                    if (parseKeywordIf(ctx, "COMMENT")) {
-                        fieldComment = parseComment(ctx);
-                        continue;
-                    }
-                }
-
-                break;
             }
 
-            return field(fieldName, type, fieldComment);
+            if (!defaultValue) {
+                if (parseKeywordIf(ctx, "DEFAULT")) {
+                    type = type.defaultValue(toField(ctx, parseConcat(ctx, null)));
+                    defaultValue = true;
+                    continue;
+                }
+            }
+
+            if (!onUpdate) {
+                if (parseKeywordIf(ctx, "ON UPDATE")) {
+
+                    // [#6132] TODO: Support this feature in the jOOQ DDL API
+                    parseConcat(ctx, null);
+                    onUpdate = true;
+                    continue;
+                }
+            }
+
+            if (!unique)
+                if (parseKeywordIf(ctx, "PRIMARY KEY"))
+                    throw ctx.notImplemented("Inline primary key specification");
+                else if (parseKeywordIf(ctx, "UNIQUE"))
+                    throw ctx.notImplemented("Inline unique key specification");
+
+            if (parseKeywordIf(ctx, "CHECK"))
+                throw ctx.notImplemented("Inline check constraint specification");
+
+            if (!comment) {
+                if (parseKeywordIf(ctx, "COMMENT")) {
+                    fieldComment = parseComment(ctx);
+                    continue;
+                }
+            }
+
+            break;
         }
+
+        return field(fieldName, type, fieldComment);
     }
 
     private static final DDLQuery parseAlterTableAlterColumn(ParserContext ctx, AlterTableStep s1) {

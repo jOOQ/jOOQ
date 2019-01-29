@@ -132,7 +132,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
 (
   'ADD CONSTRAINT' constraintName constraint
 | 'ADD' constraint
-| 'ADD' [ 'COLUMN' ] column
+| 'ADD' [ 'COLUMN' ] [ 'IF NOT EXISTS' ] column
 | 'ADD' '(' ( 'CONSTRAINT' constraintName constraint | constraint | column )
       { ',' ( 'CONSTRAINT' constraintName constraint | constraint | column ) } ')'
 | ( 'ALTER' | 'MODIFY' )

@@ -3563,7 +3563,7 @@ final class ParserImpl implements Parser {
         return parseAlterTableAddField(ctx);
     }
 
-    private static Field<?> parseAlterTableAddField(ParserContext ctx) {
+    private static final Field<?> parseAlterTableAddField(ParserContext ctx) {
 
         // The below code is taken from CREATE TABLE, with minor modifications as
         // https://github.com/jOOQ/jOOQ/issues/5317 has not yet been implemented
@@ -4594,6 +4594,11 @@ final class ParserImpl implements Parser {
             else {
                 Name alias = null;
                 Field<?> field = null;
+
+
+
+
+
 
 
 

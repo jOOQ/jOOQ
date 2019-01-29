@@ -10160,12 +10160,13 @@ from (
 
 </html><text><![CDATA[$ java -cp jooq-{jooq-version}.jar org.jooq.ParserCLI -h
 Usage:
-  -f / --formatted                        Format output SQL
-  -h / --help                             Display this help
-  -k / --keyword    <RenderKeywordStyle>  Specify the output keyword style (org.jooq.conf.RenderKeywordStyle)
-  -i / --identifier <RenderNameStyle>     Specify the output identifier style (org.jooq.conf.RenderNameStyle)
-  -t / --to-dialect <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)
-  -s / --sql        <String>              Specify the input SQL string
+  -f / --formatted                          Format output SQL
+  -h / --help                               Display this help
+  -k / --keyword      <RenderKeywordStyle>  Specify the output keyword style (org.jooq.conf.RenderKeywordStyle)
+  -i / --identifier   <RenderNameStyle>     Specify the output identifier style (org.jooq.conf.RenderNameStyle)
+  -f / --from-dialect <SQLDialect>          Specify the input dialect (org.jooq.SQLDialect)
+  -t / --to-dialect   <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)
+  -s / --sql          <String>              Specify the input SQL string
 
 $ java -cp jooq-{jooq-version}.jar org.jooq.ParserCLI -t ORACLE -s "SELECT substring('abcde', 2, 3)"
 select substr('abcde', 2, 3) from dual;]]></text><html>

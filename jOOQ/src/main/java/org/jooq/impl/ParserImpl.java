@@ -3360,10 +3360,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseAlterTable(ParserContext ctx) {
-        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        boolean ifTableExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> tableName = parseTableName(ctx);
 
-        AlterTableStep s1 = ifExists
+        AlterTableStep s1 = ifTableExists
             ? ctx.dsl.alterTableIfExists(tableName)
             : ctx.dsl.alterTable(tableName);
 
@@ -3403,17 +3403,20 @@ final class ParserImpl implements Parser {
                     }
                     else {
                         parseKeywordIf(ctx, "COLUMN");
+                        boolean ifColumnExists = parseKeywordIf(ctx, "IF EXISTS");
                         boolean parens = parseIf(ctx, '(');
                         Field<?> field = parseFieldName(ctx);
                         List<Field<?>> fields = null;
 
-                        while (parseIf(ctx, ',')) {
-                            if (fields == null) {
-                                fields = new ArrayList<Field<?>>();
-                                fields.add(field);
-                            }
+                        if (!ifColumnExists) {
+                            while (parseIf(ctx, ',')) {
+                                if (fields == null) {
+                                    fields = new ArrayList<Field<?>>();
+                                    fields.add(field);
+                                }
 
-                            fields.add(parseFieldName(ctx));
+                                fields.add(parseFieldName(ctx));
+                            }
                         }
 
                         if (parens)
@@ -3422,13 +3425,20 @@ final class ParserImpl implements Parser {
                         boolean cascade = parseKeywordIf(ctx, "CASCADE");
                         boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
 
-                        AlterTableDropStep s2 = fields == null ? s1.dropColumn(field) : s1.dropColumns(fields);
+                        AlterTableDropStep s2 =
+                              fields == null
+                            ? ifColumnExists
+                                ? s1.dropColumnIfExists(field)
+                                : s1.dropColumn(field)
+                            : s1.dropColumns(fields);
+
                         AlterTableFinalStep s3 =
                               cascade
                             ? s2.cascade()
                             : restrict
                             ? s2.restrict()
                             : s2;
+
                         return s3;
                     }
                 }

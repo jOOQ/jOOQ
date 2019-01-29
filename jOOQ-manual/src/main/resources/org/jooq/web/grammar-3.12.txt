@@ -147,7 +147,7 @@ alterTableStatement = 'ALTER TABLE' [ 'IF EXISTS' ] tableName break
   | '(' column ')'
   )
 | 'COMMENT' [ '=' ] stringLiteral
-| 'DROP' [ 'COLUMN' ] identifier [ 'CASCADE' | 'RESTRICT' ]
+| 'DROP' [ 'COLUMN' ] [ 'IF EXISTS' ] identifier [ 'CASCADE' | 'RESTRICT' ]
 | 'DROP CONSTRAINT' constraintName
 | 'RENAME' [ ( 'COLUMN' | 'INDEX' | 'CONSTRAINT' ) identifier ] ( 'TO' | 'AS' ) identifier
 )

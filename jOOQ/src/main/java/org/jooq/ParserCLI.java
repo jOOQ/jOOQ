@@ -75,6 +75,8 @@ public final class ParserCLI {
             settings.setRenderKeywordCase(a.keywords);
         if (a.name != null)
             settings.setRenderNameCase(a.name);
+        if (a.fromDialect != null)
+            settings.setParseDialect(a.fromDialect);
 
         DSLContext ctx = DSL.using(a.toDialect, settings);
         try {
@@ -132,6 +134,20 @@ public final class ParserCLI {
                     throw e;
                 }
             }
+            else if ("-f".equals(args[i]) || "--from-dialect".equals(args[i])) {
+                try {
+                    result.fromDialect = SQLDialect.valueOf(args[++i]);
+                    continue argsLoop;
+                }
+                catch (IllegalArgumentException e) {
+                    invalid(args[i], SQLDialect.class);
+                    throw e;
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    System.err.println("Flag -f / --from-dialect requires <SQLDialect> argument");
+                    throw e;
+                }
+            }
             else if ("-t".equals(args[i]) || "--to-dialect".equals(args[i])) {
                 try {
                     result.toDialect = SQLDialect.valueOf(args[++i]);
@@ -179,12 +195,13 @@ public final class ParserCLI {
 
     private static final void help() {
         System.out.println("Usage:");
-        System.out.println("  -f / --formatted                       Format output SQL");
-        System.out.println("  -h / --help                            Display this help");
-        System.out.println("  -k / --keyword    <RenderKeywordCase>  Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
-        System.out.println("  -i / --identifier <RenderNameCase>     Specify the output identifier case (org.jooq.conf.RenderNameCase)");
-        System.out.println("  -t / --to-dialect <SQLDialect>         Specify the output dialect (org.jooq.SQLDialect)");
-        System.out.println("  -s / --sql        <String>             Specify the input SQL string");
+        System.out.println("  -f / --formatted                        Format output SQL");
+        System.out.println("  -h / --help                             Display this help");
+        System.out.println("  -k / --keyword      <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
+        System.out.println("  -i / --identifier   <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  -f / --from-dialect <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
+        System.out.println("  -t / --to-dialect   <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("  -s / --sql          <String>            Specify the input SQL string");
     }
 
     public static final class Args {
@@ -192,6 +209,7 @@ public final class ParserCLI {
         RenderKeywordCase keywords;
         RenderNameCase    name;
         SQLDialect        toDialect;
+        SQLDialect        fromDialect;
         boolean           formatted;
     }
 }

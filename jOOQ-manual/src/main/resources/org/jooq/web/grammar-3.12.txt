@@ -766,7 +766,7 @@ term =
 | 'ISNULL' '(' field ',' field ')'
 | ( 'LOWER' | 'LCASE' ) '(' field ')'
 | 'LPAD' '(' field ',' field [ ',' field ] ')'
-| 'LTRIM' '(' field ')'
+| 'LTRIM' '(' field [ ',' field ] ')'
 | 'LEFT' '(' field ',' field ')'
 | 'LEN' '(' field ')'
 | 'LENGTH' '(' field ')'
@@ -820,7 +820,7 @@ term =
 | 'REPEAT' '(' field ',' field ')'
 | 'REVERSE' '(' field ')'
 | 'RPAD' '(' field ',' field [ ',' field ] ')'
-| 'RTRIM' '(' field ')'
+| 'RTRIM' '(' field [ ',' field ] ')'
 | 'RIGHT' '(' field ',' field ')'
 | 'ROW_NUMBER' '(' ')' over
 | 'RANK' ( '(' ')' over | '(' fields ')' withinGroup )
@@ -854,7 +854,8 @@ term =
 | 'TO_NUMBER' '(' field ')'
 | 'TO_TIMESTAMP' '(' field ',' field ')'
 | ( 'TRANSLATE' | 'OTRANSLATE' ) '(' field ',' field ',' field ')'
-| 'TRIM' '(' field ')'
+| 'TRIM' '(' field [ ',' field ] ')'
+| 'TRIM' '(' ( 'LEADING' | 'L' | 'TRAILING' | 'T' | 'BOTH' | 'B' ) [ field ] 'FROM' field ')'
 | 'TRUNC' '(' field ',' stringLiteral ')'
 | 'TRUNC' '(' numericOp ',' numericOp ')'
 | truthValue

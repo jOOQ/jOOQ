@@ -6606,9 +6606,40 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldTrimIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "TRIM")) {
             parse(ctx, '(');
+            int position = ctx.position();
+
+            boolean leading = parseKeywordIf(ctx, "LEADING") || parseKeywordIf(ctx, "L");
+            boolean trailing = !leading && (parseKeywordIf(ctx, "TRAILING") || parseKeywordIf(ctx, "T"));
+            boolean both = !leading && !trailing && (parseKeywordIf(ctx, "BOTH") || parseKeywordIf(ctx, "B"));
+
+            if ((leading || trailing || both) && parseIf(ctx, ',')) {
+                ctx.position(position);
+            }
+            else if ((leading || trailing || both) && parseKeywordIf(ctx, "FROM")) {
+                Field<String> f = (Field) parseField(ctx, S);
+                parse(ctx, ')');
+
+                return leading ? ltrim(f)
+                     : trailing ? rtrim(f)
+                     : trim(f);
+            }
+
             Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return trim(f1);
+
+            if (parseKeywordIf(ctx, "FROM")) {
+                Field<String> f2 = (Field) parseField(ctx, S);
+                parse(ctx, ')');
+
+                return leading ? ltrim(f2, f1)
+                     : trailing ? rtrim(f2, f1)
+                     : trim(f2, f1);
+            }
+            else {
+                Field<String> f2 = parseIf(ctx, ',') ? (Field) parseField(ctx, S) : null;
+                parse(ctx, ')');
+
+                return f2 == null ? trim(f1) : trim(f1, f2);
+            }
         }
 
         return null;
@@ -6683,8 +6714,10 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "RTRIM")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
+            Field<String> f2 = parseIf(ctx, ',') ? (Field) parseField(ctx, S) : null;
             parse(ctx, ')');
-            return rtrim(f1);
+
+            return f2 == null ? rtrim(f1) : rtrim(f1, f2);
         }
 
         return null;
@@ -6694,8 +6727,10 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "LTRIM")) {
             parse(ctx, '(');
             Field<String> f1 = (Field) parseField(ctx, S);
+            Field<String> f2 = parseIf(ctx, ',') ? (Field) parseField(ctx, S) : null;
             parse(ctx, ')');
-            return ltrim(f1);
+
+            return f2 == null ? ltrim(f1) : ltrim(f1, f2);
         }
 
         return null;

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -53,15 +54,26 @@ final class Trim extends AbstractFunction<String> {
     private static final long   serialVersionUID = -7273879239726265322L;
 
     private final Field<String> argument;
+    private final Field<String> characters;
 
     Trim(Field<String> argument) {
         super("trim", SQLDataType.VARCHAR, argument);
 
         this.argument = argument;
+        this.characters = null;
+    }
+
+    Trim(Field<String> argument, Field<String> characters) {
+        super("trim", SQLDataType.VARCHAR, argument, characters);
+
+        this.argument = argument;
+        this.characters = characters;
     }
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
+        if (characters == null) {
+            switch (configuration.dialect()) {
 
 
 
@@ -75,6 +87,24 @@ final class Trim extends AbstractFunction<String> {
 
 
 
-        return function("trim", SQLDataType.VARCHAR, argument);
+
+                default:
+                    return function("trim", VARCHAR, argument);
+            }
+        }
+        else {
+            switch (configuration.dialect()) {
+                case SQLITE:
+                    return DSL.function("trim", VARCHAR, argument, characters);
+
+
+
+
+
+
+                default:
+                    return DSL.field("{trim}({both} {0} {from} {1})", VARCHAR, characters, argument);
+            }
+        }
     }
 }

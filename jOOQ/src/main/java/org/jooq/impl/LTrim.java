@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -51,21 +53,46 @@ final class LTrim extends AbstractFunction<String> {
     private static final long   serialVersionUID = -7273879239726265322L;
 
     private final Field<String> argument;
+    private final Field<String> characters;
 
     LTrim(Field<String> argument) {
         super("ltrim", SQLDataType.VARCHAR, argument);
 
         this.argument = argument;
+        this.characters = null;
+    }
+
+    LTrim(Field<String> argument, Field<String> characters) {
+        super("ltrim", SQLDataType.VARCHAR, argument, characters);
+
+        this.argument = argument;
+        this.characters = characters;
     }
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            case FIREBIRD:
-                return DSL.field("{trim}({leading} {from} {0})", SQLDataType.VARCHAR, argument);
+        if (characters == null) {
+            switch (configuration.family()) {
+                case FIREBIRD:
+                    return DSL.field("{trim}({leading} {from} {0})", VARCHAR, argument);
 
-            default:
-                return DSL.function("ltrim", SQLDataType.VARCHAR, argument);
+                default:
+                    return DSL.function("ltrim", VARCHAR, argument);
+            }
+        }
+        else {
+            switch (configuration.family()) {
+
+
+
+
+
+                case SQLITE:
+                    return DSL.function("ltrim", VARCHAR, argument, characters);
+
+                default:
+                    return DSL.field("{trim}({leading} {0} {from} {1})", VARCHAR, characters, argument);
+            }
         }
     }
 }

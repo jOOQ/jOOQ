@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -53,21 +54,46 @@ final class RTrim extends AbstractFunction<String> {
     private static final long   serialVersionUID = -7273879239726265322L;
 
     private final Field<String> argument;
+    private final Field<String> characters;
 
     RTrim(Field<String> argument) {
         super("rtrim", SQLDataType.VARCHAR, argument);
 
         this.argument = argument;
+        this.characters = null;
+    }
+
+    RTrim(Field<String> argument, Field<String> characters) {
+        super("rtrim", SQLDataType.VARCHAR, argument, characters);
+
+        this.argument = argument;
+        this.characters = characters;
     }
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            case FIREBIRD:
-                return DSL.field("{trim}({trailing} {from} {0})", SQLDataType.VARCHAR, argument);
+        if (characters == null) {
+            switch (configuration.family()) {
+                case FIREBIRD:
+                    return DSL.field("{trim}({trailing} {from} {0})", VARCHAR, argument);
 
-            default:
-                return function("rtrim", SQLDataType.VARCHAR, argument);
+                default:
+                    return function("rtrim", VARCHAR, argument);
+            }
+        }
+        else {
+            switch (configuration.family()) {
+
+
+
+
+
+                case SQLITE:
+                    return DSL.function("rtrim", VARCHAR, argument, characters);
+
+                default:
+                    return DSL.field("{trim}({trailing} {0} {from} {1})", VARCHAR, characters, argument);
+            }
         }
     }
 }

@@ -12808,6 +12808,30 @@ public class DSL {
     }
 
     /**
+     * Get the <code>trim(field, characters)</code> or
+     * <code>trim(both characters from field)</code> function.
+     *
+     * @see #trim(Field, Field)
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(String value, String characters) {
+        return trim(Tools.field(value), Tools.field(characters));
+    }
+
+    /**
+     * Get the <code>trim(field, characters)</code> or
+     * <code>trim(both characters from field)</code> function.
+     * <p>
+     * This renders the trim function where available:
+     * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
+     * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(Field<String> field, Field<String> characters) {
+        return new Trim(nullSafe(field), nullSafe(characters));
+    }
+
+    /**
      * Get the rtrim(field) function.
      *
      * @see #rtrim(Field)
@@ -12829,6 +12853,29 @@ public class DSL {
     }
 
     /**
+     * Get the <code>rtrim(field, characters)</code> or
+     * <code>trim(trailing characters from field)</code> function.
+     *
+     * @see #rtrim(Field, Field)
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(String value, String characters) {
+        return rtrim(Tools.field(value), Tools.field(characters));
+    }
+
+    /**
+     * Get the <code>rtrim(field, characters)</code> or
+     * <code>trim(trailing characters from field)</code> function.
+     * <p>
+     * This renders the rtrim function in all dialects:
+     * <code><pre>rtrim([field])</pre></code>
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(Field<String> field, Field<String> characters) {
+        return new RTrim(nullSafe(field), nullSafe(characters));
+    }
+
+    /**
      * Get the ltrim(field) function.
      *
      * @see #ltrim(Field)
@@ -12847,6 +12894,29 @@ public class DSL {
     @Support
     public static Field<String> ltrim(Field<String> field) {
         return new LTrim(nullSafe(field));
+    }
+
+    /**
+     * Get the <code>ltrim(field, characters)</code> or
+     * <code>trim(leading characters from field)</code> function.
+     *
+     * @see #ltrim(Field, Field)
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(String value, String characters) {
+        return ltrim(Tools.field(value), Tools.field(characters));
+    }
+
+    /**
+     * Get the <code>ltrim(field, characters)</code> or
+     * <code>trim(leading characters from field)</code> function.
+     * <p>
+     * This renders the ltrim function in all dialects:
+     * <code><pre>ltrim([field])</pre></code>
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(Field<String> field, Field<String> characters) {
+        return new LTrim(nullSafe(field), nullSafe(characters));
     }
 
     /**

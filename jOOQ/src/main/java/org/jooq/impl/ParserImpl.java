@@ -6612,16 +6612,21 @@ final class ParserImpl implements Parser {
             boolean trailing = !leading && (parseKeywordIf(ctx, "TRAILING") || parseKeywordIf(ctx, "T"));
             boolean both = !leading && !trailing && (parseKeywordIf(ctx, "BOTH") || parseKeywordIf(ctx, "B"));
 
-            if ((leading || trailing || both) && parseIf(ctx, ',')) {
-                ctx.position(position);
-            }
-            else if ((leading || trailing || both) && parseKeywordIf(ctx, "FROM")) {
-                Field<String> f = (Field) parseField(ctx, S);
-                parse(ctx, ')');
+            if (leading || trailing || both) {
+                if (parseIf(ctx, ',')) {
+                    ctx.position(position);
+                }
+                else if (parseIf(ctx, ')')) {
+                    ctx.position(position);
+                }
+                else if (parseKeywordIf(ctx, "FROM")) {
+                    Field<String> f = (Field) parseField(ctx, S);
+                    parse(ctx, ')');
 
-                return leading ? ltrim(f)
-                     : trailing ? rtrim(f)
-                     : trim(f);
+                    return leading ? ltrim(f)
+                         : trailing ? rtrim(f)
+                         : trim(f);
+                }
             }
 
             Field<String> f1 = (Field) parseField(ctx, S);

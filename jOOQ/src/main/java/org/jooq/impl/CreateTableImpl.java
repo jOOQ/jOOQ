@@ -553,7 +553,7 @@ final class CreateTableImpl extends AbstractQuery implements
 
         ctx.start(CREATE_TABLE_AS);
 
-        if (NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))
+        if (!columnFields.isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))
             ctx.visit(select(asterisk()).from(table(select).as(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
         else
             ctx.visit(select);
@@ -659,7 +659,12 @@ final class CreateTableImpl extends AbstractQuery implements
             ctx.data(DATA_SELECT_NO_DATA, true);
 
         ctx.data(DATA_SELECT_INTO_TABLE, table);
-        ctx.visit(select);
+
+        if (!columnFields.isEmpty())
+            ctx.visit(select(asterisk()).from(table(select).as(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
+        else
+            ctx.visit(select);
+
         ctx.data().remove(DATA_SELECT_INTO_TABLE);
 
         if (FALSE.equals(withData))

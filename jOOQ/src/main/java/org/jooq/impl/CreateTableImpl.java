@@ -67,12 +67,15 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.createIndex;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -87,6 +90,7 @@ import static org.jooq.impl.Keywords.K_TEMPORARY;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.end;
@@ -134,14 +138,13 @@ final class CreateTableImpl extends AbstractQuery implements
     private static final long                serialVersionUID               = 8904572826501186329L;
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES   = EnumSet.of(H2);
     private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK       = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> EMULATE_ENUM_TYPES_AS_CHECK    = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
     private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK       = EnumSet.of(POSTGRES);
-
-
 
 
 
@@ -439,7 +442,8 @@ final class CreateTableImpl extends AbstractQuery implements
     private void toSQLCreateTable(Context<?> ctx) {
         toSQLCreateTableName(ctx);
 
-        if (!columnFields.isEmpty()) {
+        if (!columnFields.isEmpty()
+                && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))) {
             ctx.sql('(')
                .start(CREATE_TABLE_COLUMNS)
                .formatIndentStart()
@@ -547,9 +551,14 @@ final class CreateTableImpl extends AbstractQuery implements
         if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
             ctx.data(DATA_SELECT_NO_DATA, true);
 
-        ctx.start(CREATE_TABLE_AS)
-           .visit(select)
-           .end(CREATE_TABLE_AS);
+        ctx.start(CREATE_TABLE_AS);
+
+        if (NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))
+            ctx.visit(select(asterisk()).from(table(select).as(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
+        else
+            ctx.visit(select);
+
+        ctx.end(CREATE_TABLE_AS);
 
         if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
             ctx.data().remove(DATA_SELECT_NO_DATA);

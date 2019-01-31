@@ -211,6 +211,16 @@ final class CreateTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final CreateTableImpl columns(Name... fields) {
+        return columns(Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public final CreateTableImpl columns(String... fields) {
+        return columns(Tools.fieldsByName(fields));
+    }
+
+    @Override
     public final CreateTableImpl columns(Collection<? extends Field<?>> fields) {
         for (Field<?> field : fields)
             column(field);

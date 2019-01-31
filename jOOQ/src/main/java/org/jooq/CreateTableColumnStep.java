@@ -107,6 +107,28 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * statement.
      * <p>
      * This is the same as calling {@link #column(Field, DataType)} for each
+     * column. Lacking an explicit data type, this makes sense only for a
+     * <code>CREATE TABLE AS SELECT...</code> statement.
+     */
+    @Support
+    CreateTableColumnStep columns(Name... fields);
+
+    /**
+     * Add several columns to the column list of the <code>CREATE TABLE</code>
+     * statement.
+     * <p>
+     * This is the same as calling {@link #column(Field, DataType)} for each
+     * column. Lacking an explicit data type, this makes sense only for a
+     * <code>CREATE TABLE AS SELECT...</code> statement.
+     */
+    @Support
+    CreateTableColumnStep columns(String... fields);
+
+    /**
+     * Add several columns to the column list of the <code>CREATE TABLE</code>
+     * statement.
+     * <p>
+     * This is the same as calling {@link #column(Field, DataType)} for each
      * column, with {@link Field#getDataType()} as the argument data type.
      */
     @Support

@@ -654,22 +654,24 @@ final class CreateTableImpl extends AbstractQuery implements
         }
     }
 
-    private final void acceptSelectInto(Context<?> ctx) {
-        if (FALSE.equals(withData))
-            ctx.data(DATA_SELECT_NO_DATA, true);
 
-        ctx.data(DATA_SELECT_INTO_TABLE, table);
 
-        if (!columnFields.isEmpty())
-            ctx.visit(select(asterisk()).from(table(select).as(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
-        else
-            ctx.visit(select);
 
-        ctx.data().remove(DATA_SELECT_INTO_TABLE);
 
-        if (FALSE.equals(withData))
-            ctx.data().remove(DATA_SELECT_NO_DATA);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private enum OnCommit {
         DELETE_ROWS,

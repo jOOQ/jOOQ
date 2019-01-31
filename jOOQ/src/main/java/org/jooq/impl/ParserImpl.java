@@ -2874,10 +2874,11 @@ final class ParserImpl implements Parser {
                 Name fieldName = parseIdentifier(ctx);
                 DataType<?> type = null;
 
-                if (ctas == null && (peek(ctx, ',') || peek(ctx, ')')))
-                    ctas = true;
-                else
-                    ctas = false;
+                if (ctas == null)
+                    if (peek(ctx, ',') || peek(ctx, ')'))
+                        ctas = true;
+                    else
+                        ctas = false;
 
                 type = !TRUE.equals(ctas)
                     ? parseDataType(ctx)

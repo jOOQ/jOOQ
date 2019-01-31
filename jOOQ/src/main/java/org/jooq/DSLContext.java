@@ -8525,7 +8525,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTable(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTable(String table);
+    CreateTableColumnStep createTable(String table);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -8533,7 +8533,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTable(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTable(Name table);
+    CreateTableColumnStep createTable(Name table);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -8541,7 +8541,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTable(Table)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTable(Table<?> table);
+    CreateTableColumnStep createTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -8549,7 +8549,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTableIfNotExists(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTableIfNotExists(String table);
+    CreateTableColumnStep createTableIfNotExists(String table);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -8557,7 +8557,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTableIfNotExists(Name)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTableIfNotExists(Name table);
+    CreateTableColumnStep createTableIfNotExists(Name table);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -8565,7 +8565,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTableIfNotExists(Table)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableAsStep<Record> createTableIfNotExists(Table<?> table);
+    CreateTableColumnStep createTableIfNotExists(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
@@ -8573,7 +8573,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTemporaryTable(String)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createTemporaryTable(String table);
+    CreateTableColumnStep createTemporaryTable(String table);
 
     /**
      * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
@@ -8581,7 +8581,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTemporaryTable(Name)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createTemporaryTable(Name table);
+    CreateTableColumnStep createTemporaryTable(Name table);
 
     /**
      * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
@@ -8589,7 +8589,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createTemporaryTable(Table)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createTemporaryTable(Table<?> table);
+    CreateTableColumnStep createTemporaryTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
@@ -8597,7 +8597,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createGlobalTemporaryTable(String table);
+    CreateTableColumnStep createGlobalTemporaryTable(String table);
 
     /**
      * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
@@ -8605,7 +8605,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createGlobalTemporaryTable(Name table);
+    CreateTableColumnStep createGlobalTemporaryTable(Name table);
 
     /**
      * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
@@ -8613,7 +8613,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table);
+    CreateTableColumnStep createGlobalTemporaryTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

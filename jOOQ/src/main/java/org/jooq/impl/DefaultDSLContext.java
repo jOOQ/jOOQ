@@ -113,7 +113,7 @@ import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
-import org.jooq.CreateTableAsStep;
+import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
@@ -3013,63 +3013,63 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateTableAsStep<Record> createTable(String table) {
+    public CreateTableColumnStep createTable(String table) {
         return createTable(name(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTable(Name table) {
+    public CreateTableColumnStep createTable(Name table) {
         return createTable(table(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTable(Table<?> table) {
-        return new CreateTableImpl<Record>(configuration(), table, false, false);
+    public CreateTableColumnStep createTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, false, false);
     }
 
     @Override
-    public CreateTableAsStep<Record> createTableIfNotExists(String table) {
+    public CreateTableColumnStep createTableIfNotExists(String table) {
         return createTableIfNotExists(name(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTableIfNotExists(Name table) {
+    public CreateTableColumnStep createTableIfNotExists(Name table) {
         return createTableIfNotExists(table(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl<Record>(configuration(), table, false, true);
+    public CreateTableColumnStep createTableIfNotExists(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, false, true);
     }
 
     @Override
-    public CreateTableAsStep<Record> createTemporaryTable(String table) {
+    public CreateTableColumnStep createTemporaryTable(String table) {
         return createTemporaryTable(name(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTemporaryTable(Name table) {
+    public CreateTableColumnStep createTemporaryTable(Name table) {
         return createTemporaryTable(table(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
-        return new CreateTableImpl<Record>(configuration(), table, true, false);
+    public CreateTableColumnStep createTemporaryTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, false);
     }
 
     @Override
-    public CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
+    public CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return createGlobalTemporaryTable(name(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
+    public CreateTableColumnStep createGlobalTemporaryTable(Name table) {
         return createGlobalTemporaryTable(table(table));
     }
 
     @Override
-    public CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
-        return new CreateTableImpl<Record>(configuration(), table, true, false);
+    public CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, false);
     }
 
     @Override

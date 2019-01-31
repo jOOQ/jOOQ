@@ -104,7 +104,6 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
-import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableWithDataStep;
 import org.jooq.DataType;
@@ -123,10 +122,9 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class CreateTableImpl<R extends Record> extends AbstractQuery implements
+final class CreateTableImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
-    CreateTableAsStep<R>,
     CreateTableWithDataStep,
     CreateTableColumnStep {
 
@@ -142,6 +140,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK       = EnumSet.of(POSTGRES);
+
+
 
 
 
@@ -179,36 +179,36 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateTableImpl<R> as(Select<? extends R> s) {
+    public final CreateTableImpl as(Select<? extends Record> s) {
         this.select = s;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> withData() {
+    public final CreateTableImpl withData() {
         withData = true;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> withNoData() {
+    public final CreateTableImpl withNoData() {
         withData = false;
         return this;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final CreateTableImpl<R> column(Field<?> field) {
+    public final CreateTableImpl column(Field<?> field) {
         return column((Field) field, field.getDataType());
     }
 
     @Override
-    public final CreateTableImpl<R> columns(Field<?>... fields) {
+    public final CreateTableImpl columns(Field<?>... fields) {
         return columns(Arrays.asList(fields));
     }
 
     @Override
-    public final CreateTableImpl<R> columns(Collection<? extends Field<?>> fields) {
+    public final CreateTableImpl columns(Collection<? extends Field<?>> fields) {
         for (Field<?> field : fields)
             column(field);
 
@@ -216,103 +216,103 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final <T> CreateTableImpl<R> column(Field<T> field, DataType<T> type) {
+    public final <T> CreateTableImpl column(Field<T> field, DataType<T> type) {
         columnFields.add(field);
         columnTypes.add(type);
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> column(Name field, DataType<?> type) {
+    public final CreateTableImpl column(Name field, DataType<?> type) {
         columnFields.add(field(field, type));
         columnTypes.add(type);
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> column(String field, DataType<?> type) {
+    public final CreateTableImpl column(String field, DataType<?> type) {
         return column(name(field), type);
     }
 
     @Override
-    public final CreateTableImpl<R> constraint(Constraint c) {
+    public final CreateTableImpl constraint(Constraint c) {
         return constraints(Arrays.asList(c));
     }
 
     @Override
-    public final CreateTableImpl<R> constraints(Constraint... c) {
+    public final CreateTableImpl constraints(Constraint... c) {
         return constraints(Arrays.asList(c));
     }
 
     @Override
-    public final CreateTableImpl<R> constraints(Collection<? extends Constraint> c) {
+    public final CreateTableImpl constraints(Collection<? extends Constraint> c) {
         constraints.addAll(c);
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> index(Index i) {
+    public final CreateTableImpl index(Index i) {
         return indexes(Arrays.asList(i));
     }
 
     @Override
-    public final CreateTableImpl<R> indexes(Index... i) {
+    public final CreateTableImpl indexes(Index... i) {
         return indexes(Arrays.asList(i));
     }
 
     @Override
-    public final CreateTableImpl<R> indexes(Collection<? extends Index> i) {
+    public final CreateTableImpl indexes(Collection<? extends Index> i) {
         indexes.addAll(i);
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> onCommitDeleteRows() {
+    public final CreateTableImpl onCommitDeleteRows() {
         onCommit = OnCommit.DELETE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> onCommitPreserveRows() {
+    public final CreateTableImpl onCommitPreserveRows() {
         onCommit = OnCommit.PRESERVE_ROWS;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> onCommitDrop() {
+    public final CreateTableImpl onCommitDrop() {
         onCommit = OnCommit.DROP;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> comment(String c) {
+    public final CreateTableImpl comment(String c) {
         return comment(DSL.comment(c));
     }
 
     @Override
-    public final CreateTableImpl<R> comment(Comment c) {
+    public final CreateTableImpl comment(Comment c) {
         comment = c;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> storage(SQL sql) {
+    public final CreateTableImpl storage(SQL sql) {
         storage = sql;
         return this;
     }
 
     @Override
-    public final CreateTableImpl<R> storage(String sql) {
+    public final CreateTableImpl storage(String sql) {
         return storage(sql(sql));
     }
 
     @Override
-    public final CreateTableImpl<R> storage(String sql, Object... bindings) {
+    public final CreateTableImpl storage(String sql, Object... bindings) {
         return storage(sql(sql, bindings));
     }
 
     @Override
-    public final CreateTableImpl<R> storage(String sql, QueryPart... parts) {
+    public final CreateTableImpl storage(String sql, QueryPart... parts) {
         return storage(sql(sql, parts));
     }
 
@@ -420,7 +420,26 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             acceptCreateTableAsSelect(ctx);
         }
         else {
-            toSQLCreateTableName(ctx);
+            toSQLCreateTable(ctx);
+            toSQLOnCommit(ctx);
+        }
+
+        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.family()))
+            ctx.formatSeparator()
+               .visit(K_COMMENT).sql(' ').visit(comment);
+
+        // [#7772] This data() value should be available from ctx directly, not only from ctx.configuration()
+        if (storage != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
+            ctx.formatSeparator()
+               .visit(storage);
+
+        ctx.end(CREATE_TABLE);
+    }
+
+    private void toSQLCreateTable(Context<?> ctx) {
+        toSQLCreateTableName(ctx);
+
+        if (!columnFields.isEmpty()) {
             ctx.sql('(')
                .start(CREATE_TABLE_COLUMNS)
                .formatIndentStart()
@@ -435,9 +454,12 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 if (identity == null && type.identity())
                     identity = columnFields.get(i);
 
-                ctx.visit(columnFields.get(i))
-                   .sql(' ');
-                Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
+                ctx.visit(columnFields.get(i));
+
+                if (select == null) {
+                    ctx.sql(' ');
+                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
+                }
 
                 if (i < columnFields.size() - 1)
                     ctx.sql(',').formatSeparator();
@@ -499,20 +521,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
-
-            toSQLOnCommit(ctx);
         }
-
-        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.family()))
-            ctx.formatSeparator()
-               .visit(K_COMMENT).sql(' ').visit(comment);
-
-        // [#7772] This data() value should be available from ctx directly, not only from ctx.configuration()
-        if (storage != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
-            ctx.formatSeparator()
-               .visit(storage);
-
-        ctx.end(CREATE_TABLE);
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {
@@ -523,7 +532,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {
-        toSQLCreateTableName(ctx);
+        toSQLCreateTable(ctx);
         toSQLOnCommit(ctx);
         ctx.formatSeparator()
            .visit(K_AS);

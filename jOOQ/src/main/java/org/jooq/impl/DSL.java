@@ -170,7 +170,7 @@ import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
-import org.jooq.CreateTableAsStep;
+import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
@@ -6617,7 +6617,7 @@ public class DSL {
      * @see DSLContext#createTable(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTable(String table) {
+    public static CreateTableColumnStep createTable(String table) {
         return dsl().createTable(table);
     }
 
@@ -6627,7 +6627,7 @@ public class DSL {
      * @see DSLContext#createTable(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTable(Name table) {
+    public static CreateTableColumnStep createTable(Name table) {
         return dsl().createTable(table);
     }
 
@@ -6637,7 +6637,7 @@ public class DSL {
      * @see DSLContext#createTable(Table)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTable(Table<?> table) {
+    public static CreateTableColumnStep createTable(Table<?> table) {
         return dsl().createTable(table);
     }
 
@@ -6647,7 +6647,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTableIfNotExists(String table) {
+    public static CreateTableColumnStep createTableIfNotExists(String table) {
         return dsl().createTableIfNotExists(table);
     }
 
@@ -6657,7 +6657,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Name)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTableIfNotExists(Name table) {
+    public static CreateTableColumnStep createTableIfNotExists(Name table) {
         return dsl().createTableIfNotExists(table);
     }
 
@@ -6667,7 +6667,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Table)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTableIfNotExists(Table<?> table) {
+    public static CreateTableColumnStep createTableIfNotExists(Table<?> table) {
         return dsl().createTableIfNotExists(table);
     }
 
@@ -6677,7 +6677,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(String)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createTemporaryTable(String table) {
+    public static CreateTableColumnStep createTemporaryTable(String table) {
         return dsl().createTemporaryTable(table);
     }
 
@@ -6687,7 +6687,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Name)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createTemporaryTable(Name table) {
+    public static CreateTableColumnStep createTemporaryTable(Name table) {
         return dsl().createTemporaryTable(table);
     }
 
@@ -6697,7 +6697,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Table)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
+    public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
     }
 
@@ -6707,7 +6707,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
+    public static CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return dsl().createGlobalTemporaryTable(table);
     }
 
@@ -6717,7 +6717,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
+    public static CreateTableColumnStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
     }
 
@@ -6727,7 +6727,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
+    public static CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
     }
 

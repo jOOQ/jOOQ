@@ -62,7 +62,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface CreateTableColumnStep extends CreateTableConstraintStep {
+public interface CreateTableColumnStep extends CreateTableAsStep<Record>, CreateTableConstraintStep {
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code>

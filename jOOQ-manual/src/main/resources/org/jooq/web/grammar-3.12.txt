@@ -191,7 +191,7 @@ break
 createTableStatement = 'CREATE' [ [ 'GLOBAL' ] 'TEMPORARY' ] 'TABLE' [ 'IF NOT EXISTS' ] tableName
 ( break )
 (
-  'AS' select
+  [ '(' identifiers ')' ] 'AS' select
 | '('   ( 'CONSTRAINT' constraintName constraint | constraint | index | column )
   { ',' ( 'CONSTRAINT' constraintName constraint | constraint | index | column ) } ')'
 )

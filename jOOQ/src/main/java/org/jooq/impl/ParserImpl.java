@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 // ...
@@ -336,11 +338,10 @@ import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
 import org.jooq.CreateSequenceFlagsStep;
-import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableConstraintStep;
-import org.jooq.CreateTableIndexStep;
+import org.jooq.CreateTableOnCommitStep;
 import org.jooq.CreateTableStorageStep;
 import org.jooq.CreateTableWithDataStep;
 import org.jooq.DDLQuery;
@@ -2804,32 +2805,18 @@ final class ParserImpl implements Parser {
         CreateTableCommentStep commentStep;
         CreateTableStorageStep storageStep;
 
-        // [#5309] TODO: Move this after the column specification
-        if (parseKeywordIf(ctx, "AS")) {
-            Select<?> select = (Select<?>) parseQuery(ctx, true, true);
+        List<Field<?>> fields = new ArrayList<Field<?>>();
+        List<Constraint> constraints = new ArrayList<Constraint>();
+        List<Index> indexes = new ArrayList<Index>();
+        boolean primary = false;
 
-            CreateTableAsStep<Record> s1 = ifNotExists
-                ? ctx.dsl.createTableIfNotExists(tableName)
-                : temporary
-                    ? ctx.dsl.createTemporaryTable(tableName)
-                    : ctx.dsl.createTable(tableName);
+        // Three valued boolean:
+        // null: Possibly CTAS
+        // true: Definitely CTAS
+        // false: Definitely not CTAS
+        Boolean ctas = null;
 
-            CreateTableWithDataStep s2 = s1.as(select);
-
-            storageStep = commentStep =
-                parseKeywordIf(ctx, "WITH DATA")
-              ? s2.withData()
-              : parseKeywordIf(ctx, "WITH NO DATA")
-              ? s2.withNoData()
-              : s2;
-        }
-        else {
-            List<Field<?>> fields = new ArrayList<Field<?>>();
-            List<Constraint> constraints = new ArrayList<Constraint>();
-            List<Index> indexes = new ArrayList<Index>();
-            boolean primary = false;
-
-            parse(ctx, '(');
+        if (parseIf(ctx, '(')) {
 
             columnLoop:
             do {
@@ -2885,7 +2872,17 @@ final class ParserImpl implements Parser {
                     throw ctx.expected("CHECK", "CONSTRAINT", "FOREIGN KEY", "INDEX", "KEY", "PRIMARY KEY", "UNIQUE");
 
                 Name fieldName = parseIdentifier(ctx);
-                DataType<?> type = parseDataType(ctx);
+                DataType<?> type = null;
+
+                if (ctas == null && (peek(ctx, ',') || peek(ctx, ')')))
+                    ctas = true;
+                else
+                    ctas = false;
+
+                type = !TRUE.equals(ctas)
+                    ? parseDataType(ctx)
+                    : SQLDataType.OTHER;
+
                 Comment fieldComment = null;
 
                 boolean nullable = false;
@@ -3048,7 +3045,10 @@ final class ParserImpl implements Parser {
                     break;
                 }
 
-                fields.add(field(fieldName, type, fieldComment));
+                if (ctas)
+                    fields.add(field(fieldName));
+                else
+                    fields.add(field(fieldName, type, fieldComment));
             }
             while (parseIf(ctx, ','));
 
@@ -3056,34 +3056,53 @@ final class ParserImpl implements Parser {
                 throw ctx.expected("At least one column");
 
             parse(ctx, ')');
+        }
+        else
+            ctas = true;
 
-            CreateTableAsStep<Record> s1 = ifNotExists
-                ? ctx.dsl.createTableIfNotExists(tableName)
-                : temporary
-                    ? ctx.dsl.createTemporaryTable(tableName)
-                    : ctx.dsl.createTable(tableName);
-            CreateTableColumnStep s2 = s1.columns(fields);
-            CreateTableConstraintStep s3 = constraints.isEmpty()
-                ? s2
-                : s2.constraints(constraints);
-            CreateTableIndexStep s4 = indexes.isEmpty()
-                ? s3
-                : s3.indexes(indexes);
-            CreateTableCommentStep s5 = s4;
+        CreateTableColumnStep columnStep = ifNotExists
+            ? ctx.dsl.createTableIfNotExists(tableName)
+            : temporary
+                ? ctx.dsl.createTemporaryTable(tableName)
+                : ctx.dsl.createTable(tableName);
 
+        if (!fields.isEmpty())
+            columnStep = columnStep.columns(fields);
+
+        if (TRUE.equals(ctas) && parseKeyword(ctx, "AS") ||
+           !FALSE.equals(ctas) && parseKeywordIf(ctx, "AS")) {
+            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) parseQuery(ctx, true, true));
+            commentStep =
+                  parseKeywordIf(ctx, "WITH DATA")
+                ? withDataStep.withData()
+                : parseKeywordIf(ctx, "WITH NO DATA")
+                ? withDataStep.withNoData()
+                : withDataStep;
+        }
+        else {
+            CreateTableConstraintStep constraintStep = constraints.isEmpty()
+                ? columnStep
+                : columnStep.constraints(constraints);
+            CreateTableOnCommitStep onCommitStep = indexes.isEmpty()
+                ? constraintStep
+                : constraintStep.indexes(indexes);
+
+            // [#6133] TODO Support this also with CTAS
             if (temporary && parseKeywordIf(ctx, "ON COMMIT")) {
                 if (parseKeywordIf(ctx, "DELETE ROWS"))
-                    s5 = s4.onCommitDeleteRows();
+                    commentStep = onCommitStep.onCommitDeleteRows();
                 else if (parseKeywordIf(ctx, "DROP"))
-                    s5 = s4.onCommitDrop();
+                    commentStep = onCommitStep.onCommitDrop();
                 else if (parseKeywordIf(ctx, "PRESERVE ROWS"))
-                    s5 = s4.onCommitPreserveRows();
+                    commentStep = onCommitStep.onCommitPreserveRows();
                 else
                     throw ctx.unsupportedClause();
             }
-
-            storageStep = commentStep = s5;
+            else
+                commentStep = onCommitStep;
         }
+
+        storageStep = commentStep;
 
         List<SQL> storage = new ArrayList<SQL>();
         Comment comment = null;
@@ -4594,10 +4613,6 @@ final class ParserImpl implements Parser {
             else {
                 Name alias = null;
                 Field<?> field = null;
-
-
-
-
 
 
 

@@ -2875,10 +2875,7 @@ final class ParserImpl implements Parser {
                 DataType<?> type = null;
 
                 if (ctas == null)
-                    if (peek(ctx, ',') || peek(ctx, ')'))
-                        ctas = true;
-                    else
-                        ctas = false;
+                    ctas = peek(ctx, ',') || peek(ctx, ')');
 
                 type = !TRUE.equals(ctas)
                     ? parseDataType(ctx)

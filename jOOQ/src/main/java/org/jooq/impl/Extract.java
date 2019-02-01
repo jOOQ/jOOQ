@@ -73,6 +73,7 @@ final class Extract extends AbstractFunction<Integer> {
         switch (configuration.family()) {
             case SQLITE:
                 switch (datePart) {
+                    case QUARTER:
                     case DECADE:
                     case CENTURY:
                     case MILLENNIUM:

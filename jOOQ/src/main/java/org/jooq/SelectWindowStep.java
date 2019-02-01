@@ -131,7 +131,10 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * <li>{@link SQLDialect#H2}</li>
      * <li>{@link SQLDialect#MYSQL}</li>
      * <li>{@link SQLDialect#POSTGRES}</li>
-     * <li>{@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#SQLITE} (however, with some limitations. See
+     * <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/8279">https://github.com/jOOQ/jOOQ/issues/8279</a>.
+     * Hence, jOOQ emulates the <code>WINDOW</code> clause for SQLite</li>
      * <li>{@link SQLDialect#SYBASE}</li>
      * </ul>
      * <p>
@@ -153,7 +156,10 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * <li>{@link SQLDialect#H2}</li>
      * <li>{@link SQLDialect#MYSQL}</li>
      * <li>{@link SQLDialect#POSTGRES}</li>
-     * <li>{@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#SQLITE} (however, with some limitations. See
+     * <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/8279">https://github.com/jOOQ/jOOQ/issues/8279</a>.
+     * Hence, jOOQ emulates the <code>WINDOW</code> clause for SQLite</li>
      * <li>{@link SQLDialect#SYBASE}</li>
      * </ul>
      * <p>

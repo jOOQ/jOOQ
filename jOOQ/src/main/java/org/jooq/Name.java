@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -207,7 +208,7 @@ public interface Name extends QueryPart {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     WindowDefinition as(WindowSpecification window);
 
     /**

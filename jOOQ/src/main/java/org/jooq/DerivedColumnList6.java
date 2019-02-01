@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MYSQL_8_0;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -83,7 +84,7 @@ public interface DerivedColumnList6 extends QueryPart {
      * Specify a subselect to refer to by the <code>DerivedColumnList</code> to
      * form a common table expression.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     <R extends Record6<?, ?, ?, ?, ?, ?>> CommonTableExpression<R> as(Select<R> select);
 
 }

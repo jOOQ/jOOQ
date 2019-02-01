@@ -66,8 +66,9 @@ final class Floor<T extends Number> extends AbstractFunction<T> {
 
 
 
+            // [#8275] Improved emulation for SQLite
             case SQLITE:
-                return DSL.round(argument.sub(0.499999999999999));
+                return DSL.field("({cast}({0} {as} {bigint}) - ({0} < {cast}({0} {as} {bigint})))", getDataType(), argument);
 
             default:
                 return DSL.field("{floor}({0})", getDataType(), argument);

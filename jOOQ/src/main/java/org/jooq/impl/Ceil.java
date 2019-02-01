@@ -67,9 +67,9 @@ final class Ceil<T extends Number> extends AbstractFunction<T> {
 
 
 
-            // evaluate "ceil" if unavailable
+            // [#8275] Improved emulation for SQLite
             case SQLITE:
-                return DSL.round(argument.add(0.499999999999999));
+                return DSL.field("({cast}({0} {as} {bigint}) + ({0} > {cast}({0} {as} {bigint})))", getDataType(), argument);
 
 
 

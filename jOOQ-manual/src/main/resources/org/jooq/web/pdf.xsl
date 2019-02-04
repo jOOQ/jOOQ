@@ -78,9 +78,13 @@
 		<xsl:attribute name="page-break-inside">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
-	<xsl:attribute-set name="strong">
-		<xsl:attribute name="font-weight">bold</xsl:attribute>
-	</xsl:attribute-set>
+    <xsl:attribute-set name="strong">
+        <xsl:attribute name="font-weight">bold</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="em">
+        <xsl:attribute name="font-style">italic</xsl:attribute>
+    </xsl:attribute-set>
 
 	<xsl:attribute-set name="h1">
 		<xsl:attribute name="font-family">Roboto</xsl:attribute>
@@ -525,11 +529,17 @@
 		<fo:block/>
 	</xsl:template>
 
-	<xsl:template match="strong" mode="content">
-		<fo:inline xsl:use-attribute-sets="strong">
-			<xsl:apply-templates mode="content" />
-		</fo:inline>
-	</xsl:template>
+    <xsl:template match="strong" mode="content">
+        <fo:inline xsl:use-attribute-sets="strong">
+            <xsl:apply-templates mode="content" />
+        </fo:inline>
+    </xsl:template>
+
+    <xsl:template match="em" mode="content">
+        <fo:inline xsl:use-attribute-sets="em">
+            <xsl:apply-templates mode="content" />
+        </fo:inline>
+    </xsl:template>
 
 	<xsl:template match="code-pair" mode="content">
 		<fo:table table-layout="fixed" width="100%">

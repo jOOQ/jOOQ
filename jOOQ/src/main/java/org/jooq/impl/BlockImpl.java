@@ -57,6 +57,7 @@ import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
+import static org.jooq.impl.Tools.toplevel;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 
@@ -86,6 +87,8 @@ final class BlockImpl extends AbstractQuery implements Block {
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final EnumSet<SQLDialect>      REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = EnumSet.of(FIREBIRD);
     private static final EnumSet<SQLDialect>      SUPPORTS_NULL_STATEMENT           = EnumSet.of(POSTGRES);
+
+
 
 
 
@@ -161,16 +164,6 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-
-
-
-
-
-
-
-
-
-
             default: {
                 increment(ctx.data(), DATA_BLOCK_NESTING);
                 accept0(ctx);
@@ -188,11 +181,11 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         ;
 
-        accept1(ctx, new ArrayList<Statement>(statements), wrapInBeginEnd);
+        acceptDeclarations(ctx, new ArrayList<Statement>(statements), wrapInBeginEnd);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private static final void accept1(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
+    private static final void acceptDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
 
 
 
@@ -234,15 +227,41 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-        accept2(ctx, statements, wrapInBeginEnd);
+
+
+
+
+
+
+
+
+
+        acceptNonDeclarations(ctx, statements, wrapInBeginEnd);
+
+
+
+
+
     }
 
     private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {
-        if (!(s instanceof Block))
+        if (s instanceof Block)
+            return;
 
 
 
-                ctx.sql(';');
+
+
+
+
+
+
+
+
+
+
+
+            ctx.sql(';');
     }
 
 
@@ -255,7 +274,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-    private static final void accept2(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
+    private static final void acceptNonDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
         if (wrapInBeginEnd) {
             ctx.visit(K_BEGIN);
 
@@ -297,6 +316,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
                 if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.family()))
                     continue statementLoop;
 
@@ -321,14 +341,18 @@ final class BlockImpl extends AbstractQuery implements Block {
             }
         }
 
-        if (wrapInBeginEnd) {
-            ctx.formatIndentEnd()
-               .formatSeparator()
-               .visit(K_END);
+        if (wrapInBeginEnd)
+            end(ctx);
+    }
 
-            switch (ctx.family()) {
-                case FIREBIRD:
-                    break;
+    private static final void end(Context<?> ctx) {
+        ctx.formatIndentEnd()
+           .formatSeparator()
+           .visit(K_END);
+
+         switch (ctx.family()) {
+             case FIREBIRD:
+                 break;
 
 
 
@@ -336,9 +360,13 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-                default:
-                    ctx.sql(';');
-            }
-        }
+
+
+
+
+
+             default:
+                 ctx.sql(';');
+         }
     }
 }

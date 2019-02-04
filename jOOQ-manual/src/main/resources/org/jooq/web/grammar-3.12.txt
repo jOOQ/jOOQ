@@ -79,7 +79,7 @@ declarationStatement =
 ;
 
 declareStatement =
-  'DECLARE' identifier dataType [ '=' field ]
+  'DECLARE' identifier dataType [ ( '=' | 'DEFAULT' ) field ]
 ;
 
 assignmentStatement =
@@ -91,7 +91,7 @@ ifStatement =
   'IF' condition
 (
   'THEN' proceduralStatements
-  [ 'ELSIF' condition 'THEN' proceduralStatements ]
+  [ ( 'ELSIF' | 'ELSEIF' ) condition 'THEN' proceduralStatements ]
   [ 'ELSE' proceduralStatements ]
   'END IF'
 ) | (
@@ -110,7 +110,7 @@ forStatement =
 ;
 
 whileStatement =
-  'WHILE' condition loopStatement
+  'WHILE' condition ( loopStatement | 'DO' proceduralStatements 'END WHILE' )
 ;
 
 gotoStatement =
@@ -118,11 +118,11 @@ gotoStatement =
 ;
 
 continueStatement =
-  'CONTINUE' [ identifier ] [ 'WHEN' condition ]
+  ( 'CONTINUE' | 'ITERATE' ) [ identifier ] [ 'WHEN' condition ]
 ;
 
 exitStatement =
-  'EXIT' [ identifier ] [ 'WHEN' condition ]
+  ( 'EXIT' | 'LEAVE' ) [ identifier ] [ 'WHEN' condition ]
 ;
 
 nullStatement = 'NULL'

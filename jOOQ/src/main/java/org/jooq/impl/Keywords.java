@@ -118,6 +118,7 @@ final class Keywords {
     static final Keyword K_DROP_TABLE                       = keyword("drop table");
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
     static final Keyword K_ELSE                             = keyword("else");
+    static final Keyword K_ELSEIF                           = keyword("elseif");
     static final Keyword K_ELSIF                            = keyword("elsif");
     static final Keyword K_END                              = keyword("end");
     static final Keyword K_END_CATCH                        = keyword("end catch");
@@ -174,10 +175,12 @@ final class Keywords {
     static final Keyword K_IS                               = keyword("is");
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
     static final Keyword K_IS_NULL                          = keyword("is null");
+    static final Keyword K_ITERATE                          = keyword("iterate");
     static final Keyword K_KEEP                             = keyword("keep");
     static final Keyword K_KEY                              = keyword("key");
     static final Keyword K_LAST                             = keyword("last");
     static final Keyword K_LATERAL                          = keyword("lateral");
+    static final Keyword K_LEAVE                            = keyword("leave");
     static final Keyword K_LEFT_OUTER_JOIN_LATERAL          = keyword("left outer join lateral");
     static final Keyword K_LIKE                             = keyword("like");
     static final Keyword K_LIKE_REGEX                       = keyword("like_regex");

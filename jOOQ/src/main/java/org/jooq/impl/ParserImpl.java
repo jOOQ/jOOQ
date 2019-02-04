@@ -2383,12 +2383,22 @@ final class ParserImpl implements Parser {
 
 
                 ;
+                else if (peekKeyword(ctx, "ITERATE") && ctx.requireProEdition())
+
+
+
+                ;
 
                 break;
 
             case 'l':
             case 'L':
-                if (peekKeyword(ctx, "LOOP") && ctx.requireProEdition())
+                if (peekKeyword(ctx, "LEAVE") && ctx.requireProEdition())
+
+
+
+                ;
+                else if (peekKeyword(ctx, "LOOP") && ctx.requireProEdition())
 
 
 
@@ -2441,6 +2451,13 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
 
 
 

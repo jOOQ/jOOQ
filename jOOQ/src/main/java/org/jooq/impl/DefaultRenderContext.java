@@ -92,7 +92,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private static final Pattern          NEWLINE            = Pattern.compile("[\\n\\r]");
     private static final Set<String>      SQLITE_KEYWORDS;
 
-    private final StringBuilder           sql;
+    final StringBuilder                   sql;
     private final QueryPartList<Param<?>> bindValues;
     private int                           params;
     private int                           alias;

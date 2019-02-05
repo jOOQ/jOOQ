@@ -2,7 +2,7 @@
  name: Feature request
  about: Suggest an idea
  title: ''
- labels: 'T: Support request'
+ labels: 'T: Enhancement'
 ---
 
 ### Use case:

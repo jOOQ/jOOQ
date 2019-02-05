@@ -291,7 +291,7 @@ public abstract class AbstractDatabase implements Database {
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
                           + "\n\n"
-                          + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
                           + formatted(ctx.query())
                           + "```\n",
                             new SQLPerformanceWarning());
@@ -309,7 +309,7 @@ public abstract class AbstractDatabase implements Database {
                       ? ctx.exception().getMessage()
                       : "No exception available")
                       + "\n\n"
-                      + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                      + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
                       + formatted(ctx.query())
                       + "```\n");
                 }

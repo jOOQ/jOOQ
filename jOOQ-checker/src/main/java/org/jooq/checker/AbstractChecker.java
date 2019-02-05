@@ -72,7 +72,7 @@ abstract class AbstractChecker extends SourceChecker {
     static void print(Printer printer) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("error.txt"))){
             writer.println("This is probably a bug in jOOQ-checker.");
-            writer.println("Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new");
+            writer.println("If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new");
             writer.println("---------------------------------------------------------------------");
 
             printer.print(writer);

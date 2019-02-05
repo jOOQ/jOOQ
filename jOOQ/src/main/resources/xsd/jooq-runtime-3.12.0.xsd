@@ -101,6 +101,18 @@ jOOQ to not generate the additional <code>ORDER BY</code> clause.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="transformTableListsToAnsiJoin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible
+<p>
+(Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in
+the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+this flag enables the transformation to ANSI join syntax.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether string literals should be escaped with backslash.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

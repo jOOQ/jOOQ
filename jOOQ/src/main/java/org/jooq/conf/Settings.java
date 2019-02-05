@@ -68,6 +68,8 @@ public class Settings
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean transformTableListsToAnsiJoin = false;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
@@ -498,6 +500,38 @@ public class Settings
      */
     public void setRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         this.renderOrderByRownumberForEmulatedPagination = value;
+    }
+
+    /**
+     * Transform table lists to ANSI join if possible
+     * <p>
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+     * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isTransformTableListsToAnsiJoin() {
+        return transformTableListsToAnsiJoin;
+    }
+
+    /**
+     * Sets the value of the transformTableListsToAnsiJoin property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setTransformTableListsToAnsiJoin(Boolean value) {
+        this.transformTableListsToAnsiJoin = value;
     }
 
     /**
@@ -1438,6 +1472,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformTableListsToAnsiJoin(Boolean value) {
+        setTransformTableListsToAnsiJoin(value);
+        return this;
+    }
+
     public Settings withBackslashEscaping(BackslashEscaping value) {
         setBackslashEscaping(value);
         return this;
@@ -1680,6 +1719,11 @@ public class Settings
             sb.append("<renderOrderByRownumberForEmulatedPagination>");
             sb.append(renderOrderByRownumberForEmulatedPagination);
             sb.append("</renderOrderByRownumberForEmulatedPagination>");
+        }
+        if (transformTableListsToAnsiJoin!= null) {
+            sb.append("<transformTableListsToAnsiJoin>");
+            sb.append(transformTableListsToAnsiJoin);
+            sb.append("</transformTableListsToAnsiJoin>");
         }
         if (backslashEscaping!= null) {
             sb.append("<backslashEscaping>");
@@ -1985,6 +2029,15 @@ public class Settings
             }
         } else {
             if (!renderOrderByRownumberForEmulatedPagination.equals(other.renderOrderByRownumberForEmulatedPagination)) {
+                return false;
+            }
+        }
+        if (transformTableListsToAnsiJoin == null) {
+            if (other.transformTableListsToAnsiJoin!= null) {
+                return false;
+            }
+        } else {
+            if (!transformTableListsToAnsiJoin.equals(other.transformTableListsToAnsiJoin)) {
                 return false;
             }
         }
@@ -2323,6 +2376,7 @@ public class Settings
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
+        result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));

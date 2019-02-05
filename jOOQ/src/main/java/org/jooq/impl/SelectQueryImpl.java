@@ -1306,15 +1306,24 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ;
 
         List<Condition> semiAntiJoinPredicates = null;
+        ConditionProviderImpl where = getWhere();
 
         if (hasFrom) {
             Object previousCollect = context.data(DATA_COLLECT_SEMI_ANTI_JOIN, true);
             Object previousCollected = context.data(DATA_COLLECTED_SEMI_ANTI_JOIN, null);
 
+            TableList tablelist = getFrom();
+
+
+
+
+
+
+
             context.formatSeparator()
                    .visit(K_FROM)
                    .sql(' ')
-                   .visit(getFrom());
+                   .visit(tablelist);
 
 
 
@@ -1338,7 +1347,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // WHERE clause
         // ------------
         context.start(SELECT_WHERE);
-        ConditionProviderImpl where = getWhere();
 
         if (TRUE.equals(context.data().get(BooleanDataKey.DATA_SELECT_NO_DATA)))
             context.formatSeparator()

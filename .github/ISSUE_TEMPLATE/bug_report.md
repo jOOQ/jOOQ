@@ -1,3 +1,10 @@
+---
+ name: Bug report
+ about: Create a report and help us improve
+ title: ''
+ labels: 'T: Defect'
+---
+
 ### Expected behavior and actual behavior:
 
 ### Steps to reproduce the problem (if possible, create an MCVE: https://github.com/jOOQ/jOOQ-mcve):

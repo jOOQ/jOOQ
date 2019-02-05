@@ -117,7 +117,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R> {
+public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R> {
 
     /**
      * Add a <code>WINDOW</code> clause to the statement.
@@ -142,7 +142,7 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
-    SelectOrderByStep<R> window(WindowDefinition... definitions);
+    SelectQualifyStep<R> window(WindowDefinition... definitions);
 
     /**
      * Add a <code>WINDOW</code> clause to the statement.
@@ -167,5 +167,5 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
-    SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
+    SelectQualifyStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

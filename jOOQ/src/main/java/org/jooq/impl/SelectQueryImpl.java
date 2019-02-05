@@ -115,6 +115,7 @@ import static org.jooq.impl.Keywords.K_OF;
 import static org.jooq.impl.Keywords.K_ORDER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PERCENT;
+import static org.jooq.impl.Keywords.K_QUALIFY;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SIBLINGS;
 import static org.jooq.impl.Keywords.K_START_WITH;
@@ -255,6 +256,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private QueryPartList<GroupField>                    groupBy;
     private final ConditionProviderImpl                  having;
     private WindowList                                   window;
+    private final ConditionProviderImpl                  qualify;
     private final SortFieldList                          orderBy;
     private boolean                                      orderBySiblings;
     private final QueryPartList<Field<?>>                seek;
@@ -291,6 +293,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
         this.having = new ConditionProviderImpl();
+        this.qualify = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
@@ -1443,6 +1446,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.end(SELECT_HAVING);
 
+        // QUALIFY clause
+        // -------------
+
+        if (getQualify().hasWhere())
+            context.formatSeparator()
+                   .visit(K_QUALIFY)
+                   .sql(' ')
+                   .visit(getQualify());
+
         // WINDOW clause
         // -------------
         context.start(SELECT_WINDOW);
@@ -2151,6 +2163,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return having;
     }
 
+    final ConditionProviderImpl getQualify() {
+        return qualify;
+    }
+
     final SortFieldList getOrderBy() {
         return (unionOp.size() == 0) ? orderBy : unionOrderBy;
     }
@@ -2395,6 +2411,36 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             window = new WindowList();
 
         window.addAll(definitions);
+    }
+
+    @Override
+    public final void addQualify(Condition conditions) {
+        getQualify().addConditions(conditions);
+    }
+
+    @Override
+    public final void addQualify(Condition... conditions) {
+        getQualify().addConditions(conditions);
+    }
+
+    @Override
+    public final void addQualify(Collection<? extends Condition> conditions) {
+        getQualify().addConditions(conditions);
+    }
+
+    @Override
+    public final void addQualify(Operator operator, Condition conditions) {
+        getQualify().addConditions(operator, conditions);
+    }
+
+    @Override
+    public final void addQualify(Operator operator, Condition... conditions) {
+        getQualify().addConditions(operator, conditions);
+    }
+
+    @Override
+    public final void addQualify(Operator operator, Collection<? extends Condition> conditions) {
+        getQualify().addConditions(operator, conditions);
     }
 
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {

@@ -99,6 +99,7 @@ import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectOnStep;
 import org.jooq.SelectOptionalOnStep;
+import org.jooq.SelectQualifyConditionStep;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSeekLimitStep;
 import org.jooq.SelectSeekStep1;
@@ -147,6 +148,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectConnectByAfterStartWithConditionStep<R>,
     SelectConnectByAfterStartWithStep<R>,
     SelectHavingConditionStep<R>,
+    SelectQualifyConditionStep<R>,
     // [jooq-tools] START [implements-select-seek-step]
     SelectSeekStep1<R, T1>,
     SelectSeekStep2<R, T1, T2>,
@@ -422,6 +424,9 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             case ON:
                 joinConditions.addConditions(condition);
                 break;
+            case QUALIFY:
+                getQuery().addQualify(condition);
+                break;
         }
 
         return this;
@@ -497,6 +502,9 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
                 break;
             case ON:
                 joinConditions.addConditions(Operator.OR, condition);
+                break;
+            case QUALIFY:
+                getQuery().addQualify(Operator.OR, condition);
                 break;
         }
 
@@ -1901,6 +1909,52 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     public final SelectImpl window(Collection<? extends WindowDefinition> definitions) {
         getQuery().addWindow(definitions);
         return this;
+    }
+
+    @Override
+    public final SelectImpl qualify(Condition conditions) {
+        conditionStep = ConditionStep.QUALIFY;
+        getQuery().addQualify(conditions);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl qualify(Condition... conditions) {
+        conditionStep = ConditionStep.QUALIFY;
+        getQuery().addQualify(conditions);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl qualify(Collection<? extends Condition> conditions) {
+        conditionStep = ConditionStep.QUALIFY;
+        getQuery().addQualify(conditions);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl qualify(Field<Boolean> condition) {
+        return qualify(condition(condition));
+    }
+
+    @Override
+    public final SelectImpl qualify(SQL sql) {
+        return qualify(condition(sql));
+    }
+
+    @Override
+    public final SelectImpl qualify(String sql) {
+        return qualify(condition(sql));
+    }
+
+    @Override
+    public final SelectImpl qualify(String sql, Object... bindings) {
+        return qualify(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl qualify(String sql, QueryPart... parts) {
+        return qualify(condition(sql, parts));
     }
 
     @Override
@@ -3878,6 +3932,12 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
          * Additional conditions go to the <code>HAVING</code> clause that is
          * currently being added.
          */
-        HAVING
+        HAVING,
+
+        /**
+         * Additional conditions go to the <code>QUALIFY</code> clause that is
+         * currently being added.
+         */
+        QUALIFY
     }
 }

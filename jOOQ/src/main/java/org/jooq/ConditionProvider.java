@@ -41,7 +41,7 @@ package org.jooq;
 import java.util.Collection;
 
 /**
- * A common interface for all objects holding conditions (e.g. queries)
+ * A common interface for all objects holding conditions (e.g. queries).
  *
  * @author Lukas Eder
  * @deprecated - 2.6.0 [#1881] - This type will be removed from the public API,
@@ -53,7 +53,7 @@ public interface ConditionProvider {
 
     /**
      * Adds a new condition to the query, connecting them to existing
-     * conditions with {@link Operator#AND}
+     * conditions with {@link Operator#AND}.
      *
      * @param condition The condition
      */
@@ -62,7 +62,7 @@ public interface ConditionProvider {
 
     /**
      * Adds new conditions to the query, connecting them to existing
-     * conditions with {@link Operator#AND}
+     * conditions with {@link Operator#AND}.
      *
      * @param conditions The condition
      */
@@ -71,7 +71,7 @@ public interface ConditionProvider {
 
     /**
      * Adds new conditions to the query, connecting them to existing
-     * conditions with {@link Operator#AND}
+     * conditions with {@link Operator#AND}.
      *
      * @param conditions The condition
      */
@@ -80,7 +80,7 @@ public interface ConditionProvider {
 
     /**
      * Adds a new condition to the query, connecting them to existing
-     * conditions with the provided operator
+     * conditions with the provided operator.
      *
      * @param condition The condition
      */
@@ -89,7 +89,7 @@ public interface ConditionProvider {
 
     /**
      * Adds new conditions to the query, connecting them to existing
-     * conditions with the provided operator
+     * conditions with the provided operator.
      *
      * @param conditions The condition
      */
@@ -98,7 +98,7 @@ public interface ConditionProvider {
 
     /**
      * Adds new conditions to the query, connecting them to existing
-     * conditions with the provided operator
+     * conditions with the provided operator.
      *
      * @param conditions The condition
      */

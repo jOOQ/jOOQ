@@ -52,6 +52,7 @@ proceduralStatement = [ label ]
 | declareStatement
 | assignmentStatement
 | ifStatement [ labelReference ]
+| caseStatement [ labelReference ]
 | loopStatement [ labelReference ]
 | forStatement [ labelReference ]
 | whileStatement [ labelReference ]
@@ -99,6 +100,16 @@ ifStatement =
   proceduralStatement
   [ 'ELSE' proceduralStatement ]
 )
+;
+
+caseStatement =
+  'CASE'
+(
+  field ( 'WHEN' field 'THEN' proceduralStatements )+
+| ( 'WHEN' condition 'THEN' proceduralStatements )+
+)
+  [ 'ELSE' proceduralStatements ]
+  'END CASE'
 ;
 
 loopStatement =
@@ -474,6 +485,7 @@ tableExpression =
   [ groupBy ]
   [ 'HAVING' condition ]
   [ 'WINDOW' windows ]
+  [ 'QUALIFY' condition ]
 ;
 
 connectBy =

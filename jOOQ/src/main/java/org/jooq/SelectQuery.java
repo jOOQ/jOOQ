@@ -347,7 +347,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Adds a new condition to the having clause of query, connecting it with
-     * each other with {@link Operator#AND}.
+     * each other with <code>operator</code>.
      *
      * @param operator The operator to use to add the conditions to the existing
      *            conditions
@@ -358,7 +358,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Adds new conditions to the having clause of query, connecting them with
-     * each other with {@link Operator#AND}.
+     * each other with <code>operator</code>.
      *
      * @param operator The operator to use to add the conditions to the existing
      *            conditions
@@ -369,7 +369,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Adds new conditions to the having clause of query, connecting them with
-     * each other with {@link Operator#AND}.
+     * each other with <code>operator</code>.
      *
      * @param operator The operator to use to add the conditions to the existing
      *            conditions
@@ -393,6 +393,66 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
     void addWindow(Collection<? extends WindowDefinition> definitions);
+
+    /**
+     * Adds a new condition to the qualify clause of the query, connecting it
+     * with each other with {@link Operator#AND}.
+     *
+     * @param condition The condition
+     */
+    @Support({ H2 })
+    void addQualify(Condition condition);
+
+    /**
+     * Adds new conditions to the qualify clause of the query, connecting them
+     * with each other with {@link Operator#AND}.
+     *
+     * @param conditions The condition
+     */
+    @Support({ H2 })
+    void addQualify(Condition... conditions);
+
+    /**
+     * Adds new conditions to the qualify clause of the query, connecting them
+     * with each other with {@link Operator#AND}.
+     *
+     * @param conditions The condition
+     */
+    @Support({ H2 })
+    void addQualify(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds a new condition to the qualify clause of query, connecting it with
+     * each other with <code>operator</code>.
+     *
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
+     * @param condition The condition
+     */
+    @Support({ H2 })
+    void addQualify(Operator operator, Condition condition);
+
+    /**
+     * Adds new conditions to the qualify clause of query, connecting them with
+     * each other with <code>operator</code>.
+     *
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
+     * @param conditions The condition
+     */
+    @Support({ H2 })
+    void addQualify(Operator operator, Condition... conditions);
+
+    /**
+     * Adds new conditions to the qualify clause of query, connecting them with
+     * each other with <code>operator</code>.
+     *
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
+     * @param conditions The condition
+     */
+    @Support({ H2 })
+    void addQualify(Operator operator, Collection<? extends Condition> conditions);
 
     /**
      * Add an Oracle-style hint to the select clause.

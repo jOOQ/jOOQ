@@ -1192,6 +1192,7 @@ final class ParserImpl implements Parser {
         List<GroupField> groupBy = null;
         Condition having = null;
         List<WindowDefinition> windows = null;
+        Condition qualify = null;
 
         if (parseKeywordIf(ctx, "INTO"))
             into = parseTableName(ctx);
@@ -1266,6 +1267,9 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "WINDOW"))
             windows = parseWindowDefinitions(ctx);
 
+        if (parseKeywordIf(ctx, "QUALIFY"))
+            qualify = parseCondition(ctx);
+
         SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
         if (hints != null)
             result.addHint(hints);
@@ -1305,6 +1309,9 @@ final class ParserImpl implements Parser {
 
         if (windows != null)
             result.addWindow(windows);
+
+        if (qualify != null)
+            result.addQualify(qualify);
 
         if (limit != null)
             if (offset != null)
@@ -9730,6 +9737,7 @@ final class ParserImpl implements Parser {
         "OFFSET",
         "ORDER BY",
         "PARTITION BY",
+        "QUALIFY",
         "RETURNING",
         "START WITH",
         "UNION",
@@ -9778,6 +9786,7 @@ final class ParserImpl implements Parser {
         "ORDER BY",
         "OUTER APPLY",
         "PARTITION BY",
+        "QUALIFY",
         "RETURNING",
         "RIGHT ANTI JOIN",
         "RIGHT JOIN",

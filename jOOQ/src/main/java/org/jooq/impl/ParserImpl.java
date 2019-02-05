@@ -533,6 +533,20 @@ final class ParserImpl implements Parser {
     }
 
     @Override
+    public final Statement parseStatement(String sql) {
+        return parseStatement(sql, new Object[0]);
+    }
+
+    @Override
+    public final Statement parseStatement(String sql, Object... bindings) {
+        ParserContext ctx = ctx(sql, bindings);
+        Statement result = parseStatement(ctx);
+        parseSemicolonAfterNonBlocks(ctx, result);
+        ctx.done("Unexpected content");
+        return result;
+    }
+
+    @Override
     public final ResultQuery<?> parseResultQuery(String sql) {
         return parseResultQuery(sql, new Object[0]);
     }

@@ -92,6 +92,27 @@ public interface Parser {
     Query parseQuery(String sql, Object... bindings) throws ParserException;
 
     /**
+     * Parse a SQL string to a procedural statement.
+     *
+     * @param sql The SQL string
+     * @throws ParserException If the SQL string could not be parsed.
+     */
+    @Support
+    @PlainSQL
+    Statement parseStatement(String sql) throws ParserException;
+
+    /**
+     * Parse a SQL string with bind variables to a procedural statement.
+     *
+     * @param sql The SQL string
+     * @param bindings The bind variables
+     * @throws ParserException If the SQL string could not be parsed.
+     */
+    @Support
+    @PlainSQL
+    Statement parseStatement(String sql, Object... bindings) throws ParserException;
+
+    /**
      * Parse a SQL string to a result query.
      *
      * @param sql The SQL string

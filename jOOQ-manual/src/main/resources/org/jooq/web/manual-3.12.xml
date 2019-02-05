@@ -10168,6 +10168,8 @@ Usage:
   -t / --to-dialect   <SQLDialect>          Specify the output dialect (org.jooq.SQLDialect)
   -s / --sql          <String>              Specify the input SQL string
 
+  -I / --interactive                        Enter interactive mode
+
 $ java -cp jooq-{jooq-version}.jar org.jooq.ParserCLI -t ORACLE -s "SELECT substring('abcde', 2, 3)"
 select substr('abcde', 2, 3) from dual;]]></text><html>
 

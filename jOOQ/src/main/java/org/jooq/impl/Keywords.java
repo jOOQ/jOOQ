@@ -245,6 +245,7 @@ final class Keywords {
     static final Keyword K_RENAME_OBJECT                    = keyword("rename object");
     static final Keyword K_RENAME_TABLE                     = keyword("rename table");
     static final Keyword K_RENAME_TO                        = keyword("rename to");
+    static final Keyword K_REPEAT                           = keyword("repeat");
     static final Keyword K_REPLACE                          = keyword("replace");
     static final Keyword K_RESPECT_NULLS                    = keyword("respect nulls");
     static final Keyword K_RESTART                          = keyword("restart");
@@ -299,6 +300,7 @@ final class Keywords {
     static final Keyword K_UNBOUNDED_PRECEDING              = keyword("unbounded preceding");
     static final Keyword K_UNIQUE                           = keyword("unique");
     static final Keyword K_UNNEST                           = keyword("unnest");
+    static final Keyword K_UNTIL                            = keyword("until");
     static final Keyword K_UPDATE                           = keyword("update");
     static final Keyword K_UPSERT                           = keyword("upsert");
     static final Keyword K_USE                              = keyword("use");

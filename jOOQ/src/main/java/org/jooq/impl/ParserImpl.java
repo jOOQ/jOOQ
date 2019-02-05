@@ -2413,6 +2413,16 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'r':
+            case 'R':
+                if (peekKeyword(ctx, "REPEAT") && ctx.requireProEdition())
+
+
+
+                ;
+
+                break;
+
             case 's':
             case 'S':
                 if (peekKeyword(ctx, "SET") && ctx.requireProEdition())
@@ -2451,6 +2461,17 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

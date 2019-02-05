@@ -290,6 +290,7 @@ import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RecordType;
+// ...
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.RevokeOnStep;
@@ -9763,6 +9764,28 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

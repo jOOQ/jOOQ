@@ -55,6 +55,7 @@ proceduralStatement = [ label ]
 | loopStatement [ labelReference ]
 | forStatement [ labelReference ]
 | whileStatement [ labelReference ]
+| repeatStatement [ labelReference ]
 | gotoStatement
 | continueStatement
 | exitStatement
@@ -111,6 +112,10 @@ forStatement =
 
 whileStatement =
   'WHILE' condition ( loopStatement | 'DO' proceduralStatements 'END WHILE' )
+;
+
+repeatStatement =
+  'REPEAT' proceduralStatements 'UNTIL' condition 'END REPEAT'
 ;
 
 gotoStatement =

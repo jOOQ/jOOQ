@@ -80,4 +80,12 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+
+
             

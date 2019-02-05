@@ -54,4 +54,12 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+
+
             

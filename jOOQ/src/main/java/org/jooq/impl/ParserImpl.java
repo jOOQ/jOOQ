@@ -209,7 +209,7 @@ import static org.jooq.impl.DSL.regrSXX;
 import static org.jooq.impl.DSL.regrSXY;
 import static org.jooq.impl.DSL.regrSYY;
 import static org.jooq.impl.DSL.regrSlope;
-import static org.jooq.impl.DSL.repeat;
+// ...
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.reverse;
 import static org.jooq.impl.DSL.right;

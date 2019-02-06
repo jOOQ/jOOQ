@@ -18241,7 +18241,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
         return percentileCont(val(number));
     }
@@ -18255,7 +18255,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -18269,7 +18269,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
         return percentileDisc(val(number));
     }
@@ -18283,7 +18283,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
     }

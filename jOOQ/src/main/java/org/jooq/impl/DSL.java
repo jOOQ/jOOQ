@@ -18164,7 +18164,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields);
     }
@@ -18173,7 +18173,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18182,7 +18182,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
     }
@@ -18191,7 +18191,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18200,7 +18200,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
     }
@@ -18209,7 +18209,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18218,7 +18218,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
         return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
     }
@@ -18227,7 +18227,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_QUERYPART));
     }

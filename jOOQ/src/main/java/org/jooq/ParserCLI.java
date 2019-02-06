@@ -206,9 +206,13 @@ public final class ParserCLI {
         String sql = a.sql.trim();
 
         try {
-            if (sql.matches("^(?is:(?:BEGIN|DECLARE|DO|FOR|IF|LOOP|REPEAT|WHILE).*)$"))
-                System.out.println(ctx.render(ctx.parser().parseStatement(a.sql)));
-            else
+
+
+
+
+
+
+
                 System.out.println(ctx.render(ctx.parser().parse(a.sql)));
         }
         catch (ParserException e1) {

@@ -546,6 +546,23 @@ final class ParserImpl implements Parser {
         return result;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final ResultQuery<?> parseResultQuery(String sql) {
         return parseResultQuery(sql, new Object[0]);

@@ -112,6 +112,33 @@ public interface Parser {
     @PlainSQL
     Statement parseStatement(String sql, Object... bindings) throws ParserException;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Parse a SQL string to a result query.
      *

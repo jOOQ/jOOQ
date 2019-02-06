@@ -41,15 +41,20 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_BEGIN;
+import static org.jooq.impl.Keywords.K_CALL;
+import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DO;
+import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
@@ -73,8 +78,10 @@ import org.jooq.DDLQuery;
 // ...
 import org.jooq.Field;
 // ...
+import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
+// ...
 
 /**
  * @author Lukas Eder
@@ -154,6 +161,36 @@ final class BlockImpl extends AbstractQuery implements Block {
                 if (decrement(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.formatSeparator()
                        .sql("$$");
+
+                break;
+            }
+
+            case H2: {
+                String name = "block_" + System.currentTimeMillis() + "_" + (long) (10000000L * Math.random());
+
+                // TODO: create a non-ambiguous name
+                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
+                    ctx.paramType(INLINED)
+                       .visit(K_CREATE).sql(' ')
+                       .visit(K_ALIAS).sql(' ').sql(name).sql(' ')
+                       .visit(K_AS).sql(" $$")
+                       .formatIndentStart()
+                       .formatSeparator()
+                       .sql("void x(Connection c) throws SQLException ");
+
+                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                }
+
+                accept0(ctx);
+
+                if (decrement(ctx.data(), DATA_BLOCK_NESTING))
+                    ctx.formatIndentEnd()
+                       .formatSeparator()
+                       .sql("$$;")
+                       .formatSeparator()
+                       .visit(K_CALL).sql(' ').sql(name).sql("();")
+                       .formatSeparator()
+                       .visit(K_DROP).sql(' ').visit(K_ALIAS).sql(' ').sql(name).sql(';');
 
                 break;
             }
@@ -261,6 +298,9 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+
+
+
             ctx.sql(';');
     }
 
@@ -276,7 +316,10 @@ final class BlockImpl extends AbstractQuery implements Block {
 
     private static final void acceptNonDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
         if (wrapInBeginEnd) {
-            ctx.visit(K_BEGIN);
+            if (ctx.family() == H2)
+                ctx.sql('{');
+            else
+                ctx.visit(K_BEGIN);
 
             if (ctx.family() == MARIADB)
                 ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
@@ -297,6 +340,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
+                case H2:
                 case FIREBIRD:
                 case MARIADB:
                 default:
@@ -330,7 +374,37 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-                ctx.visit(s);
+                if (ctx.family() == H2 && s instanceof Query && !(s instanceof Block)) {
+                    ArrayList<Variable<?>> list = new ArrayList<Variable<?>>();
+
+                    ctx.data(STATEMENT_VARIABLES, list);
+                    ctx.sql("try (PreparedStatement s = c.prepareStatement(")
+                       .formatIndentStart()
+                       .formatNewLine()
+                       .sql('"')
+                       .sql(ctx.render(s).replace("\"", "\\\"").replace("\n", "\\n\" +\n\""))
+                       .sql('"')
+                       .formatIndentEnd()
+                       .formatNewLine()
+                       .sql(")) {")
+                       .formatIndentStart()
+                       .formatSeparator();
+
+                    for (int j = 0; j < list.size(); j++)
+                        ctx.sql("s.setObject(" + (j + 1) + ", ")
+                           .sql(list.get(j).getName())
+                           .sql(");")
+                           .formatSeparator();
+
+                    ctx.sql("s.execute();")
+                       .formatIndentEnd()
+                       .formatSeparator()
+                       .sql('}');
+
+                    ctx.data().remove(STATEMENT_VARIABLES);
+                }
+                else
+                    ctx.visit(s);
 
 
 
@@ -347,26 +421,45 @@ final class BlockImpl extends AbstractQuery implements Block {
 
     private static final void end(Context<?> ctx) {
         ctx.formatIndentEnd()
-           .formatSeparator()
-           .visit(K_END);
+           .formatSeparator();
 
-         switch (ctx.family()) {
-             case FIREBIRD:
-                 break;
+        if (ctx.family() == H2)
+            ctx.sql('}');
+        else
+            ctx.visit(K_END);
 
-
-
-
-
-
-
+        switch (ctx.family()) {
+            case H2:
+            case FIREBIRD:
+                break;
 
 
 
 
 
-             default:
-                 ctx.sql(';');
-         }
+
+
+
+
+
+
+
+            default:
+                ctx.sql(';');
+        }
     }
+
+    static final String  STATEMENT_VARIABLES = "org.jooq.impl.BlockImpl.statement-variables";
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -49,6 +49,7 @@ import org.jooq.Keyword;
 final class Keywords {
 
     static final Keyword K_ADD                              = keyword("add");
+    static final Keyword K_ALIAS                            = keyword("alias");
     static final Keyword K_ALTER                            = keyword("alter");
     static final Keyword K_ALTER_COLUMN                     = keyword("alter column");
     static final Keyword K_ALTER_CONSTRAINT                 = keyword("alter constraint");
@@ -72,6 +73,7 @@ final class Keywords {
     static final Keyword K_BULK_COLLECT_INTO                = keyword("bulk collect into");
     static final Keyword K_BY                               = keyword("by");
     static final Keyword K_CACHE                            = keyword("cache");
+    static final Keyword K_CALL                             = keyword("call");
     static final Keyword K_CASCADE                          = keyword("cascade");
     static final Keyword K_CASE                             = keyword("case");
     static final Keyword K_CAST                             = keyword("cast");

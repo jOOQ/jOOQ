@@ -93,4 +93,22 @@ package org.jooq.impl;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             

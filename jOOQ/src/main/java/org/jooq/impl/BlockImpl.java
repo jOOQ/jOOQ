@@ -61,6 +61,7 @@ import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Keywords.K_PROCEDURE;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
@@ -153,9 +154,8 @@ final class BlockImpl extends AbstractQuery implements Block {
             }
 
             case H2: {
-                String name = "block_" + System.currentTimeMillis() + "_" + (long) (10000000L * Math.random());
+                String name = randomName();
 
-                // TODO: create a non-ambiguous name
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
                        .visit(K_CREATE).sql(' ')
@@ -182,6 +182,31 @@ final class BlockImpl extends AbstractQuery implements Block {
                 break;
             }
 
+            case MYSQL: {
+                String name = randomName();
+
+                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
+                    ctx.paramType(INLINED)
+                       .visit(K_CREATE).sql(' ')
+                       .visit(K_PROCEDURE).sql(' ').sql(name).sql("()")
+                       .formatIndentStart()
+                       .formatSeparator();
+
+                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                }
+
+                accept0(ctx);
+
+                if (decrement(ctx.data(), DATA_BLOCK_NESTING))
+                    ctx.formatIndentEnd()
+                       .formatSeparator()
+                       .visit(K_CALL).sql(' ').sql(name).sql("();")
+                       .formatSeparator()
+                       .visit(K_DROP).sql(' ').visit(K_PROCEDURE).sql(' ').sql(name).sql(';');
+
+                break;
+            }
+
             case MARIADB:
 
 
@@ -196,6 +221,10 @@ final class BlockImpl extends AbstractQuery implements Block {
                 break;
             }
         }
+    }
+
+    private static final String randomName() {
+        return "block_" + System.currentTimeMillis() + "_" + (long) (10000000L * Math.random());
     }
 
     private final void accept0(Context<?> ctx) {

@@ -9750,7 +9750,7 @@ public class DSL {
      *
      * @see DSLContext#begin(Statement...)
      */
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Statement... statements) {
         return begin(Arrays.asList(statements));
     }
@@ -9760,7 +9760,7 @@ public class DSL {
      *
      * @see DSLContext#begin(Collection)
      */
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }

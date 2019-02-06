@@ -49,7 +49,10 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_10;
+import static org.jooq.SQLDialect.POSTGRES_11;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.choose;
@@ -147,6 +150,7 @@ class Function<T> extends AbstractField<T> implements
     private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT               = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG                 = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_FILTER                     = EnumSet.of(H2, HSQLDB, POSTGRES_9_4, POSTGRES_9_5, POSTGRES_10, POSTGRES_11);
 
     static final Field<Integer>              ASTERISK                           = DSL.field("*", Integer.class);
 
@@ -398,12 +402,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     final void toSQLFilterClause(Context<?> ctx) {
-        if (filter != null && (
-                HSQLDB == ctx.family() ||
-
-
-
-                POSTGRES_9_4.precedes(ctx.dialect()))) {
+        if (filter != null && SUPPORT_FILTER.contains(ctx.dialect()))
             ctx.sql(' ')
                .visit(K_FILTER)
                .sql(" (")
@@ -411,7 +410,6 @@ class Function<T> extends AbstractField<T> implements
                .sql(' ')
                .visit(filter)
                .sql(')');
-        }
     }
 
     final void toSQLOverClause(Context<?> ctx) {
@@ -554,12 +552,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (!args.isEmpty()) {
-            if (filter == null ||
-                    HSQLDB == ctx.family() ||
-
-
-
-                    POSTGRES_9_4.precedes(ctx.dialect())) {
+            if (filter == null || SUPPORT_FILTER.contains(ctx.dialect())) {
                 ctx.visit(args);
             }
             else {

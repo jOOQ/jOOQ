@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
@@ -130,20 +131,6 @@ final class BlockImpl extends AbstractQuery implements Block {
                 decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
             }
-//            case MARIADB: {
-//                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
-//                    ctx/*.paramType(INLINED)
-//                       */.visit(K_BEGIN).sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC)
-//                       .formatIndentStart();
-//
-//                    // ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-//                }
-//
-//                accept0(ctx);
-//
-//                decrement(ctx.data(), DATA_BLOCK_NESTING);
-//                break;
-//            }
 
 
 
@@ -195,6 +182,7 @@ final class BlockImpl extends AbstractQuery implements Block {
                 break;
             }
 
+            case MARIADB:
 
 
 
@@ -315,17 +303,8 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
     private static final void acceptNonDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
-        if (wrapInBeginEnd) {
-            if (ctx.family() == H2)
-                ctx.sql('{');
-            else
-                ctx.visit(K_BEGIN);
-
-            if (ctx.family() == MARIADB)
-                ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
-
-            ctx.formatIndentStart();
-        }
+        if (wrapInBeginEnd)
+            begin(ctx);
 
         if (statements.isEmpty()) {
             switch (ctx.family()) {
@@ -417,6 +396,18 @@ final class BlockImpl extends AbstractQuery implements Block {
 
         if (wrapInBeginEnd)
             end(ctx);
+    }
+
+    private static final void begin(Context<?> ctx) {
+        if (ctx.family() == H2)
+            ctx.sql('{');
+        else
+            ctx.visit(K_BEGIN);
+
+        if (ctx.family() == MARIADB && toplevel(ctx.data(), DATA_BLOCK_NESTING))
+            ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
+
+        ctx.formatIndentStart();
     }
 
     private static final void end(Context<?> ctx) {

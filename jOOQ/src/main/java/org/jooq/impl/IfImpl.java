@@ -37,7 +37,19 @@
  */
 package org.jooq.impl;
 
-// ...
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

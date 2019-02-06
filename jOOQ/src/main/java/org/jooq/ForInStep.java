@@ -92,4 +92,16 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
             

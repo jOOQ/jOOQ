@@ -17837,7 +17837,7 @@ public class DSL {
     /**
      * The <code>mode(field)</code> aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
         return new org.jooq.impl.Function<T>(Term.MODE, nullSafeDataType(field), field);
     }
@@ -17845,7 +17845,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, POSTGRES_9_4 })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES_9_4 })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -18155,7 +18155,7 @@ public class DSL {
      * The <code>mode() within group (oder by [order clause])</code> ordered
      * aggregate function.
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new Mode();
     }

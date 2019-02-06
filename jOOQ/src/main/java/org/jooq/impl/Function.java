@@ -239,7 +239,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-        else if (term == MODE && (                                                            ctx.family() == POSTGRES)) {
+        else if (term == MODE && (                                                            ctx.family() == H2 || ctx.family() == POSTGRES)) {
             ctx.visit(mode().withinGroupOrderBy(DSL.field("{0}", arguments.get(0))));
         }
         else if (term == MEDIAN && (                                                            ctx.family() == POSTGRES)) {

@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
 
 /**
@@ -69,6 +70,6 @@ public interface OrderedAggregateFunctionOfDeferredType {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support({ POSTGRES_9_4 })
+    @Support({ H2, POSTGRES_9_4 })
     <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field);
 }

@@ -541,8 +541,7 @@ final class ParserImpl implements Parser {
     @Override
     public final Statement parseStatement(String sql, Object... bindings) {
         ParserContext ctx = ctx(sql, bindings);
-        Statement result = parseStatement(ctx);
-        parseSemicolonAfterNonBlocks(ctx, result);
+        Statement result = parseStatementAndSemicolon(ctx);
         ctx.done("Unexpected content");
         return result;
     }
@@ -2279,6 +2278,8 @@ final class ParserImpl implements Parser {
     private static final void parseSemicolonAfterNonBlocks(ParserContext ctx, Statement result) {
         if (!(result instanceof Block))
             parseIf(ctx, ';');
+        else if (result instanceof BlockImpl && !((BlockImpl) result).alwaysWrapInBeginEnd)
+            parseIf(ctx, ';');
     }
 
     private static final Statement parseStatementAndSemicolon(ParserContext ctx) {
@@ -2515,6 +2516,69 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

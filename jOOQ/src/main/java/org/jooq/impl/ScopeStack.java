@@ -76,10 +76,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final void trim() {
+        int size;
+
         if (scopeLevel > 0)
             for (List<V> list : stack().values())
-                while (list.size() > scopeLevel || list.size() > 0 && list.get(list.size() - 1) == null)
-                    list.remove(list.size() - 1);
+                while ((size = list.size()) > scopeLevel || size > 0 && list.get(size - 1) == null)
+                    list.remove(size - 1);
     }
     @Override
     public final Iterator<V> iterator() {
@@ -108,8 +110,8 @@ final class ScopeStack<K, V> implements Iterable<V> {
                 while (it.hasNext()) {
                     List<V> list = it.next();
 
-                    int size = scopeLevel + 1;
-                    if (list.size() >= size && (next = list.get(scopeLevel)) != null)
+                    int l = scopeLevel + 1;
+                    if (list.size() >= l && (next = list.get(scopeLevel)) != null)
                         break;
                 }
 
@@ -160,9 +162,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
             stack().put(key, list);
         }
 
-        int size = scopeLevel + 1;
-        if (list.size() < size)
-            list.addAll(Collections.<V>nCopies(size - list.size(), null));
+        int l = scopeLevel + 1;
+        int size = list.size();
+        if (size < l)
+            list.addAll(Collections.<V>nCopies(l - size, null));
 
         return list;
     }

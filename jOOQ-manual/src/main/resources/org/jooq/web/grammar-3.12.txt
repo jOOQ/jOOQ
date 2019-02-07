@@ -77,11 +77,13 @@ blockStatement =
 ;
 
 declarationStatement =
-  identifier [ 'CONSTANT' ] dataType [ ( '=' | ':=' | 'DEFAULT' ) field ]
+  identifier [ 'CONSTANT' ] dataType [ [ 'NOT' ] 'NULL' ] [ ( '=' | ':=' | 'DEFAULT' ) field ]
 ;
 
 declareStatement =
-  'DECLARE' identifier dataType [ ( '=' | 'DEFAULT' ) field ]
+  'DECLARE'
+        identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ]
+  { ',' identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ] }
 ;
 
 assignmentStatement =
@@ -96,7 +98,7 @@ ifStatement =
   [ ( 'ELSIF' | 'ELSEIF' ) condition 'THEN' proceduralStatements ]
   [ 'ELSE' proceduralStatements ]
   'END IF'
-) | (
+|
   proceduralStatement
   [ 'ELSE' proceduralStatement ]
 )

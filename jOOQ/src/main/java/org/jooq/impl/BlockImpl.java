@@ -106,7 +106,7 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
     private final Collection<? extends Statement> statements;
-    private final boolean                         alwaysWrapInBeginEnd;
+    final boolean                                 alwaysWrapInBeginEnd;
 
     BlockImpl(Configuration configuration, Collection<? extends Statement> statements, boolean alwaysWrapInBeginEnd) {
         super(configuration);

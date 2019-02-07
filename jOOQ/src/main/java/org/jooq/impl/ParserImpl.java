@@ -441,6 +441,7 @@ import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateWhereStep;
 import org.jooq.User;
 // ...
+// ...
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFromFirstLastStep;
@@ -545,6 +546,12 @@ final class ParserImpl implements Parser {
         ctx.done("Unexpected content");
         return result;
     }
+
+
+
+
+
+
 
 
 
@@ -2242,6 +2249,10 @@ final class ParserImpl implements Parser {
     private static final Block parseBlock(ParserContext ctx) {
         List<Statement> statements = new ArrayList<Statement>();
 
+
+
+
+
         if (parseKeywordIf(ctx, "DECLARE") && ctx.requireProEdition())
 
 
@@ -2257,6 +2268,11 @@ final class ParserImpl implements Parser {
 
 
         parseIf(ctx, ';');
+
+
+
+
+
         return ctx.dsl.begin(statements);
     }
 
@@ -2499,6 +2515,11 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
 
 
 
@@ -8147,6 +8168,15 @@ final class ParserImpl implements Parser {
             return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
         else {
+
+
+
+
+
+
+
+
+
             return field(name);
         }
     }
@@ -9834,18 +9864,24 @@ final class ParserImpl implements Parser {
 }
 
 final class ParserContext {
-    private static final boolean PRO_EDITION = false                                 ;
+    private static final boolean          PRO_EDITION     = false                                 ;
 
-    final DSLContext             dsl;
-    final Meta                   meta;
-    final ParseWithMetaLookups   metaLookups;
-    final String                 sqlString;
-    final char[]                 sql;
-    private int                  position    = 0;
-    private boolean              ignoreHints = true;
-    private final Object[]       bindings;
-    private int                  bindIndex   = 0;
-    private String               delimiter   = ";";
+    final DSLContext                      dsl;
+    final Meta                            meta;
+    final ParseWithMetaLookups            metaLookups;
+    final String                          sqlString;
+    final char[]                          sql;
+    private int                           position        = 0;
+    private boolean                       ignoreHints     = true;
+    private final Object[]                bindings;
+    private int                           bindIndex       = 0;
+    private String                        delimiter       = ";";
+
+
+
+
+
+
 
     ParserContext(
         DSLContext dsl,

@@ -172,20 +172,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     void scopeMarkStart0(QueryPart part) {
-        ScopeStackElement e = scopeStack.get(part);
+        ScopeStackElement e = scopeStack.getOrCreate(part);
         e.positions = new int[] { sql.length(), -1 };
         e.indent = indent;
     }
 
     @Override
     void scopeMarkEnd0(QueryPart part) {
-        ScopeStackElement e = scopeStack.get(part);
+        ScopeStackElement e = scopeStack.getOrCreate(part);
         e.positions[1] = sql.length();
     }
 
     @Override
     public RenderContext scopeRegister(QueryPart part) {
-        if (scopeLevel >= 0) {
+        if (scopeStack.inScope()) {
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
                 Table<?> child = root;
@@ -198,7 +198,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     root = child;
                 }
 
-                ScopeStackElement e = scopeStack.get(root);
+                ScopeStackElement e = scopeStack.getOrCreate(root);
                 if (e.joinNode == null)
                     e.joinNode = new JoinNode(root);
 

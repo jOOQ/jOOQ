@@ -52,14 +52,10 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -96,36 +92,35 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
 
 
-    final PreparedStatement                  stmt;
+    final PreparedStatement                        stmt;
 
-    boolean                                  declareFields;
-    boolean                                  declareTables;
-    boolean                                  declareAliases;
-    boolean                                  declareWindows;
-    boolean                                  declareCTE;
-    int                                      subquery;
-    BitSet                                   subqueryScopedNestedSetOperations;
-    int                                      stringLiteral;
-    String                                   stringLiteralEscapedApos    = "'";
-    int                                      index;
-    int                                      scopeLevel                  = -1;
-    int                                      scopeMarking;
-    final ScopeStack                         scopeStack;
+    boolean                                        declareFields;
+    boolean                                        declareTables;
+    boolean                                        declareAliases;
+    boolean                                        declareWindows;
+    boolean                                        declareCTE;
+    int                                            subquery;
+    BitSet                                         subqueryScopedNestedSetOperations;
+    int                                            stringLiteral;
+    String                                         stringLiteralEscapedApos    = "'";
+    int                                            index;
+    int                                            scopeMarking;
+    final ScopeStack<QueryPart, ScopeStackElement> scopeStack;
 
     // [#2665] VisitListener API
-    final VisitListener[]                    visitListeners;
-    private final Deque<Clause>              visitClauses;
-    private final DefaultVisitContext        visitContext;
-    private final Deque<QueryPart>           visitParts;
+    final VisitListener[]                          visitListeners;
+    private final Deque<Clause>                    visitClauses;
+    private final DefaultVisitContext              visitContext;
+    private final Deque<QueryPart>                 visitParts;
 
     // [#2694] Unified RenderContext and BindContext traversal
-    final ParamType                          forcedParamType;
-    final boolean                            castModeOverride;
-    CastMode                                 castMode;
-    ParamType                                paramType                   = ParamType.INDEXED;
-    boolean                                  quote                       = true;
-    boolean                                  qualifySchema               = true;
-    boolean                                  qualifyCatalog              = true;
+    final ParamType                                forcedParamType;
+    final boolean                                  castModeOverride;
+    CastMode                                       castMode;
+    ParamType                                      paramType                   = ParamType.INDEXED;
+    boolean                                        quote                       = true;
+    boolean                                        qualifySchema               = true;
+    boolean                                        qualifyCatalog              = true;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -180,7 +175,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : m == ParamCastMode.NEVER
             ? CastMode.NEVER
             : CastMode.DEFAULT;
-        this.scopeStack = new ScopeStack();
+        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(new ScopeStack.Constructor<ScopeStackElement>() {
+            @Override
+            public ScopeStackElement create() {
+                return new ScopeStackElement();
+            }
+        });
     }
 
     // ------------------------------------------------------------------------
@@ -547,7 +547,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeStart() {
-        scopeLevel++;
+        scopeStack.scopeStart();
         scopeStart0();
 
         return (C) this;
@@ -560,7 +560,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeMarkStart(QueryPart part) {
-        if (scopeLevel >= 0 && scopeMarking++ == 0)
+        if (scopeStack.inScope() && scopeMarking++ == 0)
             scopeMarkStart0(part);
 
         return (C) this;
@@ -568,7 +568,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeMarkEnd(QueryPart part) {
-        if (scopeLevel >= 0 && --scopeMarking == 0)
+        if (scopeStack.inScope() && --scopeMarking == 0)
             scopeMarkEnd0(part);
 
         return (C) this;
@@ -577,8 +577,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C scopeEnd() {
         scopeEnd0();
-        scopeLevel--;
-        scopeStack.trim();
+        scopeStack.scopeEnd();
 
         return (C) this;
     }
@@ -782,89 +781,5 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         int[]    positions;
         int      indent;
         JoinNode joinNode;
-    }
-
-    class ScopeStack implements Iterable<ScopeStackElement> {
-        private Map<QueryPart, List<ScopeStackElement>> stack;
-
-        private Map<QueryPart, List<ScopeStackElement>> stack() {
-            if (stack == null)
-                stack = new LinkedHashMap<QueryPart, List<ScopeStackElement>>();
-
-            return stack;
-        }
-
-        final void trim() {
-            if (scopeLevel > 0)
-                for (List<ScopeStackElement> list : stack().values())
-                    while (list.size() > scopeLevel || list.size() > 0 && list.get(list.size() - 1) == null)
-                        list.remove(list.size() - 1);
-        }
-
-        @Override
-        public final Iterator<ScopeStackElement> iterator() {
-            return new Iterator<ScopeStackElement>() {
-                Iterator<List<ScopeStackElement>> it = stack().values().iterator();
-                ScopeStackElement next;
-
-                @Override
-                public boolean hasNext() {
-                    return move() != null;
-                }
-
-                @Override
-                public ScopeStackElement next() {
-                    if (next == null) {
-                        return move();
-                    }
-                    else {
-                        ScopeStackElement result = next;
-                        next = null;
-                        return result;
-                    }
-                }
-
-                private ScopeStackElement move() {
-                    while (it.hasNext()) {
-                        List<ScopeStackElement> list = it.next();
-
-                        int size = scopeLevel + 1;
-                        if (list.size() >= size && (next = list.get(scopeLevel)) != null)
-                            break;
-                    }
-
-                    return next;
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException("remove");
-                }
-            };
-        }
-
-        ScopeStackElement get(QueryPart key) {
-            List<ScopeStackElement> list = stack().get(key);
-
-            if (list == null) {
-                list = new ArrayList<ScopeStackElement>();
-                stack().put(key, list);
-            }
-
-            int size = scopeLevel + 1;
-            if (list.size() < size)
-                list.addAll(Collections.<ScopeStackElement>nCopies(size - list.size(), null));
-
-            ScopeStackElement result = null;
-            for (int i = scopeLevel; i >= 0 && result == null; i--)
-                result = list.get(i);
-
-            if (result == null) {
-                result = new ScopeStackElement();
-                list.set(scopeLevel, result);
-            }
-
-            return result;
-        }
     }
 }

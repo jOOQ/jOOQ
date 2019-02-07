@@ -1,0 +1,192 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
+ *
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+package org.jooq.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A stack to register elements that are visible to a certain scope.
+ *
+ * @author Lukas Eder
+ */
+final class ScopeStack<K, V> implements Iterable<V> {
+
+    private int                  scopeLevel = -1;
+    private Map<K, List<V>>      stack;
+    private final Constructor<V> constructor;
+
+    ScopeStack(final V defaultValue) {
+        this(new Constructor<V>() {
+            @Override
+            public V create() {
+                return defaultValue;
+            }
+        });
+    }
+
+    ScopeStack(Constructor<V> constructor) {
+        this.constructor = constructor;
+    }
+
+    private final Map<K, List<V>> stack() {
+        if (stack == null)
+            stack = new LinkedHashMap<K, List<V>>();
+
+        return stack;
+    }
+
+    private final void trim() {
+        if (scopeLevel > 0)
+            for (List<V> list : stack().values())
+                while (list.size() > scopeLevel || list.size() > 0 && list.get(list.size() - 1) == null)
+                    list.remove(list.size() - 1);
+    }
+    @Override
+    public final Iterator<V> iterator() {
+        return new Iterator<V>() {
+            Iterator<List<V>> it = stack().values().iterator();
+            V next;
+
+            @Override
+            public boolean hasNext() {
+                return move() != null;
+            }
+
+            @Override
+            public V next() {
+                if (next == null) {
+                    return move();
+                }
+                else {
+                    V result = next;
+                    next = null;
+                    return result;
+                }
+            }
+
+            private V move() {
+                while (it.hasNext()) {
+                    List<V> list = it.next();
+
+                    int size = scopeLevel + 1;
+                    if (list.size() >= size && (next = list.get(scopeLevel)) != null)
+                        break;
+                }
+
+                return next;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("remove");
+            }
+        };
+    }
+
+    final void set(K key, V value) {
+        List<V> list = list(key);
+        list.set(scopeLevel, value);
+    }
+
+    private final V get0(List<V> list) {
+        V result = null;
+        for (int i = scopeLevel; i >= 0 && result == null; i--)
+            result = list.get(i);
+
+        return result;
+    }
+
+    final V get(K key) {
+        return get0(list(key));
+    }
+
+    final V getOrCreate(K key) {
+        List<V> list = list(key);
+        V result = get0(list);
+
+        if (result == null) {
+            result = constructor.create();
+            list.set(scopeLevel, result);
+        }
+
+        return result;
+    }
+
+    private List<V> list(K key) {
+        List<V> list = stack().get(key);
+
+        if (list == null) {
+            list = new ArrayList<V>();
+            stack().put(key, list);
+        }
+
+        int size = scopeLevel + 1;
+        if (list.size() < size)
+            list.addAll(Collections.<V>nCopies(size - list.size(), null));
+
+        return list;
+    }
+
+    final boolean inScope() {
+        return scopeLevel > -1;
+    }
+
+    final void scopeStart() {
+        scopeLevel++;
+    }
+
+    final void scopeEnd() {
+        scopeLevel--;
+        trim();
+    }
+
+    /**
+     * Create a new value
+     */
+
+    @FunctionalInterface
+
+    interface Constructor<V> {
+        V create();
+    }
+}

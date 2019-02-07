@@ -69,7 +69,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.impl.DSL.alterTable;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -186,8 +185,8 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
 
 
 
@@ -772,19 +771,6 @@ final class AlterTableImpl extends AbstractQuery implements
             }
         }
 
-        // [#5319] Compound statements to drop multiple columns in a single statement.
-        if (dropColumns != null && dropColumns.size() > 1) {
-            switch (family) {
-
-
-
-
-                case POSTGRES:
-                    dropColumnsInBlock(ctx);
-                    return;
-            }
-        }
-
         accept1(ctx);
     }
 
@@ -1351,21 +1337,6 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-
-    private final void dropColumnsInBlock(Context<?> ctx) {
-        begin(ctx);
-
-        for (int i = 0; i < dropColumns.size(); i++) {
-            Field<?> f = dropColumns.get(i);
-
-            if (i > 0)
-                ctx.formatSeparator();
-
-            ctx.visit(alterTable(table).dropColumn(f)).sql(';');
-        }
-
-        end(ctx);
-    }
 
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
         begin(ctx);

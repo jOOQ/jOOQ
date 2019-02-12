@@ -469,17 +469,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     protected final Field<?>[] getFields(ResultSetMetaData meta) {
+        Collection<? extends Field<?>> fields = coerce();
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
         // method was called to get here
-        List<Field<?>> fields = getSelect();
+        if (fields == null || fields.isEmpty())
+            fields = getSelect();
 
         // If no projection was specified explicitly, create fields from result
         // set meta data instead. This is typically the case for SELECT * ...
-        if (fields.isEmpty()) {
-            Configuration configuration = configuration();
-            return new MetaDataFieldProvider(configuration, meta).getFields();
-        }
+        if (fields.isEmpty())
+            return new MetaDataFieldProvider(configuration(), meta).getFields();
 
         return fieldArray(fields);
     }
@@ -2073,7 +2073,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Class<? extends R> getRecordType() {
+    final Class<? extends R> getRecordType0() {
         // Generated record classes only come into play, when the select is
         // - on a single table
         // - a select *

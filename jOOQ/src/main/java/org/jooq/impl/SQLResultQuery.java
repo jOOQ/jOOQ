@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import java.sql.ResultSetMetaData;
+import java.util.Collection;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -86,14 +87,18 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    public final Class<? extends Record> getRecordType() {
+    final Class<? extends Record> getRecordType0() {
         return RecordImpl.class;
     }
 
     @Override
     protected final Field<?>[] getFields(ResultSetMetaData meta) {
-        Configuration configuration = configuration();
-        return new MetaDataFieldProvider(configuration, meta).getFields();
+        Collection<? extends Field<?>> coerce = coerce();
+
+        if (coerce != null && !coerce.isEmpty())
+            return coerce.toArray(Tools.EMPTY_FIELD);
+        else
+            return new MetaDataFieldProvider(configuration(), meta).getFields();
     }
 
     @Override

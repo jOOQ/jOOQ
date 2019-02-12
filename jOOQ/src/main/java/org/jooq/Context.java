@@ -150,6 +150,12 @@ public interface Context<C extends Context<C>> extends Scope {
     C subquery(boolean subquery);
 
     /**
+     * Which level of subqueries we're currently in, starting with 0 for the top
+     * level query.
+     */
+    int subqueryLevel();
+
+    /**
      * Start a new SELECT scope.
      */
     C scopeStart();

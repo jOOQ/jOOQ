@@ -93,6 +93,7 @@ import static org.jooq.impl.CombineOperator.INTERSECT;
 import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -137,6 +138,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDI
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
@@ -207,6 +209,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO_TABLE       = EnumSet.of(HSQLDB, POSTGRES);
     static final EnumSet<SQLDialect>             SUPPORT_WINDOW_CLAUSE           = EnumSet.of(H2, MYSQL, POSTGRES /*, SQLITE -- See [#8279] */);
     private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect>     REQUIRES_DERIVED_TABLE_DML      = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 
@@ -491,6 +494,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void accept(Context<?> context) {
+        Table<?> dmlTable;
+
+        // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
+        if (context.subqueryLevel() == 1
+            && REQUIRES_DERIVED_TABLE_DML.contains(context.family())
+            && (dmlTable = (Table<?>) context.data(DATA_DML_TARGET_TABLE)) != null
+            && containsTable(dmlTable)) {
+            context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
+        }
+        else
+            accept0(context);
+    }
+
+    public final void accept0(Context<?> context) {
         context.scopeStart();
         for (Table<?> table : getFrom())
             registerTable(context, table);
@@ -2069,6 +2086,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             return knownTable(((JoinTable) table).lhs) && knownTable(((JoinTable) table).rhs);
         else
             return table.fieldsRow().size() > 0;
+    }
+
+    private final boolean containsTable(Table<?> table) {
+        for (Table<?> t : getFrom())
+            if (containsTable(t, table))
+                return true;
+
+        return false;
+    }
+
+    private final boolean containsTable(Table<?> table, Table<?> contained) {
+        if (table instanceof JoinTable)
+            return containsTable(((JoinTable) table).lhs, contained)
+                || containsTable(((JoinTable) table).rhs, contained);
+        else
+            return contained.equals(table);
     }
 
     @SuppressWarnings("unchecked")

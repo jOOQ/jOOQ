@@ -510,6 +510,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final int subqueryLevel() {
+        return subquery;
+    }
+
+    @Override
     public final boolean subquery() {
         return subquery > 0;
     }

@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
+import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -239,6 +240,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     @Override
     public final void accept(Context<?> ctx) {
         WithImpl w = with;
+
+        ctx.data(DATA_DML_TARGET_TABLE, table);
 
 
 
@@ -440,6 +443,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+        ctx.data().remove(DATA_DML_TARGET_TABLE);
     }
 
     /**

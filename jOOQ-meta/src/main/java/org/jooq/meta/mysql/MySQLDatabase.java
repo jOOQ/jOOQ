@@ -279,6 +279,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 .join(KEY_COLUMN_USAGE)
                 .on(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(KeyColumnUsage.CONSTRAINT_SCHEMA))
                 .and(ReferentialConstraints.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
+                .and(ReferentialConstraints.TABLE_NAME.equal(KeyColumnUsage.TABLE_NAME))
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
                 .where(ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata()).or(
                       getInputSchemata().size() == 1

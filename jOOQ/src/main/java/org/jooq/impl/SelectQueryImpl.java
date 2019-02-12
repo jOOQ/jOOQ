@@ -2100,6 +2100,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (table instanceof JoinTable)
             return containsTable(((JoinTable) table).lhs, contained)
                 || containsTable(((JoinTable) table).rhs, contained);
+        else if (table instanceof TableAlias)
+            return containsTable(((TableAlias<?>) table).alias.wrapped, contained);
         else
             return contained.equals(table);
     }

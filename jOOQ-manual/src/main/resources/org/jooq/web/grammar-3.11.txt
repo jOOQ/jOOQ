@@ -220,7 +220,7 @@ insertStatement =
   [ RETURNING ( '*' | fields ) ]
 ;
 
-values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
+values = 'VALUES' ( '(' fields ')' ) { ',' ( '(' fields ')' ) }
 ;
 
 updateStatement =

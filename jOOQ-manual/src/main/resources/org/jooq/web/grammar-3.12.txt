@@ -82,8 +82,8 @@ declarationStatement =
 
 declareStatement =
   'DECLARE'
-        identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ]
-  { ',' identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ] }
+        ( identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ] )
+  { ',' ( identifier { ',' identifier } [ 'AS' ] dataType [ ( '=' | 'DEFAULT' ) field ] ) }
 ;
 
 assignmentStatement =
@@ -329,7 +329,7 @@ insertStatement =
   [ RETURNING ( '*' | fields ) ]
 ;
 
-values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
+values = 'VALUES' ( '(' fields ')' ) { ',' ( '(' fields ')' ) }
 ;
 
 updateStatement =

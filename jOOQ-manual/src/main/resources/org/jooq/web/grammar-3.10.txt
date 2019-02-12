@@ -157,7 +157,7 @@ insertStatement = 'INSERT INTO' tableName
   [ RETURNING ( '*' | fields ) ]
 ;
 
-values = 'VALUES' '(' fields ')' { ',' '(' fields ')' }
+values = 'VALUES' ( '(' fields ')' ) { ',' ( '(' fields ')' ) }
 ;
 
 updateStatement = 'UPDATE' tableName 'SET' setClauses [ 'WHERE' condition ] [ 'RETURNING' ( '*' | fields ) ]

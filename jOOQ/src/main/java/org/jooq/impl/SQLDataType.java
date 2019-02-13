@@ -121,6 +121,11 @@ public final class SQLDataType {
     public static final DataType<String> VARCHAR(int length) {
         return VARCHAR.length(length);
     }
+    
+    /**
+     * The {@link Types#TEXT} type.
+     */
+    public static final DataType<String> TEXT = new DefaultDataType<String>(null, String.class, "text");
 
     /**
      * The {@link Types#CHAR} type.

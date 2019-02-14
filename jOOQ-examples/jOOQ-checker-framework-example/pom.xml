@@ -19,7 +19,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.jooq.version>3.12.0-SNAPSHOT</org.jooq.version>
-        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -60,16 +59,13 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.0</version>
                         <configuration>
-                            <source>${java.version}</source>
-                            <target>${java.version}</target>
+                            <source>9</source>
+                            <target>9</target>
                             <fork>true</fork>
                             <annotationProcessors>
                                 <annotationProcessor>org.jooq.checker.SQLDialectChecker</annotationProcessor>
                                 <!-- <annotationProcessor>org.jooq.checker.PlainSQLChecker</annotationProcessor> -->
                             </annotationProcessors>
-                            <compilerArgs>
-                                <arg>-Xbootclasspath/p:1.8</arg>
-                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -88,8 +84,8 @@
                         <configuration>
                             <compilerId>javac-with-errorprone</compilerId>
                             <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                            <source>${java.version}</source>
-                            <target>${java.version}</target>
+                            <source>9</source>
+                            <target>9</target>
                             <annotationProcessorPaths>
                                 <path>
                                     <groupId>org.jooq</groupId>
@@ -98,7 +94,6 @@
                                 </path>
                             </annotationProcessorPaths>
                             <compilerArgs>
-                                <arg>-Xbootclasspath/p:1.8</arg>
                                 <arg>-XDcompilePolicy=simple</arg>
                                 <arg>-Xplugin:ErrorProne</arg>
                             </compilerArgs>

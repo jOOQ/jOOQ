@@ -38,14 +38,7 @@
 package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
-import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
 
-import java.io.PrintWriter;
-
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-
-import org.jooq.Allow;
 import org.jooq.PlainSQL;
 
 import org.checkerframework.framework.source.SourceVisitor;
@@ -66,38 +59,12 @@ public class PlainSQLChecker extends AbstractChecker {
 
             @Override
             public Void visitMethodInvocation(MethodInvocationTree node, Void p) {
-                try {
-                    ExecutableElement elementFromUse = elementFromUse(node);
-                    PlainSQL plainSQL = elementFromUse.getAnnotation(PlainSQL.class);
-
-                    // In the absence of a @PlainSQL annotation,
-                    // all jOOQ API method calls will type check.
-                    if (plainSQL != null) {
-                        boolean allowed = false;
-                        Element enclosing = enclosing(getPath(root, node));
-
-                        moveUpEnclosingLoop:
-                        while (enclosing != null) {
-                            if (enclosing.getAnnotation(Allow.PlainSQL.class) != null) {
-                                allowed = true;
-                                break moveUpEnclosingLoop;
-                            }
-
-                            enclosing = enclosing.getEnclosingElement();
-                        }
-
-                        if (!allowed)
-                            error(node, "Plain SQL usage not allowed at current scope. Use @Allow.PlainSQL.");
-                    }
-                }
-                catch (final Exception e) {
-                    print(new Printer() {
-                        @Override
-                        public void print(PrintWriter t) {
-                            e.printStackTrace(t);
-                        }
-                    });
-                }
+                Tools.checkPlainSQL(
+                    node,
+                    () -> Tools.enclosing(getPath(root, node)),
+                    message -> error(node, message),
+                    printer -> print(printer)
+                );
 
                 return super.visitMethodInvocation(node, p);
             }

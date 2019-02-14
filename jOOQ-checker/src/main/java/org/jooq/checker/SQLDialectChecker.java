@@ -38,16 +38,7 @@
 package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
-import static java.util.Arrays.asList;
-import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
 
-import java.io.PrintWriter;
-import java.util.EnumSet;
-
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-
-import org.jooq.Allow;
 import org.jooq.Require;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
@@ -70,85 +61,12 @@ public class SQLDialectChecker extends AbstractChecker {
 
             @Override
             public Void visitMethodInvocation(MethodInvocationTree node, Void p) {
-                try {
-                    ExecutableElement elementFromUse = elementFromUse(node);
-                    Support support = elementFromUse.getAnnotation(Support.class);
-
-                    // In the absence of a @Support annotation, all jOOQ API method calls will type check.
-                    if (support != null) {
-                        Element enclosing = enclosing(getPath(root, node));
-
-                        // [#7929] "Empty" @Support annotations expand to all SQLDialects
-                        EnumSet<SQLDialect> supported = EnumSet.copyOf(
-                            support.value().length > 0
-                          ? asList(support.value())
-                          : asList(SQLDialect.values())
-                        );
-
-                        EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
-                        EnumSet<SQLDialect> required = EnumSet.noneOf(SQLDialect.class);
-
-                        boolean evaluateRequire = true;
-                        while (enclosing != null) {
-                            Allow allow = enclosing.getAnnotation(Allow.class);
-
-                            if (allow != null)
-                                allowed.addAll(asList(allow.value()));
-
-                            if (evaluateRequire) {
-                                Require require = enclosing.getAnnotation(Require.class);
-
-                                if (require != null) {
-                                    evaluateRequire = false;
-
-                                    required.clear();
-                                    required.addAll(asList(require.value()));
-                                }
-                            }
-
-                            enclosing = enclosing.getEnclosingElement();
-                        }
-
-                        if (allowed.isEmpty())
-                            error(node, "No jOOQ API usage is allowed at current scope. Use @Allow.");
-
-                        boolean allowedFail = true;
-                        allowedLoop:
-                        for (SQLDialect a : allowed) {
-                            for (SQLDialect s : supported) {
-                                if (a.supports(s)) {
-                                    allowedFail = false;
-                                    break allowedLoop;
-                                }
-                            }
-                        }
-
-                        if (allowedFail)
-                            error(node, "The allowed dialects in scope " + allowed + " do not include any of the supported dialects: " + supported);
-
-                        boolean requiredFail = false;
-                        requiredLoop:
-                        for (SQLDialect r : required) {
-                            for (SQLDialect s : supported)
-                                if (r.supports(s))
-                                    continue requiredLoop;
-
-                            requiredFail = true;
-                            break requiredLoop;
-                        }
-
-                        if (requiredFail)
-                            error(node, "Not all of the required dialects " + required + " from the current scope are supported " + supported);
-                    }
-                }
-                catch (final Exception e) {
-                    print(new Printer() {
-                        @Override
-                        public void print(PrintWriter t) {
-                            e.printStackTrace(t);
-                        }
-                    });
-                }
+                Tools.checkSQLDialect(
+                    node,
+                    () -> Tools.enclosing(getPath(root, node)),
+                    message -> error(node, message),
+                    printer -> print(printer)
+                );
 
                 return super.visitMethodInvocation(node, p);
             }

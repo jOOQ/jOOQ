@@ -37,22 +37,14 @@
  */
 package org.jooq.checker;
 
-import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
-import static org.checkerframework.javacutil.TreeUtils.enclosingClass;
-import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.lang.model.element.Element;
+import org.jooq.checker.Tools.Printer;
 
 import org.checkerframework.framework.source.Result;
 import org.checkerframework.framework.source.SourceChecker;
-
-import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.MethodTree;
-import com.sun.source.util.TreePath;
 
 /**
  * Common base class for checkers.
@@ -61,15 +53,12 @@ import com.sun.source.util.TreePath;
  */
 abstract class AbstractChecker extends SourceChecker {
 
-    void error(Object node, String message) {
+    Void error(Object node, String message) {
         getChecker().report(Result.failure(message, node), node);
+        return null;
     }
 
-    void warn(Object node, String message) {
-        getChecker().report(Result.warning(message, node), node);
-    }
-
-    static void print(Printer printer) {
+    static Void print(Printer printer) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("error.txt"))){
             writer.println("This is probably a bug in jOOQ-checker.");
             writer.println("If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new");
@@ -78,19 +67,7 @@ abstract class AbstractChecker extends SourceChecker {
             printer.print(writer);
         }
         catch (IOException ignore) {}
-    }
 
-    static Element enclosing(TreePath path) {
-        MethodTree enclosingMethod = enclosingMethod(path);
-
-        if (enclosingMethod != null)
-            return elementFromDeclaration(enclosingMethod);
-
-        ClassTree enclosingClass = enclosingClass(path);
-        return elementFromDeclaration(enclosingClass);
-    }
-
-    interface Printer {
-        void print(PrintWriter writer);
+        return null;
     }
 }

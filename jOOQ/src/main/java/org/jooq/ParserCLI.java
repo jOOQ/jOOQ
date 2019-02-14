@@ -187,6 +187,7 @@ public final class ParserCLI {
                 if (a.sql.trim().endsWith(";")) {
                     render(ctx, a);
                     a.sql = null;
+                    System.out.println();
                 }
             }
 

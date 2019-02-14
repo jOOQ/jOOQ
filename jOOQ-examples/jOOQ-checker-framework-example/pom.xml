@@ -60,11 +60,6 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.0</version>
                         <configuration>
-                            <!-- [java-9] -->
-                            <release>${java.version}</release>
-                            <!-- [/java-9] -->
-
-                            <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                             <source>${java.version}</source>
                             <target>${java.version}</target>
                             <fork>true</fork>
@@ -93,11 +88,6 @@
                         <configuration>
                             <compilerId>javac-with-errorprone</compilerId>
                             <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                            <!-- [java-9] -->
-                            <release>${java.version}</release>
-                            <!-- [/java-9] -->
-
-                            <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                             <source>${java.version}</source>
                             <target>${java.version}</target>
                             <annotationProcessorPaths>

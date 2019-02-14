@@ -61,6 +61,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.VisitContext;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultVisitListener;
@@ -98,11 +99,16 @@ public class DDLDatabase extends H2Database {
     @Override
     protected DSLContext create0() {
         if (connection == null) {
+            Settings defaultSettings = new Settings();
+
             String scripts = getProperties().getProperty("scripts");
             String encoding = getProperties().getProperty("encoding", "UTF-8");
             String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
             String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
             String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
+            boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
+            String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
+            String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
 
             publicIsDefault = "none".equals(unqualifiedSchema);
             Comparator<File> fileComparator = FilePattern.fileComparator(sort);
@@ -117,7 +123,10 @@ public class DDLDatabase extends H2Database {
                 info.put("user", "sa");
                 info.put("password", "");
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
-                ctx = DSL.using(connection);
+                ctx = DSL.using(connection, new Settings()
+                    .withParseIgnoreComments(parseIgnoreComments)
+                    .withParseIgnoreCommentStart(parseIgnoreCommentStart)
+                    .withParseIgnoreCommentStop(parseIgnoreCommentStop));
 
                 // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
                 ctx.data("org.jooq.meta.extensions.ddl.ignore-storage-clauses", true);

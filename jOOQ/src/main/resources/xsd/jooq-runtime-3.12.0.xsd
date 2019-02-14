@@ -285,6 +285,18 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseUnknownFunctions" type="jooq-runtime:ParseUnknownFunctions" minOccurs="0" maxOccurs="1" default="FAIL">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7344] Whether the parser should accept unknown functions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="parseIgnoreComments" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] Whether the parser should ignore content between ignore comment tokens.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseIgnoreCommentStart" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore start]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment start token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseIgnoreCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore stop]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

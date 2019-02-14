@@ -152,6 +152,12 @@ public class Settings
     @XmlElement(defaultValue = "FAIL")
     @XmlSchemaType(name = "string")
     protected ParseUnknownFunctions parseUnknownFunctions = ParseUnknownFunctions.FAIL;
+    @XmlElement(defaultValue = "true")
+    protected Boolean parseIgnoreComments = true;
+    @XmlElement(defaultValue = "[jooq ignore start]")
+    protected String parseIgnoreCommentStart = "[jooq ignore start]";
+    @XmlElement(defaultValue = "[jooq ignore stop]")
+    protected String parseIgnoreCommentStop = "[jooq ignore stop]";
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -1407,6 +1413,78 @@ public class Settings
         this.parseUnknownFunctions = value;
     }
 
+    /**
+     * [#8325] Whether the parser should ignore content between ignore comment tokens.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isParseIgnoreComments() {
+        return parseIgnoreComments;
+    }
+
+    /**
+     * Sets the value of the parseIgnoreComments property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setParseIgnoreComments(Boolean value) {
+        this.parseIgnoreComments = value;
+    }
+
+    /**
+     * [#8325] The ignore comment start token
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getParseIgnoreCommentStart() {
+        return parseIgnoreCommentStart;
+    }
+
+    /**
+     * Sets the value of the parseIgnoreCommentStart property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setParseIgnoreCommentStart(String value) {
+        this.parseIgnoreCommentStart = value;
+    }
+
+    /**
+     * [#8325] The ignore comment stop token
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getParseIgnoreCommentStop() {
+        return parseIgnoreCommentStop;
+    }
+
+    /**
+     * Sets the value of the parseIgnoreCommentStop property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setParseIgnoreCommentStop(String value) {
+        this.parseIgnoreCommentStop = value;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -1649,6 +1727,21 @@ public class Settings
 
     public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
         setParseUnknownFunctions(value);
+        return this;
+    }
+
+    public Settings withParseIgnoreComments(Boolean value) {
+        setParseIgnoreComments(value);
+        return this;
+    }
+
+    public Settings withParseIgnoreCommentStart(String value) {
+        setParseIgnoreCommentStart(value);
+        return this;
+    }
+
+    public Settings withParseIgnoreCommentStop(String value) {
+        setParseIgnoreCommentStop(value);
         return this;
     }
 
@@ -1899,6 +1992,21 @@ public class Settings
             sb.append("<parseUnknownFunctions>");
             sb.append(parseUnknownFunctions);
             sb.append("</parseUnknownFunctions>");
+        }
+        if (parseIgnoreComments!= null) {
+            sb.append("<parseIgnoreComments>");
+            sb.append(parseIgnoreComments);
+            sb.append("</parseIgnoreComments>");
+        }
+        if (parseIgnoreCommentStart!= null) {
+            sb.append("<parseIgnoreCommentStart>");
+            sb.append(parseIgnoreCommentStart);
+            sb.append("</parseIgnoreCommentStart>");
+        }
+        if (parseIgnoreCommentStop!= null) {
+            sb.append("<parseIgnoreCommentStop>");
+            sb.append(parseIgnoreCommentStop);
+            sb.append("</parseIgnoreCommentStop>");
         }
         return sb.toString();
     }
@@ -2356,6 +2464,33 @@ public class Settings
                 return false;
             }
         }
+        if (parseIgnoreComments == null) {
+            if (other.parseIgnoreComments!= null) {
+                return false;
+            }
+        } else {
+            if (!parseIgnoreComments.equals(other.parseIgnoreComments)) {
+                return false;
+            }
+        }
+        if (parseIgnoreCommentStart == null) {
+            if (other.parseIgnoreCommentStart!= null) {
+                return false;
+            }
+        } else {
+            if (!parseIgnoreCommentStart.equals(other.parseIgnoreCommentStart)) {
+                return false;
+            }
+        }
+        if (parseIgnoreCommentStop == null) {
+            if (other.parseIgnoreCommentStop!= null) {
+                return false;
+            }
+        } else {
+            if (!parseIgnoreCommentStop.equals(other.parseIgnoreCommentStop)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -2412,6 +2547,9 @@ public class Settings
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));
+        result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
+        result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
+        result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
         return result;
     }
 

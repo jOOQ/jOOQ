@@ -455,6 +455,7 @@ import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.ParseWithMetaLookups;
+import org.jooq.conf.Settings;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
@@ -9597,13 +9598,17 @@ final class ParserImpl implements Parser {
     }
 
     private static final boolean peek(ParserContext ctx, String string) {
+        return peek(ctx, string, ctx.position());
+    }
+
+    private static final boolean peek(ParserContext ctx, String string, int position) {
         int length = string.length();
 
-        if (ctx.sql.length < ctx.position() + length)
+        if (ctx.sql.length < position + length)
             return false;
 
         for (int i = 0; i < length; i++)
-            if (ctx.sql[ctx.position() + i] != string.charAt(i))
+            if (ctx.sql[position + i] != string.charAt(i))
                 return false;
 
         return true;
@@ -9695,6 +9700,10 @@ final class ParserImpl implements Parser {
         // [#8074] The SQL standard and some implementations (e.g. PostgreSQL,
         //         SQL Server) support nesting block comments
         int blockCommentNestLevel = 0;
+        boolean ignoreComment = false;
+        String ignoreCommentStart = ctx.settings().getParseIgnoreCommentStart();
+        String ignoreCommentStop = ctx.settings().getParseIgnoreCommentStop();
+        boolean checkIgnoreComment = !FALSE.equals(ctx.settings().isParseIgnoreComments());
 
         loop:
         for (int i = position; i < ctx.sql.length; i++) {
@@ -9712,32 +9721,40 @@ final class ParserImpl implements Parser {
                         blockCommentNestLevel++;
 
                         while (i < ctx.sql.length) {
-                            switch (ctx.sql[i]) {
-                                case '/':
-                                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
-                                        i = i + 2;
-                                        blockCommentNestLevel++;
-                                    }
+                            if (checkIgnoreComment)
+                                if (!ignoreComment)
+                                    ignoreComment = peek(ctx, ignoreCommentStart, i);
+                                else
+                                    ignoreComment = !peek(ctx, ignoreCommentStop, i);
 
-                                    break;
+                            if (!ignoreComment) {
+                                switch (ctx.sql[i]) {
+                                    case '/':
+                                        if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
+                                            i = i + 2;
+                                            blockCommentNestLevel++;
+                                        }
 
-                                case '+':
-                                    if (!ctx.ignoreHints() && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z'))) {
-                                        blockCommentNestLevel = 0;
-                                        break loop;
-                                    }
+                                        break;
 
-                                    break;
+                                    case '+':
+                                        if (!ctx.ignoreHints() && i + 1 < ctx.sql.length && ((ctx.sql[i + 1] >= 'A' && ctx.sql[i + 1] <= 'Z') || (ctx.sql[i + 1] >= 'a' && ctx.sql[i + 1] <= 'z'))) {
+                                            blockCommentNestLevel = 0;
+                                            break loop;
+                                        }
 
-                                case '*':
-                                    if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
-                                        position = (i = i + 1) + 1;
+                                        break;
 
-                                        if (--blockCommentNestLevel == 0)
-                                            continue loop;
-                                    }
+                                    case '*':
+                                        if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
+                                            position = (i = i + 1) + 1;
 
-                                    break;
+                                            if (--blockCommentNestLevel == 0)
+                                                continue loop;
+                                        }
+
+                                        break;
+                                }
                             }
 
                             i++;
@@ -9751,15 +9768,22 @@ final class ParserImpl implements Parser {
                         i = i + 2;
 
                         while (i < ctx.sql.length) {
-                            switch (ctx.sql[i]) {
-                                case '\r':
-                                case '\n':
-                                    position = i;
-                                    continue loop;
+                            if (checkIgnoreComment)
+                                if (!ignoreComment)
+                                    ignoreComment = peek(ctx, ignoreCommentStart, i);
+                                else
+                                    ignoreComment = !peek(ctx, ignoreCommentStop, i);
 
-                                default:
-                                    i++;
+                            if (!ignoreComment) {
+                                switch (ctx.sql[i]) {
+                                    case '\r':
+                                    case '\n':
+                                        position = i;
+                                        continue loop;
+                                }
                             }
+
+                            i++;
                         }
 
                         position = i;
@@ -9962,8 +9986,16 @@ final class ParserContext {
         this.bindings = bindings;
     }
 
+    Configuration configuration() {
+        return dsl.configuration();
+    }
+
+    Settings settings() {
+        return configuration().settings();
+    }
+
     SQLDialect dialect() {
-        SQLDialect result = dsl.configuration().settings().getParseDialect();
+        SQLDialect result = settings().getParseDialect();
 
         if (result == null)
             result = SQLDialect.DEFAULT;

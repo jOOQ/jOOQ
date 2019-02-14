@@ -59,8 +59,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.0</version>
                         <configuration>
-                            <source>9</source>
-                            <target>9</target>
+                            <source>11</source>
+                            <target>11</target>
                             <fork>true</fork>
                             <annotationProcessors>
                                 <annotationProcessor>org.jooq.checker.SQLDialectChecker</annotationProcessor>
@@ -84,8 +84,8 @@
                         <configuration>
                             <compilerId>javac-with-errorprone</compilerId>
                             <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                            <source>9</source>
-                            <target>9</target>
+                            <source>11</source>
+                            <target>11</target>
                             <annotationProcessorPaths>
                                 <path>
                                     <groupId>org.jooq</groupId>

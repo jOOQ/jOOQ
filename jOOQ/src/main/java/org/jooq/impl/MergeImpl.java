@@ -48,6 +48,7 @@ import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
+import static org.jooq.SQLDialect.DERBY;
 // ...
 // ...
 // ...
@@ -237,16 +238,13 @@ implements
      */
     private static final long                serialVersionUID = -8835479296876774391L;
     private static final Clause[]            CLAUSES          = { MERGE };
-
-
-
-
-
+    private static final EnumSet<SQLDialect> NO_SUPPORT_WHERE = EnumSet.of(DERBY);
 
     private final WithImpl                   with;
     private final Table<R>                   table;
     private final ConditionProviderImpl      on;
     private TableLike<?>                     using;
+    private boolean                          usingDual;
 
     // [#998] Oracle extensions to the MERGE statement
     private Condition                        matchedWhere;
@@ -708,7 +706,7 @@ implements
 
         // [#1541] The VALUES() clause is also supported in the H2-specific
         // syntax, in case of which, the USING() was not added
-        if (using == null) {
+        if (using == null && !usingDual) {
             upsertStyle = true;
             getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
@@ -742,7 +740,7 @@ implements
 
     @Override
     public final MergeImpl usingDual() {
-        this.using = create().selectOne();
+        this.usingDual = true;
         return this;
     }
 
@@ -1179,11 +1177,14 @@ implements
     /**
      * Return a standard MERGE statement emulating the H2-specific syntax
      */
-    private final QueryPart getStandardMerge() {
+    private final QueryPart getStandardMerge(boolean usingSubqueries) {
 
         // The SRC for the USING() clause:
         // ------------------------------
         Table<?> src;
+        List<Field<?>> srcFields;
+
+        // [#5110] This is not yet supported by Derby
         if (upsertSelect != null) {
             Row row = upsertSelect.fieldsRow();
             List<Field<?>> v = new ArrayList<Field<?>>(row.size());
@@ -1194,14 +1195,23 @@ implements
             // [#579] TODO: Currently, this syntax may require aliasing
             // on the call-site
             src = DSL.select(v).from(upsertSelect).asTable("src");
+            srcFields = Arrays.asList(src.fields());
         }
-        else {
+        else if (usingSubqueries) {
             List<Field<?>> v = new ArrayList<Field<?>>(getUpsertValues().size());
 
             for (int i = 0; i < getUpsertValues().size(); i++)
                 v.add(getUpsertValues().get(i).as("s" + (i + 1)));
 
             src = DSL.select(v).asTable("src");
+            srcFields = Arrays.asList(src.fields());
+        }
+        else {
+            src = new Dual();
+            srcFields = new ArrayList<Field<?>>(getUpsertValues().size());
+
+            for (int i = 0; i < getUpsertValues().size(); i++)
+                srcFields.add(getUpsertValues().get(i));
         }
 
         // The condition for the ON clause:
@@ -1215,7 +1225,7 @@ implements
                 onFields.addAll(key.getFields());
 
                 for (int i = 0; i < key.getFields().size(); i++) {
-                    Condition rhs = key.getFields().get(i).equal((Field) src.field(i));
+                    Condition rhs = key.getFields().get(i).equal((Field) srcFields.get(i));
 
                     if (condition == null) {
                         condition = rhs;
@@ -1234,19 +1244,16 @@ implements
         else {
             for (int i = 0; i < getUpsertKeys().size(); i++) {
                 int matchIndex = getUpsertFields().indexOf(getUpsertKeys().get(i));
-                if (matchIndex == -1) {
+                if (matchIndex == -1)
                     throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
-                }
 
                 onFields.addAll(getUpsertKeys());
-                Condition rhs = getUpsertKeys().get(i).equal((Field) src.field(matchIndex));
+                Condition rhs = getUpsertKeys().get(i).equal((Field) srcFields.get(matchIndex));
 
-                if (condition == null) {
+                if (condition == null)
                     condition = rhs;
-                }
-                else {
+                else
                     condition = condition.and(rhs);
-                }
             }
         }
 
@@ -1255,14 +1262,13 @@ implements
         Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
         Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
 
-        for (int i = 0; i < src.fieldsRow().size(); i++) {
+        for (int i = 0; i < srcFields.size(); i++) {
 
             // Oracle does not allow to update fields from the ON clause
-            if (!onFields.contains(getUpsertFields().get(i))) {
-                update.put(getUpsertFields().get(i), src.field(i));
-            }
+            if (!onFields.contains(getUpsertFields().get(i)))
+                update.put(getUpsertFields().get(i), srcFields.get(i));
 
-            insert.put(getUpsertFields().get(i), src.field(i));
+            insert.put(getUpsertFields().get(i), srcFields.get(i));
         }
 
         return DSL.mergeInto(table)
@@ -1306,8 +1312,12 @@ implements
 
 
 
+                case DERBY:
+                    ctx.visit(getStandardMerge(false));
+                    break;
+
                 default:
-                    ctx.visit(getStandardMerge());
+                    ctx.visit(getStandardMerge(true));
                     break;
             }
         }
@@ -1437,14 +1447,28 @@ implements
            .formatSeparator()
            .start(MERGE_USING)
            .declareTables(true)
-           .visit(K_USING).sql(' ')
-           .formatIndentStart()
-           .formatNewLine();
+           .visit(K_USING).sql(' ');
+
         ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
-        ctx.visit(using);
+
+        // [#5110] As of version 10.14, Derby only supports direct table references
+        //         in its MERGE statement.
+        if (usingDual) {
+            switch (ctx.family()) {
+                case DERBY:
+                    ctx.visit(new Dual());
+                    break;
+                default:
+                    ctx.visit(DSL.selectOne());
+                    break;
+            }
+        }
+        else {
+            ctx.visit(using);
+        }
+
         ctx.data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
-        ctx.formatIndentEnd()
-           .declareTables(false);
+        ctx.declareTables(false);
 
 
 
@@ -1497,10 +1521,9 @@ implements
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ').visit(K_MATCHED);
 
-
-
-
-
+            // [#5110] Standard SQL "WHERE" clause in updates
+            if (matchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
+                ctx.sql(' ').visit(K_AND).sql(' ').visit(matchedWhere);
 
             ctx.sql(' ').visit(K_THEN).sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
@@ -1514,12 +1537,10 @@ implements
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null)
-
-
-
-            ctx.formatSeparator()
-               .visit(K_WHERE).sql(' ')
-               .visit(matchedWhere);
+            if (!NO_SUPPORT_WHERE.contains(ctx.family()))
+                ctx.formatSeparator()
+                   .visit(K_WHERE).sql(' ')
+                   .visit(matchedWhere);
 
         ctx.end(MERGE_WHERE)
            .start(MERGE_DELETE_WHERE);
@@ -1539,8 +1560,12 @@ implements
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ')
                .visit(K_NOT).sql(' ')
-               .visit(K_MATCHED).sql(' ')
-               .visit(K_THEN).sql(' ')
+               .visit(K_MATCHED).sql(' ');
+
+            if (notMatchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
+                ctx.visit(K_AND).sql(' ').visit(notMatchedWhere).sql(' ');
+
+            ctx.visit(K_THEN).sql(' ')
                .visit(K_INSERT);
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
@@ -1553,11 +1578,10 @@ implements
         ctx.start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
-        if (notMatchedWhere != null) {
+        if (notMatchedWhere != null && !NO_SUPPORT_WHERE.contains(ctx.family()))
             ctx.formatSeparator()
                .visit(K_WHERE).sql(' ')
                .visit(notMatchedWhere);
-        }
 
         ctx.end(MERGE_WHERE)
            .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);

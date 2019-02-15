@@ -5418,7 +5418,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table)
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB })
     public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return dsl().mergeInto(table);
     }

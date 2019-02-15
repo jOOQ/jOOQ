@@ -385,6 +385,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+                case DERBY:
                 case HSQLDB: {
                     ctx.visit(toMerge(ctx.configuration()));
                     break;

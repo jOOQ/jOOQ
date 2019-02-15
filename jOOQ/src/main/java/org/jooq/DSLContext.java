@@ -7604,7 +7604,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * statement without field specification. See also
      * {@link #mergeInto(Table, Field...)}
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     // [jooq-tools] START [merge]

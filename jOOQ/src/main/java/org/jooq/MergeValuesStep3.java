@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -73,19 +74,19 @@ public interface MergeValuesStep3<R extends Record, T1, T2, T3> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     Merge<R> values(T1 value1, T2 value2, T3 value3);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     Merge<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     Merge<R> values(Collection<?> values);
 
     /**

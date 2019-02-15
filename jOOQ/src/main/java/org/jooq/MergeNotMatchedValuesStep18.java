@@ -39,6 +39,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -74,20 +75,20 @@ public interface MergeNotMatchedValuesStep18<R extends Record, T1, T2, T3, T4, T
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

@@ -152,8 +152,8 @@ public class Settings
     @XmlElement(defaultValue = "FAIL")
     @XmlSchemaType(name = "string")
     protected ParseUnknownFunctions parseUnknownFunctions = ParseUnknownFunctions.FAIL;
-    @XmlElement(defaultValue = "true")
-    protected Boolean parseIgnoreComments = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean parseIgnoreComments = false;
     @XmlElement(defaultValue = "[jooq ignore start]")
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
     @XmlElement(defaultValue = "[jooq ignore stop]")

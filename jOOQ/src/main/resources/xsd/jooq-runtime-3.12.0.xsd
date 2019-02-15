@@ -286,7 +286,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7344] Whether the parser should accept unknown functions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="parseIgnoreComments" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+      <element name="parseIgnoreComments" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] Whether the parser should ignore content between ignore comment tokens.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

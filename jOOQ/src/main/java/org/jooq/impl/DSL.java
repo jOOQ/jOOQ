@@ -7519,7 +7519,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(String index) {
         return dsl().alterIndex(index);
     }
@@ -7529,7 +7529,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(Name index) {
         return dsl().alterIndex(index);
     }
@@ -7539,7 +7539,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Index)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES })
     public static AlterIndexOnStep alterIndex(Index index) {
         return dsl().alterIndex(index);
     }

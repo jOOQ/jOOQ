@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
@@ -86,7 +87,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(Table<?> table);
 
     /**
@@ -99,7 +100,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(String tableName);
 
     /**
@@ -112,7 +113,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(Name tableName);
 
 }

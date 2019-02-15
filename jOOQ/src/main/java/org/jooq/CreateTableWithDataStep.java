@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -91,6 +92,6 @@ public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
     /**
      * Add a <code>WITH DATA</code> clause.
      */
-    @Support({ CUBRID,  H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableCommentStep withNoData();
 }

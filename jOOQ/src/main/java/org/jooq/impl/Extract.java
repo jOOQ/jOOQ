@@ -169,7 +169,7 @@ final class Extract extends AbstractFunction<Integer> {
 
 
 
-                return getNativeFunction();
+                return getDefaultEmulation();
 
 
 

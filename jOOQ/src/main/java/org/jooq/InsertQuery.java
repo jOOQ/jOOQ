@@ -264,7 +264,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Condition condition);
 
     /**
@@ -276,7 +276,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Condition... conditions);
 
     /**
@@ -288,7 +288,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Collection<? extends Condition> conditions);
 
     /**
@@ -300,7 +300,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Operator operator, Condition condition);
 
     /**
@@ -312,7 +312,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Operator operator, Condition... conditions);
 
     /**
@@ -324,7 +324,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**

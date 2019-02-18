@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -71,7 +72,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**

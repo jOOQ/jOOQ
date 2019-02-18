@@ -134,7 +134,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     void onConflictOnConstraint(Name constraint);
 
     /**
@@ -142,7 +142,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     void onConflictOnConstraint(Constraint constraint);
 
     /**
@@ -166,7 +166,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -230,7 +230,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -239,7 +239,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -252,7 +252,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     void addValuesForUpdate(Map<?, ?> map);
 
     /**

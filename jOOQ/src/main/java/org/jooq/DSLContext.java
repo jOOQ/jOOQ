@@ -9708,6 +9708,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL truncate statement.
      * <p>
+     * Synonym for {@link #truncateTable(String)}
+     */
+    @Support
+    TruncateIdentityStep<Record> truncate(String table);
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Synonym for {@link #truncateTable(Name)}
+     */
+    @Support
+    TruncateIdentityStep<Record> truncate(Name table);
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Synonym for {@link #truncateTable(Table)}
+     */
+    @Support
+    <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
      * Example:
      * <p>
      * <code><pre>
@@ -9744,7 +9768,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see #truncate(Table)
      */
     @Support
-    TruncateIdentityStep<Record> truncate(String table);
+    TruncateIdentityStep<Record> truncateTable(String table);
 
     /**
      * Create a new DSL truncate statement.
@@ -9785,7 +9809,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see #truncate(Name)
      */
     @Support
-    TruncateIdentityStep<Record> truncate(Name table);
+    TruncateIdentityStep<Record> truncateTable(Name table);
 
     /**
      * Create a new DSL truncate statement.
@@ -9824,7 +9848,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * dialects that do not support them natively.
      */
     @Support
-    <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
+    <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Access control

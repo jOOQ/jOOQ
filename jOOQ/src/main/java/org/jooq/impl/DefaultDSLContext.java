@@ -3549,16 +3549,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public final TruncateIdentityStep<Record> truncate(String table) {
-        return truncate(name(table));
+        return truncateTable(table);
     }
 
     @Override
     public final TruncateIdentityStep<Record> truncate(Name table) {
-        return truncate(table(table));
+        return truncateTable(table);
     }
 
     @Override
     public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
+        return truncateTable(table);
+    }
+
+    @Override
+    public final TruncateIdentityStep<Record> truncateTable(String table) {
+        return truncateTable(name(table));
+    }
+
+    @Override
+    public final TruncateIdentityStep<Record> truncateTable(Name table) {
+        return truncateTable(table(table));
+    }
+
+    @Override
+    public <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return new TruncateImpl<R>(configuration(), table);
     }
 

@@ -7943,6 +7943,36 @@ public class DSL {
     /**
      * Create a new DSL truncate statement.
      * <p>
+     * Synonym for {@link #truncateTable(String)}
+     */
+    @Support
+    public static TruncateIdentityStep<Record> truncate(String table) {
+        return truncateTable(table);
+    }
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Synonym for {@link #truncateTable(Name)}
+     */
+    @Support
+    public static TruncateIdentityStep<Record> truncate(Name table) {
+        return truncateTable(table);
+    }
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Synonym for {@link #truncateTable(Table)}
+     */
+    @Support
+    public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
+        return truncateTable(table);
+    }
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
      * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>DELETE</code> statement.
@@ -7983,8 +8013,8 @@ public class DSL {
      * @see DSLContext#truncate(String)
      */
     @Support
-    public static TruncateIdentityStep<Record> truncate(String table) {
-        return dsl().truncate(table);
+    public static TruncateIdentityStep<Record> truncateTable(String table) {
+        return dsl().truncateTable(table);
     }
 
     /**
@@ -8030,8 +8060,8 @@ public class DSL {
      * @see DSLContext#truncate(Name)
      */
     @Support
-    public static TruncateIdentityStep<Record> truncate(Name table) {
-        return dsl().truncate(table);
+    public static TruncateIdentityStep<Record> truncateTable(Name table) {
+        return dsl().truncateTable(table);
     }
 
     /**
@@ -8077,8 +8107,8 @@ public class DSL {
      * @see DSLContext#truncate(Table)
      */
     @Support
-    public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
-        return dsl().truncate(table);
+    public static <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
+        return dsl().truncateTable(table);
     }
 
     // -------------------------------------------------------------------------

@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -74,7 +75,7 @@ public interface MergeKeyStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7> ext
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     MergeValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> key(Field<?>... keys);
 
     /**
@@ -83,6 +84,6 @@ public interface MergeKeyStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7> ext
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     MergeValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> key(Collection<? extends Field<?>> keys);
 }

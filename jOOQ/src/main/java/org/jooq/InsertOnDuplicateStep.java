@@ -160,7 +160,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <p>
      * H2 supports this clause in MySQL mode.
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**

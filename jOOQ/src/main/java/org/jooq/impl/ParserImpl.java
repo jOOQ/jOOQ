@@ -6726,7 +6726,7 @@ final class ParserImpl implements Parser {
             parse(ctx, ',');
             Field<Integer> count = (Field) parseField(ctx, N);
             parse(ctx, ')');
-            return repeat(field, count);
+            return DSL.repeat(field, count);
         }
 
         return null;

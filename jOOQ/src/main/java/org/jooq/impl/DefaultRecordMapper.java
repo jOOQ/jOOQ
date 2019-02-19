@@ -517,13 +517,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             // Just as in Collection.toArray(Object[]), return a new array in case
             // sizes don't match
-            if (size > result.length) {
+            if (size > result.length)
                 result = (Object[]) Array.newInstance(componentType, size);
-            }
 
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++)
                 result[i] = Convert.convert(record.get(i), componentType);
-            }
 
             return (E) result;
         }
@@ -742,13 +740,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 E result = instance != null ? instance : constructor.call();
 
                 for (int i = 0; i < fields.length; i++) {
-                    for (java.lang.reflect.Field member : members[i]) {
+                    for (java.lang.reflect.Field member : members[i])
 
                         // [#935] Avoid setting final fields
-                        if ((member.getModifiers() & Modifier.FINAL) == 0) {
+                        if ((member.getModifiers() & Modifier.FINAL) == 0)
                             map(record, result, member, i);
-                        }
-                    }
 
                     for (java.lang.reflect.Method method : methods[i]) {
                         Class<?> mType = method.getParameterTypes()[0];
@@ -776,14 +772,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
 
                             // [#935] Avoid setting final fields
-                            if ((member.getModifiers() & Modifier.FINAL) == 0) {
+                            if ((member.getModifiers() & Modifier.FINAL) == 0)
                                 map(value, result, member);
-                            }
                         }
 
-                        for (Method method : getMatchingSetters(configuration, type, prefix)) {
+                        for (Method method : getMatchingSetters(configuration, type, prefix))
                             method.invoke(result, value);
-                        }
                     }
                 }
 
@@ -799,30 +793,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             Class<?> mType = member.getType();
 
             if (mType.isPrimitive()) {
-                if (mType == byte.class) {
+                if (mType == byte.class)
                     map(record.get(index, byte.class), result, member);
-                }
-                else if (mType == short.class) {
+                else if (mType == short.class)
                     map(record.get(index, short.class), result, member);
-                }
-                else if (mType == int.class) {
+                else if (mType == int.class)
                     map(record.get(index, int.class), result, member);
-                }
-                else if (mType == long.class) {
+                else if (mType == long.class)
                     map(record.get(index, long.class), result, member);
-                }
-                else if (mType == float.class) {
+                else if (mType == float.class)
                     map(record.get(index, float.class), result, member);
-                }
-                else if (mType == double.class) {
+                else if (mType == double.class)
                     map(record.get(index, double.class), result, member);
-                }
-                else if (mType == boolean.class) {
+                else if (mType == boolean.class)
                     map(record.get(index, boolean.class), result, member);
-                }
-                else if (mType == char.class) {
+                else if (mType == char.class)
                     map(record.get(index, char.class), result, member);
-                }
             }
 
             else {
@@ -845,30 +831,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             Class<?> mType = member.getType();
 
             if (mType.isPrimitive()) {
-                if (mType == byte.class) {
+                if (mType == byte.class)
                     member.setByte(result, (Byte) value);
-                }
-                else if (mType == short.class) {
+                else if (mType == short.class)
                     member.setShort(result, (Short) value);
-                }
-                else if (mType == int.class) {
+                else if (mType == int.class)
                     member.setInt(result, (Integer) value);
-                }
-                else if (mType == long.class) {
+                else if (mType == long.class)
                     member.setLong(result, (Long) value);
-                }
-                else if (mType == float.class) {
+                else if (mType == float.class)
                     member.setFloat(result, (Float) value);
-                }
-                else if (mType == double.class) {
+                else if (mType == double.class)
                     member.setDouble(result, (Double) value);
-                }
-                else if (mType == boolean.class) {
+                else if (mType == boolean.class)
                     member.setBoolean(result, (Boolean) value);
-                }
-                else if (mType == char.class) {
+                else if (mType == char.class)
                     member.setChar(result, (Character) value);
-                }
             }
             else {
                 member.set(result, value);
@@ -967,18 +945,16 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         for (java.lang.reflect.Field member : members[i]) {
                             int index = propertyNames.indexOf(member.getName());
 
-                            if (index >= 0) {
+                            if (index >= 0)
                                 parameterValues[index] = record.get(i);
-                            }
                         }
 
                         if (methods[i] != null) {
                             String name = getPropertyName(methods[i].getName());
                             int index = propertyNames.indexOf(name);
 
-                            if (index >= 0) {
+                            if (index >= 0)
                                 parameterValues[index] = record.get(i);
-                            }
                         }
                     }
                 }

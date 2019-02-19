@@ -382,36 +382,36 @@ final class BlockImpl extends AbstractQuery implements Block {
 
 
 
-                if (ctx.family() == H2 && s instanceof Query && !(s instanceof Block)) {
-                    ArrayList<Variable<?>> list = new ArrayList<Variable<?>>();
 
-                    ctx.data(STATEMENT_VARIABLES, list);
-                    ctx.sql("try (PreparedStatement s = c.prepareStatement(")
-                       .formatIndentStart()
-                       .formatNewLine()
-                       .sql('"')
-                       .sql(ctx.render(s).replace("\"", "\\\"").replace("\n", "\\n\" +\n\""))
-                       .sql('"')
-                       .formatIndentEnd()
-                       .formatNewLine()
-                       .sql(")) {")
-                       .formatIndentStart()
-                       .formatSeparator();
 
-                    for (int j = 0; j < list.size(); j++)
-                        ctx.sql("s.setObject(" + (j + 1) + ", ")
-                           .sql(list.get(j).getName())
-                           .sql(");")
-                           .formatSeparator();
 
-                    ctx.sql("s.execute();")
-                       .formatIndentEnd()
-                       .formatSeparator()
-                       .sql('}');
 
-                    ctx.data().remove(STATEMENT_VARIABLES);
-                }
-                else
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     ctx.visit(s);
 
 

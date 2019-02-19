@@ -112,8 +112,14 @@ public final class FilePattern {
                     load(encoding, file, fileComparator, null, loader);
                     loaded = true;
                 }
-                else if (pattern.contains("*") || pattern.contains("?")) {
-                    file = new File(pattern.replaceAll("[*?].*", "")).getCanonicalFile();
+                else {
+
+                    // [#8336] Relative paths aren't necessarily relative to the
+                    //         working directory, but maybe to some subdirectory
+                    if (pattern.contains("*") || pattern.contains("?"))
+                        file = new File(pattern.replaceAll("[*?].*", "")).getCanonicalFile();
+                    else
+                        file = new File(".").getCanonicalFile();
 
                     Pattern regex = Pattern.compile("^.*?"
                        + pattern

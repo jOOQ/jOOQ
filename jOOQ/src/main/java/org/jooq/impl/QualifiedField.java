@@ -60,19 +60,14 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
      */
     private static final long       serialVersionUID = 6937002867156868761L;
 
-    private final Name              name;
     private transient Table<Record> table;
 
     QualifiedField(Name name, DataType<T> type) {
         super(name, type);
-
-        this.name = name;
     }
 
     QualifiedField(Name name, DataType<T> type, Comment comment) {
         super(name, type, comment);
-
-        this.name = name;
     }
 
     // ------------------------------------------------------------------------
@@ -81,13 +76,13 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name);
+        ctx.visit(getQualifiedName());
     }
 
     @Override
     public final Table<Record> getTable() {
         if (table == null)
-            table = name.qualified() ? DSL.table(name.qualifier()) : null;
+            table = getQualifiedName().qualified() ? DSL.table(getQualifiedName().qualifier()) : null;
 
         return table;
     }

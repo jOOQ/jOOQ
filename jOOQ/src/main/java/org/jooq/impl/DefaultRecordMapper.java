@@ -634,37 +634,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    /**
-     * A mapper that keeps only fields with a certain prefix prior to applying a
-     * delegate mapper.
-     */
-    private class RemovingPrefixRecordMapper implements RecordMapper<R, Object> {
-
-        private final RecordMapper<R, Object> d;
-        private final Field<?>[]              f;
-
-        RemovingPrefixRecordMapper(RecordMapper<R, Object> d, Field<?>[] fields, String prefix) {
-            this.d = d;
-            this.f = new Field[fields.length];
-
-            String dotted = prefix + ".";
-            for (int i = 0; i < fields.length; i++)
-                if (fields[i].getName().startsWith(dotted))
-                    f[i] = field(name(fields[i].getName().substring(dotted.length() + 1)), fields[i].getDataType());
-        }
-
-        @Override
-        public Object map(R record) {
-            AbstractRecord copy = (AbstractRecord) DSL.using(configuration).newRecord(f);
-
-            for (int i = 0; i < f.length; i++)
-                if (f[i] != null)
-                    copy.set(i, record.get(i));
-
-            return d.map(record);
-        }
-    }
-
     private static final class ConstructorCall<E> implements Callable<E> {
         private final Constructor<? extends E> constructor;
 
@@ -745,24 +714,20 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 List<RecordMapper<R, Object>> list = new ArrayList<RecordMapper<R, Object>>();
 
                 for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
-                    list.add(new RemovingPrefixRecordMapper(
-                        new DefaultRecordMapper<R, Object>(
-                            new Fields<R>(entry.getValue()),
-                            member.getType(),
-                            null,
-                            configuration
-                        ), fields, prefix
+                    list.add(new DefaultRecordMapper<R, Object>(
+                        new Fields<R>(entry.getValue()),
+                        member.getType(),
+                        null,
+                        configuration
                     ));
                 }
 
                 for (Method method : getMatchingSetters(configuration, type, prefix)) {
-                    list.add(new RemovingPrefixRecordMapper(
-                        new DefaultRecordMapper<R, Object>(
-                            new Fields<R>(entry.getValue()),
-                            method.getParameterTypes()[0],
-                            null,
-                            configuration
-                        ), fields, prefix
+                    list.add(new DefaultRecordMapper<R, Object>(
+                        new Fields<R>(entry.getValue()),
+                        method.getParameterTypes()[0],
+                        null,
+                        configuration
                     ));
                 }
 

@@ -53,6 +53,9 @@ public class ForcedType implements Serializable
     @XmlElement(defaultValue = "ALL")
     @XmlSchemaType(name = "string")
     protected Nullability nullability = Nullability.ALL;
+    @XmlElement(defaultValue = "ALL")
+    @XmlSchemaType(name = "string")
+    protected ForcedTypeObjectType objectType = ForcedTypeObjectType.ALL;
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
@@ -276,6 +279,30 @@ public class ForcedType implements Serializable
         this.nullability = value;
     }
 
+    /**
+     * Whether this forced type should apply to all object types, or only to specific ones
+     *
+     * @return
+     *     possible object is
+     *     {@link ForcedTypeObjectType }
+     *
+     */
+    public ForcedTypeObjectType getObjectType() {
+        return objectType;
+    }
+
+    /**
+     * Sets the value of the objectType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ForcedTypeObjectType }
+     *
+     */
+    public void setObjectType(ForcedTypeObjectType value) {
+        this.objectType = value;
+    }
+
     public ForcedType withName(String value) {
         setName(value);
         return this;
@@ -318,6 +345,11 @@ public class ForcedType implements Serializable
 
     public ForcedType withNullability(Nullability value) {
         setNullability(value);
+        return this;
+    }
+
+    public ForcedType withObjectType(ForcedTypeObjectType value) {
+        setObjectType(value);
         return this;
     }
 
@@ -368,6 +400,11 @@ public class ForcedType implements Serializable
             sb.append("<nullability>");
             sb.append(nullability);
             sb.append("</nullability>");
+        }
+        if (objectType!= null) {
+            sb.append("<objectType>");
+            sb.append(objectType);
+            sb.append("</objectType>");
         }
         return sb.toString();
     }
@@ -465,6 +502,15 @@ public class ForcedType implements Serializable
                 return false;
             }
         }
+        if (objectType == null) {
+            if (other.objectType!= null) {
+                return false;
+            }
+        } else {
+            if (!objectType.equals(other.objectType)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -481,6 +527,7 @@ public class ForcedType implements Serializable
         result = ((prime*result)+((expressions == null)? 0 :expressions.hashCode()));
         result = ((prime*result)+((types == null)? 0 :types.hashCode()));
         result = ((prime*result)+((nullability == null)? 0 :nullability.hashCode()));
+        result = ((prime*result)+((objectType == null)? 0 :objectType.hashCode()));
         return result;
     }
 

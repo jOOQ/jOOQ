@@ -78,6 +78,7 @@ import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
+import org.jooq.meta.jaxb.ForcedTypeObjectType;
 import org.jooq.meta.jaxb.Nullability;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
@@ -1406,6 +1407,15 @@ public abstract class AbstractDatabase implements Database {
             String expression = StringUtils.defaultIfNull(forcedType.getExpressions(), forcedType.getExpression());
             String types = forcedType.getTypes();
             Nullability nullability = forcedType.getNullability();
+            ForcedTypeObjectType objectType = forcedType.getObjectType();
+
+            if (     (objectType != null && objectType != ForcedTypeObjectType.ALL)
+                 && ((objectType == ForcedTypeObjectType.ATTRIBUTE && !(definition instanceof AttributeDefinition))
+                 ||  (objectType == ForcedTypeObjectType.COLUMN && !(definition instanceof ColumnDefinition))
+                 ||  (objectType == ForcedTypeObjectType.ELEMENT && !(definition instanceof ArrayDefinition))
+                 ||  (objectType == ForcedTypeObjectType.PARAMETER && !(definition instanceof ParameterDefinition))
+                 ||  (objectType == ForcedTypeObjectType.SEQUENCE && !(definition instanceof SequenceDefinition))))
+                continue forcedTypeLoop;
 
             if (     (nullability != null && nullability != Nullability.ALL)
                  && ((nullability == Nullability.NOT_NULL && definedType.isNullable())

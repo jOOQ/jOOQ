@@ -221,6 +221,12 @@
 
         </bindings>
 
+        <bindings if-exists="true" scd="~tns:ForcedTypeObjectType">
+
+            <typesafeEnumClass ref="org.jooq.meta.jaxb.ForcedTypeObjectType"/>
+
+        </bindings>
+
         <bindings if-exists="true" scd="~tns:RegexFlag">
 
             <typesafeEnumClass ref="org.jooq.meta.jaxb.RegexFlag"/>

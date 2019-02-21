@@ -873,8 +873,23 @@ type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></j
       <element name="nullability" type="tns:Nullability" default="ALL" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to nullable / non-nullable / all columns]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="objectType" type="tns:ForcedTypeObjectType" default="ALL" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to all object types, or only to specific ones]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
+
+  <simpleType name="ForcedTypeObjectType">
+    <restriction base="string">
+      <enumeration value="ALL"/>
+      <enumeration value="ATTRIBUTE"/>
+      <enumeration value="COLUMN"/>
+      <enumeration value="ELEMENT"/>
+      <enumeration value="PARAMETER"/>
+      <enumeration value="SEQUENCE"/>
+    </restriction>
+  </simpleType>
 
   <complexType name="Generate">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Options strictly related to generated code.]]></jxb:javadoc></jxb:class></appinfo></annotation>

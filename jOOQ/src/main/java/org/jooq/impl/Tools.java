@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
+import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
@@ -166,6 +167,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -176,6 +178,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -201,6 +205,7 @@ import org.jooq.Context;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -4771,5 +4776,165 @@ final class Tools {
 
     static final boolean isEmpty(Object[] array) {
         return array == null || array.length == 0;
+    }
+
+    static final boolean isEmbeddable(Object object) {
+        return object instanceof EmbeddableTableField
+            || object instanceof Val && ((Val<?>) object).value instanceof EmbeddableRecord
+            || object instanceof EmbeddableRecord;
+    }
+
+    static final Field<?>[] embeddedFields(Object object) {
+        return object instanceof EmbeddableTableField
+             ? ((EmbeddableTableField<?, ?>) object).fields
+             : object instanceof Val && ((Val<?>) object).value instanceof EmbeddableRecord
+             ? ((EmbeddableRecord<?>) ((Val<?>) object).value).valuesRow().fields()
+             : object instanceof EmbeddableRecord
+             ? ((EmbeddableRecord<?>) object).valuesRow().fields()
+             : null;
+    }
+
+    /**
+     * Flatten out an {@link EmbeddableTableField}.
+     */
+    static final <E extends Field<?>> Iterable<E> flatten(final E field) {
+        return new Iterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                Iterator<E> it = singletonList(field).iterator();
+
+                if (field instanceof EmbeddableTableField)
+                    return new FlatteningIterator<E>(it) {
+                        @SuppressWarnings("unchecked")
+                        @Override
+                        List<E> flatten(E e) {
+                            return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
+                        }
+                    };
+                else
+                    return it;
+            }
+        };
+    }
+
+    /**
+     * Flatten out {@link EmbeddableTableField} elements contained in an
+     * ordinary iterable.
+     */
+    static final <E extends Field<?>> Iterable<E> flattenCollection(final Iterable<E> iterable) {
+        return new Iterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return new FlatteningIterator<E>(iterable.iterator()) {
+                    @SuppressWarnings("unchecked")
+                    @Override
+                    List<E> flatten(E e) {
+                        if (e instanceof EmbeddableTableField)
+                            return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
+
+                        return null;
+                    }
+                };
+            }
+        };
+    }
+
+    /**
+     * Flatten out {@link EmbeddableTableField} elements contained in an
+     * entry set iterable.
+     */
+    static final <E extends Entry<Field<?>, Field<?>>> Iterable<E> flattenEntrySet(final Iterable<E> iterable) {
+        return new Iterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return new FlatteningIterator<E>(iterable.iterator()) {
+                    @SuppressWarnings("unchecked")
+                    @Override
+                    List<E> flatten(E e) {
+                        if (e.getKey() instanceof EmbeddableTableField) {
+                            List<E> result = new ArrayList<E>();
+                            Field<?>[] keys = embeddedFields(e.getKey());
+                            Field<?>[] values = embeddedFields(e.getValue());
+
+                            for (int i = 0; i < keys.length; i++)
+                                result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
+                                    keys[i], values[i]
+                                ));
+
+                            return result;
+                        }
+
+                        return null;
+                    }
+                };
+            }
+        };
+    }
+
+    /**
+     * A base implementation for {@link EmbeddableTableField} flattening
+     * iterators with a default implementation for {@link Iterator#remove()} for
+     * convenience in the Java 6 build.
+     */
+    static abstract class FlatteningIterator<E> implements Iterator<E> {
+        private final Iterator<E> delegate;
+        private Iterator<E> flatten;
+        private E next;
+
+        FlatteningIterator(Iterator<E> delegate) {
+            this.delegate = delegate;
+        }
+
+        abstract List<E> flatten(E e);
+
+        private final void move() {
+            if (next == null) {
+                if (flatten != null) {
+                    if (flatten.hasNext()) {
+                        next = flatten.next();
+                        return;
+                    }
+                    else {
+                        flatten = null;
+                    }
+                }
+
+                if (delegate.hasNext()) {
+                    next = delegate.next();
+
+                    List<E> flattened = flatten(next);
+                    if (flattened == null)
+                        return;
+
+                    next = null;
+                    flatten = flattened.iterator();
+                    move();
+                    return;
+                }
+            }
+        }
+
+        @Override
+        public final boolean hasNext() {
+            move();
+            return next != null;
+        }
+
+        @Override
+        public final E next() {
+            move();
+
+            if (next == null)
+                throw new NoSuchElementException();
+
+            E result = next;
+            next = null;
+            return result;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
     }
 }

@@ -49,6 +49,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
+import org.jooq.meta.jaxb.Embeddable;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.RegexFlag;
@@ -150,6 +151,21 @@ public interface Database  extends AutoCloseable  {
      * Get a table in this database by name.
      */
     TableDefinition getTable(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
+     * Get all embeddables.
+     */
+    List<EmbeddableDefinition> getEmbeddables();
+
+    /**
+     * Get all embeddables for a given schema.
+     */
+    List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema);
+
+    /**
+     * Get all embeddables for a given table.
+     */
+    List<EmbeddableDefinition> getEmbeddables(TableDefinition table);
 
     /**
      * The enum UDTs defined in this database.
@@ -512,6 +528,16 @@ public interface Database  extends AutoCloseable  {
     boolean getIncludeTables();
 
     /**
+     * Whether embeddable types should be included.
+     */
+    void setIncludeEmbeddables(boolean includeEmbeddables);
+
+    /**
+     * Whether embeddable types should be included.
+     */
+    boolean getIncludeEmbeddables();
+
+    /**
      * Whether invisible columns should be included.
      */
     void setIncludeInvisibleColumns(boolean includeInvisibleColumns);
@@ -754,6 +780,17 @@ public interface Database  extends AutoCloseable  {
      * or <code>null</code> if no {@link ForcedType} matches the definition.
      */
     ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType);
+
+    /**
+     * Configure the embeddable types.
+     */
+    void setConfiguredEmbeddables(List<Embeddable> configuredEmbeddables);
+
+    /**
+     * Get the configured embeddable type definitions for any given
+     * {@link Definition}.
+     */
+    List<Embeddable> getConfiguredEmbeddables();
 
     /**
      * Get the dialect for this database.

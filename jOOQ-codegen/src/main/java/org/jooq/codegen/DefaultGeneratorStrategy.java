@@ -51,6 +51,7 @@ import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
+import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IndexDefinition;
@@ -294,15 +295,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                       .replace('.', '_')
         ));
 
-        if (mode == Mode.RECORD) {
+        if (mode == Mode.RECORD)
             result.append("Record");
-        }
-        else if (mode == Mode.DAO) {
+        else if (mode == Mode.DAO)
             result.append("Dao");
-        }
-        else if (mode == Mode.INTERFACE) {
+        else if (mode == Mode.INTERFACE)
             result.insert(0, "I");
-        }
 
         return result.toString();
     }
@@ -310,6 +308,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     private String getSubPackage(Definition definition) {
         if (definition instanceof TableDefinition) {
             return "tables";
+        }
+
+        // [#2530] Embeddable types
+        else if (definition instanceof EmbeddableDefinition) {
+            return "embeddables";
         }
 
         // [#799] UDT's are also packages

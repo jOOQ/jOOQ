@@ -71,6 +71,11 @@ public interface TableDefinition extends Definition {
     ColumnDefinition getColumn(int columnIndex);
 
     /**
+     * All embeddable types in the table.
+     */
+    List<EmbeddableDefinition> getEmbeddables();
+
+    /**
      * Get the indexes for this table.
      */
     List<IndexDefinition> getIndexes();

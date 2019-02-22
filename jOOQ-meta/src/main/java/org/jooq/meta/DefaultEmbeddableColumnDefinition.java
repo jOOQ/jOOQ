@@ -37,22 +37,30 @@
  */
 package org.jooq.meta;
 
-import java.util.List;
-
 /**
- * An object holding information about an index.
- *
  * @author Lukas Eder
  */
-public interface IndexDefinition extends TableElementDefinition {
+public class DefaultEmbeddableColumnDefinition
+    extends AbstractTypedElementDefinition<EmbeddableDefinition>
+    implements EmbeddableColumnDefinition {
 
-    /**
-     * The list of columns making up the index.
-     */
-    List<IndexColumnDefinition> getIndexColumns();
+    private final ColumnDefinition column;
+    private final int              position;
 
-    /**
-     * Whether this is a unique index.
-     */
-    boolean isUnique();
+    public DefaultEmbeddableColumnDefinition(EmbeddableDefinition container, String name, ColumnDefinition column, int position) {
+        super(container, name, position, column.getDefinedType(), column.getComment());
+
+        this.column = column;
+        this.position = position;
+    }
+
+    @Override
+    public final int getPosition() {
+        return position;
+    }
+
+    @Override
+    public final ColumnDefinition getColumn() {
+        return column;
+    }
 }

@@ -35,24 +35,36 @@
  *
  *
  */
+
 package org.jooq.meta;
 
 import java.util.List;
 
 /**
- * An object holding information about an index.
+ * The definition of an embeddable type.
  *
  * @author Lukas Eder
  */
-public interface IndexDefinition extends TableElementDefinition {
+public interface EmbeddableDefinition extends TableElementDefinition {
 
     /**
-     * The list of columns making up the index.
+     * All columns in the type, table or view.
      */
-    List<IndexColumnDefinition> getIndexColumns();
+    List<EmbeddableColumnDefinition> getColumns();
 
     /**
-     * Whether this is a unique index.
+     * Get a column in this type by its name.
      */
-    boolean isUnique();
+    EmbeddableColumnDefinition getColumn(String columnName);
+
+    /**
+     * Get a column in this type by its name.
+     */
+    EmbeddableColumnDefinition getColumn(String columnName, boolean ignoreCase);
+
+    /**
+     * Get a column in this type by its index (starting at 0).
+     */
+    EmbeddableColumnDefinition getColumn(int columnIndex);
+
 }

@@ -40,7 +40,9 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
@@ -62,6 +64,7 @@ import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
 import org.jooq.JSONFormat;
 import org.jooq.Name;
@@ -240,7 +243,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<T> field) {
-        return (T) get(indexOrFail(fieldsRow(), field));
+        if (field instanceof EmbeddableTableField) {
+            Field<?>[] f = embeddedFields(field);
+
+            return (T) Tools
+                .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
+                .operate(new TransferRecordState<Record>(f));
+        }
+        else {
+            return (T) get(indexOrFail(fieldsRow(), field));
+        }
     }
 
     @Override
@@ -310,15 +322,24 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     protected final void set(int index, Object value) {
-        set(index, (Field) field(index), value);
+        set(index, field(index), value);
     }
 
     @Override
     public final <T> void set(Field<T> field, T value) {
-        set(indexOrFail(fields, field), field, value);
+        if (isEmbeddable(field) && value instanceof EmbeddableRecord) {
+            Field<?>[] f = embeddedFields(field);
+            Object[] v = ((EmbeddableRecord) value).intoArray();
+
+            for (int i = 0; i < f.length; i++)
+                set(indexOrFail(fields, f[i]), f[i], v[i]);
+        }
+        else {
+            set(indexOrFail(fields, field), field, value);
+        }
     }
 
-    final <T> void set(int index, Field<T> field, T value) {
+    final void set(int index, Field<?> field, Object value) {
         // Relevant issues documenting this method's behaviour:
         // [#945] Avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses

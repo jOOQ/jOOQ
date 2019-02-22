@@ -67,6 +67,8 @@ public class Generate implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean tables = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean embeddables = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean records = true;
     @XmlElement(defaultValue = "true")
     protected Boolean recordsImplementingRecordN = true;
@@ -532,6 +534,30 @@ public class Generate implements Serializable
      */
     public void setTables(Boolean value) {
         this.tables = value;
+    }
+
+    /**
+     * Generate embeddable classes.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isEmbeddables() {
+        return embeddables;
+    }
+
+    /**
+     * Sets the value of the embeddables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setEmbeddables(Boolean value) {
+        this.embeddables = value;
     }
 
     /**
@@ -1835,6 +1861,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withEmbeddables(Boolean value) {
+        setEmbeddables(value);
+        return this;
+    }
+
     public Generate withRecords(Boolean value) {
         setRecords(value);
         return this;
@@ -2162,6 +2193,11 @@ public class Generate implements Serializable
             sb.append("<tables>");
             sb.append(tables);
             sb.append("</tables>");
+        }
+        if (embeddables!= null) {
+            sb.append("<embeddables>");
+            sb.append(embeddables);
+            sb.append("</embeddables>");
         }
         if (records!= null) {
             sb.append("<records>");
@@ -2560,6 +2596,15 @@ public class Generate implements Serializable
             }
         } else {
             if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (embeddables == null) {
+            if (other.embeddables!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddables.equals(other.embeddables)) {
                 return false;
             }
         }
@@ -3035,6 +3080,7 @@ public class Generate implements Serializable
         result = ((prime*result)+((links == null)? 0 :links.hashCode()));
         result = ((prime*result)+((keys == null)? 0 :keys.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
         result = ((prime*result)+((records == null)? 0 :records.hashCode()));
         result = ((prime*result)+((recordsImplementingRecordN == null)? 0 :recordsImplementingRecordN.hashCode()));
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));

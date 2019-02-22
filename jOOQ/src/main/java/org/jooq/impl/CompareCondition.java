@@ -55,10 +55,13 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.EnumSet;
 
@@ -99,6 +102,13 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (isEmbeddable(field1) && isEmbeddable(field2))
+            ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
         Field<?> lhs = field1;
         Field<?> rhs = field2;

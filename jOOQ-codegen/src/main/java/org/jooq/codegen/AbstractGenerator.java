@@ -72,6 +72,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateSequences                  = true;
     boolean                            generateUDTs                       = true;
     boolean                            generateTables                     = true;
+    boolean                            generateEmbeddables                = true;
     boolean                            generateRecords                    = true;
     boolean                            generateRecordsImplementingRecordN = true;
     boolean                            generatePojos                      = false;
@@ -354,6 +355,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateTables(boolean generateTables) {
         this.generateTables = generateTables;
+    }
+
+    @Override
+    public boolean generateEmbeddables() {
+        return generateEmbeddables;
+    }
+
+    @Override
+    public void setGenerateEmbeddables(boolean generateEmbeddables) {
+        this.generateEmbeddables = generateEmbeddables;
     }
 
     @Override

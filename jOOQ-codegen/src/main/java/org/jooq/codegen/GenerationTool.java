@@ -490,6 +490,7 @@ public class GenerationTool {
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
             database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
             database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
+            database.setIncludeEmbeddables(!FALSE.equals(d.isIncludeEmbeddables()));
             database.setIncludeTriggerRoutines(TRUE.equals(d.isIncludeTriggerRoutines()));
             database.setIncludeUDTs(!FALSE.equals(d.isIncludeUDTs()));
             database.setIncludeUniqueKeys(!FALSE.equals(d.isIncludeUniqueKeys()));
@@ -502,6 +503,7 @@ public class GenerationTool {
             database.setConfiguredCustomTypes(d.getCustomTypes());
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
+            database.setConfiguredEmbeddables(d.getEmbeddables());
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
 
             if (d.getRegexFlags() != null)
@@ -616,6 +618,8 @@ public class GenerationTool {
                 generator.setGenerateUDTs(g.getGenerate().isUdts());
             if (g.getGenerate().isTables() != null)
                 generator.setGenerateTables(g.getGenerate().isTables());
+            if (g.getGenerate().isEmbeddables() != null)
+                generator.setGenerateEmbeddables(g.getGenerate().isEmbeddables());
             if (g.getGenerate().isRecords() != null)
                 generator.setGenerateRecords(g.getGenerate().isRecords());
             if (g.getGenerate().isRecordsImplementingRecordN() != null)

@@ -57,6 +57,8 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean includeTables = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeEmbeddables = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeRoutines = true;
     @XmlElement(defaultValue = "false")
     protected Boolean includeTriggerRoutines = false;
@@ -140,6 +142,9 @@ public class Database implements Serializable
     @XmlElementWrapper(name = "schemata")
     @XmlElement(name = "schema")
     protected List<SchemaMappingType> schemata;
+    @XmlElementWrapper(name = "embeddables")
+    @XmlElement(name = "embeddable")
+    protected List<Embeddable> embeddables;
     @XmlElementWrapper(name = "customTypes")
     @XmlElement(name = "customType")
     protected List<CustomType> customTypes;
@@ -377,6 +382,30 @@ public class Database implements Serializable
      */
     public void setIncludeTables(Boolean value) {
         this.includeTables = value;
+    }
+
+    /**
+     * This flag indicates whether embeddable types should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeEmbeddables() {
+        return includeEmbeddables;
+    }
+
+    /**
+     * Sets the value of the includeEmbeddables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeEmbeddables(Boolean value) {
+        this.includeEmbeddables = value;
     }
 
     /**
@@ -1299,6 +1328,17 @@ public class Database implements Serializable
         this.schemata = schemata;
     }
 
+    public List<Embeddable> getEmbeddables() {
+        if (embeddables == null) {
+            embeddables = new ArrayList<Embeddable>();
+        }
+        return embeddables;
+    }
+
+    public void setEmbeddables(List<Embeddable> embeddables) {
+        this.embeddables = embeddables;
+    }
+
     public List<CustomType> getCustomTypes() {
         if (customTypes == null) {
             customTypes = new ArrayList<CustomType>();
@@ -1375,6 +1415,11 @@ public class Database implements Serializable
 
     public Database withIncludeTables(Boolean value) {
         setIncludeTables(value);
+        return this;
+    }
+
+    public Database withIncludeEmbeddables(Boolean value) {
+        setIncludeEmbeddables(value);
         return this;
     }
 
@@ -1606,6 +1651,27 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withEmbeddables(Embeddable... values) {
+        if (values!= null) {
+            for (Embeddable value: values) {
+                getEmbeddables().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Database withEmbeddables(Collection<Embeddable> values) {
+        if (values!= null) {
+            getEmbeddables().addAll(values);
+        }
+        return this;
+    }
+
+    public Database withEmbeddables(List<Embeddable> embeddables) {
+        setEmbeddables(embeddables);
+        return this;
+    }
+
     public Database withCustomTypes(CustomType... values) {
         if (values!= null) {
             for (CustomType value: values) {
@@ -1710,6 +1776,11 @@ public class Database implements Serializable
             sb.append("<includeTables>");
             sb.append(includeTables);
             sb.append("</includeTables>");
+        }
+        if (includeEmbeddables!= null) {
+            sb.append("<includeEmbeddables>");
+            sb.append(includeEmbeddables);
+            sb.append("</includeEmbeddables>");
         }
         if (includeRoutines!= null) {
             sb.append("<includeRoutines>");
@@ -1903,6 +1974,15 @@ public class Database implements Serializable
             }
             sb.append("</schemata>");
         }
+        if (embeddables!= null) {
+            sb.append("<embeddables>");
+            for (int i = 0; (i<embeddables.size()); i ++) {
+                sb.append("<embeddable>");
+                sb.append(embeddables.get(i));
+                sb.append("</embeddable>");
+            }
+            sb.append("</embeddables>");
+        }
         if (customTypes!= null) {
             sb.append("<customTypes>");
             for (int i = 0; (i<customTypes.size()); i ++) {
@@ -2005,6 +2085,15 @@ public class Database implements Serializable
             }
         } else {
             if (!includeTables.equals(other.includeTables)) {
+                return false;
+            }
+        }
+        if (includeEmbeddables == null) {
+            if (other.includeEmbeddables!= null) {
+                return false;
+            }
+        } else {
+            if (!includeEmbeddables.equals(other.includeEmbeddables)) {
                 return false;
             }
         }
@@ -2332,6 +2421,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (embeddables == null) {
+            if (other.embeddables!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddables.equals(other.embeddables)) {
+                return false;
+            }
+        }
         if (customTypes == null) {
             if (other.customTypes!= null) {
                 return false;
@@ -2373,6 +2471,7 @@ public class Database implements Serializable
         result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
         result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));
         result = ((prime*result)+((includeTables == null)? 0 :includeTables.hashCode()));
+        result = ((prime*result)+((includeEmbeddables == null)? 0 :includeEmbeddables.hashCode()));
         result = ((prime*result)+((includeRoutines == null)? 0 :includeRoutines.hashCode()));
         result = ((prime*result)+((includeTriggerRoutines == null)? 0 :includeTriggerRoutines.hashCode()));
         result = ((prime*result)+((includePackages == null)? 0 :includePackages.hashCode()));
@@ -2409,6 +2508,7 @@ public class Database implements Serializable
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
         result = ((prime*result)+((customTypes == null)? 0 :customTypes.hashCode()));
         result = ((prime*result)+((enumTypes == null)? 0 :enumTypes.hashCode()));
         result = ((prime*result)+((forcedTypes == null)? 0 :forcedTypes.hashCode()));

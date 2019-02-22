@@ -62,6 +62,13 @@ import org.jooq.UniqueKey;
 public final class Internal {
 
     /**
+     * Factory method for embeddable types.
+     */
+    public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>... fields) {
+        return new EmbeddableTableField<R, T>(name, recordType, table, fields);
+    }
+
+    /**
      * Factory method for indexes.
      */
     public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {

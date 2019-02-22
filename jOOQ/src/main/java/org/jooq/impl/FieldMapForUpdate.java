@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.Tools.flattenEntrySet;
 
 import java.util.EnumSet;
 import java.util.Map;
@@ -87,12 +88,11 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             boolean restoreQualify = ctx.qualify();
             boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.family()) ? false : restoreQualify;
 
-            for (Entry<Field<?>, Field<?>> entry : entrySet()) {
+            for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet())) {
                 ctx.sql(separator);
 
-                if (!"".equals(separator)) {
+                if (!"".equals(separator))
                     ctx.formatNewLine();
-                }
 
                 ctx.start(assignmentClause)
                    .qualify(supportsQualify)

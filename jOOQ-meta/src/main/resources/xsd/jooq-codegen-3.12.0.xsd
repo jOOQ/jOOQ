@@ -471,6 +471,10 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether tables should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeEmbeddables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether embeddable types should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includeRoutines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether routines should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -695,6 +699,10 @@ generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
 This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="embeddables" type="tns:Embeddables" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use {@link #getForcedTypes()} only]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -791,6 +799,12 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     </sequence>
   </complexType>
 
+  <complexType name="Embeddables">
+    <sequence>
+      <element name="embeddable" type="tns:Embeddable" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
   <complexType name="ForcedTypes">
     <sequence>
       <element name="forcedType" type="tns:ForcedType" minOccurs="0" maxOccurs="unbounded" />
@@ -826,6 +840,38 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
       <element name="literals" type="string" minOccurs="1" maxOccurs="1" />
+    </all>
+  </complexType>
+
+  <complexType name="Embeddable">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[An embeddable type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The name of the embeddable type]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fields" type="tns:EmbeddableFields" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of field specifications for the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="EmbeddableFields">
+    <sequence>
+      <element name="field" type="tns:EmbeddableField" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
+  <complexType name="EmbeddableField">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A field specification for an embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A name for the field in case the regex does not produce unique names for all matches.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="expression" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -957,6 +1003,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
 
       <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Table classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="embeddables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate embeddable classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="records" type="boolean" default="true" minOccurs="0" maxOccurs="1">

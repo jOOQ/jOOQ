@@ -39,11 +39,15 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.sql.SQLException;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.EmbeddableRecord;
+import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -70,7 +74,14 @@ final class Val<T> extends AbstractParam<T> {
 
     @Override
     public void accept(Context<?> ctx) {
-        if (ctx instanceof RenderContext) {
+        if (value instanceof EmbeddableRecord) {
+            Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
+
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
+            ctx.visit(new QueryPartList<Field<?>>(embeddedFields(this)));
+            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
+        }
+        else if (ctx instanceof RenderContext) {
             ParamType paramType = ctx.paramType();
 
             if (isInline(ctx))

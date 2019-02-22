@@ -35,24 +35,31 @@
  *
  *
  */
-package org.jooq.meta;
-
-import java.util.List;
+package org.jooq;
 
 /**
- * An object holding information about an index.
+ * A record originating from a single table
  *
+ * @param <R> The embeddable record type
  * @author Lukas Eder
  */
-public interface IndexDefinition extends TableElementDefinition {
+public interface EmbeddableRecord<R extends EmbeddableRecord<R>> extends Record {
 
     /**
-     * The list of columns making up the index.
+     * {@inheritDoc}
      */
-    List<IndexColumnDefinition> getIndexColumns();
+    @Override
+    R original();
 
     /**
-     * Whether this is a unique index.
+     * {@inheritDoc}
      */
-    boolean isUnique();
+    @Override
+    <T> R with(Field<T> field, T value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

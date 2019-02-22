@@ -1460,32 +1460,26 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @SuppressWarnings("unchecked")
     private final <Z extends Number> Field<Z> numeric() {
-        if (getDataType().isNumeric()) {
+        if (getDataType().isNumeric())
             return (Field<Z>) this;
-        }
-        else {
+        else
             return (Field<Z>) cast(BigDecimal.class);
-        }
     }
 
     @SuppressWarnings("unchecked")
     private final Field<String> varchar() {
-        if (getDataType().isString()) {
+        if (getDataType().isString())
             return (Field<String>) this;
-        }
-        else {
+        else
             return cast(String.class);
-        }
     }
 
     @SuppressWarnings("unchecked")
     private final <Z extends java.util.Date> Field<Z> date() {
-        if (getDataType().isTemporal()) {
+        if (getDataType().isTemporal())
             return (Field<Z>) this;
-        }
-        else {
+        else
             return (Field<Z>) cast(Timestamp.class);
-        }
     }
 
     @Override

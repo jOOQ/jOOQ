@@ -203,6 +203,16 @@ public interface Generator {
     void setGenerateTables(boolean generateTables);
 
     /**
+     * Whether embeddable types should be generated
+     */
+    boolean generateEmbeddables();
+
+    /**
+     * Whether embeddable types should be generated
+     */
+    void setGenerateEmbeddables(boolean generateEmbeddables);
+
+    /**
      * Whether TableRecords should be generated in addition to tables
      */
     boolean generateRecords();

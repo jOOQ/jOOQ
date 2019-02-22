@@ -40,6 +40,7 @@ package org.jooq.meta;
 
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
+import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -76,6 +77,8 @@ import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
+import org.jooq.meta.jaxb.Embeddable;
+import org.jooq.meta.jaxb.EmbeddableField;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.ForcedTypeObjectType;
@@ -112,6 +115,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeExcludeColumns;
     private boolean                                                          includeInvisibleColumns              = true;
     private boolean                                                          includeTables                        = true;
+    private boolean                                                          includeEmbeddables                   = true;
     private boolean                                                          includeRoutines                      = true;
     private boolean                                                          includeTriggerRoutines               = false;
     private boolean                                                          includePackages                      = true;
@@ -138,6 +142,7 @@ public abstract class AbstractDatabase implements Database {
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
+    private List<Embeddable>                                                 configuredEmbeddables;
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -161,6 +166,7 @@ public abstract class AbstractDatabase implements Database {
     private List<ForeignKeyDefinition>                                       foreignKeys;
     private List<CheckConstraintDefinition>                                  checkConstraints;
     private List<TableDefinition>                                            tables;
+    private List<EmbeddableDefinition>                                       embeddables;
     private List<EnumDefinition>                                             enums;
     private List<DomainDefinition>                                           domains;
     private List<UDTDefinition>                                              udts;
@@ -177,6 +183,8 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
+    private transient Map<SchemaDefinition, List<EmbeddableDefinition>>      embeddablesBySchema;
+    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
@@ -357,6 +365,9 @@ public abstract class AbstractDatabase implements Database {
     }
 
     final boolean matches(Pattern pattern, Definition definition) {
+        if (pattern == null)
+            return false;
+
         if (!getRegexMatchesPartialQualification())
             return pattern.matcher(definition.getName()).matches()
                 || pattern.matcher(definition.getQualifiedName()).matches();
@@ -371,6 +382,9 @@ public abstract class AbstractDatabase implements Database {
     }
 
     final Pattern pattern(String regex) {
+        if (regex == null)
+            return null;
+
         Pattern pattern = patterns.get(regex);
 
         if (pattern == null) {
@@ -764,6 +778,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setIncludeTables(boolean includeTables) {
         this.includeTables = includeTables;
+    }
+
+    @Override
+    public final boolean getIncludeEmbeddables() {
+        return includeEmbeddables;
+    }
+
+    @Override
+    public final void setIncludeEmbeddables(boolean includeEmbeddables) {
+        this.includeEmbeddables = includeEmbeddables;
     }
 
     @Override
@@ -1454,6 +1478,84 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void setConfiguredEmbeddables(List<Embeddable> configuredEmbeddables) {
+        this.configuredEmbeddables = configuredEmbeddables;
+    }
+
+    @Override
+    public final List<Embeddable> getConfiguredEmbeddables() {
+        if (configuredEmbeddables == null)
+            configuredEmbeddables = new ArrayList<Embeddable>();
+
+        return configuredEmbeddables;
+    }
+
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddables() {
+        List<EmbeddableDefinition> result = new ArrayList<EmbeddableDefinition>();
+
+        for (SchemaDefinition schema : getSchemata()) {
+            for (TableDefinition table : getTables(schema)) {
+                for (Embeddable embeddable : getConfiguredEmbeddables()) {
+                    List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+                    List<String> names = new ArrayList<String>();
+
+                    for (EmbeddableField embeddableField : embeddable.getFields()) {
+                        boolean matched = false;
+
+                        for (ColumnDefinition column : table.getColumns())
+                            if (matches(pattern(embeddableField.getExpression()), column))
+                                if (matched)
+                                    log.warn("EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
+                                else
+                                    matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
+                    }
+
+                    if (columns.size() == embeddable.getFields().size())
+                        result.add(new DefaultEmbeddableDefinition(embeddable.getName(), names, table, columns));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema) {
+        if (embeddables == null) {
+            embeddables = new ArrayList<EmbeddableDefinition>();
+
+            if (getIncludeEmbeddables()) {
+                try {
+                    List<EmbeddableDefinition> r = getEmbeddables();
+
+                    embeddables = sort(r);
+                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
+                    log.info("Embeddables fetched", fetchedSize(r, embeddables));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching embeddables", e);
+                }
+            }
+            else
+                log.info("Embeddables excluded");
+        }
+
+        if (embeddablesBySchema == null)
+            embeddablesBySchema = new LinkedHashMap<SchemaDefinition, List<EmbeddableDefinition>>();
+
+        return filterSchema(embeddables, schema, embeddablesBySchema);
+    }
+
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddables(TableDefinition table) {
+        if (embeddablesByTable == null)
+            embeddablesByTable = new LinkedHashMap<TableDefinition, List<EmbeddableDefinition>>();
+
+        return filterTable(getEmbeddables(table.getSchema()), table, embeddablesByTable);
+    }
+
+    @Override
     public final EnumDefinition getEnum(SchemaDefinition schema, String name) {
         return getEnum(schema, name, false);
     }
@@ -1795,18 +1897,40 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {
-        if (schema == null) {
+        if (schema == null)
             return definitions;
-        }
-        else {
-            List<T> result = new ArrayList<T>();
 
-            for (T definition : definitions)
-                if (definition.getSchema().equals(schema))
-                    result.add(definition);
+        List<T> result = new ArrayList<T>();
 
-            return result;
+        for (T definition : definitions)
+            if (definition.getSchema().equals(schema))
+                result.add(definition);
+
+        return result;
+    }
+
+    protected final <T extends TableElementDefinition> List<T> filterTable(List<T> definitions, TableDefinition table, Map<TableDefinition, List<T>> cache) {
+        List<T> result = cache.get(table);
+
+        if (result == null) {
+            result = filterTable(definitions, table);
+            cache.put(table, result);
         }
+
+        return result;
+    }
+
+    protected final <T extends TableElementDefinition> List<T> filterTable(List<T> definitions, TableDefinition table) {
+        if (table == null)
+            return definitions;
+
+        List<T> result = new ArrayList<T>();
+
+        for (T definition : definitions)
+            if (definition.getTable().equals(table))
+                result.add(definition);
+
+        return result;
     }
 
     @Override

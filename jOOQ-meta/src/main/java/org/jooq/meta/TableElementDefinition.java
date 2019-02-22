@@ -35,24 +35,19 @@
  *
  *
  */
+
 package org.jooq.meta;
 
-import java.util.List;
-
 /**
- * An object holding information about an index.
+ * The definition of an object that is contained in a table.
  *
  * @author Lukas Eder
  */
-public interface IndexDefinition extends TableElementDefinition {
+public interface TableElementDefinition extends Definition {
 
     /**
-     * The list of columns making up the index.
+     * The table that this object is part of.
      */
-    List<IndexColumnDefinition> getIndexColumns();
+    TableDefinition getTable();
 
-    /**
-     * Whether this is a unique index.
-     */
-    boolean isUnique();
 }

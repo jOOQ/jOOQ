@@ -64,11 +64,14 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.EnumSet;
 
@@ -79,6 +82,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
+import org.jooq.RowN;
 import org.jooq.SQLDialect;
 
 /**
@@ -133,10 +137,23 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family()))
-            return not
-                ? (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
-                : (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));
+        if (isEmbeddable(field) && isEmbeddable(minValue) && isEmbeddable(maxValue)) {
+            RowN f = row(embeddedFields(field));
+            RowN min = row(embeddedFields(minValue));
+            RowN max = row(embeddedFields(maxValue));
+
+            return (QueryPartInternal) (not
+                 ? symmetric
+                     ? f.notBetweenSymmetric(min).and(max)
+                     : f.notBetween(min).and(max)
+                 : symmetric
+                     ? f.betweenSymmetric(min).and(max)
+                     : f.between(min).and(max));
+        }
+        else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family()))
+            return (QueryPartInternal) (not
+                ? field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
+                : field.between(minValue, maxValue).or(field.between(maxValue, minValue)));
         else
             return new Native();
     }

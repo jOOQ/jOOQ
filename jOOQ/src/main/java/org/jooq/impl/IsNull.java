@@ -41,8 +41,11 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -67,7 +70,13 @@ final class IsNull extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(field).sql(' ').visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
+        if (isEmbeddable(field))
+            if (isNull)
+                ctx.visit(row(embeddedFields(field)).isNull());
+            else
+                ctx.visit(row(embeddedFields(field)).isNotNull());
+        else
+            ctx.visit(field).sql(' ').visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
     }
 
     @Override

@@ -61,7 +61,10 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.EnumSet;
 
@@ -110,11 +113,14 @@ final class IsDistinctFrom<T> extends AbstractCondition {
      * clause.
      */
     private final QueryPartInternal delegate(Configuration configuration) {
+        if (isEmbeddable(lhs) && isEmbeddable(rhs)) {
+            return (QueryPartInternal) row(embeddedFields(lhs)).compare(comparator, row(embeddedFields(rhs)));
+        }
 
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
-        if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
+        else if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
             return (comparator == IS_DISTINCT_FROM)
                 ? (QueryPartInternal) notExists(select(lhs.as("x")).intersect(select(rhs.as("x"))))
                 : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x"))));

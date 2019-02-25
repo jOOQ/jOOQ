@@ -58,7 +58,7 @@ import org.jooq.tools.StringUtils;
  */
 final class Val<T> extends AbstractParam<T> {
 
-    private static final long   serialVersionUID = 6807729087019209084L;
+    private static final long serialVersionUID = 6807729087019209084L;
 
     Val(T value, DataType<T> type) {
         super(value, type);
@@ -74,7 +74,7 @@ final class Val<T> extends AbstractParam<T> {
 
     @Override
     public void accept(Context<?> ctx) {
-        if (value instanceof EmbeddableRecord) {
+        if (EmbeddableRecord.class.isAssignableFrom(getType())) {
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);

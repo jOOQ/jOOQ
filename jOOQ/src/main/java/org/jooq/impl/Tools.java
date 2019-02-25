@@ -4778,20 +4778,31 @@ final class Tools {
         return array == null || array.length == 0;
     }
 
-    static final boolean isEmbeddable(Object object) {
-        return object instanceof EmbeddableTableField
-            || object instanceof Val && ((Val<?>) object).value instanceof EmbeddableRecord
-            || object instanceof EmbeddableRecord;
+    static final boolean isEmbeddable(Field<?> field) {
+        return field instanceof EmbeddableTableField
+            || field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord;
     }
 
-    static final Field<?>[] embeddedFields(Object object) {
-        return object instanceof EmbeddableTableField
-             ? ((EmbeddableTableField<?, ?>) object).fields
-             : object instanceof Val && ((Val<?>) object).value instanceof EmbeddableRecord
-             ? ((EmbeddableRecord<?>) ((Val<?>) object).value).valuesRow().fields()
-             : object instanceof EmbeddableRecord
-             ? ((EmbeddableRecord<?>) object).valuesRow().fields()
+    @SuppressWarnings("unchecked")
+    static final Field<?>[] embeddedFields(Field<?> field) {
+        return field instanceof EmbeddableTableField
+             ? ((EmbeddableTableField<?, ?>) field).fields
+             : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
+             ? ((EmbeddableRecord<?>) ((Val<?>) field).value).valuesRow().fields()
+
+             // It's an embeddable type, but it is null
+             : field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType())
+             ? newInstance((Class<? extends EmbeddableRecord<?>>) field.getType()).valuesRow().fields()
              : null;
+    }
+
+    private static final EmbeddableRecord<?> newInstance(Class<? extends EmbeddableRecord<?>> type) {
+        try {
+            return type.getConstructor().newInstance();
+        }
+        catch (Exception e) {
+            throw new MappingException("Cannot create EmbeddableRecord type", e);
+        }
     }
 
     /**

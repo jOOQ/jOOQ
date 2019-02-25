@@ -56,9 +56,12 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
@@ -70,6 +73,7 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.RowN;
 import org.jooq.SQLDialect;
 
 /**
@@ -100,6 +104,25 @@ final class InCondition<T> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (isEmbeddable(field))
+            if (comparator == IN)
+                ctx.visit(row(embeddedFields(field)).in(rows()));
+            else
+                ctx.visit(row(embeddedFields(field)).notIn(rows()));
+        else
+            accept0(ctx);
+    }
+
+    private final RowN[] rows() {
+        RowN[] result = new RowN[values.length];
+
+        for (int i = 0; i < values.length; i++)
+            result[i] = row(embeddedFields(values[i]));
+
+        return result;
+    }
+
+    private final void accept0(Context<?> ctx) {
         List<Field<?>> list = Arrays.asList(values);
 
         if (list.size() == 0) {

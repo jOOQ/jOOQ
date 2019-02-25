@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
@@ -1699,14 +1700,23 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
                 try {
                     T value;
+                    Field<?>[] nested = null;
+                    Class<? extends AbstractRecord> recordType = null;
 
                     if (field instanceof RowField) {
-                        Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
+                        nested = ((RowField<?, ?>) field).emulatedFields();
+                        recordType = RecordImpl.class;
+                    }
+                    else if (field instanceof EmbeddableTableField) {
+                        nested = embeddedFields(field);
+                        recordType = (Class<AbstractRecord>) ((EmbeddableTableField<?, ?>) field).recordType;
+                    }
 
-                        value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ((DefaultExecuteContext) ctx).originalConfiguration())
-                                         .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
+                    if (nested != null) {
+                        value = (T) Tools.newRecord(true, recordType, nested, ((DefaultExecuteContext) ctx).originalConfiguration())
+                                         .operate(new CursorRecordInitialiser(nested, offset + index));
 
-                        offset += emulatedFields.length - 1;
+                        offset += nested.length - 1;
                     }
                     else {
                         rsContext.index(offset + index + 1);

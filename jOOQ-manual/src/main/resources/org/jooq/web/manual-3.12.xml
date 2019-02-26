@@ -17955,9 +17955,9 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
 </html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <generator>
-    <generate>
+    <database>
       <forceIntegerTypesOnZeroScaleDecimals>true</forceIntegerTypesOnZeroScaleDecimals>
-    </generate>
+    </database>
   </generator>
 </configuration>]]></xml><html>
 
@@ -17967,7 +17967,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
 </html><java><![CDATA[configuration
   .withGenerator(new Generator(
-    .withGenerate(new Generate()
+    .withDatabase(new Database()
       .withForceIntegerTypesOnZeroScaleDecimals(true))));]]></java><html>
 
                                             <p>
@@ -17976,7 +17976,7 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
 
 </html><java><![CDATA[myConfigurationName(sourceSets.main) {
   generator {
-    generate {
+    database {
       forceIntegerTypesOnZeroScaleDecimals = true
     }
   }

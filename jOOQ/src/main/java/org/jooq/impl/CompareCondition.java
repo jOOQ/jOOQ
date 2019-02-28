@@ -102,8 +102,12 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (isEmbeddable(field1) && isEmbeddable(field2))
+        boolean field1Embeddable = isEmbeddable(field1);
+
+        if (field1Embeddable && isEmbeddable(field2))
             ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
+        else if (field1Embeddable && field2 instanceof ScalarSubquery)
+            ctx.visit(row(embeddedFields(field1)).compare(comparator, ((ScalarSubquery<?>) field2).query));
         else
             accept0(ctx);
     }

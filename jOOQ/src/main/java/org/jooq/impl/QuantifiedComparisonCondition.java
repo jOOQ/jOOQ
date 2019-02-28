@@ -41,6 +41,9 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.isEmbeddable;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -68,6 +71,13 @@ final class QuantifiedComparisonCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (isEmbeddable(field))
+            ctx.visit(row(embeddedFields(field)).compare(comparator, query));
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.visit(field)
            .sql(' ')
            .visit(comparator.toKeyword())

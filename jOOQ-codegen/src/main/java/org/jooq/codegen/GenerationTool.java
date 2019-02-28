@@ -506,8 +506,13 @@ public class GenerationTool {
             database.setConfiguredEmbeddables(d.getEmbeddables());
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
 
-            if (d.getRegexFlags() != null)
+            if (d.getRegexFlags() != null) {
                 database.setRegexFlags(d.getRegexFlags());
+
+                if (strategy instanceof MatcherStrategy) {
+                    ((MatcherStrategy) strategy).getPatterns().setRegexFlags(d.getRegexFlags());
+                }
+            }
             database.setRegexMatchesPartialQualification(!FALSE.equals(d.isRegexMatchesPartialQualification()));
 
             SchemaVersionProvider svp = null;

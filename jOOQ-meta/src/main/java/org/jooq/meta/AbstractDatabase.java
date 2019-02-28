@@ -107,7 +107,6 @@ public abstract class AbstractDatabase implements Database {
     private Properties                                                       properties;
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
-    private List<RegexFlag>                                                  regexFlags;
     private boolean                                                          regexMatchesPartialQualification;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
@@ -197,11 +196,11 @@ public abstract class AbstractDatabase implements Database {
     private final List<Definition>                                           included;
     private final List<Definition>                                           excluded;
     private final Map<Table<?>, Boolean>                                     exists;
-    private final Map<String, Pattern>                                       patterns;
+    private final Patterns                                                   patterns;
 
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
-        patterns = new HashMap<String, Pattern>();
+        patterns = new Patterns();
         filters = new ArrayList<Filter>();
         all = new ArrayList<Definition>();
         included = new ArrayList<Definition>();
@@ -210,9 +209,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final SQLDialect getDialect() {
-        if (dialect == null) {
+        if (dialect == null)
             dialect = create().configuration().dialect();
-        }
 
         return dialect;
     }
@@ -379,45 +377,6 @@ public abstract class AbstractDatabase implements Database {
                 return true;
 
         return false;
-    }
-
-    final Pattern pattern(String regex) {
-        if (regex == null)
-            return null;
-
-        Pattern pattern = patterns.get(regex);
-
-        if (pattern == null) {
-            int flags = 0;
-
-            List<RegexFlag> list = new ArrayList<RegexFlag>(getRegexFlags());
-
-            // [#3860] This should really be handled by JAXB, but apparently, @XmlList and @XmlElement(defaultValue=...)
-            // cannot be combined: http://stackoverflow.com/q/27528698/521799
-            if (list.isEmpty()) {
-                list.add(RegexFlag.COMMENTS);
-                list.add(RegexFlag.CASE_INSENSITIVE);
-            }
-
-            for (RegexFlag flag : list) {
-                switch (flag) {
-                    case CANON_EQ:                flags |= Pattern.CANON_EQ;                break;
-                    case CASE_INSENSITIVE:        flags |= Pattern.CASE_INSENSITIVE;        break;
-                    case COMMENTS:                flags |= Pattern.COMMENTS;                break;
-                    case DOTALL:                  flags |= Pattern.DOTALL;                  break;
-                    case LITERAL:                 flags |= Pattern.LITERAL;                 break;
-                    case MULTILINE:               flags |= Pattern.MULTILINE;               break;
-                    case UNICODE_CASE:            flags |= Pattern.UNICODE_CASE;            break;
-                    case UNICODE_CHARACTER_CLASS: flags |= 0x100;                           break; // Pattern.UNICODE_CHARACTER_CLASS: Java 1.7 only
-                    case UNIX_LINES:              flags |= Pattern.UNIX_LINES;              break;
-                }
-            }
-
-            pattern = Pattern.compile(regex, flags);
-            patterns.put(regex, pattern);
-        }
-
-        return pattern;
     }
 
     @Override
@@ -912,16 +871,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final void setRegexFlags(List<RegexFlag> regexFlags) {
-        this.regexFlags = regexFlags;
+        this.patterns.setRegexFlags(regexFlags);
     }
 
     @Override
     public final List<RegexFlag> getRegexFlags() {
-        if (regexFlags == null) {
-            regexFlags = new ArrayList<RegexFlag>();
-        }
-
-        return regexFlags;
+        return patterns.getRegexFlags();
     }
 
     @Override
@@ -1447,11 +1402,11 @@ public abstract class AbstractDatabase implements Database {
                 continue forcedTypeLoop;
 
             if (expression != null)
-                if (!matches(pattern(expression), definition))
+                if (!matches(patterns.pattern(expression), definition))
                     continue forcedTypeLoop;
 
             if (types != null && definedType != null) {
-                Pattern p = pattern(types);
+                Pattern p = patterns.pattern(types);
 
                 if (    ( !p.matcher(definedType.getType()).matches() )
                      && (     definedType.getLength() == 0
@@ -1504,7 +1459,7 @@ public abstract class AbstractDatabase implements Database {
                         boolean matched = false;
 
                         for (ColumnDefinition column : table.getColumns())
-                            if (matches(pattern(embeddableField.getExpression()), column))
+                            if (matches(patterns.pattern(embeddableField.getExpression()), column))
                                 if (matched)
                                     log.warn("EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
                                 else
@@ -1974,7 +1929,7 @@ public abstract class AbstractDatabase implements Database {
         definitionsLoop: for (T definition : definitions) {
             if (e != null) {
                 for (String exclude : e) {
-                    if (exclude != null && matches(pattern(exclude), definition)) {
+                    if (exclude != null && matches(patterns.pattern(exclude), definition)) {
                         if (log.isDebugEnabled())
                             log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of pattern " + exclude);
 
@@ -1985,7 +1940,7 @@ public abstract class AbstractDatabase implements Database {
 
             if (i != null) {
                 for (String include : i) {
-                    if (include != null && matches(pattern(include), definition)) {
+                    if (include != null && matches(patterns.pattern(include), definition)) {
 
                         // [#3488] This allows for filtering out additional objects, in case the applicable
                         // code generation configuration might cause conflicts in resulting code

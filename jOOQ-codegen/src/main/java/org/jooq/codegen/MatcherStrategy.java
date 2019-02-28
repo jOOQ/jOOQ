@@ -38,7 +38,6 @@
 package org.jooq.codegen;
 
 import static java.util.Collections.emptyList;
-import static java.util.regex.Pattern.compile;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ import java.util.regex.Pattern;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.Patterns;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -73,9 +73,23 @@ import org.jooq.tools.StringUtils;
 public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     private final Matchers matchers;
+    private final Patterns patterns;
 
     public MatcherStrategy(Matchers matchers) {
+        this(matchers, new Patterns());
+    }
+
+    public MatcherStrategy(Matchers matchers, Patterns patterns) {
         this.matchers = matchers;
+        this.patterns = patterns;
+    }
+
+    public Matchers getMatchers() {
+        return matchers;
+    }
+
+    public Patterns getPatterns() {
+        return patterns;
     }
 
     /**
@@ -100,7 +114,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             ruleExpression = "$0";
 
         if (ruleExpression != null) {
-            Pattern p = compile(defaultIfEmpty(expression, "^.*$").trim());
+            Pattern p = patterns.pattern(defaultIfEmpty(expression, "^.*$").trim());
             Matcher m = p.matcher(definition.getName());
 
             if (m.matches())

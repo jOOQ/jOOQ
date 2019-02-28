@@ -39,7 +39,6 @@ package org.jooq.codegen;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -271,41 +270,33 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             // [#3756] Regenerate files only if there is a difference
             String oldContent = null;
             if (file.exists()) {
+                RandomAccessFile old = null;
 
-                // [#5892] On Windows FAT or NTFS and other case-insensitive file systems, we must
-                //         explicitly replace files whose case-sensitive file name has changed
-                String[] list = files.list(file.getParentFile(), new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.equalsIgnoreCase(file.getName()) && !name.equals(file.getName());
-                    }
-                });
-
-                if (list != null && list.length > 0)
-                    file.delete();
-                else {
-                    RandomAccessFile old = null;
-
-                    try {
-                        old = new RandomAccessFile(file, "r");
-                        byte[] oldBytes = new byte[(int) old.length()];
-                        old.readFully(oldBytes);
-                        oldContent = new String(oldBytes, encoding());
-                    }
-                    finally {
-                        if (old != null)
-                            old.close();
-                    }
+                try {
+                    old = new RandomAccessFile(file, "r");
+                    byte[] oldBytes = new byte[(int) old.length()];
+                    old.readFully(oldBytes);
+                    oldContent = new String(oldBytes, encoding());
+                }
+                finally {
+                    if (old != null)
+                        old.close();
                 }
             }
 
             if (oldContent == null || !oldContent.equals(newContent)) {
+
+                // [#5892] [#8363] On Windows FAT or NTFS and other case-insensitive
+                //                 file systems, we must explicitly replace files whose
+                //                 case-sensitive file name has changed
+                if (oldContent != null)
+                    file.delete();
+
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), encoding()));
 
                 writer.append(newContent);
                 writer.flush();
                 writer.close();
-
             }
 
             return true;

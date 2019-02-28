@@ -91,16 +91,12 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
-        Clob clob = newClob(ctx.configuration(), ctx.value());
-        DefaultExecuteContext.register(clob);
-        ctx.statement().setClob(ctx.index(), clob);
+        ctx.statement().setClob(ctx.index(), ctx.autoFree(newClob(ctx.configuration(), ctx.value())));
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<String> ctx) throws SQLException {
-        Clob clob = newClob(ctx.configuration(), ctx.value());
-        DefaultExecuteContext.register(clob);
-        ctx.output().writeClob(clob);
+        ctx.output().writeClob(ctx.autoFree(newClob(ctx.configuration(), ctx.value())));
     }
 
     @Override

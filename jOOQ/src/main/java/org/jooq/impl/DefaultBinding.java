@@ -1352,8 +1352,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
 
         /**
@@ -1765,6 +1763,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, byte[] value) throws SQLException {
+
 
 
 
@@ -3513,6 +3512,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, String value) throws SQLException {
+
 
 
 

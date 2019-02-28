@@ -91,16 +91,12 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
-        Blob blob = newBlob(ctx.configuration(), ctx.value());
-        DefaultExecuteContext.register(blob);
-        ctx.statement().setBlob(ctx.index(), blob);
+        ctx.statement().setBlob(ctx.index(), ctx.autoFree(newBlob(ctx.configuration(), ctx.value())));
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
-        Blob blob = newBlob(ctx.configuration(), ctx.value());
-        DefaultExecuteContext.register(blob);
-        ctx.output().writeBlob(blob);
+        ctx.output().writeBlob(ctx.autoFree(newBlob(ctx.configuration(), ctx.value())));
     }
 
     @Override

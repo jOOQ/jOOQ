@@ -18539,11 +18539,13 @@ public class Book implements java.io.Serializable {
   <!-- The optional transform element lets you apply a name transformation algorithm
        to transform the actual database name into a more convenient form. Possible values are:
 
-       - AS_IS  : Leave the database name as it is             : MY_name => MY_name
-       - LOWER  : Transform the database name into lower case  : MY_name => my_name
-       - UPPER  : Transform the database name into upper case  : MY_name => MY_NAME
-       - CAMEL  : Transform the database name into camel case  : MY_name => myName
-       - PASCAL : Transform the database name into pascal case : MY_name => MyName -->
+       - AS_IS               : Leave the database name as it is             : MY_name => MY_name
+       - LOWER               : Transform the database name into lower case  : MY_name => my_name
+       - LOWER_FIRST_LETTER  : Transform the first letter into lower case   : MY_name => mY_name
+       - UPPER               : Transform the database name into upper case  : MY_name => MY_NAME
+       - UPPER_FIRST_LETTER  : Transform the first letter into upper case   : my_NAME => My_NAME
+       - CAMEL               : Transform the database name into camel case  : MY_name => myName
+       - PASCAL              : Transform the database name into pascal case : MY_name => MyName -->
   <transform>CAMEL</transform>
 
   <!-- The mandatory expression element lets you specify a replacement expression to be used when

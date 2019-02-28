@@ -76,7 +76,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
            "(?:\\[(.*)\\])" +
         "\\]", Pattern.DOTALL);
 
-
+    private final Files          files;
     private final File           file;
     private final String         encoding;
     private final StringBuilder  sb;
@@ -86,15 +86,24 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private boolean              newline       = true;
 
     protected GeneratorWriter(File file) {
-        this(file, null);
+        this(file, null, null);
     }
 
     protected GeneratorWriter(File file, String encoding) {
-        file.getParentFile().mkdirs();
+        this(file, encoding, null);
+    }
 
+    protected GeneratorWriter(File file, Files files) {
+        this(file, null, files);
+    }
+
+    protected GeneratorWriter(File file, String encoding, Files files) {
+        this.files = files == null ? new Files() : files;
         this.file = file;
         this.encoding = encoding;
         this.sb = new StringBuilder();
+
+        this.files.mkdirs(file.getParentFile());
     }
 
     public void tabString(String string) {
@@ -265,7 +274,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
                 // [#5892] On Windows FAT or NTFS and other case-insensitive file systems, we must
                 //         explicitly replace files whose case-sensitive file name has changed
-                String[] list = file.getParentFile().list(new FilenameFilter() {
+                String[] list = files.list(file.getParentFile(), new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
                         return name.equalsIgnoreCase(file.getName()) && !name.equals(file.getName());

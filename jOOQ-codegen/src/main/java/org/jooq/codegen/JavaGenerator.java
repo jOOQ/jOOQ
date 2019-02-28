@@ -244,6 +244,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final boolean                         scala;
     private final String                          tokenVoid;
+    private final Files                           fileCache;
 
     static {
         SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<DataType<?>, String>();
@@ -287,6 +288,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         this.scala = (language == SCALA);
         this.tokenVoid = (scala ? "Unit" : "void");
+        this.fileCache = new Files();
     }
 
     @Override
@@ -6504,7 +6506,7 @@ public class JavaGenerator extends AbstractGenerator {
     // [#3880] Users may need to call this method
     protected JavaWriter newJavaWriter(File file) {
         file = fixSuffix(file);
-        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc());
+        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc(), fileCache);
 
         if (generateIndentation != null)
             result.tabString(generateIndentation);

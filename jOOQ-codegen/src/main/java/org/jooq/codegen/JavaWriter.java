@@ -48,7 +48,22 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc) {
-        super(file, encoding);
+        super(file, encoding, null);
+
+        this.className = file.getName().replaceAll("\\.(java|scala)$", "");
+        this.isJava = file.getName().endsWith(".java");
+        this.isScala = file.getName().endsWith(".scala");
+        this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
+        this.javadoc = javadoc;
+
+        if (isJava)
+            tabString("    ");
+        else if (isScala)
+            tabString("  ");
+    }
+
+    public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files) {
+        super(file, encoding, files);
 
         this.className = file.getName().replaceAll("\\.(java|scala)$", "");
         this.isJava = file.getName().endsWith(".java");

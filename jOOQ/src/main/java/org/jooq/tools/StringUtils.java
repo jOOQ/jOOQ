@@ -1349,11 +1349,20 @@ public final class StringUtils {
      * Change a string's first letter to lower case
      */
     public static String toLC(String string) {
-        if (string == null || string.isEmpty()) {
+        if (string == null || string.isEmpty())
             return string;
-        }
 
         return Character.toLowerCase(string.charAt(0)) + string.substring(1);
+    }
+
+    /**
+     * Change a string's first letter to lower case
+     */
+    public static String toUC(String string) {
+        if (string == null || string.isEmpty())
+            return string;
+
+        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
     }
 
     /**

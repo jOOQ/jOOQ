@@ -22,7 +22,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *     &lt;enumeration value="AS_IS"/&gt;
  *     &lt;enumeration value="LOWER"/&gt;
+ *     &lt;enumeration value="LOWER_FIRST_LETTER"/&gt;
  *     &lt;enumeration value="UPPER"/&gt;
+ *     &lt;enumeration value="UPPER_FIRST_LETTER"/&gt;
  *     &lt;enumeration value="CAMEL"/&gt;
  *     &lt;enumeration value="PASCAL"/&gt;
  *   &lt;/restriction&gt;
@@ -36,7 +38,9 @@ public enum MatcherTransformType {
 
     AS_IS,
     LOWER,
+    LOWER_FIRST_LETTER,
     UPPER,
+    UPPER_FIRST_LETTER,
     CAMEL,
     PASCAL;
 

@@ -83,9 +83,8 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
      * against an expression, and apply a rule upon match.
      */
     private final String match(Definition definition, String expression, MatcherRule rule) {
-        if (rule != null) {
+        if (rule != null)
             return match(definition, expression, rule.getExpression(), rule.getTransform());
-        }
 
         return null;
     }
@@ -104,15 +103,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             Pattern p = compile(defaultIfEmpty(expression, "^.*$").trim());
             Matcher m = p.matcher(definition.getName());
 
-            if (m.matches()) {
+            if (m.matches())
                 return transform(m.replaceAll(ruleExpression), ruleTransformType);
-            }
 
             m = p.matcher(definition.getQualifiedName());
 
-            if (m.matches()) {
+            if (m.matches())
                 return transform(m.replaceAll(ruleExpression), ruleTransformType);
-            }
         }
 
         return null;
@@ -127,8 +124,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return string;
             case LOWER:
                 return string.toLowerCase();
+            case LOWER_FIRST_LETTER:
+                return StringUtils.toLC(string);
             case UPPER:
                 return string.toUpperCase();
+            case UPPER_FIRST_LETTER:
+                return StringUtils.toUC(string);
             case CAMEL:
                 return StringUtils.toCamelCaseLC(string);
             case PASCAL:

@@ -357,7 +357,9 @@
     <restriction base="string">
       <enumeration value="AS_IS"/>
       <enumeration value="LOWER"/>
+      <enumeration value="LOWER_FIRST_LETTER"/>
       <enumeration value="UPPER"/>
+      <enumeration value="UPPER_FIRST_LETTER"/>
       <enumeration value="CAMEL"/>
       <enumeration value="PASCAL"/>
     </restriction>

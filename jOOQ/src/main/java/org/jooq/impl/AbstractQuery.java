@@ -47,7 +47,6 @@ import static org.jooq.ExecuteType.DDL;
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;

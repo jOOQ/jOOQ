@@ -80,12 +80,14 @@ import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.Identifiers.QUOTES;
@@ -503,6 +505,7 @@ final class Tools {
          * [#1206] The collected Semi / Anti JOIN predicates.
          */
         DATA_COLLECTED_SEMI_ANTI_JOIN,
+
 
 
 
@@ -2823,13 +2826,20 @@ final class Tools {
      * Utility method to extract a value from a field
      */
     static final <T> T extractVal(Field<T> field) {
-        if (isVal(field)) {
+        if (isVal(field))
             return ((Param<T>) field).getValue();
-        }
-        else {
+        else
             return null;
-        }
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2859,9 +2869,8 @@ final class Tools {
      */
     @SuppressWarnings("deprecation")
     static final void addConditions(org.jooq.ConditionProvider query, Record record, Field<?>... keys) {
-        for (Field<?> field : keys) {
+        for (Field<?> field : keys)
             addCondition(query, record, field);
-        }
     }
 
     /**
@@ -2871,12 +2880,10 @@ final class Tools {
     static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
 
         // [#2764] If primary keys are allowed to be changed, the
-        if (updatablePrimaryKeys(settings(record))) {
+        if (updatablePrimaryKeys(settings(record)))
             provider.addConditions(condition(field, record.original(field)));
-        }
-        else {
+        else
             provider.addConditions(condition(field, record.get(field)));
-        }
     }
 
     /**

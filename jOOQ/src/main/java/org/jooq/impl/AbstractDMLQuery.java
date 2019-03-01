@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -124,6 +125,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      */
     private static final long                    serialVersionUID                 = -7438014075226919192L;
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
+
+
 
 
 
@@ -242,6 +245,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         WithImpl w = with;
 
         ctx.data(DATA_DML_TARGET_TABLE, table);
+
+
 
 
 

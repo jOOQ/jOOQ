@@ -14936,11 +14936,10 @@ public class JPAAuthor {
     Query result = em.createNativeQuery(query.getSQL());
 
     // Extract the bind values from the jOOQ query:
-    int i = 0;
-    for (Param<?> param : query.getParams().values()) {
-        result.setParameter(i + 1, convertToDatabaseType(param));
-        i++;
-    }
+    int i = 1;
+    for (Param<?> param : query.getParams().values())
+        if (!param.isInline())
+            result.setParameter(i++, convertToDatabaseType(param));
 
     return result.getResultList();
 }
@@ -14997,11 +14996,10 @@ books.forEach((Object[] book) -> System.out.println(book[0] + " " + book[1] + " 
     Query result = em.createNativeQuery(query.getSQL(), type);
 
     // Extract the bind values from the jOOQ query:
-    int i = 0;
-    for (Param<?> param : query.getParams().values()) {
-        result.setParameter(i + 1, convertToDatabaseType(param));
-        i++;
-    }
+    int i = 1;
+    for (Param<?> param : query.getParams().values())
+        if (!param.isInline())
+            result.setParameter(i++, convertToDatabaseType(param));
 
     return result.getResultList();
 }
@@ -15102,11 +15100,10 @@ authors.forEach(author -> {
     Query result = em.createNativeQuery(query.getSQL(), resultSetMapping);
 
     // Extract the bind values from the jOOQ query:
-    int i = 0;
-    for (Param<?> param : query.getParams().values()) {
-        result.setParameter(i + 1, convertToDatabaseType(param));
-        i++;
-    }
+    int i = 1;
+    for (Param<?> param : query.getParams().values())
+        if (!param.isInline())
+            result.setParameter(i++, convertToDatabaseType(param));
 
     return result.getResultList();
 }

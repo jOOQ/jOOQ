@@ -142,9 +142,7 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.TableLike;
-import org.jooq.UniqueKey;
 import org.jooq.UpdateQuery;
 
 /**
@@ -507,6 +505,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return condition.hasWhere();
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
@@ -645,18 +644,20 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 break;
         }
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) && !table().getKeys().isEmpty()) {
-            UniqueKey<?> key = table().getPrimaryKey() != null ? table().getPrimaryKey() : table().getKeys().get(0);
-
-            @SuppressWarnings("unchecked")
-            TableField<?, Object>[] keyFields = (TableField<?, Object>[]) key.getFieldsArray();
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
+            Field<?>[] keyFields =
+                table().getKeys().isEmpty()
+              ? new Field[] { table().rowid() }
+              : (table().getPrimaryKey() != null
+                  ? table().getPrimaryKey()
+                  : table().getKeys().get(0)).getFieldsArray();
 
             ctx.start(UPDATE_WHERE)
                .formatSeparator()
                .visit(K_WHERE).sql(' ');
 
             if (keyFields.length == 1)
-                ctx.visit(keyFields[0].in(select(keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+                ctx.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
             else
                 ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
 

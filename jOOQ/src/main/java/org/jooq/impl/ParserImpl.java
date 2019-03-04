@@ -1620,14 +1620,15 @@ final class ParserImpl implements Parser {
 
         parseKeywordIf(ctx, "INTO");
         Table<?> table = parseTableNameIf(ctx);
-        if (table == null) {
+        if (table == null)
             table = table(parseSelect(ctx));
 
-            if (parseKeywordIf(ctx, "AS"))
-                table = table.as(parseIdentifier(ctx));
-            else if (!peekKeyword(ctx, "VALUES", "SELECT"))
-                table = table.as(parseIdentifierIf(ctx));
-        }
+        Name alias;
+        if (parseKeywordIf(ctx, "AS"))
+            table = table.as(parseIdentifier(ctx));
+        else if (!peekKeyword(ctx, "DEFAULT VALUES", "SEL", "SELECT", "SET", "VALUES")
+            && (alias = parseIdentifierIf(ctx)) != null)
+            table = table.as(alias);
 
         InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(table) : with.insertInto(table));
         Field<?>[] fields = null;

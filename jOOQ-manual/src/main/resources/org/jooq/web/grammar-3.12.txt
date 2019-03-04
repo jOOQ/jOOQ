@@ -307,7 +307,7 @@ selectStatement = select
 
 insertStatement =
   [ with ]
-  ( 'INSERT' | 'INS' ) [ 'INTO' ]  ( tableName | '(' select ')' [ [ 'AS' ] identifier ] )
+  ( 'INSERT' | 'INS' ) [ 'INTO' ]  ( tableName | '(' select ')' ) [ [ 'AS' ] identifier ]
   [ '(' identifiers ')' ]
   (
     values

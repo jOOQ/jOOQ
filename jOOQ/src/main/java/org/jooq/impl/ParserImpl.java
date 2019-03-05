@@ -3160,9 +3160,15 @@ final class ParserImpl implements Parser {
                         }
                     }
 
+                    ConstraintTypeStep inlineConstraint = null;
+                    if (parseKeywordIf(ctx, "CONSTRAINT"))
+                        inlineConstraint = constraint(parseIdentifier(ctx));
+
                     if (!unique) {
                         if (parseKeywordIf(ctx, "PRIMARY KEY")) {
-                            constraints.add(primaryKey(fieldName));
+                            constraints.add(inlineConstraint == null
+                                ? primaryKey(fieldName)
+                                : inlineConstraint.primaryKey(fieldName));
                             primary = true;
                             unique = true;
                             continue;
@@ -3171,21 +3177,26 @@ final class ParserImpl implements Parser {
                             if (!parseKeywordIf(ctx, "KEY"))
                                 parseKeywordIf(ctx, "INDEX");
 
-                            constraints.add(unique(fieldName));
+                            constraints.add(inlineConstraint == null
+                                ? unique(fieldName)
+                                : inlineConstraint.unique(fieldName));
                             unique = true;
                             continue;
                         }
                     }
 
                     if (parseKeywordIf(ctx, "CHECK")) {
-                        constraints.add(parseCheckSpecification(ctx, null));
+                        constraints.add(parseCheckSpecification(ctx, inlineConstraint));
                         continue;
                     }
 
                     if (parseKeywordIf(ctx, "REFERENCES")) {
-                        constraints.add(parseForeignKeyReferenceSpecification(ctx, null, new Field[] { field(fieldName) }));
+                        constraints.add(parseForeignKeyReferenceSpecification(ctx, inlineConstraint, new Field[] { field(fieldName) }));
                         continue;
                     }
+
+                    if (inlineConstraint != null)
+                        throw ctx.expected("CHECK", "PRIMARY KEY", "REFERENCES", "UNIQUE");
 
                     if (!identity) {
                         if (parseKeywordIf(ctx, "AUTO_INCREMENT") ||

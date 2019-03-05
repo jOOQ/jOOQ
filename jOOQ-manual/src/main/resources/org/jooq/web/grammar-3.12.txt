@@ -378,10 +378,12 @@ column =
     | 'GENERATED' ( 'ALWAYS' | 'BY DEFAULT' [ 'ON NULL' ] ) 'AS IDENTITY' '('
         [ identity ]
       ')'
-    | 'PRIMARY KEY'
-    | 'UNIQUE' [ 'KEY' | 'INDEX' ]
-    | 'CHECK' '(' condition ')'
-    | 'REFERENCES' constraintReferenceSpecification
+    | ( [ 'CONSTRAINT' constraintName ] (
+        'PRIMARY KEY'
+      | 'UNIQUE' [ 'KEY' | 'INDEX' ]
+      | 'CHECK' '(' condition ')'
+      | 'REFERENCES' constraintReferenceSpecification
+      ) )
     | 'AUTO_INCREMENT'
     | 'AUTOINCREMENT'
     | 'IDENTITY' [ '(' signedInteger ',' signedInteger ')' ]

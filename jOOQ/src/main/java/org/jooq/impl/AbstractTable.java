@@ -223,9 +223,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return DSL.using(new DefaultConfiguration()).newRecord(this);
     }
 
+    /*
+     * Subclasses may override this method
+     */
     @SuppressWarnings({ "rawtypes" })
     @Override
-    public final Row fieldsRow() {
+    public Row fieldsRow() {
         return new RowImpl(fields0());
     }
 

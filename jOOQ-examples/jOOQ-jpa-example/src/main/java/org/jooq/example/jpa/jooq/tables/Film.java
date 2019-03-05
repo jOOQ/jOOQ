@@ -14,6 +14,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1598245119;
+    private static final long serialVersionUID = -1567412069;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -196,5 +197,17 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Film rename(Name name) {
         return new Film(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row6 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row6<Integer, Integer, Year, String, Integer, Integer> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

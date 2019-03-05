@@ -13,6 +13,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -636203274;
+    private static final long serialVersionUID = -2110031383;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -159,5 +160,17 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Language rename(Name name) {
         return new Language(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row2 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row2<Integer, String> fieldsRow() {
+        return (Row2) super.fieldsRow();
     }
 }

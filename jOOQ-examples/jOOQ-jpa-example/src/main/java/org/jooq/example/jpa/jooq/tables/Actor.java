@@ -13,6 +13,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -197980969;
+    private static final long serialVersionUID = -1700943295;
 
     /**
      * The reference instance of <code>PUBLIC.ACTOR</code>
@@ -164,5 +165,17 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public Actor rename(Name name) {
         return new Actor(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row3 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row3<Integer, String, String> fieldsRow() {
+        return (Row3) super.fieldsRow();
     }
 }

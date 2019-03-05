@@ -4374,6 +4374,27 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
+        // [#7809] fieldsRow()
+        int degree = table.getColumns().size();
+        String rowType = refRowType(out, table.getColumns());
+
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+            out.tab(1).header("Row%s type methods", degree);
+
+            if (scala) {
+                out.println();
+                out.tab(1).println("override def fieldsRow : %s[%s] = {", out.ref(Row.class.getName() + degree), rowType);
+                out.tab(2).println("super.fieldsRow.asInstanceOf[ %s[%s] ]", out.ref(Row.class.getName() + degree), rowType);
+                out.tab(1).println("}");
+            }
+            else {
+                out.tab(1).overrideInherit();
+                out.tab(1).println("public %s<%s> fieldsRow() {", out.ref(Row.class.getName() + degree), rowType);
+                out.tab(2).println("return (%s) super.fieldsRow();", out.ref(Row.class.getName() + degree));
+                out.tab(1).println("}");
+            }
+        }
+
         // [#1070] Table-valued functions should generate an additional set of call() methods
         if (table.isTableValuedFunction()) {
             for (boolean parametersAsField : new boolean[] { false, true }) {

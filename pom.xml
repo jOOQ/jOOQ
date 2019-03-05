@@ -154,7 +154,7 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.197</version>
+                <version>1.4.198</version>
             </dependency>
 
             <!-- jooq-meta-extensions and integration tests have this dependency -->

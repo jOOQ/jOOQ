@@ -19,7 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.jooq.version>3.12.0-SNAPSHOT</org.jooq.version>
-        <org.h2.version>1.4.197</org.h2.version>
+        <org.h2.version>1.4.198</org.h2.version>
         <org.hibernate.version>5.3.1.Final</org.hibernate.version>
         <org.springframework.version>5.0.7.RELEASE</org.springframework.version>
     </properties>

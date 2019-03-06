@@ -304,8 +304,14 @@ public class MockFileDatabase implements MockDataProvider {
                     rows = Integer.parseInt(rowString.substring(7).trim());
 
                 String resultText = currentResult.toString();
-                MockResult result = resultText.isEmpty()
+                String trimmed = resultText.trim();
+                MockResult result =
+                      resultText.isEmpty()
                     ? new MockResult(rows)
+                    : trimmed.startsWith("<")
+                    ? new MockResult(rows, create.fetchFromXML(resultText))
+                    : trimmed.startsWith("{") || trimmed.startsWith("[")
+                    ? new MockResult(rows, create.fetchFromJSON(resultText))
                     : new MockResult(rows,
                           configuration.nullLiteral == null && nullLiteral == null
                         ? create.fetchFromTXT(resultText)

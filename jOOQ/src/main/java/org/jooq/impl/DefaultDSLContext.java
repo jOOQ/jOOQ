@@ -76,7 +76,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1441,27 +1440,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromJSON(String string) {
-        List<String[]> list = new LinkedList<String[]>();
-        JSONReader reader = null;
-        try {
-            reader = new JSONReader(new StringReader(string));
-            List<String[]> records = reader.readAll();
-            String[] fields = reader.getFields();
-            list.add(fields);
-            list.addAll(records);
-        }
-        catch (IOException e) {
-            throw new DataAccessException("Could not read the JSON string", e);
-        }
-        finally {
-            try {
-                if (reader != null)
-                    reader.close();
-            }
-            catch (IOException ignore) {}
-        }
-
-        return fetchFromStringData(list);
+        return new JSONReader(this).read(string);
     }
 
     @Override

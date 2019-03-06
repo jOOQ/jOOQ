@@ -37,123 +37,136 @@
  */
 package org.jooq.impl;
 
-import java.io.BufferedReader;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.Reader;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DefaultDataType.getDataType;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.tools.StringUtils.defaultIfBlank;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.tools.json.ContainerFactory;
 import org.jooq.tools.json.JSONParser;
-import org.jooq.tools.json.ParseException;
 
 /**
  * A very simple JSON reader based on Simple JSON.
  *
  * @author Johannes Bühler
+ * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked" })
-final class JSONReader implements Closeable {
+final class JSONReader {
 
-    private final BufferedReader br;
-    private final JSONParser     parser;
-    private String[]             fieldNames;
-    private Map<String, Integer> fieldIndexes;
-    private List<String[]>       records;
+    private final DSLContext ctx;
 
-    JSONReader(Reader reader) {
-        this.br = new BufferedReader(reader);
-        this.parser = new JSONParser();
+    JSONReader(DSLContext ctx) {
+        this.ctx = ctx;
     }
 
-    final List<String[]> readAll() throws IOException {
-        if (records == null) {
-            try {
-                LinkedHashMap<String, LinkedList<?>> jsonRoot = getJsonRoot();
+    final Result<Record> read(String string) {
+        try {
 
-                readFields(jsonRoot);
-                readRecords(jsonRoot);
+            @SuppressWarnings("rawtypes")
+            Object root = new JSONParser().parse(string, new ContainerFactory() {
+                @Override
+                public Map createObjectContainer() {
+                    return new LinkedHashMap();
+                }
+
+                @Override
+                public List createArrayContainer() {
+                    return new ArrayList();
+                }
+            });
+
+            List<Field<?>> f = new ArrayList<Field<?>>();
+
+            List<?> records;
+            Result<Record> result = null;
+            Map<String, Integer> fieldIndexes = null;
+
+            if (root instanceof Map) {
+                Map<String, Object> o1 = (Map<String, Object>) root;
+                List<Map<String, String>> fields = (List<Map<String, String>>) o1.get("fields");
+
+                if (fields != null) {
+                    for (Map<String, String> field : fields) {
+                        String catalog = field.get("catalog");
+                        String schema = field.get("schema");
+                        String table = field.get("table");
+                        String name = field.get("name");
+                        String type = field.get("type");
+
+                        f.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
+                    }
+
+                    result = ctx.newResult(f);
+                }
+
+                records = (List<?>) o1.get("records");
             }
-            catch (ParseException ex) {
-                throw new RuntimeException(ex);
+            else {
+                records = (List<?>) root;
             }
+
+            for (Object o3 : records) {
+                if (o3 instanceof Map) {
+                    Map<String, Object> record = (Map<String, Object>) o3;
+                    String[] values = new String[record.size()];
+
+                    if (result == null) {
+                        if (f.isEmpty())
+                            for (String name : record.keySet())
+                                f.add(field(name(name), VARCHAR));
+
+                        result = ctx.newResult(f);
+                    }
+
+                    if (fieldIndexes == null) {
+                        fieldIndexes = new HashMap<String, Integer>();
+
+                        int i = 0;
+                        for (String name : record.keySet())
+                            fieldIndexes.put(name, i++);
+                    }
+
+                    for (Entry<String, Object> entry : record.entrySet())
+                        values[fieldIndexes.get(entry.getKey())] = "" + entry.getValue();
+
+                    Record r = ctx.newRecord(f);
+                    r.from(values);
+                    result.add(r);
+                }
+                else {
+                    List<?> record = (List<?>) o3;
+
+                    if (result == null) {
+                        if (f.isEmpty())
+                            f.addAll(Arrays.asList(Tools.fields(record.size())));
+
+                        result = ctx.newResult(f);
+                    }
+
+                    Record r = ctx.newRecord(f);
+                    r.from(record);
+                    result.add(r);
+                }
+            }
+
+            return result;
         }
-
-        return records;
-    }
-
-    final String[] getFields() throws IOException {
-        if (fieldNames == null)
-            readAll();
-
-        return fieldNames;
-    }
-
-    @Override
-    public final void close() throws IOException {
-        br.close();
-    }
-
-    private final void readRecords(LinkedHashMap<String, LinkedList<?>> jsonRoot) {
-        LinkedList<?> rootRecords = jsonRoot.get("records");
-        records = new ArrayList<String[]>(rootRecords.size());
-
-        for (Object record : rootRecords) {
-            String[] v = new String[fieldNames.length];
-            int i = 0;
-
-            // [#5372] Serialisation mode ARRAY
-            if (record instanceof LinkedList)
-                for (Object value : (LinkedList<Object>) record)
-                    v[i++] = value == null ? null : String.valueOf(value);
-
-            // [#5372] Serialisation mode OBJECT
-            else if (record instanceof LinkedHashMap)
-                for (Entry<String, Object> entry : ((LinkedHashMap<String, Object>) record).entrySet())
-                    v[fieldIndexes.get(entry.getKey())] = entry.getValue() == null ? null : String.valueOf(entry.getValue());
-
-            else
-                throw new IllegalArgumentException("Ill formed JSON : " + jsonRoot);
-
-            records.add(v);
-        }
-    }
-
-    private LinkedHashMap<String, LinkedList<?>> getJsonRoot() throws IOException, ParseException {
-        Object parse = parser.parse(br, new ContainerFactory() {
-            @Override
-            public LinkedHashMap<String, Object> createObjectContainer() {
-                return new LinkedHashMap<String, Object>();
-            }
-
-            @Override
-            public List<Object> createArrayContainer() {
-                return new LinkedList<Object>();
-            }
-        });
-        return (LinkedHashMap<String, LinkedList<?>>) parse;
-    }
-
-    private final void readFields(LinkedHashMap<String, LinkedList<?>> jsonRoot) {
-        LinkedList<LinkedHashMap<String, String>> fieldEntries =
-            (LinkedList<LinkedHashMap<String, String>>) jsonRoot.get("fields");
-
-        fieldNames = new String[fieldEntries.size()];
-        fieldIndexes = new HashMap<String, Integer>();
-        int i = 0;
-        for (LinkedHashMap<String, String> key : fieldEntries) {
-            String name = key.get("name");
-
-            fieldNames[i] = name;
-            fieldIndexes.put(name, i);
-
-            i++;
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

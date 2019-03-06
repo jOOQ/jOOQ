@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +64,8 @@ final class XMLHandler extends DefaultHandler {
     private final DSLContext     ctx;
     private boolean              inResult;
     private boolean              inFields;
-    private boolean              inRecords;
     private int                  inRecord;
+    private boolean              inColumn;
     Result<Record>               result;
     private Field<?>[]           fieldsArray;
     private final List<Field<?>> fields;
@@ -92,22 +93,23 @@ final class XMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             String type = attributes.getValue("type");
 
-            fields.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), type)));
+            fields.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
         }
-        else if (inResult && "records".equals(qName)) {
-            inRecords = true;
-        }
+        else if (inResult && "records".equals(qName)) {}
         else if (inResult && "record".equals(qName)) {
             inRecord++;
-            column = 0;
         }
-        else if (result == null) {
-            String fieldName;
+        else {
+            if (result == null) {
+                String fieldName;
 
-            if (("value").equals(qName) && (fieldName = attributes.getValue("field")) != null)
-                fields.add(field(name(fieldName), VARCHAR));
-            else
-                fields.add(field(name(qName), VARCHAR));
+                if (("value").equals(qName) && (fieldName = attributes.getValue("field")) != null)
+                    fields.add(field(name(fieldName), VARCHAR));
+                else
+                    fields.add(field(name(qName), VARCHAR));
+            }
+
+            inColumn = true;
         }
     }
 
@@ -120,9 +122,8 @@ final class XMLHandler extends DefaultHandler {
             inFields = false;
             initResult();
         }
-        else if (inResult && "records".equals(qName)) {
-            inRecords = false;
-        }
+        else if (inResult && inFields && "field".equals(qName)) {}
+        else if (inResult && "records".equals(qName)) {}
         else if (inRecord > 0 && "record".equals(qName)) {
             inRecord--;
 
@@ -132,8 +133,10 @@ final class XMLHandler extends DefaultHandler {
             result.add(r);
 
             values.clear();
+            column = 0;
         }
         else {
+            inColumn = false;
             column++;
         }
     }
@@ -161,11 +164,13 @@ final class XMLHandler extends DefaultHandler {
 
     @Override
     public final void characters(char[] ch, int start, int length) throws SAXException {
-        String value = new String(ch, start, length);
+        if (inColumn) {
+            String value = new String(ch, start, length);
 
-        if (values.size() == column)
-            values.add(value);
-        else
-            values.set(column, values.get(column) + value);
+            if (values.size() == column)
+                values.add(value);
+            else
+                values.set(column, values.get(column) + value);
+        }
     }
 }

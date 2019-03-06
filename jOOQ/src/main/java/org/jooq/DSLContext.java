@@ -3727,6 +3727,31 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Result<Record> fetchFromJSON(String string);
 
     /**
+     * Fetch all data from an XML string.
+     * <p>
+     * This is the inverse of calling {@link Result#formatXML()}. Use the
+     * various conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li> {@link Result#getValues(Field, Class)}</li>
+     * <li> {@link Result#getValues(int, Class)}</li>
+     * <li> {@link Result#getValues(String, Class)}</li>
+     * <li> {@link Result#getValues(Field, Converter)}</li>
+     * <li> {@link Result#getValues(int, Converter)}</li>
+     * <li> {@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The XML string
+     * @return The transformed result. This will never be <code>null</code>.
+     * @throws DataAccessException If anything went wrong parsing the XML file
+     */
+    @Support
+    Result<Record> fetchFromXML(String string);
+
+    /**
      * Fetch all data from a list of strings.
      * <p>
      * This is used by methods such as

@@ -61,6 +61,7 @@ import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.tools.Convert.convert;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -88,6 +89,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
@@ -1451,14 +1454,29 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
         finally {
             try {
-                if (reader != null) {
+                if (reader != null)
                     reader.close();
-                }
             }
             catch (IOException ignore) {}
         }
 
         return fetchFromStringData(list);
+    }
+
+    @Override
+    public Result<Record> fetchFromXML(String string) {
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            // TODO: Why does the SAXParser replace \r by \n?
+
+            XMLHandler handler = new XMLHandler(this);
+            saxParser.parse(new ByteArrayInputStream(string.getBytes()), handler);
+            return handler.result;
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Could not read the XML string", e);
+        }
     }
 
     @Override

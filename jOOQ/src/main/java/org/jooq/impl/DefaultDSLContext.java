@@ -89,6 +89,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -1467,6 +1468,33 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Result<Record> fetchFromXML(String string) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
+
+            // -----------------------------------------------------------------
+            // [JOOX #136] FIX START: Prevent OWASP attack vectors
+            try {
+                factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            try {
+                factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            try {
+                factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            // [#149] Not implemented on Android
+            try {
+                factory.setXIncludeAware(false);
+            }
+            catch (UnsupportedOperationException ignore) {}
+
+            // [JOOX #136] FIX END
+            // -----------------------------------------------------------------
+
             SAXParser saxParser = factory.newSAXParser();
             // TODO: Why does the SAXParser replace \r by \n?
 

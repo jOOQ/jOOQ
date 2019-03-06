@@ -1045,6 +1045,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * <p>
      * Loading of data is delegated to {@link #fromMap(Map)}
      * <p>
+     * <h5>If <code>source</code> is an {@link Iterable}</h5>
+     * <p>
+     * <p>
+     * Loading of data is equivalent to loading {@link #fromArray(Object...)},
+     * transforming the {@link Iterable} to an array, first.
+     * <p>
      * <h5>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching
      * candidates are:</h5>
@@ -1063,7 +1069,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * <li>{@link Column#name()} must match {@link Field#getName()}. All other
      * annotation attributes are ignored</li>
      * <li>Only the first match per field is used</li>
-     * <li>Matching methods have a higher priority than matching member fields</li>
+     * <li>Matching methods have a higher priority than matching member
+     * fields</li>
      * <li>Explicitly matching methods have a higher priority than implicitly
      * matching methods (implicitly matching getter = setter is annotated)</li>
      * <li>Static methods / member fields are ignored</li>

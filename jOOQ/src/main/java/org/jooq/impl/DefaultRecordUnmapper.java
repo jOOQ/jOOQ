@@ -44,6 +44,7 @@ import static org.jooq.impl.Tools.getMatchingMembers;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
 
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +91,8 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             delegate = new ArrayUnmapper();
         else if (Map.class.isAssignableFrom(type))
             delegate = new MapUnmapper();
+        else if (Iterable.class.isAssignableFrom(type))
+            delegate = new IterableUnmapper();
         else
             delegate = new PojoUnmapper();
     }
@@ -163,6 +166,33 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             }
 
             throw new MappingException("Object[] expected. Got: " + source.getClass());
+        }
+    }
+
+    private final class IterableUnmapper implements RecordUnmapper<E, R> {
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @Override
+        public final R unmap(E source) {
+            if (source == null)
+                return null;
+
+            if (source instanceof Iterable) {
+                Iterator<?> it = ((Iterable<?>) source).iterator();
+                int size = rowType.size();
+                Record record = newRecord();
+
+                for (int i = 0; i < size && it.hasNext(); i++) {
+                    Field field = rowType.field(i);
+
+                    if (rowType.field(field) != null)
+                        Tools.setValue(record, field, it.next());
+                }
+
+                return (R) record;
+            }
+
+            throw new MappingException("Iterable expected. Got: " + source.getClass());
         }
     }
 

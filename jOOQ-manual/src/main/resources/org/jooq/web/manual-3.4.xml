@@ -6256,13 +6256,13 @@ SELECT CAST(AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql><html>
 										in jOOQ, you can write something like that:
 									</p>
 
-</html><java>create.select(TAuthor.LAST_NAME.cast(PostgresDataType.TEXT)).fetch();</java><html>
+</html><java>create.select(AUTHOR.LAST_NAME.cast(SQLDataType.VARCHAR(100))).fetch();</java><html>
 
 									<p>
 										The same thing can be achieved by casting a Field directly to String.class, as <code>TEXT</code> is the default data type in Postgres to map to Java's String
 									</p>
 
-</html><java>create.select(TAuthor.LAST_NAME.cast(String.class)).fetch();</java><html>
+</html><java>create.select(AUTHOR.LAST_NAME.cast(String.class)).fetch();</java><html>
 
 									<p>
 										The complete <code>CAST</code> API in <reference class="org.jooq.Field"/> consists of these three methods:

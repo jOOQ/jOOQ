@@ -59,6 +59,16 @@ import org.jooq.impl.SQLDataType;
  * that would otherwise not be supported by jOOQ and/or JDBC. All of jOOQ's
  * internal support for bind variable types is implemented in
  * {@link DefaultBinding}.
+ * <p>
+ * <h3>Creating user defined {@link DataType}s</h3>
+ * <p>
+ * jOOQ provides built in data types through {@link SQLDataType}. Users can
+ * define their own data types programmatically by calling
+ * {@link DataType#asConvertedDataType(Converter)} or
+ * {@link DataType#asConvertedDataType(Binding)}, for example. Custom data types
+ * can also be defined on generated code using the
+ * <code>&lt;forcedType/&gt;</code> configuration, see <a href=
+ * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the manual for more details</a>
  *
  * @param <T> The database type - i.e. any type available from
  *            {@link SQLDataType}

@@ -7386,7 +7386,7 @@ SELECT CAST(AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql><html>
 </html><java>create.select(AUTHOR.LAST_NAME.cast(SQLDataType.VARCHAR(100))).fetch();</java><html>
 
 									<p>
-										The same thing can be achieved by casting a Field directly to String.class, as <code>TEXT</code> is the default data type in Postgres to map to Java's String
+										The same thing can be achieved by casting a Field directly to String.class, as VARCHAR is the default <code>SQLDataType</code> to map to Java's String
 									</p>
 
 </html><java>create.select(AUTHOR.LAST_NAME.cast(String.class)).fetch();</java><html>

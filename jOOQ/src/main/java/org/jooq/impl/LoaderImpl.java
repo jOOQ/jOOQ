@@ -82,6 +82,7 @@ import org.jooq.LoaderRowListener;
 import org.jooq.LoaderRowsStep;
 import org.jooq.LoaderXMLStep;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
@@ -649,15 +650,16 @@ final class LoaderImpl<R extends Record> implements
     }
 
     private void executeJSON() throws IOException {
-        JSONReader reader = null;
+        BufferedReader reader = null;
 
         try {
-            reader = new JSONReader(data.reader());
-            source = Tools.fieldsByName(reader.getFields());
+            reader = data.reader();
+            Result<Record> r = new JSONReader(create).read(reader);
+            source = r.fields();
 
             // The current json format is not designed for streaming. Thats why
             // all records are loaded at once.
-            List<String[]> allRecords = reader.readAll();
+            List<Object[]> allRecords = Arrays.asList(r.intoArrays());
             executeSQL(allRecords.iterator());
         }
 

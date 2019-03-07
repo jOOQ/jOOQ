@@ -43,6 +43,8 @@ import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -74,10 +76,14 @@ final class JSONReader {
     }
 
     final Result<Record> read(String string) {
+        return read(new StringReader(string));
+    }
+
+    final Result<Record> read(final Reader reader) {
         try {
 
             @SuppressWarnings("rawtypes")
-            Object root = new JSONParser().parse(string, new ContainerFactory() {
+            Object root = new JSONParser().parse(reader, new ContainerFactory() {
                 @Override
                 public Map createObjectContainer() {
                     return new LinkedHashMap();

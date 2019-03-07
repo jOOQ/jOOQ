@@ -62,8 +62,7 @@ import org.jooq.impl.SQLDataType;
  * <ul>
  * <li>if <code>Y.equals(converter.from(X))</code>, then
  * <code>X.equals(converter.to(Y))</code>.</li>
- * <li>
- * <code>X.equals(converter.from(converter.to(X)))</code></li>
+ * <li><code>X.equals(converter.from(converter.to(X)))</code></li>
  * <li><code>X.equals(converter.to(converter.from(X)))</code></li>
  * </ul>
  * <p>
@@ -72,6 +71,16 @@ import org.jooq.impl.SQLDataType;
  * <li><code>converter.from(null) == null</code></li>
  * <li><code>converter.to(null) == null</code></li>
  * </ul>
+ * <p>
+ * <h3>Creating user defined {@link DataType}s</h3>
+ * <p>
+ * jOOQ provides built in data types through {@link SQLDataType}. Users can
+ * define their own data types programmatically by calling
+ * {@link DataType#asConvertedDataType(Converter)} or
+ * {@link DataType#asConvertedDataType(Binding)}, for example. Custom data types
+ * can also be defined on generated code using the
+ * <code>&lt;forcedType/&gt;</code> configuration, see <a href=
+ * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the manual for more details</a>
  *
  * @author Lukas Eder
  * @param <T> The database type - i.e. any type available from

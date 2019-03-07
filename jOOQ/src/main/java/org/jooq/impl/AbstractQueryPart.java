@@ -166,7 +166,10 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     @Override
     public String toString() {
         try {
-            return create(configuration().derive(SettingsTools.clone(configuration().settings()).withRenderFormatted(true))).renderInlined(this);
+
+            // [#8355] Subtypes may have null configuration
+            Configuration configuration = Tools.configuration(configuration());
+            return create(configuration.derive(SettingsTools.clone(configuration.settings()).withRenderFormatted(true))).renderInlined(this);
         }
         catch (SQLDialectNotSupportedException e) {
             return "[ ... " + e.getMessage() + " ... ]";

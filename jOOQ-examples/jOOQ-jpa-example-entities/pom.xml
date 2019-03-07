@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-jpa-example-entities</artifactId>
-    <version>3.11.9</version>
+    <version>3.11.10</version>
     <name>jOOQ JPA Example (Entities)</name>
 
     <licenses>

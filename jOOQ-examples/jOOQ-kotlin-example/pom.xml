@@ -20,7 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.2.30</kotlin.version>
-        <org.jooq.version>3.11.9</org.jooq.version>
+        <org.jooq.version>3.11.10</org.jooq.version>
         <org.h2.version>1.4.195</org.h2.version>
         <java.version>1.8</java.version>
     </properties>
@@ -164,6 +164,7 @@
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
                                 <generate>
+                                    <generatedAnnotation>false</generatedAnnotation>
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
                                 </generate>

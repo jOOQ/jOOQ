@@ -50,8 +50,12 @@ package org.jooq;
  * <p>
  * The <code>WINDOW</code> clause is only natively supported by
  * <ul>
- * <li> {@link SQLDialect#POSTGRES}</li>
- * <li> {@link SQLDialect#SYBASE}</li>
+ * <li>{@link SQLDialect#AURORA_POSTGRES}</li>
+ * <li>{@link SQLDialect#H2}</li>
+ * <li>{@link SQLDialect#MYSQL}</li>
+ * <li>{@link SQLDialect#POSTGRES}</li>
+ * <li>{@link SQLDialect#SQLITE}</li>
+ * <li>{@link SQLDialect#SYBASE}</li>
  * </ul>
  * <p>
  * If your database supports window functions, but not the <code>WINDOW</code>

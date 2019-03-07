@@ -3409,7 +3409,7 @@ final class ParserImpl implements Parser {
                             : ((RowN) left).isNotNull()
                         : left instanceof Field
                             ? ((Field) left).isNull()
-                            : ((RowN) left).isNotNull();
+                            : ((RowN) left).isNull();
 
                 parseKeyword(ctx, "DISTINCT FROM");
                 if (left instanceof Field) {

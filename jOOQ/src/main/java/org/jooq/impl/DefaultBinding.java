@@ -127,6 +127,7 @@ import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -2434,7 +2435,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             parseAnyChar(string, position, " T");
             LocalTime t = parseLocalTime(string, position);
 
-            return OffsetDateTime.of(d, t, parseOffset(string, position));
+            ZoneOffset offset = parseOffset(string, position);
+
+            // [#8178] PostgreSQL doesn't support negative years but expects the
+            //         AD / BC notation
+            return parseBCIf(string, position)
+                 ? OffsetDateTime.of(d.withYear(1 - d.getYear()), t, offset)
+                 : OffsetDateTime.of(d, t, offset);
         }
 
         static final LocalDate parseLocalDate(String string, int[] position) {
@@ -2475,6 +2482,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final ZoneOffset parseOffset(String string, int[] position) {
             int offsetHours = 0;
             int offsetMinutes = 0;
+            int offsetSeconds = 0;
 
             if (!parseCharIf(string, position, 'Z')) {
 
@@ -2496,14 +2504,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (parseCharIf(string, position, ':'))
                         offsetMinutes = parseInt(string, position, 2);
 
+                    // [#8181] In some edge cases, there might also be a seconds offset
+                    if (parseCharIf(string, position, ':'))
+                        offsetSeconds = parseInt(string, position, 2);
+
                     if (minus) {
                         offsetHours = -offsetHours;
                         offsetMinutes = -offsetMinutes;
+                        offsetSeconds = -offsetSeconds;
                     }
                 }
             }
 
-            return ZoneOffset.ofHoursMinutes(offsetHours, offsetMinutes);
+            return ZoneOffset.ofHoursMinutesSeconds(offsetHours, offsetMinutes, offsetSeconds);
         }
 
         private static final void parseAnyChar(String string, int[] position, String expected) {
@@ -2515,6 +2528,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             throw new IllegalArgumentException("Expected any of \"" + expected + "\" at position " + position[0] + " in " + string);
+        }
+
+        private static final boolean parseBCIf(String string, int[] position) {
+            return parseCharIf(string, position, ' ')
+                && parseCharIf(string, position, 'B')
+                && parseCharIf(string, position, 'C');
         }
 
         private static final boolean parseCharIf(String string, int[] position, char expected) {
@@ -2540,7 +2559,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             int pos = position[0];
             int length;
 
-            for (length = 0; length < maxLength && length < string.length(); length++) {
+            for (length = 0; length < maxLength && (pos + length) < string.length(); length++) {
                 int digit = string.charAt(pos + length) - '0';
 
                 if (digit >= 0 && digit < 10)
@@ -2571,10 +2590,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetDateTime value) {
+            SQLDialect family = ctx.family();
 
             // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
-            if (ctx.family() == H2)
-                ctx.render().visit(K_CAST).sql("('").sql(escape(format(value), ctx.render())).sql("' ")
+            if (family == H2)
+                ctx.render().visit(K_CAST).sql("('").sql(escape(format(value, family), ctx.render())).sql("' ")
                             .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
 
 
@@ -2589,17 +2609,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Some dialects implement SQL standard time literals
             else
-                ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+                ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, OffsetDateTime value) throws SQLException {
+            SQLDialect family = ctx.family();
 
 
 
 
 
-            ctx.statement().setString(ctx.index(), format(value));
+
+            ctx.statement().setString(ctx.index(), format(value, family));
         }
 
         @Override
@@ -2674,17 +2696,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        private static final String format(OffsetDateTime val) {
+        private static final String format(OffsetDateTime val, SQLDialect family) {
 
-            // Remove the ISO standard T character, as some databases don't like that
+            // [#8178] Replace negative dates by AD/BC notation in PostgreSQL
+            if (family == POSTGRES && val.getYear() <= 0)
+                return formatEra(val);
+
             String format = formatISO(val);
 
+            // Remove the ISO standard T character, as some databases don't like that
             // Replace the ISO standard Z character for UTC, as some databases don't like that
+            // TODO: Write a custom formatter rather than string replacing things
             return StringUtils.replace(format.substring(0, 10) + ' ' + format.substring(11), "Z", "+00:00");
         }
 
         private static final String formatISO(OffsetDateTime val) {
             return val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        }
+
+        private static final DateTimeFormatter ERA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnnnnnZZZZZ G", Locale.US);
+
+        private static final String formatEra(OffsetDateTime val) {
+            return val.format(ERA);
         }
     }
 

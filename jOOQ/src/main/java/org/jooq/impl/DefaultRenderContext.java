@@ -547,6 +547,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
+
+
                     // [#5701] Tests were conducted with PostgreSQL 9.5 and pgjdbc 9.4.1209
                     case POSTGRES:
                         checkForceInline(32767);

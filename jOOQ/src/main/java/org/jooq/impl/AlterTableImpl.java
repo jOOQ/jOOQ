@@ -181,6 +181,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS                  = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = EnumSet.of(CUBRID, DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL);
@@ -805,10 +806,20 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.visit(K_COMMENT).sql(' ').visit(comment);
         }
         else if (renameTo != null) {
-            ctx.start(ALTER_TABLE_RENAME)
-               .visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
-               .visit(renameTo)
-               .end(ALTER_TABLE_RENAME);
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_RENAME);
+
+            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.family()))
+                ctx.qualify(false);
+
+            ctx.visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
+               .visit(renameTo);
+
+            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.family()))
+                ctx.qualify(qualify);
+
+            ctx.end(ALTER_TABLE_RENAME);
         }
         else if (renameColumn != null) {
             boolean qualify = ctx.qualify();

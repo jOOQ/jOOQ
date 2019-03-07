@@ -569,6 +569,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 return create().renderNamedParams(this);
             case NAMED_OR_INLINED:
                 return create().renderNamedOrInlinedParams(this);
+            case FORCE_INDEXED:
+                return create().renderContext().paramType(paramType).visit(this).render();
         }
 
         throw new IllegalArgumentException("ParamType not supported: " + paramType);

@@ -546,13 +546,13 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
         }
 
         if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
-            ctx.sql(' ')
+            ctx.formatSeparator()
                .visit(K_WITH_NO_DATA);
         else if (TRUE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
-            ctx.sql(' ')
+            ctx.formatSeparator()
                .visit(K_WITH_DATA);
         else if (REQUIRES_WITH_DATA.contains(ctx.family()))
-            ctx.sql(' ')
+            ctx.formatSeparator()
                .visit(K_WITH_DATA);
     }
 

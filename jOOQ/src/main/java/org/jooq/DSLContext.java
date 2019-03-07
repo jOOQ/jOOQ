@@ -249,33 +249,50 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Access the database meta data.
      * <p>
-     * This method returns a wrapper type that gives access to your JDBC
-     * connection's database meta data.
+     * This method returns meta information provided by
+     * {@link Configuration#metaProvider()}, which defaults to a wrapper type
+     * that gives access to your JDBC connection's {@link DatabaseMetaData} as
+     * obtained from your {@link ConnectionProvider}.
+     *
+     * @see #meta(DatabaseMetaData)
      */
     Meta meta();
 
     /**
-     * Access the database meta data from JDBC {@link DatabaseMetaData}.
+     * Access the database meta data from an explicit JDBC
+     * {@link DatabaseMetaData}.
      */
     Meta meta(DatabaseMetaData meta);
 
     /**
-     * Access the database meta data from catalog information.
+     * Access the database meta data from explicit catalog information.
+     * <p>
+     * This will not connect to your database to get live meta information,
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
      */
     Meta meta(Catalog... catalogs);
 
     /**
-     * Access the database meta data from schema information.
+     * Access the database meta data from explicit schema information.
+     * <p>
+     * This will not connect to your database to get live meta information,
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
      */
     Meta meta(Schema... schemas);
 
     /**
-     * Access the database meta data from table information.
+     * Access the database meta data from explicit table information.
+     * <p>
+     * This will not connect to your database to get live meta information,
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
      */
     Meta meta(Table<?>... tables);
 
     /**
-     * Access the database meta data from an JAXB-annotated meta model.
+     * Access the database meta data from an explicit JAXB-annotated meta model.
+     * <p>
+     * This will not connect to your database to get live meta information,
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
      */
     Meta meta(InformationSchema schema);
 

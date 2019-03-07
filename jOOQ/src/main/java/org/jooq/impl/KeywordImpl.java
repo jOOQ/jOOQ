@@ -63,9 +63,33 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
         this.asIs = keyword;
         this.upper = keyword.toUpperCase();
         this.lower = keyword.toLowerCase();
-        this.pascal = keyword.length() > 0
-                    ? keyword.substring(0, 1).toUpperCase() + keyword.substring(1, keyword.length()).toLowerCase()
-                    : keyword;
+        this.pascal = keyword.length() > 0 ? pascal(keyword) : keyword;
+    }
+
+    private static final String pascal(String keyword) {
+        if (keyword.contains(" ")) {
+            StringBuilder sb = new StringBuilder();
+
+            int prev = 0;
+            int next = 0;
+
+            do {
+                next = keyword.indexOf(' ', prev);
+
+                if (prev > 0)
+                    sb.append(' ');
+
+                sb.append(Character.toUpperCase(keyword.charAt(prev)));
+                sb.append(keyword.substring(prev + 1, next == -1 ? keyword.length() : next).toLowerCase());
+
+                prev = next + 1;
+            }
+            while (next != -1);
+
+            return sb.toString();
+        }
+        else
+            return keyword.substring(0, 1).toUpperCase() + keyword.substring(1, keyword.length()).toLowerCase();
     }
 
     @Override

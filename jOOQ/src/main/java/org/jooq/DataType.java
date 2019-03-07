@@ -50,6 +50,14 @@ import org.jooq.types.YearToMonth;
 
 /**
  * A common interface to all dialect-specific data types.
+ * <p>
+ * jOOQ provides built in data types through {@link SQLDataType}. Users can
+ * define their own data types programmatically by calling
+ * {@link #asConvertedDataType(Converter)} or
+ * {@link #asConvertedDataType(Binding)}, for example. Custom data types can
+ * also be defined on generated code using the <code>&lt;forcedType/&gt;</code>
+ * configuration, see <a href=
+ * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the manual for more details</a>
  *
  * @param <T> The Java type associated with this SQL data type
  * @author Lukas Eder

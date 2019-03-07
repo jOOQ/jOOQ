@@ -51,6 +51,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Converter;
+import org.jooq.EnumType;
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
@@ -460,18 +461,16 @@ public class PostgresUtils {
      * Create a PostgreSQL string representation of any object.
      */
     public static String toPGString(Object o) {
-        if (o instanceof byte[]) {
+        if (o instanceof byte[])
             return toPGString((byte[]) o);
-        }
-        else if (o instanceof Object[]) {
+        else if (o instanceof Object[])
             return toPGArrayString((Object[]) o);
-        }
-        else if (o instanceof Record) {
+        else if (o instanceof Record)
             return toPGString((Record) o);
-        }
-        else {
+        else if (o instanceof EnumType)
+            return ((EnumType) o).getLiteral();
+        else
             return "" + o;
-        }
     }
 
     /**

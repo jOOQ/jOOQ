@@ -1,5 +1,5 @@
 #!/bin/sh
-VERSION=3.11.9
+VERSION=3.11.10
 
 if [ -f jOOQ-javadoc/jooq-$VERSION-javadoc.jar ]; then
   JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc/jooq-$VERSION-javadoc.jar

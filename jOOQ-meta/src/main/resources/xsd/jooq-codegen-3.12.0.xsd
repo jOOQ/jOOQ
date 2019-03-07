@@ -601,6 +601,10 @@ jOOQ 4.0.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate jOOU data types for your unsigned data types, which are not natively supported in Java]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="integerDisplayWidths" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Include display width in type declaration. In some RDBMS (e.g. MariaDB, MySQL), fixed width integer types are optionally accompanied by a display width. This is sometimes abused to model BOOLEAN types via TINYINT(1). This flag allows for including that display width in the type declaration exposed by jOOQ-meta code, as if it were a numeric precision.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="inputCatalog" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The catalog that is used locally as a source for meta information.
 <p>

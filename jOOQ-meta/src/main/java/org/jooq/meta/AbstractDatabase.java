@@ -134,6 +134,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         overridePrimaryKeys;
     private String[]                                                         syntheticIdentities;
     private boolean                                                          supportsUnsignedTypes;
+    private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
     private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<CatalogMappingType>();
@@ -1127,6 +1128,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean supportsUnsignedTypes() {
         return supportsUnsignedTypes;
+    }
+
+    @Override
+    public final void setIntegerDisplayWidths(boolean integerDisplayWidths) {
+        this.integerDisplayWidths = integerDisplayWidths;
+    }
+
+    @Override
+    public final boolean integerDisplayWidths() {
+        return integerDisplayWidths;
     }
 
     @Override

@@ -105,6 +105,8 @@ public class Database implements Serializable
     protected Boolean ignoreProcedureReturnValues = false;
     @XmlElement(defaultValue = "true")
     protected Boolean unsignedTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean integerDisplayWidths = true;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String inputCatalog = "";
@@ -953,6 +955,30 @@ public class Database implements Serializable
     }
 
     /**
+     * Include display width in type declaration. In some RDBMS (e.g. MariaDB, MySQL), fixed width integer types are optionally accompanied by a display width. This is sometimes abused to model BOOLEAN types via TINYINT(1). This flag allows for including that display width in the type declaration exposed by jOOQ-meta code, as if it were a numeric precision.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIntegerDisplayWidths() {
+        return integerDisplayWidths;
+    }
+
+    /**
+     * Sets the value of the integerDisplayWidths property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIntegerDisplayWidths(Boolean value) {
+        this.integerDisplayWidths = value;
+    }
+
+    /**
      * The catalog that is used locally as a source for meta information.
      * <p>
      * This cannot be combined with the {@link #getCatalogs()} configuration element.
@@ -1528,6 +1554,11 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withIntegerDisplayWidths(Boolean value) {
+        setIntegerDisplayWidths(value);
+        return this;
+    }
+
     public Database withInputCatalog(String value) {
         setInputCatalog(value);
         return this;
@@ -1886,6 +1917,11 @@ public class Database implements Serializable
             sb.append("<unsignedTypes>");
             sb.append(unsignedTypes);
             sb.append("</unsignedTypes>");
+        }
+        if (integerDisplayWidths!= null) {
+            sb.append("<integerDisplayWidths>");
+            sb.append(integerDisplayWidths);
+            sb.append("</integerDisplayWidths>");
         }
         if (inputCatalog!= null) {
             sb.append("<inputCatalog>");
@@ -2286,6 +2322,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (integerDisplayWidths == null) {
+            if (other.integerDisplayWidths!= null) {
+                return false;
+            }
+        } else {
+            if (!integerDisplayWidths.equals(other.integerDisplayWidths)) {
+                return false;
+            }
+        }
         if (inputCatalog == null) {
             if (other.inputCatalog!= null) {
                 return false;
@@ -2493,6 +2538,7 @@ public class Database implements Serializable
         result = ((prime*result)+((dateAsTimestamp == null)? 0 :dateAsTimestamp.hashCode()));
         result = ((prime*result)+((ignoreProcedureReturnValues == null)? 0 :ignoreProcedureReturnValues.hashCode()));
         result = ((prime*result)+((unsignedTypes == null)? 0 :unsignedTypes.hashCode()));
+        result = ((prime*result)+((integerDisplayWidths == null)? 0 :integerDisplayWidths.hashCode()));
         result = ((prime*result)+((inputCatalog == null)? 0 :inputCatalog.hashCode()));
         result = ((prime*result)+((outputCatalog == null)? 0 :outputCatalog.hashCode()));
         result = ((prime*result)+((outputCatalogToDefault == null)? 0 :outputCatalogToDefault.hashCode()));

@@ -48,6 +48,8 @@ import static org.jooq.meta.mysql.information_schema.tables.Columns.TABLE_SCHEMA
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.Record;
 import org.jooq.meta.AbstractTableDefinition;
@@ -62,6 +64,8 @@ import org.jooq.meta.mysql.information_schema.tables.Columns;
  * @author Lukas Eder
  */
 public class MySQLTableDefinition extends AbstractTableDefinition {
+
+    private static final Pattern COLUMN_TYPE = Pattern.compile("(\\w+)\\s*(\\(\\d+\\))?\\s*(unsigned)?");
 
     public MySQLTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -92,10 +96,23 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
             String dataType = record.get(Columns.DATA_TYPE);
 
             // [#519] Some types have unsigned versions
-            if (getDatabase().supportsUnsignedTypes()) {
+            boolean unsigned = getDatabase().supportsUnsignedTypes();
+
+            // [#7719]
+            boolean displayWidths = getDatabase().integerDisplayWidths();
+
+            if (unsigned || displayWidths) {
                 if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-                    if (record.get(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
-                        dataType += "unsigned";
+                    Matcher matcher = COLUMN_TYPE.matcher(record.get(Columns.COLUMN_TYPE).toLowerCase());
+
+                    if (matcher.find()) {
+                        String mType = matcher.group(1);
+                        String mPrecision = matcher.group(2);
+                        String mUnsigned = matcher.group(3);
+
+                        dataType = mType
+                                 + (unsigned && mUnsigned != null ? mUnsigned : "")
+                                 + (displayWidths && mPrecision != null ? mPrecision : "");
                     }
                 }
             }

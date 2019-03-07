@@ -818,6 +818,18 @@ public interface Database  extends AutoCloseable  {
     boolean supportsUnsignedTypes();
 
     /**
+     * Whether this database includes integer display widths in metadata, where
+     * applicable.
+     */
+    void setIntegerDisplayWidths(boolean integerDisplayWidths);
+
+    /**
+     * Whether this database includes integer display widths in metadata, where
+     * applicable.
+     */
+    boolean integerDisplayWidths();
+
+    /**
      * Whether this database should ignore procedure return values.
      */
     void setIgnoreProcedureReturnValues(boolean ignoreProcedureReturnValues);

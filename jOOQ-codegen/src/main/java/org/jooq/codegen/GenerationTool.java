@@ -576,6 +576,8 @@ public class GenerationTool {
                 database.setDateAsTimestamp(d.isDateAsTimestamp());
             if (d.isUnsignedTypes() != null)
                 database.setSupportsUnsignedTypes(d.isUnsignedTypes());
+            if (d.isIntegerDisplayWidths() != null)
+                database.setIntegerDisplayWidths(d.isIntegerDisplayWidths());
             if (d.isIgnoreProcedureReturnValues() != null)
                 database.setIgnoreProcedureReturnValues(d.isIgnoreProcedureReturnValues());
 

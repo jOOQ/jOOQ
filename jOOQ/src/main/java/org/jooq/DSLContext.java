@@ -11237,6 +11237,418 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> R fetchSingle(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Record fetchSingle(SelectField<?>... fields) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Record fetchSingle(Collection<? extends SelectField<?>> fields) throws DataAccessException;
+
+    // [jooq-tools] START [fetch-single]
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1> Record1<T1> fetchSingle(SelectField<T1> field1) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2> Record2<T1, T2> fetchSingle(SelectField<T1> field1, SelectField<T2> field2) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3> Record3<T1, T2, T3> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4> Record4<T1, T2, T3, T4> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) throws DataAccessException;
+
+    /**
+     * Execute and return exactly one record for
+     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     * <p>
+     * Convenience API for calling {@link #fetchSingle(ResultQuery)} with
+     * {@link DSL#select(SelectFieldOrAsterisk...)}.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) throws DataAccessException;
+
+// [jooq-tools] END [fetch-single]
+
 
     /**
      * Execute and return zero or one record for

@@ -971,17 +971,15 @@ dataType =
 | 'BINARY' [ '(' unsignedInteger ')' ]
 | 'BIT' [ '(' unsignedInteger ')' ]
 | 'BLOB' [ '(' unsignedInteger ')' ]
-| 'BOOLEAN'
-| 'CHAR' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
-| 'CHARACTER' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
+| ( 'BOOL' | 'BOOLEAN' )
+| ( 'CHAR' | 'CHARACTER' ) [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'CLOB' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'DATE'
 | 'DECIMAL' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
 | 'DOUBLE' [ 'PRECISION' ] [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
 | 'ENUM' '(' stringLiteral [ ',' stringLiteral ] ')' [ 'COLLATE' collationName ]
 | 'FLOAT' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
-| 'INT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
-| 'INTEGER' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
+| ( 'INT' | 'INTEGER' ) [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'LONGBLOB'
 | 'LONGTEXT' [ 'COLLATE' collationName ]
 | 'LONG NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
@@ -992,8 +990,7 @@ dataType =
 | 'MEDIUMTEXT' [ 'COLLATE' collationName ]
 | 'NCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'NCLOB' [ 'COLLATE' collationName ]
-| 'NUMBER' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
-| 'NUMERIC' [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
+| ( 'NUMBER' | 'NUMERIC' ) [ '(' ( '*' | unsignedInteger ) [ ',' signedInteger ] ')' ]
 | 'NVARCHAR' [ '(' unsignedInteger ')' ] [ 'COLLATE' collationName ]
 | 'OTHER'
 | 'REAL' [ '(' unsignedInteger [ ',' unsignedInteger ] ')' ]
@@ -1011,9 +1008,8 @@ dataType =
 | 'TINYINT' [ '(' unsignedInteger ')' ] [ 'UNSIGNED' ]
 | 'TINYTEXT' [ 'COLLATE' collationName ]
 | 'UUID'
-| 'VARCHAR' [ '(' unsignedInteger [ 'BYTE' | 'CHAR' ] ')' ] [ 'COLLATE' collationName ]
+| ( 'VARCHAR' | 'CHARACTER VARYING' ) [ '(' unsignedInteger [ 'BYTE' | 'CHAR' ] ')' ] [ 'COLLATE' collationName ]
 | 'VARCHAR2' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
-| 'CHARACTER VARYING' [ '(' unsignedInteger ')' [ 'BYTE' | 'CHAR' ] ] [ 'COLLATE' collationName ]
 | 'VARBINARY' [ '(' unsignedInteger ')' ]
 ) [ arraySuffix ]
 ;

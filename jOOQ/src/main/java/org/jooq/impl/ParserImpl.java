@@ -8493,7 +8493,8 @@ final class ParserImpl implements Parser {
                     return parseDataTypeLength(ctx, SQLDataType.BIT);
                 else if (parseKeywordOrIdentifierIf(ctx, "BLOB"))
                     return parseDataTypeLength(ctx, SQLDataType.BLOB);
-                else if (parseKeywordOrIdentifierIf(ctx, "BOOLEAN"))
+                else if (parseKeywordOrIdentifierIf(ctx, "BOOLEAN") ||
+                         parseKeywordOrIdentifierIf(ctx, "BOOL"))
                     return SQLDataType.BOOLEAN;
                 else if (parseKeywordOrIdentifierIf(ctx, "BYTEA"))
                     return SQLDataType.BLOB;

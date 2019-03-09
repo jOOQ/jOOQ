@@ -128,6 +128,7 @@ final class TruncDate<T> extends AbstractFunction<T> {
                 switch (part) {
                     case YEAR:   keyword = "year";   break;
                     case MONTH:  keyword = "month";  break;
+                    case WEEK:   keyword = "week";   break;
                     case DAY:    keyword = "day";    break;
                     case HOUR:   keyword = "hour";   break;
                     case MINUTE: keyword = "minute"; break;

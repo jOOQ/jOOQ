@@ -298,7 +298,7 @@ public final class Convert {
     }
 
     public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
-        return new ConvertAll<U[]>(to).from(from);
+        return ConvertAll.from(from, to);
     }
 
     /**
@@ -317,8 +317,7 @@ public final class Convert {
      * Conversion type-safety
      */
     private static final <T, U> U convert0(Object from, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
-        return converter.from(all.from(from));
+        return converter.from(ConvertAll.from(from, converter.fromType()));
     }
 
     /**
@@ -381,7 +380,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
-        return convert(from, new ConvertAll<T>(toClass));
+        return ConvertAll.from(ConvertAll.from(from, toClass), toClass);
     }
 
     /**
@@ -395,7 +394,13 @@ public final class Convert {
      * @see #convert(Object, Class)
      */
     public static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
-        return convert(collection, new ConvertAll<T>(type));
+        List<T> result = new ArrayList<T>(collection.size());
+
+        for (Object o : collection) {
+            result.add(convert(o, type));
+        }
+
+        return result;
     }
 
     /**
@@ -416,11 +421,10 @@ public final class Convert {
      * Type safe conversion
      */
     private static final <T, U> List<U> convert0(Collection<?> collection, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
         List<U> result = new ArrayList<U>(collection.size());
 
         for (Object o : collection) {
-            result.add(convert(all.from(o), converter));
+            result.add(convert(ConvertAll.from(o, converter.fromType()), converter));
         }
 
         return result;
@@ -434,22 +438,15 @@ public final class Convert {
     /**
      * The converter to convert them all.
      */
-    private static class ConvertAll<U> implements Converter<Object, U> {
+    private static class ConvertAll {
 
         /**
          * Generated UID
          */
         private static final long        serialVersionUID = 2508560107067092501L;
 
-        private final Class<? extends U> toClass;
-
-        ConvertAll(Class<? extends U> toClass) {
-            this.toClass = toClass;
-        }
-
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        @Override
-        public U from(Object from) {
+        public static <U> U from(Object from, Class<? extends U> toClass) {
             if (from == null) {
 
                 // [#936] If types are converted to primitives, the result must not
@@ -1052,22 +1049,6 @@ public final class Convert {
             }
 
             throw fail(from, toClass);
-        }
-
-        @Override
-        public Object to(U to) {
-            return to;
-        }
-
-        @Override
-        public Class<Object> fromType() {
-            return Object.class;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public Class<U> toType() {
-            return (Class<U>) toClass;
         }
 
         /**

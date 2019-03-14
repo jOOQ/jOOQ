@@ -873,7 +873,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
     void setWithTies(boolean withTies);
 
     /**

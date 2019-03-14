@@ -672,6 +672,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 case CUBRID:
                 case FIREBIRD_3_0:
+                case H2:
                 case MARIADB:
                 case MYSQL:
                 case MYSQL_8_0:

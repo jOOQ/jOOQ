@@ -16717,6 +16717,26 @@ public class DSL {
     }
 
     /**
+     * Negate a field to get its negative value.
+     *
+     * @see Field#neg()
+     */
+    @Support
+    public static <T extends Number> Field<T> neg(Field<T> field) {
+        return field.neg();
+    }
+
+    /**
+     * Negate a field to get its negative value.
+     *
+     * @see Field#neg()
+     */
+    @Support
+    public static <T extends Number> Field<T> minus(Field<T> field) {
+        return field.neg();
+    }
+
+    /**
      * Get the sign of a numeric field: sign(field).
      *
      * @see #sign(Field)

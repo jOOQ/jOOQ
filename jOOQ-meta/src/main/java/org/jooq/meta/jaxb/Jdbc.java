@@ -51,6 +51,7 @@ public class Jdbc implements Serializable
     protected String username;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String password;
+    protected Boolean autoCommit;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
     protected List<Property> properties;
@@ -199,6 +200,30 @@ public class Jdbc implements Serializable
         this.password = value;
     }
 
+    /**
+     * The value of the JDBC autocommit flag. The flag is not set by default, i.e. it keeps the default provided to jOOQ.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isAutoCommit() {
+        return autoCommit;
+    }
+
+    /**
+     * Sets the value of the autoCommit property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setAutoCommit(Boolean value) {
+        this.autoCommit = value;
+    }
+
     public List<Property> getProperties() {
         if (properties == null) {
             properties = new ArrayList<Property>();
@@ -237,6 +262,11 @@ public class Jdbc implements Serializable
 
     public Jdbc withPassword(String value) {
         setPassword(value);
+        return this;
+    }
+
+    public Jdbc withAutoCommit(Boolean value) {
+        setAutoCommit(value);
         return this;
     }
 
@@ -293,6 +323,11 @@ public class Jdbc implements Serializable
             sb.append("<password>");
             sb.append(password);
             sb.append("</password>");
+        }
+        if (autoCommit!= null) {
+            sb.append("<autoCommit>");
+            sb.append(autoCommit);
+            sb.append("</autoCommit>");
         }
         if (properties!= null) {
             sb.append("<properties>");
@@ -372,6 +407,15 @@ public class Jdbc implements Serializable
                 return false;
             }
         }
+        if (autoCommit == null) {
+            if (other.autoCommit!= null) {
+                return false;
+            }
+        } else {
+            if (!autoCommit.equals(other.autoCommit)) {
+                return false;
+            }
+        }
         if (properties == null) {
             if (other.properties!= null) {
                 return false;
@@ -394,6 +438,7 @@ public class Jdbc implements Serializable
         result = ((prime*result)+((user == null)? 0 :user.hashCode()));
         result = ((prime*result)+((username == null)? 0 :username.hashCode()));
         result = ((prime*result)+((password == null)? 0 :password.hashCode()));
+        result = ((prime*result)+((autoCommit == null)? 0 :autoCommit.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         return result;
     }

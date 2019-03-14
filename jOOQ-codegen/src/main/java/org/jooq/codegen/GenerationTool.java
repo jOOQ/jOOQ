@@ -116,6 +116,7 @@ public class GenerationTool {
     private ClassLoader             loader;
     private DataSource              dataSource;
     private Connection              connection;
+    private Boolean                 autoCommit;
     private boolean                 close;
 
     /**
@@ -307,6 +308,13 @@ public class GenerationTool {
                             j.setUsername(System.getProperty("jooq.codegen.jdbc.username"));
                         if (j.getPassword() == null)
                             j.setPassword(System.getProperty("jooq.codegen.jdbc.password"));
+
+                        if (j.isAutoCommit() == null) {
+                            String a = System.getProperty("jooq.codegen.jdbc.autoCommit");
+
+                            if (a != null)
+                                j.setAutoCommit(Boolean.valueOf(a));
+                        }
                     }
 
                     if (j != null) {
@@ -325,6 +333,10 @@ public class GenerationTool {
 
             j = defaultIfNull(j, new Jdbc());
 
+            if (connection != null && j.isAutoCommit() != null) {
+                autoCommit = connection.getAutoCommit();
+                connection.setAutoCommit(j.isAutoCommit());
+            }
 
             // Initialise generator
             // --------------------
@@ -781,8 +793,12 @@ public class GenerationTool {
                 }
 
             // Close connection only if it was created by the GenerationTool
-            if (close && connection != null)
-                connection.close();
+            if (connection != null) {
+                if (close)
+                    connection.close();
+                else if (autoCommit != null)
+                    connection.setAutoCommit(autoCommit);
+            }
         }
     }
 

@@ -10,7 +10,44 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.11.9 - January 3, 2018
+Version 3.11.10 - March 7, 2019
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Features and Improvements
+-------------------------
+#8387 - Improve Javadoc on DSLContext.meta(Table...) etc.
+#8395 - Add reference to <forcedType/> configuration in DataType, Converter, Binding
+
+
+Bug Fixes
+---------
+#8043 - ALTER TABLE .. RENAME TO .. should fully qualify tables if supported by the database
+#8182 - Timezone Offset parser doesn't correctly parse offset seconds
+#8184 - DefaultOffsetDateTimeBinding fails when year field is negative
+#8198 - Row[N].isDistinctFrom(T1, ..., TN) and others do not work correctly when passing null values
+#8207 - ORA-01745 executing a SELECT * FROM WHERE column IN (large collection)
+#8224 - StringIndexOutOfBoundsException when parsing a PostgreSQL TIMESTAMPTZ with microseconds precision
+#8245 - Outdated Javadoc on WindowDefinition referring WINDOW clause support
+#8258 - Wrong results from field when forcedType references both converter and binding
+#8266 - ParamType not supported: FORCE_INDEXED when calling Query.getSQL()
+#8288 - Change message "Please report this bug here" for cases which are not bugs
+#8296 - RenderKeywordStyle.PASCAL doesn't work when keywords contain whitespace
+#8318 - Wrong foreign key specification generated in MySQL, when foreign key shares name with unique key in different table
+#8330 - Lacking formatting for WITH [ NO ] DATA clause
+#8340 - Redundant QualifiedField.name and AbstractNamed.name fields
+#8351 - Parser parses (a, b) IS NULL as (a, b) IS NOT NULL
+#8356 - NullPointerException on Routine.toString() when routine is not attached to a Configuration
+#8364 - Slow check for similar generated files that differ by case
+#8370 - Compilation errors in generated code for DB2 overloaded procedures
+#8373 - DB2 array types get generated as routines
+#8376 - DB2 array types get generated as UDTRecord types
+#8379 - Array of enums whose literals contain special characters cannot be bound in PostgreSQL
+
+
+Version 3.11.9 - January 3, 2019
 ================================================================================
 
 This is a 3.11 patch release with bug fixes

@@ -62,6 +62,7 @@ import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROWNUMBER_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
@@ -161,6 +162,17 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
                .visit(orderBy);
 
             glue = " ";
+        }
+        else if (TRUE.equals(ctx.data(DATA_ROWNUMBER_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
+
+            // [#8414] H2 requires ORDER BY in all other ranking functions than ROW_NUMBER()
+            if (ctx.family() != H2) {
+                ctx.sql(glue)
+                   .visit(K_ORDER_BY).sql(' ')
+                   .visit(field(select(one())));
+
+                glue = " ";
+            }
         }
         else if (TRUE.equals(ctx.data(DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
             ctx.sql(glue)

@@ -453,6 +453,11 @@ final class Tools {
         DATA_EMULATE_BULK_INSERT_RETURNING,
 
         /**
+         * [#8414] We're currently generating the window specification of a row_number function.
+         */
+        DATA_ROWNUMBER_FUNCTION,
+
+        /**
          * [#1535] We're currently generating the window specification of a ranking function.
          */
         DATA_RANKING_FUNCTION,

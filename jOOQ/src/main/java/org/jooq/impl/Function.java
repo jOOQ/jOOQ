@@ -89,6 +89,7 @@ import static org.jooq.impl.Term.MODE;
 import static org.jooq.impl.Term.PRODUCT;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROWNUMBER_FUNCTION;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
@@ -424,10 +425,17 @@ class Function<T> extends AbstractField<T> implements
             return;
 
         Boolean ranking = false;
-        Boolean previous = null;
+        Boolean rowNumber = false;
+        Boolean previousRanking = null;
+        Boolean previousRowNumber = null;
 
         if (term != null) {
             switch (term) {
+                case ROW_NUMBER:
+                    rowNumber = true;
+                    ranking = true;
+                    break;
+
                 case CUME_DIST:
                 case DENSE_RANK:
                 case FIRST_VALUE:
@@ -438,7 +446,6 @@ class Function<T> extends AbstractField<T> implements
                 case NTILE:
                 case PERCENT_RANK:
                 case RANK:
-                case ROW_NUMBER:
                     ranking = true;
                     break;
             }
@@ -448,14 +455,20 @@ class Function<T> extends AbstractField<T> implements
            .visit(K_OVER)
            .sql(' ');
 
-        previous = (Boolean) ctx.data(DATA_RANKING_FUNCTION, ranking);
+        previousRanking = (Boolean) ctx.data(DATA_RANKING_FUNCTION, ranking);
+        previousRowNumber = (Boolean) ctx.data(DATA_ROWNUMBER_FUNCTION, rowNumber);
 
         ctx.visit(window);
 
-        if (TRUE.equals(previous))
-            ctx.data(DATA_RANKING_FUNCTION, previous);
+        if (TRUE.equals(previousRanking))
+            ctx.data(DATA_RANKING_FUNCTION, previousRanking);
         else
             ctx.data().remove(DATA_RANKING_FUNCTION);
+
+        if (TRUE.equals(previousRowNumber))
+            ctx.data(DATA_ROWNUMBER_FUNCTION, previousRowNumber);
+        else
+            ctx.data().remove(DATA_ROWNUMBER_FUNCTION);
     }
 
     @SuppressWarnings("unchecked")

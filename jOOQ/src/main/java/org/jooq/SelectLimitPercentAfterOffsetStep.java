@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 
@@ -102,14 +103,9 @@ package org.jooq;
  */
 public interface SelectLimitPercentAfterOffsetStep<R extends Record> extends SelectWithTiesAfterOffsetStep<R> {
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add the <code>PERCENT</code> clause to a <code>LIMIT</code> clause.
+     */
+    @Support({ H2 })
+    SelectWithTiesAfterOffsetStep<R> percent();
 }

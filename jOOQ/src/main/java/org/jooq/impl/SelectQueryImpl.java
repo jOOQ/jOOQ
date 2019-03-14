@@ -211,8 +211,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     REQUIRES_DERIVED_TABLE_DML      = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-
-
+    private static final EnumSet<SQLDialect>     SUPPORT_FULL_WITH_TIES          = EnumSet.of(H2);
 
 
 
@@ -672,7 +671,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 case CUBRID:
                 case FIREBIRD_3_0:
-                case H2:
                 case MARIADB:
                 case MYSQL:
                 case MYSQL_8_0:
@@ -1930,15 +1928,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         getLimit().setNumberOfRows(numberOfRows);
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public final void setLimitPercent(boolean percent) {
+        getLimit().setPercent(percent);
+    }
 
     @Override
     public final void setWithTies(boolean withTies) {

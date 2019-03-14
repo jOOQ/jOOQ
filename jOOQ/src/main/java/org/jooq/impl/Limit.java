@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.RenderContext.CastMode.NEVER;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.one;
@@ -89,10 +90,7 @@ final class Limit extends AbstractQueryPart {
     private Field<?>                    offsetPlusOne     = ONE;
     private boolean                     rendersParams;
     private boolean                     withTies;
-
-
-
-
+    private boolean                     percent;
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -177,32 +175,16 @@ final class Limit extends AbstractQueryPart {
 
 
 
+            case H2:
             case DERBY: {
 
-                // Casts are not supported here...
-                ctx.castMode(NEVER);
+                // [#8415] For backwards compatibility reasons, we generate standard
+                //         OFFSET .. FETCH syntax on H2 only when strictly needed
+                if (ctx.dialect() == H2 && !withTies() && !percent())
+                    acceptDefault(ctx, castMode);
+                else
+                    acceptStandard(ctx, castMode);
 
-
-
-
-                    ctx.formatSeparator()
-                       .visit(K_OFFSET)
-                       .sql(' ').visit(offsetOrZero)
-                       .sql(' ').visit(K_ROWS);
-
-                if (!limitZero()) {
-                    ctx.formatSeparator()
-                       .visit(K_FETCH_NEXT).sql(' ').visit(numberOfRows);
-
-
-
-
-
-
-                    ctx.sql(' ').visit(withTies ? K_ROWS_WITH_TIES : K_ROWS_ONLY);
-                }
-
-                ctx.castMode(castMode);
                 break;
             }
 
@@ -293,7 +275,6 @@ final class Limit extends AbstractQueryPart {
 
 
             // [#4785] OFFSET cannot be without LIMIT
-            case H2:
             case MARIADB:
             case MYSQL_5_7:
             case MYSQL_8_0:
@@ -329,22 +310,48 @@ final class Limit extends AbstractQueryPart {
 
             // A default implementation is necessary for hashCode() and toString()
             default: {
-                ctx.castMode(NEVER);
-
-                if (!limitZero())
-                    ctx.formatSeparator()
-                           .visit(K_LIMIT)
-                           .sql(' ').visit(numberOfRows);
-
-                if (!offsetZero())
-                    ctx.formatSeparator()
-                           .visit(K_OFFSET)
-                           .sql(' ').visit(offsetOrZero);
-
-                ctx.castMode(castMode);
+                acceptDefault(ctx, castMode);
                 break;
             }
         }
+    }
+
+    private final void acceptStandard(Context<?> ctx, CastMode castMode) {
+        ctx.castMode(NEVER);
+
+        if (                                                  !offsetZero())
+            ctx.formatSeparator()
+               .visit(K_OFFSET)
+               .sql(' ').visit(offsetOrZero)
+               .sql(' ').visit(K_ROWS);
+
+        if (!limitZero()) {
+            ctx.formatSeparator()
+               .visit(K_FETCH_NEXT).sql(' ').visit(numberOfRows);
+
+            if (percent)
+                ctx.sql(' ').visit(K_PERCENT);
+
+            ctx.sql(' ').visit(withTies ? K_ROWS_WITH_TIES : K_ROWS_ONLY);
+        }
+
+        ctx.castMode(castMode);
+    }
+
+    private final void acceptDefault(Context<?> ctx, CastMode castMode) {
+        ctx.castMode(NEVER);
+
+        if (!limitZero())
+            ctx.formatSeparator()
+                   .visit(K_LIMIT)
+                   .sql(' ').visit(numberOfRows);
+
+        if (!offsetZero())
+            ctx.formatSeparator()
+                   .visit(K_OFFSET)
+                   .sql(' ').visit(offsetOrZero);
+
+        ctx.castMode(castMode);
     }
 
 
@@ -452,19 +459,13 @@ final class Limit extends AbstractQueryPart {
         this.rendersParams |= numberOfRows.isInline();
     }
 
+    final void setPercent(boolean percent) {
+        this.percent = percent;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    final boolean percent() {
+        return percent;
+    }
 
     final void setWithTies(boolean withTies) {
         this.withTies = withTies;

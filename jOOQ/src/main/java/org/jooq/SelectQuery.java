@@ -859,16 +859,11 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add the <code>PERCENT</code> clause to a <code>LIMIT</code> clause.
+     */
+    @Support({ H2 })
+    void setLimitPercent(boolean percent);
 
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.

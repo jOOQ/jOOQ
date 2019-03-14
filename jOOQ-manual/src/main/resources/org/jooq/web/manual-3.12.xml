@@ -15922,6 +15922,45 @@ result.forEach((Object[] entities) -> {
   }
 }]]></java><html>
 
+                                    <h3>Auto committing</h3>
+
+                                    <p>
+                                        jOOQ's code generator will use the driver's / connection's default auto commit flag. If for some reason you need to override this (e.g. in order to recover from failed transactions in PostgreSQL, by setting it to true), you can specify it here:
+                                    </p>
+
+
+                                    <p>
+                                        <strong>XML configuration (standalone and Maven)</strong>
+                                    </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <jdbc>
+    ...
+    <autoCommit>true</autoCommit>
+  </jdbc>
+  ...
+</configuration>]]></xml><html>
+
+                                    <p>
+                                        <strong>Programmatic configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[configuration
+  .withJdbc(new Jdbc()
+    .withAutoCommit(true));]]></java><html>
+
+                                    <p>
+                                        <strong>Gradle configuration</strong>
+                                    </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  jdbc {
+    driver = 'com.mysql.jdbc.Driver'
+    url = 'jdbc:mysql://localhost/testdb'
+    autoCommit = true
+  }
+}]]></java><html>
+
                                     <h3>Using variables in Maven</h3>
 
                                     <p>

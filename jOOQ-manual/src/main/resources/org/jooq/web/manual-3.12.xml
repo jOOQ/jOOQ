@@ -9763,7 +9763,7 @@ SortField<?>[] orderBy = { count().desc() };
 create.select(select)
       .from(from)
       .groupBy(groupBy)
-      .orderBy()
+      .orderBy(orderBy)
       .fetch();]]></java><html>
 
                             <p>

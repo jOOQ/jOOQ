@@ -38,6 +38,9 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE_VALUES;
+// ...
+import static org.jooq.impl.Keywords.K_MULTISET;
+import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VALUES;
 
 import org.jooq.Context;
@@ -109,7 +112,6 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
 
 
-
             case FIREBIRD:
             case MARIADB:
             case MYSQL: {
@@ -147,9 +149,16 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
 
 
+
             default: {
-                ctx.start(TABLE_VALUES)
-                   .visit(K_VALUES);
+                ctx.start(TABLE_VALUES);
+
+
+
+
+
+
+                ctx.visit(K_VALUES);
 
                 if (rows.length > 1)
                     ctx.formatIndentStart()
@@ -166,6 +175,10 @@ final class Values<R extends Record> extends AbstractTable<R> {
                 if (rows.length > 1)
                     ctx.formatIndentEnd()
                        .formatNewLine();
+
+
+
+
 
                 ctx.end(TABLE_VALUES);
                 break;

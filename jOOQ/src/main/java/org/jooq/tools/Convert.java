@@ -380,7 +380,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
-        return ConvertAll.from(ConvertAll.from(from, toClass), toClass);
+        return ConvertAll.from(from, toClass);
     }
 
     /**
@@ -424,7 +424,7 @@ public final class Convert {
         List<U> result = new ArrayList<U>(collection.size());
 
         for (Object o : collection) {
-            result.add(convert(ConvertAll.from(o, converter.fromType()), converter));
+            result.add(convert(o, converter));
         }
 
         return result;

@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONSTRAINT;
 // ...
+// ...
+// ...
 import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
 import static org.jooq.impl.ConstraintImpl.Action.NO_ACTION;
 import static org.jooq.impl.ConstraintImpl.Action.RESTRICT;
@@ -60,6 +62,8 @@ import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
+
+import java.util.EnumSet;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -92,6 +96,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.Name;
+// ...
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
@@ -136,8 +142,14 @@ implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 1018023703769802616L;
-    private static final Clause[] CLAUSES          = { CONSTRAINT };
+    private static final long                serialVersionUID             = 1018023703769802616L;
+    private static final Clause[]            CLAUSES                      = { CONSTRAINT };
+
+
+
+
+
+
 
     private Field<?>[]            unique;
     private Field<?>[]            primaryKey;
@@ -176,12 +188,13 @@ implements
         else {
             boolean qualify = ctx.qualify();
 
-            if (getQualifiedName() != AbstractName.NO_NAME)
+            if (getQualifiedName() != AbstractName.NO_NAME                                                     ) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(getUnqualifiedName())
                    .formatIndentStart()
                    .formatSeparator();
+            }
 
             if (unique != null) {
                 ctx.visit(K_UNIQUE)
@@ -235,12 +248,18 @@ implements
                        .sql(')');
 
                 if (onDelete != null)
-                    ctx.sql(' ').visit(K_ON_DELETE)
-                       .sql(' ').visit(onDelete.keyword);
+
+
+
+                        ctx.sql(' ').visit(K_ON_DELETE)
+                           .sql(' ').visit(onDelete.keyword);
 
                 if (onUpdate != null)
-                    ctx.sql(' ').visit(K_ON_UPDATE)
-                       .sql(' ').visit(onUpdate.keyword);
+
+
+
+                        ctx.sql(' ').visit(K_ON_UPDATE)
+                           .sql(' ').visit(onUpdate.keyword);
             }
             else if (check != null) {
                 ctx.visit(K_CHECK)
@@ -251,8 +270,19 @@ implements
                    .sql(')');
             }
 
-            if (getQualifiedName() != AbstractName.NO_NAME)
+            if (getQualifiedName() != AbstractName.NO_NAME) {
+
+
+
+
+
+
+
+
+
+
                 ctx.formatIndentEnd();
+            }
         }
     }
 

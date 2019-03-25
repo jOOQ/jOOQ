@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME;
+import static org.jooq.impl.Keywords.K_RENAME_SEQUENCE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_RESTART;
 import static org.jooq.impl.Keywords.K_RESTART_WITH;
@@ -165,6 +166,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     private final void accept0(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

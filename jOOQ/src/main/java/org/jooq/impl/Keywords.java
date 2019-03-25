@@ -195,6 +195,7 @@ final class Keywords {
     static final Keyword K_MINUS                            = keyword("minus");
     static final Keyword K_MINVALUE                         = keyword("minvalue");
     static final Keyword K_MODIFY                           = keyword("modify");
+    static final Keyword K_MULTISET                         = keyword("multiset");
     static final Keyword K_NEW_TABLE                        = keyword("new table");
     static final Keyword K_NO                               = keyword("no");
     static final Keyword K_NOCYCLE                          = keyword("nocycle");
@@ -247,6 +248,7 @@ final class Keywords {
     static final Keyword K_RENAME_CONSTRAINT                = keyword("rename constraint");
     static final Keyword K_RENAME_INDEX                     = keyword("rename index");
     static final Keyword K_RENAME_OBJECT                    = keyword("rename object");
+    static final Keyword K_RENAME_SEQUENCE                  = keyword("rename sequence");
     static final Keyword K_RENAME_TABLE                     = keyword("rename table");
     static final Keyword K_RENAME_TO                        = keyword("rename to");
     static final Keyword K_REPEAT                           = keyword("repeat");

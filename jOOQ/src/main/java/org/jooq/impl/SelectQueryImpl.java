@@ -669,6 +669,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
                 case CUBRID:
                 case FIREBIRD_3_0:
                 case MARIADB:
@@ -1571,11 +1575,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final void toSQLOrderBy(
-            Context<?> ctx,
-            Field<?>[] originalFields, Field<?>[] alternativeFields,
-            boolean wrapQueryExpressionInDerivedTable, boolean wrapQueryExpressionBodyInDerivedTable,
-            SortFieldList actualOrderBy,
-            Limit actualLimit
+        Context<?> ctx,
+        Field<?>[] originalFields,
+        Field<?>[] alternativeFields,
+        boolean wrapQueryExpressionInDerivedTable,
+        boolean wrapQueryExpressionBodyInDerivedTable,
+        SortFieldList actualOrderBy,
+        Limit actualLimit
     ) {
 
         ctx.start(SELECT_ORDER_BY);

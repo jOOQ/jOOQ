@@ -229,6 +229,12 @@ final class CreateSequenceImpl extends AbstractQuery implements
                .sql(' ');
 
         ctx.visit(sequence);
+        String noSeparator = " ";
+
+
+
+
+
 
         // Some databases default to sequences starting with MIN_VALUE
         if (startWith == null && REQUIRES_START_WITH.contains(ctx.family()))
@@ -242,23 +248,23 @@ final class CreateSequenceImpl extends AbstractQuery implements
         if (minvalue != null)
             ctx.sql(' ').visit(K_MINVALUE).sql(' ').visit(minvalue);
         else if (noMinvalue)
-            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_MINVALUE);
+            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MINVALUE);
 
         if (maxvalue != null)
             ctx.sql(' ').visit(K_MAXVALUE).sql(' ').visit(maxvalue);
         else if (noMaxvalue)
-            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_MAXVALUE);
+            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MAXVALUE);
 
         if (cycle)
             ctx.sql(' ').visit(K_CYCLE);
         else if (noCycle)
-            ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CYCLE);
+            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
         if (!NO_SUPPORT_CACHE.contains(ctx.family()))
             if (cache != null)
                 ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
             else if (noCache)
-                ctx.sql(' ').visit(K_NO).sql(' ').visit(K_CACHE);
+                ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }

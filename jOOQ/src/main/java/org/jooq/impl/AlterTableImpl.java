@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -84,6 +85,7 @@ import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
+import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
@@ -182,11 +184,14 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS                  = EnumSet.of(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> SUPPORT_RENAME_COLUMN                 = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
+
+
 
 
 
@@ -779,7 +784,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
         boolean omitAlterTable =
                (renameConstraint != null && family == HSQLDB)
-            || (renameColumn != null && family == DERBY);
+            || (renameColumn != null && SUPPORT_RENAME_COLUMN.contains(family));
         boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(family);
         boolean renameObject = renameTo != null && (false                                                                   );
 
@@ -824,6 +829,9 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_RENAME_COLUMN);
 
             switch (ctx.family()) {
+
+
+
                 case DERBY:
                     ctx.visit(K_RENAME_COLUMN).sql(' ')
                        .visit(renameColumn)
@@ -1011,8 +1019,15 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_ADD);
 
             ctx.visit(K_ADD)
-               .sql(' ')
-               .visit(addConstraint);
+               .sql(' ');
+
+
+
+
+
+
+
+            ctx.visit(addConstraint);
 
 
 
@@ -1165,6 +1180,7 @@ final class AlterTableImpl extends AbstractQuery implements
             else {
                 acceptDropColumn(ctx);
                 acceptIfExistsColumn(ctx);
+
 
 
 

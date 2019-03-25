@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -64,6 +65,7 @@ import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_VIEW;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -172,11 +174,20 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+        Field<?>[] f = fields;
 
         // [#3835] SQLite doesn't like renaming columns at the view level
-        boolean rename = fields != null && fields.length > 0;
+        boolean rename = f != null && f.length > 0;
         boolean renameSupported = ctx.family() != SQLITE;
         boolean replaceSupported = false                                                     ;
+
+
+
+
+
+
+
+
 
         // [#4806] CREATE VIEW doesn't accept parameters in most databases
         ParamType paramType = ctx.paramType();
@@ -215,7 +226,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
             ctx.sql('(')
                .qualify(false)
-               .visit(new QueryPartList<Field<?>>(fields))
+               .visit(new QueryPartList<Field<?>>(f))
                .qualify(qualify)
                .sql(')');
         }
@@ -228,7 +239,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(select).as(name("t"), Tools.fieldNames(fields)))
+             ? selectFrom(table(select).as(name("t"), Tools.fieldNames(f)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);

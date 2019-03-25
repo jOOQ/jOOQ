@@ -4330,6 +4330,14 @@ final class ParserImpl implements Parser {
                         ? ((Field) left).notLike(right)
                         : ((Field) left).like(right);
             }
+            else if (left instanceof Field && (parseKeywordIf(ctx, "REGEXP")
+                                            || parseKeywordIf(ctx, "RLIKE")
+                                            || parseKeywordIf(ctx, "LIKE_REGEX"))) {
+                Field right = toField(ctx, parseConcat(ctx, null));
+                return not
+                        ? ((Field) left).notLikeRegex(right)
+                        : ((Field) left).likeRegex(right);
+            }
             else if (left instanceof Field && parseKeywordIf(ctx, "SIMILAR TO")) {
                 Field right = toField(ctx, parseConcat(ctx, null));
                 boolean escape = parseKeywordIf(ctx, "ESCAPE");

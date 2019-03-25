@@ -665,6 +665,7 @@ predicate =
     (
     | 'IN' '(' ( select | fields ) ')'
     | 'BETWEEN' [ 'SYMMETRIC' ] concat 'AND' concat
+    | ( 'REGEXP' | 'RLIKE' | 'LIKE_REGEX' ) concat
     | 'LIKE' concat [ 'ESCAPE' characterLiteral ]
     | 'SIMILAR' 'TO' concat [ 'ESCAPE' characterLiteral ]
     )

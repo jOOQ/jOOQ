@@ -674,6 +674,7 @@ predicate =
 | concat '*=' concat
 | concat '=*' concat
 | row2 'OVERLAPS' row2
+| 'REGEXP_LIKE' '(' concat ',' concat ')'
 ;
 
 row2 = [ 'ROW' ] '(' field ',' field ')'

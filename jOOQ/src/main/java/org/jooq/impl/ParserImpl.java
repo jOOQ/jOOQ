@@ -4191,7 +4191,15 @@ final class ParserImpl implements Parser {
 
             return exists(select);
         }
+        else if (parseKeywordIf(ctx, "REGEXP_LIKE")) {
+            parse(ctx, '(');
+            Field<?> f1 = parseField(ctx);
+            parse(ctx, ',');
+            Field<?> f2 = parseField(ctx);
+            parse(ctx, ')');
 
+            return f1.likeRegex((Field) f2);
+        }
         else {
             FieldOrRow left;
             Comparator comp;

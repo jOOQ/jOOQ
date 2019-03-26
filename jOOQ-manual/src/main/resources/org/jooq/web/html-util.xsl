@@ -92,6 +92,20 @@
         </div>
     </xsl:template>
 
+    <xsl:template match="tabs" mode="content">
+        <xsl:apply-templates select="tab" mode="content"/>
+    </xsl:template>
+
+    <xsl:template match="tab" mode="content">
+        <div class="row col col-100 col-white">
+            <p>
+                <strong><xsl:value-of select="@title"/></strong>
+            </p>
+
+            <xsl:apply-templates select="node()" mode="content"/>
+        </div>
+    </xsl:template>
+
     <xsl:template match="grammar" mode="content">
         <xsl:apply-templates match="rule" mode="grammar-content"/>
     </xsl:template>

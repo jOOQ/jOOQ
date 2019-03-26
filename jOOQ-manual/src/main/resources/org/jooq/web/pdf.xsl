@@ -317,6 +317,22 @@
         <xsl:apply-templates select="@*|node()" mode="content"/>
     </xsl:template>
 
+    <xsl:template match="tabs" mode="content">
+        <xsl:apply-templates select="@*|node()" mode="content"/>
+    </xsl:template>
+
+    <xsl:template match="tab" mode="content">
+        <fo:block xsl:use-attribute-sets="div">
+            <fo:block xsl:use-attribute-sets="p">
+                <fo:inline xsl:use-attribute-sets="strong">
+                    <xsl:value-of select="@title"/>
+                </fo:inline>
+            </fo:block>
+
+            <xsl:apply-templates select="node()" mode="content"/>
+        </fo:block>
+    </xsl:template>
+
 	<xsl:template match="div" mode="content">
 		<fo:block xsl:use-attribute-sets="div">
 			<xsl:apply-templates mode="content"/>

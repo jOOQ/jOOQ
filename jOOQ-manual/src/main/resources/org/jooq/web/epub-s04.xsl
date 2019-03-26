@@ -86,6 +86,18 @@
         <xsl:value-of select="@id"/>
     </xsl:template>
 
+    <xsl:template match="tabs" mode="content">
+        <xsl:apply-templates select="tab" mode="content"/>
+    </xsl:template>
+
+    <xsl:template match="tab">
+        <p>
+            <strong><xsl:value-of select="@title"/></strong>
+        </p>
+
+        <xsl:apply-templates select="node()" mode="content"/>
+    </xsl:template>
+
     <xsl:template match="grammar" mode="content">
         <p>
             The grammar is currently not supported in the EPUB version of the manual. Please visit the HTML documentation to see the grammar.

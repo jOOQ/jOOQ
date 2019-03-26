@@ -46,6 +46,8 @@ public class Database implements Serializable
     protected List<RegexFlag> regexFlags;
     @XmlElement(defaultValue = "true")
     protected Boolean regexMatchesPartialQualification = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean sqlMatchesPartialQualification = true;
     @XmlElement(defaultValue = ".*")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String includes = ".*";
@@ -276,6 +278,30 @@ public class Database implements Serializable
      */
     public void setRegexMatchesPartialQualification(Boolean value) {
         this.regexMatchesPartialQualification = value;
+    }
+
+    /**
+     * Whether SQL queries that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSqlMatchesPartialQualification() {
+        return sqlMatchesPartialQualification;
+    }
+
+    /**
+     * Sets the value of the sqlMatchesPartialQualification property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSqlMatchesPartialQualification(Boolean value) {
+        this.sqlMatchesPartialQualification = value;
     }
 
     /**
@@ -1424,6 +1450,11 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withSqlMatchesPartialQualification(Boolean value) {
+        setSqlMatchesPartialQualification(value);
+        return this;
+    }
+
     public Database withIncludes(String value) {
         setIncludes(value);
         return this;
@@ -1788,6 +1819,11 @@ public class Database implements Serializable
             sb.append(regexMatchesPartialQualification);
             sb.append("</regexMatchesPartialQualification>");
         }
+        if (sqlMatchesPartialQualification!= null) {
+            sb.append("<sqlMatchesPartialQualification>");
+            sb.append(sqlMatchesPartialQualification);
+            sb.append("</sqlMatchesPartialQualification>");
+        }
         if (includes!= null) {
             sb.append("<includes>");
             sb.append(includes);
@@ -2085,6 +2121,15 @@ public class Database implements Serializable
             }
         } else {
             if (!regexMatchesPartialQualification.equals(other.regexMatchesPartialQualification)) {
+                return false;
+            }
+        }
+        if (sqlMatchesPartialQualification == null) {
+            if (other.sqlMatchesPartialQualification!= null) {
+                return false;
+            }
+        } else {
+            if (!sqlMatchesPartialQualification.equals(other.sqlMatchesPartialQualification)) {
                 return false;
             }
         }
@@ -2512,6 +2557,7 @@ public class Database implements Serializable
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((regexFlags == null)? 0 :regexFlags.hashCode()));
         result = ((prime*result)+((regexMatchesPartialQualification == null)? 0 :regexMatchesPartialQualification.hashCode()));
+        result = ((prime*result)+((sqlMatchesPartialQualification == null)? 0 :sqlMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
         result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
         result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));

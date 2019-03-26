@@ -109,6 +109,7 @@ public abstract class AbstractDatabase implements Database {
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private boolean                                                          regexMatchesPartialQualification;
+    private boolean                                                          sqlMatchesPartialQualification;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes                             = { ".*" };
@@ -388,7 +389,7 @@ public abstract class AbstractDatabase implements Database {
         if (set == null)
             return false;
 
-        if (!getRegexMatchesPartialQualification())
+        if (!getSqlMatchesPartialQualification())
             return set.contains(definition.getName())
                 || set.contains(definition.getQualifiedName());
 
@@ -909,6 +910,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getRegexMatchesPartialQualification() {
         return regexMatchesPartialQualification;
+    }
+
+    @Override
+    public final void setSqlMatchesPartialQualification(boolean sqlMatchesPartialQualification) {
+        this.sqlMatchesPartialQualification = sqlMatchesPartialQualification;
+    }
+
+    @Override
+    public final boolean getSqlMatchesPartialQualification() {
+        return sqlMatchesPartialQualification;
     }
 
     @Override

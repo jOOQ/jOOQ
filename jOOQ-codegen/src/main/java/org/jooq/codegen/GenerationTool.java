@@ -526,6 +526,7 @@ public class GenerationTool {
                 }
             }
             database.setRegexMatchesPartialQualification(!FALSE.equals(d.isRegexMatchesPartialQualification()));
+            database.setSqlMatchesPartialQualification(!FALSE.equals(d.isSqlMatchesPartialQualification()));
 
             SchemaVersionProvider svp = null;
             CatalogVersionProvider cvp = null;

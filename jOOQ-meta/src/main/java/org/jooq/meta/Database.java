@@ -620,6 +620,20 @@ public interface Database  extends AutoCloseable  {
     boolean getRegexMatchesPartialQualification();
 
     /**
+     * Whether the SQL statements matching database objects should match
+     * partially qualified names as well as fully qualified and unqualified
+     * names.
+     */
+    void setSqlMatchesPartialQualification(boolean sqlMatchesPartialQualification);
+
+    /**
+     * Whether the SQL statements matching database objects should match
+     * partially qualified names as well as fully qualified and unqualified
+     * names.
+     */
+    boolean getSqlMatchesPartialQualification();
+
+    /**
      * Table columns matching these regular expressions will be considered as
      * record version fields in generated code.
      */

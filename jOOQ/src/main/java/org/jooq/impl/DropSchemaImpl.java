@@ -48,10 +48,13 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DROP_SCHEMA;
+import static org.jooq.impl.Keywords.K_DATABASE;
+import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RESTRICT;
+import static org.jooq.impl.Keywords.K_SCHEMA;
 
 import java.util.EnumSet;
 
@@ -60,6 +63,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropSchemaFinalStep;
 import org.jooq.DropSchemaStep;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 
@@ -75,10 +79,15 @@ final class DropSchemaImpl extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_SCHEMA };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> REQUIRES_RESTRICT    = EnumSet.of(DERBY);
+    private static final long                serialVersionUID           = 8904572826501186329L;
+    private static final Clause[]            CLAUSES                    = { DROP_SCHEMA };
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> REQUIRES_RESTRICT          = EnumSet.of(DERBY);
+
+
+
+
+
 
     private final Schema                     schema;
     private final boolean                    ifExists;
@@ -133,7 +142,14 @@ final class DropSchemaImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_SCHEMA_SCHEMA)
-           .visit(K_DROP_SCHEMA);
+           .visit(K_DROP);
+
+
+
+
+
+
+            ctx.sql(' ').visit(K_SCHEMA);
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);

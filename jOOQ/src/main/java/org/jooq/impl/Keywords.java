@@ -91,11 +91,11 @@ final class Keywords {
     static final Keyword K_CONTINUE                         = keyword("continue");
     static final Keyword K_CONTINUE_IDENTITY                = keyword("continue identity");
     static final Keyword K_CREATE                           = keyword("create");
-    static final Keyword K_CREATE_SCHEMA                    = keyword("create schema");
     static final Keyword K_CROSS_JOIN_LATERAL               = keyword("cross join lateral");
     static final Keyword K_CURRENT_ROW                      = keyword("current row");
     static final Keyword K_CURRENT_SCHEMA                   = keyword("current_schema");
     static final Keyword K_CYCLE                            = keyword("cycle");
+    static final Keyword K_DATABASE                         = keyword("database");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
     static final Keyword K_DATETIMEOFFSET                   = keyword("datetimeoffset");

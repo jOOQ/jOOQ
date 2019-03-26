@@ -17652,6 +17652,72 @@ public class CaseInsensitiveOrderProvider implements Comparator<Definition> {
   }
 }]]></java><html>
 
+                                            <h3>Using SQL to match column names</h3>
+
+                                            <p>
+                                                If you want to match your column names based on more complex criteria not supported by jOOQ yet, you can supply the matching column names using a SQL query that runs against your dictionary views.
+                                            </p>
+
+                                            <p>
+                                                <strong>XML configuration (standalone and Maven)</strong>
+                                            </p>
+
+</html><xml><![CDATA[<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
+  <generator>
+    <database>
+      <forcedTypes>
+        <forcedType>
+
+          <!-- Rewrite types to boolean -->
+          <userType>java.lang.Boolean</userType>
+          <converter>com.example.YNBooleanConverter</converter>
+
+          <!-- All Oracle columns that have a default of 'Y' or 'N' are probably boolean -->
+          <sql>
+            SELECT owner || '.' || table_name || '.' || column_name
+            FROM all_tab_cols
+            WHERE data_default IN ('Y', 'N')
+          </sql>
+        </forcedType>
+      </forcedTypes>
+    </database>
+  </generator>
+</configuration>]]></xml><html>
+
+                                            <p>
+                                                <strong>Programmatic configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[configuration
+  .withGenerator(new Generator(
+    .withDatabase(new Database()
+      .withForcedTypes(new ForcedType()
+        .withUserType("java.lang.Boolean")
+        .withConverter("com.example.YNBooleanConverter")
+        .withSql(
+           "SELECT owner || '.' || table_name || '.' || column_name "
+         + "FROM all_tab_cols "
+         + "WHERE data_default IN ('Y', 'N')")))));]]></java><html>
+
+                                            <p>
+                                                <strong>Gradle configuration</strong>
+                                            </p>
+
+</html><java><![CDATA[myConfigurationName(sourceSets.main) {
+  generator {
+    database {
+      // The first matching forcedType will be applied to the data type definition.
+      forcedTypes {
+        forcedType {
+          userType = 'java.lang.Boolean'
+          converter = 'com.example.YNBooleanConverter'
+          expression = 'SELECT owner || '.' || table_name || '.' || column_name FROM all_tab_cols WHERE data_default IN ('Y', 'N')'
+        }
+      }
+    }
+  }
+}]]></java><html>
+
                                             <p>
                                                 For more information about using converters, <reference id="custom-data-type-bindings" title="please refer to the manual's section about custom data type bindings"/>.
                                             </p>

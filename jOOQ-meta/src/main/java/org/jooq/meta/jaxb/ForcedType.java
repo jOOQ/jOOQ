@@ -49,6 +49,8 @@ public class ForcedType implements Serializable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expressions;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String sql;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String types;
     @XmlElement(defaultValue = "ALL")
     @XmlSchemaType(name = "string")
@@ -231,6 +233,30 @@ public class ForcedType implements Serializable
     }
 
     /**
+     * A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getSql() {
+        return sql;
+    }
+
+    /**
+     * Sets the value of the sql property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setSql(String value) {
+        this.sql = value;
+    }
+
+    /**
      * A Java regular expression matching data types to be forced to have this
      * type. If provided, both "expression" and "types" must match.
      *
@@ -338,6 +364,11 @@ public class ForcedType implements Serializable
         return this;
     }
 
+    public ForcedType withSql(String value) {
+        setSql(value);
+        return this;
+    }
+
     public ForcedType withTypes(String value) {
         setTypes(value);
         return this;
@@ -390,6 +421,11 @@ public class ForcedType implements Serializable
             sb.append("<expressions>");
             sb.append(expressions);
             sb.append("</expressions>");
+        }
+        if (sql!= null) {
+            sb.append("<sql>");
+            sb.append(sql);
+            sb.append("</sql>");
         }
         if (types!= null) {
             sb.append("<types>");
@@ -484,6 +520,15 @@ public class ForcedType implements Serializable
                 return false;
             }
         }
+        if (sql == null) {
+            if (other.sql!= null) {
+                return false;
+            }
+        } else {
+            if (!sql.equals(other.sql)) {
+                return false;
+            }
+        }
         if (types == null) {
             if (other.types!= null) {
                 return false;
@@ -525,6 +570,7 @@ public class ForcedType implements Serializable
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
         result = ((prime*result)+((expressions == null)? 0 :expressions.hashCode()));
+        result = ((prime*result)+((sql == null)? 0 :sql.hashCode()));
         result = ((prime*result)+((types == null)? 0 :types.hashCode()));
         result = ((prime*result)+((nullability == null)? 0 :nullability.hashCode()));
         result = ((prime*result)+((objectType == null)? 0 :objectType.hashCode()));

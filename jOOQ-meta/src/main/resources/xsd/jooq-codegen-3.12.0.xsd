@@ -921,6 +921,10 @@ etc to be forced to have this type. If provided, both "expressions" and
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as expression. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="sql" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="types" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching data types to be forced to have this
 type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>

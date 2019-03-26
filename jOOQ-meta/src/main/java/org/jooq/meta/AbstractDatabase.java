@@ -57,6 +57,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -198,10 +199,12 @@ public abstract class AbstractDatabase implements Database {
     private final List<Definition>                                           excluded;
     private final Map<Table<?>, Boolean>                                     exists;
     private final Patterns                                                   patterns;
+    private final Statements                                                 statements;
 
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
         patterns = new Patterns();
+        statements = new Statements();
         filters = new ArrayList<Filter>();
         all = new ArrayList<Definition>();
         included = new ArrayList<Definition>();
@@ -219,6 +222,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setConnection(Connection connection) {
         this.connection = connection;
+        this.statements.dslContext(create());
     }
 
     @Override
@@ -375,6 +379,23 @@ public abstract class AbstractDatabase implements Database {
 
         for (int i = parts.size() - 1; i >= 0; i--)
             if (pattern.matcher(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName().toString()).matches())
+                return true;
+
+        return false;
+    }
+
+    final boolean matches(Set<?> set, Definition definition) {
+        if (set == null)
+            return false;
+
+        if (!getRegexMatchesPartialQualification())
+            return set.contains(definition.getName())
+                || set.contains(definition.getQualifiedName());
+
+        List<Name> parts = Arrays.asList(definition.getQualifiedNamePart().parts());
+
+        for (int i = parts.size() - 1; i >= 0; i--)
+            if (set.contains(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName().toString()))
                 return true;
 
         return false;
@@ -1398,6 +1419,7 @@ public abstract class AbstractDatabase implements Database {
             String types = forcedType.getTypes();
             Nullability nullability = forcedType.getNullability();
             ForcedTypeObjectType objectType = forcedType.getObjectType();
+            String sql = forcedType.getSql();
 
             if (     (objectType != null && objectType != ForcedTypeObjectType.ALL)
                  && ((objectType == ForcedTypeObjectType.ATTRIBUTE && !(definition instanceof AttributeDefinition))
@@ -1436,6 +1458,10 @@ public abstract class AbstractDatabase implements Database {
                     continue forcedTypeLoop;
                 }
             }
+
+            if (sql != null)
+                if (!matches(statements.fetchSet(sql), definition))
+                    continue forcedTypeLoop;
 
             return forcedType;
         }

@@ -203,9 +203,8 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderImpl<R> onDuplicateKeyUpdate() {
-        if (table.getPrimaryKey() == null) {
+        if (table.getPrimaryKey() == null)
             throw new IllegalStateException("ON DUPLICATE KEY UPDATE only works on tables with explicit primary keys. Table is not updatable : " + table);
-        }
 
         onDuplicate = ON_DUPLICATE_KEY_UPDATE;
         return this;

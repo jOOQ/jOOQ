@@ -126,6 +126,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeUDTs                          = true;
     private boolean                                                          includeSequences                     = true;
     private boolean                                                          includeIndexes                       = true;
+    private boolean                                                          includeCheckConstraints              = true;
     private boolean                                                          includePrimaryKeys                   = true;
     private boolean                                                          includeUniqueKeys                    = true;
     private boolean                                                          includeForeignKeys                   = true;
@@ -881,6 +882,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void setIncludeCheckConstraints(boolean includeCheckConstraints) {
+        this.includeCheckConstraints = includeCheckConstraints;
+    }
+
+    @Override
+    public final boolean getIncludeCheckConstraints() {
+        return includeCheckConstraints;
+    }
+
+    @Override
     public final void setIncludeIndexes(boolean includeIndexes) {
         this.includeIndexes = includeIndexes;
     }
@@ -1350,10 +1361,11 @@ public abstract class AbstractDatabase implements Database {
         if (checkConstraints == null) {
             checkConstraints = new ArrayList<CheckConstraintDefinition>();
 
-            for (SchemaDefinition s : getSchemata())
-                for (TableDefinition table : getTables(s))
-                    for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints())
-                        checkConstraints.add(checkConstraint);
+            if (getIncludeCheckConstraints())
+                for (SchemaDefinition s : getSchemata())
+                    for (TableDefinition table : getTables(s))
+                        for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints())
+                            checkConstraints.add(checkConstraint);
         }
 
         if (checkConstraintsBySchema == null)
@@ -2086,7 +2098,8 @@ public abstract class AbstractDatabase implements Database {
         }
 
         try {
-            loadCheckConstraints(result);
+            if (getIncludeCheckConstraints())
+                loadCheckConstraints(result);
         }
         catch (Exception e) {
             log.error("Error while fetching check constraints", e);

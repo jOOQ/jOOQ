@@ -85,6 +85,8 @@ public class Database implements Serializable
     @XmlElement(defaultValue = "true")
     protected Boolean includeForeignKeys = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeCheckConstraints = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeInvisibleColumns = true;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -724,6 +726,30 @@ public class Database implements Serializable
      */
     public void setIncludeForeignKeys(Boolean value) {
         this.includeForeignKeys = value;
+    }
+
+    /**
+     * This flag indicates whether check constraints should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeCheckConstraints() {
+        return includeCheckConstraints;
+    }
+
+    /**
+     * Sets the value of the includeCheckConstraints property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeCheckConstraints(Boolean value) {
+        this.includeCheckConstraints = value;
     }
 
     /**
@@ -1566,6 +1592,11 @@ public class Database implements Serializable
         return this;
     }
 
+    public Database withIncludeCheckConstraints(Boolean value) {
+        setIncludeCheckConstraints(value);
+        return this;
+    }
+
     public Database withIncludeInvisibleColumns(Boolean value) {
         setIncludeInvisibleColumns(value);
         return this;
@@ -1939,6 +1970,11 @@ public class Database implements Serializable
             sb.append("<includeForeignKeys>");
             sb.append(includeForeignKeys);
             sb.append("</includeForeignKeys>");
+        }
+        if (includeCheckConstraints!= null) {
+            sb.append("<includeCheckConstraints>");
+            sb.append(includeCheckConstraints);
+            sb.append("</includeCheckConstraints>");
         }
         if (includeInvisibleColumns!= null) {
             sb.append("<includeInvisibleColumns>");
@@ -2322,6 +2358,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (includeCheckConstraints == null) {
+            if (other.includeCheckConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!includeCheckConstraints.equals(other.includeCheckConstraints)) {
+                return false;
+            }
+        }
         if (includeInvisibleColumns == null) {
             if (other.includeInvisibleColumns!= null) {
                 return false;
@@ -2620,6 +2665,7 @@ public class Database implements Serializable
         result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));
         result = ((prime*result)+((includeUniqueKeys == null)? 0 :includeUniqueKeys.hashCode()));
         result = ((prime*result)+((includeForeignKeys == null)? 0 :includeForeignKeys.hashCode()));
+        result = ((prime*result)+((includeCheckConstraints == null)? 0 :includeCheckConstraints.hashCode()));
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));

@@ -748,6 +748,16 @@ public interface Database  extends AutoCloseable  {
     void setLogSlowQueriesAfterSeconds(int logSlowQueriesAfterSeconds);
 
     /**
+     * Log slow results after this amount of seconds.
+     */
+    int getLogSlowResultsAfterSeconds();
+
+    /**
+     * Log slow results after this amount of seconds.
+     */
+    void setLogSlowResultsAfterSeconds(int logSlowResultsAfterSeconds);
+
+    /**
      * The database's schema version provider.
      */
     SchemaVersionProvider getSchemaVersionProvider();

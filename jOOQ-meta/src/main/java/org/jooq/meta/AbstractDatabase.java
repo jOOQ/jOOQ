@@ -151,6 +151,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeRelations                     = true;
     private boolean                                                          tableValuedFunctions                 = true;
     private int                                                              logSlowQueriesAfterSeconds;
+    private int                                                              logSlowResultsAfterSeconds;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
@@ -318,7 +319,7 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void fetchEnd(ExecuteContext ctx) {
-                    int s = getLogSlowQueriesAfterSeconds();
+                    int s = getLogSlowResultsAfterSeconds();
                     if (s <= 0)
                         return;
 
@@ -329,7 +330,7 @@ public abstract class AbstractDatabase implements Database {
 
                         log.warn(
                             "Slow Result Fetching",
-                            "jOOQ Meta fetched a slow result (slower than " + s + " seconds)" // [#8465], configured by configuration/generator/database/logSlowResultsAfterSeconds
+                            "jOOQ Meta fetched a slow result (slower than " + s + " seconds, configured by configuration/generator/database/logSlowResultsAfterSeconds)"
                           + "\n\n"
                           + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
                           + formatted(ctx.query())
@@ -1147,6 +1148,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setLogSlowQueriesAfterSeconds(int logSlowQueriesAfterSeconds) {
         this.logSlowQueriesAfterSeconds = logSlowQueriesAfterSeconds;
+    }
+
+    @Override
+    public final int getLogSlowResultsAfterSeconds() {
+        return logSlowResultsAfterSeconds;
+    }
+
+    @Override
+    public final void setLogSlowResultsAfterSeconds(int logSlowResultsAfterSeconds) {
+        this.logSlowResultsAfterSeconds = logSlowResultsAfterSeconds;
     }
 
     @Override

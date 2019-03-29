@@ -748,6 +748,10 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       <element name="logSlowQueriesAfterSeconds" type="int" minOccurs="0" maxOccurs="1" default="5">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="logSlowResultsAfterSeconds" type="int" minOccurs="0" maxOccurs="1" default="5">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

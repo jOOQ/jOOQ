@@ -137,6 +137,8 @@ public class Database implements Serializable
     protected Boolean tableValuedFunctions;
     @XmlElement(defaultValue = "5")
     protected Integer logSlowQueriesAfterSeconds = 5;
+    @XmlElement(defaultValue = "5")
+    protected Integer logSlowResultsAfterSeconds = 5;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
     protected List<Property> properties;
@@ -1347,6 +1349,30 @@ public class Database implements Serializable
         this.logSlowQueriesAfterSeconds = value;
     }
 
+    /**
+     * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
+     *
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *
+     */
+    public Integer getLogSlowResultsAfterSeconds() {
+        return logSlowResultsAfterSeconds;
+    }
+
+    /**
+     * Sets the value of the logSlowResultsAfterSeconds property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
+    public void setLogSlowResultsAfterSeconds(Integer value) {
+        this.logSlowResultsAfterSeconds = value;
+    }
+
     public List<Property> getProperties() {
         if (properties == null) {
             properties = new ArrayList<Property>();
@@ -1647,6 +1673,11 @@ public class Database implements Serializable
 
     public Database withLogSlowQueriesAfterSeconds(Integer value) {
         setLogSlowQueriesAfterSeconds(value);
+        return this;
+    }
+
+    public Database withLogSlowResultsAfterSeconds(Integer value) {
+        setLogSlowResultsAfterSeconds(value);
         return this;
     }
 
@@ -2018,6 +2049,11 @@ public class Database implements Serializable
             sb.append("<logSlowQueriesAfterSeconds>");
             sb.append(logSlowQueriesAfterSeconds);
             sb.append("</logSlowQueriesAfterSeconds>");
+        }
+        if (logSlowResultsAfterSeconds!= null) {
+            sb.append("<logSlowResultsAfterSeconds>");
+            sb.append(logSlowResultsAfterSeconds);
+            sb.append("</logSlowResultsAfterSeconds>");
         }
         if (properties!= null) {
             sb.append("<properties>");
@@ -2484,6 +2520,15 @@ public class Database implements Serializable
                 return false;
             }
         }
+        if (logSlowResultsAfterSeconds == null) {
+            if (other.logSlowResultsAfterSeconds!= null) {
+                return false;
+            }
+        } else {
+            if (!logSlowResultsAfterSeconds.equals(other.logSlowResultsAfterSeconds)) {
+                return false;
+            }
+        }
         if (properties == null) {
             if (other.properties!= null) {
                 return false;
@@ -2597,6 +2642,7 @@ public class Database implements Serializable
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
+        result = ((prime*result)+((logSlowResultsAfterSeconds == null)? 0 :logSlowResultsAfterSeconds.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));

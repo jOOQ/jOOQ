@@ -16418,6 +16418,7 @@ result.forEach((Object[] entities) -> {
       <includePrimaryKeys>false</includePrimaryKeys>
       <includeUniqueKeys>false</includeUniqueKeys>
       <includeForeignKeys>false</includeForeignKeys>
+      <includeCheckConstraints>false</includeCheckConstraints>
       <includeIndexes>false</includeIndexes>
     </database>
   </generator>
@@ -16441,6 +16442,7 @@ result.forEach((Object[] entities) -> {
       .withIncludePrimaryKeys(false)
       .withIncludeUniqueKeys(false)
       .withIncludeForeignKeys(false)
+      .withIncludeCheckConstraints(false)
       .withIncludeIndexes(false))));]]></java><html>
 
                                             <p>
@@ -16461,6 +16463,7 @@ result.forEach((Object[] entities) -> {
       includePrimaryKeys = false
       includeUniqueKeys = false
       includeForeignKeys = false
+      includeCheckConstraints = false
       includeIndexes = false
     }
   }

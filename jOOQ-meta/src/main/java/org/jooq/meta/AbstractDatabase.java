@@ -286,7 +286,7 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeStart(ExecuteContext ctx) {
-                    ctx.data("org.jooq.meta.AbstractDatabase.watch", new StopWatch());
+                    ctx.data("org.jooq.meta.AbstractDatabase.SQLPerformanceWarning.execute", new StopWatch());
                 }
 
                 @Override
@@ -295,7 +295,7 @@ public abstract class AbstractDatabase implements Database {
                     if (s <= 0)
                         return;
 
-                    StopWatch watch = (StopWatch) ctx.data("org.jooq.meta.AbstractDatabase.watch");
+                    StopWatch watch = (StopWatch) ctx.data("org.jooq.meta.AbstractDatabase.SQLPerformanceWarning.execute");
 
                     if (watch.split() > TimeUnit.SECONDS.toNanos(s)) {
                         watch.splitWarn("Slow SQL");
@@ -303,6 +303,33 @@ public abstract class AbstractDatabase implements Database {
                         log.warn(
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
+                          + "\n\n"
+                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                          + formatted(ctx.query())
+                          + "```\n",
+                            new SQLPerformanceWarning());
+                    }
+                }
+
+                @Override
+                public void fetchStart(ExecuteContext ctx) {
+                    ctx.data("org.jooq.meta.AbstractDatabase.SQLPerformanceWarning.fetch", new StopWatch());
+                }
+
+                @Override
+                public void fetchEnd(ExecuteContext ctx) {
+                    int s = getLogSlowQueriesAfterSeconds();
+                    if (s <= 0)
+                        return;
+
+                    StopWatch watch = (StopWatch) ctx.data("org.jooq.meta.AbstractDatabase.SQLPerformanceWarning.fetch");
+
+                    if (watch.split() > TimeUnit.SECONDS.toNanos(s)) {
+                        watch.splitWarn("Slow Result Fetching");
+
+                        log.warn(
+                            "Slow Result Fetching",
+                            "jOOQ Meta fetched a slow result (slower than " + s + " seconds)" // [#8465], configured by configuration/generator/database/logSlowResultsAfterSeconds
                           + "\n\n"
                           + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
                           + formatted(ctx.query())

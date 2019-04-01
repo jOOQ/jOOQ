@@ -51,13 +51,9 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -213,9 +209,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private final void accept0(Context<?> ctx) {
         Field<?>[] f = fields;
 
-        // [#3835] SQLite doesn't like renaming columns at the view level
         boolean rename = f != null && f.length > 0;
-        boolean renameSupported = ctx.family() != SQLITE;
         boolean replaceSupported = false                                                     ;
 
 
@@ -258,7 +252,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
         ctx.visit(view);
 
-        if (rename && renameSupported) {
+        if (rename) {
             boolean qualify = ctx.qualify();
 
             ctx.sql('(')
@@ -274,10 +268,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .formatSeparator()
            .start(CREATE_VIEW_AS)
            .paramType(INLINED)
-           .visit(
-               rename && !renameSupported
-             ? selectFrom(table(parsed()).as(name("t"), Tools.fieldNames(f)))
-             : select)
+           .visit(select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);
     }

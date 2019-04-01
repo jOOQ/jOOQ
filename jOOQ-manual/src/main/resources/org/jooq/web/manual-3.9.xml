@@ -12891,6 +12891,7 @@ book2.store();]]></java><html>
 									<ul>
 										<li>jOOQ sets only modified values in <reference id="insert-statement" title="INSERT statements"/> or <reference id="update-statement" title="UPDATE statements"/>. This allows for default values to be applied to inserted records, as specified in CREATE TABLE DDL statements.</li>
 										<li>When store() performs an <reference id="insert-statement" title="INSERT statement"/>, jOOQ attempts to load any generated keys from the database back into the record. For more details, see the manual's section about <reference id="identity-values" title="IDENTITY values"/>.</li>
+                                        <li>In addition to loading identity values, store() can also be configured to refresh the entire record. See <reference id="settings-return-all-on-store" title="the returnAllOnUpdatableRecord setting"/> for details</li>
 										<li>When loading records from <reference id="pojos" title="POJOs"/>, jOOQ will assume the record is a new record. It will hence attempt to INSERT it.</li>
 										<li>When you activate <reference id="optimistic-locking" title="optimistic locking"/>, storing a record may fail, if the underlying database record has been changed in the mean time.</li>
 									</ul>

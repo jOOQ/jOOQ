@@ -76,8 +76,12 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateViewAsStep;
 import org.jooq.CreateViewFinalStep;
+import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.ResultQuery;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -107,7 +111,8 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private final BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction;
 
     private Field<?>[]                                                              fields;
-    private Select<?>                                                               select;
+    private ResultQuery<?>                                                          select;
+    private transient Select<?>                                                     parsed;
 
     CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists, boolean orReplace) {
         super(configuration);
@@ -151,6 +156,38 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
 
         return this;
+    }
+
+    @Override
+    public final CreateViewFinalStep as(SQL sql) {
+        this.select = DSL.resultQuery(sql);
+
+
+        if (fieldNameFunction != null) {
+            Select<?> s = parsed();
+            List<Field<?>> source = s.getSelect();
+            fields = new Field[source.size()];
+            for (int i = 0; i < fields.length; i++)
+                fields[i] = fieldNameFunction.apply(source.get(i), i);
+        }
+
+
+        return this;
+    }
+
+    @Override
+    public final CreateViewFinalStep as(String sql) {
+        return as(DSL.sql(sql));
+    }
+
+    @Override
+    public final CreateViewFinalStep as(String sql, Object... bindings) {
+        return as(DSL.sql(sql, bindings));
+    }
+
+    @Override
+    public final CreateViewFinalStep as(String sql, QueryPart... parts) {
+        return as(DSL.sql(sql, parts));
     }
 
     // ------------------------------------------------------------------------
@@ -239,10 +276,21 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(select).as(name("t"), Tools.fieldNames(f)))
+             ? selectFrom(table(parsed()).as(name("t"), Tools.fieldNames(f)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);
+    }
+
+    private final Select<?> parsed() {
+        if (parsed != null)
+            return parsed;
+
+        if (select instanceof Select)
+            return parsed = (Select<?>) select;
+
+        DSLContext dsl = configuration().dsl();
+        return dsl.parser().parseSelect(dsl.renderInlined(select));
     }
 
     @Override

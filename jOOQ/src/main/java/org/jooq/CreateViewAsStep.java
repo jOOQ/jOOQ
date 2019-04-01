@@ -67,4 +67,64 @@ public interface CreateViewAsStep<R extends Record> {
      */
     @Support
     CreateViewFinalStep as(Select<? extends R> select);
+
+    /**
+     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CreateViewFinalStep as(SQL sql);
+
+    /**
+     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CreateViewFinalStep as(String sql);
+
+    /**
+     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CreateViewFinalStep as(String sql, Object... bindings);
+
+    /**
+     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CreateViewFinalStep as(String sql, QueryPart... parts);
 }

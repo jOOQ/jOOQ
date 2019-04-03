@@ -399,11 +399,13 @@ public class PostgresDatabase extends AbstractDatabase {
 
                 // [#3254] Materialised views are reported only in PG_CLASS, not
                 //         in INFORMATION_SCHEMA.TABLES
+                // [#8478] CockroachDB cannot compare "sql_identifier" types (varchar)
+                //         from information_schema with "name" types from pg_catalog
                 .unionAll(
                     select(
-                        PG_NAMESPACE.NSPNAME,
-                        PG_CLASS.RELNAME,
-                        PG_CLASS.RELNAME,
+                        field("{0}::varchar", PG_NAMESPACE.NSPNAME.getDataType(), PG_NAMESPACE.NSPNAME),
+                        field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
+                        field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         inline(false).as("table_valued_function"),
                         inline(true).as("materialized_view"),
                         PG_DESCRIPTION.DESCRIPTION)

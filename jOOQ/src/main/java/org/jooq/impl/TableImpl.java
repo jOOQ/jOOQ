@@ -58,6 +58,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -339,4 +340,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
         return super.equals(that);
     }
+
+    // [#8489] this override is necessary due to a Scala compiler bug (versions 2.10 and 2.11)
+    @Override
+    public Row fieldsRow() {
+        return super.fieldsRow();
+    }
+
 }

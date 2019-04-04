@@ -566,22 +566,22 @@ public class Parameter implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (specificCatalog!= null) {
+        if ((specificCatalog!= null)&&(!"".equals(specificCatalog))) {
             sb.append("<specific_catalog>");
             sb.append(specificCatalog);
             sb.append("</specific_catalog>");
         }
-        if (specificSchema!= null) {
+        if ((specificSchema!= null)&&(!"".equals(specificSchema))) {
             sb.append("<specific_schema>");
             sb.append(specificSchema);
             sb.append("</specific_schema>");
         }
-        if (specificPackage!= null) {
+        if ((specificPackage!= null)&&(!"".equals(specificPackage))) {
             sb.append("<specific_package>");
             sb.append(specificPackage);
             sb.append("</specific_package>");
         }
-        if (specificName!= null) {
+        if ((specificName!= null)&&(!"".equals(specificName))) {
             sb.append("<specific_name>");
             sb.append(specificName);
             sb.append("</specific_name>");
@@ -594,12 +594,12 @@ public class Parameter implements Serializable
             sb.append(parameterMode);
             sb.append("</parameter_mode>");
         }
-        if (parameterName!= null) {
+        if ((parameterName!= null)&&(!"".equals(parameterName))) {
             sb.append("<parameter_name>");
             sb.append(parameterName);
             sb.append("</parameter_name>");
         }
-        if (dataType!= null) {
+        if ((dataType!= null)&&(!"".equals(dataType))) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -619,27 +619,27 @@ public class Parameter implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if (udtCatalog!= null) {
+        if ((udtCatalog!= null)&&(!"".equals(udtCatalog))) {
             sb.append("<udt_catalog>");
             sb.append(udtCatalog);
             sb.append("</udt_catalog>");
         }
-        if (udtSchema!= null) {
+        if ((udtSchema!= null)&&(!"".equals(udtSchema))) {
             sb.append("<udt_schema>");
             sb.append(udtSchema);
             sb.append("</udt_schema>");
         }
-        if (udtName!= null) {
+        if ((udtName!= null)&&(!"".equals(udtName))) {
             sb.append("<udt_name>");
             sb.append(udtName);
             sb.append("</udt_name>");
         }
-        if (parameterDefault!= null) {
+        if ((parameterDefault!= null)&&(!"".equals(parameterDefault))) {
             sb.append("<parameter_default>");
             sb.append(parameterDefault);
             sb.append("</parameter_default>");
         }
-        if (comment!= null) {
+        if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

@@ -1953,7 +1953,7 @@ public class Settings
             sb.append(inListPadBase);
             sb.append("</inListPadBase>");
         }
-        if (delimiter!= null) {
+        if ((delimiter!= null)&&(!"".equals(delimiter))) {
             sb.append("<delimiter>");
             sb.append(delimiter);
             sb.append("</delimiter>");
@@ -1998,12 +1998,12 @@ public class Settings
             sb.append(parseIgnoreComments);
             sb.append("</parseIgnoreComments>");
         }
-        if (parseIgnoreCommentStart!= null) {
+        if ((parseIgnoreCommentStart!= null)&&(!"".equals(parseIgnoreCommentStart))) {
             sb.append("<parseIgnoreCommentStart>");
             sb.append(parseIgnoreCommentStart);
             sb.append("</parseIgnoreCommentStart>");
         }
-        if (parseIgnoreCommentStop!= null) {
+        if ((parseIgnoreCommentStop!= null)&&(!"".equals(parseIgnoreCommentStop))) {
             sb.append("<parseIgnoreCommentStop>");
             sb.append(parseIgnoreCommentStop);
             sb.append("</parseIgnoreCommentStop>");

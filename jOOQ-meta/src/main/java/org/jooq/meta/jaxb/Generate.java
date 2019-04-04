@@ -2259,7 +2259,7 @@ public class Generate implements Serializable
             sb.append(jpaAnnotations);
             sb.append("</jpaAnnotations>");
         }
-        if (jpaVersion!= null) {
+        if ((jpaVersion!= null)&&(!"".equals(jpaVersion))) {
             sb.append("<jpaVersion>");
             sb.append(jpaVersion);
             sb.append("</jpaVersion>");
@@ -2414,7 +2414,7 @@ public class Generate implements Serializable
             sb.append(varargSetters);
             sb.append("</varargSetters>");
         }
-        if (fullyQualifiedTypes!= null) {
+        if ((fullyQualifiedTypes!= null)&&(!"".equals(fullyQualifiedTypes))) {
             sb.append("<fullyQualifiedTypes>");
             sb.append(fullyQualifiedTypes);
             sb.append("</fullyQualifiedTypes>");
@@ -2439,12 +2439,12 @@ public class Generate implements Serializable
             sb.append(primaryKeyTypes);
             sb.append("</primaryKeyTypes>");
         }
-        if (newline!= null) {
+        if ((newline!= null)&&(!"".equals(newline))) {
             sb.append("<newline>");
             sb.append(newline);
             sb.append("</newline>");
         }
-        if (indentation!= null) {
+        if ((indentation!= null)&&(!"".equals(indentation))) {
             sb.append("<indentation>");
             sb.append(indentation);
             sb.append("</indentation>");

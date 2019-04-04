@@ -3,7 +3,7 @@
 
 
 
-    <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd" if-exists="true" scd="x-schema::tns">
+    <bindings xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd" if-exists="true" scd="x-schema::tns">
 
         <schemaBindings map="false">
 

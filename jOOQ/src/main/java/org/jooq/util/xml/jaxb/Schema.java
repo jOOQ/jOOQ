@@ -148,17 +148,17 @@ public class Schema implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (catalogName!= null) {
+        if ((catalogName!= null)&&(!"".equals(catalogName))) {
             sb.append("<catalog_name>");
             sb.append(catalogName);
             sb.append("</catalog_name>");
         }
-        if (schemaName!= null) {
+        if ((schemaName!= null)&&(!"".equals(schemaName))) {
             sb.append("<schema_name>");
             sb.append(schemaName);
             sb.append("</schema_name>");
         }
-        if (comment!= null) {
+        if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

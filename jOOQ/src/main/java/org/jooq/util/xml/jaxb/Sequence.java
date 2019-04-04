@@ -310,22 +310,22 @@ public class Sequence implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (sequenceCatalog!= null) {
+        if ((sequenceCatalog!= null)&&(!"".equals(sequenceCatalog))) {
             sb.append("<sequence_catalog>");
             sb.append(sequenceCatalog);
             sb.append("</sequence_catalog>");
         }
-        if (sequenceSchema!= null) {
+        if ((sequenceSchema!= null)&&(!"".equals(sequenceSchema))) {
             sb.append("<sequence_schema>");
             sb.append(sequenceSchema);
             sb.append("</sequence_schema>");
         }
-        if (sequenceName!= null) {
+        if ((sequenceName!= null)&&(!"".equals(sequenceName))) {
             sb.append("<sequence_name>");
             sb.append(sequenceName);
             sb.append("</sequence_name>");
         }
-        if (dataType!= null) {
+        if ((dataType!= null)&&(!"".equals(dataType))) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -345,7 +345,7 @@ public class Sequence implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if (comment!= null) {
+        if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

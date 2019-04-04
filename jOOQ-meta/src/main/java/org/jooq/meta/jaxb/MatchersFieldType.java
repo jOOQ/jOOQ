@@ -188,7 +188,7 @@ public class MatchersFieldType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (expression!= null) {
+        if ((expression!= null)&&(!"".equals(expression))) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");

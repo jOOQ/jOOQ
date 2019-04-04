@@ -337,37 +337,37 @@ public class IndexColumnUsage implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (indexCatalog!= null) {
+        if ((indexCatalog!= null)&&(!"".equals(indexCatalog))) {
             sb.append("<index_catalog>");
             sb.append(indexCatalog);
             sb.append("</index_catalog>");
         }
-        if (indexSchema!= null) {
+        if ((indexSchema!= null)&&(!"".equals(indexSchema))) {
             sb.append("<index_schema>");
             sb.append(indexSchema);
             sb.append("</index_schema>");
         }
-        if (indexName!= null) {
+        if ((indexName!= null)&&(!"".equals(indexName))) {
             sb.append("<index_name>");
             sb.append(indexName);
             sb.append("</index_name>");
         }
-        if (tableCatalog!= null) {
+        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
             sb.append("</table_catalog>");
         }
-        if (tableSchema!= null) {
+        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
             sb.append("<table_schema>");
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if (tableName!= null) {
+        if ((tableName!= null)&&(!"".equals(tableName))) {
             sb.append("<table_name>");
             sb.append(tableName);
             sb.append("</table_name>");
         }
-        if (columnName!= null) {
+        if ((columnName!= null)&&(!"".equals(columnName))) {
             sb.append("<column_name>");
             sb.append(columnName);
             sb.append("</column_name>");

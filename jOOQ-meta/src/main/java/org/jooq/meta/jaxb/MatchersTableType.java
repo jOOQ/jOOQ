@@ -434,7 +434,7 @@ public class MatchersTableType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (expression!= null) {
+        if ((expression!= null)&&(!"".equals(expression))) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");
@@ -449,7 +449,7 @@ public class MatchersTableType implements Serializable
             sb.append(tableIdentifier);
             sb.append("</tableIdentifier>");
         }
-        if (tableImplements!= null) {
+        if ((tableImplements!= null)&&(!"".equals(tableImplements))) {
             sb.append("<tableImplements>");
             sb.append(tableImplements);
             sb.append("</tableImplements>");
@@ -459,7 +459,7 @@ public class MatchersTableType implements Serializable
             sb.append(recordClass);
             sb.append("</recordClass>");
         }
-        if (recordImplements!= null) {
+        if ((recordImplements!= null)&&(!"".equals(recordImplements))) {
             sb.append("<recordImplements>");
             sb.append(recordImplements);
             sb.append("</recordImplements>");
@@ -469,7 +469,7 @@ public class MatchersTableType implements Serializable
             sb.append(interfaceClass);
             sb.append("</interfaceClass>");
         }
-        if (interfaceImplements!= null) {
+        if ((interfaceImplements!= null)&&(!"".equals(interfaceImplements))) {
             sb.append("<interfaceImplements>");
             sb.append(interfaceImplements);
             sb.append("</interfaceImplements>");
@@ -479,7 +479,7 @@ public class MatchersTableType implements Serializable
             sb.append(daoClass);
             sb.append("</daoClass>");
         }
-        if (daoImplements!= null) {
+        if ((daoImplements!= null)&&(!"".equals(daoImplements))) {
             sb.append("<daoImplements>");
             sb.append(daoImplements);
             sb.append("</daoImplements>");
@@ -489,12 +489,12 @@ public class MatchersTableType implements Serializable
             sb.append(pojoClass);
             sb.append("</pojoClass>");
         }
-        if (pojoExtends!= null) {
+        if ((pojoExtends!= null)&&(!"".equals(pojoExtends))) {
             sb.append("<pojoExtends>");
             sb.append(pojoExtends);
             sb.append("</pojoExtends>");
         }
-        if (pojoImplements!= null) {
+        if ((pojoImplements!= null)&&(!"".equals(pojoImplements))) {
             sb.append("<pojoImplements>");
             sb.append(pojoImplements);
             sb.append("</pojoImplements>");

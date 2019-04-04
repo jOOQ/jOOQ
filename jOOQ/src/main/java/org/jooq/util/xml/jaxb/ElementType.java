@@ -410,27 +410,27 @@ public class ElementType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (objectCatalog!= null) {
+        if ((objectCatalog!= null)&&(!"".equals(objectCatalog))) {
             sb.append("<object_catalog>");
             sb.append(objectCatalog);
             sb.append("</object_catalog>");
         }
-        if (objectSchema!= null) {
+        if ((objectSchema!= null)&&(!"".equals(objectSchema))) {
             sb.append("<object_schema>");
             sb.append(objectSchema);
             sb.append("</object_schema>");
         }
-        if (objectName!= null) {
+        if ((objectName!= null)&&(!"".equals(objectName))) {
             sb.append("<object_name>");
             sb.append(objectName);
             sb.append("</object_name>");
         }
-        if (objectType!= null) {
+        if ((objectType!= null)&&(!"".equals(objectType))) {
             sb.append("<object_type>");
             sb.append(objectType);
             sb.append("</object_type>");
         }
-        if (dataType!= null) {
+        if ((dataType!= null)&&(!"".equals(dataType))) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -450,17 +450,17 @@ public class ElementType implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if (udtCatalog!= null) {
+        if ((udtCatalog!= null)&&(!"".equals(udtCatalog))) {
             sb.append("<udt_catalog>");
             sb.append(udtCatalog);
             sb.append("</udt_catalog>");
         }
-        if (udtSchema!= null) {
+        if ((udtSchema!= null)&&(!"".equals(udtSchema))) {
             sb.append("<udt_schema>");
             sb.append(udtSchema);
             sb.append("</udt_schema>");
         }
-        if (udtName!= null) {
+        if ((udtName!= null)&&(!"".equals(udtName))) {
             sb.append("<udt_name>");
             sb.append(udtName);
             sb.append("</udt_name>");

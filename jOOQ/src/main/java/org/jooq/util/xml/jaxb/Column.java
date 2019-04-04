@@ -572,27 +572,27 @@ public class Column implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (tableCatalog!= null) {
+        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
             sb.append("</table_catalog>");
         }
-        if (tableSchema!= null) {
+        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
             sb.append("<table_schema>");
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if (tableName!= null) {
+        if ((tableName!= null)&&(!"".equals(tableName))) {
             sb.append("<table_name>");
             sb.append(tableName);
             sb.append("</table_name>");
         }
-        if (columnName!= null) {
+        if ((columnName!= null)&&(!"".equals(columnName))) {
             sb.append("<column_name>");
             sb.append(columnName);
             sb.append("</column_name>");
         }
-        if (dataType!= null) {
+        if ((dataType!= null)&&(!"".equals(dataType))) {
             sb.append("<data_type>");
             sb.append(dataType);
             sb.append("</data_type>");
@@ -612,17 +612,17 @@ public class Column implements Serializable
             sb.append(numericScale);
             sb.append("</numeric_scale>");
         }
-        if (udtCatalog!= null) {
+        if ((udtCatalog!= null)&&(!"".equals(udtCatalog))) {
             sb.append("<udt_catalog>");
             sb.append(udtCatalog);
             sb.append("</udt_catalog>");
         }
-        if (udtSchema!= null) {
+        if ((udtSchema!= null)&&(!"".equals(udtSchema))) {
             sb.append("<udt_schema>");
             sb.append(udtSchema);
             sb.append("</udt_schema>");
         }
-        if (udtName!= null) {
+        if ((udtName!= null)&&(!"".equals(udtName))) {
             sb.append("<udt_name>");
             sb.append(udtName);
             sb.append("</udt_name>");
@@ -632,7 +632,7 @@ public class Column implements Serializable
             sb.append(ordinalPosition);
             sb.append("</ordinal_position>");
         }
-        if (identityGeneration!= null) {
+        if ((identityGeneration!= null)&&(!"".equals(identityGeneration))) {
             sb.append("<identity_generation>");
             sb.append(identityGeneration);
             sb.append("</identity_generation>");
@@ -642,12 +642,12 @@ public class Column implements Serializable
             sb.append(isNullable);
             sb.append("</is_nullable>");
         }
-        if (columnDefault!= null) {
+        if ((columnDefault!= null)&&(!"".equals(columnDefault))) {
             sb.append("<column_default>");
             sb.append(columnDefault);
             sb.append("</column_default>");
         }
-        if (comment!= null) {
+        if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);
             sb.append("</comment>");

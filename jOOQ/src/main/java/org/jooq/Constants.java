@@ -47,7 +47,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.11";
+    public static final String MINOR_VERSION  = "3.12";
 
     /**
      * The latest jOOQ version.
@@ -88,7 +88,7 @@ public final class Constants {
     /**
      * The current jooq-meta XSD file name.
      */
-    public static final String XSD_META       = "jooq-meta-3.11.0.xsd";
+    public static final String XSD_META       = "jooq-meta-3.12.0.xsd";
 
     /**
      * The current jooq-meta XML namespace.

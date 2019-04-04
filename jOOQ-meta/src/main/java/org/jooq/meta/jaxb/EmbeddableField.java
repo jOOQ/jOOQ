@@ -115,12 +115,12 @@ public class EmbeddableField implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (name!= null) {
+        if ((name!= null)&&(!"".equals(name))) {
             sb.append("<name>");
             sb.append(name);
             sb.append("</name>");
         }
-        if (expression!= null) {
+        if ((expression!= null)&&(!"".equals(expression))) {
             sb.append("<expression>");
             sb.append(expression);
             sb.append("</expression>");

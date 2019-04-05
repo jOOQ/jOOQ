@@ -39,12 +39,12 @@
                 <version>3.8.0</version>
                 <configuration>
                     <!-- [java-9] -->
-                    <release>10</release>
+                    <release>11</release>
                     <!-- [/java-9] -->
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                    <source>10</source>
-                    <target>10</target>
+                    <source>11</source>
+                    <target>11</target>
 
                     <!-- How to properly set things up in JDK 9+
                          https://stackoverflow.com/a/51409471/521799 -->

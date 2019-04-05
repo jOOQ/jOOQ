@@ -85,12 +85,12 @@
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
                     <!-- [java-9] -->
-                    <release>10</release>
+                    <release>11</release>
                     <!-- [/java-9] -->
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                    <source>10</source>
-                    <target>10</target>
+                    <source>11</source>
+                    <target>11</target>
 
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>

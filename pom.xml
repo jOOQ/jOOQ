@@ -215,12 +215,12 @@
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
                         <!-- [java-9] -->
-                        <release>10</release>
+                        <release>11</release>
                         <!-- [/java-9] -->
 
                         <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                        <source>10</source>
-                        <target>10</target>
+                        <source>11</source>
+                        <target>11</target>
 
                         <debug>true</debug>
                         <debuglevel>lines,vars,source</debuglevel>
@@ -286,7 +286,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.5.2</version>
+                    <version>3.6.0</version>
                 </plugin>
 
                 <plugin>
@@ -298,7 +298,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.4.6</version>
+                    <version>4.0.1</version>
                 </plugin>
 
                 <plugin>

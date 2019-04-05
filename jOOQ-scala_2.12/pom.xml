@@ -22,7 +22,6 @@
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
 
-            <!-- [trial] -->
 
 
 
@@ -126,7 +125,8 @@
 
 
 
-            <!-- [/trial] -->
+
+
 
             <!-- The Scala compiler plugin -->
             <plugin>

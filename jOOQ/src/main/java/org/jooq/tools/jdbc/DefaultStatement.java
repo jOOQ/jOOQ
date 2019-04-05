@@ -351,7 +351,7 @@ public class DefaultStatement extends JDBC41Statement implements Statement {
 
 
 
-    /* [java-9] */
+
 
     // ------------------------------------------------------------------------
     // JDBC 4.3
@@ -377,6 +377,6 @@ public class DefaultStatement extends JDBC41Statement implements Statement {
         return getDelegate().enquoteNCharLiteral(val);
     }
 
-    /* [/java-9] */
+
 
 }

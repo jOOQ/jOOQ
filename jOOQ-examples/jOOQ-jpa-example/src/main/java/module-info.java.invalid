@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ example JPA entities module.
  */
@@ -12,4 +12,3 @@ module org.jooq.example.jpa {
     requires spring.jdbc;
     requires spring.orm;
 }
-/* [/java-9] */

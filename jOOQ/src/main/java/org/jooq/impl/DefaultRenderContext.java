@@ -760,7 +760,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             "WHERE"
         ));
 
-        /* [trial] */
+
 
         /*
          * So, you've found the piece of logic that displays our beautifully-crafted ASCII-art logo that
@@ -824,7 +824,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                    "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
                    "\n                                      ");
         }
-        /* [/trial] */
+
     }
 
     /**

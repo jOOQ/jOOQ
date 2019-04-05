@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ checker module
  */
@@ -10,4 +10,3 @@ module org.jooq.checker {
     requires checker;
 }
 */
-/* [/java-9] */

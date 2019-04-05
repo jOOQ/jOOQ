@@ -38,9 +38,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <!-- [java-9] -->
+
                     <release>11</release>
-                    <!-- [/java-9] -->
+
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                     <source>11</source>

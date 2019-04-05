@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ code generation meta model module.
  */
@@ -41,4 +41,3 @@ module org.jooq.meta {
     exports org.jooq.meta.postgres;
     exports org.jooq.meta.sqlite;
 }
-/* [/java-9] */

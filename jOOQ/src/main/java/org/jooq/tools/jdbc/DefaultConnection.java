@@ -357,7 +357,7 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
 
 
 
-    /* [java-9] */
+
 
     // ------------------------------------------------------------------------
     // JDBC 4.3
@@ -393,5 +393,5 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
         getDelegate().setShardingKey(shardingKey);
     }
 
-    /* [/java-9] */
+
 }

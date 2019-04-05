@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ runtime module.
  */
@@ -71,4 +71,3 @@ module org.jooq {
     exports org.jooq.util.postgres;
     exports org.jooq.util.sqlite;
 }
-/* [/java-9] */

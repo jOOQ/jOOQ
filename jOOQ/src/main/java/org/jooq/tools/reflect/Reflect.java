@@ -238,11 +238,11 @@ public class Reflect {
     static {
         Constructor<MethodHandles.Lookup> result;
 
-        /* [java-9] */
+
         if (true)
             result = null;
         else
-        /* [/java-9] */
+
         try {
             result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
 
@@ -702,7 +702,7 @@ public class Reflect {
 
                     if (method.isDefault()) {
 
-                        /* [java-9] */
+
                         // Java 9 version
                         if (CACHED_LOOKUP_CONSTRUCTOR == null) {
                             return MethodHandles
@@ -712,7 +712,7 @@ public class Reflect {
                                 .bindTo(proxy)
                                 .invokeWithArguments(args);
                         }
-                        /* [/java-9] */
+
 
                         // Java 8 version
                         return CACHED_LOOKUP_CONSTRUCTOR

@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ example JPA entities module.
  */
@@ -10,4 +10,3 @@ module org.jooq.example.jpa.entities {
     exports org.jooq.example.jpa.embeddables;
     exports org.jooq.example.jpa.entity;
 }
-/* [/java-9] */

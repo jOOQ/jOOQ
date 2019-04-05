@@ -100,7 +100,7 @@ class Compile {
                     byte[] b = fileManager.o.getBytes();
                     result = Reflect.on(cl).call("defineClass", className, b, 0, b.length).get();
                 }
-                /* [java-9] */
+
 
                 // Lookup.defineClass() has only been introduced in Java 9. It is
                 // required to get private-access to interfaces in the class hierarchy
@@ -137,7 +137,7 @@ class Compile {
                         }.loadClass(className);
                     }
                 }
-                /* [/java-9] */
+
 
                 return result;
             }

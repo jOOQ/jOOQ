@@ -214,9 +214,9 @@
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
-                        <!-- [java-9] -->
+
                         <release>11</release>
-                        <!-- [/java-9] -->
+
 
                         <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                         <source>11</source>
@@ -336,9 +336,9 @@
 
     <modules>
         <module>jOOQ</module>
-        <!-- [java-8] -->
+
         <module>jOOQ-checker</module>
-        <!-- [/java-8] -->
+
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>

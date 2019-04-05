@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ code generation maven plugin module.
  */
@@ -14,4 +14,3 @@ module org.jooq.codegen.maven {
     requires maven.core;
     requires maven.plugin.api;
 }
-/* [/java-9] */

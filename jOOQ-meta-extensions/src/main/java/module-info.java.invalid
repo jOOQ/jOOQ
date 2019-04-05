@@ -1,4 +1,4 @@
-/* [java-9] */
+
 /**
  * The jOOQ code generation meta model extensions module.
  */
@@ -16,4 +16,3 @@ module org.jooq.meta.extensions {
     exports org.jooq.meta.extensions.ddl;
     exports org.jooq.meta.extensions.jpa;
 }
-/* [/java-9] */

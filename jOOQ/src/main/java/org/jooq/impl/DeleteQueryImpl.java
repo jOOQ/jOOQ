@@ -195,6 +195,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
            .declareTables(declare)
            .end(DELETE_DELETE);
 
+
+
+
+
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()

@@ -198,6 +198,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 // ...
+import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
@@ -218,6 +219,7 @@ import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
+import org.jooq.QualifiedAsterisk;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -4715,6 +4717,17 @@ final class Tools {
                 return true;
 
         return false;
+    }
+
+    static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
+        if (field instanceof Field)
+            return qualify(table, (Field<?>) field);
+        else if (field instanceof Asterisk)
+            return table.asterisk();
+        else if (field instanceof QualifiedAsterisk)
+            return table.asterisk();
+        else
+            throw new IllegalArgumentException("Unsupported field : " + field);
     }
 
     static final <T> Field<T> qualify(Table<?> table, Field<T> field) {

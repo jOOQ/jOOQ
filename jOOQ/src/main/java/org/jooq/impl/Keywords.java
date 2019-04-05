@@ -225,6 +225,7 @@ final class Keywords {
     static final Keyword K_OR                               = keyword("or");
     static final Keyword K_ORDER                            = keyword("order");
     static final Keyword K_ORDER_BY                         = keyword("order by");
+    static final Keyword K_OUTPUT                           = keyword("output");
     static final Keyword K_OVER                             = keyword("over");
     static final Keyword K_OVERLAPS                         = keyword("overlaps");
     static final Keyword K_PARTITION_BY                     = keyword("partition by");

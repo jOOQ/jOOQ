@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
@@ -61,6 +62,7 @@ import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_OPEN;
+import static org.jooq.impl.Keywords.K_OUTPUT;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
@@ -92,6 +94,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.Delete;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -125,6 +128,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
      */
     private static final long                    serialVersionUID                 = -7438014075226919192L;
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
+
+
 
 
 
@@ -440,6 +445,47 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
@@ -523,6 +569,59 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 throw new DataAccessException("A statement is executed without WHERE clause");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
@@ -724,11 +823,24 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                     return result;
                 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-
-
 
 
 
@@ -740,45 +852,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 case H2:
                 case MARIADB:
                 case MYSQL: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
-
-                    try {
-                        rs = ctx.statement().getGeneratedKeys();
-                    }
-                    catch (SQLException e) {
-
-
-
-
-
-
-
-                        throw e;
-                    }
-
-                    try {
-                        List<Object> list = new ArrayList<Object>();
-
-                        // Some JDBC drivers seem to illegally return null
-                        // from getGeneratedKeys() sometimes
-                        if (rs != null)
-                            while (rs.next())
-                                list.add(rs.getObject(1));
-
-                        selectReturning(
-                            ((DefaultExecuteContext) ctx).originalConfiguration(),
-                            ctx.configuration(),
-                            list.toArray()
-                        );
-
-                        return result;
-                    }
-                    finally {
-                        JDBCUtils.safeClose(rs);
-                    }
+                    return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
                 }
 
 
@@ -792,9 +866,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 // in the Postgres JDBC driver
                 case FIREBIRD:
                 case POSTGRES: {
-                    listener.executeStart(ctx);
-                    rs = ctx.statement().executeQuery();
-                    listener.executeEnd(ctx);
+                    rs = executeReturningQuery(ctx, listener);
                     break;
                 }
 
@@ -880,12 +952,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                 case HSQLDB:
                 default: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
-
-                    rs = ctx.statement().getGeneratedKeys();
+                    rs = executeReturningGeneratedKeys(ctx, listener);
                     break;
                 }
             }
@@ -906,6 +973,67 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
             return result;
         }
+    }
+
+    private final ResultSet executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        listener.executeStart(ctx);
+        int result = ctx.statement().executeUpdate();
+        ctx.rows(result);
+        listener.executeEnd(ctx);
+
+        return ctx.statement().getGeneratedKeys();
+    }
+
+    private final int executeReturningGeneratedKeysFetchAdditionalRows(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        ResultSet rs;
+
+        listener.executeStart(ctx);
+        int result = ctx.statement().executeUpdate();
+        ctx.rows(result);
+        listener.executeEnd(ctx);
+
+        try {
+            rs = ctx.statement().getGeneratedKeys();
+        }
+        catch (SQLException e) {
+
+
+
+
+
+
+
+            throw e;
+        }
+
+        try {
+            List<Object> list = new ArrayList<Object>();
+
+            // Some JDBC drivers seem to illegally return null
+            // from getGeneratedKeys() sometimes
+            if (rs != null)
+                while (rs.next())
+                    list.add(rs.getObject(1));
+
+            selectReturning(
+                ((DefaultExecuteContext) ctx).originalConfiguration(),
+                ctx.configuration(),
+                list.toArray()
+            );
+
+            return result;
+        }
+        finally {
+            JDBCUtils.safeClose(rs);
+        }
+    }
+
+    private final ResultSet executeReturningQuery(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        listener.executeStart(ctx);
+        ResultSet rs = ctx.statement().executeQuery();
+        listener.executeEnd(ctx);
+
+        return rs;
     }
 
     /**

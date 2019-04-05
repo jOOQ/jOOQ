@@ -68,6 +68,8 @@ public class Settings
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderOutputForSQLServerReturningClause = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
     @XmlElement(defaultValue = "DEFAULT")
@@ -506,6 +508,38 @@ public class Settings
      */
     public void setRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         this.renderOrderByRownumberForEmulatedPagination = value;
+    }
+
+    /**
+     * Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+     * is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+     * want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+     * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+     * is only supported for single row inserts.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRenderOutputForSQLServerReturningClause() {
+        return renderOutputForSQLServerReturningClause;
+    }
+
+    /**
+     * Sets the value of the renderOutputForSQLServerReturningClause property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRenderOutputForSQLServerReturningClause(Boolean value) {
+        this.renderOutputForSQLServerReturningClause = value;
     }
 
     /**
@@ -1550,6 +1584,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderOutputForSQLServerReturningClause(Boolean value) {
+        setRenderOutputForSQLServerReturningClause(value);
+        return this;
+    }
+
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
@@ -1812,6 +1851,11 @@ public class Settings
             sb.append("<renderOrderByRownumberForEmulatedPagination>");
             sb.append(renderOrderByRownumberForEmulatedPagination);
             sb.append("</renderOrderByRownumberForEmulatedPagination>");
+        }
+        if (renderOutputForSQLServerReturningClause!= null) {
+            sb.append("<renderOutputForSQLServerReturningClause>");
+            sb.append(renderOutputForSQLServerReturningClause);
+            sb.append("</renderOutputForSQLServerReturningClause>");
         }
         if (transformTableListsToAnsiJoin!= null) {
             sb.append("<transformTableListsToAnsiJoin>");
@@ -2137,6 +2181,15 @@ public class Settings
             }
         } else {
             if (!renderOrderByRownumberForEmulatedPagination.equals(other.renderOrderByRownumberForEmulatedPagination)) {
+                return false;
+            }
+        }
+        if (renderOutputForSQLServerReturningClause == null) {
+            if (other.renderOutputForSQLServerReturningClause!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOutputForSQLServerReturningClause.equals(other.renderOutputForSQLServerReturningClause)) {
                 return false;
             }
         }
@@ -2511,6 +2564,7 @@ public class Settings
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
+        result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));

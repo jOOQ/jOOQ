@@ -621,6 +621,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         ctx.end(UPDATE_SET);
 
+
+
+
+
         switch (ctx.family()) {
 
 

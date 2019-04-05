@@ -550,6 +550,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);
 
+
+
+
+
         if (select != null) {
 
             // [#2995] Prevent the generation of wrapping parentheses around the

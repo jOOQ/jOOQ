@@ -101,6 +101,18 @@ jOOQ to not generate the additional <code>ORDER BY</code> clause.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderOutputForSQLServerReturningClause" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+<p>
+SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+is only supported for single row inserts.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="transformTableListsToAnsiJoin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible
 <p>

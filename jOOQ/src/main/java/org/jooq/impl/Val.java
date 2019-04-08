@@ -112,11 +112,12 @@ final class Val<T> extends AbstractParam<T> {
     final String getBindVariable(Context<?> ctx) {
         if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
             int index = ctx.nextIndex();
+            String prefix = StringUtils.defaultIfNull(ctx.settings().getRenderNamedParamPrefix(), ":");
 
             if (StringUtils.isBlank(getParamName()))
-                return ":" + index;
+                return prefix + index;
             else
-                return ":" + getParamName();
+                return prefix + getParamName();
         }
         else {
             return "?";

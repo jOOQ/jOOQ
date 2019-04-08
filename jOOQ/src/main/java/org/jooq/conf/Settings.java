@@ -52,6 +52,8 @@ public class Settings
     @XmlElement(defaultValue = "QUOTED")
     @XmlSchemaType(name = "string")
     protected RenderNameStyle renderNameStyle = RenderNameStyle.QUOTED;
+    @XmlElement(defaultValue = ":")
+    protected String renderNamedParamPrefix = ":";
     @XmlElement(defaultValue = "AS_IS")
     @XmlSchemaType(name = "string")
     protected RenderKeywordCase renderKeywordCase = RenderKeywordCase.AS_IS;
@@ -325,6 +327,38 @@ public class Settings
      */
     public void setRenderNameStyle(RenderNameStyle value) {
         this.renderNameStyle = value;
+    }
+
+    /**
+     * The prefix to use for named parameters.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code>.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getRenderNamedParamPrefix() {
+        return renderNamedParamPrefix;
+    }
+
+    /**
+     * Sets the value of the renderNamedParamPrefix property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setRenderNamedParamPrefix(String value) {
+        this.renderNamedParamPrefix = value;
     }
 
     /**
@@ -1549,6 +1583,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderNamedParamPrefix(String value) {
+        setRenderNamedParamPrefix(value);
+        return this;
+    }
+
     public Settings withRenderKeywordCase(RenderKeywordCase value) {
         setRenderKeywordCase(value);
         return this;
@@ -1816,6 +1855,11 @@ public class Settings
             sb.append("<renderNameStyle>");
             sb.append(renderNameStyle);
             sb.append("</renderNameStyle>");
+        }
+        if ((renderNamedParamPrefix!= null)&&(!"".equals(renderNamedParamPrefix))) {
+            sb.append("<renderNamedParamPrefix>");
+            sb.append(renderNamedParamPrefix);
+            sb.append("</renderNamedParamPrefix>");
         }
         if (renderKeywordCase!= null) {
             sb.append("<renderKeywordCase>");
@@ -2118,6 +2162,15 @@ public class Settings
             }
         } else {
             if (!renderNameStyle.equals(other.renderNameStyle)) {
+                return false;
+            }
+        }
+        if (renderNamedParamPrefix == null) {
+            if (other.renderNamedParamPrefix!= null) {
+                return false;
+            }
+        } else {
+            if (!renderNamedParamPrefix.equals(other.renderNamedParamPrefix)) {
                 return false;
             }
         }
@@ -2557,6 +2610,7 @@ public class Settings
         result = ((prime*result)+((renderQuotedNames == null)? 0 :renderQuotedNames.hashCode()));
         result = ((prime*result)+((renderNameCase == null)? 0 :renderNameCase.hashCode()));
         result = ((prime*result)+((renderNameStyle == null)? 0 :renderNameStyle.hashCode()));
+        result = ((prime*result)+((renderNamedParamPrefix == null)? 0 :renderNamedParamPrefix.hashCode()));
         result = ((prime*result)+((renderKeywordCase == null)? 0 :renderKeywordCase.hashCode()));
         result = ((prime*result)+((renderKeywordStyle == null)? 0 :renderKeywordStyle.hashCode()));
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));

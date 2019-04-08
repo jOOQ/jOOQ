@@ -58,6 +58,18 @@ This is set to "QUOTED" by default for backwards-compatibility.
 @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderNamedParamPrefix" type="string" minOccurs="0" maxOccurs="1" default=":">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The prefix to use for named parameters.
+<p>
+Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+for PostgreSQL's <code>$name</code>.
+<p>
+"Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="renderKeywordCase" type="jooq-runtime:RenderKeywordCase" minOccurs="0" maxOccurs="1" default="AS_IS">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Keyword} references should be modified in any way.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

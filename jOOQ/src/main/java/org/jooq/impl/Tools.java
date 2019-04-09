@@ -173,6 +173,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1941,7 +1942,7 @@ final class Tools {
             // [#4182] MySQL also supports # as a comment character, and requires
             // -- to be followed by a whitespace, although the latter is also not
             // handled correctly by the MySQL JDBC driver (yet). See
-    		// http://bugs.mysql.com/bug.php?id=76623
+            // http://bugs.mysql.com/bug.php?id=76623
                 (mysql && peek(sqlChars, i, TOKEN_HASH))) {
 
                 // Consume the complete comment
@@ -3167,7 +3168,7 @@ final class Tools {
 
             @Override
             public List<Method> call() {
-                List<Method> result = new ArrayList<Method>();
+                Set<SourceMethod> set = new LinkedHashSet<SourceMethod>();
 
                 for (Method method : getInstanceMethods(type)) {
                     Column column = method.getAnnotation(Column.class);
@@ -3176,7 +3177,7 @@ final class Tools {
 
                         // Annotated setter
                         if (method.getParameterTypes().length == 1) {
-                            result.add(accessible(method));
+                            set.add(new SourceMethod(accessible(method)));
                         }
 
                         // Annotated getter with matching setter
@@ -3190,11 +3191,13 @@ final class Tools {
 
                             if (suffix != null) {
                                 try {
-                                    Method setter = type.getDeclaredMethod("set" + suffix, method.getReturnType());
+
+                                    // [#7953] [#8496] Search the hierarchy for a matching setter
+                                    Method setter = getInstanceMethod(type, "set" + suffix, new Class[] { method.getReturnType() });
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null)
-                                        result.add(accessible(setter));
+                                        set.add(new SourceMethod(accessible(setter)));
                                 }
                                 catch (NoSuchMethodException ignore) {}
                             }
@@ -3202,7 +3205,7 @@ final class Tools {
                     }
                 }
 
-                return result;
+                return SourceMethod.methods(set);
             }
 
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
@@ -3267,7 +3270,9 @@ final class Tools {
 
             @Override
             public List<Method> call() {
-                List<Method> result = new ArrayList<Method>();
+
+                // [#8460] Prevent duplicate methods in the call hierarchy
+                Set<SourceMethod> set = new LinkedHashSet<SourceMethod>();
 
                 // [#1942] Caching these values before the method-loop significantly
                 // accerates POJO mapping
@@ -3279,16 +3284,16 @@ final class Tools {
 
                     if (parameterTypes.length == 1)
                         if (name.equals(method.getName()))
-                            result.add(accessible(method));
+                            set.add(new SourceMethod(accessible(method)));
                         else if (camelCaseLC.equals(method.getName()))
-                            result.add(accessible(method));
+                            set.add(new SourceMethod(accessible(method)));
                         else if (("set" + name).equals(method.getName()))
-                            result.add(accessible(method));
+                            set.add(new SourceMethod(accessible(method)));
                         else if (("set" + camelCase).equals(method.getName()))
-                            result.add(accessible(method));
+                            set.add(new SourceMethod(accessible(method)));
                 }
 
-                return result;
+                return SourceMethod.methods(set);
             }
 
         }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
@@ -3329,8 +3334,90 @@ final class Tools {
         }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
     }
 
-    private static final List<Method> getInstanceMethods(Class<?> type) {
-        List<Method> result = new ArrayList<Method>();
+    /**
+     * A wrapper class that re-implements {@link Method#equals(Object)} and
+     * {@link Method#hashCode()} based only on the "source signature" (name,
+     * parameter types), instead of the "binary signature" (declaring class,
+     * name, return type, parameter types).
+     */
+    private static final class SourceMethod {
+        final Method method;
+
+        SourceMethod(Method method) {
+            this.method = method;
+        }
+
+        static List<Method> methods(Collection<? extends SourceMethod> methods) {
+            List<Method> result = new ArrayList<Method>(methods.size());
+
+            for (SourceMethod s : methods)
+                result.add(s.method);
+
+            return result;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((method == null) ? 0 : method.getName().hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof SourceMethod) {
+                Method other = ((SourceMethod) obj).method;
+
+                if (method.getName().equals(other.getName())) {
+                    Class<?>[] p1 = method.getParameterTypes();
+                    Class<?>[] p2 = other.getParameterTypes();
+
+                    return Arrays.equals(p1, p2);
+                }
+            }
+
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return method.toString();
+        }
+    }
+
+    private static final Method getInstanceMethod(Class<?> type, String name, Class<?>[] parameters) throws NoSuchMethodException {
+
+        // first priority: find a public method with exact signature match in class hierarchy
+        try {
+            return type.getMethod(name, parameters);
+        }
+
+        // second priority: find a private method with exact signature match on declaring class
+        catch (NoSuchMethodException e) {
+            do {
+                try {
+                    return type.getDeclaredMethod(name, parameters);
+                }
+                catch (NoSuchMethodException ignore) {}
+
+                type = type.getSuperclass();
+            }
+            while (type != null);
+
+            throw new NoSuchMethodException();
+        }
+    }
+
+    /**
+     * All the public and declared methods of a type.
+     * <p>
+     * This method returns each method only once. Public methods are returned
+     * first in the resulting set while declared methods are returned
+     * afterwards, from lowest to highest type in the type hierarchy.
+     */
+    private static final Set<Method> getInstanceMethods(Class<?> type) {
+        Set<Method> result = new LinkedHashSet<Method>();
 
         for (Method method : type.getMethods())
             if ((method.getModifiers() & Modifier.STATIC) == 0)

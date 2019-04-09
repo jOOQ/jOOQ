@@ -141,6 +141,38 @@ public class Reflect {
     }
 
     /**
+     * Get the initialisation or default value for any given type.
+     * <p>
+     * This returns:
+     * <ul>
+     * <li><code>null</code> for reference types (including wrapper types)</li>
+     * <li><code>0</code> for numeric primitive types (including
+     * <code>char</code>)</li>
+     * <li><code>false</code> for the <code>boolean</code> primitive type.
+     * </ul>
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T initValue(Class<T> type) {
+        return type == boolean.class
+            ? (T) Boolean.FALSE
+            : type == byte.class
+            ? (T) Byte.valueOf((byte) 0)
+            : type == short.class
+            ? (T) Short.valueOf((short) 0)
+            : type == int.class
+            ? (T) Integer.valueOf(0)
+            : type == long.class
+            ? (T) Long.valueOf(0L)
+            : type == double.class
+            ? (T) Double.valueOf(0.0)
+            : type == float.class
+            ? (T) Float.valueOf(0.0f)
+            : type == char.class
+            ? (T) Character.valueOf((char) 0)
+            : (T) null;
+    }
+
+    /**
      * Conveniently render an {@link AccessibleObject} accessible.
      * <p>
      * To prevent {@link SecurityException}, this is only done if the argument

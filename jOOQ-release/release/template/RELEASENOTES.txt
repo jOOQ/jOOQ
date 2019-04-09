@@ -10,6 +10,31 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.11.11 - April 9, 2019
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Features and Improvements
+-------------------------
+#8466 - Log slow result set fetching in code generator
+
+
+Bug Fixes
+---------
+#8419 - Rollback should not be called when TransactionListener.commitEnd() throws exception
+#8427 - jOOQ 3.11.10 prints its version as 3.11.9
+#8444 - Syntax error when generating code on Informix 12.10 without DELIMIDENT=y
+#8445 - Bad SQL generated when setting data type and nullability in PostgreSQL's ALTER TABLE .. ALTER .. SET statement
+#8455 - <inputSchema/> doesn't work on Informix code generation
+#8457 - Calling Record.get(0, int.class) returns null if value is not convertible to int
+#8472 - Regression calling POJO setters twice from DefaultRecordMapper.MutablePOJOMapper
+#8485 - ERROR: conflicting ColumnTypes while executing meta query on CockroachDB
+#8494 - ALTER TABLE .. ADD FOREIGN KEY .. REFERENCES references unqualified table name
+#8497 - Regression in DefaultRecordMapper, calling matching setter for JPA annotated getter
+
+
 Version 3.11.10 - March 7, 2019
 ================================================================================
 

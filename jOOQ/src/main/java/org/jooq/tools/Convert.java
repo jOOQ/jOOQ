@@ -88,6 +88,7 @@ import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.jdbc.MockArray;
+import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -583,7 +584,7 @@ public final class Convert {
                         return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
                 else if (wrapperTo == Short.class) {
@@ -597,7 +598,7 @@ public final class Convert {
                         return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
                 else if (wrapperTo == Integer.class) {
@@ -611,7 +612,7 @@ public final class Convert {
                         return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
                 else if (wrapperTo == Long.class) {
@@ -635,7 +636,7 @@ public final class Convert {
                         return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
 
@@ -714,7 +715,7 @@ public final class Convert {
                         return (U) Float.valueOf(from.toString().trim());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
                 else if (wrapperTo == Double.class) {
@@ -728,7 +729,7 @@ public final class Convert {
                         return (U) Double.valueOf(from.toString().trim());
                     }
                     catch (NumberFormatException e) {
-                        return null;
+                        return Reflect.initValue(toClass);
                     }
                 }
                 else if (toClass == BigDecimal.class) {
@@ -768,7 +769,7 @@ public final class Convert {
                         return (U) (((Boolean) from) ? Character.valueOf('1') : Character.valueOf('0'));
 
                     if (from.toString().length() < 1)
-                        return null;
+                        return Reflect.initValue(toClass);
 
                     return (U) Character.valueOf(from.toString().charAt(0));
                 }

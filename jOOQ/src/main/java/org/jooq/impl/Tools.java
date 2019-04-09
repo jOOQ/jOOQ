@@ -311,16 +311,6 @@ final class Tools {
         DATA_OMIT_RETURNING_CLAUSE,
 
         /**
-         * [#1905] This constant is used internally by jOOQ to indicate to
-         * subqueries that they're being rendered in the context of a row value
-         * expression predicate.
-         * <p>
-         * This is particularly useful for H2, which pretends that ARRAYs and RVEs
-         * are the same
-         */
-        DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY,
-
-        /**
          * [#1296] This constant is used internally by jOOQ to indicate that
          * {@link ResultSet} rows must be locked to emulate a
          * <code>FOR UPDATE</code> clause.
@@ -373,6 +363,13 @@ final class Tools {
          */
         @SuppressWarnings("javadoc")
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
+
+
+
+
+
+
+
 
 
 

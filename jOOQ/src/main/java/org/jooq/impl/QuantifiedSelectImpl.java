@@ -42,7 +42,6 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -53,6 +52,7 @@ import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Select;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -82,23 +82,28 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean extraParentheses = false;
+
+        ctx.visit(quantifier.toKeyword());
 
 
 
 
 
 
-        ctx.visit(quantifier.toKeyword())
-           .sql(extraParentheses ? " ((" : " (")
-           .subquery(true)
+
+
+
+        ctx.subquery(true)
            .formatIndentStart()
            .formatNewLine()
            .visit(delegate(ctx.configuration()))
            .formatIndentEnd()
            .formatNewLine()
-           .subquery(false)
-           .sql(extraParentheses ? "))" : ")");
+           .subquery(false);
+
+
+
+
     }
 
     private final QueryPartInternal delegate(Configuration ctx) {

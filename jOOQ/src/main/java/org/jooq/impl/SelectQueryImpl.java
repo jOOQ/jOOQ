@@ -134,7 +134,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSE
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
@@ -1246,23 +1245,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.visit(new SelectFieldList<Field<?>>(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
             else
                 context.visit(new SelectFieldList<Field<?>>(alternativeFields));
-        }
-
-        // [#1905] H2 only knows arrays, no row value expressions. Subqueries
-        // in the context of a row value expression predicate have to render
-        // arrays explicitly, as the subquery doesn't form an implicit RVE
-        else if (context.subquery() && dialect == H2 && TRUE.equals(context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY))) {
-            Object data = context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
-
-            try {
-                context.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
-                context.sql('(')
-                       .visit(getSelect1())
-                       .sql(')');
-            }
-            finally {
-                context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, data);
-            }
         }
 
         // The default behaviour

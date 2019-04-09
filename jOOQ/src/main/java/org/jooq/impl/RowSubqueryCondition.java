@@ -59,7 +59,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.EnumSet;
 
@@ -78,6 +77,7 @@ import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -220,15 +220,14 @@ final class RowSubqueryCondition extends AbstractCondition {
 
             if (rightQuantified == null) {
 
-                // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = false
 
 
 
-                    ;
 
-                ctx.sql(extraParentheses ? "((" : "(");
-                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+
+
+
+
                 ctx.subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
@@ -236,17 +235,26 @@ final class RowSubqueryCondition extends AbstractCondition {
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false);
-                ctx.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
-                ctx.sql(extraParentheses ? "))" : ")");
+
+
+
+
+
             }
 
             // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
             else {
-                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+
+
+
+
                 ctx.subquery(true)
                    .visit(rightQuantified)
                    .subquery(false);
-                ctx.data().remove(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
+
+
+
+
             }
         }
 

@@ -2044,7 +2044,7 @@ final class Tools {
             // [#4182] MySQL also supports # as a comment character, and requires
             // -- to be followed by a whitespace, although the latter is also not
             // handled correctly by the MySQL JDBC driver (yet). See
-    		// http://bugs.mysql.com/bug.php?id=76623
+            // http://bugs.mysql.com/bug.php?id=76623
                 (mysql && peek(sqlChars, i, TOKEN_HASH))) {
 
                 // Consume the complete comment
@@ -3335,7 +3335,9 @@ final class Tools {
 
                             if (suffix != null) {
                                 try {
-                                    Method setter = type.getDeclaredMethod("set" + suffix, method.getReturnType());
+
+                                    // [#7953] [#8496] Search the hierarchy for a matching setter
+                                    Method setter = getInstanceMethod(type, "set" + suffix, new Class[] { method.getReturnType() });
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null)
@@ -3525,6 +3527,29 @@ final class Tools {
         @Override
         public String toString() {
             return method.toString();
+        }
+    }
+
+    private static final Method getInstanceMethod(Class<?> type, String name, Class<?>[] parameters) throws NoSuchMethodException {
+
+        // first priority: find a public method with exact signature match in class hierarchy
+        try {
+            return type.getMethod(name, parameters);
+        }
+
+        // second priority: find a private method with exact signature match on declaring class
+        catch (NoSuchMethodException e) {
+            do {
+                try {
+                    return type.getDeclaredMethod(name, parameters);
+                }
+                catch (NoSuchMethodException ignore) {}
+
+                type = type.getSuperclass();
+            }
+            while (type != null);
+
+            throw new NoSuchMethodException();
         }
     }
 

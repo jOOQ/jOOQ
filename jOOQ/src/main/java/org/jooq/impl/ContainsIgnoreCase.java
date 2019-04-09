@@ -52,7 +52,7 @@ import org.jooq.Field;
  *
  * @author lmarchau
  */
-final class ContainsIgnoreCase<T> extends AbstractCondition {
+final class ContainsIgnoreCase extends AbstractCondition {
 
     /**
      * Generated UID
@@ -61,24 +61,14 @@ final class ContainsIgnoreCase<T> extends AbstractCondition {
 
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Field<T>        lhs;
-    private final Field<T>        rhs;
+    private final Field<?>        lhs;
+    private final Field<?>        rhs;
     private final boolean         leftWildcard;
     private final boolean         rightWildcard;
-    private final T               value;
 
-    ContainsIgnoreCase(Field<T> field, T value, boolean leftWildcard, boolean rightWildcard) {
-        this.lhs = field;
-        this.rhs = null;
-        this.value = value;
-        this.leftWildcard = leftWildcard;
-        this.rightWildcard = rightWildcard;
-    }
-
-    ContainsIgnoreCase(Field<T> field, Field<T> rhs, boolean leftWildcard, boolean rightWildcard) {
+    ContainsIgnoreCase(Field<?> field, Field<?> rhs, boolean leftWildcard, boolean rightWildcard) {
         this.lhs = field;
         this.rhs = rhs;
-        this.value = null;
         this.leftWildcard = leftWildcard;
         this.rightWildcard = rightWildcard;
     }
@@ -100,10 +90,7 @@ final class ContainsIgnoreCase<T> extends AbstractCondition {
         if (leftWildcard)
             array[i++] = inline("%");
 
-        if (rhs == null)
-            array[i++] = Tools.escapeForLike(value, configuration);
-        else
-            array[i++] = Tools.escapeForLike(rhs, configuration);
+        array[i++] = Tools.escapeForLike(rhs, configuration);
 
         if (rightWildcard)
             array[i++] = inline("%");

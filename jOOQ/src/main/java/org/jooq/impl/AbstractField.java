@@ -903,18 +903,14 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return contains(value).not();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition containsIgnoreCase(T value) {
-        if (value instanceof Field)
-            return containsIgnoreCase((Field) value);
-        else
-            return new ContainsIgnoreCase<T>(this, value, true, true);
+        return containsIgnoreCase(Tools.field(value, this));
     }
 
     @Override
     public final Condition containsIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value, true, true);
+        return new ContainsIgnoreCase(this, value, true, true);
     }
 
     @Override
@@ -927,14 +923,9 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return containsIgnoreCase(value).not();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition startsWith(T value) {
-        if (value instanceof Field)
-            return startsWith((Field) value);
-
-        Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
-        return like(concat, Tools.ESCAPE);
+        return startsWith(Tools.field(value, this));
     }
 
     @Override
@@ -943,28 +934,19 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return like(concat, Tools.ESCAPE);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition startsWithIgnoreCase(T value) {
-        if (value instanceof Field)
-            return startsWithIgnoreCase((Field) value);
-        else
-            return new ContainsIgnoreCase<T>(this, value, false, true);
+        return startsWithIgnoreCase(Tools.field(value, this));
     }
 
     @Override
     public final Condition startsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value, false, true);
+        return new ContainsIgnoreCase(this, value, false, true);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition endsWith(T value) {
-        if (value instanceof Field)
-            return endsWith((Field) value);
-
-        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
-        return like(concat, Tools.ESCAPE);
+        return endsWith(Tools.field(value, this));
     }
 
     @Override
@@ -973,18 +955,14 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return like(concat, Tools.ESCAPE);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition endsWithIgnoreCase(T value) {
-        if (value instanceof Field)
-            return endsWithIgnoreCase((Field) value);
-        else
-            return new ContainsIgnoreCase<T>(this, value, true, false);
+        return endsWithIgnoreCase(Tools.field(value, this));
     }
 
     @Override
     public final Condition endsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase<T>(this, value, true, false);
+        return new ContainsIgnoreCase(this, value, true, false);
     }
 
     private final boolean isAccidentalSelect(T[] values) {

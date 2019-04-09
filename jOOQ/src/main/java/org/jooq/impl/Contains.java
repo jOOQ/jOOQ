@@ -98,9 +98,13 @@ final class Contains<T> extends AbstractCondition {
 
         // "contains" operations on Strings
         else
-            return lhs.like((rhs == null)
-                ? DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"))
-                : DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%")), Tools.ESCAPE);
+            return lhs.like(
+                DSL.concat(
+                    inline("%"),
+                    Tools.escapeForLike(rhs == null ? Tools.field(value, lhs) : rhs, configuration),
+                    inline("%")
+                ), Tools.ESCAPE
+            );
     }
 
     /**

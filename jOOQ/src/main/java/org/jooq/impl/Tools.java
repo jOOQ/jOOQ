@@ -2768,34 +2768,6 @@ final class Tools {
     }
 
     /**
-     * Utility method to escape strings or "toString" other objects
-     */
-    static final Field<String> escapeForLike(Object value) {
-        return escapeForLike(value, new DefaultConfiguration());
-    }
-
-    /**
-     * Utility method to escape strings or "toString" other objects
-     */
-    static final Field<String> escapeForLike(Object value, Configuration configuration) {
-        if (value != null && value.getClass() == String.class) {
-
-
-
-
-
-
-
-            {
-                return val(escape("" + value, ESCAPE));
-            }
-        }
-        else {
-            return val("" + value);
-        }
-    }
-
-    /**
      * Utility method to escape string fields, or cast other fields
      */
     static final Field<String> escapeForLike(Field<?> field) {

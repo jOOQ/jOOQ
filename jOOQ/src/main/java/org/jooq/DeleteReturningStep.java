@@ -89,6 +89,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return all fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -98,6 +100,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      * <p>
      * [#5070] Due to an early API design flaw, this method historically returns
      * the type <code>R</code>, not a more generic type <code>Record</code>.
@@ -115,6 +119,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
      * <p>
+     * This will return the data <em>before</em> deletion.
+     * <p>
      * [#5070] Due to an early API design flaw, this method historically returns
      * the type <code>R</code>, not a more generic type <code>Record</code>.
      * This means that only actual columns in <code>R</code> can be returned.
@@ -130,6 +136,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @param fields Fields to be returned
      * @see DeleteResultStep
@@ -140,6 +148,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @param fields Fields to be returned
      * @see DeleteResultStep
@@ -152,6 +162,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -161,6 +173,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -170,6 +184,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -179,6 +195,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -188,6 +206,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -197,6 +217,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -206,6 +228,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -215,6 +239,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -224,6 +250,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -233,6 +261,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -242,6 +272,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -251,6 +283,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -260,6 +294,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -269,6 +305,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -278,6 +316,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -287,6 +327,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -296,6 +338,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -305,6 +349,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -314,6 +360,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -323,6 +371,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -332,6 +382,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */
@@ -341,6 +393,8 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
     /**
      * Configure the <code>DELETE</code> statement to return a list of fields in
      * <code>R</code>.
+     * <p>
+     * This will return the data <em>before</em> deletion.
      *
      * @see DeleteResultStep
      */

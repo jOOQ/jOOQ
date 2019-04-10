@@ -53,8 +53,9 @@ public class Configuration implements Serializable
     private final static long serialVersionUID = 31200L;
     @XmlSchemaType(name = "string")
     protected Logging logging;
+    @XmlElement(defaultValue = "FAIL")
     @XmlSchemaType(name = "string")
-    protected OnError onError;
+    protected OnError onError = OnError.FAIL;
     protected Jdbc jdbc;
     @XmlElement(required = true)
     protected Generator generator;
@@ -84,7 +85,7 @@ public class Configuration implements Serializable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of an encountered exception.
+     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
      * @return
      *     possible object is

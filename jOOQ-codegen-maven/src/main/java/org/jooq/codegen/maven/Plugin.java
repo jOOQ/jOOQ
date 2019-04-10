@@ -121,6 +121,14 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.Logging   logging;
 
     /**
+     * The on-error behavior.
+     */
+    @Parameter(
+        property = "jooq.codegen.onError"
+    )
+    private org.jooq.meta.jaxb.OnError   onError;
+
+    /**
      * The jdbc settings.
      */
     @Parameter
@@ -180,6 +188,7 @@ public class Plugin extends AbstractMojo {
 
             Configuration configuration = new Configuration();
             configuration.setLogging(logging);
+            configuration.setOnError(onError);
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
 
@@ -224,6 +233,7 @@ public class Plugin extends AbstractMojo {
             in = new FileInputStream(f);
             Configuration configuration = GenerationTool.load(in);
             logging = MiniJAXB.append(logging, configuration.getLogging());
+            onError = MiniJAXB.append(onError, configuration.getOnError());
             jdbc = MiniJAXB.append(jdbc, configuration.getJdbc());
             generator = MiniJAXB.append(generator, configuration.getGenerator());
         }

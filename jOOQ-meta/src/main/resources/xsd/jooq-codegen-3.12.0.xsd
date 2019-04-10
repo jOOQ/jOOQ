@@ -13,6 +13,10 @@
           <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The logging configuration element specifies the code generation logging threshold.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
 
+        <element name="onError" type="tns:OnError" minOccurs="0" maxOccurs="1" default="FAIL">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
         <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1">
           <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC configuration element contains information about how to set up the database connection used for source code generation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
@@ -32,6 +36,14 @@
       <enumeration value="WARN"/>
       <enumeration value="ERROR"/>
       <enumeration value="FATAL"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="OnError">
+    <restriction base="string">
+      <enumeration value="FAIL"/>
+      <enumeration value="LOG"/>
+      <enumeration value="SILENT"/>
     </restriction>
   </simpleType>
 

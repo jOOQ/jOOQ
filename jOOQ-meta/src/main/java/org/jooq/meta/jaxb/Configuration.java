@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
  *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Logging" minOccurs="0"/&gt;
+ *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}OnError" minOccurs="0"/&gt;
  *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Jdbc" minOccurs="0"/&gt;
  *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Generator"/&gt;
  *       &lt;/all&gt;
@@ -52,6 +53,8 @@ public class Configuration implements Serializable
     private final static long serialVersionUID = 31200L;
     @XmlSchemaType(name = "string")
     protected Logging logging;
+    @XmlSchemaType(name = "string")
+    protected OnError onError;
     protected Jdbc jdbc;
     @XmlElement(required = true)
     protected Generator generator;
@@ -78,6 +81,30 @@ public class Configuration implements Serializable
      */
     public void setLogging(Logging value) {
         this.logging = value;
+    }
+
+    /**
+     * The action to be taken by the generator as the consequence of an encountered exception.
+     *
+     * @return
+     *     possible object is
+     *     {@link OnError }
+     *
+     */
+    public OnError getOnError() {
+        return onError;
+    }
+
+    /**
+     * Sets the value of the onError property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link OnError }
+     *
+     */
+    public void setOnError(OnError value) {
+        this.onError = value;
     }
 
     /**
@@ -133,6 +160,11 @@ public class Configuration implements Serializable
         return this;
     }
 
+    public Configuration withOnError(OnError value) {
+        setOnError(value);
+        return this;
+    }
+
     public Configuration withJdbc(Jdbc value) {
         setJdbc(value);
         return this;
@@ -150,6 +182,11 @@ public class Configuration implements Serializable
             sb.append("<logging>");
             sb.append(logging);
             sb.append("</logging>");
+        }
+        if (onError!= null) {
+            sb.append("<onError>");
+            sb.append(onError);
+            sb.append("</onError>");
         }
         if (jdbc!= null) {
             sb.append("<jdbc>");
@@ -185,6 +222,15 @@ public class Configuration implements Serializable
                 return false;
             }
         }
+        if (onError == null) {
+            if (other.onError!= null) {
+                return false;
+            }
+        } else {
+            if (!onError.equals(other.onError)) {
+                return false;
+            }
+        }
         if (jdbc == null) {
             if (other.jdbc!= null) {
                 return false;
@@ -211,6 +257,7 @@ public class Configuration implements Serializable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((logging == null)? 0 :logging.hashCode()));
+        result = ((prime*result)+((onError == null)? 0 :onError.hashCode()));
         result = ((prime*result)+((jdbc == null)? 0 :jdbc.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         return result;

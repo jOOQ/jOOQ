@@ -82,6 +82,7 @@ import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Logging;
 import org.jooq.meta.jaxb.Matchers;
+import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.Property;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.Strategy;
@@ -224,8 +225,29 @@ public class GenerationTool {
         new GenerationTool().run(configuration);
     }
 
-    @SuppressWarnings("unchecked")
     public void run(Configuration configuration) throws Exception {
+        try {
+            run0(configuration);
+        }
+        catch (Exception e) {
+            OnError onError = configuration.getOnError();
+            if (onError == null) {
+                onError = OnError.FAIL;
+            }
+            switch (onError) {
+                case SILENT:
+                    break;
+                case LOG:
+                    log.warn("Code generation failed", e);
+                    break;
+                case FAIL:
+                    throw e;
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void run0(Configuration configuration) throws Exception {
         if (Boolean.getBoolean("jooq.codegen.skip")) {
             log.info("Skipping jOOQ code generation");
             return;

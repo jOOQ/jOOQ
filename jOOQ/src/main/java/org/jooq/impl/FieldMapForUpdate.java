@@ -43,12 +43,15 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Tools.flattenEntrySet;
+import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.EnumSet;
 import java.util.Map;
 
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -74,6 +77,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         this.assignmentClause = assignmentClause;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final void accept(Context<?> ctx) {
         if (size() > 0) {
@@ -98,9 +102,16 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                    .qualify(supportsQualify)
                    .visit(entry.getKey())
                    .qualify(restoreQualify)
-                   .sql(" = ")
-                   .visit(entry.getValue())
-                   .end(assignmentClause);
+                   .sql(" = ");
+
+                // [#8479] Emulate WHERE clause using CASE
+                Condition condition = (Condition) ctx.data(DATA_ON_DUPLICATE_KEY_WHERE);
+                if (condition != null)
+                    ctx.visit(when(condition, (Field) entry.getValue()).else_(entry.getKey()));
+                else
+                    ctx.visit(entry.getValue());
+
+                ctx.end(assignmentClause);
 
                 separator = ", ";
             }

@@ -79,6 +79,7 @@ import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -305,9 +306,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .formatIndentStart()
                        .formatSeparator()
-                       .qualify(newQualify)
-                       .visit(updateMap)
-                       .qualify(oldQualify)
+                       .qualify(newQualify);
+
+                    // [#8479] Emulate WHERE clause using CASE
+                    if (condition.hasWhere())
+                        ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
+
+                    ctx.visit(updateMap);
+
+                    if (condition.hasWhere())
+                        ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
+
+                    ctx.qualify(oldQualify)
                        .formatIndentEnd()
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 

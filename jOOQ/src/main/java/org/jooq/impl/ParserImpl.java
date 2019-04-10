@@ -1700,7 +1700,12 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "ON")) {
             if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE SET")) {
-                returning = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
+                InsertOnConflictWhereStep<?> where = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
+
+                if (parseKeywordIf(ctx, "WHERE"))
+                    returning = where.where(parseCondition(ctx));
+                else
+                    returning = where;
             }
             else if (parseKeywordIf(ctx, "DUPLICATE KEY IGNORE")) {
                 returning = onDuplicate.onDuplicateKeyIgnore();

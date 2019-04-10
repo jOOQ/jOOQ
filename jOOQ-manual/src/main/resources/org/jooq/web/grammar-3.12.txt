@@ -317,7 +317,7 @@ insertStatement =
   )
   break
   [
-    'ON DUPLICATE KEY UPDATE' 'SET' setClauses
+    'ON DUPLICATE KEY UPDATE' 'SET' setClauses [ 'WHERE' condition ]
   | 'ON DUPLICATE KEY IGNORE'
   | 'ON CONFLICT' ( 'ON CONSTRAINT' constraintName | '(' fieldNames ')' ) 'DO'
     (

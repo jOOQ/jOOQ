@@ -549,7 +549,12 @@ final class Tools {
         /**
          * [#6583] The target table on which a DML operation operates on.
          */
-        DATA_DML_TARGET_TABLE
+        DATA_DML_TARGET_TABLE,
+
+        /**
+         * [#8479] There is a WHERE clause to be emulated for ON DUPLICATE KEY
+         */
+        DATA_ON_DUPLICATE_KEY_WHERE
     }
 
     /**

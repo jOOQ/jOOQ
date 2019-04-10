@@ -78,22 +78,12 @@ final class Array<T> extends AbstractField<T[]> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
             case H2:
-                ctx.sql('(').visit(fields);
-
-                // [#7878] Single element arrays in H2 need a trailing comma to distinguish between e.g.
-                //         (1), the parenthesised integer, and (1,) the array.
-                //         See: http://h2database.com/html/grammar.html#array
-                if (fields.size() == 1)
-                    ctx.sql(',');
-
-                ctx.sql(')');
-                break;
-
-
-
-
-
             case HSQLDB:
             case POSTGRES:
             default:

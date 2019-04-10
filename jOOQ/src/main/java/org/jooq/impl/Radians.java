@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
@@ -75,7 +76,7 @@ final class Radians extends AbstractFunction<BigDecimal> {
 
             case FIREBIRD:
             case SQLITE:
-                return argument.cast(BigDecimal.class).mul(pi()).div(inline(180));
+                return castIfNeeded(argument, BigDecimal.class).mul(pi()).div(inline(180));
 
             default:
                 return function("radians", SQLDataType.NUMERIC, argument);

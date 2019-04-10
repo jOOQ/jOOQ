@@ -1255,6 +1255,52 @@ final class Tools {
     }
 
     /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
+    static <T> Field<T>[] castAllIfNeeded(Field<?>[] fields, Class<T> type) {
+        Field<T>[] castFields = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            castFields[i] = castIfNeeded(fields[i], type);
+
+        return castFields;
+    }
+
+    /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> castIfNeeded(Field<?> field, Class<T> type) {
+        if (field.getType().equals(type))
+            return (Field<T>) field;
+        else
+            return field.cast(type);
+    }
+
+    /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> castIfNeeded(Field<?> field, DataType<T> type) {
+        if (field.getDataType().equals(type))
+            return (Field<T>) field;
+        else
+            return field.cast(type);
+    }
+
+    /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> castIfNeeded(Field<?> field, Field<T> type) {
+        if (field.getDataType().equals(type.getDataType()))
+            return (Field<T>) field;
+        else
+            return field.cast(type);
+    }
+
+    /**
      * Be sure that a given object is a field.
      *
      * @param value The argument object
@@ -2794,7 +2840,7 @@ final class Tools {
             }
         }
         else {
-            return field.cast(String.class);
+            return castIfNeeded(field, String.class);
         }
     }
 

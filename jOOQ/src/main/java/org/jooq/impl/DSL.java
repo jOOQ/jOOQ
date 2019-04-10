@@ -12444,24 +12444,6 @@ public class DSL {
     }
 
     /**
-     * Cast all fields that need casting.
-     *
-     * @param <T> The generic field type
-     * @param type The type to cast to
-     * @param fields The fields to be cast to a uniform type
-     * @return The cast fields
-     */
-    static <T> Field<T>[] castAll(Class<T> type, Field<?>... fields) {
-        Field<?>[] castFields = new Field<?>[fields.length];
-
-        for (int i = 0; i < fields.length; i++) {
-            castFields[i] = fields[i].cast(type);
-        }
-
-        return (Field<T>[]) castFields;
-    }
-
-    /**
      * The <code>COALESCE(value1, value2, ... , value n)</code> function.
      *
      * @see #coalesce(Field, Field...)

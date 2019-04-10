@@ -63,6 +63,7 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
+import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.tools.Convert.FALSE_VALUES;
 import static org.jooq.tools.Convert.TRUE_VALUES;
 
@@ -245,26 +246,14 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return cast(field.getDataType());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> cast(DataType<Z> type) {
-
-        // [#473] Prevent unnecessary casts
-        if (getDataType().equals(type))
-            return (Field<Z>) this;
-        else
-            return new Cast<Z>(this, type);
+        return new Cast<Z>(this, type);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> cast(Class<Z> type) {
-
-        // [#2597] Prevent unnecessary casts
-        if (getType() == type)
-            return (Field<Z>) this;
-        else
-            return cast(DefaultDataType.getDataType(null, type));
+        return cast(DefaultDataType.getDataType(null, type));
     }
 
     // ------------------------------------------------------------------------
@@ -276,15 +265,9 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         return coerce(field.getDataType());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> coerce(DataType<Z> type) {
-
-        // [#473] Prevent unnecessary coercions
-        if (getDataType().equals(type))
-            return (Field<Z>) this;
-        else
-            return new Coerce<Z>(this, type);
+        return new Coerce<Z>(this, type);
     }
 
     @Override
@@ -721,7 +704,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(true));
         else
-            return cast(String.class).in(TRUE_VALUES);
+            return castIfNeeded(this, String.class).in(TRUE_VALUES);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -736,7 +719,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false));
         else
-            return cast(String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
+            return castIfNeeded(this, String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
     }
 
     @Override
@@ -1272,7 +1255,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition equalIgnoreCase(Field<String> value) {
-        return DSL.lower(cast(String.class)).equal(DSL.lower(value));
+        return DSL.lower(castIfNeeded(this, String.class)).equal(DSL.lower(value));
     }
 
     @Override
@@ -1302,7 +1285,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition notEqualIgnoreCase(Field<String> value) {
-        return DSL.lower(cast(String.class)).notEqual(DSL.lower(value));
+        return DSL.lower(castIfNeeded(this, String.class)).notEqual(DSL.lower(value));
     }
 
     @Override

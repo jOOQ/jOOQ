@@ -71,6 +71,7 @@ import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -179,12 +180,12 @@ final class Expression<T> extends AbstractFunction<T> {
 
         // Many dialects don't support shifts. Use multiplication/division instead
         else if (SHL == operator && EMULATE_SHR_SHL.contains(family))
-            return lhs.mul((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
+            return lhs.mul((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs));
 
         // [#3962] This emulation is expensive. If this is emulated, BitCount should
         // use division instead of SHR directly
         else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
-            return lhs.div((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
+            return lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs));
 
         // Some dialects support shifts as functions
         else if (SHL == operator && FIREBIRD == family)
@@ -376,6 +377,12 @@ final class Expression<T> extends AbstractFunction<T> {
                     interval = interval.concat(inline(ytm ? " months" : " seconds"));
                     return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
+
+
+
+
+
+
 
 
 

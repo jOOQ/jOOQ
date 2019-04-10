@@ -88,6 +88,7 @@ import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.MODE;
 import static org.jooq.impl.Term.PRODUCT;
 import static org.jooq.impl.Term.ROW_NUMBER;
+import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROWNUMBER_FUNCTION;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
@@ -366,7 +367,7 @@ class Function<T> extends AbstractField<T> implements
             ctx.visit(K_DISTINCT).sql(' ');
 
         // The explicit cast is needed in Postgres
-        ctx.visit(((Field<?>) arguments.get(0)).cast(String.class));
+        ctx.visit(castIfNeeded((Field<?>) arguments.get(0), String.class));
 
         if (arguments.size() > 1)
             ctx.sql(", ").visit(arguments.get(1));

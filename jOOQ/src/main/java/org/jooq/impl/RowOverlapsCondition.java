@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_OVERLAPS;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.EnumSet;
 
@@ -129,8 +130,8 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
             // All other OVERLAPS predicates can be emulated simply
             else {
                 return (QueryPartInternal)
-                       right1.le(left2.cast(right1)).and(
-                       left1.le(right2.cast(left1)));
+                       right1.le(castIfNeeded(left2, right1)).and(
+                       left1.le(castIfNeeded(right2, left1)));
             }
         }
 

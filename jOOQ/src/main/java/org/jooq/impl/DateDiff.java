@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -123,6 +124,6 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
         }
 
         // Default implementation for equals() and hashCode()
-        return date1.sub(date2).cast(Integer.class);
+        return castIfNeeded(date1.sub(date2), Integer.class);
     }
 }

@@ -37,11 +37,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.castAll;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
+import static org.jooq.impl.Tools.castAllIfNeeded;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -65,12 +65,11 @@ final class Concat extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
-        Field<String>[] cast = castAll(String.class, getArguments());
+        Field<String>[] cast = castAllIfNeeded(getArguments(), String.class);
 
         // If there is only one argument, return it immediately
-        if (cast.length == 1) {
+        if (cast.length == 1)
             return cast[0];
-        }
 
         Field<String> first = cast[0];
         Field<String>[] others = new Field[cast.length - 1];

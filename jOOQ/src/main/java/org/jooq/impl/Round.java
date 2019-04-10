@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
@@ -110,7 +111,7 @@ final class Round<T extends Number> extends AbstractFunction<T> {
                 if (decimals == 0)
                     return function("round", getDataType(), argument);
                 else
-                    return function("round", getDataType(), argument.cast(BigDecimal.class), val(decimals));
+                    return function("round", getDataType(), castIfNeeded(argument, BigDecimal.class), val(decimals));
             }
 
             // This is the optimal implementation by most RDBMS

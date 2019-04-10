@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -93,7 +94,7 @@ final class DateOrTime<T> extends AbstractFunction<T> {
             }
 
             default:
-                return field.cast(getDataType());
+                return castIfNeeded(field, getDataType());
         }
     }
 }

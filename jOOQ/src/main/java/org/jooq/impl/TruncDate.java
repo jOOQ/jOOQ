@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 
@@ -151,6 +152,9 @@ final class TruncDate<T> extends AbstractFunction<T> {
 //                    default: throwUnsupported();
 //                }
 //            }
+
+
+
 
 
 

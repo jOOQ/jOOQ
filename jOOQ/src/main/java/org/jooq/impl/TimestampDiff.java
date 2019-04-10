@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -144,6 +145,6 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
         }
 
         // Default implementation for equals() and hashCode()
-        return timestamp1.sub(timestamp2).cast(DayToSecond.class);
+        return castIfNeeded(timestamp1.sub(timestamp2), DayToSecond.class);
     }
 }

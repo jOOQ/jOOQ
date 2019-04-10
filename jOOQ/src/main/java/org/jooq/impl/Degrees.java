@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
@@ -76,7 +77,7 @@ final class Degrees extends AbstractFunction<BigDecimal> {
 
             case FIREBIRD:
             case SQLITE:
-                return argument.cast(BigDecimal.class).mul(inline(180)).div(pi());
+                return castIfNeeded(argument, BigDecimal.class).mul(inline(180)).div(pi());
 
             default:
                 return DSL.field("{degrees}({0})", SQLDataType.NUMERIC, argument);

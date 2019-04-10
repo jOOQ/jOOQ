@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -365,14 +366,14 @@ final class Extract extends AbstractFunction<Integer> {
     private final Field<Integer> getDefaultEmulation() {
         switch (datePart) {
             case DECADE:
-                return DSL.cast(DSL.year(field).div(inline(10)), INTEGER);
+                return castIfNeeded(DSL.year(field).div(inline(10)), INTEGER);
             case CENTURY:
-                return DSL.cast(
+                return castIfNeeded(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(99)))
                        .div(inline(100)), INTEGER);
             case MILLENNIUM:
-                return DSL.cast(
+                return castIfNeeded(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(999)))
                        .div(inline(1000)), INTEGER);

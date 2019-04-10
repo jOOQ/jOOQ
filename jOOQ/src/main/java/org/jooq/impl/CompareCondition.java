@@ -60,6 +60,7 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.isEmbeddable;
 
@@ -124,7 +125,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
                 && field1.getType() != String.class
                 && REQUIRES_CAST_ON_LIKE.contains(family)) {
 
-            lhs = lhs.cast(String.class);
+            lhs = castIfNeeded(lhs, String.class);
         }
 
         // [#1423] Only Postgres knows a true ILIKE operator. Other dialects

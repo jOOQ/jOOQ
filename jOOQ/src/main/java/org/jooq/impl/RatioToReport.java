@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
@@ -82,7 +83,7 @@ final class RatioToReport extends Function<BigDecimal> {
 
 
             default:
-                ctx.visit(field.cast((DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
+                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
                    .sql(" / ")
                    .visit(DSL.sum(field));
                 toSQLOverClause(ctx);

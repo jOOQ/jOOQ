@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.extractVal;
 
 import java.math.BigDecimal;
@@ -111,7 +112,13 @@ final class Trunc<T> extends AbstractFunction<T> {
 
 
             case POSTGRES:
-                return DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
+                return castIfNeeded(
+                    DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC,
+                        castIfNeeded(field, BigDecimal.class),
+                        decimals
+                    ),
+                    field.getDataType()
+                );
 
 
 

@@ -24,6 +24,19 @@
 
     <url>http://www.jooq.org</url>
 
+    <properties>
+
+        <!-- H2 is used by jOOQ-meta-extensions and a variety of integration tests -->
+        <h2.version>1.4.199</h2.version>
+
+        <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
+        <jaxb.version>2.3.0</jaxb.version>
+        <javax.activation.version>1.2.0</javax.activation.version>
+
+        <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
+        <javax.persistence-api.version>2.2</javax.persistence-api.version>
+    </properties>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -102,8 +115,26 @@
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
-                <version>2.3.0</version>
+                <version>${jaxb.version}</version>
             </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <!-- Optional logging dependency -->
             <dependency>
@@ -118,7 +149,7 @@
             <dependency>
                 <groupId>javax.persistence</groupId>
                 <artifactId>javax.persistence-api</artifactId>
-                <version>2.2</version>
+                <version>${javax.persistence-api.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
@@ -154,7 +185,7 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.199</version>
+                <version>${h2.version}</version>
             </dependency>
 
             <!-- jooq-meta-extensions and integration tests have this dependency -->

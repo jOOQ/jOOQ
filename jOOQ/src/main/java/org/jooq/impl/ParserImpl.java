@@ -1699,7 +1699,9 @@ final class ParserImpl implements Parser {
             throw ctx.expected("DEFAULT VALUES", "SELECT", "SET", "VALUES");
 
         if (parseKeywordIf(ctx, "ON")) {
-            if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE SET")) {
+            if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE")) {
+                parseKeywordIf(ctx, "SET");
+
                 InsertOnConflictWhereStep<?> where = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
 
                 if (parseKeywordIf(ctx, "WHERE"))

@@ -1140,7 +1140,11 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final void setConfiguredForcedTypes(List<ForcedType> configuredForcedTypes) {
-        this.configuredForcedTypes = configuredForcedTypes;
+
+        // [#8512] Some implementation of this database may have already configured
+        //         a forced type programmatically, so we must not set the list but
+        //         append it.
+        getConfiguredForcedTypes().addAll(configuredForcedTypes);
     }
 
     @Override

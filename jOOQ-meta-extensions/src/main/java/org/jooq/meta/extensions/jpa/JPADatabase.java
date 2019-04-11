@@ -203,9 +203,12 @@ public class JPADatabase extends H2Database {
             for (Entry<Name, AttributeConverter<?, ?>> entry : extractor.extract().entrySet()) {
                 Class<?> convertToEntityAttribute = null;
 
-                for (Method method : entry.getValue().getClass().getMethods())
-                    if ("convertToEntityAttribute".equals(method.getName()))
+                for (Method method : entry.getValue().getClass().getMethods()) {
+                    if (!method.isBridge() && "convertToEntityAttribute".equals(method.getName())) {
                         convertToEntityAttribute = method.getReturnType();
+                        break;
+                    }
+                }
 
                 if (convertToEntityAttribute == null) {
                     log.info("AttributeConverter", "Cannot use AttributeConverter: " + entry.getValue().getClass().getName());

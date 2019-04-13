@@ -913,7 +913,9 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public void setGenerateNewline(String newline) {
-        this.generateNewline = newline;
+        // [#6234] The character provided in the configuration may either be the
+        //         ASCII character itself, or an escaped version of it, such as "\\n"
+        this.generateNewline = newline == null ? newline : newline.replace("\\r", "\r").replace("\\n", "\n");
     }
 
     @Override

@@ -90,27 +90,27 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * other with {@link Operator#AND}.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> where(Condition condition);
+    InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
      * Add a <code>WHERE</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> where(Condition... conditions);
+    InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> where(Collection<? extends Condition> conditions);
+    InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> where(Field<Boolean> field);
+    InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -125,7 +125,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     @PlainSQL
-    InsertReturningStep<R> where(SQL sql);
+    InsertOnConflictConditionStep<R> where(SQL sql);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -140,7 +140,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     @PlainSQL
-    InsertReturningStep<R> where(String sql);
+    InsertOnConflictConditionStep<R> where(String sql);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -156,7 +156,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     @PlainSQL
-    InsertReturningStep<R> where(String sql, Object... bindings);
+    InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -172,17 +172,17 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     @PlainSQL
-    InsertReturningStep<R> where(String sql, QueryPart... parts);
+    InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> whereExists(Select<?> select);
+    InsertOnConflictConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
-    InsertReturningStep<R> whereNotExists(Select<?> select);
+    InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);
 }

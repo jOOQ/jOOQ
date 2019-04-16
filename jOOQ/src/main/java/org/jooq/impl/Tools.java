@@ -554,7 +554,12 @@ final class Tools {
         /**
          * [#8479] There is a WHERE clause to be emulated for ON DUPLICATE KEY
          */
-        DATA_ON_DUPLICATE_KEY_WHERE
+        DATA_ON_DUPLICATE_KEY_WHERE,
+
+        /**
+         * [#3607] [#8522] CTEs that need to be added to the top level CTE section.
+         */
+        DATA_TOP_LEVEL_CTE
     }
 
     /**

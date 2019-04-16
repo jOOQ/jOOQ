@@ -50,6 +50,7 @@ import java.util.ListIterator;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
+import org.jooq.Statement;
 
 /**
  * @author Lukas Eder
@@ -116,8 +117,12 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
                 if (i > 0 || indent)
                     ctx.formatNewLine();
 
-                ctx.visit(get(i));
-                separator = ", ";
+                T part = get(i);
+                ctx.visit(part);
+
+                // [#3607] Procedures and functions are not separated by comma
+                if (!(part instanceof Statement))
+                    separator = ", ";
             }
 
             if (indent)

@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
@@ -66,20 +67,25 @@ import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_FUNCTION;
 import static org.jooq.impl.Keywords.K_IS;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_RECORD;
+import static org.jooq.impl.Keywords.K_RETURN;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -121,6 +127,7 @@ import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Statement;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -1141,7 +1148,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         ctx.visit(value);
     }
 
-    private final void toSQLQualifiedName(RenderContext ctx) {
+    private final void toSQLQualifiedName(Context<?> ctx) {
         if (ctx.qualify()) {
             Schema mapped = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
@@ -1650,14 +1657,127 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                   : AbstractRoutine.this.type);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         public void accept(Context<?> ctx) {
-            RenderContext local = create(ctx).renderContext();
-            toSQLQualifiedName(local);
-
             SQLDialect family = ctx.family();
+
+            String name;
+            DataType<?> returnType;
             List<Field<?>> fields = new ArrayList<Field<?>>(getInParameters().size());
+
+
+
+
+
+
+            returnType = getDataType();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {
+                RenderContext local = create(ctx).renderContext();
+                toSQLQualifiedName(local);
+                name = local.render();
+            }
+
             for (Parameter<?> parameter : getInParameters()) {
 
                 // [#1183] [#3533] Skip defaulted parameters
@@ -1678,12 +1798,15 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                             fields.add(DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
                             fields.add(DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+
+
+
+
                 else
                     fields.add(getInValues().get(parameter));
             }
 
-            Field<T> result = function(local.render(), getDataType(), fields.toArray(EMPTY_FIELD));
-
+            Field<?> result = function(name, returnType, fields.toArray(EMPTY_FIELD));
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
             if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions()))
@@ -1691,5 +1814,33 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
             ctx.visit(result);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

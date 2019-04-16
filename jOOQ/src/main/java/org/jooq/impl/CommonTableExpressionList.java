@@ -37,7 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
+import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
+
 import org.jooq.CommonTableExpression;
+import org.jooq.Context;
 
 /**
  * A list of {@link CommonTableExpression} query parts.
@@ -50,6 +54,19 @@ final class CommonTableExpressionList extends QueryPartList<CommonTableExpressio
      * Generated UID
      */
     private static final long serialVersionUID = 4284724883554582081L;
+
+    @Override
+    public void accept(Context<?> ctx) {
+        if (ctx.subqueryLevel() == 0)
+            ctx.scopeMarkStart(BEFORE_FIRST_TOP_LEVEL_CTE)
+               .scopeMarkEnd(BEFORE_FIRST_TOP_LEVEL_CTE);
+
+        super.accept(ctx);
+
+        if (ctx.subqueryLevel() == 0)
+            ctx.scopeMarkStart(AFTER_LAST_TOP_LEVEL_CTE)
+               .scopeMarkEnd(AFTER_LAST_TOP_LEVEL_CTE);
+    }
 
     @Override
     public final boolean declaresCTE() {

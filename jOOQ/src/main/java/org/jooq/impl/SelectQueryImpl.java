@@ -126,6 +126,8 @@ import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_LOCK;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
+import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
+import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
@@ -140,6 +142,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.sql.ResultSetMetaData;
@@ -510,6 +513,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         for (Table<?> table : getFrom())
             registerTable(context, table);
 
+        if (context.subqueryLevel() == 0)
+            context.data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
+
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
 
@@ -538,6 +544,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (with != null)
                 context.visit(with).formatSeparator();
+            else if (context.subqueryLevel() == 0)
+                context.scopeMarkStart(BEFORE_FIRST_TOP_LEVEL_CTE)
+                       .scopeMarkEnd(BEFORE_FIRST_TOP_LEVEL_CTE)
+                       .scopeMarkStart(AFTER_LAST_TOP_LEVEL_CTE)
+                       .scopeMarkEnd(AFTER_LAST_TOP_LEVEL_CTE);
 
             pushWindow(context);
 

@@ -47,7 +47,11 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Keywords.K_WITH;
+import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
+import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -221,16 +225,56 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     void scopeEnd0() {
+
+        // TODO: Think about a more appropriate location for this logic, rather
+        // than the generic DefaultRenderContext, which shouldn't know anything
+        // about the individual query parts that it is rendering.
+        TopLevelCte cte = null;
+        ScopeStackElement beforeFirstCte = null;
+        ScopeStackElement afterLastCte = null;
+
+        if (subqueryLevel() == 0
+                && (cte = (TopLevelCte) data(DATA_TOP_LEVEL_CTE)) != null
+                && !cte.isEmpty()) {
+            beforeFirstCte = scopeStack.get(BEFORE_FIRST_TOP_LEVEL_CTE);
+            afterLastCte = scopeStack.get(AFTER_LAST_TOP_LEVEL_CTE);
+        }
+
         outer:
         for (ScopeStackElement e1 : scopeStack) {
-            if (e1.positions == null || e1.joinNode == null)
-                continue outer;
+            String replaced = null;
 
-            if (!e1.joinNode.children.isEmpty()) {
-                String replaced = configuration
+            if (e1.positions == null) {
+                continue outer;
+            }
+            else if (e1 == beforeFirstCte) {
+                boolean single = cte != null && cte.size() == 1;
+                RenderContext render = configuration.dsl().renderContext();
+
+                // There is no WITH clause
+                if (afterLastCte != null && e1.positions[0] == afterLastCte.positions[0])
+                    render.visit(K_WITH);
+
+                if (single)
+                    render.formatIndentStart()
+                          .formatSeparator();
+                else
+                    render.sql(' ');
+
+                render.declareCTE(true).visit(cte).declareCTE(false);
+
+                if (single)
+                    render.formatIndentEnd();
+
+                replaced = render.render();
+            }
+            else if (e1.joinNode == null) {
+                continue outer;
+            }
+            else if (!e1.joinNode.children.isEmpty()) {
+                replaced = configuration
                     .dsl()
                     .renderContext()
                     .declareTables(true)
@@ -242,7 +286,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     .formatNewLine()
                     .sql(')')
                     .render();
+            }
 
+            if (replaced != null) {
                 sql.replace(e1.positions[0], e1.positions[1], replaced);
                 int shift = replaced.length() - (e1.positions[1] - e1.positions[0]);
 

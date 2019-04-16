@@ -45,11 +45,19 @@ public class ForcedType implements Serializable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String excludeExpression;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String includeExpression;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expressions;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String sql;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String excludeTypes;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String includeTypes;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String types;
     @XmlElement(defaultValue = "ALL")
@@ -184,8 +192,58 @@ public class ForcedType implements Serializable
 
     /**
      * A Java regular expression matching columns, parameters, attributes,
-     * etc to be forced to have this type. If provided, both "expressions" and
-     * "types" must match.
+     * etc. which must not have this type. Excludes match before includes, i.e.
+     * excludes have a higher priority.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getExcludeExpression() {
+        return excludeExpression;
+    }
+
+    /**
+     * Sets the value of the excludeExpression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setExcludeExpression(String value) {
+        this.excludeExpression = value;
+    }
+
+    /**
+     * A Java regular expression matching columns, parameters, attributes,
+     * etc. to be forced to have this type. If provided, both "includeExpression" and
+     * "includeTypes" must match.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getIncludeExpression() {
+        return includeExpression;
+    }
+
+    /**
+     * Sets the value of the includeExpression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setIncludeExpression(String value) {
+        this.includeExpression = value;
+    }
+
+    /**
+     * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
      *
      * @return
      *     possible object is
@@ -209,7 +267,7 @@ public class ForcedType implements Serializable
     }
 
     /**
-     * The same as expression. This is kept for backwards compatibility reasons.
+     * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
      *
      * @return
      *     possible object is
@@ -257,8 +315,58 @@ public class ForcedType implements Serializable
     }
 
     /**
+     * A Java regular expression matching data types
+     * which must not have this type. Excludes match before includes, i.e.
+     * excludes have a higher priority.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getExcludeTypes() {
+        return excludeTypes;
+    }
+
+    /**
+     * Sets the value of the excludeTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setExcludeTypes(String value) {
+        this.excludeTypes = value;
+    }
+
+    /**
      * A Java regular expression matching data types to be forced to have this
-     * type. If provided, both "expression" and "types" must match.
+     * type. If provided, both "includeExpression" and "includeTypes" must match.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getIncludeTypes() {
+        return includeTypes;
+    }
+
+    /**
+     * Sets the value of the includeTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setIncludeTypes(String value) {
+        this.includeTypes = value;
+    }
+
+    /**
+     * The same as {@link #getIncludeTypes()}. This is kept for backwards compatibility reasons.
      *
      * @return
      *     possible object is
@@ -354,6 +462,16 @@ public class ForcedType implements Serializable
         return this;
     }
 
+    public ForcedType withExcludeExpression(String value) {
+        setExcludeExpression(value);
+        return this;
+    }
+
+    public ForcedType withIncludeExpression(String value) {
+        setIncludeExpression(value);
+        return this;
+    }
+
     public ForcedType withExpression(String value) {
         setExpression(value);
         return this;
@@ -366,6 +484,16 @@ public class ForcedType implements Serializable
 
     public ForcedType withSql(String value) {
         setSql(value);
+        return this;
+    }
+
+    public ForcedType withExcludeTypes(String value) {
+        setExcludeTypes(value);
+        return this;
+    }
+
+    public ForcedType withIncludeTypes(String value) {
+        setIncludeTypes(value);
         return this;
     }
 
@@ -412,6 +540,16 @@ public class ForcedType implements Serializable
             sb.append(binding);
             sb.append("</binding>");
         }
+        if ((excludeExpression!= null)&&(!"".equals(excludeExpression))) {
+            sb.append("<excludeExpression>");
+            sb.append(excludeExpression);
+            sb.append("</excludeExpression>");
+        }
+        if ((includeExpression!= null)&&(!"".equals(includeExpression))) {
+            sb.append("<includeExpression>");
+            sb.append(includeExpression);
+            sb.append("</includeExpression>");
+        }
         if ((expression!= null)&&(!"".equals(expression))) {
             sb.append("<expression>");
             sb.append(expression);
@@ -426,6 +564,16 @@ public class ForcedType implements Serializable
             sb.append("<sql>");
             sb.append(sql);
             sb.append("</sql>");
+        }
+        if ((excludeTypes!= null)&&(!"".equals(excludeTypes))) {
+            sb.append("<excludeTypes>");
+            sb.append(excludeTypes);
+            sb.append("</excludeTypes>");
+        }
+        if ((includeTypes!= null)&&(!"".equals(includeTypes))) {
+            sb.append("<includeTypes>");
+            sb.append(includeTypes);
+            sb.append("</includeTypes>");
         }
         if ((types!= null)&&(!"".equals(types))) {
             sb.append("<types>");
@@ -502,6 +650,24 @@ public class ForcedType implements Serializable
                 return false;
             }
         }
+        if (excludeExpression == null) {
+            if (other.excludeExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!excludeExpression.equals(other.excludeExpression)) {
+                return false;
+            }
+        }
+        if (includeExpression == null) {
+            if (other.includeExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!includeExpression.equals(other.includeExpression)) {
+                return false;
+            }
+        }
         if (expression == null) {
             if (other.expression!= null) {
                 return false;
@@ -526,6 +692,24 @@ public class ForcedType implements Serializable
             }
         } else {
             if (!sql.equals(other.sql)) {
+                return false;
+            }
+        }
+        if (excludeTypes == null) {
+            if (other.excludeTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!excludeTypes.equals(other.excludeTypes)) {
+                return false;
+            }
+        }
+        if (includeTypes == null) {
+            if (other.includeTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!includeTypes.equals(other.includeTypes)) {
                 return false;
             }
         }
@@ -568,9 +752,13 @@ public class ForcedType implements Serializable
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
+        result = ((prime*result)+((excludeExpression == null)? 0 :excludeExpression.hashCode()));
+        result = ((prime*result)+((includeExpression == null)? 0 :includeExpression.hashCode()));
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
         result = ((prime*result)+((expressions == null)? 0 :expressions.hashCode()));
         result = ((prime*result)+((sql == null)? 0 :sql.hashCode()));
+        result = ((prime*result)+((excludeTypes == null)? 0 :excludeTypes.hashCode()));
+        result = ((prime*result)+((includeTypes == null)? 0 :includeTypes.hashCode()));
         result = ((prime*result)+((types == null)? 0 :types.hashCode()));
         result = ((prime*result)+((nullability == null)? 0 :nullability.hashCode()));
         result = ((prime*result)+((objectType == null)? 0 :objectType.hashCode()));

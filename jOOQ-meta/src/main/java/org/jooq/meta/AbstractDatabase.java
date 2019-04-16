@@ -1089,9 +1089,21 @@ public abstract class AbstractDatabase implements Database {
             ForcedType type = it2.next();
 
             if (type.getExpressions() != null) {
-                type.setExpression(type.getExpressions());
+                type.setIncludeExpression(type.getExpressions());
                 type.setExpressions(null);
-                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <expression/> instead: " + type);
+                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
+            }
+
+            if (type.getExpression() != null) {
+                type.setIncludeExpression(type.getExpression());
+                type.setExpression(null);
+                log.warn("DEPRECATED", "The <expression/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
+            }
+
+            if (type.getTypes() != null) {
+                type.setIncludeTypes(type.getTypes());
+                type.setTypes(null);
+                log.warn("DEPRECATED", "The <types/> element in <forcedType/> is deprecated. Use <includeTypes/> instead: " + type);
             }
 
             if (StringUtils.isBlank(type.getName())) {
@@ -1480,8 +1492,10 @@ public abstract class AbstractDatabase implements Database {
         // [#5885] Only the first matching <forcedType/> is applied to the data type definition.
         forcedTypeLoop:
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
-            String expression = StringUtils.defaultIfNull(forcedType.getExpressions(), forcedType.getExpression());
-            String types = forcedType.getTypes();
+            String excludeExpression = forcedType.getExcludeExpression();
+            String includeExpression = StringUtils.firstNonNull(forcedType.getIncludeExpression(), forcedType.getExpression(), forcedType.getExpressions());
+            String excludeTypes = forcedType.getExcludeTypes();
+            String includeTypes = StringUtils.firstNonNull(forcedType.getIncludeTypes(), forcedType.getTypes());
             Nullability nullability = forcedType.getNullability();
             ForcedTypeObjectType objectType = forcedType.getObjectType();
             String sql = forcedType.getSql();
@@ -1499,30 +1513,18 @@ public abstract class AbstractDatabase implements Database {
                  ||  (nullability == Nullability.NULL && !definedType.isNullable())))
                 continue forcedTypeLoop;
 
-            if (expression != null)
-                if (!matches(patterns.pattern(expression), definition))
-                    continue forcedTypeLoop;
+            if (     (excludeExpression != null || includeExpression != null)
+                 &&  filterExcludeInclude(
+                         Collections.singletonList(definition),
+                         new String[] { excludeExpression },
+                         new String[] { includeExpression != null ? includeExpression : ".*" },
+                         getFilters()
+                     ).isEmpty())
+                continue forcedTypeLoop;
 
-            if (types != null && definedType != null) {
-                Pattern p = patterns.pattern(types);
-
-                if (    ( !p.matcher(definedType.getType()).matches() )
-                     && (     definedType.getLength() == 0
-                     ||   !p.matcher(definedType.getType() + "(" + definedType.getLength() + ")").matches())
-                     && (     definedType.getScale() != 0
-                     ||   !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ")").matches())
-                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + "," + definedType.getScale() + ")").matches() )
-                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches() )
-
-                     // [#5872] We should match user-defined types as well, in case of which the type might be reported
-                     //         as USER-DEFINED (in PostgreSQL)
-                     && ( StringUtils.isBlank(definedType.getUserType())
-                     ||   !p.matcher(definedType.getUserType()).matches()
-                     &&   !p.matcher(definedType.getQualifiedUserType().unquotedName().toString()).matches() )
-                ) {
-                    continue forcedTypeLoop;
-                }
-            }
+            if (    (definedType != null && (excludeTypes != null || includeTypes != null))
+                 && !typeMatchesExcludeInclude(definedType, excludeTypes, includeTypes))
+                continue forcedTypeLoop;
 
             if (sql != null)
                 if (!matches(statements.fetchSet(sql), definition))
@@ -1532,6 +1534,30 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return null;
+    }
+
+    private boolean typeMatchesExcludeInclude(DataTypeDefinition type, String exclude, String include) {
+        if (exclude != null && matches(type, patterns.pattern(exclude)))
+            return false;
+
+        return include == null || matches(type, patterns.pattern(include));
+    }
+
+    private boolean matches(DataTypeDefinition type, Pattern pattern) {
+        return  ( pattern.matcher(type.getType()).matches() )
+             || (     type.getLength() != 0
+             &&   pattern.matcher(type.getType() + "(" + type.getLength() + ")").matches() )
+             || (     type.getScale() == 0
+             &&   pattern.matcher(type.getType() + "(" + type.getPrecision() + ")").matches() )
+             || ( pattern.matcher(type.getType() + "(" + type.getPrecision() + "," + type.getScale() + ")").matches() )
+             || ( pattern.matcher(type.getType() + "(" + type.getPrecision() + ", " + type.getScale() + ")").matches() )
+
+             // [#5872] We should match user-defined types as well, in case of which the type might be reported
+             //         as USER-DEFINED (in PostgreSQL)
+             || ( !StringUtils.isBlank(type.getUserType())
+             && ( pattern.matcher(type.getUserType()).matches()
+             ||   pattern.matcher(type.getQualifiedUserType().unquotedName().toString()).matches() )
+            );
     }
 
     @Override

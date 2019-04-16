@@ -1302,6 +1302,22 @@ public final class StringUtils {
         return object != null ? object : defaultValue;
     }
 
+    /**
+     * <p>Returns the first non-{@code null} argument.</p>
+     *
+     * @param <T> the type of the objects
+     * @param objects  the elements to test, may not be {@code null} but empty
+     * @return first non-{@code null} element in {@code objects}, otherwise {@code null}
+     */
+     @SafeVarargs
+    public static <T> T firstNonNull(T... objects) {
+        for (T object : objects) {
+            if (object != null)
+                return object;
+        }
+        return null;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: The following methods are not part of Apache's commons-lang library
     // -------------------------------------------------------------------------

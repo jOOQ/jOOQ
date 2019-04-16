@@ -344,7 +344,7 @@
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for enum names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="expression" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This sequence matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="enumClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
@@ -935,23 +935,43 @@ or {@link #getBinding()} is required]]></jxb:javadoc></jxb:property></appinfo></
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Binding} implementation for the custom type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+      <element name="excludeExpression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching columns, parameters, attributes,
-etc to be forced to have this type. If provided, both "expressions" and
-"types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+etc. which must not have this type. Excludes match before includes, i.e.
+excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="includeExpression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching columns, parameters, attributes,
+etc. to be forced to have this type. If provided, both "includeExpression" and
+"includeTypes" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="expressions" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as expression. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="sql" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="types" type="string" minOccurs="0" maxOccurs="1">
+      <element name="excludeTypes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching data types
+which must not have this type. Excludes match before includes, i.e.
+excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="includeTypes" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A Java regular expression matching data types to be forced to have this
-type. If provided, both "expression" and "types" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+type. If provided, both "includeExpression" and "includeTypes" must match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="types" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as {@link #getIncludeTypes()}. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="nullability" type="tns:Nullability" default="ALL" minOccurs="0" maxOccurs="1">

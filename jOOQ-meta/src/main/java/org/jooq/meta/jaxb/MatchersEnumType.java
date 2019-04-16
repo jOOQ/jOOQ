@@ -40,7 +40,7 @@ public class MatchersEnumType implements Serializable
     protected String enumImplements;
 
     /**
-     * This sequence matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
+     * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
      *
      * @return
      *     possible object is

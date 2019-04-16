@@ -59,7 +59,7 @@ import org.jooq.impl.DSL;
  *       .values(value3, value4)
  *       .onDuplicateKeyUpdate()
  *       .set(field1, value1)
- *       .set(field2, value2)
+ *       .where(field2.eq(value5))
  *       .execute();
  * </pre></code>
  * <p>
@@ -86,34 +86,38 @@ import org.jooq.impl.DSL;
 public interface InsertOnConflictWhereStep<R extends Record> extends InsertReturningStep<R> {
 
     /**
-     * Add a <code>WHERE</code> clause to the query, connecting them with each
-     * other with {@link Operator#AND}.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
-     * Add a <code>WHERE</code> clause to the query, connecting them with each
-     * other with {@link Operator#AND}.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
+     * connecting them with each other using {@link Operator#AND}.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add a <code>WHERE</code> clause to the query, connecting them with each
-     * other with {@link Operator#AND}.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
+     * connecting them with each other using {@link Operator#AND}.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -128,7 +132,8 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     InsertOnConflictConditionStep<R> where(SQL sql);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -143,7 +148,8 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     InsertOnConflictConditionStep<R> where(String sql);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -159,7 +165,8 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -175,13 +182,15 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 
     /**
-     * Add a <code>WHERE EXISTS</code> clause to the query.
+     * Add a <code>WHERE EXISTS</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> whereExists(Select<?> select);
 
     /**
-     * Add a <code>WHERE NOT EXISTS</code> clause to the query.
+     * Add a <code>WHERE NOT EXISTS</code> clause to the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @Support({ CUBRID, DERBY, POSTGRES_9_5 })
     InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);

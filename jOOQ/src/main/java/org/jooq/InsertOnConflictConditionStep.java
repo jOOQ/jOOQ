@@ -53,7 +53,8 @@ import org.jooq.impl.DSL;
  *       .values(value3, value4)
  *       .onDuplicateKeyUpdate()
  *       .set(field1, value1)
- *       .set(field2, value2)
+ *       .where(field2.eq(value5))
+ *       .or(field2.eq(value6))
  *       .execute();
  * </pre></code>
  * <p>

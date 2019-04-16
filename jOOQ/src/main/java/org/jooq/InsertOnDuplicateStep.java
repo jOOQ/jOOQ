@@ -93,25 +93,25 @@ import java.util.Collection;
 public interface InsertOnDuplicateStep<R extends Record> extends InsertReturningStep<R> {
 
     /**
-     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
 
     /**
-     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
 
     /**
-     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this query.
+     * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
     @Support
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(UniqueKey<R> constraint);
 
     /**
-     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     * Add an <code>ON CONFLICT</code> clause to this INSERT statement.
      * <p>
      * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
      * other dialects can emulate it using <code>MERGE</code>, if table meta
@@ -121,7 +121,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
 
     /**
-     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     * Add an <code>ON CONFLICT</code> clause to this INSERT statement.
      * <p>
      * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
      * other dialects can emulate it using <code>MERGE</code>, if table meta
@@ -131,7 +131,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
-     * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.
+     * Add an <code>ON CONFLICT DO NOTHING</code> clause to this INSERT statement.
      * <p>
      * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
      * other dialects can emulate it using <code>MERGE</code>, if table meta
@@ -141,7 +141,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     InsertReturningStep<R> onConflictDoNothing();
 
     /**
-     * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.
+     * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this INSERT statement.
      * <p>
      * This will try to <code>INSERT</code> a record. If there is a primary key
      * or unique key in this <code>INSERT</code> statement's affected table that
@@ -164,7 +164,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**
-     * Add an <code>ON DUPLICATE KEY IGNORE</code> clause to this insert query.
+     * Add an <code>ON DUPLICATE KEY IGNORE</code> clause to this INSERT statement.
      * <p>
      * This will try to <code>INSERT</code> a record. If there is a primary key
      * or unique key in this <code>INSERT</code> statement's affected table that

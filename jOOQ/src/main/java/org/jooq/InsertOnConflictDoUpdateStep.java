@@ -58,9 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
  *
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
- *       .values(value3, value4)
- *       .onDuplicateKeyUpdate()
- *       .set(field1, value1)
+ *       .onConflict(field1)
  *       .set(field2, value2)
  *       .execute();
  * </pre></code>
@@ -77,7 +75,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**
-     * Add the <code>DO IGNORE</code> clause.
+     * Add the <code>DO NOTHING</code> clause.
      */
     @Support
     InsertReturningStep<R> doNothing();

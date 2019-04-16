@@ -152,8 +152,12 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 Select<Record> select =
                     select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
-                context.sql('(').formatIndentStart().formatNewLine()
-                       .visit(select).formatIndentEnd().formatNewLine()
+                context.sql('(')
+                       .formatIndentStart().formatNewLine()
+                       .subquery(true)
+                       .visit(select)
+                       .subquery(false)
+                       .formatIndentEnd().formatNewLine()
                        .sql(')');
             }
 
@@ -196,8 +200,12 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 );
 
-                context.sql('(').formatIndentStart().formatNewLine()
-                       .visit(select).formatIndentEnd().formatNewLine()
+                context.sql('(')
+                       .formatIndentStart().formatNewLine()
+                       .subquery(true)
+                       .visit(select)
+                       .subquery(false)
+                       .formatIndentEnd().formatNewLine()
                        .sql(')');
             }
 

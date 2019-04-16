@@ -368,6 +368,9 @@ public class MiniJAXB {
         Class<T> klass = (Class<T>) first.getClass();
         if (klass != second.getClass())
             throw new IllegalArgumentException("Can only append identical types");
+        // [#8527] support enum types
+        else if (klass.isEnum())
+            return first;
 
         // We're assuming that XJC generated objects are all in the same package
         Package pkg = klass.getPackage();

@@ -12,6 +12,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row1;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -30,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = -626066612;
+    private static final long serialVersionUID = 365689567;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -145,5 +146,17 @@ public class BookStore extends TableImpl<BookStoreRecord> {
     @Override
     public BookStore rename(Name name) {
         return new BookStore(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row1 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row1<String> fieldsRow() {
+        return (Row1) super.fieldsRow();
     }
 }

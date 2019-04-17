@@ -14,6 +14,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row11;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -1247107780;
+    private static final long serialVersionUID = -1946957800;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -221,5 +222,17 @@ public class Book extends TableImpl<BookRecord> {
     @Override
     public Book rename(Name name) {
         return new Book(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row11 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp> fieldsRow() {
+        return (Row11) super.fieldsRow();
     }
 }

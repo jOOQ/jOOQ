@@ -14,6 +14,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -691260260;
+    private static final long serialVersionUID = 670209307;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -180,5 +181,17 @@ public class Author extends TableImpl<AuthorRecord> {
     @Override
     public Author rename(Name name) {
         return new Author(name, null);
+    }
+
+    // -------------------------------------------------------------------------
+    // Row6 type methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Row6<Integer, String, String, Date, Integer, String> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

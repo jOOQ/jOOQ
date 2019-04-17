@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.3.7.Final</org.hibernate.version>
+        <org.hibernate.version>5.4.2.Final</org.hibernate.version>
     </properties>
 
     <dependencies>

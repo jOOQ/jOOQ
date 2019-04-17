@@ -9462,10 +9462,10 @@ public class DSL {
         if (name.getName().length < 1 || name.getName().length > 2)
             throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name);
 
-        String n = name.getName()[name.getName().length - 1];
-        Schema s = name.getName().length == 2 ? schema(name(name.getName()[0])) : null;
+        Name n = name.unqualifiedName();
+        Schema s = name.parts().length == 2 ? schema(name.qualifier()) : null;
 
-        return new SequenceImpl<T>(n, s, type);
+        return new SequenceImpl<T>(n, s, type, false);
     }
 
     /**

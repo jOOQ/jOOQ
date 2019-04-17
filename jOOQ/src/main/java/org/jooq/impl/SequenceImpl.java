@@ -52,6 +52,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -73,7 +74,6 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     private static final long     serialVersionUID = 6224349401603636427L;
     private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    final String                  name;
     final boolean                 nameIsPlainSQL;
     final Schema                  schema;
     final DataType<T>             type;
@@ -83,9 +83,12 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
-        super(qualify(schema, DSL.name(name)), CommentImpl.NO_COMMENT);
+        this(DSL.name(name), schema, type, nameIsPlainSQL);
+    }
 
-        this.name = name;
+    SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
+        super(qualify(schema, name), CommentImpl.NO_COMMENT);
+
         this.schema = schema;
         this.type = type;
         this.nameIsPlainSQL = nameIsPlainSQL;
@@ -241,11 +244,11 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                    .sql('.');
 
         if (asStringLiterals)
-            ctx.visit(inline(name));
+            ctx.visit(inline(getName()));
         else if (nameIsPlainSQL)
-            ctx.sql(name);
+            ctx.sql(getName());
         else
-            ctx.literal(name);
+            ctx.visit(getUnqualifiedName());
     }
 
     @Override

@@ -4886,30 +4886,26 @@ public class JavaGenerator extends AbstractGenerator {
             String glue1 = generateNewline();
 
             for (UniqueKeyDefinition uk : table.getUniqueKeys()) {
+                sb1.append(glue1);
+                sb1.append("\t")
+                   .append(scala ? "new " : "@")
 
-                // Single-column keys are annotated on the column itself
-                if (uk.getKeyColumns().size() > 1) {
-                    sb1.append(glue1);
-                    sb1.append("\t")
-                       .append(scala ? "new " : "@")
+                   // Since JPA 1.0
+                   .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
 
-                       // Since JPA 1.0
-                       .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
+                String glue1Inner = "";
+                for (ColumnDefinition column : uk.getKeyColumns()) {
+                    sb1.append(glue1Inner);
+                    sb1.append("\"");
+                    sb1.append(column.getName().replace("\"", "\\\""));
+                    sb1.append("\"");
 
-                    String glue1Inner = "";
-                    for (ColumnDefinition column : uk.getKeyColumns()) {
-                        sb1.append(glue1Inner);
-                        sb1.append("\"");
-                        sb1.append(column.getName().replace("\"", "\\\""));
-                        sb1.append("\"");
-
-                        glue1Inner = ", ";
-                    }
-
-                    sb1.append(scala ? ")" : "}").append(")");
-
-                    glue1 = "," + generateNewline();
+                    glue1Inner = ", ";
                 }
+
+                sb1.append(scala ? ")" : "}").append(")");
+
+                glue1 = "," + generateNewline();
             }
 
             if (sb1.length() > 0) {
@@ -4967,7 +4963,6 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printColumnJPAAnnotation(JavaWriter out, ColumnDefinition column) {
         if (generateJPAAnnotations()) {
             UniqueKeyDefinition pk = column.getPrimaryKey();
-            List<UniqueKeyDefinition> uks = column.getUniqueKeys();
 
             if (pk != null) {
                 if (pk.getKeyColumns().size() == 1) {
@@ -4980,14 +4975,6 @@ public class JavaGenerator extends AbstractGenerator {
                         out.tab(1).println("@%s(strategy = %s.IDENTITY)",
                             out.ref("javax.persistence.GeneratedValue"),
                             out.ref("javax.persistence.GenerationType"));
-                }
-            }
-
-            String unique = "";
-            for (UniqueKeyDefinition uk : uks) {
-                if (uk.getKeyColumns().size() == 1) {
-                    unique = ", unique = true";
-                    break;
                 }
             }
 
@@ -5011,11 +4998,13 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
+            // [#8535] The unique flag is not set on the column, but only on
+            //         the table's @UniqueConstraint section.
+
             // Since JPA 1.0
             out.print("\t@%s(name = \"", out.ref("javax.persistence.Column"));
             out.print(column.getName().replace("\"", "\\\""));
             out.print("\"");
-            out.print(unique);
             out.print(nullable);
             out.print(length);
             out.print(precision);

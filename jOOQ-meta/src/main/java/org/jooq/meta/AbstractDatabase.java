@@ -1513,13 +1513,10 @@ public abstract class AbstractDatabase implements Database {
                  ||  (nullability == Nullability.NULL && !definedType.isNullable())))
                 continue forcedTypeLoop;
 
-            if (     (excludeExpression != null || includeExpression != null)
-                 &&  filterExcludeInclude(
-                         Collections.singletonList(definition),
-                         new String[] { excludeExpression },
-                         new String[] { includeExpression != null ? includeExpression : ".*" },
-                         getFilters()
-                     ).isEmpty())
+            if (excludeExpression != null && matches(patterns.pattern(excludeExpression), definition))
+                continue forcedTypeLoop;
+
+            if (includeExpression != null && !matches(patterns.pattern(includeExpression), definition))
                 continue forcedTypeLoop;
 
             if (    (definedType != null && (excludeTypes != null || includeTypes != null))

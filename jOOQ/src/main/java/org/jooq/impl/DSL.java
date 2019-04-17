@@ -9230,19 +9230,67 @@ public class DSL {
      * still prefer to associate a {@link Field} type with your
      * <code>DEFAULT</code> value. In that case, use
      * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
+     * <p>
+     * This is an alias for {@link #default_()}.
+     *
+     * @see #default_()
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Object> defaultValue() {
-        return defaultValue(Object.class);
+        return default_();
     }
 
     /**
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * This is an alias for {@link #default_(Class)}.
+     *
+     * @see #default_(Class)
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> defaultValue(Class<T> type) {
-        return defaultValue(getDataType(type));
+        return default_(type);
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * This is an alias for {@link #default_(DataType)}.
+     *
+     * @see #default_(DataType)
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T> Field<T> defaultValue(DataType<T> type) {
+        return default_(type);
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * This is an alias for {@link #default_(Field)}.
+     *
+     * @see #default_(Field)
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T> Field<T> defaultValue(Field<T> field) {
+        return default_(field);
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * While the <code>DEFAULT</code> keyword works with all data types, you may
+     * still prefer to associate a {@link Field} type with your
+     * <code>DEFAULT</code> value. In that case, use
+     * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Object> default_() {
+        return default_(Object.class);
     }
 
     /**
@@ -9250,7 +9298,16 @@ public class DSL {
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T> Field<T> defaultValue(DataType<T> type) {
+    public static <T> Field<T> default_(Class<T> type) {
+        return default_(getDataType(type));
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T> Field<T> default_(DataType<T> type) {
         return new SQLField<T>(type, keyword("default"));
     }
 
@@ -9259,7 +9316,7 @@ public class DSL {
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T> Field<T> defaultValue(Field<T> field) {
+    public static <T> Field<T> default_(Field<T> field) {
         return new SQLField<T>(field.getDataType(), keyword("default"));
     }
 

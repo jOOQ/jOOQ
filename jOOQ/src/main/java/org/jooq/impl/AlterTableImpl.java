@@ -539,11 +539,21 @@ final class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl defaultValue(Object literal) {
-        return defaultValue(Tools.field(literal));
+        return default_(literal);
     }
 
     @Override
     public final AlterTableImpl defaultValue(Field expression) {
+        return default_(expression);
+    }
+
+    @Override
+    public final AlterTableImpl default_(Object literal) {
+        return default_(Tools.field(literal));
+    }
+
+    @Override
+    public final AlterTableImpl default_(Field expression) {
         alterColumnDefault = expression;
         return this;
     }

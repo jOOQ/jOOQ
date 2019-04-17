@@ -410,16 +410,31 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaultValue(T d) {
-        return defaultValue(Tools.field(d, this));
+        return default_(d);
     }
 
     @Override
     public final DataType<T> defaultValue(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullability, collation, d != null ? false : identity, d);
+        return default_(d);
     }
 
     @Override
     public final Field<T> defaultValue() {
+        return default_();
+    }
+
+    @Override
+    public final DataType<T> default_(T d) {
+        return default_(Tools.field(d, this));
+    }
+
+    @Override
+    public final DataType<T> default_(Field<T> d) {
+        return new DefaultDataType<T>(this, precision, scale, length, nullability, collation, d != null ? false : identity, d);
+    }
+
+    @Override
+    public final Field<T> default_() {
         return defaultValue;
     }
 

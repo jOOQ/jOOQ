@@ -277,6 +277,8 @@ public interface DataType<T> extends Serializable {
      * this data type.
      * <p>
      * [#5709] A <code>defaulted</code> column cannot have an {@link #identity()}.
+     * <p>
+     * This is an alias for {@link #default_(Object)}.
      *
      * @see #defaultValue(Field)
      */
@@ -295,8 +297,48 @@ public interface DataType<T> extends Serializable {
      * The distinct types of possible <code>DEFAULT</code> expressions is
      * defined by the underlying database. Please refer to your database manual
      * to learn what expressions are possible.
+     * <p>
+     * This is an alias for {@link #default_(Field)}.
      */
     DataType<T> defaultValue(Field<T> defaultValue);
+
+    /**
+     * The expression to be applied as the <code>DEFAULT</code> value for this
+     * data type.
+     * <p>
+     * This is an alias for {@link #default_()}.
+     *
+     * @return The default value if present, or <code>null</code> if no default
+     *         value is specified for this data type.
+     * @see #defaultValue(Field)
+     */
+    Field<T> defaultValue();
+
+    /**
+     * Specify an expression to be applied as the <code>DEFAULT</code> value for
+     * this data type.
+     * <p>
+     * [#5709] A <code>defaulted</code> column cannot have an {@link #identity()}.
+     *
+     * @see #defaultValue(Field)
+     */
+    DataType<T> default_(T defaultValue);
+
+    /**
+     * Specify an expression to be applied as the <code>DEFAULT</code> value for
+     * this data type.
+     * <p>
+     * A default value of a data type applies to DDL statements, such as
+     * <ul>
+     * <li><code>CREATE TABLE</code></li>
+     * <li><code>ALTER TABLE</code></li>
+     * </ul>
+     * <p>
+     * The distinct types of possible <code>DEFAULT</code> expressions is
+     * defined by the underlying database. Please refer to your database manual
+     * to learn what expressions are possible.
+     */
+    DataType<T> default_(Field<T> defaultValue);
 
     /**
      * The expression to be applied as the <code>DEFAULT</code> value for this
@@ -306,7 +348,7 @@ public interface DataType<T> extends Serializable {
      *         value is specified for this data type.
      * @see #defaultValue(Field)
      */
-    Field<T> defaultValue();
+    Field<T> default_();
 
     /**
      * Return a new data type like this, with a new defaultability.

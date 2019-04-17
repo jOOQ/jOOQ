@@ -85,15 +85,31 @@ public interface AlterTableAlterStep<T> {
 
     /**
      * Specify a new column <code>DEFAULT</code>.
+     * <p>
+     * This is an alias for {@link #default_(Object)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep defaultValue(T literal);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
+     * <p>
+     * This is an alias for {@link #default_(Field)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep defaultValue(Field<T> expression);
+
+    /**
+     * Specify a new column <code>DEFAULT</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    AlterTableFinalStep default_(T literal);
+
+    /**
+     * Specify a new column <code>DEFAULT</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    AlterTableFinalStep default_(Field<T> expression);
 
     /**
      * Specify a new column data type.

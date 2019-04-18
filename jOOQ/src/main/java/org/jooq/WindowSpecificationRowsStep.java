@@ -91,7 +91,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsUnboundedPreceding();
 
     /**

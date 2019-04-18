@@ -4891,7 +4891,14 @@ public class JavaGenerator extends AbstractGenerator {
                    .append(scala ? "new " : "@")
 
                    // Since JPA 1.0
-                   .append(out.ref("javax.persistence.UniqueConstraint")).append("(columnNames = ").append(scala ? "Array(" : "{");
+                   .append(out.ref("javax.persistence.UniqueConstraint("));
+
+                if (!StringUtils.isBlank(uk.getOutputName()))
+                    sb1.append("name = \"" + uk.getOutputName().replace("\"", "\\\"") + "\",")
+                       .append(generateNewline());
+
+                sb1.append("columnNames = ")
+                   .append(scala ? "Array(" : "{");
 
                 String glue1Inner = "";
                 for (ColumnDefinition column : uk.getKeyColumns()) {

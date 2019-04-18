@@ -38,6 +38,7 @@
 
 package org.jooq;
 
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -628,6 +629,26 @@ public enum SQLDialect {
             return true;
 
         return other.precedes(this);
+    }
+
+    /**
+     * Check whether this dialect supports any dialect from the argument
+     * collection.
+     */
+    public final boolean supports(Collection<SQLDialect> other) {
+        if (other.contains(family))
+            return true;
+
+        SQLDialect candidate = family.predecessor();
+        boolean successor = this == family;
+        for (;;) {
+            successor = successor || this == candidate;
+            if (other.contains(candidate))
+                return successor;
+
+            if (candidate == (candidate = candidate.predecessor()))
+                return false;
+        }
     }
 
     /**

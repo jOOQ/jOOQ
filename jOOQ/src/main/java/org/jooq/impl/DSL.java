@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -18584,7 +18585,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
@@ -18592,7 +18593,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
@@ -18600,7 +18601,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
@@ -18608,7 +18609,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
@@ -18616,7 +18617,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
@@ -18624,7 +18625,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
     }
@@ -18632,7 +18633,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
     }
@@ -18640,7 +18641,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
     }
@@ -18648,7 +18649,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
     }
@@ -18656,7 +18657,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }

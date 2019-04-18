@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -90,19 +91,19 @@ public interface WindowSpecificationExcludeStep extends WindowSpecificationFinal
     /**
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationFinalStep excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationFinalStep excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationFinalStep excludeTies();
 
     /**

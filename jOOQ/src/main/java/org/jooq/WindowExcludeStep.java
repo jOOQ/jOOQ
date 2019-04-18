@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -47,6 +48,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -74,19 +76,19 @@ public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeTies();
 
     /**

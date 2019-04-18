@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -214,68 +215,68 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsCurrentRow();
 
     /**
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsFollowing(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenPreceding(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenCurrentRow();
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenFollowing(int number);
 }

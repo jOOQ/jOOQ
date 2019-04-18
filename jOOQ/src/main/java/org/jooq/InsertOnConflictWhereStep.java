@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 
 import java.util.Collection;
@@ -57,9 +58,10 @@ import org.jooq.impl.DSL;
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
  *       .values(value3, value4)
- *       .onDuplicateKeyUpdate()
- *       .set(field1, value1)
- *       .where(field2.eq(value5))
+ *       .onConflict(field1)
+ *       .doUpdate()
+ *       .set(field2, value2)
+ *       .where(field3.eq(value5))
  *       .execute();
  * </pre></code>
  * <p>
@@ -89,7 +91,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
@@ -97,7 +99,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
@@ -105,14 +107,14 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
@@ -127,7 +129,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(SQL sql);
 
@@ -143,7 +145,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql);
 
@@ -160,7 +162,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
@@ -177,7 +179,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 
@@ -185,13 +187,13 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * Add a <code>WHERE EXISTS</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);
 }

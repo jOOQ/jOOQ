@@ -69,7 +69,6 @@ import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_ON_CONFLICT;
 import static org.jooq.impl.Keywords.K_ON_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
-import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -327,7 +326,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-                case POSTGRES: {
+                case POSTGRES:
+                case SQLITE: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -418,8 +418,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case MARIADB:
                 case MYSQL_5_7:
                 case MYSQL_8_0:
-                case MYSQL:
-                case SQLITE: {
+                case MYSQL: {
                     toSQLInsert(ctx);
                     ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
@@ -432,7 +431,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case POSTGRES_9_5:
                 case POSTGRES_10:
                 case POSTGRES_11:
-                case POSTGRES: {
+                case POSTGRES:
+                case SQLITE: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -543,13 +543,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .visit(K_INSERT)
            .sql(' ');
 
-        // [#1295] [#4376] MySQL and SQLite have native syntaxes for
-        //                 INSERT [ OR ] IGNORE
+        // [#1295] MySQL dialects have native syntax for INSERT IGNORE
+        // [#4376] [#8433] for SQLite render using ON CONFLICT DO NOTHING
+        //                 rather than INSERT OR IGNORE
         if (onDuplicateKeyIgnore)
             if (SUPPORT_INSERT_IGNORE.contains(ctx.family()))
                 ctx.visit(K_IGNORE).sql(' ');
-            else if (SQLDialect.SQLITE == ctx.family())
-                ctx.visit(K_OR).sql(' ').visit(K_IGNORE).sql(' ');
 
         ctx.visit(K_INTO)
            .sql(' ')

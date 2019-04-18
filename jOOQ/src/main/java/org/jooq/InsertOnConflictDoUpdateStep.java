@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -59,6 +60,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
  *       .onConflict(field1)
+ *       .doUpdate()
  *       .set(field2, value2)
  *       .execute();
  * </pre></code>
@@ -71,7 +73,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5, SQLITE })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**

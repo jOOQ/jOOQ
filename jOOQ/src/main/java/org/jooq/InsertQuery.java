@@ -130,7 +130,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflict(Collection<? extends Field<?>> fields);
 
     /**
-     * Whether use a <code>On CONFLICT</code> or
+     * Whether use a <code>ON CONFLICT</code> or
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
@@ -138,7 +138,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflictOnConstraint(Name constraint);
 
     /**
-     * Whether use a <code>On CONFLICT</code> or
+     * Whether use a <code>ON CONFLICT</code> or
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
@@ -146,7 +146,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void onConflictOnConstraint(Constraint constraint);
 
     /**
-     * Whether use a <code>On CONFLICT</code> or
+     * Whether use a <code>ON CONFLICT</code> or
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
@@ -166,7 +166,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -185,7 +185,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <td><code><pre>INSERT IGNORE INTO ..</pre></code></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#POSTGRES_9_5}</td>
+     * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
      * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
      * </tr>
      * <tr>
@@ -230,7 +230,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -239,7 +239,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -252,7 +252,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
     void addValuesForUpdate(Map<?, ?> map);
 
     /**
@@ -264,7 +264,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Condition condition);
 
     /**
@@ -276,7 +276,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Condition... conditions);
 
     /**
@@ -288,7 +288,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Collection<? extends Condition> conditions);
 
     /**
@@ -300,7 +300,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Operator operator, Condition condition);
 
     /**
@@ -312,7 +312,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Operator operator, Condition... conditions);
 
     /**
@@ -324,7 +324,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DERBY, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, POSTGRES_9_5, SQLITE })
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**

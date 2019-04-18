@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
@@ -113,9 +114,9 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add an <code>ON CONFLICT</code> clause to this INSERT statement.
      * <p>
-     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
-     * other dialects can emulate it using <code>MERGE</code>, if table meta
-     * data is available.
+     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SQLITE} have
+     * native support for this clause. The other dialects can emulate it using
+     * <code>MERGE</code>, if table meta data is available.
      */
     @Support
     InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
@@ -123,9 +124,9 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add an <code>ON CONFLICT</code> clause to this INSERT statement.
      * <p>
-     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
-     * other dialects can emulate it using <code>MERGE</code>, if table meta
-     * data is available.
+     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SQLITE} have
+     * native support for this clause. The other dialects can emulate it using
+     * <code>MERGE</code>, if table meta data is available.
      */
     @Support
     InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
@@ -133,9 +134,9 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this INSERT statement.
      * <p>
-     * Only {@link SQLDialect#POSTGRES} has native support for this clause. The
-     * other dialects can emulate it using <code>MERGE</code>, if table meta
-     * data is available.
+     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SQLITE} have
+     * native support for this clause. The other dialects can emulate it using
+     * <code>MERGE</code>, if table meta data is available.
      */
     @Support
     InsertReturningStep<R> onConflictDoNothing();
@@ -160,7 +161,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <p>
      * H2 supports this clause in MySQL mode.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**
@@ -183,7 +184,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <td><code><pre>INSERT IGNORE INTO ..</pre></code></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#POSTGRES_9_5}</td>
+     * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
      * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
      * </tr>
      * <tr>
